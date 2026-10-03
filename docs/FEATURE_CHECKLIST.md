@@ -4,6 +4,8 @@ Initial inventory baseline: 2026-10-03; inspected application commit `0bcd99988a
 
 This file is the shared feature-status and user-testing record. README is the quick walkthrough; PROJECT_STATUS records milestones; MASTER_SPEC remains the product source. The 2026-10-03 UX update implements the accepted discussion decisions; see [UX checkpoint](UX_UPDATE.md) for contracts and source references.
 
+Current verified UX application checkpoint: `445d9d2d57bcc415192e1a2cb9e46ebf84c73bbb`. Later documentation-only commits do not imply additional implemented behavior.
+
 ## Status and evidence
 
 - **Implemented locally:** working code in the demo; no production readiness or user acceptance implied.
@@ -157,6 +159,7 @@ These are implementation defects, not a claim that a user or independent reviewe
 | 2026-10-03 | Owner manual browser pass | Dashboard; lesson-1 recognition and typed Hebrew feedback; Studio word-note draft, affected-lesson report, publication. | No completed manual CSV, rollback, backup, mobile, matching, or ordering walkthrough is claimed. Later driver-owned browser lifecycle ended. |
 | 2026-10-03 | Current code inventory | Read source, README, build brief and master specification; recorded bounded implementation and B01/B02. | Not independent QA. User test results: none reported yet. |
 | 2026-10-03 | UX update, this checkpoint | npm.cmd run verify: 30 passed, 0 failed; separate syntax checks for media/UX/tutor modules; git diff --check passed. Includes rich-field preservation, pinned resumes/backups, taught distractors, undo, reports, role gates, media ranges and mocked AI. | No live AI, production login, source-media or FSRS claim. |
+| 2026-10-03 | 445d9d2 application | Remote main matched the local full commit; [GitHub Actions run 37133489029](https://github.com/guylfe/hebleo-3.0/actions/runs/37133489029) completed success. | Private checkpoint, not deployment or user acceptance. |
 | 2026-10-03 | UX owner browser pass | Local 4173: separate portions, typed-answer feedback, immediate recognition, lesson 1 completion opens lesson 2, labelled narrow navigation. Isolated in-memory 4174: review/reveal/rate/undo with exact prior schedule readback; restored matching selections; concept dialog preserves question; report attaches actual revision/answer; rich cards/table/root search/full entry; authored help. | Background mounted browser; synthetic data. Trusted clicks or explicit DOM clicks followed by state/API readback. Narrow-window visual check, not real-device acceptance. Native dropdown selection, microphone recording, real media playback and independent QA remain pending. |
 
 ## Maintaining this checklist
