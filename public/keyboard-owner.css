@@ -170,7 +170,7 @@
 }
 
 .hebleo-keyboard__row--tools {
-  grid-template-columns: minmax(48px, 0.75fr) minmax(58px, 0.9fr) minmax(150px, 2.35fr) minmax(44px, 0.62fr) minmax(44px, 0.62fr) minmax(48px, 0.75fr);
+  grid-template-columns: 48px 58px 44px minmax(0, 1fr) 44px 48px;
 }
 
 .hebleo-keyboard__key {
@@ -281,12 +281,10 @@
 
 @media (hover: none), (pointer: coarse) {
   .hebleo-keyboard__row--tools {
-    grid-template-columns: minmax(58px, 1.1fr) minmax(118px, 2.05fr) minmax(32px, 0.48fr) minmax(32px, 0.48fr) minmax(34px, 0.54fr);
+    grid-template-columns: 38px 48px 32px minmax(0, 1fr) 32px 34px;
   }
 
-  .hebleo-keyboard__key--convert-toggle {
-    display: none;
-  }
+
 
   .hebleo-keyboard__key:hover,
   .hebleo-keyboard__key:focus,
@@ -337,49 +335,6 @@ body.hebleo-keyboard-is-open {
   transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 
-.hebleo-keyboard-target-active[data-hebleo-keyboard-target="true"] {
-  animation: hebleo-keyboard-target-pulse 1400ms ease-in-out infinite;
-}
-
-.hebleo-keyboard__field-caret {
-  background: var(--hebleo-keyboard-blue);
-  border-radius: 999px;
-  box-shadow: 0 0 0 2px rgba(26, 93, 178, 0.16);
-  display: none;
-  pointer-events: none;
-  position: fixed;
-  width: 2px;
-  z-index: 2147483001;
-}
-
-.hebleo-keyboard__field-caret--visible {
-  animation: hebleo-keyboard-caret-blink 950ms steps(2, start) infinite;
-  display: block;
-}
-
-@keyframes hebleo-keyboard-target-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 3px rgba(26, 93, 178, 0.15), 0 0 0 1px rgba(0, 75, 142, 0.1);
-  }
-
-  50% {
-    box-shadow: 0 0 0 5px rgba(26, 93, 178, 0.22), 0 0 0 1px rgba(0, 75, 142, 0.16);
-  }
-}
-
-@keyframes hebleo-keyboard-caret-blink {
-  0%,
-  45% {
-    opacity: 1;
-  }
-
-  46%,
-  100% {
-    opacity: 0;
-  }
-}
-
 @media (max-width: 680px) {
   .hebleo-keyboard__launcher {
     bottom: 16px;
@@ -421,12 +376,10 @@ body.hebleo-keyboard-is-open {
   }
 
   .hebleo-keyboard__row--tools {
-    grid-template-columns: minmax(58px, 1.1fr) minmax(92px, 1.85fr) minmax(32px, 0.48fr) minmax(32px, 0.48fr) minmax(34px, 0.54fr);
+    grid-template-columns: 38px 48px 32px minmax(0, 1fr) 32px 34px;
   }
 
-  .hebleo-keyboard__key--convert-toggle {
-    display: none;
-  }
+
 
   .hebleo-keyboard__key {
     border-radius: 7px;

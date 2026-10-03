@@ -10,10 +10,11 @@ import * as ux from '../public/ux.js';
 import {composeSentence,bindMatching,matchWord} from '../public/interactions.js';
 import {richCell,cellCSS,createLessonRenderer} from '../public/rich.js';
 async function settled(predicate){for(let i=0;i<80;i++){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle.');}
-async function app(t,{page='lesson/lesson-2/learn',author=false,prepare}={}){
+async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false}={}){
   const store=new Store();prepare?.(store);const d=new JSDOM('<div id="app"></div><div id="toast"></div>',{url:'http://127.0.0.1/#'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=d.window;
   t.after(()=>{w.close();store.close();});w.matchMedia=()=>({matches:false});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
+  if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
   Object.assign(w,ux,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),stopMedia(){},clearRecording(){},feedbackSound(){}});
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;try{let value;
     if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
@@ -52,7 +53,21 @@ test('Studio edits author card policy and lesson highlights through the app draf
   const form=doc.querySelector('#review-policy-form');form.querySelector('select').value='none';form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.get('draft')?.content.reviewPolicy.defaultNikkud==='none');await settled(()=>doc.querySelector('[data-action="publish"]'));
   click(doc,'publish');await settled(()=>store.snapshot().reviewPolicy.defaultNikkud==='none');
   await settled(()=>doc.body.textContent.includes('PUBLISHED VERSION 2'));
-  const lessonForm=doc.querySelector('#lesson-form');lessonForm.elements.knownKeys.value='א';lessonForm.elements.newKeys.value='ב';lessonForm.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.get('draft')?.content.lessons[0].keyboard.newKeys==='ב');
+  const lessonForm=doc.querySelector('#lesson-form');lessonForm.elements.knownKeys.value='א';lessonForm.elements.newKeys.value='ב';lessonForm.elements.newColor.value='#abcdef';lessonForm.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.get('draft')?.content.lessons[0].keyboard.newKeys==='ב');
+  assert.equal(doc.querySelector('#known-color'),null);
+  assert.equal(store.get('draft').content.lessons[0].keyboard.newColor,'#abcdef');
+});
+
+test('Actual app launcher focuses the native answer field and saves pinning through the learner preference API',async t=>{
+  const {store,w,doc}=await app(t,{page:'lesson/lesson-1/apply',ownerKeyboard:true});
+  click(doc,'keyboard-open');const answer=doc.querySelector('#answer');
+  await settled(()=>doc.activeElement===answer);assert.equal(answer.readOnly,false);
+  doc.querySelector('[data-insert="א"]').click();assert.equal(answer.value,'א');
+  doc.querySelector('[data-action="pin"]').click();await settled(()=>store.learner('learner-demo').preferences.keyboardPinned);
+  doc.querySelector('h1').dispatchEvent(new w.Event('pointerdown',{bubbles:true}));
+  assert.ok(doc.querySelector('.hebleo-keyboard--open'));
+  doc.querySelector('[data-action="pin"]').click();await settled(()=>!store.learner('learner-demo').preferences.keyboardPinned);
+  doc.querySelector('h1').dispatchEvent(new w.Event('pointerdown',{bubbles:true}));assert.equal(doc.querySelector('.hebleo-keyboard--open'),null);
 });
 test('Lesson help exposes an actual question form and saves it to the author inbox',async t=>{
   const {store,w,doc}=await app(t);click(doc,'help');await settled(()=>doc.querySelector('#author-question-form'));

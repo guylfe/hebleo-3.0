@@ -4,7 +4,7 @@ Initial inventory baseline: 2026-10-03; inspected application commit `0bcd99988a
 
 This file is the shared feature-status and user-testing record. README is the quick walkthrough; PROJECT_STATUS records milestones; MASTER_SPEC remains the product source. The 2026-10-03 UX update implements the accepted discussion decisions; see [UX checkpoint](UX_UPDATE.md) for contracts and source references.
 
-Current verified refinement application checkpoint: `5220a59ab6549d3343b29e15e48df2a2233664e2`. See [UI refinement](UI_REFINEMENT.md). Guy's feedback below refers to the preceding application `445d9d2` (documentation HEAD `9a35879`); the new fixes await his retest. Documentation-only commits do not imply extra behavior.
+Previous verified refinement application checkpoint: `5220a59ab6549d3343b29e15e48df2a2233664e2`. See [UI refinement](UI_REFINEMENT.md). Guy's feedback below refers to the preceding application `445d9d2` (documentation HEAD `9a35879`); the new fixes await his retest. Documentation-only commits do not imply extra behavior.
 
 ## Status and evidence
 
@@ -39,7 +39,7 @@ Test URL when the local server is running: http://127.0.0.1:4173. Startup and th
 | E09 | Exact-vowel requirement | Available through full JSON import: set typing exercise requireNikkud=true; unpointed answer fails and authored pointed form passes. No Studio toggle yet. | A | Pending |
 | H01 | Explicit Nikkud settings | Exercise modes: Lesson-authored / With / Without Nikkud. Vocabulary stays full. Separate flashcard control follows an author default or learner override. | A (preferences/policy), C; M (earlier Settings) | Correction 2026-10-03: admin/user flashcard choice; retest Pending |
 | H02 | Contextual full-word entry | Open a vocabulary entry to inspect fully pointed Hebrew, meaning, notes, all retained fields and native audio. Rich lesson phrases are RTL units rather than automatic per-word buttons. Closing preserves the lesson position. | C, M (earlier word dialog) | Pending |
-| H03 | Floating Hebrew keyboard and author highlights | Original owner-plugin overlay with launcher, Pin/Close, always-visible English equivalents, conversion/caret/backspace/Nikkud. Studio specifies separate known/new keys and colors per lesson. | A (owner code insertion/pinning/highlights), M (floating overlay, English hints, typed אני, pin display); final positioning/touch Pending | Fail reported 2026-10-03: inline keyboard too far from fields; revised, retest Pending |
+| H03 | Floating Hebrew keyboard and author highlights | Owner-plugin overlay with launcher, effective Pin/Close, English equivalents, native field caret, conversion/backspace, compact Nikkud sound column with 1.5s left-opening variants. Known/new key groups use dark/bright shades of one author color; no legend. | A (insertion, dwell/cancel, variants, pin persistence/click-away, native focus, shared hue); M (compact layout/sound column/native caret and field visibility); final hover/pin/touch visual Pending | Fail/change reports 2026-10-03: size, key order, Nikkud placement, pin no visible effect, synthetic caret; revised, retest Pending |
 | R01 | Manual and completion-based review enrollment | Add a word from a lesson/library, or complete a lesson; cards are created once. | A | Pending |
 | R02 | Initial card presentations and configurable front Nikkud | Recognition, translation, listening-first and sentence fronts need appropriate authored sources. Studio sets a Nikkud default; learner Settings/Review can follow or override it. Revealed word answers stay fully pointed with available audio. Types share one schedule per word. | A (policy preview/persistence/override), C; M (earlier recognition/reveal) | Correction 2026-10-03: no automatic unpointed-front assumption; retest Pending |
 | R03 | Again / Hard / Good / Easy ratings | Rate recall and reload; due dates, interval, and repetition count persist. Again schedules ten minutes; Hard one day; Good/Easy expand a simple interval. This is not FSRS. | A | Pending |
@@ -159,6 +159,10 @@ B01/B02 originated in code inspection. The additional rows below record Guy’s 
 | B07 | Revised; Guy retest Pending | Prefix attached to a separate vocabulary choice. Authored prefix tiles compose with base words; historical IDs retained. | A (composition/grading/version safety) |
 | B08 | Renderer fixed; live import/retest Pending | Rich letter/cell/text formatting missing. Native metadata renders and survives JSON; no real masterfile imported. | Read-only Sheet1 reference + A (rich runs/colors/backup) |
 
+| B09 | Revised; Guy retest Pending | Keyboard too large: legend removed; dark/bright shared hue; Nikkud moved left of A→א with five sound slots and 1500ms left-opening variants; left-arrow/space order corrected. Header discussion deferred. | A (dwell/cancel/insertion/shades/order); M (compact layout/sound column); final hover visual Pending |
+| B10 | Fixed locally; Guy retest Pending | Pin appeared ineffective: unpinned click-away closes; pinned stays open across click-away/questions with visible pressed state and saved preference. | A (real app persistence and click-away/context); final browser click-away visual Pending |
+| B11 | Removed; Guy retest Pending | Special text ticker/caret unwanted: simulated caret and native-keyboard suppression removed; launcher focuses writable answer with normal caret. Mobile keyboard coordination deferred. | A (native focus/attributes and readonly protection); M (normal caret and field above overlay) |
+
 ## Verification ledger
 
 | Date | Artifact | Evidence | Limit |
@@ -174,6 +178,7 @@ B01/B02 originated in code inspection. The additional rows below record Guy’s 
 | 2026-10-03 | User-feedback refinement | npm.cmd run verify: 46 passed, 0 failed; syntax and whitespace checks. Mounted browser: cleaner player, RTL text, owner floating keyboard/hints, clicks entering and saving אני, pin display, typed feedback. | Final drag/positioning visual walkthrough stopped after browser lifecycle/binding failure. Pointer/HTML placement and active-field logic have automated checks; real touch, live AI/media and independent QA remain Pending. |
 
 | 2026-10-03 | 5220a59 application | Remote main matched the full application commit; [GitHub Actions run 37147722285](https://github.com/guylfe/hebleo-3.0/actions/runs/37147722285) completed success. Final restarted 4173 returned healthy with refinement fixtures and three fictional profiles. | Private checkpoint, not production deployment, Guy acceptance or independent review. |
+| 2026-10-03 | Compact keyboard follow-up | npm.cmd run verify: 53 passed, 0 failed; separate keyboard syntax and whitespace checks. Mounted background browser: compact row/legend removal, Nikkud sound column, native caret and fully visible answer field. | Final hover/alternative and click-away pin visual checks stopped after browser lifecycle/endpoint loss. Exact dwell and pin persistence have automated evidence; mobile-native keyboard work deferred; Guy retest and independent review Pending. |
 
 ## Maintaining this checklist
 
