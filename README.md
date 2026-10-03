@@ -37,7 +37,7 @@ First startup creates illustrative content and two fictional demo learners in `d
 
 ## Validation and limits
 
-`npm.cmd run verify` passes 15 executable checks covering grading, normalization, CSV fidelity, validation failures, publication/rollback, pinned answers, persistence, profile isolation, access, replay protection, restore, and HTTP boundaries. GitHub Actions runs the same command; its remote result must be checked separately.
+`npm.cmd run verify` passes 15 executable checks covering grading, normalization, CSV fidelity, validation failures, publication/rollback, pinned answers, persistence, profile isolation, access, replay protection, restore, and HTTP boundaries. The [GitHub Actions run for the first runnable commit](https://github.com/guylfe/hebleo-3.0/actions/runs/37089995096) also passed. Future changes require their own validation.
 
 Manual background browser checks confirmed dashboard rendering, recognition and Hebrew typing feedback, and Studio draft/preview/publication. This is implementation-owner verification; named QA/release reviewers have not run.
 
