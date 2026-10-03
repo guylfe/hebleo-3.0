@@ -21,9 +21,8 @@ export function audioURL(value) {
 export function orderingTokens(exercise, content) {
   const base = [...exercise.tokens];
   const lessonIndex = content.lessons.findIndex(l => l.id === exercise.lessonId);
-  const taught = content.lessons.slice(0, lessonIndex + 1).flatMap(l => l.wordIds);
   const recent = content.lessons.slice(Math.max(0, lessonIndex - 2), lessonIndex + 1).reverse().flatMap(l => l.wordIds);
-  const candidates = [...new Set([...recent, ...taught])].map(id => content.words.find(w => w.id === id)?.unpointed).filter(Boolean);
+  const candidates = [...new Set(recent)].map(id => content.words.find(w => w.id === id)).filter(w=>w && !w.noVocab).map(w=>w.unpointed);
   const key=t=>t.normalize('NFD').replace(/[\u0591-\u05c7]/g,'').trim();
   const seen=new Set(base.map(key));
   const extras=candidates.filter(t=>{const k=key(t);if(seen.has(k))return false;seen.add(k);return true;}).slice(0, 6);
@@ -40,8 +39,14 @@ export function targetedExercises(content, lesson, attempts) {
 }
 export function searchableWord(word) { return JSON.stringify(word).normalize('NFD').replace(/[\u0591-\u05c7]/g, '').toLowerCase(); }
 export function wordFields(word) {
-  const skip = new Set(['id', 'pointed', 'unpointed', 'curated', 'english', 'notes', 'format', 'sourceFields', 'audio']);
+  const skip = new Set(['id', 'pointed', 'unpointed', 'curated', 'english', 'notes', 'format', 'sourceFields', 'audio', 'fieldFormatting', 'sourceTheme', 'baseWordId', 'prefix']);
   const fields = Object.entries(word).filter(([key, value]) => !skip.has(key) && value != null && value !== '');
   return [...fields, ...Object.entries(word.sourceFields || {}).filter(([, value]) => value != null && value !== '')];
 }
 export function fieldLabel(key) { return ({ partOfSpeech: 'Part of speech', pluralFeminine: 'Plural feminine', alternateAudio: 'Audio for other forms', introducedLesson: 'Introduced in lesson', noCard: 'Exclude from cards', noVocab: 'Exclude from vocabulary' })[key] || key.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase()); }
+
+export function orderingPrefixes(exercise, tray) {
+  const positions=new Set(exercise.prefixTokenIndices || []), counts=new Map();
+  return tray.flatMap((t,i)=>{const count=counts.get(t)||0;counts.set(t,count+1);const occurrences=exercise.tokens.map((v,p)=>v===t?p:-1).filter(p=>p>=0);return positions.has(occurrences[count])?[i]:[];});
+}
+export function reviewNikkud(content, preference) { return preference && preference !== 'default' ? preference : content.reviewPolicy?.defaultNikkud || 'full'; }

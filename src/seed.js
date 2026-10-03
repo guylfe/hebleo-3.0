@@ -33,7 +33,7 @@ export const seed = {
 };
 
 // Additive upgrade of synthetic fixtures only. Existing source fields and learner records survive.
-export function upgradeDemo(content) {
+function upgradeFoundation(content) {
   if (content.provenance.kind !== 'synthetic-demo' || content.uxVersion === 1) return null;
   const next = structuredClone(content); next.uxVersion = 1;
   const details = {
@@ -63,6 +63,22 @@ export function upgradeDemo(content) {
   }
   const first=next.lessons.find(l=>l.id==='lesson-1');
   if(first && first.exerciseIds.includes('ex-1-recognize') && first.checkExerciseIds===undefined)first.checkExerciseIds=['ex-1-recognize'];
+  return next;
+}
+export function upgradeDemo(content) {
+  if(content.provenance.kind!=='synthetic-demo'||content.uxVersion===2)return null;
+  const next=upgradeFoundation(content)||structuredClone(content);next.uxVersion=2;
+  next.reviewPolicy ||= {defaultNikkud:'full'};
+  const highlights=[{knownKeys:'',newKeys:'אהוימנ'},{knownKeys:'אהוימנ',newKeys:'בתפש'},{knownKeys:'אהוימנבתפש',newKeys:'כ'}];
+  next.lessons.forEach((l,i)=>{l.keyboard ||= {...highlights[i],knownColor:'#164b81',newColor:'#007b89'};});
+  const ani=next.words.find(w=>w.id==='w-ani');if(ani?.format?.color==='#137c83')delete ani.format.color;
+  const base=next.words.find(w=>w.id==='w-bayit'),form=next.words.find(w=>w.id==='w-babayit');
+  if(base && form && form.pointed==='בַּבַּיִת'){
+    Object.assign(form,{baseWordId:base.id,prefix:'ב',noVocab:true,noCard:true});
+    base.prefixedForms ||= [{hebrew:form.pointed,english:form.english,prefix:'ב',notes:form.notes}];
+    const l=next.lessons.find(l=>l.id==='lesson-2');if(l)l.wordIds=[...new Set(l.wordIds.map(id=>id===form.id?base.id:id))];
+    const e=next.exercises.find(e=>e.id==='ex-2-order');if(e && JSON.stringify(e.tokens)==='["בבית","אני"]'){e.tokens=['ב','בית','אני'];e.prefixTokenIndices=[0];}
+  }
   return next;
 }
 Object.assign(seed,upgradeDemo(seed));

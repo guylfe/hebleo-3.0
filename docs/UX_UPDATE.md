@@ -2,13 +2,15 @@
 
 This local update implements Guy's accepted navigation, vocabulary, exercise and interaction clarifications together. The stable-ID [feature checklist](FEATURE_CHECKLIST.md) remains the acceptance ledger; tests never imply Guy's acceptance.
 
+The later [user-feedback refinement](UI_REFINEMENT.md) supersedes the keyboard layout, card-Nikkud assumption, rich-format limitations and help labels below.
+
 ## Contracts
 
 - Watch defaults when video exists. Watch/Read shows both choices when both formats exist. Text-only content shows text directly, without a no-video announcement. Manifest portions have separate routes; optional checks follow explanation. Smaller-screen course outline starts collapsed.
-- Introduced vocabulary uses full authored Nikkud. Exercise labels are Lesson-authored Nikkud, With Nikkud and Without Nikkud. Card display follows its purpose, with no generic curated-card setting.
+- Introduced vocabulary uses full authored Nikkud. Exercise labels are Lesson-authored Nikkud, With Nikkud and Without Nikkud. Card presentation remains purpose-specific; the later refinement adds an author default plus learner Nikkud choice.
 - Cards show notes and expandable complete entries; Table retains all source fields. Unknown imported columns survive publication/backup. Rich fields remain searchable. Raw masterfile data is not silently reduced or given fabricated IDs/forms.
 - Immediate single-choice submission is a saved setting; Continue follows feedback. Sounds, animations and keyboard controls are separate preferences.
-- Ordering adds four to six distinct taught distractors, prioritizing the current lesson and two prior lessons, then older taught words. No future vocabulary. Publication rejects fewer than four available taught distractors. A differently pointed version of the same answer is not counted as a distractor. Accepted variants remain explicitly authored.
+- Ordering adds four to six distinct taught distractors, from the current lesson and two prior lessons. No future vocabulary. Publication rejects fewer than four available taught distractors. A differently pointed version of the same answer is not counted as a distractor. Accepted variants remain explicitly authored.
 - Cloze says Type the missing word. Its pedagogical value and final card templates remain open for discussion with the pedagogy architect.
 - Completion uses stable lesson IDs and a final course destination. Resume saves portion/question/answer/feedback with immutable source revision.
 - Help prefers authored explanations; extra practice selects unresolved authored mistakes. Optional AI clarification is labelled and cannot publish or grade. Roleplay/generated practice remain future work.

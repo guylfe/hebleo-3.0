@@ -24,7 +24,8 @@ test('all six exercise families grade submitted answers; lessons complete and en
   const answers = ['who', 'אני', { 'w-hu': 'he', 'w-hi': 'she', 'w-mi': 'who' }, 'אני בבית', 'היא', 'היא בבית', 'writes (feminine singular)', 'היא כותבת', 'היא כותבת פה'];
   seed.exercises.forEach((e, i) => assert.equal(answer(s, e.id, answers[i]).correct, true, e.id));
   assert.deepEqual(s.learner(learner).completed, seed.lessons.map(l => l.id));
-  assert.equal(Object.keys(s.learner(learner).cards).length, 10);
+  assert.equal(Object.keys(s.learner(learner).cards).length, 9);
+  assert.equal(s.learner(learner).cards['w-babayit'],undefined,'Prefixed forms belong to the base entry, not separate review words.');
   assert.equal(answer(s, 'ex-3-transform', 'היא כותב').correct, false);
 });
 test('nikkud-required typing rejects the unpointed alternative', t => {
@@ -69,7 +70,7 @@ test('manifest selectors use canonical source objects and permit changing compon
   assert.equal(l.blocks[0].type, 'vocabulary');
   assert.equal(resolveBlock(content, l, l.blocks[0])[0], content.words[0]);
   l.blocks[0].selector.lessonId = 'lesson-2';
-  assert.equal(resolveBlock(content, l, l.blocks[0]).length, 7);
+  assert.equal(resolveBlock(content, l, l.blocks[0]).length, 6);
 });
 test('invalid imports fail without changing the active revision or existing draft', t => {
   const s = setup(t); s.stage({ baseRevisionId: 1, word: { id: 'w-mi', notes: 'Staged note' } }); const before = s.active();

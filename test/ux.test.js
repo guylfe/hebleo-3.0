@@ -28,7 +28,7 @@ test('sentence trays include substantial distractors drawn from current/recent t
   assert.ok(tray.length>=e.tokens.length+4);
   assert.ok(!tray.includes('כותב'));assert.ok(!tray.includes('כותבת'));
   const taught=new Set(seed.lessons.slice(0,2).flatMap(l=>l.wordIds).map(id=>seed.words.find(w=>w.id===id).unpointed));
-  tray.forEach(t=>assert.ok(taught.has(t)));
+  tray.forEach(t=>assert.ok(taught.has(t)||t==='ב','Only taught vocabulary and the authored prefix may appear.'));
   const publicTray=new Store();try{assert.deepEqual(publicTray.bootstrap(user).content.exercises.find(x=>x.id===e.id).tokens,tray);}finally{publicTray.close();}
 });
 

@@ -10,7 +10,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml' };
 export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {}) {
   return http.createServer(async (req, res) => {
-    const headers = { 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' https: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'", 'Referrer-Policy': 'no-referrer' };
+    const headers = { 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' https: data:; media-src 'self' https: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'", 'Referrer-Policy': 'no-referrer' };
     const json = (status, data) => { res.writeHead(status, { ...headers, 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(data)); };
     try {
       const url = new URL(req.url, 'http://127.0.0.1');
@@ -23,6 +23,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
         if (req.method === 'GET') {
           if (url.pathname === '/api/bootstrap') return json(200, store.bootstrap(userId));
           if (url.pathname === '/api/session') return json(200,store.session(userId,url.searchParams.get('lessonId')));
+          if (url.pathname === '/api/questions') return json(200,store.questions(userId));
           if (url.pathname === '/api/reports') return json(200,store.reports(userId));
           if (['/api/studio','/api/export','/api/content'].includes(url.pathname)) store.requireAuthor(userId);
           if (url.pathname === '/api/studio') return json(200, { ...store.active(), preview: store.preview() });
@@ -35,11 +36,14 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
           for await (const chunk of req) { bytes += chunk.length; if (bytes > 750000) throw new DomainError('Request exceeds the local import limit.', 413); chunks.push(chunk); }
           let input; try { input = JSON.parse(Buffer.concat(chunks).toString()); } catch { throw new DomainError('Malformed JSON.'); }
           if (!input || typeof input !== 'object' || Array.isArray(input)) throw new DomainError('Expected a JSON object.');
-          if (url.pathname.startsWith('/api/studio/') || ['/api/restore','/api/reports/resolve'].includes(url.pathname)) store.requireAuthor(userId);
+          if (url.pathname.startsWith('/api/studio/') || ['/api/restore','/api/reports/resolve','/api/questions/answer'].includes(url.pathname)) store.requireAuthor(userId);
           if (url.pathname === '/api/progress') return json(200, store.saveProgress(userId,input));
+          if (url.pathname === '/api/session/latest') return json(200,store.startLatestLesson(userId,input.lessonId));
           if (url.pathname === '/api/practice') return json(200,store.practice(userId,input));
           if (url.pathname === '/api/report') return json(200,store.report(userId,input));
           if (url.pathname === '/api/reports/resolve') return json(200,store.resolveReport(userId,input));
+          if (url.pathname === '/api/questions') return json(200,store.askQuestion(userId,input));
+          if (url.pathname === '/api/questions/answer') return json(200,store.answerQuestion(userId,input));
           if (url.pathname === '/api/help') return json(200,await help(store,userId,input));
           if (url.pathname === '/api/review/undo') return json(200,store.undoReview(userId,input));
           if (url.pathname === '/api/preferences') return json(200, store.updateLearner(userId, input));
@@ -55,7 +59,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
         return json(404, { error: 'API endpoint not found.' });
       }
       if (url.pathname.startsWith('/media/') && ['GET','HEAD'].includes(req.method)) {
-        const mediaTypes={'.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.m4a':'audio/mp4','.mp4':'video/mp4','.webm':'video/webm'};
+        const mediaTypes={'.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.m4a':'audio/mp4','.mp4':'video/mp4','.webm':'video/webm','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif'};
         const name=url.pathname.slice(7),type=mediaTypes[extname(name).toLowerCase()];
         if(!type || !/^[A-Za-z0-9_./-]+$/.test(name) || name.includes('..'))throw new DomainError('Media not found.',404);
         let file,base;
@@ -75,9 +79,9 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
         const stream=createReadStream(file,{start,end});stream.on('error',()=>res.destroy());res.on('close',()=>stream.destroy());stream.pipe(res);return;
       }
       if (req.method !== 'GET') return json(405, { error: 'Method not allowed.' });
-      const allowed = { '/': 'index.html', '/app.js': 'app.js', '/content.js': 'content.js', '/ux.js': 'ux.js', '/media.js': 'media.js', '/styles.css': 'styles.css' };
+      const allowed = { '/': 'index.html', '/app.js': 'app.js', '/content.js': 'content.js', '/ux.js': 'ux.js', '/media.js': 'media.js', '/styles.css': 'styles.css', '/refinement.css':'refinement.css', '/rich.js':'rich.js', '/rich-browser.js':'rich-browser.js', '/interactions.js':'interactions.js', '/keyboard-owner.js':'keyboard-owner.js', '/keyboard-owner.css':'keyboard-owner.css', '/hebleo-lion-mark.svg':'hebleo-lion-mark.svg', '/vendor/marked.js':'../node_modules/marked/lib/marked.esm.js', '/vendor/purify.js':'../node_modules/dompurify/dist/purify.es.mjs' };
       if (!allowed[url.pathname]) return json(404, { error: 'Page not found.' });
-      const file = allowed[url.pathname]; const ext = '.' + file.split('.').pop();
+      const file = allowed[url.pathname]; const ext = url.pathname.startsWith('/vendor/') ? '.js' : '.' + file.split('.').pop();
       const body = await readFile(resolve(root, 'public', file));
       res.writeHead(200, { ...headers, 'Content-Type': types[ext] + '; charset=utf-8' }); res.end(body);
     } catch (e) { json(e instanceof DomainError ? e.status : 500, { error: e instanceof DomainError ? e.message : 'Local server error. See terminal for details.' }); if (!(e instanceof DomainError)) console.error(e.message); }
