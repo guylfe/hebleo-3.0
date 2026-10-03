@@ -1,0 +1,3313 @@
+Me:
+I want to generate an app that would replace LearnDash for me, that will work both online in WordPress and also be usable as just a mobile app, so iOS, Android, and so on, that will do everything that Hiblio does, use Hiblio's videos, etc., and also have text lessons, and basically every feature that Hiblio has right now, I want it to be on this new platform, along with new features that we haven't created yet, because the technology wasn't there yet. Now that I can vibe-code my way into functioning apps, it should be very easy to make a very high-quality app for Hiblio that has all the bells and whistles you would expect from a language learning app. It can be user-friendly, can have leaderboards and streak reminders and anything else you can think of that the successful language apps have, this new app can also have. And I want Hiblio to be the absolute best product it can be. I know that my materials are very, very good. I want this product to also be good. I also want it to have a single source of truth from the cloud with backups and so on. Right now it's on my Google Drive. It's a spreadsheet. The source of truth is for vocabulary and what vocabulary goes in what lesson and so on, and also exercise types, different exercise types, audio recognition, pronunciation practice, all that stuff I want on this app. So let's try to analyze and devise a plan for what this app is going to look like, what features it's going to have, etc. Eventually I will send a briefing that you will create to Codex to complete, to actually create the app and everything it needs to connect to the existing Hiblio website and all of that good stuff.
+
+Chat:
+Worked for 2m 39s
+TL;DR
+Yes. I think the right goal is not “replace LearnDash with a nicer LMS.” It should be:
+
+Build a dedicated Hebleo learning platform, with WordPress becoming the storefront/marketing layer rather than the system that runs the learning experience.
+
+The platform should have one canonical cloud database powering:
+
+the web learner experience on Hebleo
+iOS
+Android
+your admin/content system
+vocabulary and morphology
+your existing native audio
+videos
+exercises
+SRS
+learner progress
+pronunciation/speaking
+adaptive practice
+eventually AI conversation and tutoring
+And I would build the system around Hebleo's pedagogy, rather than copying Duolingo's pedagogy and pouring your content into it.
+
+Your existing material explicitly teaches by making new information attach to prior knowledge through associative structure, and then develops Hebrew as a system—for example roots + patterns—rather than a collection of isolated phrases. 
+ 
+
+That should be the product's fundamental advantage.
+
+1. The product I think we should build
+Internally, I'd stop thinking of it as an LMS.
+
+Think of it as a Hebrew learning operating system with four learner modes:
+
+Learn → Practice → Review → Use
+
+Learn
+The structured Hebleo curriculum.
+
+Video, written explanations, examples, diagrams, vocabulary, audio, mini-exercises and full exercises.
+
+Practice
+Short targeted exercises drawn from exactly what the student has learned.
+
+Reading, writing, listening, grammar, sentence production, vocabulary, morphology, etc.
+
+Review
+Your HebLearn/SRS system.
+
+The student doesn't just “finish Lesson 3.2.” Their vocabulary and concepts remain alive afterward and come back when they need reinforcement.
+
+Use
+Actual Hebrew production.
+
+Pronunciation, speaking, dialogue, roleplay, listening, open sentence creation and eventually an AI Hebrew conversation partner that knows precisely what this student has learned.
+
+Those four things should continuously feed one another.
+
+2. Your current system is already farther along conceptually than I expected
+I found and inspected your Ultimate Vocabulary Masterfile.
+
+It isn't merely:
+
+Hebrew | English | Lesson
+
+It already contains fields like:
+
+Lesson / Type / Hebrew / English / Notes / Gender / Plural / Root / Pattern / Feminine / plural feminine / audio / plural audio / feminine audio / infinitive / person conjugations...
+
+That is extremely valuable.
+
+It means we can turn your existing data into a genuine Hebrew knowledge graph rather than starting again.
+
+I also found your previous SRS specification. You had already designed much of this:
+
+dynamic note types
+arbitrary fields
+multiple card types per note
+production / recognition / listening cards
+lesson tags
+vocabulary tables automatically populated by lesson
+add one word or whole vocabulary sets to learning
+learning queues
+review queues
+quick timed review
+suspend/unsuspend
+review streak
+daily limits
+customizable card templates
+FSRS
+audio
+card-specific review states
+So I would classify these as parity requirements for Hebleo 2, not wishlist features.
+
+3. The most important architectural decision
+Google Sheets should stop being the actual source of truth.
+I would still let you edit/import/export using Google Sheets, because you're comfortable with it.
+
+But underneath it should sit a proper cloud database.
+
+Something like:
+
+Supabase/PostgreSQL → canonical Hebleo database
+
+Supabase currently provides a full Postgres database plus authentication, storage, realtime functionality and managed backups; paid tiers have daily backups and optional point-in-time recovery. 
+
+Then:
+
+                  HEBLEO CLOUD
+                       │
+             ┌─────────┴─────────┐
+             │ Canonical database│
+             │ + media + accounts│
+             └─────────┬─────────┘
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+     WEB APP         iOS APP       ANDROID APP
+        │              │              │
+        └──────────────┼──────────────┘
+                       │
+                  same learner
+                  same progress
+                  same content
+                  same SRS
+Google Sheets becomes:
+
+Admin convenience / import / export
+             ↕
+       canonical database
+rather than:
+
+Google Sheet → 14 different systems trying to stay synchronized
+4. The canonical content model
+This is one of the things I want us to design particularly carefully before Codex touches the project.
+
+Course structure
+Course
+ └── Chapter
+      └── Lesson
+           └── Lesson blocks
+A lesson should be composed of reusable blocks rather than being one blob of WordPress HTML.
+
+Possible blocks:
+
+video
+rich text
+heading
+explanation
+Hebrew example
+bilingual example
+image
+diagram
+callout
+vocabulary list
+vocabulary table
+audio
+interactive exercise
+quiz
+pronunciation drill
+conversation
+downloadable resource
+recap
+checkpoint
+That allows the same lesson to render beautifully on desktop, phone and tablet.
+
+5. Vocabulary needs to become a first-class object
+This is crucial.
+
+A Hebrew item shouldn't simply be "כּוֹתֵב" = "writes".
+
+It could know:
+
+Lexeme
+Hebrew
+English sense(s)
+part of speech
+gender
+root
+pattern
+niqqud
+unpointed spelling
+plural
+feminine
+plural feminine
+infinitive
+conjugations
+notes
+native audio
+plural audio
+feminine audio
+first introduced
+lessons used in
+grammar concepts
+frequency
+tags
+Your spreadsheet is already close to this.
+
+And because Chapter 5 explicitly builds the course around relationships between root, pattern and semantic field, this data can become pedagogically useful rather than mere metadata. 
+
+Imagine tapping:
+
+מַחְשֵׁב
+
+and seeing:
+
+Computer
+Root: ח־ש־ב → thinking
+Pattern: מַקְטֵל → tools
+
+You already know: חושב, מחשבה...
+
+That would make the application itself teach the Hebleo method.
+
+6. The lesson experience
+I don't want:
+
+video → Next → video → Next → quiz
+
+Instead:
+
+Lesson 5.1 — Roots & Patterns
+Video
+
+Watch Guy explain the system.
+
+↓
+
+Interactive explanation
+
+Tap the root letters in words to highlight them.
+
+↓
+
+Prediction exercise
+
+ח־ש־ב = thinking
+מַקְטֵל = tool
+
+What might מַחְשֵׁב mean?
+
+↓
+
+Reveal
+
+Computer.
+
+↓
+
+Try another
+
+זרק + מַקְטֵל → ?
+
+↓
+
+Vocabulary
+
+Relevant words appear with native audio.
+
+↓
+
+Mini practice
+
+Recognition / production / root identification.
+
+↓
+
+Lesson complete
+
+Words and concepts enter Review.
+
+That is dramatically more powerful than simply reproducing a LearnDash page.
+
+7. Exercise engine
+This should be schema-based, not one custom-coded feature for every exercise.
+
+An admin chooses:
+
+Exercise type: Audio → Hebrew typing
+
+and supplies content.
+
+The renderer knows how to present it.
+
+That lets us keep adding exercise types indefinitely.
+
+Initial exercise library
+I would support at least:
+
+multiple choice
+multiple select
+Hebrew → English
+English → Hebrew
+typed Hebrew answer
+typed English answer
+audio → Hebrew
+audio → English meaning
+dictation
+matching
+word ordering
+sentence ordering
+fill-in-the-blank
+dropdown cloze
+identify root
+identify pattern
+root + pattern prediction
+noun gender
+choose conjugation
+produce conjugation
+transform sentence
+add/remove niqqud
+listen and distinguish sounds
+minimal pairs
+record yourself
+repeat sentence
+translate aloud
+answer aloud
+open sentence creation
+And importantly:
+
+the same vocabulary item can automatically generate several kinds of practice.
+
+Babbel currently does something similar at the review level, allowing flashcard, writing, speaking and listening practice over learned vocabulary. 
+
+8. HebLearn becomes a major part of the app
+I would preserve the SRS concept you already designed but integrate it much more deeply.
+
+There should be a persistent Review area.
+
+Something like:
+
+Today
+
+16 vocabulary reviews
+4 grammar concepts
+3 pronunciation items
+2 mistakes to retry
+
+Start Review — ~8 min
+
+And users can drill down:
+
+vocabulary
+listening
+production
+recognition
+weak words
+pronunciation
+grammar
+mistakes
+custom collection
+lesson-specific vocabulary
+FSRS should be the underlying scheduling system.
+
+The important improvement over your old design is that review isn't limited to flashcards.
+
+An item can be reviewed through multiple manifestations.
+
+For example, בית could come back as:
+
+Hear בית → choose meaning.
+House → type בית.
+Hear בית → type בית.
+Say בית.
+Use בית in a sentence.
+One knowledge object, many exercise forms.
+
+9. A concept mastery system
+This is one of the biggest features I'd add.
+
+Separate from lesson completion, we maintain:
+
+Knowledge concepts
+Examples:
+
+Mem
+final letters
+/a/ niqqud
+definite article
+masculine/feminine
+object pronoun: אותי
+direct object marker את
+root identification
+מִקְטָל pattern
+participle
+infinitive
+Each learner gradually develops a mastery estimate for each.
+
+Then Hebleo can know:
+
+Guy repeatedly misses definite direct objects but knows object pronouns well.
+
+So tomorrow's practice can include more את, rather than merely saying:
+
+Repeat Lesson 3.
+
+This is the basis for genuinely adaptive learning.
+
+Duolingo publicly describes its personalized practice similarly—tracking learner performance and targeting vocabulary, grammar and skills that need additional work. 
+
+10. Mistake Bank
+Every significant mistake should be remembered.
+
+Not necessarily forever, but long enough to learn from it.
+
+There should be:
+
+Practice → My Mistakes
+
+And Hebleo can periodically say:
+
+Let's fix three things you've struggled with recently.
+
+A mistake should know:
+
+what was asked
+answer given
+correct answer
+relevant vocabulary
+grammar concept
+date
+number of repeated mistakes
+whether the misconception appears resolved
+This also powers personalization.
+
+11. Speaking and pronunciation
+I'd actually split these into two different systems.
+
+A. Speech recognition
+“Did the learner say the intended Hebrew sentence?”
+
+Useful for:
+
+answering questions orally
+sentence production
+dialogues
+translation aloud
+B. Pronunciation evaluation
+“How well did they pronounce it?”
+
+Useful for:
+
+ר
+ח/כ
+stress
+vowels
+consonant distinctions
+whole words
+phrases
+Babbel currently embeds microphone-based pronunciation feedback directly into lesson exercises across app and web. 
+
+For Hebleo we can go further because we know exactly which sounds have been taught.
+
+For example:
+
+Good overall.
+
+Your ר was correct.
+Your final ך sounded too much like /k/.
+Listen again.
+
+And importantly, your existing human-recorded audio remains the canonical model rather than replacing it with TTS.
+
+12. The Hebrew keyboard trainer
+This deserves its own feature.
+
+Your course already gradually introduces Hebrew typing.
+
+We can make that much better.
+
+For early exercises:
+
+Need the letter ש?
+
+Highlight it on an onscreen keyboard.
+
+Later:
+
+no help.
+
+Eventually:
+
+native device keyboard only.
+
+We can track typing familiarity separately from vocabulary knowledge.
+
+13. Niqqud fading
+Another feature uniquely suited to Hebleo.
+
+The application should know whether a learner is ready for:
+
+Fully pointed
+
+מַתָּנָה
+
+then partially pointed
+
+מתָּנה
+
+then normal Modern Hebrew
+
+מתנה
+
+We could even make the transition adaptive.
+
+Instead of simply saying:
+
+“From Lesson X onward, no niqqud.”
+
+Hebleo could progressively remove it from words the learner demonstrably knows.
+
+That feels much more aligned with your methodology.
+
+14. AI tutor — but constrained by Hebleo
+This could eventually be one of the strongest parts of the product.
+
+I would not put a generic chatbot inside Hebleo.
+
+Instead:
+
+“Practice with Hebleo”
+The AI gets:
+
+learner's completed lessons
+vocabulary learned
+concepts learned
+mastery
+common mistakes
+current target lesson
+Then it is instructed:
+
+Have a conversation using mostly material the learner already knows. Introduce at most one unfamiliar construction. Never assume grammar they haven't learned.
+
+Example:
+
+Lesson 2 learner
+
+?איפה אתה
+
+Learner responds.
+
+Tutor continues with material they've encountered.
+
+For a more advanced learner:
+
+You're checking into a hotel in Tel Aviv.
+Ask whether breakfast is included.
+
+Duolingo and Busuu have both moved toward curriculum-aware AI conversation practice rather than treating chat as an isolated novelty. Duolingo's Roleplay and Video Call are explicitly structured around scenarios and learner level, while Busuu now combines AI conversation and pronunciation features with its course. 
+
+15. “Explain my mistake”
+This one is almost inevitable.
+
+Whenever an answer is wrong:
+
+Why?
+
+And Hebleo can explain it using your curriculum.
+
+Not:
+
+Generic LLM answer about Hebrew.
+
+But:
+
+Remember Lesson 3.4: את is used before a definite direct object.
+
+Then perhaps:
+
+Review this concept
+
+or
+
+Give me another example
+
+That keeps AI subordinate to the curriculum.
+
+16. Smart “What should I do now?”
+The home screen shouldn't dump a course menu on learners.
+
+It should say:
+
+Good afternoon, Sarah
+Continue learning
+
+Lesson 3.2 — Object Pronouns
+12 min
+
+Review
+
+14 items due
+~5 min
+
+Practice
+
+Your weakest skill: listening
+
+Optional
+
+5-minute Hebrew conversation
+
+One obvious action.
+
+Busuu now does something similar with its “Next Up” feature, recommending what to work on based on recent progress and errors. 
+
+17. Study plans
+During onboarding:
+
+Why Hebrew?
+
+Moving to Israel
+Family
+Jewish culture/religion
+Travel
+Work
+Academic interest
+Other
+Then:
+
+How much time do you want to study?
+
+5 / 10 / 15 / 20 / 30 min per day.
+
+Hebleo can calculate something like:
+
+At this pace, you'll finish Hebrew Foundations around March.
+
+Busuu's current study plans combine learning goal, target level, chosen days, daily study time, reminders and an estimated completion date. 
+
+This is a very good model to borrow.
+
+18. Streaks — yes, but don't let them corrupt the product
+Absolutely:
+
+current streak
+longest streak
+daily goal
+weekly goal
+optional reminders
+streak freeze
+achievements
+XP
+Duolingo's streak is explicitly based on completing learning activity on consecutive days and pairs with practice reminders. 
+
+But Hebleo should reward actual meaningful practice.
+
+Not:
+
+Tap something easy for 25 seconds → streak preserved.
+
+For example:
+
+A Hebleo day counts when the learner completes either:
+
+meaningful lesson progress
+review session
+practice session
+conversation session
+19. Leaderboards
+I'd support them, but make them optional.
+
+Possible rankings:
+
+Friends
+Much more motivating than competing against 30 random people.
+
+Weekly cohort
+Hebrew Foundations students
+And score meaningful learning activity, not mere raw clicks.
+
+Possibly:
+
+XP for lesson completion
+XP for due reviews
+XP for speaking
+small XP for ordinary practice
+No infinite farming.
+
+20. Achievements
+Some can be standard:
+
+7-day streak
+30 days
+100 reviews
+500 learned words
+But Hebleo can have meaningful language achievements:
+
+No Training Wheels
+Read 100 words without niqqud.
+
+Pattern Spotter
+Correctly identify 50 Hebrew patterns.
+
+Rooted
+Identify 100 roots.
+
+First Conversation
+Complete a 5-minute Hebrew conversation.
+
+These reinforce the actual teaching philosophy.
+
+21. Native-speaker audio/video
+Memrise currently builds much of its differentiation around authentic native-speaker video rather than synthetic speech. 
+
+Hebleo already has a major advantage here because you've got 2,000+ native recordings.
+
+I'd make audio ubiquitous:
+
+Tap virtually any Hebrew word → hear it.
+
+Possibly:
+
+normal speed / slow
+
+where slow playback is audio processing, not a different voice.
+
+22. Offline mode
+Essential for the mobile app.
+
+Learner taps:
+
+Download Chapter 2
+
+The app caches:
+
+lesson content
+video if permitted by the video platform
+native audio
+exercises
+vocabulary
+Progress and review history sync when online again.
+
+Busuu currently offers chapter downloads/offline learning with later synchronization, so this is now a fairly normal premium language-app expectation. 
+
+23. Mobile notifications
+Useful notifications, not spam.
+
+Examples:
+
+12 words are ready for review.
+
+You're 8 minutes away from this week's goal.
+
+Ready for Lesson 2.4?
+
+You haven't practiced speaking this week.
+
+Learner controls categories and time.
+
+24. Search / dictionary
+This could become surprisingly powerful.
+
+Search:
+
+מחשב
+
+Result:
+
+מַחְשֵׁב — computer
+
+Audio
+
+Root: ח־ש־ב
+
+Pattern: מַקְטֵל
+
+Forms
+
+Where learned:
+
+Chapter 5 — Roots & Patterns
+
+Example sentences
+
+Add to Review
+
+Eventually this becomes a personal Hebrew dictionary tied to what they've learned.
+
+25. Learner notebook
+Allow:
+
+Bookmark
+
+Add note
+
+Save example
+
+Then:
+
+My Hebrew
+
+contains:
+
+saved words
+saved sentences
+notes
+difficult vocabulary
+custom collections
+Very cheap technically, disproportionately useful.
+
+26. Analytics for you
+The admin side should be dramatically better than LearnDash.
+
+You should know:
+
+Funnel
+Purchase
+→ account activated
+→ first lesson
+→ first exercise
+→ first review
+→ day 2
+→ day 7
+→ chapter complete
+
+Course analytics
+For each lesson:
+
+starts
+completions
+average duration
+dropout
+exercise accuracy
+repeat rate
+Question analytics
+61% of learners get this question wrong.
+
+That's potentially a content problem, not a student problem.
+
+Language analytics
+Students consistently struggle with:
+
+direct object marker
+plural nouns
+listening recognition of ח
+
+That becomes data for improving the course.
+
+27. Admin/content studio
+This is one feature I would take extremely seriously.
+
+You should not have to ask Codex to alter the database every time you create a lesson.
+
+You need your own:
+
+Hebleo Studio
+Navigation:
+
+Courses
+
+Lessons
+
+Vocabulary
+
+Grammar concepts
+
+Exercises
+
+Audio
+
+Videos
+
+SRS
+
+Users
+
+Analytics
+
+Inside a lesson:
+
++ Add block
+
+Video
+Text
+Example
+Vocabulary
+Exercise
+Quiz
+Pronunciation
+Audio
+Image
+Download
+Conversation
+Drag to reorder.
+
+Preview:
+
+Desktop | Mobile
+
+Then:
+
+Save draft
+
+Publish
+
+28. Revision history is mandatory
+If you accidentally change:
+
+מַחְשֵׁב
+
+to the wrong form and publish it to 2,000 users, I want:
+
+Restore version from September 30.
+
+So canonical content should have:
+
+draft
+published
+revision history
+editor
+timestamp
+rollback
+And scheduled database backups on top of that.
+
+29. Web + app architecture
+I would probably start from this architecture:
+
+hebleo.com
+WordPress
+│
+├── Marketing
+├── Blog
+├── Sales pages
+├── WooCommerce / PayPlus
+└── Account entry
+        │
+        ▼
+learn.hebleo.com
+Hebleo learner application
+        │
+        ├── Web
+        ├── iOS
+        └── Android
+                │
+                ▼
+        Hebleo backend/API
+                │
+      ┌─────────┼─────────┐
+      │         │         │
+ Postgres    Storage    Analytics
+      │
+ Course/content/progress/SRS
+I would not make WordPress the new LMS.
+
+And I would not deeply embed the application into Elementor.
+
+It should feel like the same site, but technologically the learner application should be independent.
+
+30. Existing WordPress purchases can survive
+This is important because it means we don't have to rebuild your business infrastructure on day one.
+
+WooCommerce supports signed webhooks for things like order/customer changes. 
+
+So:
+
+Student buys Hebrew Foundations
+        ↓
+WooCommerce
+        ↓ webhook
+Hebleo backend
+        ↓
+Grant Hebrew Foundations entitlement
+Refund:
+
+WooCommerce refund
+        ↓
+Hebleo backend
+        ↓
+Remove/modify entitlement
+The new application doesn't need to care whether the payment came from PayPlus, Stripe or something else.
+
+It only asks:
+
+Does user X have entitlement Y?
+
+That separation is excellent architecture.
+
+31. One account everywhere
+A user must never feel like they have:
+
+WordPress account
+app account
+SRS account
+community account
+One identity.
+
+One login.
+
+One learner ID.
+
+WordPress's REST API supports external application authentication mechanisms, and WooCommerce gives us the event infrastructure to bridge the existing site with the new backend. 
+
+We'll choose the exact SSO mechanism when we inventory your existing login/account setup.
+
+32. The client technology
+My starting recommendation would be:
+
+Learner application
+React Native + Expo
+
+for:
+
+Android
+iOS
+web
+Expo explicitly supports building a single JavaScript/TypeScript project across iOS, Android and web. 
+
+Backend
+Supabase / Postgres
+
+Admin studio
+Probably a dedicated React/Next-style web admin.
+
+WordPress
+Marketing + commerce + existing website integration.
+
+That gives Codex a modern TypeScript-heavy system that is particularly amenable to AI-assisted development.
+
+This isn't a final stack decision yet, but it is the architecture I'd design around unless our audit uncovers a reason not to.
+
+33. What I would not build
+This matters just as much.
+
+I would not:
+
+make Google Sheets the production database
+store course structure as WordPress post IDs
+turn all lesson content into giant HTML fields
+let an LLM invent canonical Hebrew answers on demand
+replace your human audio with TTS
+hard-code every exercise screen separately
+force gamification onto students who dislike it
+make points more important than mastery
+rebuild your checkout infrastructure before the learning product works
+migrate students until feature parity has been tested
+let a “vibe-coded” database evolve with no migrations, tests or backups
+The code can be vibe-coded.
+
+The architecture cannot be vibe-architected.
+
+34. So what is “Hebleo 2.0”?
+I'd currently define it as ten systems:
+
+Curriculum engine
+Videos + text + interactive lessons.
+
+Hebrew knowledge database
+Vocabulary, roots, patterns, forms, grammar and audio.
+
+Exercise engine
+Reusable interactive question types.
+
+Mastery engine
+Understand what each learner actually knows.
+
+HebLearn review engine
+FSRS + vocabulary + listening + production + mistakes.
+
+Speaking engine
+Speech recognition + pronunciation feedback.
+
+AI practice engine
+Explanations, conversations and adaptive practice grounded in Hebleo.
+
+Motivation layer
+Study plans, goals, streaks, achievements, optional leaderboards.
+
+Learner platform
+Web + iOS + Android + offline.
+
+Hebleo Studio
+Content management, users, analytics and publishing.
+
+35. Development sequence
+I would not give Codex “build all of Hebleo” as one giant prompt.
+
+We should create a master specification and then build it in controlled stages.
+
+Phase 0 — Audit and schema
+Inventory everything currently on Hebleo:
+
+WordPress
+LearnDash
+lessons/topics
+videos
+lesson HTML/text
+vocabulary
+native audio
+PDFs
+quizzes
+exercises
+SRS
+users
+purchases
+access rules
+progress
+existing plugins/customizations
+Then design the canonical data schema.
+
+No new app UI yet.
+
+Phase 1 — Data layer + Studio
+Build:
+
+database
+content model
+vocabulary
+media references
+importer for your spreadsheet
+importer for existing lessons
+admin editor
+revisioning
+backups
+Phase 2 — LearnDash parity
+Web learner:
+
+login
+entitlement
+course navigation
+lesson player
+videos
+text
+vocab
+audio
+exercises
+quizzes
+progress
+responsive UI
+At this point, you could replace LearnDash.
+
+Phase 3 — HebLearn
+Bring over and improve:
+
+SRS
+learning queue
+review
+quick review
+cards
+lesson vocabulary
+custom practice
+mistake bank
+Phase 4 — Mobile
+Ship:
+
+iOS
+Android
+push notifications
+offline mode
+recording
+synchronization
+Phase 5 — Intelligent learning
+concept mastery
+adaptive practice
+personalized Next Up
+study plans
+niqqud fading
+keyboard assistance
+Phase 6 — Speaking
+speech recognition
+pronunciation scoring
+listening
+speaking drills
+Phase 7 — AI Hebleo
+Explain My Answer
+grammar tutor
+roleplay
+free conversation
+personalized conversation
+AI-generated practice constrained by the Hebleo knowledge base
+Phase 8 — Engagement/social
+achievements
+XP
+streaks
+quests
+optional leaderboards
+friends
+challenges
+perhaps community correction later
+36. The key product principle
+There is a pattern across the strongest current language products:
+
+structured course → active recall → personalized review → speaking/listening → habit formation.
+
+Duolingo adds motivation, adaptive practice and AI conversation. 
+
+Busuu adds study planning, weak-area review, offline learning, pronunciation and community correction. 
+
+Babbel tightly integrates SRS with writing, listening and speaking practice. 
+
+Memrise emphasizes authentic native speech, review and AI practice. 
+
+We can take the strongest product mechanics from all of those without turning Hebleo into a clone.
+
+The central screen isn't:
+
+“Learn Hebrew through a game.”
+
+It's:
+
+“Hebrew makes sense here.”
+
+And everything—the data model, interactive lessons, review, adaptive practice and AI tutor—should reinforce that.
+
+What I think we should do next
+The next step should be unusually concrete: build the Hebleo 2.0 feature inventory and data architecture before writing the Codex brief.
+
+I already found your canonical vocabulary spreadsheet and old SRS specification. On the next pass, we can systematically inspect the current WordPress/LearnDash course, your existing exercise types, lesson pages, videos, PDFs, vocabulary system and plugins, and classify every function into:
+
+KEEP AS-IS / REBUILD BETTER / REPLACE / NEW
+
+Then we'll have a complete Hebleo 2.0 Product Specification, followed by the technical architecture/schema, and only after those are solid will we turn it into the implementation brief for Codex.
+
+Me:
+Okay, so generally, I like where you took it. I agree with most of what you said. I want to make some clarifications, some points of emphasis, and so on. First of all, the advantage of Hiblio is that it's fundamentally man-made. So other apps might have AI do everything. Those are going to end up being low quality. Hiblio is different. Hiblio has native audio, has native explanation videos, and so on and so forth. The issue is that right now the explanation videos, and in general each lesson, is quite long. And what I would need is, in parallel to designing this app, I'm going to need help, and it might not be this chat in particular, but I'm going to need help in reorganizing and splicing and cutting lessons so that you have a video lesson, a short video lesson, that goes into vocabulary, an exercise implementing the vocabulary with whatever the lesson taught, be it letters, and so on. By the way, I really like the keyboard idea, basically you have the keyboard with the relevant letters highlighted based on the lesson. And yeah, that's one thing. The reason I like Google Sheets as a source of truth, at least for vocabulary, is that unlike databases, it allows very easy cell formatting that can then be preserved for the vocabulary sections of the app. Also, in general, what I would recommend to people, because sometimes when you have apps that are too rich, this happened to me when I was studying Japanese with J-A Sensei. So they have so many features that you absolutely just don't know what to do. And so it's going to be rich, but it's going to be very structured. So you have a course that you use along with the reviews, and after you're done, you have several different kinds of ways to use what you learned, and it can be Yenshuf-style, or meaning Yenshuf meaning HebrewToday.com, but newsletters in their style that are level-appropriate, AI tutors, other kinds of level-appropriate content that you can consume. But I'd like it to be very clear what you should do at each moment in time, and nevertheless that this app will take you into as close to fluency as possible. Now, not every lesson that I have has a video right now, but eventually I'd like each lesson to have at least the option of video. So each lesson is going to have either a text option where it teaches you the topic that it teaches, or a video, and you can choose which one you want.
+
+ChatGPT:
+Yes. These clarifications change the concept in a useful way. I think the product now has a much clearer identity:
+Hebleo is a human-authored Hebrew course with software intelligence wrapped around it—not an AI-generated language app.
+
+The technology should make your teaching more effective, more interactive, more personalized and easier to use. It should not become the teacher.
+1. Human-made should be an explicit product principle
+I'd distinguish between canonical content and adaptive machinery.
+Canonical Hebleo content should remain human-made:
+- explanation videos
+- written explanations
+- vocabulary definitions and notes
+- native-speaker audio
+- canonical example sentences
+- curriculum order
+- grammar explanations
+- important exercises
+- judgments about what students should learn and when
+AI can then operate around that material:
+- create a conversation constrained to known vocabulary
+- give additional practice
+- explain a student's mistake by referencing the Hebleo explanation
+- generate level-appropriate questions
+- simulate scenarios
+- adapt difficulty
+- recommend what to review
+- potentially generate extra reading material
+But it shouldn't quietly become the source of linguistic truth.
+That distinction should actually exist technically. We should be able to mark content as something like:
+Hebleo-authored / Hebleo-approved / dynamically generated
+so the system always knows what is canonical.
+2. The course remains the spine
+This is probably the most important correction to my previous framing.
+I don't want the home screen eventually becoming:
+Lessons
+Flashcards
+Games
+AI
+Stories
+Grammar
+Dictionary
+Challenges
+Listening
+News
+Leaderboard
+Pronunciation
+Writing...
+
+That's exactly the J-A Sensei problem you described.
+Instead, Hebleo should always answer:
+What should I do now?
+
+For an active course student, I imagine the home screen primarily saying:
+Continue
+Lesson 3.2 — Object Pronouns II
+~12 minutes
+Review
+8 items due
+~4 minutes
+And perhaps beneath that:
+Optional practice
+Everything else is available, but visually subordinate.
+So there are really two categories:
+The Path — what Hebleo recommends you do.
+The Library — everything you can do.
+That distinction solves an enormous amount of interface complexity.
+3. I would make the recommended path extremely opinionated
+Something like:
+LEARN
+↓
+REVIEW
+↓
+LEARN
+↓
+REVIEW
+↓
+CHAPTER PRACTICE
+↓
+LEARN
+...
+
+Within an individual lesson:
+Short explanation
+        ↓
+Relevant vocabulary
+        ↓
+Guided exercise using both
+        ↓
+More challenging application
+        ↓
+Review items added
+        ↓
+Next lesson
+
+So the technology doesn't destroy the carefully sequenced nature of your curriculum.
+It reinforces it.
+4. And yes: the current lessons should be re-cut
+I think this should be a parallel workstream, not something we postpone until after the software exists.
+Right now your material was designed around something closer to:
+Watch a substantial lesson → understand topic → do exercises.
+
+The new product benefits from:
+concept → interaction → concept → interaction → consolidation.
+
+So rather than merely chopping the current videos arbitrarily into five-minute pieces, we'd examine their pedagogical structure.
+For example, a hypothetical current 25-minute lesson might become:
+3.2 Object Pronouns II
+3.2A — What we're adding
+Short video/text explanation.
+↓  
+New vocabulary
+with native audio.
+↓  
+Mini practice
+Recognize the new forms.
+↓  
+3.2B — How the pattern works
+Short video/text explanation.
+↓  
+Guided exercise
+Complete forms.
+↓  
+3.2C — Use them in sentences
+Short explanation/examples.
+↓  
+Application
+Reading / listening / production.
+↓  
+Lesson challenge
+That is very different from just putting pauses into the existing video.
+And yes, I can see this becoming a separate substantial project where we go through the source lessons, presentations and transcripts and construct a new micro-lesson curriculum.
+5. The vocabulary should sit inside learning rather than after it
+This is another thing I think your clarification gets right.
+Instead of:
+lesson video
+lesson video
+lesson video
+vocabulary page
+quiz
+
+we might have:
+Here's א / ה / י.
+
+Then immediately:
+Here are four useful words you can now read.
+
+Then:
+Read them.
+
+Then:
+Hear one. Which one did you hear?
+
+Then:
+Type it.
+
+And the keyboard highlights only the letters you're expected to know.
+That's excellent because the app can enforce one of Hebleo's strongest pedagogical principles:
+Students repeatedly get to use what they've just learned.
+6. The keyboard can become genuinely intelligent
+I like this more the more I think about it.
+It should have stages.
+Very early
+Only taught letters prominently visible.
+New/relevant letters highlighted.
+Perhaps untaught letters muted.
+Intermediate
+Full Hebrew keyboard, but relevant letters subtly highlighted.
+Later
+Normal keyboard.
+Eventually
+Use the device's Hebrew keyboard.
+And the assistance can adapt by exercise.
+If the learner is practicing the letter צ, highlighting צ is pedagogically useful.
+If they're being tested on whether they remember where צ is, highlighting it defeats the exercise.
+So the exercise definition can specify:
+keyboard_assistance: full | lesson_letters | subtle | none
+That's exactly the kind of thing an ordinary LMS could never do elegantly.
+7. Text and video should be parallel ways through the same lesson
+I strongly agree with this.
+I would not make:
+Video lesson
+and
+Text lesson
+two separate pieces of curriculum.
+Instead:
+Lesson 4.2
+Learn this as:
+▶ Video | Aa Read
+Both teach the same concept and lead into the same vocabulary and exercises.
+A learner could even switch halfway through.
+Progress is on the lesson, not the medium.
+And over time, the goal should indeed be that every substantive explanation has both versions.
+That gives:
+- people who learn better by watching
+- people who learn better by reading
+- people in public without headphones
+- people reviewing a concept they already saw
+- accessibility benefits
+a much better experience.
+8. It also means the lesson data model changes slightly
+Rather than:
+Lesson
+  video
+  text
+  quiz
+
+I'd think in terms of:
+Lesson
+  Concept 1
+    human-written text explanation
+    human-recorded video explanation
+  Vocabulary set
+  Exercise sequence
+
+  Concept 2
+    human-written text explanation
+    human-recorded video explanation
+  Exercise sequence
+
+  Final application
+
+This becomes important when we re-edit the existing course.
+One old LearnDash “lesson” may become several new lesson units.
+9. I think you're right about Google Sheets
+I'd revise my earlier recommendation.
+There are actually two meanings of “source of truth” that I conflated:
+Editorial source of truth
+Where you author and control the information.
+Runtime database
+What the application queries efficiently.
+Those don't have to be the same thing.
+For vocabulary, I think Google Sheets can remain the editorial source of truth.
+And there is a technical reason this can work well: the Sheets API exposes not just cell values but cell formatting, including rich-text runs within a cell, as well as cell-level formatting. Google for Developers
+So we can potentially preserve things like:
+- bold
+- italics
+- text color
+- possibly differentiated runs within a cell
+- cell background
+- alignment
+- etc.
+The application database would then contain a published representation of the Sheet.
+So:
+ULTIMATE VOCABULARY MASTERFILE
+          ↓
+       Publish
+          ↓
+ Validation + transformation
+          ↓
+ Hebleo production database
+          ↓
+ Web / iOS / Android
+
+The key rule is:
+We don't edit vocabulary independently in both places.
+
+Otherwise they diverge.
+For vocabulary:
+Sheet = canonical authoring source
+Database = deployed runtime copy
+That makes much more sense for your workflow.
+10. And “Publish” should be deliberate
+I don't think changing cell C428 should immediately alter every student's app.
+Better:
+You edit normally in Google Sheets.
+Then Hebleo Studio shows:
+17 vocabulary changes detected
+3 new items
+9 changed
+5 removed
+
+And perhaps warnings:
+⚠ Word 738 has no English definition.
+⚠ Word 810 refers to Lesson 7.3, which doesn't exist.
+⚠ Audio file missing.
+
+Then:
+Publish vocabulary update
+The system creates a version and pushes it live.
+That gives you both spreadsheet convenience and database reliability.
+11. Formatting should be semantic where possible
+There's one refinement I'd make.
+We can preserve arbitrary formatting from Sheets, but I don't want the UI fundamentally depending on:
+Guy happened to make this cell #F8C9D4.
+
+Some formatting is presentation.
+Some formatting actually carries meaning.
+If, for instance:
+- red means irregular
+- grey means optional
+- yellow means something the student hasn't learned
+- bold marks a root
+then we should eventually encode that semantic meaning explicitly.
+So the importer can translate:
+formatted cell
+
+into something like:
+text:
+  "יֶיְנוֹת"
+
+segments:
+  - text: ...
+    bold: true
+    semantic_role: "..."
+
+This makes it possible to redesign the app in five years without losing the pedagogical meaning contained in today's spreadsheet formatting.
+But you should still be able to author it visually in Sheets.
+12. The post-course experience should be a runway toward fluency
+This clarification is also important.
+I wouldn't conceive of Hebleo as:
+Course → congratulations → go find something else.
+
+I think it needs two phases.
+Phase I — Guided acquisition
+Hebleo tells you very explicitly what to do.
+Lessons + vocabulary + review + application.
+Phase II — Guided immersion
+As the structured curriculum gets more advanced, Hebleo increasingly becomes:
+Use Hebrew, with scaffolding.
+
+And eventually:
+Consume Hebrew, with help only when needed.
+
+That is where your Yanshuf idea comes in.
+13. I really like the Yanshuf-style content idea
+We could have a section like:
+Read
+Your level
+Israeli election reforms — Level 4
+5 min
+
+or:
+Archaeologists discover ancient inscription — Level 3
+4 min
+
+But unlike an ordinary graded reader, Hebleo knows what that particular student has learned.
+So words could visually behave differently:
+Known word
+normal.
+Learned but weak word
+tap for reminder.
+Not yet learned but inferable word
+perhaps subtle assistance.
+New word
+definition available.
+And we could show:
+You know 92% of the vocabulary in this article.
+
+That creates a very smooth bridge from course Hebrew to real Hebrew.
+14. Eventually the app should shift from “teach me” to “feed me Hebrew”
+This might actually be the long-term product vision.
+Early learner:
+Here's what you need to learn today.
+
+Intermediate learner:
+Here's what you should learn and practice today.
+
+Advanced learner:
+Here are things in Hebrew worth reading, watching, discussing and listening to at your level.
+
+So the platform changes with the learner.
+The destination isn't:
+Completed all 120 lessons.
+
+It's:
+I now live part of my life in Hebrew.
+
+That is a much more ambitious—and much better—definition of “finished.”
+15. There can therefore be enormous feature richness without overwhelming the learner
+The trick is progressive disclosure.
+An early learner might literally have:
+Home
+Course
+Review
+That's almost it.
+Later perhaps:
+Home
+Learn
+Review
+Use Hebrew
+And under Use Hebrew:
+- Read
+- Listen
+- Speak
+- AI conversation
+- Stories
+- News
+- Challenges
+The functionality exists from an architectural perspective, but the interface only exposes what is useful.
+I would even consider unlocking entire feature categories gradually.
+For example:
+🔓 Hebrew reading unlocked
+
+once the learner knows enough letters.
+🔓 Conversations unlocked
+
+once they possess enough vocabulary.
+This turns complexity into progression rather than clutter.
+16. This gives us a stronger hierarchy than “all the bells and whistles”
+I'd now phrase the product hierarchy as:
+Layer 1 — The Path
+What you should do next.
+This is sacred. Always obvious.
+Layer 2 — Review
+What Hebleo thinks you should reinforce.
+Mostly automatic.
+Layer 3 — Practice
+What you want to deliberately work on.
+Listening, pronunciation, vocabulary, grammar, etc.
+Layer 4 — Immerse
+Actually use Hebrew.
+Articles, audio, conversations, AI, level-appropriate content.
+Layer 5 — Explore
+Dictionary, saved words, statistics, achievements, leaderboards, settings, etc.
+You could theoretically build fifty features without ever making the first screen confusing.
+17. And I would make this a formal rule for Codex later
+Something like:
+No new feature may compete visually with the learner's recommended next action unless it is itself part of the recommended path.
+
+That's a UX rule, but it's important enough to be an architectural/product requirement.
+Because otherwise AI coding will happily produce seventeen equally prominent dashboard cards because seventeen features exist.
+We want software that has opinions.
+18. So I would revise the Hebleo product principles to these
+1. Human teaching is canonical.
+   AI supports Hebleo; it doesn't replace Hebleo.
+2. There is always an obvious next step.
+3. The course is the spine.
+4. Review accompanies the course automatically.
+5. Every concept should quickly become something the learner uses.
+6. Video and text are equal interfaces to the same human-authored lesson.
+7. Vocabulary is structured data, not static lesson text.
+8. Google Sheets can remain the vocabulary authoring source.
+9. Complexity is progressively revealed rather than dumped on users.
+10. The course gradually transitions into guided immersion.
+11. The destination is functional Hebrew, not course completion.
+12. Human audio and human explanations remain premium assets throughout the experience.
+That feels considerably more distinctly Hebleo than my first proposal.
+And I think the next genuinely useful design exercise is now to define a canonical Hebleo lesson anatomy: exactly what units can make up a lesson, how video/text alternatives work, where vocabulary enters, where exercises enter, when SRS items are created, what completion means, and how one of your actual existing lessons would be transformed into the new format. Once that is solved, a huge amount of the rest of the application architecture falls naturally out of it.
+
+Me:
+Okay, so a few things came to mind. One, I can see. So you pay once for the highly curated aspects, and then other tools like verb drilling and some aspects of flash cards and the Anki style things, those could be, and also the AI tutor, those could all be part of a subscription service that you pay for. And those can be first curated for you and also done based on the material as you've learned it, with tooltips that remind you of grammatical structures and so on. So you have a one-time payment for the full course, and then if you want, you can add monthly payment to get other features. That's basically what I'm thinking, as well as access to me, for example. You can send messages and I get them either— it doesn't have to be Discord. It can be its own bespoke thing. But you can be part of the community as well and send me questions and so on, and that's also part of the subscription. With regards to lesson taxonomy, generally what I like doing is working with— there's a pyramid of learning that is used in pedagogy science, where the more complex the task in which you use the information, the more you remember it in lower levels. So instead of memorizing, if you use, for example, words in sentence creation, then you're actually, like, applying them creatively and therefore get the benefits as if you would have also memorized them and so on, all the different features. I hope you understand what I'm saying and you can find the concept. There's a learning YouTuber that I like that talks about it a bunch. I forget his name at the moment, though. Justin Sung, maybe? I don't know. Anyway, so I like that concept, and so what I would be interested in is you have a lesson, you have vocabulary that's attached to the lesson, and then you have an exercise that is— I like, when possible, I like, I think sentences are the best level of analysis or resolution at which to learn the language, because words are too isolated, a sentence is its own independent unit, and it isn't hard to make paragraphs then once you understand sentences. It is just sentences strung together, which doesn't mean there wouldn't be reading comprehension exercises and so on. But I think that as much as possible, sentence creation— so sentence recognition followed by sentence creation, I think is the most efficient way to learn. And I would like to lean into that now. There's also, you fear monotony. You don't want things to be too monotonous. So we can be creative about how we apply it and what exactly we do with it. But I think the anchor for exercises should be, to the extent possible, sentence creation. So let's say you have a lesson, a short concept, you have a few words that you learn with the concept, then you have something that allows you to remember the words better, and then you have the exercise. And the exercise combines the lesson with the words through sentence creation, along with information that existed, that you've learned prior, so that you keep— it's not isolated from what you've already learned, and this allows you to build a strong foundation from lesson to lesson. That's basically my idea. So usually, the way it is right now is I have a video lesson, then within the video lesson, there's a guided exercise where I show the student the question and then I explain the answer, and they see if they got it right, followed by the vocabulary sheet, followed by usually a sentence-based exercise. But depending on the lesson, it could also be a matching pairs exercise or something like that. And again, we have many different exercise types. So we can take from Duolingo, we can take from Babbel and all these different services that teach you languages. Now tell me. This is generally how I do it. Tell me what you think. If there are ways that you think it can be improved, let me know. I really want to know. So far this has worked for me, but that doesn't mean that's the best option available. But generally it would be, to summarize: lesson, bounded tests with explanations within the lesson, vocabulary, exercise to make sure you understood, and then you can move on to the next one.
+
+
+ChatGPT:
+Yes. I think your existing structure is fundamentally good, and I would evolve it rather than replace it. The main improvement I’d make is to turn sentence creation into a deliberate progression instead of simply one exercise that comes after the lesson.
+First: the concept you're thinking of
+You are almost certainly thinking of Bloom's revised taxonomy, and Justin Sung does talk about it extensively:
+Remember → Understand → Apply → Analyze → Evaluate → Create. Center for Teaching Innovation
+There's an important distinction, though. The popular “learning pyramid” claiming things like “reading = 10% retention, doing = 75%, teaching = 90%” is not supported by credible evidence. ERIC
+But the useful idea you're taking from it is much more defensible: don't spend most of the learner's effort on passive exposure or rote memorization when you can have them retrieve, manipulate, and generate with the knowledge. Retrieval practice robustly improves memory, especially with feedback, and L2 research gives good reason to include “pushed output” when the goal is productive language ability. Annual Reviews
+So I agree with your principle, with one modification:
+Sentence production should be the default destination of an exercise sequence, but it shouldn't necessarily be the first exercise.
+
+That's important.
+Your current lesson structure is good
+Right now you essentially have:
+Explanation → guided questions/explanations → vocabulary → application exercise → next lesson
+I would preserve that skeleton.
+What I'd change is the granularity and the progression.
+I think the canonical Hebleo lesson should become:
+1. Reactivate
+Very short retrieval from previous material.
+2. Teach
+One bounded concept, through video OR text.
+3. Check
+A few questions embedded immediately after the explanation.
+4. Equip
+Introduce the small vocabulary set necessary to actually use the concept.
+5. Activate
+Get those words retrievable enough to use.
+6. Build sentences
+Use the new concept + new vocabulary + old material.
+7. Transfer
+Use the same knowledge in a slightly different situation.
+8. Add to review
+The relevant vocabulary/concepts enter the long-term review system.
+9. Continue
+Next lesson.
+That's very close to what you're already doing. But it makes the learning logic explicit, which will help us massively when we redesign every lesson.
+The thing I would emphasize most: a “sentence ladder”
+I think your instinct about sentences is particularly strong.
+Individual words are often too atomized.
+Paragraphs introduce many things at once.
+A sentence is small enough to manipulate but rich enough to contain:
+- vocabulary
+- syntax
+- morphology
+- gender
+- agreement
+- prepositions
+- word order
+- semantic meaning
+- context
+And research does support meaningful contextual exposure; sentence contexts can benefit word learning, and variation across semantic contexts can improve later recall. ScienceDirect
+But I wouldn't jump directly from:
+Here's the word מסעדה.
+
+to:
+Now invent a Hebrew sentence containing מסעדה.
+
+For a beginner that's sometimes not “higher-order learning”; it's just too large a search space.
+Instead, I'd build a ladder.
+Level 1 — Recognize
+הוא במסעדה.
+
+What does this mean?
+This confirms comprehension.
+Level 2 — Distinguish
+Hear:
+הוא במסעדה.
+
+Choose between several sentences.
+Now listening is involved.
+Level 3 — Reconstruct
+במסעדה / הוא
+
+Put the sentence in order.
+They're already producing its structure, but with support.
+Level 4 — Complete
+הוא ___.
+
+Given:
+במסעדה
+
+Now they're retrieving the word.
+Level 5 — Transform
+הוא במסעדה.
+
+Change he to she.
+Perhaps nothing changes here—which itself teaches something.
+Or later:
+הוא כותב.
+
+→ feminine.
+Level 6 — Translate / constrained production
+He is in the restaurant.
+
+Type:
+הוא במסעדה.
+
+No pieces supplied.
+Level 7 — Respond
+איפה הוא?
+
+Student produces:
+הוא במסעדה.
+
+Now the sentence has a communicative purpose.
+Level 8 — Create
+Write a sentence saying where someone is.
+
+Now genuine freer production occurs.
+That's much closer to what I think you mean by getting the benefits of higher-level processing.
+And this solves the monotony problem
+The pedagogical anchor can remain sentence production while the surface interaction changes constantly.
+We don't need twelve fundamentally different learning theories. We can have twelve ways of getting somebody to manipulate and eventually generate a sentence.
+For example:
+- arrange sentence tiles
+- translate a sentence
+- hear and reconstruct
+- answer a Hebrew question
+- describe an image
+- transform masculine → feminine
+- singular → plural
+- present → past
+- replace one noun with another
+- fix an incorrect sentence
+- select which sentence fits a situation
+- fill the missing phrase
+- choose which spoken sentence you heard
+- dictate the sentence
+- say the sentence aloud
+- complete a dialogue turn
+- combine two pieces of information into one sentence
+- create your own sentence
+So the learner doesn't think:
+Oh God, another translation exercise.
+
+Yet under the hood we're repeatedly forcing integration.
+One particularly good Hebleo exercise type: transformation
+I think this should become a signature format.
+Hebrew lends itself extraordinarily well to it.
+For example:
+הַיֶלֶד כּוֹתֵב.
+
+Make the subject feminine.
+הַיַלְדָּה כּוֹתֶבֶת.
+
+Now:
+Make it plural.
+הַיְלָדִים כּוֹתְבִים.
+
+Now:
+Replace “write” with “learn.”
+And so forth.
+A student is simultaneously exercising:
+- vocabulary
+- gender
+- number
+- noun morphology
+- verb morphology
+- sentence structure
+without having to memorize four independent tables.
+That's very Hebleo.
+The new vocabulary shouldn't be a detour from the lesson
+This is one thing I would alter from the current format.
+I don't particularly want:
+Learn grammar
+STOP
+Now learn 14 unrelated vocabulary items
+RESUME
+Grammar exercise
+
+Instead, the vocabulary attached to a lesson should ideally be selected because it gives you useful material for doing the lesson.
+So:
+New concept: ב־ “in”
+
+Vocabulary:
+בית
+מסעדה
+מקום
+ירושלים
+
+Then immediately:
+אני בבית.
+הוא במסעדה.
+היא בירושלים.
+
+The grammar makes the vocabulary useful, and the vocabulary gives the grammar something to operate on.
+That's reciprocal encoding.
+The vocabulary can still have its own beautiful table with audio, notes, roots, plurals, etc. But from the learner's perspective it isn't:
+“Now memorize the vocabulary section.”
+
+It's:
+“Here are the pieces you're about to use.”
+
+I would still keep some word-level drills
+This is where I'd slightly resist taking the sentence principle too far.
+There are cases where the sentence is simply the wrong resolution.
+If I'm trying to teach someone:
+ש = /ʃ/
+
+I don't need an elaborate sentence every time.
+Likewise:
+- letter recognition
+- phoneme discrimination
+- keyboard location
+- noun gender recognition
+- irregular plural
+- verb conjugation form
+- audio discrimination
+can benefit from tiny, fast drills.
+So I'd use this rule:
+Use the smallest unit needed to teach the subskill; integrate it into sentences as quickly as practical.
+
+Then later we move above the sentence, too:
+- dialogues
+- reading comprehension
+- stories
+- Yanshuf-style articles
+- listening passages
+- conversations
+So the eventual hierarchy becomes:
+sound/letter → word/form → sentence → discourse
+with sentence being the main integration layer.
+I also strongly like your “new material + old material” point
+This should become a formal Hebleo design rule.
+Every exercise shouldn't be:
+Today's concept + today's five new words.
+
+It should be:
+Today's concept + today's words + things you learned yesterday + things you learned three chapters ago.
+
+Otherwise people develop isolated “Lesson 4 knowledge.”
+We want an accumulating system.
+I'd actually give the exercise engine a concept of a novelty budget:
+This exercise is allowed to introduce:
+- one target grammatical concept
+- a small new vocabulary set
+Everything else should preferentially come from material already learned.
+
+That means when teaching a new grammatical construction, the system doesn't simultaneously burden the learner with six unknown nouns and three unknown verbs.
+And once those new words are learned, they enter the pool that future lessons can draw from.
+That's how the curriculum becomes a genuine cumulative structure.
+Your guided tests inside the lesson should survive — but become truly interactive
+This is another place where the app can improve what you already have without changing the pedagogy.
+Currently, as you described it:
+You show a question in the video → student thinks → you explain the answer.
+
+That's already good because you're forcing prediction.
+In Hebleo 2, I'd turn the exact same moment into:
+Pause
+What do you think the answer is?
+
+Student actually commits an answer.
+Then:
+Check
+
+And your recorded explanation plays—or the human-written explanation appears.
+This matters because generating an answer rather than just seeing one is generally better for learning, while immediate corrective feedback helps prevent errors from consolidating. APA
+And the text version has exactly the same checkpoint.
+So video and text aren't different pedagogies.
+They're different presentations of the same learning sequence.
+Monetization: I really like your model, with one boundary
+I think you've landed on a very natural business model:
+Hebleo Course — one-time purchase
+The highly curated, durable intellectual product:
+- all core lessons
+- all human videos
+- all written versions
+- human native audio
+- vocabulary
+- core exercises
+- progress
+- purchased future fixes/updates to that course
+You bought the course. You own access to it.
+Then:
+Hebleo Membership — recurring
+Things whose value actually continues to be produced every month:
+- AI tutor
+- adaptive drills
+- expanded verb trainer
+- advanced personalized practice
+- dynamic flashcard tools
+- level-appropriate reading feed
+- Yanshuf-style ongoing content
+- new listening content
+- community
+- questions to you
+- perhaps live Q&A/office hours
+- challenges
+- enhanced progress analytics
+- continuously expanding practice modes
+That is a much healthier subscription justification than arbitrarily renting access to prerecorded course videos.
+The one thing I would not fully put behind the subscription
+I would give course purchasers basic permanent spaced review for the material they bought.
+Because if Hebleo teaches:
+You need retrieval and spacing to retain this material
+
+and then after the subscription ends says:
+Pay us or lose the mechanism needed to retain your course,
+
+that weakens the integrity of the core product.
+So perhaps:
+Included permanently
+HebLearn Core
+- vocabulary from your purchased course
+- basic SRS
+- human audio
+- recognition/production cards
+- lesson-specific review
+- standard review scheduling
+Membership
+HebLearn+
+- adaptive exercise selection
+- dynamic sentence generation
+- verb drilling
+- weak-area detection
+- custom review modes
+- unlimited personal collections
+- AI-generated contextual practice
+- pronunciation practice
+- advanced speaking/listening review
+- AI explanation
+- etc.
+The course remains complete.
+The subscription makes it substantially more powerful.
+And access to you is very strong recurring value
+I especially like integrating this rather than relying on Discord.
+But I would not start with:
+Every subscriber can privately DM Guy infinitely.
+
+That can become disastrous if Hebleo succeeds.
+Instead I would design a course-aware Q&A/community system.
+Imagine a learner is on Lesson 5.2 and taps:
+Ask Guy / Community
+Their question automatically knows:
+Lesson 5.2
+Exercise 8
+Question: _______
+
+They ask:
+Why isn't this מִקְטָל?
+
+You answer.
+Then you can choose:
+Private answer
+or
+Publish to lesson Q&A
+Now future learners see:
+Common questions about this lesson
+Why isn't ___ part of this pattern?
+Answered by Guy
+
+You answer something once and it becomes part of the human knowledge base.
+That's incredibly synergistic with the “human-made” positioning.
+I'd probably eventually support:
+- lesson discussions
+- general community spaces
+- questions to Guy
+- learner posts
+- monthly AMA
+- announcements
+all natively.
+I think this gives us the canonical lesson model
+I'd now write it like this:
+HEBLEO LESSON
+
+1. REACTIVATE
+   Brief retrieval of relevant earlier material
+
+2. LEARN
+   Human-created explanation
+   ├── Watch
+   └── Read
+
+3. CHECKPOINTS
+   Bounded questions embedded in the explanation
+   Attempt → human explanation/feedback
+
+4. VOCABULARY
+   Small purposeful vocabulary set
+   Human translation/notes + native audio
+
+5. ACTIVATE VOCABULARY
+   Fast recognition/retrieval sufficient to use it
+
+6. SENTENCE LAB
+   Recognition
+       ↓
+   Reconstruction
+       ↓
+   Manipulation
+       ↓
+   Constrained production
+       ↓
+   Communicative response
+       ↓
+   Free production when appropriate
+
+   Uses:
+   NEW CONCEPT
+   + NEW VOCABULARY
+   + OLD KNOWLEDGE
+
+7. TRANSFER / VARIATION
+   Same knowledge in a different context or modality
+
+8. COMPLETE
+   Concepts/vocabulary enter long-term review
+
+9. NEXT LESSON
+
+And not every lesson needs every rung.
+A letter lesson might lean heavily on:
+recognition → reading → typing.
+A verb lesson might lean on:
+transformation → production.
+A more advanced lesson might end with:
+Respond to this situation in Hebrew.
+
+The schema needs to be flexible enough that your pedagogical judgment remains in control.
+One final change I would make to your summary
+You described the structure as:
+lesson → bounded tests → vocabulary → exercise → next
+
+I would modify it only slightly:
+reactivate → short lesson → bounded tests → vocabulary in context → scaffolded sentence use → genuine sentence production → transfer → review → next
+
+The biggest conceptual shift is that “the exercise” becomes a progression from support to independent production, rather than a single checkpoint proving they understood.
+That, I think, is the version that best combines what you already do well with what an actual purpose-built application can now let you do.
+
+Me:
+A few things. One, isn't your final structure a bit too long per lesson? It's a lot of steps. If someone wants to, let's say someone understood it pretty immediately, then it just becomes a whole lot of unnecessary repetition. So tell me what you think about that. Another thing is, with regards to vocabulary, at least early on, so I like a spiral teaching concept where you learn a concept, and then the next lesson you learn a different concept, and the next lesson you learn a different concept, and then the lesson after that is a continuation of the original concept. And therefore you learn something, let's say you learn letters, then the next lesson you learn a binyan, and then you learn prepositions. In the binyan lesson, you're using the letters that you just learned, and so you're already becoming more and more familiar with them, so they're no longer new information. And then the prepositions exercise you learn, you practice both the binyan and the letters. By the time you get to the next letter, or the next lesson, where you get the next set of letters, you have already implemented or internalized the letters that you've studied well. And so you have letters, binyan, prepositions, next set of letters, next binyan, next preposition. It doesn't have to be that formulaic, but the principle, I think of like a spiral, because you go back to where you were, but you're higher. So like you're back to letters, but now you're learning a new set. Because I like that structure, and because I like to teach the letters gradually, so it's not a race towards memorization, I am constrained with the vocabulary I can utilize, at least at the beginning. And therefore, the vocabulary would have to be at least somewhat random, based on what's available, at least early on.
+
+ChatGPT:
+Yes. I think the spiral point actually fixes the main weakness in the lesson structure I proposed.
+1. I made the individual lesson too heavy
+If every lesson requires:
+reactivate → teach → checkpoints → vocabulary → vocab drill → sentence recognition → reconstruction → production → transfer → review
+
+then a student who understood the concept in two minutes is being punished for understanding quickly.
+I would change the principle to:
+Thin lessons, rich curriculum.
+
+A normal lesson should probably have only four mandatory pieces:
+1. Learn — short human explanation, video or text.
+2. Check — perhaps 1–3 bounded questions, with your explanation afterward.
+3. Vocabulary — the small set attached to this lesson.
+4. Use it — an integrated exercise, preferentially sentence-based.
+Then you're done.
+The rest should happen across subsequent lessons and through review, not be crammed into the current lesson.
+So your summary was actually closer to the right answer than my expanded version:
+Lesson → bounded checks → vocabulary → integrated exercise → next.
+
+I would keep that.
+2. The spiral does the repetition for us
+What you're describing is indeed a spiral curriculum: return to the same domain repeatedly, but at increasing levels of sophistication. Bruner described essentially this idea—revisiting material at progressively greater complexity. Cambridge University Press
+But your model also contains another useful feature: interleaving.
+Instead of:
+Letters 1
+Letters 2
+Letters 3
+Letters 4  
+then grammar...
+
+you get something more like:
+Letters A
+Grammar A — uses Letters A
+Prepositions A — uses Letters A + Grammar A
+Letters B — still uses previous material
+Grammar B — Letters A+B + old grammar
+Prepositions B — everything accumulated so far
+
+That's particularly appealing because practice testing and spacing have very strong evidence behind them, while interleaving can be useful when it causes learners to retrieve and distinguish material over time rather than repeatedly doing an identical task in one block. APA
+So I would explicitly not put a “reactivate previous material” section at the beginning of every lesson.
+The new lesson itself is the reactivation.
+That's cleaner.
+3. This becomes a major curriculum rule
+I think this deserves to go into our eventual specification:
+Every new lesson should preferentially use previously learned knowledge as the substrate for learning the new material.
+
+So if the target is a new preposition, the exercise uses:
+- previously learned letters
+- previously learned sentence structures
+- previously learned vocabulary
+- perhaps the recently learned binyan
+with only:
+- one new grammatical target
+- a small amount of new vocabulary
+That prevents each lesson from becoming an isolated box.
+The student's knowledge base just keeps getting denser.
+4. It also changes how I think about the exercise
+We don't necessarily need:
+recognition exercise
+reconstruction exercise
+transformation exercise
+production exercise
+
+every single time.
+Those are tools available to the lesson designer, not mandatory stages.
+For an easy concept, perhaps the exercise is literally five questions:
+1. recognize
+2. recognize
+3. constrained production
+4. sentence creation
+5. slightly novel sentence creation
+Got them all right?
+Next lesson.
+If the learner struggles, then we can branch:
+Want another example?
+
+or automatically provide a more scaffolded question.
+So I'd favor:
+Default path
+Short.
+Remediation path
+Appears when needed.
+Extra-practice path
+Available when wanted.
+That's much better than forcing everybody through the longest possible pedagogical sequence.
+5. We could even have a very mild mastery shortcut
+Not something obnoxiously gamified, but suppose the student gets:
+- the embedded checkpoint right
+- then two reasonably demanding application questions right
+The system doesn't need another six examples to prove the point.
+It can say:
+Looks good. Continue →
+
+Conversely, if the student makes mistakes:
+Let's do two more.
+
+I'd be cautious about pretending that three correct answers prove “mastery”—immediate success does not necessarily predict long-term retention. Spaced retrieval later matters precisely for that reason. APA
+So the philosophy would be:
+Prove enough understanding to continue now; prove retention later through the spiral and SRS.
+
+That distinction is really important.
+6. Your vocabulary constraint early on makes complete sense
+This changes something else from my previous answer.
+I said ideally the vocabulary for a lesson would be chosen primarily because it fits the concept being taught.
+That's possible later.
+Very early, orthographic constraints come first.
+If students only know:
+א ה י מ נ ת
+there are simply not that many useful Hebrew words they can independently read.
+So yes, the vocabulary can appear somewhat arbitrary because the actual selection function is closer to:
+Can the learner decode it?
+
+rather than:
+Is this one of the 500 most important Hebrew words?
+
+I don't think that's a flaw.
+You're simultaneously teaching a writing system and a language.
+At the beginning, the vocabulary has a second job: provide material through which learners can exercise their growing decoding ability.
+7. I would formalize that distinction in the database
+This gives me an idea I think could improve Hebleo substantially.
+Not every word shown during the early course necessarily needs to have the same status.
+We could distinguish:
+Core vocabulary
+A word we actually want the learner to retain long-term.
+It enters HebLearn/SRS.
+Instructional vocabulary
+A word chosen partly because it is useful for demonstrating letters, a pattern, grammar, etc.
+It can appear repeatedly in lessons, but we don't necessarily burden the student with memorizing it forever.
+Example-only word
+Used to demonstrate a phenomenon.
+No expectation that they've “learned” it.
+That gives you much more freedom.
+Suppose an early combination of taught letters happens to permit some relatively obscure Hebrew word.
+You can use it to practice decoding without effectively telling the learner:
+Congratulations, this obscure noun is now one of your 14 vocabulary words to memorize.
+
+That's an important distinction an ordinary vocabulary spreadsheet might currently blur.
+8. But we can still optimize the “random” vocabulary
+Even under letter constraints, the content tools could help you find the best candidates.
+For example, for each new set of letters, we could rank possible vocabulary by:
+1. Fully readable with letters taught so far
+2. Frequency/usefulness
+3. Ease of representing meaning
+4. Ability to form useful sentences
+5. Connection to grammar already taught
+6. Morphological usefulness
+7. Potential to recur naturally later
+So early vocabulary might be constrained, but it's not literally random.
+It's:
+best available vocabulary under the decoding constraint.
+
+And importantly, you still choose it. The software can surface candidates, not decide the curriculum.
+9. The spiral can make even “random” early words useful
+Suppose a word is introduced mainly because it can be read with the first six letters.
+Lesson 1:
+learner reads it.
+
+Lesson 2:
+it becomes the noun in a new sentence structure.
+
+Lesson 3:
+it appears with a preposition.
+
+Lesson 4:
+it is used as contrast against a newly introduced word.
+
+Now something initially selected for orthographic convenience has accumulated:
+- pronunciation
+- recognition
+- semantic meaning
+- grammatical context
+- multiple retrievals
+without a giant vocabulary-memorization session.
+That's exactly where the spiral approach becomes powerful.
+10. So I'd now model the curriculum as several intertwined spirals
+Not one linear sequence.
+Something more like:
+ORTHOGRAPHY       ●──────●──────●──────●
+                   ╲    ╱ ╲    ╱
+GRAMMAR         ●──────●──────●──────●
+                 ╲    ╱ ╲    ╱
+VOCABULARY        ●────●────●────●────●
+                   ╲  ╱    ╲  ╱
+PRODUCTION          ●──────●──────●
+
+You're cycling through:
+- letters/reading
+- morphology
+- syntax
+- prepositions
+- vocabulary
+- listening
+- production
+And every turn of one spiral uses the others.
+That is much more accurate to what you're describing than:
+Complete Module: Alphabet
+Complete Module: Grammar
+Complete Module: Vocabulary.
+
+11. And it suggests an important technical feature
+Every piece of content should be tagged with prerequisites.
+For example:
+Sentence
+היא נותנת מתנה.
+System knows it requires:
+Orthography
+- ה
+- י
+- א
+- נ
+- ו
+- ת
+- מ
+Vocabulary
+- היא
+- נותן/נותנת
+- מתנה
+Grammar
+- feminine present verb
+- basic verbal sentence
+Then later, when we create an exercise, the system can answer:
+Which human-authored sentences is this learner currently equipped to understand?
+
+And for dynamic practice:
+Generate/use a sentence containing the new target without introducing grammar or vocabulary outside the learner's allowed set.
+
+That prerequisite graph could eventually become one of the most important things in the whole platform.
+12. So my updated canonical lesson is much simpler
+I'd now define it as:
+HEBLEO LESSON
+
+1. LEARN
+   Short human explanation
+   Video OR text
+
+2. CHECK
+   A few embedded attempts
+   → commit to answer
+   → human explanation
+
+3. VOCABULARY
+   Small set appropriate to this point
+   + native audio
+   + notes where useful
+
+4. USE
+   Short integrated exercise
+   preferentially centered on sentences
+   using:
+      new concept
+      + new vocabulary
+      + accumulated old knowledge
+
+   IF EASY → continue
+   IF DIFFICULT → additional scaffolded practice
+
+5. NEXT
+
+And outside that individual lesson:
+Lesson A
+   ↓
+Lesson B reuses A
+   ↓
+Lesson C reuses A + B
+   ↓
+Lesson D returns to A's domain at a higher level
+   ↓
+...
+
+Then SRS/review exists across the whole system, catching what the curriculum's natural recycling doesn't catch.
+I like this much more than my previous nine-stage structure. It preserves the thing that seems central to your pedagogy: you don't need to exhaustively drill something when it is introduced, because the rest of the curriculum is deliberately designed to keep bringing it back.
+
+Me:
+Yes, I like the idea of optional extra practice. Like you do the practice, and then either if you get too much of it wrong, or you choose, you get more practice. So one option is you try the exercise, you got like 60% right, the app is gonna keep going with more exercises until you improve. The other option is you get everything right. You have a button instead of pressing Next. You can press Next, or there's a button at the top like More exercises. So people have an option of finishing early or continuing if they feel like they need it. I'm not sure how I feel about the random words or the unlearned words. We'll have to see. Same goes for tagging words with prerequisites. That sounds like a lot of work for not a lot of upside, because this will be obvious in the curation. And by the way, the major curriculum rule is actually the principle that I said at the beginning. New information is best learned by connecting it to established old information.
+
+ChatGPT:
+Yes — I think that correction is important. The core curriculum principle should be stated exactly as you framed it:
+New information is best learned by connecting it to established old information.
+
+The spiral structure, cumulative exercises, sentence creation, and recycling of prior vocabulary are all implementations of that principle. They are not separate pedagogical rules.
+And I agree we should be careful not to over-engineer the content model. If you are curating the curriculum yourself, then a giant prerequisite graph for every word may create a lot of maintenance work for very little benefit. I would not make that a requirement for the first version.
+The practice model you described is better
+I think the post-lesson exercise should work something like this:
+Student completes the core exercise.
+If performance is strong:
+Great — you're ready to continue.
+
+Then prominently:
+Next lesson
+and secondarily:
+More practice
+So someone who immediately understands the material isn't held hostage by the application.
+If performance is weak:
+Let's practice this a little more.
+
+Then the app automatically supplies another small batch, ideally varying the surface form rather than simply repeating the same questions.
+After that batch it reassesses.
+Conceptually:
+Core exercise
+     ↓
+  score/check
+   ↙       ↘
+strong     needs work
+  ↓           ↓
+Next       Extra batch
+or          ↓
+More      reassess
+practice    ↓
+           ready → Next
+           still weak → another small batch
+
+That gives us something much better than either extreme:
+- fixed exercises that are too long for fast learners
+- fully adaptive AI curricula where the software keeps arbitrarily deciding what somebody should do
+The curated lesson stays fixed. Only the amount of practice adapts.
+I'd keep the adaptation conservative
+I wouldn't have the app say:
+89% = mastery, 74% = 7 questions, 63% = 14 questions...
+
+That's false precision.
+Something simpler is probably better.
+For example:
+- Strong performance → finish normally.
+- Some difficulty → recommend another short set.
+- Clear difficulty → automatically continue with scaffolded practice.
+And perhaps particular mistakes matter more than the raw percentage.
+Getting 6/10 wrong because of one repeated misunderstanding is different from four random careless errors.
+Eventually the system can be smarter about that, but we don't need it to be sophisticated on day one.
+Optional “More exercises” should be everywhere appropriate
+I like your placement idea as well.
+At the completion screen:
+Lesson complete
+
+Next lesson →
+More exercises
+And perhaps also:
+Review explanation
+So the student has three obvious responses:
+I get it → move forward.
+I'm shaky → practice.
+I didn't understand → revisit explanation.
+That's a very clean learning interface.
+And because the extra exercises aren't mandatory, we can afford to make the exercise bank quite deep.
+The extra practice is where we can safely add variety
+The core exercise should probably remain carefully human-curated.
+That's where you control:
+- what the student is expected to know
+- which sentences appear
+- the intended progression
+- important pitfalls
+- what qualifies as successful application
+Then optional/adaptive practice can draw from a larger pool.
+That larger pool might consist of:
+1. additional human-written exercises
+2. parameterized exercises based on human-created sentence templates
+3. eventually AI-created exercises constrained by approved vocabulary/grammar
+That preserves the human quality hierarchy:
+CURRICULUM
+Human-authored
+
+CORE EXERCISES
+Human-authored / human-approved
+
+EXTRA PRACTICE
+Mostly curated + scalable generation where safe
+
+That feels consistent with the product identity you've been defining.
+On “random vocabulary”: let's not decide that yet
+I agree with your hesitation.
+I wouldn't create an architectural category like instructional-but-unlearned vocabulary until we actually restructure the first chapters and discover that we need one.
+It could turn out that your existing vocabulary choices work perfectly well.
+Or perhaps we discover a useful distinction later between:
+- vocabulary actively taught
+- words merely encountered in examples
+But we should derive that from the curriculum rather than inventing taxonomy now.
+Same with prerequisites.
+This is an important design discipline for this project:
+Don't encode theoretical complexity until the real course demonstrates a need for it.
+
+Because otherwise we can easily build an extraordinarily sophisticated CMS that makes writing a lesson twice as hard.
+The app exists to serve your curriculum, not force the curriculum to feed the app.
+What does need to be explicit
+Even if we don't tag every prerequisite, we do need a relatively small amount of structured information about each lesson.
+Probably something like:
+- lesson ID
+- chapter/order
+- title
+- concept(s) taught
+- video explanation
+- text explanation
+- attached vocabulary
+- embedded checks
+- core exercise set
+- extra exercise pool
+- review items generated/unlocked
+- completion state
+That is enough to support the learner experience we're talking about without requiring you to annotate every sentence with seventeen metadata fields.
+I would also slightly revise the vocabulary relationship
+Previously we were discussing:
+lesson → vocabulary → exercise
+
+I think the actual relationship is closer to:
+Lesson teaches new concept.
+Vocabulary provides fresh material with which to use it.
+Exercise binds the new concept and vocabulary to existing knowledge.
+
+And the last part is the key.
+Suppose the new lesson teaches X.
+The exercise should ideally require:
+X + something introduced recently + older established material.
+Not because every exercise needs to be maximally complex, but because that's what builds the associative network you're aiming for.
+A simplified example:
+Lesson A
+Learn letters מ נ ת.
+Lesson B
+Learn some grammatical construction.
+The construction exercises use מ נ ת words.
+So while conscious attention is on grammar, the letters receive additional exposure without being the object of memorization.
+Lesson C
+Learn a preposition.
+Exercises use:
+- that preposition
+- the prior grammatical structure
+- previously introduced vocabulary
+- those letters
+The learner isn't thinking:
+I am reviewing Lesson A.
+
+But Lesson A is becoming automatic.
+That's the elegant part of the design.
+This also means “review” has two different meanings
+I think we should explicitly distinguish these in the specification.
+Natural curriculum review
+Old information reappears organically while learning something new.
+This is your primary method.
+Scheduled review
+SRS deliberately resurfaces items because enough time has passed or the learner has shown weakness.
+They complement one another.
+The SRS shouldn't try to carry the entire burden of retention.
+And the curriculum shouldn't assume that natural reuse will perfectly space everything.
+That's probably the strongest version of the system.
+So the lesson structure is now becoming pleasantly small
+I think we're converging on:
+1. Learn
+Short human explanation.
+Video or text.
+With bounded interactive checks where appropriate.
+2. Vocabulary
+Relevant vocabulary for this point in the curriculum, with your existing rich information and native audio.
+3. Apply
+A concise core exercise.
+Preferably sentence-centered where the material allows it.
+Combines:
+- current concept
+- current vocabulary
+- established older knowledge
+4. Decide
+If they're doing well:
+Next lesson
+More exercises
+If they're struggling:
+Continue practicing
+with increasingly appropriate additional exercises.
+Then scheduled review happens outside the lesson.
+That is much cleaner.
+And I'd put your principle at the top of the future Hebleo product specification, before all the mechanics:
+Hebleo teaches by attaching new information to established knowledge and repeatedly reusing that knowledge in progressively richer contexts.
+
+Everything else we're discussing should be judged against that.
+
+Me:
+Another thing we should have is playing around with vowels, so that vocabulary. Right now what I do is I slowly wean students off of vowels through having less and less words with vowels as the recognition exercises progress. We can also have, like, a toggle for the vowels on most things so that the student can decide what they want. And there can be a manual option, and there can be, like, a curated option, which means our opinionated way of doing it with regards to what we think shouldn't, shouldn't have vowels based on their specific level.
+
+ChatGPT:
+Yes. I think this should become a first-class Hebleo feature, because it matches something you're already deliberately doing in the course rather than adding a gimmick. Your early material explicitly teaches with Nikkud because beginners lack native familiarity, while pointing toward the fact that normal Hebrew is generally read without it.  Chapter 1 Presentation
+I would make Curated the default mode. That means Hebleo displays exactly the amount of Nikkud you think is pedagogically appropriate at that learner's point in the course. Early on that might mean nearly everything is pointed; later, familiar words lose their vowels while new or potentially confusing words retain them; eventually most ordinary text appears like normal Modern Hebrew.
+Then give the learner two overrides: Full Nikkud and No Nikkud. So the control might simply be:
+Vowels: Curated | Full | None
+The important part is that Curated is not an algorithm deciding what the student “probably knows.” It can simply be the authored presentation for that lesson. That fits your philosophy much better.
+There's also a very useful fourth interaction I'd add without making it another permanent mode: press/tap to reveal Nikkud temporarily. A student reading unpointed Hebrew gets stuck on a word, taps it, sees the pointed version, perhaps hears the native audio, and then releases it. That makes removing vowels less binary.
+One technical point is important here: we should not assume that “unpointed Hebrew” can always be produced by mechanically deleting the Nikkud Unicode marks from the pointed form. Standard unvocalized/plene spelling can differ from the consonantal spelling used with Nikkud. So for vocabulary I would store at least three representations where relevant:
+- Fully pointed form — canonical pronunciation.
+- Standard unpointed form — how we'd actually write the word normally.
+- Curated display form — optional, allowing partial Nikkud exactly where you want it.
+That third form is especially powerful. You could have a sentence in which most words have no Nikkud, but the one new verb does. Or perhaps only an ambiguous vowel remains marked. You're not limited to “all or nothing.”
+I would also let individual exercises override the global learner preference when the Nikkud level is itself pedagogically relevant. For example, if the point of an exercise is to test reading without vowels, someone shouldn't be able to flip Full Nikkud on and accidentally reveal the answer. But for ordinary vocabulary tables, explanations, reading passages, and most sentence exercises, their chosen display preference should work.
+This can also integrate beautifully with your spiral principle. A new word might first appear fully pointed. In the following lesson, while attention is directed toward some new grammatical concept, that same word might appear with partial or no Nikkud. By the time the student consciously encounters the next reading concept, the old word has quietly become something they can read normally.
+So I would add a principle to the specification:
+Nikkud is scaffolding, not a permanent presentation format. Hebleo should deliberately and progressively remove that scaffolding while always letting learners request more support when they need it.
+
+And I think Curated / Full / None + tap-to-reveal gives us almost everything we need without making the system complicated.
+
+Me:
+Great. Anything else we need for the actual system?
+
+ChatGPT: 
+Yes. I think we’ve covered most of the learning philosophy, but there are still several pieces of the actual product system that we should explicitly design before handing anything to Codex.
+The big distinction now is: what the learner experiences versus what makes the whole thing reliable and manageable behind the scenes.
+The remaining core systems
+1. Accounts, purchases, and entitlements
+We need a clean model for:
+- one account across website + web app + iOS + Android
+- one-time course purchases
+- monthly subscription
+- subscription cancellation while preserving purchased-course access
+- different subscription tiers later if wanted
+- refunds
+- coupons / gifted access
+- manual access grants
+- family/student accounts if we ever want them
+The app should only ask:
+What does this user currently own?
+
+rather than knowing the details of WooCommerce, PayPlus, App Store billing, etc.
+This becomes especially important once Apple/Google subscriptions exist alongside the website.
+2. Learner progress
+We need to define precisely what is remembered.
+At minimum:
+- current lesson
+- completed lessons
+- lesson attempts
+- core-exercise performance
+- optional-practice performance
+- video/text preference
+- Nikkud preference
+- vocabulary learned
+- review state
+- suspended review cards
+- mistakes
+- streak
+- study goal
+- bookmarks/notes
+- downloaded offline content
+And it needs to synchronize across devices.
+If I do Lesson 2.3 on my phone, opening Hebleo on my laptop should know immediately.
+3. The exercise engine
+This is probably the largest actual application component.
+We need a common exercise format that supports many renderers rather than hard-coding every exercise individually.
+For example:
+Exercise
+- prompt
+- instructions
+- target concept
+- content
+- answer
+- accepted alternatives
+- feedback
+- explanation
+- audio
+- Nikkud behavior
+- keyboard behavior
+- difficulty
+- core / extra practice
+
+Then the type determines whether it renders as:
+- multiple choice
+- sentence construction
+- matching
+- typing
+- listening
+- speaking
+- transformation
+- fill-in
+- etc.
+That will let us continually invent new exercise forms later without rebuilding the entire learning system.
+4. Answer validation
+This deserves its own specification because Hebrew makes it tricky.
+For typed exercises, what counts as correct?
+We need rules around:
+- Nikkud ignored or required?
+- final letters
+- spelling variants
+- punctuation
+- extra spaces
+- Hebrew quotation marks
+- typo tolerance
+- multiple valid translations
+- masculine/feminine alternatives
+- word-order alternatives
+- synonymous answers
+Sometimes:
+Exact answer required.
+
+Sometimes:
+Several answers are linguistically valid.
+
+And sometimes we want:
+Correct, but here's a more natural way to say it.
+
+AI can eventually help with open answers, but the canonical exercises should still have human-defined answer logic.
+5. Nikkud display system
+What we just discussed should be built as a proper rendering layer rather than manually implemented lesson by lesson.
+Each Hebrew text object can potentially contain:
+- pointed form
+- ordinary unpointed form
+- curated display form
+Learner setting:
+Curated / Full / None
+plus:
+tap to reveal
+And exercises can lock their Nikkud mode when necessary.
+6. Content publishing/versioning
+Very important.
+You should be able to edit tomorrow without breaking today's course.
+I'd want:
+Draft → Preview → Publish
+For each lesson/content item.
+And:
+- revision history
+- rollback
+- publishing timestamp
+- change log
+- staging/preview environment
+For vocabulary edited in Sheets:
+Sheet → Validate → Preview changes → Publish
+not instant production changes.
+7. Media management
+We have a lot of media:
+- videos
+- native vocabulary audio
+- images
+- PDFs
+- perhaps future dialogue recordings
+Each should be a reusable asset rather than embedded independently in every page.
+For example:
+Audio ID 837 = מַתָּנָה, female native speaker, normal speed.
+
+Any exercise can reference it.
+If you replace the recording later, everything using it updates.
+8. Review/SRS
+We have discussed its pedagogical role, but technically we still need to define:
+- vocabulary note model
+- card types
+- scheduling algorithm
+- learning queue
+- review queue
+- optional quick review
+- suspended cards
+- lesson-linked cards
+- basic review included with purchase
+- premium review features
+- what happens when a learner changes course progress
+- how old LearnDash/SRS progress migrates
+And we should decide exactly where FSRS ends and Hebleo-specific behavior begins.
+9. Adaptive extra practice
+The simple model we've converged on is good:
+Core exercise
+Human-curated and finite.
+Then:
+Doing well
+→ Next
+→ More practice
+Struggling
+→ automatically continue with extra practice.
+But we need rules for:
+- when extra practice starts
+- when it ends
+- whether to repeat the same skill or vary it
+- what constitutes repeated misunderstanding
+- when to recommend returning to the explanation
+I would keep this deliberately simple in V1.
+10. Content relationships
+I agree that we don't need to annotate every word with a vast prerequisite graph.
+But we still need a modest hierarchy:
+Course
+Chapter
+Lesson
+Concept
+Vocabulary set
+Exercise set
+
+And probably basic tagging such as:
+- lesson
+- chapter
+- grammatical topic
+- exercise pool
+- vocabulary type
+Enough to reuse content.
+Not enough to turn curriculum authoring into database administration.
+11. Hebleo Studio
+This is absolutely necessary.
+You shouldn't need Codex whenever you want to:
+- edit a lesson
+- attach vocabulary
+- add an exercise
+- reorder exercises
+- upload audio
+- replace video
+- change feedback
+- add optional practice
+- publish something
+- correct a typo
+So there needs to be a private admin application.
+I picture:
+Curriculum
+Courses → Chapters → Lessons
+Content
+Vocabulary
+Concepts
+Exercises
+Media
+Students
+Users
+Purchases
+Access
+Progress
+Community
+Questions
+Reported content
+Announcements
+Analytics
+Lessons
+Exercises
+Retention
+Subscriptions
+12. Analytics
+There are two categories we need.
+Learner analytics
+Useful to the student:
+- course progress
+- words learned
+- review due
+- streak
+- time studied
+- perhaps skill strengths
+Product analytics
+Useful to you:
+- where students stop
+- which lessons take longest
+- which exercises produce errors
+- which vocabulary causes problems
+- video vs text usage
+- optional-practice uptake
+- review adherence
+- subscription conversion
+- cancellation
+This will let the course itself improve.
+13. Offline + synchronization
+If we're making a proper mobile app, this should be designed from the beginning even if we don't ship it immediately.
+A learner may:
+- download a chapter
+- study offline
+- complete exercises
+- review flashcards
+and reconnect later.
+We need conflict rules.
+For example, if a card was reviewed on two devices offline, which review state wins?
+Much easier to plan this early than bolt it on later.
+14. Notifications
+The system needs a notification service for:
+- review due
+- streak reminder
+- study-plan reminder
+- answer from you
+- reply in community
+- new subscriber content
+- maybe new level-appropriate reading
+And users need granular control.
+Nobody should feel harassed by Hebleo.
+15. Community / Ask Guy
+We should decide the model early because it affects accounts and content.
+I like:
+Lesson-specific questions
+and
+General community
+A student can ask something directly from an exercise or lesson.
+The system automatically attaches context:
+Course 1
+Lesson 4.2
+Exercise 6
+
+You answer.
+You can optionally convert a useful answer into:
+Instructor answer visible to everyone
+
+which gradually builds a curated FAQ.
+We will also need:
+- notifications
+- moderation
+- reporting
+- blocking/spam protection
+- subscriber permissions
+16. Search
+Eventually everything should be searchable:
+- vocabulary
+- grammar concepts
+- lesson titles
+- instructor Q&A
+- perhaps sentences/examples
+A student searches:
+את
+
+and sees:
+- definition/concept
+- lessons that taught it
+- examples
+- relevant vocabulary
+- saved questions
+- practice
+This becomes increasingly valuable as the course grows.
+17. Accessibility
+Worth designing rather than fixing later.
+Especially:
+- subtitles/transcripts for videos
+- keyboard navigation
+- screen readers
+- adjustable Hebrew font size
+- color not carrying meaning alone
+- audio transcripts
+- dyslexia-friendly presentation options if useful
+- proper RTL/LTR handling
+Hebrew + English on one screen can create nasty interface bugs if directionality isn't architected properly.
+18. Localization
+Even if Hebleo initially teaches Hebrew in English, I would avoid building English permanently into the data structure.
+A vocabulary item should conceptually have:
+Hebrew
+translation[language]
+
+not simply:
+Hebrew
+English
+
+Same for interface strings.
+Then someday:
+Hebrew for Spanish speakers
+
+doesn't require rebuilding the platform.
+No need to actually translate it now.
+Just don't close the door.
+19. Security and backups
+Boring, but critical.
+We need:
+- automated database backups
+- media backups
+- restore testing
+- audit log for admin changes
+- role-based admin permissions
+- secure authentication
+- rate limiting
+- payment data kept out of our database wherever possible
+- privacy controls
+- account deletion/export
+And we should have a staging environment separate from production.
+Codex should never be experimenting directly on the live student database.
+20. Migration
+This is a separate project in itself.
+Before shutting down LearnDash we need to map:
+Old → New
+- WordPress users
+- purchases
+- course enrollment
+- lesson completion
+- quiz progress
+- SRS progress if available
+- subscriptions
+- perhaps comments/Q&A
+Then test migration repeatedly.
+The final switch should feel to an existing student like:
+Hebleo suddenly got much better.
+
+Not:
+Please create a new account and start again.
+
+21. Feature flags
+This will make vibe-coding substantially safer.
+For example:
+AI Tutor: OFF
+New Review UI: 10% users
+Nikkud Curated Mode: ON
+Community: beta users only
+
+Then new things can be tested without immediately exposing everybody to them.
+22. QA/testing infrastructure
+I would actually put this into the Codex brief as a hard requirement.
+At minimum automated testing for:
+- login
+- purchases/entitlements
+- saving progress
+- lesson completion
+- exercise scoring
+- SRS scheduling
+- syncing
+- Hebrew/Nikkud transformations
+And particularly:
+Never silently lose learner progress.
+
+That should be treated as a catastrophic bug.
+The system is therefore roughly this
+                     HEBLEO
+
+                    WORDPRESS
+             marketing + purchasing
+                       │
+                       ▼
+                IDENTITY / ACCESS
+                       │
+                       ▼
+               HEBLEO BACKEND
+                       │
+        ┌──────────────┼─────────────┐
+        │              │             │
+     CONTENT        LEARNING       USERS
+        │              │             │
+ Lessons           Progress       Accounts
+ Vocabulary        Exercises      Entitlements
+ Media             Reviews        Preferences
+ Concepts          Mistakes       Subscription
+        │              │
+        └───────┬──────┘
+                │
+        HEBLEO LEARNER APP
+        ├── Web
+        ├── iOS
+        └── Android
+
+                +
+          HEBLEO STUDIO
+          admin / publishing
+
+                +
+            COMMUNITY
+
+                +
+           ANALYTICS
+
+What I think is not missing anymore
+At the conceptual level, we've now got enough to start designing the actual specification.
+The three things I think deserve dedicated design passes before we create the final Codex build brief are:
+1. Canonical lesson anatomy — we're already almost there.
+2. Exact content/data model — what a lesson, vocabulary item, exercise, concept, review card, etc. actually contains.
+3. Learner UX/navigation — exactly what the student sees from login → home → lesson → exercise → review → optional features.
+After those, I think we can stop theorizing and turn the whole thing into a proper build specification.
+
+Me:
+As we said, I want easy management of modular components for the lessons, vocabulary, exercises, etc., such that I can shift things around easily and the whole course changes (so the lesson is built using some sort of shortcode-like component that says "use characteristics tagged X from file Z using format Y". This can be vocabulary, exercises, etc. This way I can change things in the source of truth and refresh and automatically propogate changes throughout multiple lessons
+
+ChatGPT:
+Yes. I think this should be a foundational architectural requirement, not merely an admin convenience.
+What you’re describing is essentially a content-composition system: lessons should not contain duplicated content. They should contain references to reusable content objects and queries.
+So instead of Lesson 3.2 literally storing a vocabulary table, it stores something closer to:
+<Vocabulary
+  source="Ultimate Vocabulary Masterfile"
+  filter="lesson:3.2"
+  view="standard-vocab-table"
+/>
+
+And an exercise section might be:
+<ExerciseSet
+  source="Exercise Bank"
+  filter="lesson:3.2 AND type:sentence-production"
+  view="lesson-practice"
+/>
+
+Then if you change the underlying vocabulary, audio, formatting, exercise, or ordering, every place referencing it changes automatically.
+I would make this the basic rule
+Lessons contain composition instructions; canonical content lives elsewhere.
+
+A lesson is basically an ordered list of components:
+Lesson 3.2
+
+1. Explanation
+   → explanation ID 3.2-A
+
+2. Vocabulary
+   → all vocabulary assigned to 3.2
+   → render as "lesson vocabulary"
+
+3. Guided check
+   → exercise set "3.2-check"
+
+4. Main practice
+   → exercise set "3.2-core"
+
+5. Optional extra practice
+   → exercise pool "3.2-extra"
+
+You can drag those around in Hebleo Studio.
+Nothing has to be copied.
+The component should have four parts
+I’d make essentially every dynamic lesson block follow this model:
+1. Source
+Where is the canonical information?
+Examples:
+- Vocabulary Masterfile
+- Exercise Bank
+- Media Library
+- Grammar Concepts
+- Sentence Bank
+2. Selector
+Which objects do we want?
+Examples:
+lesson = 3.2
+
+or:
+tags contain "object-pronouns"
+
+or:
+exercise_set = "3.2-core"
+
+or even:
+lesson = 3.2
+AND type = Verb
+
+3. Presentation
+How should it appear here?
+For example:
+vocab-table-standard
+vocab-table-compact
+flashcard-list
+audio-drill
+matching-exercise
+sentence-builder
+
+4. Local overrides
+Very occasionally you want this particular instance to behave differently.
+For example:
+show_columns = Hebrew, English, Audio
+nikkud = curated
+collapsed = false
+
+But the underlying content is still canonical.
+One refinement: don’t rely on tags alone
+I like the convenience of:
+“Use characteristics tagged X from file Z using format Y.”
+
+But I would not make tags the only linking mechanism.
+Tags are great for flexible grouping, but they're easy to break:
+- typo in tag
+- rename tag
+- accidentally reuse tag
+- ambiguous hierarchy
+So I’d use:
+Stable IDs for important relationships
+Example:
+lesson_id = lesson_3_2
+exercise_set_id = exset_3_2_core
+
+Tags for flexible grouping
+Example:
+tags:
+  object-pronouns
+  beginner
+  speaking
+  chapter-3
+
+Then you get both reliability and flexibility.
+Google Sheets fits this model very well
+For vocabulary, for example:
+Your Sheet remains the authoring source.
+Rows have fields like:
+ID
+Lesson
+Part
+Type
+Hebrew
+English
+Notes
+...
+
+We add only whatever additional structure genuinely becomes useful.
+Then the application can say:
+Source:
+Ultimate Vocabulary Masterfile
+
+Selector:
+Lesson = 3.2
+
+Presentation:
+Lesson Vocabulary Table
+
+You modify one row in Sheets.
+Then:
+Sync / Publish
+And every lesson, practice screen, dictionary entry, flashcard, etc. using that vocabulary gets the updated version.
+No copy-pasting.
+This also solves a huge future problem
+Suppose the word:
+מַחְשֵׁב
+appears in:
+- Lesson 5.1 vocabulary
+- a root exercise
+- a pattern exercise
+- three sentence exercises
+- a review card
+- the dictionary
+- a reading lesson
+There should be one vocabulary object.
+Not seven copies.
+So if you replace the audio file or correct a note, everything updates.
+The same applies to sentences.
+If we build a useful sentence:
+אני רוצה לדבר עברית.
+
+That could be reused in:
+- infinitive practice
+- vocabulary
+- listening
+- pronunciation
+- sentence reconstruction
+- review
+without five copies of the sentence floating around.
+I would actually create reusable “content objects”
+At minimum:
+- Lesson
+- Explanation
+- Vocabulary Item
+- Vocabulary Set
+- Sentence
+- Exercise
+- Exercise Set
+- Grammar Concept
+- Media Asset
+- Reading
+- Dialogue
+- Review Template
+Then lessons simply assemble these.
+That gives you a LEGO system.
+And importantly, you can move one LEGO piece without rebuilding the house.
+It should also support nested components
+For instance:
+<ExerciseSet id="lesson-3.2-core">
+
+might itself contain:
+<SentenceExercise id="ex-391" />
+<SentenceExercise id="ex-392" />
+<MatchingExercise id="ex-393" />
+
+Then you can reorder them inside the set without editing the lesson.
+And the lesson simply references:
+Core Exercise Set 3.2
+
+That gives you different levels of modularity.
+The Studio should make this visual
+I don't want you literally editing shortcode unless you want to.
+You should see:
+Lesson 3.2
+Explanation: Object Pronouns II
+⋮
+Vocabulary: Lesson 3.2 Vocabulary
+Source: Ultimate Vocabulary Masterfile
+Filter: Lesson = 3.2
+View: Standard vocabulary
+⋮
+Exercise Set: 3.2 Core
+6 exercises
+⋮
+Optional Practice: 3.2 Extra
+14 exercises
+⋮
+And you can drag them:
+☰ Explanation
+☰ Vocabulary
+☰ Guided Exercise
+☰ Main Exercise
+☰ Extra Practice
+
+The underlying stored representation can be shortcode-like JSON.
+You just don't have to look at it.
+One very important feature: dependency preview
+Because propagation is powerful, it can also be dangerous.
+If you change a vocabulary item, I want Studio to tell you:
+This change affects 11 places
+Lesson 2.3
+Lesson 4.1
+HebLearn Recognition
+HebLearn Production
+Sentence Exercise 893
+…
+
+That would be extremely useful.
+Likewise, before deleting something:
+This item is referenced by 7 published lessons.
+You cannot delete it without replacing those references.
+
+That prevents silent breakage.
+And we should distinguish “live reference” from “snapshot”
+Most course content should use live references:
+Always show latest published version.
+
+But occasionally you may want:
+Preserve exactly this version.
+
+For instance, perhaps an old assessment must never change.
+So the component could optionally say:
+version = latest
+
+or:
+version = 17
+
+I expect 95%+ of Hebleo content would use latest.
+But version locking is worth supporting architecturally.
+This also makes restructuring the entire curriculum much easier
+Suppose later you decide:
+This vocabulary shouldn't be 2.3. It belongs in 2.1.
+
+You change:
+Lesson = 2.3
+
+to:
+Lesson = 2.1
+
+in the source.
+After publishing:
+- it disappears from 2.3
+- appears in 2.1
+- 2.1's review pool changes
+- 2.1's vocabulary table changes
+- any automatic practice drawing from lesson vocabulary changes
+You aren't editing five different pages.
+That's exactly the behavior we want.
+I’d make this one of the core architecture commandments
+Something like:
+Hebleo must use normalized reusable content objects. Lessons and learning experiences reference or query those objects rather than duplicating them. Changes to a canonical object must propagate to every dependent surface after publication, with previewable impact and version history.
+
+And I think your shortcode analogy is exactly right.
+The system underneath should behave like a much more powerful version of shortcodes:
+source + selector + renderer + options
+
+while Hebleo Studio gives you a friendly visual interface for assembling them.
+This should absolutely go into the eventual Codex specification as a non-negotiable requirement.
