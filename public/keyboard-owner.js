@@ -211,7 +211,7 @@
     var stop = document.createElement('div');
     stop.className = 'hebleo-keyboard__vowel-group';
     stop.dataset.category = 'stop';
-    stop.appendChild(makeVowelKey('ְ', 'Sheva', 'stop'));
+    stop.appendChild(makeVowelKey('ְ', 'Sheva'));
     vowelPicker.appendChild(stop);
     // Remaining consonant marks retain their own Unicode values.
     var extra = document.createElement('div');
