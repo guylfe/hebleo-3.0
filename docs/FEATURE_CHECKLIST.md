@@ -4,7 +4,7 @@ Initial inventory baseline: 2026-10-03; inspected application commit `0bcd99988a
 
 This file is the shared feature-status and user-testing record. README is the quick walkthrough; PROJECT_STATUS records milestones; MASTER_SPEC remains the product source. The 2026-10-03 UX update implements the accepted discussion decisions; see [UX checkpoint](UX_UPDATE.md) for contracts and source references.
 
-Current refinement is described in [UI refinement](UI_REFINEMENT.md). The preceding verified application checkpoint was `445d9d2d57bcc415192e1a2cb9e46ebf84c73bbb`; new evidence appears below. Documentation-only commits do not imply extra behavior.
+Current verified refinement application checkpoint: `5220a59ab6549d3343b29e15e48df2a2233664e2`. See [UI refinement](UI_REFINEMENT.md). Guy's feedback below refers to the preceding application `445d9d2` (documentation HEAD `9a35879`); the new fixes await his retest. Documentation-only commits do not imply extra behavior.
 
 ## Status and evidence
 
@@ -172,6 +172,8 @@ B01/B02 originated in code inspection. The additional rows below record Guy’s 
 | 2026-10-03 | UX owner browser pass | Local 4173: separate portions, typed-answer feedback, immediate recognition, lesson 1 completion opens lesson 2, labelled narrow navigation. Isolated in-memory 4174: review/reveal/rate/undo with exact prior schedule readback; restored matching selections; concept dialog preserves question; report attaches actual revision/answer; rich cards/table/root search/full entry; authored help. | Background mounted browser; synthetic data. Trusted clicks or explicit DOM clicks followed by state/API readback. Narrow-window visual check, not real-device acceptance. Native dropdown selection, microphone recording, real media playback and independent QA remain pending. |
 
 | 2026-10-03 | User-feedback refinement | npm.cmd run verify: 46 passed, 0 failed; syntax and whitespace checks. Mounted browser: cleaner player, RTL text, owner floating keyboard/hints, clicks entering and saving אני, pin display, typed feedback. | Final drag/positioning visual walkthrough stopped after browser lifecycle/binding failure. Pointer/HTML placement and active-field logic have automated checks; real touch, live AI/media and independent QA remain Pending. |
+
+| 2026-10-03 | 5220a59 application | Remote main matched the full application commit; [GitHub Actions run 37147722285](https://github.com/guylfe/hebleo-3.0/actions/runs/37147722285) completed success. Final restarted 4173 returned healthy with refinement fixtures and three fictional profiles. | Private checkpoint, not production deployment, Guy acceptance or independent review. |
 
 ## Maintaining this checklist
 
