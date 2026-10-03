@@ -31,6 +31,14 @@ export function orderingTokens(exercise, content) {
   for (let i = 0; i < Math.max(base.length, extras.length); i++) { if (extras[i]) tray.push(extras[i]); if (base[i]) tray.push(base[i]); }
   return tray;
 }
+// Correct answers earn one slot per question within the pinned lesson revision.
+export function lessonQuestionProgress(lesson, attempts, revisionId) {
+  const latest=new Map(),correct=new Set();
+  for(const a of attempts)if(a.lessonId===lesson.id && a.revisionId===revisionId && lesson.exerciseIds.includes(a.exerciseId)){
+    latest.set(a.exerciseId,a.correct);if(a.correct)correct.add(a.exerciseId);
+  }
+  return {correctIds:lesson.exerciseIds.filter(id=>correct.has(id)),missedIds:lesson.exerciseIds.filter(id=>latest.get(id)===false)};
+}
 export function targetedExercises(content, lesson, attempts) {
   const latest = new Map();
   for (const a of attempts) if (a.lessonId === lesson.id) latest.set(a.exerciseId, a.correct);

@@ -8,7 +8,7 @@ import { Store, validateContent } from '../src/store.js';
 import { seed, upgradeDemo } from '../src/seed.js';
 import { createServer } from '../src/server.js';
 import { help } from '../src/tutor.js';
-import { followingLesson, defaultMedium, orderingTokens, lessonSteps, wordFields, searchableWord, audioURL } from '../public/ux.js';
+import { followingLesson, lessonQuestionProgress, defaultMedium, orderingTokens, lessonSteps, wordFields, searchableWord, audioURL } from '../public/ux.js';
 import { importVocabularyCSV } from '../public/content.js';
 const user='learner-demo';
 function setup(t){const s=new Store();t.after(()=>s.close());return s;}
@@ -152,4 +152,11 @@ test('native local media supports seeking and rejects invalid ranges and nonmedi
   assert.equal((await fetch(base+'/media/recording.mp3',{headers:{range:'bytes=50-'}})).status,416);
   assert.equal((await fetch(base+'/media/private.txt')).status,404);
   assert.equal((await fetch(base+'/media/missing.mp3')).status,404);
+});
+
+test('Question progress counts each correct question once in its own lesson revision and removes corrected misses',()=>{
+  const lesson=seed.lessons[0],a=(exerciseId,correct,revisionId=1,lessonId=lesson.id)=>({exerciseId,correct,revisionId,lessonId});
+  const attempts=[a('ex-1-type',false),a('ex-1-type',true),a('ex-1-type',true),a('ex-1-match',false),a('ex-1-recognize',true,2),a('ex-2-order',true,1,'lesson-2')];
+  assert.deepEqual(lessonQuestionProgress(lesson,attempts,1),{correctIds:['ex-1-type'],missedIds:['ex-1-match']});
+  assert.deepEqual(lessonQuestionProgress(lesson,attempts,2),{correctIds:['ex-1-recognize'],missedIds:[]});
 });

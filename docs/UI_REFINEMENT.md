@@ -73,3 +73,13 @@ Validation: 53 automated checks passed, including six focused keyboard tests and
 ### Owner Nikkud grouping correction — 2026-10-03
 
 Guy explicitly placed חטף קמץ in a, the left Shin/Sin dot in o, the right Shin dot under …, and clarified that stop means שווא. Sheva is now its own category/button beneath the five sound categories; the visible stop label was subsequently removed at Guy’s request. Canonical Unicode insertion is preserved: right Shin U+05C1, left Sin U+05C2, Holam U+05B9 and Sheva U+05B0 remain distinct even where visual positions resemble one another. This changes keyboard grouping only; no authored content, release IDs or learner records are migrated. Existing keyboard checks verify placement and actual insertion; manual hover/device acceptance remains Pending.
+
+## Question retries, progress and fresh-demo testing — 2026-10-04
+
+Wrong-answer feedback offers **Try this question again**, resetting only the current input/result and retaining its position and other submitted answers. The finish screen lists questions whose latest answer in the pinned revision was wrong; each opens a one-question repeat set. Correcting it removes that retry item. A lesson-wide bar counts each core question with a correct attempt once, within the saved revision. Wrong attempts and navigation do not increase it; progress persists within the same app build.
+
+Sentence prefix tiles now share ordinary tile styling and have no prefix label. In the selected answer, a prefix and the following tile form a group with a 2px gap, compared with 9px between words; each remains individually removable. Existing composition and grading continue to attach prefixes without guessing vowels.
+
+Guy explicitly requested a fresh demo on every app update. The local server fingerprints executable src/public assets and package-lock.json (normalized line endings), and stores `demo-progress-build` in the existing KV table. A new build transaction clears completed lessons, attempts, cards/schedules, saved positions, last-review undo and review receipts for all three fictional profiles. Settings, notes/bookmarks, entitlements, published content/drafts and questions/reports remain. Same-build refreshes and restarts retain new progress; documentation-only edits do not reset. No schema migration or production integration. Server-code updates require restarting the local process; live asset changes are detected on API requests.
+
+All 62 automated checks pass. Actual-app/store regressions cover retries, correction, saved progress and prefix grouping; SQLite/HTTP tests cover reset-on-update and retention across refresh/restart. Visual/device testing and Guy acceptance remain Pending.

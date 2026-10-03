@@ -5,10 +5,11 @@ import { resolve, dirname, relative, isAbsolute, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Store, DomainError } from './store.js';
 import { help } from './tutor.js';
+import { demoBuildFingerprint } from './demo-build.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml' };
-export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {}) {
+export function createServer(store, { mediaRoot = resolve(root, 'uploads'), demoBuild = null } = {}) {
   return http.createServer(async (req, res) => {
     const headers = { 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' https: data:; media-src 'self' https: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'", 'Referrer-Policy': 'no-referrer' };
     const json = (status, data) => { res.writeHead(status, { ...headers, 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(data)); };
@@ -20,6 +21,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
       if (url.pathname === '/api/health' && req.method === 'GET') return json(200, { ok: true, demo: true });
       if (url.pathname.startsWith('/api/')) {
         const userId = req.headers['x-demo-user'] || 'learner-demo'; store.learner(userId);
+        if(demoBuild)store.resetDemoProgressForBuild(await demoBuild());
         if (req.method === 'GET') {
           if (url.pathname === '/api/bootstrap') return json(200, store.bootstrap(userId));
           if (url.pathname === '/api/session') return json(200,store.session(userId,url.searchParams.get('lessonId')));
@@ -90,7 +92,8 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   mkdirSync(resolve(root, 'data'), { recursive: true });
   const store = new Store(resolve(root, 'data', 'hebleo-demo.sqlite'));
-  const server = createServer(store); const port = Number(process.env.PORT || 4173);
+  store.resetDemoProgressForBuild(await demoBuildFingerprint());
+  const server = createServer(store,{demoBuild:demoBuildFingerprint}); const port = Number(process.env.PORT || 4173);
   server.listen(port, '127.0.0.1', () => console.log('Hebleo local demo: http://127.0.0.1:' + port));
   const stop = () => server.close(() => { store.close(); process.exit(0); });
   process.on('SIGINT', stop); process.on('SIGTERM', stop);

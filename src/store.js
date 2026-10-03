@@ -117,6 +117,15 @@ export class Store {
   learner(userId) { if (!users.some(u => u.id === userId)) throw new DomainError('Unknown demo learner.', 404); const state = JSON.parse(this.db.prepare('SELECT state FROM learners WHERE id=?').get(userId).state); state.preferences = { ...preferenceDefaults, ...state.preferences }; state.resumes ||= {}; return state; }
   requireAuthor(userId) { if (!users.find(u => u.id === userId)?.canAuthor) throw new DomainError('Author workspace required. Switch to the fictional Author profile for local testing.', 403); }
   saveLearner(userId, state) { this.db.prepare('INSERT INTO learners(id,state) VALUES(?,?) ON CONFLICT(id) DO UPDATE SET state=excluded.state').run(userId, JSON.stringify(state)); }
+  resetDemoProgressForBuild(build) {
+    if(typeof build!=='string'||!build.trim()||build.length>100)throw new DomainError('Invalid demo build.');
+    if(this.get('demo-progress-build')===build)return false;
+    return this.transaction(()=>{
+      for(const user of users){const state=this.learner(user.id);Object.assign(state,{completed:[],attempts:[],cards:{},resumes:{},lastReview:null});delete state.lastLessonId;this.saveLearner(user.id,state);}
+      this.db.exec("DELETE FROM kv WHERE key LIKE 'review-%'");
+      this.set('demo-progress-build',build);return true;
+    });
+  }
   active() { return { revisionId: this.get('active'), content: this.snapshot(), draft: this.get('draft'), history: this.db.prepare('SELECT id,created_at AS createdAt,reason FROM revisions ORDER BY id DESC').all() }; }
   dependencies(wordId, content = this.snapshot()) {
     return { lessons: content.lessons.filter(l => l.wordIds.includes(wordId) || l.blocks.some(b => b.source === 'words' && content.lessons.find(target => target.id === b.selector.lessonId)?.wordIds.includes(wordId))).map(l => l.id), exercises: content.exercises.filter(e => e.wordId === wordId || e.wordIds?.includes(wordId)).map(e => e.id), review: 'All enrolled cards for this word resolve the latest published vocabulary.' };
