@@ -1,0 +1,33 @@
+// Illustrative fixtures only. These are not imported or approved Hebleo lessons.
+export const seed = {
+  schemaVersion: 1,
+  provenance: { kind: 'synthetic-demo', label: 'Illustrative demo content; not approved replacement curriculum.' },
+  words: [
+    { id: 'w-ani', pointed: 'אֲנִי', unpointed: 'אני', curated: 'אֲנִי', english: 'I', notes: 'The speaker refers to themself.', format: { color: '#137c83' } },
+    { id: 'w-mi', pointed: 'מִי', unpointed: 'מי', curated: 'מִי', english: 'who', notes: 'A question word.' },
+    { id: 'w-hu', pointed: 'הוּא', unpointed: 'הוא', curated: 'הוּא', english: 'he', notes: 'Third-person masculine singular.' },
+    { id: 'w-hi', pointed: 'הִיא', unpointed: 'היא', curated: 'הִיא', english: 'she', notes: 'Third-person feminine singular.' },
+    { id: 'w-bayit', pointed: 'בַּיִת', unpointed: 'בית', curated: 'בַּיִת', english: 'house', notes: 'The base form. In the expression בבית, the prefix and pronunciation also change.' },
+    { id: 'w-babayit', pointed: 'בַּבַּיִת', unpointed: 'בבית', curated: 'בבית', english: 'at home', notes: 'In this expression: at home / in the house.' },
+    { id: 'w-po', pointed: 'פֹּה', unpointed: 'פה', curated: 'פה', english: 'here', notes: 'A location word.' },
+    { id: 'w-sham', pointed: 'שָׁם', unpointed: 'שם', curated: 'שם', english: 'there', notes: 'A location word.' },
+    { id: 'w-kotev', pointed: 'כּוֹתֵב', unpointed: 'כותב', curated: 'כּוֹתֵב', english: 'writes (masculine singular)', notes: 'Present-tense masculine singular form; also can mean is writing.' },
+    { id: 'w-kotevet', pointed: 'כּוֹתֶבֶת', unpointed: 'כותבת', curated: 'כּוֹתֶבֶת', english: 'writes (feminine singular)', notes: 'Present-tense feminine singular form; also can mean is writing.' }
+  ],
+  lessons: [
+    { id: 'lesson-1', title: 'Small words, first connections', chapter: '01 · Getting started', minutes: 4, letters: 'אהוימנ', explanation: 'Begin with a few short words. Notice the same letters returning in different combinations. This demonstration shows how a brief explanation, a small vocabulary set, and a bounded check can fit together.', wordIds: ['w-ani', 'w-mi', 'w-hu', 'w-hi'], exerciseIds: ['ex-1-recognize', 'ex-1-type', 'ex-1-match'], blocks: [{ type: 'explanation', renderer: 'text' }, { type: 'vocabulary', source: 'words', selector: { lessonId: 'lesson-1' }, renderer: 'vocabulary-table', options: { showNotes: true } }, { type: 'exercise-set', source: 'exercises', selector: { lessonId: 'lesson-1' }, renderer: 'practice' }] },
+    { id: 'lesson-2', title: 'Say where someone is', chapter: '02 · Build a sentence', minutes: 5, letters: 'אהויבתפשמ', explanation: 'Use the pronouns from the previous lesson to say where someone is. In these simple present-tense examples, Hebrew does not add a separate word for “am” or “is”: אני בבית — I am at home. Earlier words now become the foundation for a new sentence.', wordIds: ['w-ani', 'w-hu', 'w-hi', 'w-bayit', 'w-babayit', 'w-po', 'w-sham'], exerciseIds: ['ex-2-order', 'ex-2-cloze', 'ex-2-transform'], blocks: [{ type: 'explanation', renderer: 'text' }, { type: 'vocabulary', source: 'words', selector: { lessonId: 'lesson-2' }, renderer: 'vocabulary-table', options: { showNotes: true } }, { type: 'exercise-set', source: 'exercises', selector: { lessonId: 'lesson-2' }, renderer: 'practice' }] },
+    { id: 'lesson-3', title: 'Make the sentence agree', chapter: '03 · Connect and apply', minutes: 5, letters: 'אהויכבתפשםנ', explanation: 'Return to familiar pronouns and sentence structure while introducing a verb. Compare הוא כותב and היא כותבת. The form of the verb changes with the subject. This is an illustrative spiral: new information connects to a sentence pattern you have already used.', wordIds: ['w-hu', 'w-hi', 'w-kotev', 'w-kotevet', 'w-po', 'w-sham'], exerciseIds: ['ex-3-recognize', 'ex-3-transform', 'ex-3-order'], blocks: [{ type: 'explanation', renderer: 'text' }, { type: 'vocabulary', source: 'words', selector: { lessonId: 'lesson-3' }, renderer: 'vocabulary-table', options: { showNotes: true } }, { type: 'exercise-set', source: 'exercises', selector: { lessonId: 'lesson-3' }, renderer: 'practice' }] }
+  ],
+  exercises: [
+    { id: 'ex-1-recognize', lessonId: 'lesson-1', type: 'recognition', wordId: 'w-mi', prompt: 'Choose the meaning of this word.', distractors: ['I', 'he', 'she'] },
+    { id: 'ex-1-type', lessonId: 'lesson-1', type: 'typing', wordId: 'w-ani', prompt: 'Type the Hebrew word for “I”.' },
+    { id: 'ex-1-match', lessonId: 'lesson-1', type: 'matching', wordIds: ['w-hu', 'w-hi', 'w-mi'], prompt: 'Match each word to its meaning.' },
+    { id: 'ex-2-order', lessonId: 'lesson-2', type: 'ordering', prompt: 'Build: “I am at home.”', tokens: ['בבית', 'אני'], answers: ['אני בבית'] },
+    { id: 'ex-2-cloze', lessonId: 'lesson-2', type: 'cloze', prompt: 'Complete: ___ בבית — She is at home.', answers: ['היא'], nikkudOverride: 'none' },
+    { id: 'ex-2-transform', lessonId: 'lesson-2', type: 'transformation', prompt: 'Change “He is at home” to “She is at home”.', context: 'הוא בבית', answers: ['היא בבית'] },
+    { id: 'ex-3-recognize', lessonId: 'lesson-3', type: 'recognition', wordId: 'w-kotevet', prompt: 'Choose the meaning of this form.', distractors: ['he', 'at home', 'writes (masculine singular)'] },
+    { id: 'ex-3-transform', lessonId: 'lesson-3', type: 'transformation', prompt: 'Change the subject and verb to feminine.', context: 'הוא כותב', answers: ['היא כותבת'] },
+    { id: 'ex-3-order', lessonId: 'lesson-3', type: 'ordering', prompt: 'Build: “She is writing here.”', tokens: ['פה', 'כותבת', 'היא'], answers: ['היא כותבת פה'] }
+  ]
+};

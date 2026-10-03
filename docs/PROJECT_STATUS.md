@@ -1,6 +1,12 @@
 # Project status
 
-2026-10-03: Local project initialized and pushed to the verified PRIVATE repository https://github.com/guylfe/hebleo-3.0. The combined setup for all six specialists was applied. Architecture/hosting assessment, curriculum/provenance, and the local demo implementation are being assigned. No application build has yet been verified.
+2026-10-03: Private repository https://github.com/guylfe/hebleo-3.0 created and privacy verified. Six specialists were created by applied decision c0581c67-a13a-42ef-b218-324bede11e5b; existing thread models were not changed.
+
+Architect, curriculum, and lead assignments failed before running due to the shared-folder lock. No teammate implementation, import, or review evidence exists from those runs. The native lead-profile isolation proposal returned pending review; an applied receipt is still required. Named QA/release checks are pending, not passed.
+
+Leo implemented a runnable bootstrap: three synthetic lessons, six exercise types, SQLite learner state, vowel display/keyboard, simple interval review, library, Studio with JSON/CSV imports, manifest order, draft publication, impact preview, history/rollback, backup/restore, and entitlement simulation. README records exact working scope and remaining features.
+
+Actual local validation: `npm.cmd run verify` — 15 checks passed, 0 failed; Node.js 24.19.0. Mounted background browser tools verified dashboard rendering, recognition and typed Hebrew feedback, and Studio draft/preview/publication. HTTP health on port 4173 returned `{ "ok": true, "demo": true }`. This checkpoint is not completion of the broad brief or a production release.
 
 Confirmed by the user: web payments remain in WordPress. Separate versus same-server deployment remains an architecture decision; initial local implementation uses an independent learner runtime with WordPress integration boundaries.
 

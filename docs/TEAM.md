@@ -11,6 +11,8 @@ The combined setup was applied on 2026-10-03 (decision c0581c67-a13a-42ef-b218-3
 | Hebleo QA Red Team | df3d19e5-dedf-4129-9d7a-5b08ffaa6bd9 | Grok / grok-4.7 | high |
 | Hebleo Release Reviewer | 6fce93a9-6bf0-4d8d-ad11-edd2d2a11700 | Codex / gpt-6-astra | xhigh |
 
-The lead owns main, commits, and pushes during parallel work in the shared checkout. Architect and curriculum specialist write their assigned documentation only and hand it to the lead for integration. Feature code uses an isolated branch/worktree or agreed disjoint files. QA and release gates evaluate the exact integrated revision.
+Initial architect, curriculum, and lead assignments failed before execution: OpenMaus reported another thread working in the project folder. A native proposal to give the lead its private working folder returned pending review; no applied receipt has been received. Other specialists also need viable isolated working folders before concrete assignments can run.
+
+The lead owns main, integration, commits, and pushes once it can start. Each specialist uses its own clone/branch and submits exact artifacts/commits. QA and release gates evaluate the exact integrated revision. Leo temporarily bootstrapped and verified the local demo while specialist runs were blocked; none of that work is attributed to teammates.
 
 The initial parallel workstreams are architecture/hosting assessment, curriculum/provenance pack, and broad local application implementation. Leo will dispatch independent QA and release review when the build is ready, and require concrete corrections as needed.
