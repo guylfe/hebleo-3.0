@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {randomUUID} from 'node:crypto';
 import {JSDOM} from 'jsdom';
 import {marked} from 'marked';
 import createPurifier from 'dompurify';
@@ -24,6 +25,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else if(url.pathname==='/api/progress')value=store.saveProgress(user,input);
     else if(url.pathname==='/api/preferences')value=store.updateLearner(user,input);
     else if(url.pathname==='/api/attempt')value=store.attempt(user,input);
+    else if(url.pathname==='/api/practice')value=store.practice(user,input);
     else if(url.pathname==='/api/studio'){store.requireAuthor(user);value={...store.active(),preview:store.preview()};}
     else if(url.pathname==='/api/reports')value=store.reports(user);
     else if(url.pathname==='/api/studio/draft'){store.requireAuthor(user);value=store.stage(input);}
@@ -36,6 +38,46 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+
+test('Lesson 1 can advance past optional practice with an unresolved Check answer, preserving actual completion and graded history',async t=>{
+  const {store,w,doc}=await app(t,{page:'lesson/lesson-1/complete',prepare(s){
+    s.attempt('learner-demo',{requestId:randomUUID(),revisionId:1,exerciseId:'ex-1-recognize',answer:'incorrect'});
+    s.attempt('learner-demo',{requestId:randomUUID(),revisionId:1,exerciseId:'ex-1-type',answer:'אני'});
+    const e=s.snapshot().exercises.find(e=>e.id==='ex-1-match');
+    s.attempt('learner-demo',{requestId:randomUUID(),revisionId:1,exerciseId:e.id,answer:Object.fromEntries(e.wordIds.map(id=>[id,s.snapshot().words.find(w=>w.id===id).english]))});
+  }});
+  assert.equal(store.learner('learner-demo').completed.includes('lesson-1'),false);
+  const attempts=store.learner('learner-demo').attempts;
+  const next=doc.querySelector('#practice [data-action="lesson"]');assert.ok(next);assert.equal(next.dataset.value,'lesson-2');assert.equal(next.textContent,'Next lesson →');
+  assert.equal(doc.querySelectorAll('#practice [data-action="target-practice"]').length,1);
+  next.click();await settled(()=>w.location.hash==='#lesson/lesson-2/learn');
+  assert.deepEqual(store.learner('learner-demo').attempts,attempts);assert.equal(store.learner('learner-demo').completed.includes('lesson-1'),false);
+  assert.equal(store.learner('learner-demo').resumes['lesson-1'].step,'complete');
+});
+
+test('Extra practice can be skipped before submission and after grading, clearing its resume without erasing attempts',async t=>{
+  const {store,w,doc}=await app(t,{page:'lesson/lesson-1/complete'});
+  click(doc,'target-practice');await settled(()=>doc.querySelector('#practice .exercise-footer'));
+  const skip=()=>[...doc.querySelectorAll('#practice [data-action="step"]')].find(el=>el.textContent==='Skip extra practice');
+  assert.ok(skip());assert.ok(store.learner('learner-demo').resumes['lesson-1'].practiceIds.length);
+  skip().click();await settled(()=>w.location.hash==='#lesson/lesson-1/complete'&&doc.querySelector('#practice [data-action="target-practice"]')&&store.learner('learner-demo').resumes['lesson-1'].practiceIds.length===0);
+  assert.deepEqual(store.learner('learner-demo').resumes['lesson-1'].practiceIds,[]);assert.equal(store.learner('learner-demo').attempts.length,0);
+  click(doc,'target-practice');await settled(()=>doc.querySelector('#practice .choices'));
+  doc.querySelector('#practice [data-action="choice"]').click();await settled(()=>doc.querySelector('#practice [data-action="check"]'));
+  click(doc,'check');await settled(()=>doc.querySelector('#practice .feedback'));
+  const attempts=store.learner('learner-demo').attempts;assert.equal(attempts.length,1);
+  skip().click();await settled(()=>w.location.hash==='#lesson/lesson-1/complete'&&doc.querySelector('#practice [data-action="target-practice"]')&&store.learner('learner-demo').resumes['lesson-1'].practiceIds.length===0);
+  assert.deepEqual(store.learner('learner-demo').attempts,attempts);assert.deepEqual(store.learner('learner-demo').resumes['lesson-1'].practiceIds,[]);
+});
+
+test('The final lesson offers a course exit when incomplete, and core exercises do not show the extra-practice skip',async t=>{
+  const {doc,w}=await app(t,{page:'lesson/lesson-3/complete'});
+  const exit=doc.querySelector('#practice [data-action="page"]');assert.ok(exit);assert.equal(exit.textContent,'Return to course →');assert.equal(exit.dataset.value,'course');
+  exit.click();await settled(()=>w.location.hash==='#course');
+  const lesson1=doc.querySelector('[data-action="lesson"][data-value="lesson-1"]');lesson1.click();await settled(()=>w.location.hash==='#lesson/lesson-1/learn');
+  doc.querySelector('[data-action="step"][data-value="apply"]').click();await settled(()=>doc.querySelector('#practice .exercise-footer'));
+  assert.ok(!doc.querySelector('#practice .exercise-footer').textContent.includes('Skip extra practice'));
+});
 
 test('Starting updated lesson through the actual app does not flush the old resume back over the reset',async t=>{
   const {store,doc}=await app(t,{prepare(s){s.saveProgress('learner-demo',{lessonId:'lesson-2',revisionId:1,step:'learn',question:0,answer:'old',selectedTokens:[],matching:{},practiceIds:[],resultRequestId:null});s.stage({baseRevisionId:1,word:{id:'w-mi',notes:'Updated'}});s.publish(1);}});

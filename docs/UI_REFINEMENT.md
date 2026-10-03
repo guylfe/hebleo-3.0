@@ -50,6 +50,8 @@ Reference contracts: [Sheets CellData/text runs](https://developers.google.com/w
 
 **Repeat lesson questions** selects authored questions whose latest attempt in that lesson/version was incorrect. If none are incorrect, it repeats that lesson's core questions. It does not generate new exercises or infer a new difficulty level.
 
+2026-10-04: Extra practice is optional. Every finish screen offers Next lesson or a course exit, even with unresolved core answers. Repeat sets include Skip extra practice before or after grading; leaving clears the extra-practice resume while preserving submitted attempts. Advancing does not grant lesson completion or enroll its words in review. Three actual-app/store regressions verify these paths; the full 56-check suite passes. Guy's Lesson 1 report is B12, awaiting retest.
+
 ## Flashcard Nikkud
 
 `content.reviewPolicy.defaultNikkud` is the author's default (`full`, `curated`, `none`); initially full. Studio stages this policy through the regular publication preview. Learner `preferences.reviewNikkud` can follow that default or override it. Settings and Review show explicit controls. Recognition fronts use the chosen authored word form. Sentence fronts can remove supplied Nikkud, but do not manufacture missing pointed/partially pointed sentences. Listening-first fronts remain audio; answers retain fully pointed source Hebrew. Final templates and independent schedules per card type remain for pedagogy work.
