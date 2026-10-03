@@ -1,5 +1,7 @@
 # Project status
 
+The maintained [feature and user-acceptance checklist](FEATURE_CHECKLIST.md) is the shared source for detailed scope/test status, including partial features and known issues. This file records milestones.
+
 2026-10-03: Private repository https://github.com/guylfe/hebleo-3.0 created and privacy verified. Six specialists were created by applied decision c0581c67-a13a-42ef-b218-324bede11e5b; existing thread models were not changed.
 
 Architect, curriculum, and lead assignments failed before running due to the shared-folder lock. No teammate implementation, import, or review evidence exists from those runs. The native lead-profile isolation proposal returned pending review; an applied receipt is still required. Named QA/release checks are pending, not passed.

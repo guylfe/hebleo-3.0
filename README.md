@@ -2,6 +2,8 @@
 
 A runnable first checkpoint of the human-authored Hebrew learning platform. Private repository: https://github.com/guylfe/hebleo-3.0. Product source: [master specification](docs/MASTER_SPEC.md); broader milestone: [initial build brief](docs/INITIAL_BUILD_BRIEF.md).
 
+The maintained [implementation and user-testing checklist](docs/FEATURE_CHECKLIST.md) records implemented, partial, simulated, and missing features, test steps, evidence, and known issues. It is the shared status source; this README is a quick walkthrough.
+
 Requires Node.js 24.19 or newer. No third-party runtime dependencies. On Windows, from this folder:
 
 ```powershell
