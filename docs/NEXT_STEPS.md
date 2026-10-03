@@ -1,0 +1,21 @@
+# Next development steps — planning draft, 2026-10-04
+
+Guy requested a team-assisted next-step plan. This sequence is a proposal for specialist review, not an implementation assignment or a reduced replacement for MASTER_SPEC.md. The full private course application remains the objective; production launch is not authorized by this plan.
+
+Current application: `e1f195c3850f9d7365f854338da269fb23737766`; checklist-ID correction: `6768901`. 62 implementation-owner automated checks passed. Real content, real media, live AI, FSRS and production identity/entitlements remain unfinished. Specialist execution and Guy acceptance are separate gates.
+
+| Proposed order | Concrete outcome | Team contribution | Exit evidence / dependency |
+| --- | --- | --- | --- |
+| 1. Stabilize the current learner flow | Verify direct question retries, correctness progress, optional practice exits, plain prefix attachment and keyboard behavior. Fix reproducible defects before expanding them. | QA independently executes checks; release reviewer examines data/publishing/reset consequences; lead identifies integration fixes. | Exact tested commit, reproducible findings, commands/results and retained manual/device limits. Guy's visual retest stays separate. |
+| 2. Deliver one representative real lesson end to end | Approve a small source-backed lesson/vocabulary/media pack, preview it in Studio, publish privately, and verify propagation and rollback. | Curriculum designer proposes source selection/provenance and human decision points; architect defines reference/formatting/media boundaries; feature engineer proposes the necessary authoring/import slice. | Human-approved canonical content and stable IDs; read-only source audit before import. Rich source formatting, native media and source provenance retained. No student/purchase import or live site edits. |
+| 3. Complete authoring and review foundations | Usable lesson/exercise authoring and draft execution preview, reusable sentence/media references, then agreed flashcard templates and genuine FSRS. | Lead sequences integration; feature engineer implements bounded branches after contracts; curriculum designer specifies pedagogy; QA verifies; reviewer checks state/migration consequences. | Scope and dependencies confirmed against MASTER_SPEC and checklist. Review type/schedule policy agreed before FSRS migration. No invented linguistic content or generic framework rewrite without a concrete need. |
+| 4. Build production service boundaries privately | Resolve deployment shape, identity and verified WordPress purchase/subscription events; rehearse cross-device persistence and migration using fixtures. | Architect evaluates alternatives; lead builds adapters; QA tests entitlement/event failures; reviewer gates identity/data changes. | WordPress remains web checkout. Separate deployment does not require separate physical hosting. Hosting purchase, live migration and launch require their own decisions. |
+| 5. Broaden delivery in dependency order | Real-device/mobile accessibility, PWA/offline and synchronization, then native apps and advanced tutor/immersion/community features. | Team refines ordering based on earlier evidence and product priorities. | Production data/identity contracts first; tested offline/reconnect policy. Deferred inventory remains visible in FEATURE_CHECKLIST. |
+
+## Coordination and evidence
+
+Leo consolidates the plan and keeps Guy's requirements distinct from teammate recommendations. Specialists start by proving their current repository access; roster availability is not access evidence. The previous shared-folder lock is historical and has not been reverified.
+
+No specialist edits Leo's active checkout/main or restarts the 4173 demo during planning. Code execution uses an isolated checkout and synthetic data; review outputs identify their exact revision and actual commands. A blocked startup is reported honestly, with native isolation/retry used if necessary. The lead becomes the implementation integration owner once access and a concrete assignment are confirmed.
+
+Each planning return provides recommended next outcome, prerequisite decisions, checklist/spec references, bounded owner responsibilities, acceptance evidence, and any actual access/test limitations. Consultation alone does not count as implementation or QA.
