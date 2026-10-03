@@ -6,6 +6,8 @@ This file is the shared feature-status and user-testing record. README is the qu
 
 Previous verified refinement application checkpoint: `5220a59ab6549d3343b29e15e48df2a2233664e2`. See [UI refinement](UI_REFINEMENT.md). Guy's feedback below refers to the preceding application `445d9d2` (documentation HEAD `9a35879`); the new fixes await his retest. Documentation-only commits do not imply extra behavior.
 
+Current compact keyboard application checkpoint: `e7c148e3a5bba0adb75d1bdd43a507e3cc7c0045`. All 53 local checks and [application CI](https://github.com/guylfe/hebleo-3.0/actions/runs/37152006034) passed. Private remote main matched this application checkpoint; the running 4173 assets were SHA-256 identical to the final local files. H03 and B09–B11 await Guy’s retest.
+
 ## Status and evidence
 
 - **Implemented locally:** working code in the demo; no production readiness or user acceptance implied.
