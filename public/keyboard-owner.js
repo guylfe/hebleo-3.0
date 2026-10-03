@@ -193,10 +193,10 @@
     vowelPicker.setAttribute('aria-label', 'Nikkud sounds');
     vowelPicker.hidden = true;
     var groups = [
-      {sound:'a', mark:'ַ', name:'Patah', variants:[['ָ','Qamats'],['ֲ','Hataf patah']]},
+      {sound:'a', mark:'ַ', name:'Patah', variants:[['ָ','Qamats'],['ֲ','Hataf patah'],['ֳ','Hataf qamats']]},
       {sound:'e', mark:'ֶ', name:'Segol', variants:[['ֵ','Tsere'],['ֱ','Hataf segol']]},
       {sound:'i', mark:'ִ', name:'Hiriq', variants:[['ִי','Hiriq with yod']]},
-      {sound:'o', mark:'ֹ', name:'Holam', variants:[['וֹ','Holam with vav'],['ֳ','Hataf qamats']]},
+      {sound:'o', mark:'ֹ', name:'Holam', variants:[['וֹ','Holam with vav'],['ׂ','Sin dot']]},
       {sound:'u', mark:'ֻ', name:'Qubuts', variants:[['וּ','Shuruk']]}
     ];
     groups.forEach(function (group) {
@@ -208,19 +208,25 @@
       addVowelVariants(row, key, group.variants);
       vowelPicker.appendChild(row);
     });
-    // Preserve the original non-vowel marks without labeling them as vowel sounds.
+    var stop = document.createElement('div');
+    stop.className = 'hebleo-keyboard__vowel-group';
+    stop.dataset.category = 'stop';
+    stop.appendChild(makeVowelKey('ְ', 'Sheva', 'stop'));
+    vowelPicker.appendChild(stop);
+    // Remaining consonant marks retain their own Unicode values.
     var extra = document.createElement('div');
     extra.className = 'hebleo-keyboard__vowel-group hebleo-keyboard__extra-marks';
-    var more = makeControlButton('more-marks', '⋯', 'Other marks: sheva, dagesh, shin and sin dots');
+    var more = makeControlButton('more-marks', '⋯', 'Other marks: dagesh and right Shin dot');
     extra.appendChild(more);
-    addVowelVariants(extra, more, [['ְ','Sheva'],['ּ','Dagesh'],['ׁ','Shin dot'],['ׂ','Sin dot']]);
+    addVowelVariants(extra, more, [['ּ','Dagesh'],['ׁ','Right Shin dot']]);
     vowelPicker.appendChild(extra);
     container.appendChild(vowelPicker);
     return container;
   }
 
   function makeVowelKey(mark, name, sound) {
-    var key = makeLetterKey({he:/^[\u05B0-\u05BC\u05C1\u05C2]/.test(mark) ? 'א'+mark : mark, en:sound || ''});
+    var base = mark === 'ׁ' || mark === 'ׂ' ? 'ש' : 'א';
+    var key = makeLetterKey({he:/^[\u05B0-\u05BC\u05C1\u05C2]/.test(mark) ? base+mark : mark, en:sound || ''});
     key.dataset.insert = mark;
     key.classList.add('hebleo-keyboard__vowel-key');
     key.setAttribute('aria-label', 'Insert '+name+(sound ? ' ('+sound+')' : ''));

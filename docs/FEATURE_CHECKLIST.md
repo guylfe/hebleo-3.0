@@ -6,7 +6,7 @@ This file is the shared feature-status and user-testing record. README is the qu
 
 Previous verified refinement application checkpoint: `5220a59ab6549d3343b29e15e48df2a2233664e2`. See [UI refinement](UI_REFINEMENT.md). Guy's feedback below refers to the preceding application `445d9d2` (documentation HEAD `9a35879`); the new fixes await his retest. Documentation-only commits do not imply extra behavior.
 
-Current compact keyboard application checkpoint: `e7c148e3a5bba0adb75d1bdd43a507e3cc7c0045`. All 53 local checks and [application CI](https://github.com/guylfe/hebleo-3.0/actions/runs/37152006034) passed. Private remote main matched this application checkpoint; the running 4173 assets were SHA-256 identical to the final local files. H03 and B09–B11 await Guy’s retest.
+Previous compact keyboard application checkpoint: `e7c148e3a5bba0adb75d1bdd43a507e3cc7c0045`. All 53 local checks and [application CI](https://github.com/guylfe/hebleo-3.0/actions/runs/37152006034) passed. Private remote main matched this application checkpoint; the running 4173 assets were SHA-256 identical to the final local files. H03 and B09–B11 await Guy’s retest.
 
 ## Status and evidence
 
@@ -181,6 +181,7 @@ B01/B02 originated in code inspection. The additional rows below record Guy’s 
 
 | 2026-10-03 | 5220a59 application | Remote main matched the full application commit; [GitHub Actions run 37147722285](https://github.com/guylfe/hebleo-3.0/actions/runs/37147722285) completed success. Final restarted 4173 returned healthy with refinement fixtures and three fictional profiles. | Private checkpoint, not production deployment, Guy acceptance or independent review. |
 | 2026-10-03 | Compact keyboard follow-up | npm.cmd run verify: 53 passed, 0 failed; separate keyboard syntax and whitespace checks. Mounted background browser: compact row/legend removal, Nikkud sound column, native caret and fully visible answer field. | Final hover/alternative and click-away pin visual checks stopped after browser lifecycle/endpoint loss. Exact dwell and pin persistence have automated evidence; mobile-native keyboard work deferred; Guy retest and independent review Pending. |
+| 2026-10-03 | Owner Nikkud grouping correction | 53 automated checks pass, including keyboard placement and exact Unicode insertion for the Shin/Sin dots and the separate Sheva button; syntax/whitespace checks passed. | Keyboard grouping follows Guy’s explicit correction. No new manual browser/device verification or user acceptance is claimed. |
 
 ## Maintaining this checklist
 

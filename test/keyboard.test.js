@@ -26,6 +26,11 @@ test('Nikkud uses five sound slots, inserts at the actual caret, and preserves n
   click('[data-action="toggle-vowels"]');
   assert.deepEqual([...doc.querySelectorAll('[data-sound]')].map(x=>x.dataset.sound),['a','e','i','o','u']);
   for(const group of doc.querySelectorAll('[data-sound]'))assert.ok(group.querySelector('.hebleo-keyboard__vowel-variants'),'Each sound has alternatives.');
+  assert.equal(doc.querySelector('[data-insert="ֳ"]').closest('[data-sound]').dataset.sound,'a');
+  assert.equal(doc.querySelector('[data-insert="ׂ"]').closest('[data-sound]').dataset.sound,'o');
+  assert.equal(doc.querySelector('[data-insert="ׁ"] .hebleo-keyboard__he').textContent,'שׁ');
+  assert.equal(doc.querySelector('[data-insert="ְ"]').parentElement.dataset.category,'stop');
+  input.value='נ';input.setSelectionRange(1,1);click('[data-category="stop"]>button');assert.equal(input.value,'נְ');
   input.value='אב';input.setSelectionRange(1,1);
   click('[data-sound="a"]>button');assert.equal(input.value,'אַב');assert.equal(input.selectionStart,2);
   click('[data-action="space"]');assert.equal(input.value,'אַ ב');
@@ -61,7 +66,10 @@ test('Vowel variants have a keyboard path, include auxiliary marks, and dismiss 
   doc.querySelector('[data-sound="o"]>button').dispatchEvent(new d.window.KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true,cancelable:true}));
   input.value='כ';input.setSelectionRange(1,1);click('#hebleo-vowel-o button');assert.equal(input.value,'כוֹ');
   click('[data-action="more-marks"]');assert.equal(doc.querySelector('#hebleo-vowel-other').hidden,false);
-  assert.equal(doc.querySelector('#hebleo-vowel-other').querySelectorAll('button').length,4);
+  assert.equal(doc.querySelector('#hebleo-vowel-other').querySelectorAll('button').length,2);
+  input.value='ש';input.setSelectionRange(1,1);click('#hebleo-vowel-other [data-insert="ׁ"]');assert.equal(input.value,'שׁ');
+  doc.querySelector('[data-sound="o"]>button').dispatchEvent(new d.window.KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true,cancelable:true}));
+  input.value='ש';input.setSelectionRange(1,1);click('#hebleo-vowel-o [data-insert="ׂ"]');assert.equal(input.value,'שׂ');
   doc.querySelector('[data-action="toggle-vowels"]').dispatchEvent(new d.window.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
   assert.equal(doc.querySelector('#hebleo-vowel-picker').hidden,true);
   assert.ok(doc.querySelector('.hebleo-keyboard--open'));
