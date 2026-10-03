@@ -18,6 +18,8 @@ Prefer a well-integrated broad build over disconnected feature stubs. The archit
 
 The user explicitly asked whether separate hosting versus placement alongside the existing WordPress website meaningfully changes development. This is an open architecture decision, not a settled production choice.
 
+The user then confirmed that web payments must continue through the existing WordPress checkout. Preserve that checkout. The learner backend consumes verified purchase/subscription/refund events to determine access; it must not introduce a replacement web payment processor. Mobile store billing remains a separate future decision. Here, "live payments" means real financial operations/events, not a requirement to add mobile billing.
+
 Leo's proposed direction is an independently deployed learner app, potentially `learn.hebleo.com`, with WordPress remaining marketing/checkout and explicit identity/entitlement integration. Separate deployment and separate physical hosting are different decisions: the services might share an appropriately configured server. A standalone local application is the first-build working assumption. The architect must assess and document standalone application, same-server deployment, and WordPress-embedded/plugin alternatives, including hosting capabilities, deployment, SSO, mobile/offline reuse, operational ownership, and migration implications. Do not buy hosting or implement production-specific identity assumptions before the decision is resolved. Keep adapters clean enough that deployment details can change without rewriting core learning logic.
 
 ## Core working scope
