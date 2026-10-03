@@ -24,14 +24,16 @@ export function importVocabularyCSV(csv, content) {
   finishRow();
   const headers = rows.shift()?.map(h => h.trim());
   const required = ['id', 'pointed', 'unpointed', 'curated', 'english'];
-  if (!headers || required.some(h => !headers.includes(h)) || new Set(headers).size !== headers.length || headers.some(h => ![...required, 'notes', 'color', 'bold'].includes(h))) throw new Error('CSV needs id, pointed, unpointed, curated, english; optional notes, color, bold.');
+  if (!headers || required.some(h => !headers.includes(h)) || new Set(headers).size !== headers.length || headers.some(h => !h || h.length > 100 || ['__proto__', 'prototype', 'constructor'].includes(h))) throw new Error('CSV needs unique columns including id, pointed, unpointed, curated, english. Other source columns are preserved.');
   if (!rows.length || rows.length > 2000) throw new Error('CSV needs 1–2000 vocabulary rows.');
   const next = structuredClone(content); const seen = new Set();
   for (const values of rows) {
     if (values.length !== headers.length) throw new Error('CSV row has a different number of columns.');
     const fields = Object.fromEntries(headers.map((h, i) => [h, values[i]]));
     if (seen.has(fields.id)) throw new Error('Duplicate CSV vocabulary ID: ' + fields.id); seen.add(fields.id);
-    const old = next.words.find(w => w.id === fields.id); const w = { ...old, ...Object.fromEntries(Object.entries(fields).filter(([key]) => !['color', 'bold'].includes(key))) };
+    const known = [...required, 'notes', 'root', 'pattern', 'gender', 'plural', 'feminine', 'pluralFeminine', 'infinitive', 'partOfSpeech', 'audio', 'introducedLesson', 'part'];
+    const old = next.words.find(w => w.id === fields.id); const w = { ...old, ...Object.fromEntries(Object.entries(fields).filter(([key]) => known.includes(key))) };
+    w.sourceFields = { ...old?.sourceFields, ...Object.fromEntries(Object.entries(fields).filter(([key]) => ![...known, 'color', 'bold'].includes(key))) };
     if ('color' in fields || 'bold' in fields) {
       w.format = { ...(old?.format || {}) };
       if ('color' in fields) { if (fields.color && !/^#[0-9a-f]{6}$/i.test(fields.color)) throw new Error('CSV color must be a six-digit hex value.'); if (fields.color) w.format.color = fields.color; else delete w.format.color; }

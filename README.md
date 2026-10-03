@@ -1,10 +1,8 @@
 # Hebleo 3.0 local demo
 
-A runnable first checkpoint of the human-authored Hebrew learning platform. Private repository: https://github.com/guylfe/hebleo-3.0. Product source: [master specification](docs/MASTER_SPEC.md); broader milestone: [initial build brief](docs/INITIAL_BUILD_BRIEF.md).
+Private build: https://github.com/guylfe/hebleo-3.0. The [master specification](docs/MASTER_SPEC.md) remains the product source. The maintained [feature and acceptance checklist](docs/FEATURE_CHECKLIST.md) records working scope, missing work and Guy's separate results. The [UX checkpoint](docs/UX_UPDATE.md) explains this update and inspected source references.
 
-The maintained [implementation and user-testing checklist](docs/FEATURE_CHECKLIST.md) records implemented, partial, simulated, and missing features, test steps, evidence, and known issues. It is the shared status source; this README is a quick walkthrough.
-
-Requires Node.js 24.19 or newer. No third-party runtime dependencies. On Windows, from this folder:
+Requires Node.js 24.19+; no third-party runtime dependencies. From this folder on Windows:
 
 ```powershell
 npm.cmd ci --ignore-scripts
@@ -12,39 +10,33 @@ npm.cmd run verify
 npm.cmd start
 ```
 
-Open http://127.0.0.1:4173. Stop a foreground server with Ctrl+C. `npm.cmd run dev` restarts after source changes. Other platforms can use `npm` without `.cmd`.
+Open http://127.0.0.1:4173. Ctrl+C stops a foreground server; `npm.cmd run dev` watches changes. First start creates synthetic content and fictional Alex/Sam/Author profiles in ignored SQLite. Later starts retain progress. Existing synthetic fixtures receive an additive UX revision if no draft is pending; source content and learner history survive.
 
-First startup creates illustrative content and two fictional demo learners in `data/hebleo-demo.sqlite`. Startup is idempotent and retains progress. The database and sidecars are excluded from Git. No live student data or real purchase processing.
+## Walkthrough
 
-## Working features
+1. Continue or open Course. Each lesson portion has its own URL and course outline. Text-only lessons show text directly; linked video defaults to Watch, with Watch/Read choices when both exist.
+2. Vocabulary always introduces full Nikkud. Switch Cards/Table, read notes and expand rich fields. My Hebrew searches roots, patterns, forms and other retained fields.
+3. Complete Check/Apply. Try all six exercise families, taught sentence distractors, clear cloze wording and retained matching feedback. Reload to resume the exact question and answer against the saved content revision.
+4. Settings groups immediate multiple-choice submission, sounds/animations and keyboard assistance. Continue remains separate. Exercise Nikkud controls have explicit labels and do not hide vowels from introduced vocabulary.
+5. Try the owner-inspired Hebrew keyboard, English hints, physical-key conversion, Nikkud entry, cursor controls or device keyboard. Numbers select choices/ratings; Enter/Space check/reveal/continue; R replays available audio. Editable fields retain normal shortcuts.
+6. Review a concept without leaving the question. After feedback, open vocabulary help or report a problem. Ask about a lesson/word opens authored help. Practice more prioritizes unresolved authored mistakes.
+7. Review a bounded session using Hebrew-to-meaning, English-to-Hebrew, listening-first or sentence-context. Listening/sentence cards need linked audio/examples. Reveal, rate and Undo last rating to restore the preceding schedule.
+8. Choose fictional Author for Studio. Edit core word fields or additional JSON, inspect dependencies and publish locally. Reports attach actual answers and source revisions; marking reviewed never changes grading.
+9. Import [the synthetic CSV example](docs/examples/vocabulary-demo.csv). Required headers: `id,pointed,unpointed,curated,english`. Known optional rich fields map directly; other columns keep their original labels in sourceFields. Matching IDs update, new IDs append and absent words/columns survive. Raw Google masterfile needs an approved stable-ID/form mapping.
+10. Author Settings exports/restores current content, three profiles, receipts, reports and pinned session snapshots. Restored answers require checking again after revision remapping. History/drafts/media are excluded; legacy two-learner backups remain supported.
 
-- Responsive dashboard, course, three illustrative lessons, vocabulary library, Studio, and preferences.
-- Recognition, typing, matching, ordering, cloze, and transformation exercises, graded on the server. Hebrew answer normalization, exercise vowel overrides, and an on-screen Hebrew keyboard.
-- Full, curated, and unpointed vocabulary modes; saved attempts, completion, bookmarks, personal notes, and per-learner preferences.
-- Word enrollment and a persisted simple interval review scheduler. This is explicitly **not FSRS**.
-- Canonical vocabulary references and source/selector/renderer lesson manifests. Studio reorders components; the learner renderer follows that order.
-- Word editing, dependency preview, validated full-content JSON and vocabulary CSV imports, atomic publishing, version history, and rollback. Learner state is retained. Open lessons pin their original revision.
-- Local backup/restore of published content, both learners, and replay receipts. Revision history and unpublished drafts are excluded from export.
-- Local WordPress purchase/membership event simulation. Cancelling membership retains the purchased course and basic review. A refund gates practice while preserving learner data.
+## Media and optional AI
 
-## Demo walkthrough
+Word `audio` accepts an HTTPS URL or `{ "url": "https://..." }`. Related form/example audio is retained. Lesson `video` and exercise `explanationTime` support playback and concept timestamps. Approved files in ignored `uploads/` can use `/media/file.mp3` or `/media/lesson.mp4`; byte-range seeking supports MP3/WAV/OGG/M4A/MP4/WebM. No upload UI or automatic media import.
 
-1. Choose **Continue learning**. Read, change vowel display, and complete the checks. Refresh to see saved progress.
-2. Add a word to review, open **Review**, reveal meaning, and rate recall. In **My Hebrew**, search, bookmark, and save a personal note.
-3. In **Studio**, edit a note or meaning and **Save draft**. Inspect affected lessons, then **Publish draft**. Reopen a lesson/review to see the published source. **Restore** an earlier version; progress stays.
-4. Import [the synthetic CSV example](docs/examples/vocabulary-demo.csv), preview, and publish. Or export full JSON and import an edited copy. Required CSV columns: `id,pointed,unpointed,curated,english`; optional `notes,color,bold`. CSV updates matching IDs, appends new IDs, and retains words absent from the file.
-5. Choose **Move vocabulary first**, publish, and reopen the lesson to see the manifest order.
-6. In **Settings**, cancel test membership and verify course/review access remains. Simulate a course refund to test the gate, then a purchase to restore it. These controls never contact WordPress.
-7. Export a backup, make changes, then restore. Both demo profiles and replay receipts return to the exported state.
+Audio supports play/pause/replay and normal/0.75× with pitch preservation. Optional record/replay comparison requires browser microphone permission, stays in this tab's memory, and clears on leaving the item; no scoring/upload. Native Hebleo recordings are not linked. Missing audio is labelled and disabled.
+
+Authored help needs no provider. An optional server-side [Responses API](https://developers.openai.com/api/docs/guides/migrate-to-responses) adapter is available. Copy `.env.example` to ignored `.env`, set `HEBLEO_AI_KEY` and an explicit `HEBLEO_AI_MODEL`, then restart using npm start. No key/model is bundled. Requests send source context/question with `store:false`, without learner history; output remains optional assistance. Settings reports configuration presence, not verified live connectivity. External AI help requires the fictional membership entitlement.
 
 ## Validation and limits
 
-`npm.cmd run verify` passes 15 executable checks covering grading, normalization, CSV fidelity, validation failures, publication/rollback, pinned answers, persistence, profile isolation, access, replay protection, restore, and HTTP boundaries. The [GitHub Actions run for the first runnable commit](https://github.com/guylfe/hebleo-3.0/actions/runs/37089995096) also passed. Future changes require their own validation.
+`npm.cmd run verify` passes 30 checks: existing grading/import/publish/restore plus stable destinations, taught distractors, rich-field preservation, pinned resumes, exact undo, reports, authored remediation, media seeking, author routes and mocked AI boundaries. The checklist records actual browser evidence separately; this is owner verification, not named independent QA or Guy's acceptance.
 
-Manual background browser checks confirmed dashboard rendering, recognition and Hebrew typing feedback, and Studio draft/preview/publication. This is implementation-owner verification; named QA/release reviewers have not run.
+All content remains synthetic. Real masterfile/course import, live Sheets/WordPress sync, original media linking, production login/entitlements, FSRS, final card pedagogy, independent schedules per type, roleplay/generated practice, speech scoring, offline/PWA, mobile apps and production deployment remain unfinished. Literal sentences do not rewrite when vocabulary changes. Colors are retained but displayed using a shared accent.
 
-All content is **synthetic demonstration material**, not imported or approved Hebleo curriculum. Native audio/video, real WordPress SSO/verified callbacks, rich-text Sheets sync, FSRS, offline/PWA, native apps, AI tutoring, and speech scoring are not implemented. Literal sentence fixtures are authored independently; word edits do not rewrite them. Bold is shown; authored colors are retained, but the UI uses one accent color.
-
-Demo accounts and Studio have no production authentication. The server binds only to `127.0.0.1` and rejects external hosts and cross-origin requests. Do not expose it publicly or through a tunnel. Production hosting, identity, and migration remain separate decisions; **web payments stay in WordPress**.
-
-See [bootstrap decisions](docs/architecture/BOOTSTRAP_DECISIONS.md) and [project status](docs/PROJECT_STATUS.md). The native team was created; initial assignments failed before execution due to a shared-folder lock. Folder isolation and independent reviews remain pending.
+Demo profiles are freely switchable; author gates are local behavior, not secure authentication. The server binds loopback and rejects external hosts/cross-origin requests. Web payments remain in WordPress. Named specialist execution/reviews remain pending in [project status](docs/PROJECT_STATUS.md).

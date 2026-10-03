@@ -24,10 +24,45 @@ export const seed = {
     { id: 'ex-1-type', lessonId: 'lesson-1', type: 'typing', wordId: 'w-ani', prompt: 'Type the Hebrew word for “I”.' },
     { id: 'ex-1-match', lessonId: 'lesson-1', type: 'matching', wordIds: ['w-hu', 'w-hi', 'w-mi'], prompt: 'Match each word to its meaning.' },
     { id: 'ex-2-order', lessonId: 'lesson-2', type: 'ordering', prompt: 'Build: “I am at home.”', tokens: ['בבית', 'אני'], answers: ['אני בבית'] },
-    { id: 'ex-2-cloze', lessonId: 'lesson-2', type: 'cloze', prompt: 'Complete: ___ בבית — She is at home.', answers: ['היא'], nikkudOverride: 'none' },
+    { id: 'ex-2-cloze', lessonId: 'lesson-2', type: 'cloze', prompt: 'Type the missing word: ___ בבית — She is at home.', answers: ['היא'], nikkudOverride: 'none' },
     { id: 'ex-2-transform', lessonId: 'lesson-2', type: 'transformation', prompt: 'Change “He is at home” to “She is at home”.', context: 'הוא בבית', answers: ['היא בבית'] },
     { id: 'ex-3-recognize', lessonId: 'lesson-3', type: 'recognition', wordId: 'w-kotevet', prompt: 'Choose the meaning of this form.', distractors: ['he', 'at home', 'writes (masculine singular)'] },
     { id: 'ex-3-transform', lessonId: 'lesson-3', type: 'transformation', prompt: 'Change the subject and verb to feminine.', context: 'הוא כותב', answers: ['היא כותבת'] },
     { id: 'ex-3-order', lessonId: 'lesson-3', type: 'ordering', prompt: 'Build: “She is writing here.”', tokens: ['פה', 'כותבת', 'היא'], answers: ['היא כותבת פה'] }
   ]
 };
+
+// Additive upgrade of synthetic fixtures only. Existing source fields and learner records survive.
+export function upgradeDemo(content) {
+  if (content.provenance.kind !== 'synthetic-demo' || content.uxVersion === 1) return null;
+  const next = structuredClone(content); next.uxVersion = 1;
+  const details = {
+    'w-ani': { partOfSpeech:'Pronoun', examples:[{hebrew:'אני בבית',english:'I am at home.'}] },
+    'w-hu': { partOfSpeech:'Pronoun',gender:'Masculine singular' },
+    'w-hi': { partOfSpeech:'Pronoun',gender:'Feminine singular' },
+    'w-kotev': { root:'כ־ת־ב',pattern:'קוֹטֵל',partOfSpeech:'Verb',gender:'Masculine singular',feminine:'כּוֹתֶבֶת',infinitive:'לִכְתּוֹב',examples:[{hebrew:'הוא כותב פה',english:'He is writing here.'}] },
+    'w-kotevet': { root:'כ־ת־ב',pattern:'קוֹטֶלֶת',partOfSpeech:'Verb',gender:'Feminine singular',examples:[{hebrew:'היא כותבת פה',english:'She is writing here.'}] }
+  };
+  for (const w of next.words) if (w.pointed === seed.words.find(x=>x.id===w.id)?.pointed) Object.assign(w, { ...details[w.id], ...w });
+  const feedback = {
+    'ex-1-recognize':['Pronouns and question words','מִי asks “who”. The pronouns refer to the speaker or another person.'],
+    'ex-1-type':['Pronouns','אֲנִי means “I”.'],
+    'ex-1-match':['Pronouns and question words','הוּא means “he”, הִיא means “she”, and מִי means “who”.'],
+    'ex-2-order':['Location sentences','אני בבית means “I am at home”. These present-tense examples have no separate word for “am”.'],
+    'ex-2-cloze':['Pronouns in context','היא is the feminine singular pronoun “she”. Enter the missing pronoun, rather than the full sentence.'],
+    'ex-2-transform':['Pronouns in context','Replace הוא with היא. The location expression בבית stays the same.'],
+    'ex-3-recognize':['Feminine verb forms','כותבת is the feminine singular present form.'],
+    'ex-3-transform':['Subject and verb agreement','Use היא with כותבת so both subject and verb are feminine singular.'],
+    'ex-3-order':['Subject and verb agreement','היא כותבת פה means “She is writing here”. The subject and verb agree.']
+  };
+  for (const e of next.exercises) {
+    const reference = seed.exercises.find(x=>x.id===e.id);
+    if (!reference || (e.prompt !== reference.prompt && !(e.id==='ex-2-cloze' && e.prompt==='Complete: ___ בבית — She is at home.'))) continue;
+    const f=feedback[e.id]; if(f){e.concept ||= f[0];e.feedback ||= f[1];}
+    if(e.id==='ex-2-cloze')e.prompt='Type the missing word: ___ בבית — She is at home.';
+  }
+  const first=next.lessons.find(l=>l.id==='lesson-1');
+  if(first && first.exerciseIds.includes('ex-1-recognize') && first.checkExerciseIds===undefined)first.checkExerciseIds=['ex-1-recognize'];
+  return next;
+}
+Object.assign(seed,upgradeDemo(seed));

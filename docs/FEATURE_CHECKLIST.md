@@ -1,8 +1,8 @@
 # Hebleo implementation and acceptance checklist
 
-Baseline: 2026-10-03; inspected application commit `0bcd99988a8acce9ee91d8d7d2106e46590d539f` and documentation commit `c0bb85d9370b4f1c4b4222b574f6fa6d1121801e`. This inventory covers the initial-build brief and feature families in the supplied master specification. Future/optional features listed here are not a promise that all belong in the first release.
+Initial inventory baseline: 2026-10-03; inspected application commit `0bcd99988a8acce9ee91d8d7d2106e46590d539f` and documentation commit `c0bb85d9370b4f1c4b4222b574f6fa6d1121801e`. This inventory covers the initial-build brief and feature families in the supplied master specification. Future/optional features listed here are not a promise that all belong in the first release.
 
-This file is the shared feature-status and user-testing record. README is the quick walkthrough; PROJECT_STATUS records milestones; MASTER_SPEC remains the product source. App features have not changed as part of creating this inventory.
+This file is the shared feature-status and user-testing record. README is the quick walkthrough; PROJECT_STATUS records milestones; MASTER_SPEC remains the product source. The 2026-10-03 UX update implements the accepted discussion decisions; see [UX checkpoint](UX_UPDATE.md) for contracts and source references.
 
 ## Status and evidence
 
@@ -10,80 +10,89 @@ This file is the shared feature-status and user-testing record. README is the qu
 - **Partial:** a working subset, with its missing portion stated explicitly.
 - **Simulated:** fictional local accounts/events only; no live service integration.
 - **Not implemented:** absent from this build, even if proposed in planning documents.
-- Evidence **A** = existing automated test coverage; **M** = prior owner-operated browser check; **C** = code inspection. Evidence describes scope, not a blanket guarantee.
+- Evidence **A** = automated test coverage; **M** = owner-operated browser check; **C** = code inspection. Evidence describes scope, not a blanket guarantee.
 - **Guy test** starts as **Pending** for every available feature. Only Guy's reported result changes it to Pass/Fail/Blocked. Automated success and independent QA are recorded separately.
 
-Test URL when the local server is running: http://127.0.0.1:4173. Startup and the synthetic CSV example are linked from README. Use fictional Alex/Sam profiles. Published edits affect both profiles' shared content; their learner records remain separate. Backups include both profiles.
+Test URL when the local server is running: http://127.0.0.1:4173. Startup and the synthetic CSV example are linked from README. Use fictional Alex/Sam learner profiles and Author for Studio. Published content is shared; learner records remain separate. New backups include all three profiles.
 
 ## Implemented locally: ready for user testing
 
 | ID | Feature | What to test / expected result | Evidence | Guy test |
 | --- | --- | --- | --- | --- |
-| L01 | Home dashboard and navigation | Open Your path, Course, Review, My Hebrew, Studio, Settings; each opens its own screen. | C, M (home) | Pending |
-| L02 | Recommended next unfinished lesson | Home Continue learning selects the first incomplete lesson; after all are complete it offers revisiting the first. This differs from the end-of-lesson bug below. | C | Pending |
-| L03 | Three illustrative lessons | Open all three: pronouns/reading, location sentences, and verb agreement. Each has explanation, vocabulary, and three checks; ten canonical words and nine exercises total. | C, A (grading) | Pending |
-| L04 | Text explanations and lesson vocabulary | Read explanation and vocabulary notes. Reused words resolve from canonical vocabulary rather than copied lesson rows. | C, A (references) | Pending |
-| L05 | Correct/incorrect feedback | Submit both a valid and invalid answer; receive feedback and an accepted answer, then advance through questions. | A, M (recognition/typing) | Pending |
+| L01 | Home dashboard and navigation | Open Your path, Course, Review, My Hebrew, Settings. Choose the fictional Author profile to expose Studio. | C, M (learner navigation) | Pending |
+| L02 | Resume or next unfinished lesson | Home offers the saved portion of the last unfinished lesson, otherwise the next unfinished lesson. When all are complete, it offers review and revisiting through the course. | A, C, M (course completion destination) | Pending |
+| L03 | Three illustrative lessons | Ten words and nine core exercises; explanation, vocabulary and practice on separate portion routes. Lesson 1 has a separate Check portion. | A, M (portion navigation) | Pending |
+| L04 | Text explanations and rich lesson vocabulary | Introduced vocabulary always has full authored Nikkud. Cards show notes and expandable rich fields; Table preserves every additional source column. Reused words resolve canonical entries. | A (rich-field preservation), M (cards/details/table) | Pending |
+| L05 | Correct/incorrect feedback | Feedback retains the actual submitted answer and accepted answer; authored explanation/details appear when supplied. Continue is separate from feedback. | A, M (recognition/typing) | Pending |
 | L06 | Completion and attempts | Answer every core question correctly at least once, across attempts if needed; lesson becomes complete and its words join review. Wrong attempts remain saved. | A | Pending |
-| L07 | Lesson recap and repeat practice | Finish a set to see session accuracy; More exercises repeats that same authored set. Weak results offer a link back to the explanation. | C | Pending |
-| E01 | Multiple-choice recognition | Lesson 1 question 1 and lesson 3 question 1: select the word's English meaning. | A, M (lesson 1) | Pending |
-| E02 | Typed Hebrew | Lesson 1 question 2: type the Hebrew for I, with or without vowels under default rules. | A, M | Pending |
-| E03 | Matching | Lesson 1 question 3: match he/she/who to meanings using dropdowns. See feedback-display issue B02. | A (grading), C (UI) | Pending |
-| E04 | Sentence ordering | Lesson 2 question 1 and lesson 3 question 3: select tokens in sentence order; remove a chosen token and rebuild. | A (grading), C (UI) | Pending |
-| E05 | Typed cloze | Lesson 2 question 2: complete the missing pronoun. | A (grading), C (UI) | Pending |
+| L07 | Lesson recap and targeted repeat practice | Finish a set, then Practice more prioritizes unresolved wrong answers in that lesson/revision; otherwise repeats authored core exercises. Generated/new practice sets are absent. | A, C | Pending |
+| E01 | Multiple-choice recognition | Lesson 1 Check and lesson 3 Apply: select the meaning. Enable immediate submission in Settings; selection grades immediately but Continue remains separate. | A (grading/preferences), M (immediate recognition) | Pending |
+| E02 | Typed Hebrew | Lesson 1 Apply question 1: type Hebrew for I, with or without vowels under default rules. | A, M | Pending |
+| E03 | Matching | Lesson 1 Apply question 2: match he/she/who using dropdowns. Submitted selections persist in feedback and saved resumes; B02 fixed. | A (grading/resume), C (UI); full manual dropdown walkthrough pending | Pending |
+| E04 | Sentence ordering with taught distractors | Lesson 2/3 Apply: build the sentence, return tokens and rebuild. Four to six distractors use taught words, prioritizing this lesson and two prior lessons; no future words. Publication rejects an insufficient taught pool. | A, C | Pending |
+| E05 | Typed cloze | Lesson 2 Apply question 2 says Type the missing word. Enter the missing pronoun. Its pedagogical value remains under review. | A, C | Pending |
 | E06 | Sentence transformation | Lesson 2 question 3 and lesson 3 question 2: change the subject/form as instructed. | A (grading), C (UI) | Pending |
 | E07 | Server-side grading and explicit accepted alternatives | Edit a full JSON exercise's accepted answers, stage/publish it, and test alternatives. Answers are not automatically generated. | A (all six grading families), C (alternative list) | Pending |
 | E08 | Hebrew normalization | Default typed checks ignore vowel marks, direction controls, selected punctuation, and extra spaces. Wrong spelling/final-letter substitutions stay wrong. | A | Pending |
 | E09 | Exact-vowel requirement | Available through full JSON import: set typing exercise requireNikkud=true; unpointed answer fails and authored pointed form passes. No Studio toggle yet. | A | Pending |
-| H01 | Curated / Full / None modes | Switch modes in lessons, library, review, and Settings; vocabulary uses explicit authored forms and preference survives reload. Curated can equal Full for some demo words. | C, A (preference storage) | Pending |
-| H02 | Tap-to-reveal vowels | Tap a vocabulary word in None/Curated mode to reveal Full, then tap again to restore the selected mode. This temporary reveal is not saved. | C | Pending |
-| H03 | Hebrew keyboard assistance | In typed exercises, click Hebrew letters, Space, and backspace; try replacing a selected range. Lesson letters are highlighted; all letters remain available. | C | Pending |
+| H01 | Explicit exercise Nikkud settings | Settings: Lesson-authored Nikkud / With Nikkud / Without Nikkud. Overrides remain exercise-specific. Introduced vocabulary stays fully pointed; cards follow their purpose. | A (storage), M (Settings) | Pending |
+| H02 | Contextual full-word entry | Tap a linked lesson word or vocabulary entry to inspect fully pointed Hebrew, meaning, notes, rich fields and available native audio in a dialog; closing preserves the lesson position. Replaces temporary vowel-reveal behavior. | C, M (word dialog) | Pending |
+| H03 | Hebrew keyboard assistance | Standard layout from the owner plugin, English hints, physical-key conversion, cursor controls, space, backspace and Nikkud buttons. Device-keyboard option. Lesson letters highlighted; all letters available. | C, M (typed input); touch/physical conversion acceptance pending | Pending |
 | R01 | Manual and completion-based review enrollment | Add a word from a lesson/library, or complete a lesson; cards are created once. | A | Pending |
-| R02 | Due queue and recognition cards | Open Review: due count, Hebrew front, revealed English/teaching note, and empty state when no words are due. One recognition card per word. | A (queue), C (UI) | Pending |
+| R02 | Bounded due queue and initial card presentations | Choose session length and Hebrew-to-meaning, English-to-Hebrew, listening-first or sentence-context. Listening/sentence cards require linked source material. Clear question/answer sides and reveal controls. Types currently share one schedule per word. | A (queue), C, M (recognition/reveal) | Pending |
 | R03 | Again / Hard / Good / Easy ratings | Rate recall and reload; due dates, interval, and repetition count persist. Again schedules ten minutes; Hard one day; Good/Easy expand a simple interval. This is not FSRS. | A | Pending |
 | R04 | Published vocabulary in review | Enroll a word, publish a meaning/note correction, then reopen Review; the card resolves the new canonical word. | A | Pending |
-| N01 | Vocabulary search | In My Hebrew, search English, exact Hebrew forms, or a teaching-note substring; no matches shows an empty state. Search does not normalize vowels. | C | Pending |
+| N01 | Rich vocabulary search | My Hebrew searches pointed/unpointed Hebrew, English, notes, root, pattern, forms and other retained fields. Search normalizes Nikkud. | A (helper), M (rich entry/search) | Pending |
 | N02 | Word bookmarks | Star/unstar words and reload; bookmark state remains with the selected learner. | C, A (preservation across publish/rollback) | Pending |
 | N03 | Personal word notes | Bookmark a word to expose its note box; save a note and reload/switch users. Notes belong to that learner. | C, A (storage/preservation) | Pending |
-| S01 | Vocabulary editor | In Studio, edit full vowels, unpointed form, curated form, English meaning, or teaching note; save a draft without changing published learner content. | A, M (note edit) | Pending |
+| S01 | Vocabulary editor | Author profile only: edit core forms/meaning/notes and additional JSON fields without discarding rich source data. Save a draft before publication. | A, C; earlier M (core editor) | Pending |
 | S02 | Change and dependency preview | Draft preview lists changed objects and affected lesson IDs; confirm a shared-word edit affects the appropriate lessons. It is a change report, not a rendered draft lesson. | A, M | Pending |
 | S03 | Deliberate atomic publication | Publish a draft; latest word-linked lesson/practice/library/review views use the new source. Existing open lesson remains pinned to its version. | A, M (publication) | Pending |
 | S04 | History and content rollback | Inspect numbered revisions/timestamps/reasons; restore an earlier revision. A new revision is created and learner attempts/notes/bookmarks/cards remain. | A | Pending |
 | S05 | Full content JSON import/export | Export content, edit a copy, choose it in Studio, Validate & stage, inspect impact, publish. Lessons/exercises can currently be edited only this way. | A (validation), C (UI/file wiring) | Pending |
-| S06 | Vocabulary CSV import | Import docs/examples/vocabulary-demo.csv or your exported CSV with required authored forms. Matching IDs update; new IDs append; absent words remain. Quoted notes/newlines and explicit forms are preserved. | A (parser/fidelity), C (UI/file wiring) | Pending |
+| S06 | Vocabulary CSV import with rich fields | Required explicit IDs/forms remain; known rich columns map to fields and other columns retain their original names in sourceFields. Quoted notes/newlines and omitted existing columns survive. Raw masterfile needs an approved ID/form mapping. | A (parser/fidelity/publish/backup), C (file wiring) | Pending |
 | S07 | Invalid content rejection | Try duplicate IDs, missing forms, broken references, unsupported types/renderers, or malformed CSV. Import must fail without replacing active content or an existing valid draft. | A | Pending |
-| S08 | Reusable component order | In Studio, Move vocabulary first, publish, reopen lesson; vocabulary precedes explanation. Exactly three component types are supported. | A (manifest resolution), C (UI) | Pending |
+| S08 | Reusable component order and portion routes | Move vocabulary first, publish, reopen a fresh session; manifest order determines portion order. Exactly three manifest block types remain; optional checkExerciseIds add a separate Check portion. | A, C | Pending |
 | S09 | Basic source/selector/renderer/options contract | Full JSON can select words by another lesson ID and hide vocabulary notes; validated renderer resolves canonical rows. Broader selectors are absent. | A (selector), C (option rendering) | Pending |
-| D01 | Persistent local learner records | Restart server/reload browser; completed lessons, attempts, preferences, cards, bookmarks, notes, and saved daily goal remain. Exact active question is not saved. | A | Pending |
-| D02 | Local backup export/restore | In Settings export, change both profiles/content, restore; active content, both profiles, and review/event replay receipts return to the snapshot. No revision-history/draft/media backup. | A (store restore), C (file controls) | Pending |
+| D01 | Persistent records and exact lesson resume | Reload/restart: learner data plus lesson revision, portion, question, typed/matching answer, tray selections and submitted feedback persist. Navigation flushes pending saves. | A, M (reload/typing) | Pending |
+| D02 | Local backup export/restore | Author Settings exports all three profiles, current content, replay receipts, learner reports and pinned session snapshots. Restore remaps session revisions and requires feedback to be checked again. No full history/draft/media backup. Legacy two-learner backups supported. | A, C | Pending |
 | D03 | Invalid restore rejection | Invalid content/learner/card backup must fail without partially replacing data. This is basic schema validation, not a completed security audit. | A | Pending |
-| D04 | Content-version-safe grading | Keep a lesson open, publish a word change in another window/profile, then answer the old lesson; it grades against the displayed revision. | A (backend), C (session pinning) | Pending |
+| D04 | Content-version-safe resumed grading | Open/resume a lesson across publication: answers grade against its saved immutable revision. Restored sessions retain their source snapshot. | A, C | Pending |
 | D05 | Stale publish/rollback protection | API/JSON-level test: a request with an old active revision must fail rather than overwrite a newer publication. No multi-editor draft merge. | A | Pending |
 | D06 | Duplicate operation protection | API-level test: repeat an attempt/rating/event request ID with identical data; no second attempt/rating/event applied. Conflicting ID payload is rejected. | A | Pending |
 | O01 | Repeatable startup and demo seeding | Node 24.19+; npm.cmd ci --ignore-scripts, npm.cmd start. First run seeds SQLite; later starts retain data. No one-click reset. | A (SQLite reopening), prior HTTP health check | Pending |
 | O02 | Local service boundaries | Server binds loopback; HTTP checks reject unknown demo users, external hosts, cross-origin requests, non-JSON/malformed bodies, and unknown files. Basic validation/size caps/CSP are present; not production auth. | A (selected HTTP cases), C (other guards) | Pending |
 | O03 | Private GitHub checkpoints and CI | Repo guylfe/hebleo-3.0 is private; source/docs/tests are pushed, local DB/logs are excluded, GitHub Actions runs checks. | Prior remote privacy/push/CI evidence | Pending |
+| L08 | Separate lesson portions and course outline | Learn, optional Check, Vocabulary, Apply, Finish have distinct URLs. Chapter/lesson navigation shows completion; outline collapses on smaller screens. | A, M | Pending |
+| R05 | Undo latest review rating | Rate, then Undo last rating. The exact preceding schedule returns once; replaying the old rating cannot apply it again. | A, M | Pending |
+| R06 | Short review session | Choose 1–100 due cards and an initial presentation; clear completion and return-to-course actions. | A (preferences), C, M (start/reveal) | Pending |
+| M01 | Native recording playback controls | Linked native recordings: play/pause, replay and normal/slower speed with pitch preservation. Audio available for words/forms/examples; listening front hides writing until reveal. No synthetic speech. | A (safe URL/range serving), C; real-media playback acceptance pending | Pending |
+| M02 | Local voice comparison | Record yourself after browser microphone permission, stop and replay; maximum 60 seconds. Tab-local recording clears on leaving item; no upload/scoring. | C; microphone walkthrough pending | Pending |
+| X01 | Immediate interaction and optional feedback | Settings groups immediate single-choice submission, separate Continue, sounds/animations and keyboard assistance. Reduced motion respected. | A (preference validation), M (immediate submission) | Pending |
+| X02 | Review concept without losing question | Exercise opens authored text/video/timestamp in dialog; closing restores the current answer/question. | C, M | Pending |
+| X03 | Learner error report and author queue | Report after feedback attaches actual answer/exercise/revision. Author marks reviewed; reports never alter grades or accepted answers. | A, C, M (report submission) | Pending |
 
 ## Simulated: test the local rules, not a live integration
 
 | ID | Feature | What to test / expected result | Evidence | Guy test |
-| I01 | Fictional Alex/Sam profile switch | Select each demo learner; attempts, preferences, notes, and cards remain separate. Both can open Studio; this is not a login or role system. | A (isolation), C (UI) | Pending |
-| I02 | Membership start/cancellation | In Settings cancel/start test membership. Cancellation retains purchased course and basic review. No premium tool changes because none exists. | A | Pending |
+| I01 | Fictional learner/author profile switch | Alex and Sam keep separate learner data and cannot use Studio APIs. Author can edit content and inspect reports. This selector/header is a local demo role boundary, not secure login. | A (isolation/routes), C | Pending |
+| I02 | Membership start/cancellation | Settings test cancellation retains course/basic review. Optional external AI help requires membership; authored help remains available. No WordPress calls. | A | Pending |
 | I03 | Course purchase/refund | Simulate refund: lesson attempts/enrollment/review are gated; stored progress remains. Simulate purchase: access returns. Vocabulary/content are still exposed in this demo, so this is not production content protection. | A | Pending |
 
 ## Partial implementations: available portion and missing portion
 
 | ID | Area | Available now | Still missing | Evidence | Guy test |
-| P01 | Continue / remediation | End-of-set score, repeat same set, revisit explanation; next-lesson button appears for strong performance. | Next-lesson destination has B01 bug; targeted/new extra sets, hints, concept-based recommendations, and adaptive practice. | C | Pending |
-| P02 | Watch / Read | Read text and a Watch tab displaying an explicit media-unavailable message. | Actual player, mapped native videos, transcript sync/subtitles, saved Watch/Read preference, separate checks embedded in explanation. | C | Pending |
+| P01 | Continue / remediation | Stable next lesson ID, final course destination, authored explanation panel and unresolved-mistake practice selection. | New authored extra pools, adaptive hints/concept mastery and generated practice. | A, M (lesson 1 to 2) | Pending |
+| P02 | Watch / Read | Native HTML video when linked; default Watch with a visible Watch/Read selector when text also exists. Text-only lessons show text directly. Optional concept timestamp. | Real course media mapping, transcript/subtitle sync and persisted format choice. | A (defaults/URL validation/range serving), C | Pending |
 | P03 | Vowel overrides | Exercise-specific mode overrides word-linked recognition/matching display; locked-mode badge and optional pointed-answer requirement. | Global override behavior for literal sentence tokens/context; visual authoring toggles, deliberate course-wide vowel fading. The cloze fixture alone does not prove all override behavior. | C, A (pointed requirement) | Pending |
-| P04 | Review / HebLearn | Due cards, simple intervals, recognition, persistence, course access rule. | FSRS, production/listening cards, multiple cards per note, learning steps, suspension/resumption controls, custom decks/collections, premium review modes, reviewed-activity history/UI. | A, C | Pending |
-| P05 | Lesson Studio | Visual vocabulary editing, impact report, limited manifest composition/order, full JSON editing path. | Visual course/chapter/lesson/sentence/exercise editors, add/remove/drag arbitrary blocks, richer settings, tag/filter/compound selectors, draft desktop/mobile lesson preview, multi-editor conflicts, editor identity/audit. | A, C, M (subset) | Pending |
+| P04 | Review / HebLearn | Due queue, simple intervals, four initial presentations, source audio controls and exact latest-rating undo. | FSRS migration/configuration, independent cards per type, learning steps, suspension UI, decks and final pedagogy/templates. | A, C, M (recognition/undo) | Pending |
+| P05 | Lesson Studio | Author-only demo role; visual core word editing, additional-field JSON, impact report, limited manifest composition, learner error queue. | Visual rich curriculum/exercise editors, arbitrary blocks/selectors, rendered draft preview, real identity/audit and multi-editor handling. | A, C; earlier M (core editing) | Pending |
 | P06 | Source formatting | Stores bold/color; CSV supports both; bold appears and an accent class is rendered. | Exact arbitrary authored colors, span-level rich text/highlighting, semantic formatting, and native Sheets formatting sync. | A (CSV), C | Pending |
 | P07 | Automatic propagation | Word-linked recognition/typing/matching, vocabulary/library/review use canonical words. | Sentence bank and canonical tokens; editing a word does not rewrite literal sentence prompts, ordering tokens, cloze/transformation answers, or media. Already open views refresh on action/navigation; no live push subscription. | A, C | Pending |
-| P08 | Progress / mistakes / stats | Attempts store answer/correct/expected/date; dashboard shows completion, aggregate accuracy, attempts, enrolled words, due count; goal minutes are saved. | Exact question resume, visible attempt/mistake bank, mastery model, time tracking, goal attainment/streaks, video preference, product/admin analytics. Enrolled count is not a mastery estimate. | A (storage), C | Pending |
-| P09 | Responsive/accessibility foundations | Responsive CSS, RTL inputs/bdi, labels, focus styles, Enter submission, status announcements. | Full mobile/tablet, screen-reader, keyboard-only, zoom/contrast and RTL punctuation acceptance testing; adjustable text, audio transcripts/subtitles, progression-driven feature disclosure. | C, M (one desktop viewport) | Pending |
-| P10 | Content objects and backup | Stable word/lesson/exercise IDs; immutable content history; current-content/learner snapshot export. | General course/chapter/concept/sentence/media/reading models, restore of revision history/drafts, automatic database/media backups and full disaster recovery. | A, C | Pending |
+| P08 | Progress / mistakes / stats | Exact saved position, actual attempts/answers, aggregates and targeted authored repeat practice. | Dedicated mistake bank, mastery/time tracking, attained goals/streaks, persistent video preference and analytics. | A, C, M (resume) | Pending |
+| P09 | Responsive/accessibility foundations | RTL/bdi, labels, feedback announcements, numbered choice/rating shortcuts, answer/reveal/continue and replay shortcuts, reduced motion, labelled small-screen navigation and collapsible course outline. | Full real-device, screen-reader, keyboard-only, zoom/contrast/RTL punctuation acceptance; adjustable text and transcripts. | C, M (desktop and narrow window) | Pending |
+| P10 | Content objects and backup | Stable word/lesson/exercise IDs; rich vocabulary; immutable source snapshots; current learner/content/reports and pinned-session export. | General registry, full history/draft/media restore, automatic backups and disaster recovery. | A, C | Pending |
+| P11 | Contextual authored/optional AI help | Ask about this lesson or word opens authored explanation. Optional server-side Responses API adapter uses source context, store:false and membership gate. | Live provider configuration/verification; no generated canonical content, roleplay or generated practice. | A (mocked adapter/offline/access), M (authored help) | Pending |
 
 ## Not implemented: remaining specification inventory
 
@@ -91,13 +100,13 @@ Test URL when the local server is running: http://127.0.0.1:4173. Startup and th
 | --- | --- | --- |
 | U01 | Import real Hebleo curriculum/masterfile | Demo uses synthetic fixtures; no verified source content or approved replacement sequence. |
 | U02 | Curriculum redesign and master sheet | Real-course audit, approved micro-lesson splitting/resequencing, Preserve/Improve/Reconsider proposals, deliberate spiral/scaffolding/extra-practice mapping. |
-| U03 | Original video and native word/sentence audio | Includes canonical playback, reusable media IDs, storage/upload/replacement, images/diagrams/PDFs, media provenance. |
+| U03 | Original course media import and general media registry | Playback and local /media streaming exist (P02/M01); native Hebleo files are not linked. Upload/replacement/provenance, images/PDFs and reusable media IDs remain. |
 | U04 | Full LearnDash course parity | Existing course/chapter coverage, quizzes, enrollments, progress, teaching/media behavior have not been reproduced. |
 | U05 | Additional exercise interactions | Multi-select, typed English, dropdown cloze, audio-to-Hebrew/meaning, dictation, sound discrimination/minimal pairs. |
 | U06 | Specialized Hebrew exercises | Root/pattern identification/prediction, noun-gender/conjugation exercises, add/remove Nikkud as distinct exercise types. Existing generic typing/transformation is not a morphology engine. |
-| U07 | Open and spoken exercise types | Recording/repeat/translate/answer aloud, open sentence/image description, communicative response, dialogue completion. |
-| U08 | Practice pools and targeted adaptation | Human-authored extra sets, adaptive selection/hints, weak-area remediation, standalone practice area, concept mastery and mistake-resolution tracking. |
-| U09 | Configurable keyboard modes | Per-exercise full/lesson-letter/subtle/none/native settings, progression, keyboard-recall safeguards; no vowel-entry buttons currently. |
+| U07 | Graded open and spoken exercises | Local record/replay comparison exists (M02), without scoring. Open descriptions, communicative responses and dialogue completion remain absent. |
+| U08 | New practice pools and full adaptive learning | Existing authored mistakes can be selected (L07/P01). Additional human-authored pools, adaptive hints, concept mastery and standalone practice remain absent. |
+| U09 | Pedagogy-driven keyboard progression | Owner-inspired global keyboard controls and Nikkud entry now exist (H03). Per-exercise full/lesson-letter/subtle/none progression and recall safeguards remain absent. |
 | U10 | Genuine FSRS and richer review | Algorithm/configuration decision, migration from old custom SRS, card templates/multiple modes/decks; see P04 for working subset. |
 | U11 | Live Google Sheets integration | Authentication/configured source, remote fetch/diff/publish/sync and formatting; CSV export/import is the only spreadsheet route. |
 | U12 | General reusable content registry | Canonical sentences/concepts/explanations/media/readings/dialogues/practice pools/review templates and cross-object propagation; current explanations live in lesson records. |
@@ -112,12 +121,12 @@ Test URL when the local server is running: http://127.0.0.1:4173. Startup and th
 | U21 | PWA and offline downloads | Installable app, chapter/media cache, offline exercises/review, reconnect queue/conflicts. Local SQLite on the server is not browser offline support. |
 | U22 | Cross-device synchronization | Device sessions, concurrent progress/review merging, conflict policies and tested recovery. |
 | U23 | Speech recognition / pronunciation evaluation | Recording pipeline, native reference comparison, stress/sound scoring, speaking feedback. |
-| U24 | AI tutor | Curriculum-constrained roleplay/conversation, explanations, generated optional practice, reading discussion/writing feedback and real model connection. |
+| U24 | Advanced AI tutor and live configuration | Authored contextual help plus optional server adapter exist (P11); no live model verified. Roleplay/conversation, generated practice, reading discussion and writing feedback remain absent. |
 | U25 | Guided immersion / reading library | Stories/articles/news/listening/dialogues/media feeds; known/weak/new-word coverage, tap dictionary/audio, learner-level matching. |
 | U26 | Community and instructor access | General/lesson discussion, contextual Q&A, private/public instructor answers and FAQ reuse, announcements, subscriber areas, moderation/reports. |
-| U27 | Expanded search/dictionary | Concepts/lessons/sentences/Q&A/readings, root/pattern/forms/examples/audio and relevant practice. Current search is vocabulary/teaching notes only. |
+| U27 | Search beyond vocabulary | Word fields including root/pattern/forms are searchable (N01). Concepts/lessons/sentences/Q&A/readings and relevant practice search remain absent. |
 | U28 | Expanded notebook | Saved sentences/exercises/readings, custom collections/decks, favorite exercises and dedicated saved-only views. Current word bookmarks/notes work. |
-| U29 | Motivation features | Streaks/freezes, XP, achievements, leaderboards, friend challenges and meaningful attainment. Saved goal value alone is not a tracked goal. |
+| U29 | Broader motivation features | Brief optional completion animation and feedback sounds exist (X01). Streaks/freezes, XP, achievements, leaderboards/challenges and attained goals remain absent. |
 | U30 | Onboarding and study plans | Goals/motivation questionnaire, placement, recommended pace, weekly plans and actual daily time/goal attainment. |
 | U31 | Notifications | Due/streak/study reminders, instructor/community replies and new-content notifications with granular controls. |
 | U32 | Full analytics | Time/weak skills/mastery, exercise/lesson reporting, drop-off, review adherence, D2/D7 retention, activation/conversion/cancellation. |
@@ -134,8 +143,8 @@ Test URL when the local server is running: http://127.0.0.1:4173. Startup and th
 
 | ID | Status | Reproduction / expected correction | Evidence |
 | --- | --- | --- | --- |
-| B01 | Confirmed by code inspection; not fixed | Finish lesson 1/2 with strong score and click Next lesson. The UI compares a cloned lesson object by object identity; indexOf returns -1 and chooses lesson 1. Expected: lookup next lesson by stable ID. This was not part of prior automated coverage. | public/app.js exercisePanel/openLesson |
-| B02 | Confirmed by code inspection; not fixed | Submit matching answers. Re-rendered dropdowns return to the empty option instead of displaying submitted selections. Backend retains the answer and shows expected meanings. Expected: retain submitted selections in feedback. | public/app.js exercisePanel matching branch |
+| B01 | Fixed locally, 2026-10-03 | Next lesson resolves by stable ID. Final lesson routes to course completion. | A (copied-object destination regression), M (lesson 1 completion opens lesson 2) |
+| B02 | Fixed locally, 2026-10-03 | Matching options use saved state in feedback and restored sessions. | A (matching grading/resume), M (restored he/she/who selections visible); full native dropdown walkthrough remains pending |
 
 These are implementation defects, not a claim that a user or independent reviewer reproduced them in the browser. Keep the rows after fixes and attach regression/acceptance evidence.
 
@@ -147,6 +156,8 @@ These are implementation defects, not a claim that a user or independent reviewe
 | 2026-10-03 | 0bcd999 application | GitHub Actions run 37089995096 completed success. | CI success does not imply product acceptance or production readiness. |
 | 2026-10-03 | Owner manual browser pass | Dashboard; lesson-1 recognition and typed Hebrew feedback; Studio word-note draft, affected-lesson report, publication. | No completed manual CSV, rollback, backup, mobile, matching, or ordering walkthrough is claimed. Later driver-owned browser lifecycle ended. |
 | 2026-10-03 | Current code inventory | Read source, README, build brief and master specification; recorded bounded implementation and B01/B02. | Not independent QA. User test results: none reported yet. |
+| 2026-10-03 | UX update, this checkpoint | npm.cmd run verify: 30 passed, 0 failed; separate syntax checks for media/UX/tutor modules; git diff --check passed. Includes rich-field preservation, pinned resumes/backups, taught distractors, undo, reports, role gates, media ranges and mocked AI. | No live AI, production login, source-media or FSRS claim. |
+| 2026-10-03 | UX owner browser pass | Local 4173: separate portions, typed-answer feedback, immediate recognition, lesson 1 completion opens lesson 2, labelled narrow navigation. Isolated in-memory 4174: review/reveal/rate/undo with exact prior schedule readback; restored matching selections; concept dialog preserves question; report attaches actual revision/answer; rich cards/table/root search/full entry; authored help. | Background mounted browser; synthetic data. Trusted clicks or explicit DOM clicks followed by state/API readback. Narrow-window visual check, not real-device acceptance. Native dropdown selection, microphone recording, real media playback and independent QA remain pending. |
 
 ## Maintaining this checklist
 

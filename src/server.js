@@ -1,15 +1,16 @@
 import http from 'node:http';
-import { readFile } from 'node:fs/promises';
-import { mkdirSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { readFile, stat, realpath } from 'node:fs/promises';
+import { mkdirSync, createReadStream } from 'node:fs';
+import { resolve, dirname, relative, isAbsolute, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Store, DomainError } from './store.js';
+import { help } from './tutor.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml' };
-export function createServer(store) {
+export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {}) {
   return http.createServer(async (req, res) => {
-    const headers = { 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'", 'Referrer-Policy': 'no-referrer' };
+    const headers = { 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' https: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'", 'Referrer-Policy': 'no-referrer' };
     const json = (status, data) => { res.writeHead(status, { ...headers, 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(data)); };
     try {
       const url = new URL(req.url, 'http://127.0.0.1');
@@ -21,6 +22,9 @@ export function createServer(store) {
         const userId = req.headers['x-demo-user'] || 'learner-demo'; store.learner(userId);
         if (req.method === 'GET') {
           if (url.pathname === '/api/bootstrap') return json(200, store.bootstrap(userId));
+          if (url.pathname === '/api/session') return json(200,store.session(userId,url.searchParams.get('lessonId')));
+          if (url.pathname === '/api/reports') return json(200,store.reports(userId));
+          if (['/api/studio','/api/export','/api/content'].includes(url.pathname)) store.requireAuthor(userId);
           if (url.pathname === '/api/studio') return json(200, { ...store.active(), preview: store.preview() });
           if (url.pathname === '/api/export') return json(200, store.backup());
           if (url.pathname === '/api/content') return json(200, store.snapshot());
@@ -31,6 +35,13 @@ export function createServer(store) {
           for await (const chunk of req) { bytes += chunk.length; if (bytes > 750000) throw new DomainError('Request exceeds the local import limit.', 413); chunks.push(chunk); }
           let input; try { input = JSON.parse(Buffer.concat(chunks).toString()); } catch { throw new DomainError('Malformed JSON.'); }
           if (!input || typeof input !== 'object' || Array.isArray(input)) throw new DomainError('Expected a JSON object.');
+          if (url.pathname.startsWith('/api/studio/') || ['/api/restore','/api/reports/resolve'].includes(url.pathname)) store.requireAuthor(userId);
+          if (url.pathname === '/api/progress') return json(200, store.saveProgress(userId,input));
+          if (url.pathname === '/api/practice') return json(200,store.practice(userId,input));
+          if (url.pathname === '/api/report') return json(200,store.report(userId,input));
+          if (url.pathname === '/api/reports/resolve') return json(200,store.resolveReport(userId,input));
+          if (url.pathname === '/api/help') return json(200,await help(store,userId,input));
+          if (url.pathname === '/api/review/undo') return json(200,store.undoReview(userId,input));
           if (url.pathname === '/api/preferences') return json(200, store.updateLearner(userId, input));
           if (url.pathname === '/api/attempt') return json(200, store.attempt(userId, input));
           if (url.pathname === '/api/review') return json(200, store.review(userId, input));
@@ -43,8 +54,28 @@ export function createServer(store) {
         }
         return json(404, { error: 'API endpoint not found.' });
       }
+      if (url.pathname.startsWith('/media/') && ['GET','HEAD'].includes(req.method)) {
+        const mediaTypes={'.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.m4a':'audio/mp4','.mp4':'video/mp4','.webm':'video/webm'};
+        const name=url.pathname.slice(7),type=mediaTypes[extname(name).toLowerCase()];
+        if(!type || !/^[A-Za-z0-9_./-]+$/.test(name) || name.includes('..'))throw new DomainError('Media not found.',404);
+        let file,base;
+        try { base=await realpath(mediaRoot);file=await realpath(resolve(base,name)); } catch { throw new DomainError('Media not found.',404); }
+        const path=relative(base,file);if(path.startsWith('..') || isAbsolute(path))throw new DomainError('Media not found.',404);
+        const info=await stat(file);if(!info.isFile())throw new DomainError('Media not found.',404);
+        let start=0,end=info.size-1,status=200;
+        if(req.headers.range){
+          const range=/^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
+          if(!range || !info.size || (!range[1]&&!range[2])){res.writeHead(416,{...headers,'Content-Range':'bytes */'+info.size});return res.end();}
+          start=range[1]?Number(range[1]):Math.max(0,info.size-Number(range[2]));end=range[1]&&range[2]?Math.min(end,Number(range[2])):end;
+          if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start>end||start>=info.size){res.writeHead(416,{...headers,'Content-Range':'bytes */'+info.size});return res.end();}
+          status=206;
+        }
+        res.writeHead(status,{...headers,'Content-Type':type,'Accept-Ranges':'bytes','Content-Length':Math.max(0,end-start+1),...(status===206?{'Content-Range':`bytes ${start}-${end}/${info.size}`}:{})});
+        if(req.method==='HEAD'||!info.size)return res.end();
+        const stream=createReadStream(file,{start,end});stream.on('error',()=>res.destroy());res.on('close',()=>stream.destroy());stream.pipe(res);return;
+      }
       if (req.method !== 'GET') return json(405, { error: 'Method not allowed.' });
-      const allowed = { '/': 'index.html', '/app.js': 'app.js', '/content.js': 'content.js', '/styles.css': 'styles.css' };
+      const allowed = { '/': 'index.html', '/app.js': 'app.js', '/content.js': 'content.js', '/ux.js': 'ux.js', '/media.js': 'media.js', '/styles.css': 'styles.css' };
       if (!allowed[url.pathname]) return json(404, { error: 'Page not found.' });
       const file = allowed[url.pathname]; const ext = '.' + file.split('.').pop();
       const body = await readFile(resolve(root, 'public', file));
