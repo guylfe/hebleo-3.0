@@ -1,9 +1,11 @@
 # Batch 2 draft / preview wire decisions (Lead, 2026-10-04)
 
-Status: decided by Lead for implementation. Architect owns the schema/ADR wording;
-any change goes through Lead with evidence. Base: 1f67a49. Lead implements on
-branch `lead/b2-draft-api` in `C:\Users\Trans\.openmausbot\workspaces\8c900356-50f6-4d41-bbb9-50c8abe09233\hebleo-lead`
-(fetch read-only with `git fetch <that path> lead/b2-draft-api`); also pushed to the private remote.
+Status: frozen by Lead and implemented. Architect owns the schema/ADR wording;
+any change goes through Lead with evidence. Base: 1f67a49.
+Implemented at a792f1e on private remote branch `lead/b2-draft-api` (https://github.com/guylfe/hebleo-3.0):
+`src/store.js`, `src/server.js`, `src/evaluate.js`; tests in `test/draft-api.test.js`.
+Fetch with `git fetch origin lead/b2-draft-api`, or read-only from the Lead clone
+`C:\Users\Trans\.openmausbot\workspaces\8c900356-50f6-4d41-bbb9-50c8abe09233\hebleo-lead`.
 
 Content stays `schemaVersion: 1` with `words`/`lessons`/`exercises` arrays. The store
 already keeps every field it is given (unknown/source fields, provenance, approval,
