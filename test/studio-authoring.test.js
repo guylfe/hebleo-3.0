@@ -13,6 +13,9 @@ function fixture() {
   for (const x of [...content.exercises,...content.lessons]) {
     x.privateSource = {locator:'fixture-only',snapshot:'synthetic-1'};
     x.extension = {richRuns:[{startIndex:0,format:{bold:true}}],unknown:['retain']};
+    x.provenance = {status:'synthetic-demo',source:{locator:'fixture-only'}};
+    x.approval = {status:'unapproved'};
+    x.media = {assetId:'fixture-only',revisionId:'fixture-r1',sha256:'a'.repeat(64)};
   }
   return content;
 }
@@ -134,17 +137,20 @@ test('import inspection exposes exact forms, formatting, provenance and omission
 });
 
 test('draft editors carry successful CAS tokens forward but retain previous tokens and authored input after rejection',async()=>{
-  for (const kind of ['exercise','lesson']) {
+  for (const kind of ['exercise','lesson']) for (const code of ['DRAFT_CONFLICT','STALE_BASE']) {
     const content=fixture(),{dom,container}=harness(),requests=[];let savedCalls=0;
-    const saveDraft=async input=>{requests.push(structuredClone(input));if(requests.length===2)throw Object.assign(new Error('Draft conflict; reload required'),{status:409});return {draft:{draftToken:`token-${requests.length}`}};};
-    const config={content,baseRevisionId:1,expectedDraftToken:'token-0',saveDraft,onSaved:()=>savedCalls++};
+    const saveDraft=async input=>{requests.push(structuredClone(input));if(requests.length===2)throw Object.assign(new Error('Raw conflict'),{status:409,code,current:{draftToken:'other-token',activeRevisionId:9}});return {draftToken:`token-${requests.length}`,draft:{draftToken:'nested-token-must-not-be-used'}};};
+    const config={content,baseRevisionId:1,expectedDraftToken:null,saveDraft,onSaved:()=>savedCalls++};
     const dispose=kind==='exercise'?mountExerciseEditor(container,{...config,exerciseId:content.exercises[0].id}):mountLessonEditor(container,{...config,lessonId:content.lessons[0].id});
     const form=container.querySelector('form'),field=kind==='exercise'?'prompt':'title';
     change(dom,form,field,'Fixture first edit');await submit(dom,form);
     change(dom,form,field,'Fixture conflicted edit');await submit(dom,form);
-    assert.match(form.textContent,/Draft conflict/);assert.equal(form.elements.namedItem(field).value,'Fixture conflicted edit');assert.equal(savedCalls,1);
-    await submit(dom,form);assert.deepEqual(requests.map(x=>x.expectedDraftToken),['token-0','token-1','token-1']);
+    assert.match(form.textContent,/Draft changed elsewhere — reload/);assert.match(form.textContent,/active revision: 9; draft token: other-token/);assert.equal(form.elements.namedItem(field).value,'Fixture conflicted edit');assert.equal(savedCalls,1);
+    await submit(dom,form);assert.deepEqual(requests.map(x=>x.expectedDraftToken),[null,'token-1','token-1']);
+    assert.ok(requests.every(x=>x.baseRevisionId===1));
     assert.equal(requests[2].content[kind==='exercise'?'exercises':'lessons'][0][field],'Fixture conflicted edit');
+    const retained=requests[2].content[kind==='exercise'?'exercises':'lessons'][0];
+    for(const key of ['id','privateSource','provenance','approval','extension','media']) assert.deepEqual(retained[key],content[kind==='exercise'?'exercises':'lessons'][0][key]);
     dispose();dom.window.close();
   }
 });

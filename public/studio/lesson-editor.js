@@ -1,4 +1,4 @@
-import {escapeHTML as e, field, wordOptions, markDirty, readFields, replaceObject} from './editor-fields.js';
+import {escapeHTML as e, field, wordOptions, markDirty, readFields, replaceObject, draftSaveError} from './editor-fields.js';
 
 export function applyLessonEdits(original, edits) {
   const next = structuredClone(original);
@@ -58,12 +58,12 @@ export function mountLessonEditor(container, {content, lessonId, baseRevisionId,
       controls.forEach(el=>el.disabled=true);
       const result = await saveDraft({baseRevisionId,expectedDraftToken,content:next});
       if (controller.signal.aborted) return;
-      expectedDraftToken = result?.draft?.draftToken ?? result?.draftToken ?? expectedDraftToken;
+      expectedDraftToken = result?.draftToken ?? expectedDraftToken;
       frozen = structuredClone(next); original = frozen.lessons.find(x=>x.id===lessonId);
       form.querySelectorAll('[data-block-index]').forEach((row,i)=>row.dataset.blockIndex=String(i));
       dirty.clear(); status.textContent = 'Lesson draft saved.';
       await onSaved(result,next);
-    } catch(error) {if (!controller.signal.aborted) status.textContent=error.message;}
+    } catch(error) {if (!controller.signal.aborted) status.textContent=draftSaveError(error);}
     finally {saving=false; controls.forEach((el,i)=>el.disabled=disabled[i]);}
   }, {signal});
   return () => controller.abort();

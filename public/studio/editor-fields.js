@@ -1,5 +1,12 @@
 // Authoring controls only. All content validation and grading remain server-owned.
 export const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export function draftSaveError(error) {
+  if ((error.status === 409 || error.statusCode === 409) && ['DRAFT_CONFLICT','STALE_BASE'].includes(error.code)) {
+    const current = error.current;
+    return `Draft changed elsewhere — reload${current ? ` (active revision: ${current.activeRevisionId}; draft token: ${current.draftToken ?? 'none'})` : ''}`;
+  }
+  return error.message;
+}
 export const field = (name, label, value, { multiline = false, type = 'text', options, hint } = {}) => {
   const e = escapeHTML;
   const control = options ? `<select name="${e(name)}">${options.map(([v, text]) => `<option value="${e(v)}"${String(value ?? '') === String(v) ? ' selected' : ''}>${e(text)}</option>`).join('')}</select>`

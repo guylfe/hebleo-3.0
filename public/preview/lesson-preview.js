@@ -49,21 +49,22 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
     if (!item || currentAnswer().result) return;
     answers.set(item.id, {answer:structuredClone(answer), result:null});
   }
-  async function submit() {
+  async function submit(wireAnswer) {
     assertMutable(); const item = exercise();
     if (!item || currentAnswer().result) return;
     const current = ++generation, answer = structuredClone(currentAnswer().answer);
     busy = true; status.textContent = 'Checking draft answer…'; render();
     try {
-      const response = await evaluate({lessonId, exerciseId:item.id, draftToken, answer});
+      const response = await evaluate({lessonId, exerciseId:item.id, draftToken, answer:structuredClone(wireAnswer)});
       if (!active() || current !== generation) return;
       if (response?.mode !== 'draft-preview' || response.persistent !== false || response.draftToken !== draftToken || !response.result) throw new Error('Invalid draft evaluation response.');
       answers.set(item.id, {answer, result:structuredClone(response.result)});
       status.textContent = 'Draft answer checked. Your learner progress is unchanged.';
     } catch (error) {
       if (!active() || current !== generation) return;
-      stale = error.status === 409 || error.statusCode === 409;
-      status.textContent = stale ? 'This draft changed. Exit and reopen rehearsal.' : error.message;
+      const code = error.status ?? error.statusCode;
+      stale = code === 409 || (code === 404 && error.code === 'PREVIEW_TARGET_NOT_FOUND');
+      status.textContent = code === 409 ? 'This draft changed. Exit and reopen rehearsal.' : error.message;
     } finally {if (active() && current === generation) {busy = false; render();}}
   }
   function retry() {assertMutable(); const item = exercise(); if (item) {answers.delete(item.id); lookupId = null; render();}}

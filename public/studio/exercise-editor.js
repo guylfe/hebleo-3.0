@@ -1,4 +1,4 @@
-import { escapeHTML as e, field, listField, booleanOptions, nikkudOptions, wordOptions, bindLists, markDirty, readFields, replaceObject } from './editor-fields.js';
+import { escapeHTML as e, field, listField, booleanOptions, nikkudOptions, wordOptions, bindLists, markDirty, readFields, replaceObject, draftSaveError } from './editor-fields.js';
 
 export const exerciseTypes = ['recognition', 'typing', 'matching', 'ordering', 'cloze', 'transformation'];
 const shared = ['prompt', 'feedback', 'feedbackDetails', 'concept', 'explanationTime', 'nikkudOverride', 'requireNikkud', 'allowLookup'];
@@ -67,14 +67,14 @@ export function mountExerciseEditor(container, {content, exerciseId, baseRevisio
       controls.forEach(el=>el.disabled=true);
       const result = await saveDraft({baseRevisionId, expectedDraftToken, content: next});
       if (controller.signal.aborted) return;
-      expectedDraftToken = result?.draft?.draftToken ?? result?.draftToken ?? expectedDraftToken;
+      expectedDraftToken = result?.draftToken ?? expectedDraftToken;
       status.textContent = 'Draft saved. Reloading author workspace…';
       // Subsequent saves from this mount use the successfully saved object.
       frozen = structuredClone(next);
       original = frozen.exercises.find(x => x.id === exerciseId);
       dirty.clear();
       await onSaved(result, next);
-    } catch (error) {if (!controller.signal.aborted) status.textContent = error.message;}
+    } catch (error) {if (!controller.signal.aborted) status.textContent = draftSaveError(error);}
     finally {saving = false; controls.forEach((el,i)=>el.disabled=disabled[i]);}
   }, {signal:controller.signal});
   return () => {controller.abort(); unbind();};
