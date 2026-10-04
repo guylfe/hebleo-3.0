@@ -36,7 +36,7 @@ test('all six exercise forms save/reload without losing authored answers, extens
     const before=store.backup();
     for(const type of exerciseTypes) {
       const exercise=content.exercises.find(x=>x.type===type), {dom,container}=harness();
-      const dispose=mountExerciseEditor(container,{content,exerciseId:exercise.id,baseRevisionId:store.get('active'),saveDraft:input=>store.stage(input)});
+      const dispose=mountExerciseEditor(container,{content,exerciseId:exercise.id,baseRevisionId:store.get('active'),expectedDraftToken:store.currentDraft()?.draftToken??null,saveDraft:input=>store.stage(input)});
       await submit(dom,container.querySelector('form'));
       assert.match(container.textContent,/Draft saved/);
       assert.deepEqual(store.active().draft.content,content);
@@ -75,8 +75,8 @@ test('prefix removal remaps stored token indices and never infers or rewrites ac
 test('failed draft validation retains the entered text and the previous saved draft',async()=>{
   const store=new Store(),content=fixture(),original=content.exercises.find(x=>x.type==='recognition'),{dom,container}=harness();
   try {
-    store.stage({baseRevisionId:1,content});const before=store.active().draft;
-    mountExerciseEditor(container,{content,exerciseId:original.id,baseRevisionId:1,saveDraft:input=>store.stage(input)});
+    store.stage({baseRevisionId:1,expectedDraftToken:null,content});const before=store.active().draft;
+    mountExerciseEditor(container,{content,exerciseId:original.id,baseRevisionId:1,expectedDraftToken:before.draftToken,saveDraft:input=>store.stage(input)});
     const form=container.querySelector('form');change(dom,form,'prompt','');
     await submit(dom,form);
     assert.match(form.textContent,/Invalid exercise prompt/);assert.equal(form.elements.prompt.value,'');
