@@ -142,3 +142,13 @@ test('Lesson help exposes an actual question form and saves it to the author inb
   const {store,w,doc}=await app(t);click(doc,'help');await settled(()=>doc.querySelector('#author-question-form'));
   const form=doc.querySelector('#author-question-form');form.elements.question.value='Why is this prefix used?';form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.questions('author-demo').length===1);assert.equal(store.questions('author-demo')[0].lessonId,'lesson-2');
 });
+
+test('Learner keyboard shortcuts never activate or handle controls inside a rehearsal root',async t=>{
+  const {w,doc}=await app(t,{page:'lesson/lesson-2/learn'});
+  const host=doc.createElement('div');host.dataset.previewRoot='';host.innerHTML='<button data-action="check">Check</button><button data-action="choice">One</button><button data-action="next-question">Next</button><button data-action="audio-replay">Replay</button><input id="answer">';doc.body.append(host);
+  let clicks=0;host.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>clicks++));
+  for(const key of ['Enter',' ','1','r'])doc.body.dispatchEvent(new w.KeyboardEvent('keydown',{key,bubbles:true,cancelable:true}));
+  const inside=new w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true});host.querySelector('input').dispatchEvent(inside);
+  host.querySelector('button').dispatchEvent(new w.KeyboardEvent('keydown',{key:'1',bubbles:true,cancelable:true}));
+  assert.equal(clicks,0);assert.equal(inside.defaultPrevented,false,'the learner handler leaves rehearsal keys to the rehearsal');
+});

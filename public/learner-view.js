@@ -56,7 +56,7 @@ export function exerciseInput(e,{mode,word,draft,result,keyboard=''}) {
 export function exerciseFeedback(e,result) {
   return result?'<div class="feedback '+(result.correct?'':'wrong')+'" role="status"><strong>'+(result.correct?'That’s right.':'Let’s look at this answer.')+'</strong><p>Your answer: <bdi>'+esc(typeof result.answer==='object'?Object.values(result.answer).join(' · '):result.answer)+'</bdi></p><p>Accepted answer: <bdi>'+esc(typeof result.expected==='object'?Object.values(result.expected).join(' · '):result.expected)+'</bdi></p>'+(e.feedback?'<p>'+esc(e.feedback)+'</p>':'')+(e.feedbackDetails?'<details><summary>Explain further</summary><p>'+esc(e.feedbackDetails)+'</p></details>':'')+'</div>':'';
 }
-// Wire answer exactly as graded by /api/attempt and /api/studio/preview/evaluate.
+// Wire answer exactly as graded by the learner attempt and draft preview evaluate endpoints.
 export function wireAnswer(e,draft) {
   let answer=draft.text;
   if(e.type==='ordering')answer=composeSentence(e.tokens,draft.selectedTokens,e.prefixTokenIndices);
