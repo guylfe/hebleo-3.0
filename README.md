@@ -10,7 +10,7 @@ npm.cmd run verify
 npm.cmd start
 ```
 
-Open http://127.0.0.1:4173. Ctrl+C stops a foreground server; `npm.cmd run dev` watches changes. First start creates synthetic content and fictional Alex/Sam/Author profiles in ignored SQLite. Refreshes/restarts of the same app build retain progress. App source/assets updates automatically clear all three fictional profiles’ lesson/review progress once per build, as requested for testing; settings, authored content/drafts and local questions/reports remain. Existing synthetic fixtures receive an additive UX revision if no draft is pending; source content and learner history survive.
+Open http://127.0.0.1:4173. Ctrl+C stops a foreground server; `npm.cmd run dev` watches changes. First start creates synthetic content and fictional Alex/Sam/Author profiles in ignored SQLite. Refreshes/restarts of the same app build retain progress. When `npm start` launches a new app build it clears all three fictional profiles’ lesson/review progress once, as requested for testing (`--demo-fresh-progress`, or `HEBLEO_DEMO_FRESH_PROGRESS=1`); settings, authored content/drafts and local questions/reports remain. The check runs only at startup, so editing files while the server runs never wipes new progress; `npm.cmd run dev` never resets. Existing synthetic fixtures receive an additive UX revision if no draft is pending; source content and learner history survive.
 
 ## Walkthrough
 
@@ -23,7 +23,7 @@ Open http://127.0.0.1:4173. Ctrl+C stops a foreground server; `npm.cmd run dev` 
 7. Review a bounded session using Hebrew-to-meaning, English-to-Hebrew, listening-first or sentence-context. Listening/sentence cards need linked audio/examples. Reveal, rate and Undo last rating to restore the preceding schedule.
 8. Choose fictional Author for Studio. Edit word fields/JSON, lesson Markdown with preview, known/new key groups/colors and default flashcard Nikkud; inspect dependencies and publish locally. Reports attach actual answers and source revisions; marking reviewed never changes grading.
 9. Import [the synthetic CSV example](docs/examples/vocabulary-demo.csv). Required headers: `id,pointed,unpointed,curated,english`. Known optional rich fields map directly; other columns keep their original labels in sourceFields. Matching IDs update, new IDs append and absent words/columns survive. Raw Google masterfile needs an approved stable-ID/form mapping.
-10. Author Settings exports/restores current content, three profiles, receipts, reports, question/reply inbox and pinned session snapshots. Restored answers require checking again after revision remapping. History/drafts/media are excluded; legacy two-learner backups remain supported.
+10. Author Settings exports/restores current content, the pending draft, three profiles, receipts, reports, question/reply inbox and every content revision that history points at (`hebleo-demo-backup-v2`). Restore remaps attempts, resumes, questions and reports to the same new revision IDs, so resumed feedback survives. Older v1 backups still restore; their attempts from uncarried revisions keep their grade and become explicit `legacyRevisionId` links instead of pointing at the wrong revision. Unreferenced history and media are excluded; legacy two-learner backups remain supported.
 
 Saved lessons use their original source revision. To see a newer fixture (including lesson-2 prefix tiles), choose **Start updated lesson**; it resets that lesson’s current position/answers while preserving graded attempts and review history.
 

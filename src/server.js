@@ -9,7 +9,11 @@ import { demoBuildFingerprint } from './demo-build.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml' };
-export function createServer(store, { mediaRoot = resolve(root, 'uploads'), demoBuild = null } = {}) {
+// Fresh demo progress is an explicit demo-only switch: npm start passes the flag; watch mode and tests do not.
+export const demoFreshProgressEnabled = (argv = process.argv, env = process.env) => argv.includes('--demo-fresh-progress') || env.HEBLEO_DEMO_FRESH_PROGRESS === '1';
+// Runs once before listening. A running server never re-fingerprints, so saving files mid-session cannot wipe new progress.
+export async function prepareDemoProgress(store, { enabled = demoFreshProgressEnabled(), fingerprint = demoBuildFingerprint } = {}) { return enabled ? store.resetDemoProgressForBuild(await fingerprint()) : false; }
+export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {}) {
   return http.createServer(async (req, res) => {
     const headers = { 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' https: data:; media-src 'self' https: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'", 'Referrer-Policy': 'no-referrer' };
     const json = (status, data) => { res.writeHead(status, { ...headers, 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(data)); };
@@ -21,7 +25,6 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'), demo
       if (url.pathname === '/api/health' && req.method === 'GET') return json(200, { ok: true, demo: true });
       if (url.pathname.startsWith('/api/')) {
         const userId = req.headers['x-demo-user'] || 'learner-demo'; store.learner(userId);
-        if(demoBuild)store.resetDemoProgressForBuild(await demoBuild());
         if (req.method === 'GET') {
           if (url.pathname === '/api/bootstrap') return json(200, store.bootstrap(userId));
           if (url.pathname === '/api/session') return json(200,store.session(userId,url.searchParams.get('lessonId')));
@@ -34,8 +37,9 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'), demo
         }
         if (req.method === 'POST') {
           if (!String(req.headers['content-type']).startsWith('application/json')) throw new DomainError('JSON content type required.', 415);
-          const chunks = []; let bytes = 0;
-          for await (const chunk of req) { bytes += chunk.length; if (bytes > 750000) throw new DomainError('Request exceeds the local import limit.', 413); chunks.push(chunk); }
+          // Backups carry every referenced revision, so restore gets a larger bound than ordinary edits.
+          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? 10000000 : 750000;
+          for await (const chunk of req) { bytes += chunk.length; if (bytes > limit) throw new DomainError('Request exceeds the local import limit.', 413); chunks.push(chunk); }
           let input; try { input = JSON.parse(Buffer.concat(chunks).toString()); } catch { throw new DomainError('Malformed JSON.'); }
           if (!input || typeof input !== 'object' || Array.isArray(input)) throw new DomainError('Expected a JSON object.');
           if (url.pathname.startsWith('/api/studio/') || ['/api/restore','/api/reports/resolve','/api/questions/answer'].includes(url.pathname)) store.requireAuthor(userId);
@@ -53,12 +57,15 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'), demo
           if (url.pathname === '/api/review') return json(200, store.review(userId, input));
           if (url.pathname === '/api/enroll') return json(200, store.enroll(userId, input.wordId));
           if (url.pathname === '/api/studio/draft') return json(200, store.stage(input));
-          if (url.pathname === '/api/studio/publish') return json(200, store.publish(input.baseRevisionId));
-          if (url.pathname === '/api/studio/rollback') return json(200, store.rollback(input.revisionId, input.baseRevisionId));
+          if (url.pathname === '/api/studio/publish') return json(200, store.publish(input.baseRevisionId, input.draftToken));
+          if (url.pathname === '/api/studio/rollback') return json(200, store.rollback(input.revisionId, input.baseRevisionId, input.expectedDraftToken));
+          // Author rehearsal: read-only against one exact draft token; no learner record is touched.
+          if (url.pathname === '/api/studio/preview/session') return json(200, store.previewSession(input));
+          if (url.pathname === '/api/studio/preview/evaluate') return json(200, store.previewEvaluate(input));
           if (url.pathname === '/api/demo/event') return json(200, store.entitlement(userId, input));
           if (url.pathname === '/api/restore') return json(200, store.restore(input));
         }
-        return json(404, { error: 'API endpoint not found.' });
+        return json(404, { error: 'API endpoint not found.', code: 'NOT_FOUND' });
       }
       if (url.pathname.startsWith('/media/') && ['GET','HEAD'].includes(req.method)) {
         const mediaTypes={'.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.m4a':'audio/mp4','.mp4':'video/mp4','.webm':'video/webm','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif'};
@@ -80,20 +87,20 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'), demo
         if(req.method==='HEAD'||!info.size)return res.end();
         const stream=createReadStream(file,{start,end});stream.on('error',()=>res.destroy());res.on('close',()=>stream.destroy());stream.pipe(res);return;
       }
-      if (req.method !== 'GET') return json(405, { error: 'Method not allowed.' });
+      if (req.method !== 'GET') return json(405, { error: 'Method not allowed.', code: 'METHOD_NOT_ALLOWED' });
       const allowed = { '/': 'index.html', '/app.js': 'app.js', '/content.js': 'content.js', '/ux.js': 'ux.js', '/media.js': 'media.js', '/styles.css': 'styles.css', '/refinement.css':'refinement.css', '/rich.js':'rich.js', '/rich-browser.js':'rich-browser.js', '/interactions.js':'interactions.js', '/keyboard-owner.js':'keyboard-owner.js', '/keyboard-owner.css':'keyboard-owner.css', '/hebleo-lion-mark.svg':'hebleo-lion-mark.svg', '/vendor/marked.js':'../node_modules/marked/lib/marked.esm.js', '/vendor/purify.js':'../node_modules/dompurify/dist/purify.es.mjs' };
-      if (!allowed[url.pathname]) return json(404, { error: 'Page not found.' });
+      if (!allowed[url.pathname]) return json(404, { error: 'Page not found.', code: 'NOT_FOUND' });
       const file = allowed[url.pathname]; const ext = url.pathname.startsWith('/vendor/') ? '.js' : '.' + file.split('.').pop();
       const body = await readFile(resolve(root, 'public', file));
       res.writeHead(200, { ...headers, 'Content-Type': types[ext] + '; charset=utf-8' }); res.end(body);
-    } catch (e) { json(e instanceof DomainError ? e.status : 500, { error: e instanceof DomainError ? e.message : 'Local server error. See terminal for details.' }); if (!(e instanceof DomainError)) console.error(e.message); }
+    } catch (e) { json(e instanceof DomainError ? e.status : 500, e instanceof DomainError ? { error: e.message, code: e.code, ...e.details } : { error: 'Local server error. See terminal for details.', code: 'SERVER_ERROR' }); if (!(e instanceof DomainError)) console.error(e.message); }
   });
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   mkdirSync(resolve(root, 'data'), { recursive: true });
   const store = new Store(resolve(root, 'data', 'hebleo-demo.sqlite'));
-  store.resetDemoProgressForBuild(await demoBuildFingerprint());
-  const server = createServer(store,{demoBuild:demoBuildFingerprint}); const port = Number(process.env.PORT || 4173);
+  if (await prepareDemoProgress(store)) console.log('Fresh demo progress for this app build: fictional lesson/review progress cleared; settings and content kept.');
+  const server = createServer(store); const port = Number(process.env.PORT || 4173);
   server.listen(port, '127.0.0.1', () => console.log('Hebleo local demo: http://127.0.0.1:' + port));
   const stop = () => server.close(() => { store.close(); process.exit(0); });
   process.on('SIGINT', stop); process.on('SIGTERM', stop);
