@@ -10,13 +10,14 @@ import {resolveBlock,importVocabularyCSV} from '../public/content.js';
 import * as ux from '../public/ux.js';
 import {composeSentence,bindMatching,matchWord} from '../public/interactions.js';
 import {richCell,cellCSS,createLessonRenderer} from '../public/rich.js';
+import * as learnerView from '../public/learner-view.js';
 async function settled(predicate){for(let i=0;i<80;i++){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle.');}
 async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore}={}){
   const store=providedStore||new Store();prepare?.(store);const d=new JSDOM('<div id="app"></div><div id="toast"></div>',{url:'http://127.0.0.1/#'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=d.window;
   t.after(()=>{w.close();if(!providedStore)store.close();});w.matchMedia=()=>({matches:false});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,ux,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),stopMedia(){},clearRecording(){},feedbackSound(){}});
+  Object.assign(w,ux,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),stopMedia(){},clearRecording(){},feedbackSound(){}});
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;try{let value;
     if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
     else if(url.pathname==='/api/questions')value=input?store.askQuestion(user,input):store.questions(user);

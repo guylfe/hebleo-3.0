@@ -5,12 +5,11 @@ import {renderLesson} from './rich-browser.js';
 import {composeSentence,bindMatching,matchWord} from './interactions.js';
 import {reviewNikkud} from './ux.js';
 import { playAudio, stopMedia, recordVoice, stopRecording, replayVoice, clearRecording, feedbackSound } from './media.js';
+import {esc,button,wordText,fieldText,cellAttribute,audioControls,richFields,wordCard,vocabularyTable,learnMedia,exerciseInput,exerciseFeedback,wireAnswer} from './learner-view.js';
 
 const root = document.querySelector('#app');
 const state = { page:'home', user:localStorage.getItem('hebleo-demo-user') || 'learner-demo', data:null, lessonId:'lesson-1', step:'learn', question:0, answer:'', matching:{}, selectedTokens:[], result:null, practiceIds:[], medium:'watch', wordId:'w-ani', search:'', studio:null, reports:[], questions:[], authorLessonId:'lesson-1', panel:null, reviewSession:null, revealReview:false, recording:'empty' };
-const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid = () => crypto.randomUUID();
-const button = (label, action, cls='', value='', disabled=false) => '<button type="button" class="button '+cls+'" data-action="'+action+'" data-value="'+esc(value)+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
 const pref = () => state.data.learner.preferences;
 let saveTimer, saveChain=Promise.resolve(), submitting=false, routeGeneration=0, lastFocus=null;
 async function api(path, body, user=state.user) {
@@ -28,20 +27,13 @@ function content() { return state.page==='lesson' && state.session ? state.sessi
 function word(id) { return content().words.find(w=>w.id===id); }
 function lessonObject() { return content().lessons.find(l=>l.id===state.lessonId); }
 function currentExercise() { const l=lessonObject();return l ? content().exercises.find(e=>e.id===stepExercises(l,state.step,state.practiceIds)[state.question]) : null; }
-function sourceCell(w,key){return w.fieldFormatting?.[key];}
-function wordText(w,mode='full') {
-  const key=mode==='none'?'unpointed':mode==='curated'?'curated':'pointed',cell=sourceCell(w,key),legacy=w.format||{};
-  const style=cellCSS(cell,w.sourceTheme)+(legacy.color&&/^#[0-9a-f]{6}$/i.test(legacy.color)?';color:'+legacy.color:'')+(legacy.bold?';font-weight:700':'');
-  return '<bdi dir="rtl" class="hebrew" style="'+style+'">'+richCell(w[key],cell,w.sourceTheme)+'</bdi>';
-}
-function fieldText(w,key,value){return richCell(value,sourceCell(w,key),w.sourceTheme);}
-function cellAttribute(w,key){return ' style="'+cellCSS(sourceCell(w,key),w.sourceTheme)+'"';}
 function keyboardContext(){return state.page==='lesson'?lessonObject()?.keyboard || {knownKeys:lessonObject()?.letters||'',newKeys:''}:{knownKeys:'',newKeys:''};}
 function syncKeyboard(){window.HebleoKeyboard?.sync(keyboardContext(),pref(),state.page==='lesson'?state.lessonId+'|'+state.step+'|'+state.question:state.page);}
 function returnKeyboard(){window.HebleoKeyboard?.mount(document.body);}
 function nextLesson() { return state.data.content.lessons.find(l=>!state.data.learner.completed.includes(l.id)) || null; }
 function continueLesson() { const l=state.data.content.lessons.find(l=>l.id===state.data.learner.lastLessonId && !state.data.learner.completed.includes(l.id));return l || nextLesson(); }
 function clearQuestionAnswer() { state.answer='';state.matching={};state.selectedTokens=[];state.result=null; }
+function answerDraft() { return {text:state.answer,matching:state.matching,selectedTokens:state.selectedTokens}; }
 function resetQuestion() { state.question=0;clearQuestionAnswer(); }
 function questionProgress(l) { return lessonQuestionProgress(l,state.data.learner.attempts,state.session.revisionId); }
 function lessonProgressBar(l) { const n=questionProgress(l).correctIds.length,total=l.exerciseIds.length;return '<div class="lesson-progress"><label for="lesson-question-progress">'+n+' of '+total+' questions answered correctly</label><progress id="lesson-question-progress" value="'+n+'" max="'+(total||1)+'" aria-label="Lesson questions answered correctly" aria-valuetext="'+n+' of '+total+'"></progress></div>'; }
@@ -91,31 +83,18 @@ function course() {
   const groups=Map.groupBy(state.data.content.lessons,l=>l.chapter);
   return '<div class="eyebrow">FOUNDATIONS</div><h1 tabindex="-1">Your course.</h1><p>Choose a lesson or return to your saved place.</p>'+Array.from(groups).map(([chapter,ls])=>'<details class="card course-chapter" open><summary>'+esc(chapter)+'</summary>'+ls.map(l=>'<div class="chapter-lesson"><strong>'+esc(l.title)+'</strong><span class="tag">'+(state.data.learner.completed.includes(l.id)?'Complete':'In progress')+'</span>'+button('Open lesson →','lesson','small secondary',l.id)+'</div>').join('')+'</details>').join('');
 }
-function audioControls(audio,label) {
-  const url=audioURL(audio);
-  return '<div class="audio-controls" role="group" aria-label="'+esc(label)+' recording">'+button('▶ Play / Pause','audio','small secondary',url||'',!url)+button('↻ Replay','audio-replay','small outline',url||'',!url)+(url?'':'<small>Recording not linked</small>')+'</div>';
-}
-function formatValue(value,field='') {
-  if(value===null || value===undefined)return '';
-  if(typeof value==='object')return Array.isArray(value)?'<ul>'+value.map(v=>'<li>'+formatValue(v,field)+'</li>').join('')+'</ul>':audioURL(value)&&/audio|recording/i.test(field)?audioControls(value,'Related form'):'<dl>'+Object.entries(value).map(([k,v])=>'<dt>'+esc(fieldLabel(k))+'</dt><dd>'+formatValue(v,k)+'</dd>').join('')+'</dl>';
-  if(audioURL(value)&&/audio|recording/i.test(field))return audioControls(value,'Related form');
-  return '<bdi>'+esc(value)+'</bdi>';
-}
-function richFields(w) { const fields=wordFields(w);return fields.length?'<dl class="word-details">'+fields.map(([k,v])=>'<dt>'+esc(fieldLabel(k))+'</dt><dd'+cellAttribute(w,k)+'>'+(typeof v==='string'?fieldText(w,k,v):formatValue(v,k))+'</dd>').join('')+'</dl>':'<p>No additional source fields for this demo entry.</p>'; }
 function vocabulary(w,notes=true) {
-  return '<article class="word-card"><button class="bookmark '+(state.data.learner.bookmarks.includes(w.id)?'saved':'')+'" data-action="bookmark" data-value="'+w.id+'" aria-label="Bookmark '+esc(w.english)+'">'+(state.data.learner.bookmarks.includes(w.id)?'★':'☆')+'</button><button class="hebrew-word" data-action="lookup" data-value="'+w.id+'" aria-label="Open full entry for '+esc(w.english)+'">'+wordText(w)+'</button><div class="meaning">'+fieldText(w,'english',w.english)+'</div>'+audioControls(w.audio,w.english)+(notes&&w.notes?'<p class="note"'+cellAttribute(w,'notes')+'>'+fieldText(w,'notes',w.notes)+'</p>':'')+'<details><summary>Full vocabulary entry</summary>'+richFields(w)+'</details>'+button(state.data.learner.cards[w.id]?'In your review':'+ Add to review','enroll','small secondary',w.id)+'</article>';
+  return wordCard(w,{notes,before:'<button class="bookmark '+(state.data.learner.bookmarks.includes(w.id)?'saved':'')+'" data-action="bookmark" data-value="'+w.id+'" aria-label="Bookmark '+esc(w.english)+'">'+(state.data.learner.bookmarks.includes(w.id)?'★':'☆')+'</button>',after:button(state.data.learner.cards[w.id]?'In your review':'+ Add to review','enroll','small secondary',w.id)});
 }
 function vocabularyView(words,notes=true) {
   words=words.filter(w=>!w.noVocab);
   const controls=segmented([['cards','Cards'],['table','Table']],pref().vocabularyView,'vocab-view','Vocabulary view');
   if(pref().vocabularyView==='cards')return '<div class="mode-bar"><span>Fully pointed Hebrew</span>'+controls+'</div><div class="word-grid">'+words.map(w=>vocabulary(w,notes)).join('')+'</div>';
-  const extras=[...new Set(words.flatMap(w=>wordFields(w).map(([k])=>k)))];
-  return '<div class="mode-bar"><span>All source fields</span>'+controls+'</div><div class="table-scroll" role="region" aria-label="Vocabulary table" tabindex="0"><table class="table vocabulary-table"><thead><tr>'+['Hebrew','English','Audio','Notes',...extras.map(fieldLabel),'Entry'].map(x=>'<th scope="col">'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+words.map(w=>'<tr><td'+cellAttribute(w,'pointed')+'>'+wordText(w)+'</td><td'+cellAttribute(w,'english')+'>'+fieldText(w,'english',w.english)+'</td><td>'+audioControls(w.audio,w.english)+'</td><td'+cellAttribute(w,'notes')+'>'+fieldText(w,'notes',w.notes)+'</td>'+extras.map(k=>{const value=wordFields(w).find(([key])=>key===k)?.[1];return '<td'+cellAttribute(w,k)+'>'+(typeof value==='string'?fieldText(w,k,value):formatValue(value,k))+'</td>';}).join('')+'<td>'+button('Open entry','lookup','small secondary',w.id)+'</td></tr>').join('')+'</tbody></table></div>';
+  return '<div class="mode-bar"><span>All source fields</span>'+controls+'</div>'+vocabularyTable(words);
 }
-function lessonInteractions(l){return (l.interactions||[]).map((item,i)=>item.type==='reveal'?'<details class="lesson-interaction"><summary>'+esc(item.prompt)+'</summary>'+renderLesson(item.answer)+'</details>':'<section class="lesson-interaction"><h3>'+esc(item.prompt)+'</h3><div class="choices">'+item.choices.map((choice,j)=>button(esc(choice),'inline-choice','secondary',i+'|'+j)).join('')+'</div><p class="inline-feedback" role="status" id="inline-feedback-'+i+'"></p></section>').join('');}
 function learnBody(l,conceptTime) {
   const hasText=Boolean(l.explanation?.trim()),video=audioURL(l.video),mode=video&&hasText?state.medium:video?'watch':'read';
-  return (video&&hasText?'<div class="mode-bar"><h2>Your explanation</h2>'+segmented([['watch','Watch'],['read','Read']],mode,'medium','Lesson format')+'</div>':'')+(mode==='watch'?'<video class="lesson-video" controls preload="metadata" src="'+esc(video)+'" '+(conceptTime!==undefined?'data-start="'+Number(conceptTime)+'"':'')+' aria-label="'+esc(l.title)+' explanation"></video>':'<div class="explanation rich-lesson" dir="'+(l.textDirection||'auto')+'">'+renderLesson(l.explanation)+lessonInteractions(l)+'</div>')+'<div class="button-row">'+button('Lesson help & questions','help','outline small',l.id)+'</div>';
+  return (video&&hasText?'<div class="mode-bar"><h2>Your explanation</h2>'+segmented([['watch','Watch'],['read','Read']],mode,'medium','Lesson format')+'</div>':'')+learnMedia(l,mode,renderLesson,conceptTime)+'<div class="button-row">'+button('Lesson help & questions','help','outline small',l.id)+'</div>';
 }
 function lessonOutline(l) {
   return '<details class="card lesson-toc" '+(window.matchMedia('(max-width:1100px)').matches?'':'open')+'><summary>Course outline</summary><div class="course-outline-content">'+state.session.content.lessons.map(x=>'<details '+(x.id===l.id?'open':'')+'><summary>'+esc(x.title)+(state.data.learner.completed.includes(x.id)?' ✓':'')+'</summary>'+lessonSteps(x).map(step=>'<button data-action="outline" data-value="'+x.id+'|'+step+'" class="outline-step '+(x.id===l.id&&state.step===step?'active':'')+'" '+(x.id===l.id&&state.step===step?'aria-current="step"':'')+'>'+esc(stepLabels[step])+'</button>').join('')+'</details>').join('')+'<small>Answers and your place are saved.</small></div></details>';
@@ -136,25 +115,12 @@ function completion(l) {
   return '<div class="empty '+(completed&&pref().animations?'celebrate':'')+'"><div class="empty-symbol" aria-hidden="true">'+(completed?'✓':'↻')+'</div><h2>'+(completed?'Lesson complete.':'You finished this set.')+'</h2><p>'+(completed?'A new connection made.':'Some core questions still need a correct answer. Extra practice is optional; you can continue and return later.')+'</p><div class="button-row centered">'+onward+button('Practice more','target-practice','secondary')+'</div>'+(missed.length?'<div class="missed-questions"><h3>Retry a missed question</h3><div class="retry-list">'+missed.map(id=>button('Question '+(l.exerciseIds.indexOf(id)+1)+': '+esc(content().exercises.find(e=>e.id===id).prompt),'retry-question','small outline',id)).join('')+'</div></div>':'')+'<p>Your answers are saved. This session is not a mastery assessment.</p></div>';
 }
 function keyboard(){return '<div class="keyboard-tools">'+button('Open Hebrew keyboard','keyboard-open','small secondary')+'<small>Floating keyboard · English key equivalents · pin to keep open</small></div>';}
-function matchingGame(e,mode){const means=e.wordIds.map(id=>word(id).english).sort();return '<p class="interaction-hint">Drag a word onto its meaning, or select a word and then its meaning.</p><div class="matching-game"><div class="match-bank">'+e.wordIds.map(id=>'<button class="match-tile" data-match-word="'+id+'" aria-pressed="false" '+(state.result?'disabled':'')+'>'+wordText(word(id),mode)+'<small>'+(state.matching[id]?'Placed: '+esc(state.matching[id]):'Drag or select')+'</small></button>').join('')+'</div><div class="match-targets">'+means.map(meaning=>{const id=Object.keys(state.matching).find(id=>state.matching[id]===meaning);return '<button class="match-target '+(id?'filled':'')+'" data-match-target="'+esc(meaning)+'" '+(state.result?'disabled':'')+'><strong>'+esc(meaning)+'</strong><span>'+(id?wordText(word(id),mode):'Drop word here')+'</span></button>';}).join('')+'</div></div>';}
-function sentenceTiles(e) {
-  const prefixes=new Set(e.prefixTokenIndices||[]),groups=[];
-  for(const [position,index] of state.selectedTokens.entries()){
-    if(groups.length && prefixes.has(state.selectedTokens[position-1]))groups.at(-1).push({position,index});
-    else groups.push([{position,index}]);
-  }
-  return groups.map(group=>'<span class="sentence-tile-group">'+group.map(({position,index})=>'<button class="token target" data-action="remove-token" data-value="'+position+'" '+(state.result?'disabled':'')+'>'+esc(e.tokens[index])+'</button>').join('')+'</span>').join('');
-}
 function exercisePanel(l) {
   const ids=stepExercises(l,state.step,state.practiceIds),e=currentExercise();
   if(!e)return '<h2>That portion is finished.</h2>'+button('Continue →','step','primary',lessonSteps(l)[lessonSteps(l).indexOf(state.step)+1]);
-  const mode=e.nikkudOverride||pref().nikkud;let input;
-  if(e.type==='recognition')input='<div class="hebrew large">'+wordText(word(e.wordId),mode)+'</div><div class="choices">'+e.choices.map((c,i)=>'<button class="choice '+(state.answer===c?'selected':'')+'" data-action="choice" data-value="'+esc(c)+'" '+(state.result?'disabled':'')+'><span class="shortcut">'+(i+1)+'</span>'+esc(c)+'</button>').join('')+'</div>';
-  else if(e.type==='matching')input=matchingGame(e,mode);
-  else if(e.type==='ordering')input='<label>Your sentence</label><p class="assembled-sentence hebrew" dir="rtl">'+esc(composeSentence(e.tokens,state.selectedTokens,e.prefixTokenIndices))+'</p><div class="token-row sentence-answer" aria-label="Your sentence">'+sentenceTiles(e)+'</div><label>Choose words</label><div class="token-row" aria-label="Available words">'+e.tokens.map((t,i)=>'<button class="token" data-action="token" data-value="'+i+'" '+(state.selectedTokens.includes(i)||state.result?'disabled':'')+'>'+esc(t)+'</button>').join('')+'</div>';
-  else input=(e.context?'<div class="hebrew large">'+esc(e.context)+'</div>':'')+(e.type==='cloze'?'<label for="answer">Type the missing word</label>':'<label for="answer">Your Hebrew answer</label>')+'<input id="answer" class="answer-input" dir="rtl" autocomplete="off" spellcheck="false" inputmode="text" value="'+esc(state.answer)+'" '+(state.result?'disabled':'')+'>'+(state.result?'':keyboard(l.letters));
+  const mode=e.nikkudOverride||pref().nikkud,input=exerciseInput(e,{mode,word,draft:answerDraft(),result:state.result,keyboard:keyboard(l.letters)});
   const allowed=e.allowLookup || Boolean(state.result);
-  const feedback=state.result?'<div class="feedback '+(state.result.correct?'':'wrong')+'" role="status"><strong>'+(state.result.correct?'That’s right.':'Let’s look at this answer.')+'</strong><p>Your answer: <bdi>'+esc(typeof state.result.answer==='object'?Object.values(state.result.answer).join(' · '):state.result.answer)+'</bdi></p><p>Accepted answer: <bdi>'+esc(typeof state.result.expected==='object'?Object.values(state.result.expected).join(' · '):state.result.expected)+'</bdi></p>'+(e.feedback?'<p>'+esc(e.feedback)+'</p>':'')+(e.feedbackDetails?'<details><summary>Explain further</summary><p>'+esc(e.feedbackDetails)+'</p></details>':'')+'</div>':'';
+  const feedback=exerciseFeedback(e,state.result);
   return '<div class="mode-bar"><span class="tag">Question '+(state.question+1)+' of '+ids.length+'</span>'+(e.nikkudOverride?'<span class="tag">Nikkud: '+esc({full:'With Nikkud',none:'Without Nikkud',curated:'Lesson-authored Nikkud'}[e.nikkudOverride])+'</span>':'')+'</div><p class="exercise-prompt">'+esc(e.prompt)+'</p>'+input+feedback+'<div class="exercise-footer">'+(state.result?button(state.question+1===ids.length?'Continue →':'Next question →','next-question','primary'):button('Check answer','check','primary'))+'<div class="toolbar">'+(state.result&&!state.result.correct?button('Try this question again','retry-question','small secondary',e.id):'')+(state.practiceIds.length?button('Skip extra practice','step','small outline','complete'):'')+button('Review this concept','concept','small outline')+(allowed?button('Vocabulary help','exercise-lookup','small outline'):'')+(state.result?button('Report a problem','report-open','small outline'):'')+'</div></div>';
 }
 function reviewWord() { return state.reviewSession ? state.data.content.words.find(w=>w.id===state.reviewSession.ids[state.reviewSession.index]) : null; }
@@ -206,10 +172,7 @@ async function authoredHelp(wordId) {
 }
 async function submitAnswer() {
   if(submitting || state.result)return;
-  const e=currentExercise();if(!e)return;let answer=state.answer;
-  if(e.type==='ordering')answer=composeSentence(e.tokens,state.selectedTokens,e.prefixTokenIndices);
-  if(e.type==='matching'){answer={...state.matching};if(e.wordIds.some(id=>!answer[id])){toast('Choose a meaning for every word.');return;}}
-  if(typeof answer==='string'&&!answer.trim()){toast('Choose or enter an answer first.');return;}
+  const e=currentExercise();if(!e)return;const wire=wireAnswer(e,answerDraft());if(wire.error){toast(wire.error);return;}const answer=wire.answer;
   submitting=true;document.querySelectorAll('[data-action="check"],[data-action="choice"]').forEach(el=>el.disabled=true);
   try {state.result=await api('attempt',{requestId:uid(),revisionId:state.session.revisionId,exerciseId:e.id,answer});feedbackSound(pref().sounds,state.result.correct);await load();await queueSave();render();document.querySelector(state.result.correct?'[data-action="next-question"]':'[data-action="retry-question"]')?.focus();}
   finally{submitting=false;document.querySelectorAll('[data-action="check"],[data-action="choice"]').forEach(el=>el.disabled=Boolean(state.result));}
@@ -300,21 +263,23 @@ function bind(scope=root) {
   scope.querySelector('#help-form')?.addEventListener('submit',async event=>{event.preventDefault();const question=new FormData(event.target).get('question'),el=event.target.querySelector('button'),p=state.panel;el.disabled=true;try{const response=await api('help',{...p.context,question,useAI:true});if(state.panel===p)replacePanel({...p,...response,question});}catch(error){toast(error.message);}finally{if(el.isConnected)el.disabled=false;}});
   scope.querySelectorAll('video[data-start]').forEach(el=>el.addEventListener('loadedmetadata',()=>{el.currentTime=Math.min(Number(el.dataset.start),el.duration||Number(el.dataset.start));},{once:true}));
 }
+// Learner shortcuts never reach a disposable rehearsal (data-preview-root); it handles its own keys.
+const learnerElements=selector=>Array.from(document.querySelectorAll(selector)).filter(el=>!el.closest('[data-preview-root]'));
 document.addEventListener('keydown',event=>{
-  if(event.defaultPrevented||event.isComposing||event.ctrlKey||event.altKey||event.metaKey)return;
+  if(event.defaultPrevented||event.target.closest?.('[data-preview-root]')||event.isComposing||event.ctrlKey||event.altKey||event.metaKey)return;
   const typing=/^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName)||event.target.isContentEditable;
   if(typing){
     if(event.target.id==='answer'&&!state.result){
-      if(event.key==='Enter'){event.preventDefault();document.querySelector('[data-action="check"]')?.click();return;}
+      if(event.key==='Enter'){event.preventDefault();learnerElements('[data-action="check"]')[0]?.click();return;}
 
     }
     return;
   }
   if(state.panel)return;
   if((event.key==='Enter'||event.key===' ')&&['BUTTON','A','SUMMARY'].includes(event.target.tagName))return;
-  if(event.key==='Enter'||event.key===' '){const el=document.querySelector('[data-action="next-question"],[data-action="check"],[data-action="review-reveal"]');if(el){event.preventDefault();el.click();}}
-  if(/^[1-9]$/.test(event.key)){const choices=document.querySelectorAll('[data-action="choice"]'),ratings=document.querySelectorAll('[data-action="review-rate"]'),el=choices[Number(event.key)-1]||ratings[Number(event.key)-1];if(el){event.preventDefault();el.click();}}
-  if(event.key.toLowerCase()==='r'){const el=document.querySelector('[data-action="audio-replay"]:not(:disabled)');if(el){event.preventDefault();el.click();}}
+  if(event.key==='Enter'||event.key===' '){const el=learnerElements('[data-action="next-question"],[data-action="check"],[data-action="review-reveal"]')[0];if(el){event.preventDefault();el.click();}}
+  if(/^[1-9]$/.test(event.key)){const choices=learnerElements('[data-action="choice"]'),ratings=learnerElements('[data-action="review-rate"]'),el=choices[Number(event.key)-1]||ratings[Number(event.key)-1];if(el){event.preventDefault();el.click();}}
+  if(event.key.toLowerCase()==='r'){const el=learnerElements('[data-action="audio-replay"]:not(:disabled)')[0];if(el){event.preventDefault();el.click();}}
 });
 async function routeFromURL() {
   const generation=++routeGeneration,parts=location.hash.slice(1).split('/');
