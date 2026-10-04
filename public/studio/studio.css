@@ -1,0 +1,13 @@
+.studio-editor { display: grid; gap: 1rem; max-width: 60rem; }
+.studio-editor .studio-field { display: grid; gap: .35rem; min-width: 0; }
+.studio-editor input, .studio-editor select, .studio-editor textarea { width: 100%; box-sizing: border-box; font: inherit; }
+.studio-editor input[type="checkbox"] { width: auto; }
+.studio-editor fieldset { min-width: 0; border: 1px solid #cbd5dd; border-radius: .6rem; }
+.studio-editor .studio-list-row { display: flex; align-items: end; flex-wrap: wrap; gap: .6rem; margin-block: .7rem; }
+.studio-editor .studio-list-row .studio-field { flex: 1 1 15rem; }
+.studio-editor button { min-height: 2.75rem; }
+.studio-editor small { color: #425466; }
+.studio-editor [data-editor-status] { white-space: pre-wrap; }
+.studio-import-review { overflow-x: auto; }
+.studio-import-review pre { white-space: pre-wrap; overflow-wrap: anywhere; max-width: 28rem; }
+@media (max-width: 35rem) { .studio-editor .studio-list-row { display: grid; } }
