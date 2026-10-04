@@ -1,0 +1,14 @@
+{
+  "name": "hebleo-private-contract-checks",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test checks/*.check.mjs",
+    "examples": "node tools/build-examples.mjs",
+    "validate": "node tools/validate.mjs",
+    "runtime": "node tools/runtime-check.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0"
+  }
+}

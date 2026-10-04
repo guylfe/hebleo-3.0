@@ -1,0 +1,197 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hebleo.invalid/contracts/source-map.v1.schema.json",
+  "title": "Private stable identity sidecar v1; locators and hashes never generate identity on re-import",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+            "not": {
+              "enum": [
+                "constructor",
+                "prototype",
+                "__proto__"
+              ]
+            }
+          },
+          "kind": {
+            "enum": [
+              "sheet",
+              "pdf",
+              "wordpress",
+              "fixture",
+              "other"
+            ]
+          },
+          "snapshotSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "locator": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": true
+          },
+          "formatting": {
+            "enum": [
+              "captured",
+              "not-captured",
+              "not-applicable"
+            ]
+          }
+        },
+        "required": [
+          "sourceId",
+          "kind",
+          "snapshotSha256",
+          "locator",
+          "formatting"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "entryId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+            "not": {
+              "enum": [
+                "constructor",
+                "prototype",
+                "__proto__"
+              ]
+            }
+          },
+          "sourceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+            "not": {
+              "enum": [
+                "constructor",
+                "prototype",
+                "__proto__"
+              ]
+            }
+          },
+          "object": {
+            "type": "object",
+            "properties": {
+              "collection": {
+                "enum": [
+                  "words",
+                  "lessons",
+                  "exercises"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                "not": {
+                  "enum": [
+                    "constructor",
+                    "prototype",
+                    "__proto__"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "collection",
+              "id"
+            ],
+            "additionalProperties": true
+          },
+          "locator": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": true
+          },
+          "rowSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "fieldMap": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "ownership": {
+            "type": "object",
+            "additionalProperties": {
+              "enum": [
+                "source",
+                "studio",
+                "unresolved"
+              ]
+            }
+          },
+          "baselineSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "tombstone"
+            ]
+          },
+          "supersedesEntryId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+            "not": {
+              "enum": [
+                "constructor",
+                "prototype",
+                "__proto__"
+              ]
+            }
+          }
+        },
+        "required": [
+          "entryId",
+          "sourceId",
+          "object",
+          "locator",
+          "rowSha256",
+          "fieldMap",
+          "ownership",
+          "baselineSha256",
+          "status"
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": [
+    "version",
+    "sources",
+    "entries"
+  ],
+  "additionalProperties": true
+}

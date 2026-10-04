@@ -1,0 +1,324 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hebleo.invalid/contracts/common.v1.schema.json",
+  "title": "Additive metadata v1; unknown source fields remain data, never executable instructions",
+  "definitions": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+      "not": {
+        "enum": [
+          "constructor",
+          "prototype",
+          "__proto__"
+        ]
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "revisionId": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "token": {
+      "type": "string",
+      "pattern": "^dt1-[a-f0-9]{64}$"
+    },
+    "url": {
+      "type": "string",
+      "pattern": "^(https://[^\\s]+|/media/[A-Za-z0-9_./-]+)$"
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+          "not": {
+            "enum": [
+              "constructor",
+              "prototype",
+              "__proto__"
+            ]
+          }
+        },
+        "snapshotSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "rowSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "rowAtCapture": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "approval": {
+          "enum": [
+            "pending",
+            "approved",
+            "rejected",
+            "not-applicable"
+          ]
+        },
+        "approvedBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "approvedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": true
+          }
+        },
+        "derived": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": true
+    },
+    "approval": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "approved",
+            "rejected",
+            "not-applicable"
+          ]
+        },
+        "reviewedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contentSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "collection": {
+                "enum": [
+                  "words",
+                  "lessons",
+                  "exercises"
+                ]
+              },
+              "id": {
+                "$ref": "common.v1.schema.json#/definitions/id"
+              },
+              "sha256": {
+                "$ref": "common.v1.schema.json#/definitions/sha256"
+              }
+            },
+            "required": [
+              "collection",
+              "id",
+              "sha256"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "version",
+        "status"
+      ],
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "approved"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "reviewedBy",
+              "reviewedAt",
+              "contentSha256",
+              "dependencies"
+            ]
+          }
+        }
+      ]
+    },
+    "binding": {
+      "type": "object",
+      "properties": {
+        "collection": {
+          "enum": [
+            "words",
+            "lessons",
+            "exercises"
+          ]
+        },
+        "id": {
+          "$ref": "common.v1.schema.json#/definitions/id"
+        },
+        "sha256": {
+          "$ref": "common.v1.schema.json#/definitions/sha256"
+        }
+      },
+      "required": [
+        "collection",
+        "id",
+        "sha256"
+      ],
+      "additionalProperties": true
+    },
+    "mediaRef": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "assetId": {
+              "$ref": "common.v1.schema.json#/definitions/id"
+            },
+            "revisionId": {
+              "$ref": "common.v1.schema.json#/definitions/id"
+            },
+            "sha256": {
+              "$ref": "common.v1.schema.json#/definitions/sha256"
+            }
+          },
+          "required": [
+            "assetId",
+            "revisionId",
+            "sha256"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "$ref": "common.v1.schema.json#/definitions/url"
+        }
+      ],
+      "description": "An object is an immutable pin resolved through the manifest. A URL string is legacy-unpinned and promises no historical bytes."
+    },
+    "cell": {
+      "type": "object",
+      "properties": {
+        "formattedValue": {
+          "type": "string"
+        },
+        "textFormatRuns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "startIndex": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "format": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": true
+              }
+            },
+            "required": [
+              "startIndex",
+              "format"
+            ],
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": true
+    },
+    "objectMetadata": {
+      "type": "object",
+      "properties": {
+        "provenance": {
+          "$ref": "common.v1.schema.json#/definitions/provenance"
+        },
+        "approval": {
+          "$ref": "common.v1.schema.json#/definitions/approval"
+        },
+        "sourceFields": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": true
+        },
+        "fieldFormatting": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "common.v1.schema.json#/definitions/cell"
+          }
+        },
+        "sourceTheme": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": true
+          }
+        },
+        "mediaRefs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "common.v1.schema.json#/definitions/mediaRef"
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": true
+    }
+  }
+}
