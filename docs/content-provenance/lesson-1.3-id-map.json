@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "note": "Private stable-ID sidecar. IDs are assigned once and never derived from row position. Source-sheet ID columns are not written (not authorized).",
+  "words": {
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:1": {
+      "id": "hw-6671c84cb2",
+      "capturedRowSha256": "af35e36abe24335a8ac60f93f9063c75432ea3f058dc40c99abd59ad6ab1b662",
+      "capturedHebrew": "יָם",
+      "capturedEnglish": "Sea",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:2": {
+      "id": "hw-48b180e344",
+      "capturedRowSha256": "fcbebba117150d6562171c75661cbf61dfcd98e57aecfcb5ce305889e0f54e94",
+      "capturedHebrew": "יַיִן",
+      "capturedEnglish": "Wine",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:3": {
+      "id": "hw-e7b68512e1",
+      "capturedRowSha256": "6cd5d3ceada488bbe7cddf2c557537d863cfff45fe17eacc17b5948f376ddaa4",
+      "capturedHebrew": "מַיִם",
+      "capturedEnglish": "Water",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:4": {
+      "id": "hw-790a281821",
+      "capturedRowSha256": "bc90915e8469dbf35ec5afac38f0b055bfcdd2c9abc2bfee71350257a0958dc5",
+      "capturedHebrew": "מֶאָה",
+      "capturedEnglish": "Hundred",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:5": {
+      "id": "hw-5fc497d20c",
+      "capturedRowSha256": "1dd80fdf0219ef4d74fe277ab9e3a8acaf11994b30a2f0fb1c52169633535675",
+      "capturedHebrew": "אָמָּן",
+      "capturedEnglish": "Artist",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:6": {
+      "id": "hw-c8d9dc3960",
+      "capturedRowSha256": "3475b2092d2a540119fe4eba95cce31b8f3ad68464c5cbdcca6f21d584c94437",
+      "capturedHebrew": "מַתָּנָה",
+      "capturedEnglish": "Gift, present",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:7": {
+      "id": "hw-3f1f34858a",
+      "capturedRowSha256": "ed4d38825a75f2b7caee99effbd14be408ea11872486568318ba6f80f59958d4",
+      "capturedHebrew": "אִמָא",
+      "capturedEnglish": "Mom, mother",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:8": {
+      "id": "hw-273fb84dbd",
+      "capturedRowSha256": "c30aa4d2a5a647fc38f964fbb26a8d72c4e22a66c1a7c11827952205fa0fc414",
+      "capturedHebrew": "אִי",
+      "capturedEnglish": "Island",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:9": {
+      "id": "hw-73643a29ef",
+      "capturedRowSha256": "4bb12bf56bddb7081adfd4ee80426ec9cc0d3ba4318e521064448cf70d2c3f56",
+      "capturedHebrew": "מָנָה",
+      "capturedEnglish": "Dish",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:10": {
+      "id": "hw-b07870f4a7",
+      "capturedRowSha256": "b3d6168a5308baf3ec854345ead2c27f827c69b77f625d19e2064d759d9a3dc9",
+      "capturedHebrew": "אֱמֶת",
+      "capturedEnglish": "Truth",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:11": {
+      "id": "hw-9ab93b8a77",
+      "capturedRowSha256": "2b6e7557153e3c239894d42f6ee19f8aacd00c87053546ecb7647a952c5fa53f",
+      "capturedHebrew": "תֵימָן",
+      "capturedEnglish": "Yemen",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:12": {
+      "id": "hw-9a5a045da4",
+      "capturedRowSha256": "508c00c3f266c678a4d18c10253337be368e25954dae1ef515b6dbd3c82e6e43",
+      "capturedHebrew": "נָתַנְיָה",
+      "capturedEnglish": "Natanya",
+      "capturedLesson": "1.3"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:13": {
+      "id": "hw-d71d48515d",
+      "capturedRowSha256": "edff1a80e1243ac0453654e7758bda891e770480beea89d5f163a212bdce8a86",
+      "capturedHebrew": "אֲנִי",
+      "capturedEnglish": "I",
+      "capturedLesson": "1.3.5"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:14": {
+      "id": "hw-c53f260c96",
+      "capturedRowSha256": "d2b900917c58e20eeb0369169ed8f093c80f72611ccc49480ec69860fa156fe1",
+      "capturedHebrew": "אַתְ",
+      "capturedEnglish": "You (singular female)",
+      "capturedLesson": "1.3.5"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:15": {
+      "id": "hw-4a6cfef387",
+      "capturedRowSha256": "43dc2b08415d98b95c4343be9080314882fe29982ce3c4dd8179b570951023c6",
+      "capturedHebrew": "אַתָּה",
+      "capturedEnglish": "You (singular male)",
+      "capturedLesson": "1.3.5"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:16": {
+      "id": "hw-1e48a45d19",
+      "capturedRowSha256": "fbb64bc7552f04f419b10f56e522d6b79893ef9d77cf453e4be28e72ec313740",
+      "capturedHebrew": "אַתֶּם",
+      "capturedEnglish": "You (plural)",
+      "capturedLesson": "1.3.5"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:17": {
+      "id": "hw-0c75e2dd24",
+      "capturedRowSha256": "8b936d67292e49f09418054679fa1764dd8c10a50d2dbb863644ba30e4adbb2b",
+      "capturedHebrew": "אַתֶּן",
+      "capturedEnglish": "You (plural, only female)",
+      "capturedLesson": "1.3.5"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:18": {
+      "id": "hw-c0ebeeff83",
+      "capturedRowSha256": "f510a20159efbdebe1c99753d030cf3da5354ac57b20374fa946eefc0020f5fc",
+      "capturedHebrew": "הִיא",
+      "capturedEnglish": "She",
+      "capturedLesson": "1.3.5"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:19": {
+      "id": "hw-6938c9527e",
+      "capturedRowSha256": "3d083d258fd74e7dbfa01029a2573c4929639f5ffa2c5bee09b135c624a88464",
+      "capturedHebrew": "הֵם",
+      "capturedEnglish": "They",
+      "capturedLesson": "1.3.5"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:20": {
+      "id": "hw-c46ba6d184",
+      "capturedRowSha256": "5c44676aa68d0530bb95824784477d3295d9478508c9d56e545a251e2aa90944",
+      "capturedHebrew": "הֵן",
+      "capturedEnglish": "They (only female)",
+      "capturedLesson": "1.3.5"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:21": {
+      "id": "hw-f07dffbfe3",
+      "capturedRowSha256": "33b4dc37a231041ddc65dcd86b7f48770fa167ef400c0901b226f0cae3d36d2f",
+      "capturedHebrew": "הַ",
+      "capturedEnglish": "The",
+      "capturedLesson": "1.4"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:22": {
+      "id": "hw-bd2ebdcfc8",
+      "capturedRowSha256": "888335a8862cb6c7183510b56d9805ab127680861daa8b4b18c2f0238dde6f9a",
+      "capturedHebrew": "מִ",
+      "capturedEnglish": "From",
+      "capturedLesson": "1.4"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:23": {
+      "id": "hw-70fb17f06a",
+      "capturedRowSha256": "8979ef48bf6bc806d96d2eac39e502f2f67868bbf78263b57d6ed0531ba270c8",
+      "capturedHebrew": "מִי",
+      "capturedEnglish": "who?",
+      "capturedLesson": "1.4"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:24": {
+      "id": "hw-27f9b134a9",
+      "capturedRowSha256": "bceeefb7f2eb0cc24f939025de19a215d6e21c2cb9e69d13dee79ca9c1767f28",
+      "capturedHebrew": "מָה",
+      "capturedEnglish": "what?",
+      "capturedLesson": "1.4"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:25": {
+      "id": "hw-fe52a4f4b5",
+      "capturedRowSha256": "5e6d173d7ffc0ccae627cfa4a2f8b8273734b614c7af621b67e9b67f712e930a",
+      "capturedHebrew": "מָתַי",
+      "capturedEnglish": "When?",
+      "capturedLesson": "1.4"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:26": {
+      "id": "hw-95bc614855",
+      "capturedRowSha256": "496aa82b810d7334e7356f0d9c6d41750132decc3cddccd1bece94a6703fd915",
+      "capturedHebrew": "הַאִם",
+      "capturedEnglish": "is/does…?\nIs it the case that…?",
+      "capturedLesson": "1.4"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:27": {
+      "id": "hw-53470d6e0b",
+      "capturedRowSha256": "121ee61b11c57b8145242b42f5177b853ffa8fc46428b85cd2490d2c23440430",
+      "capturedHebrew": "הַיי",
+      "capturedEnglish": "Hi",
+      "capturedLesson": "1.4"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:28": {
+      "id": "hw-5565f9da1f",
+      "capturedRowSha256": "fc639f63571f298e5570515de75123aaec76303deb430f3c8a32752e3577149b",
+      "capturedHebrew": "נָתַן",
+      "capturedEnglish": "(he) gave",
+      "capturedLesson": "1.4"
+    },
+    "masterfile:1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc:rowAtCapture:29": {
+      "id": "hw-ebb61165b5",
+      "capturedRowSha256": "fe195cf211dc6d7d02838c2d07af7cdd4efe31f7523cb0a867b7bc9861f7b25d",
+      "capturedHebrew": "הָיָה",
+      "capturedEnglish": "(he) was",
+      "capturedLesson": "1.4"
+    }
+  },
+  "exercises": {
+    "wp-media:28389:exercise2:masterfileRowAtCapture:6": {
+      "id": "hx-ff48830348"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:1": {
+      "id": "hx-fdb4801226"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:13": {
+      "id": "hx-43876d004c"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:20": {
+      "id": "hx-23d661a36b"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:15": {
+      "id": "hx-4e234d8d4f"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:17": {
+      "id": "hx-7851563f85"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:16": {
+      "id": "hx-75d11831ce"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:19": {
+      "id": "hx-e26937efb7"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:14": {
+      "id": "hx-b3382a53f4"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:4": {
+      "id": "hx-d38990aaf8"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:3": {
+      "id": "hx-ac4b766e60"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:28": {
+      "id": "hx-90619ca16d"
+    },
+    "wp-media:28389:exercise2:masterfileRowAtCapture:24": {
+      "id": "hx-b06b783c01"
+    }
+  },
+  "lessons": {
+    "wp-lesson:25328": {
+      "id": "hl-b1606542dc"
+    }
+  }
+}

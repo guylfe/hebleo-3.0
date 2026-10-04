@@ -1,0 +1,841 @@
+{
+  "status": "EVIDENCE — not approved, not canonical, not importable. Proposed for Guy's review.",
+  "generated": "2026-10-04 by Hebleo Curriculum Designer (branch curriculum/b04-source-audit)",
+  "sources": {
+    "masterfile": {
+      "title": "Ultimate Vocabulary Masterfile",
+      "driveFileId": "1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc",
+      "owner": "guylfe@gmail.com",
+      "modifiedTime": "2026-08-21T12:51:21.066Z",
+      "range": "Sheet1!A1:AD1059",
+      "export": "text/csv via Google Drive connector download_file_content, 2026-10-04",
+      "snapshotSha256": "d0cd29c4bf641841a5a26f494c361cbc6832730434b658de4108b75e22bce0c5",
+      "snapshotLocation": "outside repository (curriculum designer workspace source-snapshots/); not committed",
+      "formattingCaptured": false,
+      "formattingNote": "CSV drops rich-text runs, colors, notes and hyperlinks. The old hebleo-vocab-sheets plugin reads textFormatRuns (bold/italic/underline/color) from Sheets grid data, so source formatting exists and is learner-visible; a grid-data read is still required."
+    },
+    "lesson": {
+      "wordpressLessonId": 25328,
+      "postType": "sfwd-lessons",
+      "title": "Lesson 1-3: Vowel Letters א,ה,י (6 of 22)",
+      "modified": "2025-12-24T22:50:28",
+      "link": "https://hebleo.com/courses/hebleo-hebrew-learning-platform/lessons/lesson-1-3-vowel-letters-%d7%90%d7%94%d7%99-6-of-22/",
+      "bodyAsRetrieved": "Vimeo video 740173416 plus [visitor course_id=\"25283\"][elementor-template id=\"44954\"][/visitor]",
+      "video": "https://vimeo.com/740173416/631b0ae8c8",
+      "transcriptAvailable": false,
+      "retrieved": "2026-10-04 via hebleo_wordpress wp_get_cpt_item (read-only)"
+    },
+    "exercise": {
+      "wordpressTopicId": 25717,
+      "title": "EXERCISE: 1-3 Pronunciation and Vocabulary",
+      "parentLessonId": 25328,
+      "blankPdf": {
+        "mediaId": 28386,
+        "url": "https://hebleo.com/wp-content/uploads/2023/12/1.3-Exercise.pdf",
+        "sha256": "b125758b00d5119d242340bf6475bfd2b9d8ebef665f93057d07646f42d0389e"
+      },
+      "solvedPdf": {
+        "mediaId": 28389,
+        "url": "https://hebleo.com/wp-content/uploads/2023/03/1.3-Exercise-Solved-1.pdf",
+        "sha256": "4ff61bece5d3d69d6a236ac83b74ee49035afa93855c5c85e0b9561707f8faae"
+      },
+      "method": "PyMuPDF span extraction (font + color) plus visual check of a page render. Latin text copied exactly; Hebrew transcribed from the render.",
+      "colorConvention": "black = printed worked example; red (#ff0000) = answer key",
+      "boldConvention": "Arial-BoldMT on one syllable of multi-syllable words (hypothesis: stress; NOT confirmed by Guy)",
+      "instructions": {
+        "exercise1": "Write each vocabulary word using English letters (see examples).\nAfterwards, write its meaning.",
+        "exercise2": "Write each vocabulary word using Hebrew letters (see examples).\nAfterwards, write its meaning.",
+        "lookupRule": "Try learning the words before doing this exercise, and to not look at the\nvocab sheet while doing the exercise.\n\nOnly look at the vocab and correct your work once you are done."
+      }
+    }
+  },
+  "header": [
+    "Ordinals",
+    "Lesson",
+    "Part",
+    "Type",
+    "No_Vocab",
+    "No_Card",
+    "Hebrew",
+    "English",
+    "Notes",
+    "Gender",
+    "Plural",
+    "Root",
+    "Pattern",
+    "Feminine",
+    "Plural Feminine",
+    "Audio",
+    "Pl. Audio",
+    "Fem. Audio",
+    "Pl.Fem. Audio",
+    "Infinitive",
+    "I",
+    "he",
+    "she",
+    "אתה",
+    "את",
+    "אתם",
+    "אתן",
+    "הם",
+    "הן",
+    "אנחנו"
+  ],
+  "rows": [
+    {
+      "stableId": "hw-6671c84cb2",
+      "ordinal": 1,
+      "rowSha256": "af35e36abe24335a8ac60f93f9063c75432ea3f058dc40c99abd59ad6ab1b662",
+      "cells": {
+        "Ordinals": "1",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "יָם",
+        "English": "Sea",
+        "Gender": "M",
+        "Plural": "יָמִים",
+        "Root": "יממ"
+      },
+      "exercise1_3": {
+        "transliteration": "Yam",
+        "meaning": "Sea",
+        "exercise1Role": "example",
+        "exercise2Role": "answer",
+        "boldSegment": null
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41669,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/yam.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ],
+      "pluralAudioCandidate": {
+        "mediaId": 41652,
+        "url": "https://hebleo.com/wp-content/uploads/2025/10/yamim.mp3",
+        "match": "filename only, unconfirmed"
+      }
+    },
+    {
+      "stableId": "hw-48b180e344",
+      "ordinal": 2,
+      "rowSha256": "fcbebba117150d6562171c75661cbf61dfcd98e57aecfcb5ce305889e0f54e94",
+      "cells": {
+        "Ordinals": "2",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "יַיִן",
+        "English": "Wine",
+        "Notes": "The similarity to English is not a coincidence; \n[The plural form in Hebrew, like “wines” in English, is rare.]",
+        "Gender": "M",
+        "Plural": "יֶיְנוֹת",
+        "Root": "יינ",
+        "Pattern": "קָיִל"
+      },
+      "exercise1_3": {
+        "transliteration": "Yayin",
+        "meaning": "Wine",
+        "exercise1Role": "answer",
+        "exercise2Role": "example",
+        "boldSegment": "יַ"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41653,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/yayin.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-e7b68512e1",
+      "ordinal": 3,
+      "rowSha256": "6cd5d3ceada488bbe7cddf2c557537d863cfff45fe17eacc17b5948f376ddaa4",
+      "cells": {
+        "Ordinals": "3",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "מַיִם",
+        "English": "Water",
+        "Notes": "Treated as plural.",
+        "Gender": "M",
+        "Root": "מימ",
+        "Pattern": "קָיִל"
+      },
+      "exercise1_3": {
+        "transliteration": "Mayim",
+        "meaning": "Water",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": "מַ"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41586,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/mayim.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-790a281821",
+      "ordinal": 4,
+      "rowSha256": "bc90915e8469dbf35ec5afac38f0b055bfcdd2c9abc2bfee71350257a0958dc5",
+      "cells": {
+        "Ordinals": "4",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "מֶאָה",
+        "English": "Hundred",
+        "Gender": "F",
+        "Plural": "מֶאוֹת",
+        "Root": "מאה"
+      },
+      "exercise1_3": {
+        "transliteration": "Me'a",
+        "meaning": "Hundred (100)",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": "מֶ"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41587,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/mea.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ],
+      "pluralAudioCandidate": {
+        "mediaId": 41600,
+        "url": "https://hebleo.com/wp-content/uploads/2025/10/meot.mp3",
+        "match": "filename only, unconfirmed"
+      }
+    },
+    {
+      "stableId": "hw-5fc497d20c",
+      "ordinal": 5,
+      "rowSha256": "1dd80fdf0219ef4d74fe277ab9e3a8acaf11994b30a2f0fb1c52169633535675",
+      "cells": {
+        "Ordinals": "5",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "אָמָּן",
+        "English": "Artist",
+        "Gender": "M",
+        "Plural": "אַמָּנִים",
+        "Root": "אמנ",
+        "Pattern": "קָטָּל"
+      },
+      "exercise1_3": null,
+      "audioCandidates": [
+        {
+          "mediaId": 41431,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/aman.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-c8d9dc3960",
+      "ordinal": 6,
+      "rowSha256": "3475b2092d2a540119fe4eba95cce31b8f3ad68464c5cbdcca6f21d584c94437",
+      "cells": {
+        "Ordinals": "6",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "מַתָּנָה",
+        "English": "Gift, present",
+        "Gender": "F",
+        "Plural": "מַתָּנוֹת",
+        "Root": "נתנ",
+        "Pattern": "מָקְטָלָה"
+      },
+      "exercise1_3": {
+        "transliteration": "Matana",
+        "meaning": "Gift, present",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": "נָה",
+        "exerciseHebrewDiffersFromSheet": "מַתָנָה"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41579,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/matana.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ],
+      "pluralAudioCandidate": {
+        "mediaId": 41584,
+        "url": "https://hebleo.com/wp-content/uploads/2025/10/matanot.mp3",
+        "match": "filename only, unconfirmed"
+      }
+    },
+    {
+      "stableId": "hw-3f1f34858a",
+      "ordinal": 7,
+      "rowSha256": "ed4d38825a75f2b7caee99effbd14be408ea11872486568318ba6f80f59958d4",
+      "cells": {
+        "Ordinals": "7",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "אִמָא",
+        "English": "Mom, mother",
+        "Notes": "Like English, people sometimes use “mom” to mean “my/our mother\" – especially when talking to siblings.",
+        "Gender": "F",
+        "Plural": "אִמָהוֹת"
+      },
+      "exercise1_3": null,
+      "audioCandidates": [
+        {
+          "mediaId": 41539,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/ima.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-273fb84dbd",
+      "ordinal": 8,
+      "rowSha256": "c30aa4d2a5a647fc38f964fbb26a8d72c4e22a66c1a7c11827952205fa0fc414",
+      "cells": {
+        "Ordinals": "8",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "אִי",
+        "English": "Island",
+        "Gender": "M",
+        "Plural": "אִיִים"
+      },
+      "exercise1_3": null,
+      "audioCandidates": [
+        {
+          "mediaId": 41537,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/i.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-73643a29ef",
+      "ordinal": 9,
+      "rowSha256": "4bb12bf56bddb7081adfd4ee80426ec9cc0d3ba4318e521064448cf70d2c3f56",
+      "cells": {
+        "Ordinals": "9",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "מָנָה",
+        "English": "Dish",
+        "Gender": "F",
+        "Plural": "מָנוֹת",
+        "Root": "מנה",
+        "Pattern": "קָטָה"
+      },
+      "exercise1_3": null,
+      "audioCandidates": [
+        {
+          "mediaId": 41575,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/mana.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-b07870f4a7",
+      "ordinal": 10,
+      "rowSha256": "b3d6168a5308baf3ec854345ead2c27f827c69b77f625d19e2064d759d9a3dc9",
+      "cells": {
+        "Ordinals": "10",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "אֱמֶת",
+        "English": "Truth",
+        "Gender": "F",
+        "Plural": "אָמִיתוֹת",
+        "Root": "אמת"
+      },
+      "exercise1_3": null,
+      "audioCandidates": [
+        {
+          "mediaId": 41480,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/emet.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-9ab93b8a77",
+      "ordinal": 11,
+      "rowSha256": "2b6e7557153e3c239894d42f6ee19f8aacd00c87053546ecb7647a952c5fa53f",
+      "cells": {
+        "Ordinals": "11",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "תֵימָן",
+        "English": "Yemen",
+        "Notes": "Name of a country.",
+        "Gender": "F"
+      },
+      "exercise1_3": null,
+      "audioCandidates": [
+        {
+          "mediaId": 41640,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/teiman.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-9a5a045da4",
+      "ordinal": 12,
+      "rowSha256": "508c00c3f266c678a4d18c10253337be368e25954dae1ef515b6dbd3c82e6e43",
+      "cells": {
+        "Ordinals": "12",
+        "Lesson": "1.3",
+        "Type": "Noun",
+        "Hebrew": "נָתַנְיָה",
+        "English": "Natanya",
+        "Notes": "Name of a city.",
+        "Gender": "F"
+      },
+      "exercise1_3": null,
+      "audioCandidates": [
+        {
+          "mediaId": 41613,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/natanya.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-d71d48515d",
+      "ordinal": 13,
+      "rowSha256": "edff1a80e1243ac0453654e7758bda891e770480beea89d5f163a212bdce8a86",
+      "cells": {
+        "Ordinals": "13",
+        "Lesson": "1.3.5",
+        "Type": "Pronoun",
+        "Hebrew": "אֲנִי",
+        "English": "I",
+        "Notes": "(1st person singular pronoun). Can be used for both males and females.",
+        "Gender": "Both"
+      },
+      "exercise1_3": {
+        "transliteration": "`ani",
+        "meaning": "I",
+        "exercise1Role": "example",
+        "exercise2Role": "answer",
+        "boldSegment": "נִי"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41442,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/ani.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-c53f260c96",
+      "ordinal": 14,
+      "rowSha256": "d2b900917c58e20eeb0369169ed8f093c80f72611ccc49480ec69860fa156fe1",
+      "cells": {
+        "Ordinals": "14",
+        "Lesson": "1.3.5",
+        "Type": "Pronoun",
+        "Hebrew": "אַתְ",
+        "English": "You (singular female)",
+        "Notes": "Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F). You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not.",
+        "Gender": "F"
+      },
+      "exercise1_3": {
+        "transliteration": "`at",
+        "meaning": "You (single female)",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": null,
+        "exerciseHebrewDiffersFromSheet": "אַת"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41445,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/at.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-4a6cfef387",
+      "ordinal": 15,
+      "rowSha256": "43dc2b08415d98b95c4343be9080314882fe29982ce3c4dd8179b570951023c6",
+      "cells": {
+        "Ordinals": "15",
+        "Lesson": "1.3.5",
+        "Type": "Pronoun",
+        "Hebrew": "אַתָּה",
+        "English": "You (singular male)",
+        "Notes": "Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F). You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not.",
+        "Gender": "M"
+      },
+      "exercise1_3": {
+        "transliteration": "`ata",
+        "meaning": "You (single male)",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": "תָה",
+        "exerciseHebrewDiffersFromSheet": "אַתָה"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41446,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/ata.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-1e48a45d19",
+      "ordinal": 16,
+      "rowSha256": "fbb64bc7552f04f419b10f56e522d6b79893ef9d77cf453e4be28e72ec313740",
+      "cells": {
+        "Ordinals": "16",
+        "Lesson": "1.3.5",
+        "Type": "Pronoun",
+        "Hebrew": "אַתֶּם",
+        "English": "You (plural)",
+        "Notes": "1. Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F).  You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not.\n\n2. Remember: This is the neutral plural, meaning it applies to mixed groups and all-male groups, ",
+        "Gender": "M/Mixed"
+      },
+      "exercise1_3": {
+        "transliteration": "`atem",
+        "meaning": "You (plural)",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": "תֶם",
+        "exerciseHebrewDiffersFromSheet": "אַתֶם"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41447,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/atem.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-0c75e2dd24",
+      "ordinal": 17,
+      "rowSha256": "8b936d67292e49f09418054679fa1764dd8c10a50d2dbb863644ba30e4adbb2b",
+      "cells": {
+        "Ordinals": "17",
+        "Lesson": "1.3.5",
+        "Type": "Pronoun",
+        "Hebrew": "אַתֶּן",
+        "English": "You (plural, only female)",
+        "Notes": "Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F).  You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not.",
+        "Gender": "F"
+      },
+      "exercise1_3": {
+        "transliteration": "`aten",
+        "meaning": "You (plural all-female)",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": "תֶן",
+        "exerciseHebrewDiffersFromSheet": "אַתֶן"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41448,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/aten.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-c0ebeeff83",
+      "ordinal": 18,
+      "rowSha256": "f510a20159efbdebe1c99753d030cf3da5354ac57b20374fa946eefc0020f5fc",
+      "cells": {
+        "Ordinals": "18",
+        "Lesson": "1.3.5",
+        "Type": "Pronoun",
+        "Hebrew": "הִיא",
+        "English": "She",
+        "Gender": "F"
+      },
+      "exercise1_3": {
+        "transliteration": "Hi",
+        "exercise1Note": "(\"hee\", not \"hai\")",
+        "exercise2Note": "(\"hee\")",
+        "meaning": "She",
+        "exercise1Role": "answer",
+        "exercise2Role": "example",
+        "boldSegment": null
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41528,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/hi-she.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-6938c9527e",
+      "ordinal": 19,
+      "rowSha256": "3d083d258fd74e7dbfa01029a2573c4929639f5ffa2c5bee09b135c624a88464",
+      "cells": {
+        "Ordinals": "19",
+        "Lesson": "1.3.5",
+        "Type": "Pronoun",
+        "Hebrew": "הֵם",
+        "English": "They",
+        "Gender": "M/Mixed"
+      },
+      "exercise1_3": {
+        "transliteration": "Hem",
+        "meaning": "They (plural)",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": null
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41526,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/hem.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-c46ba6d184",
+      "ordinal": 20,
+      "rowSha256": "5c44676aa68d0530bb95824784477d3295d9478508c9d56e545a251e2aa90944",
+      "cells": {
+        "Ordinals": "20",
+        "Lesson": "1.3.5",
+        "Type": "Pronoun",
+        "Hebrew": "הֵן",
+        "English": "They (only female)",
+        "Gender": "F"
+      },
+      "exercise1_3": {
+        "transliteration": "Hen",
+        "meaning": "They (all-female)",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": null
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41527,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/hen.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-f07dffbfe3",
+      "ordinal": 21,
+      "rowSha256": "33b4dc37a231041ddc65dcd86b7f48770fa167ef400c0901b226f0cae3d36d2f",
+      "cells": {
+        "Ordinals": "21",
+        "Lesson": "1.4",
+        "Type": "Grammar",
+        "Hebrew": "הַ",
+        "English": "The",
+        "Notes": "Attaches to the following word as a prefix."
+      },
+      "exercise1_3": null,
+      "audioCandidates": []
+    },
+    {
+      "stableId": "hw-bd2ebdcfc8",
+      "ordinal": 22,
+      "rowSha256": "888335a8862cb6c7183510b56d9805ab127680861daa8b4b18c2f0238dde6f9a",
+      "cells": {
+        "Ordinals": "22",
+        "Lesson": "1.4",
+        "Type": "Grammar",
+        "Hebrew": "מִ",
+        "English": "From",
+        "Notes": "Attaches to the following word as a prefix.\nWhen it's followed by הַ, it becomes \"me\" (מֵ). This is for ease of pronunciation, but you can use either version."
+      },
+      "exercise1_3": null,
+      "audioCandidates": []
+    },
+    {
+      "stableId": "hw-70fb17f06a",
+      "ordinal": 23,
+      "rowSha256": "8979ef48bf6bc806d96d2eac39e502f2f67868bbf78263b57d6ed0531ba270c8",
+      "cells": {
+        "Ordinals": "23",
+        "Lesson": "1.4",
+        "Type": "Grammar",
+        "Hebrew": "מִי",
+        "English": "who?",
+        "Notes": "The question word, not the relative pronoun:\n\"who are you?\" (question), not \"This is who did this.\" (relative pronoun)"
+      },
+      "exercise1_3": {
+        "transliteration": "Mi",
+        "meaning": "Who?",
+        "exercise1Role": "answer",
+        "exercise2Role": "example",
+        "boldSegment": null
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41607,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/mi.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-27f9b134a9",
+      "ordinal": 24,
+      "rowSha256": "bceeefb7f2eb0cc24f939025de19a215d6e21c2cb9e69d13dee79ca9c1767f28",
+      "cells": {
+        "Ordinals": "24",
+        "Lesson": "1.4",
+        "Type": "Grammar",
+        "Hebrew": "מָה",
+        "English": "what?",
+        "Notes": "The question word, not the relative pronoun:\n\"what did you do?\" (question), not \"this is not what you think!\" (relative pronoun)"
+      },
+      "exercise1_3": {
+        "transliteration": "Ma",
+        "meaning": "What?",
+        "exercise1Role": "answer",
+        "exercise2Role": "answer",
+        "boldSegment": null
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41585,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/ma-what.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-fe52a4f4b5",
+      "ordinal": 25,
+      "rowSha256": "5e6d173d7ffc0ccae627cfa4a2f8b8273734b614c7af621b67e9b67f712e930a",
+      "cells": {
+        "Ordinals": "25",
+        "Lesson": "1.4",
+        "Type": "Grammar",
+        "Hebrew": "מָתַי",
+        "English": "When?",
+        "Notes": "The question word, not the relative pronoun:\n\"when did you arrive?\" (question), not \"I was there when you arrived.\" (relative pronoun)"
+      },
+      "exercise1_3": {
+        "transliteration": "Matai",
+        "meaning": "When?",
+        "exercise1Role": "answer",
+        "exercise2Role": null,
+        "boldSegment": "תַי"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41578,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/matai.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-95bc614855",
+      "ordinal": 26,
+      "rowSha256": "496aa82b810d7334e7356f0d9c6d41750132decc3cddccd1bece94a6703fd915",
+      "cells": {
+        "Ordinals": "26",
+        "Lesson": "1.4",
+        "Type": "Grammar",
+        "Hebrew": "הַאִם",
+        "English": "is/does…?\nIs it the case that…?",
+        "Notes": "Question word where the answer is going to be either “yes” or “no”. The word is often omitted, and the question is understood by voice intonation or through the use of a question mark.\nExamples for possible questions that would start with הַאִם: \n\nAre you Tammy? – אָת תָמִי?/הַאִם אָת תָמִי?\nIs Matan from Yemen? – מָתָן מִתֶימָן?/הַאִם מָתָן מִתֶימָן?"
+      },
+      "exercise1_3": null,
+      "audioCandidates": [
+        {
+          "mediaId": 41516,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/haim-is-it-the-case.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-53470d6e0b",
+      "ordinal": 27,
+      "rowSha256": "121ee61b11c57b8145242b42f5177b853ffa8fc46428b85cd2490d2c23440430",
+      "cells": {
+        "Ordinals": "27",
+        "Lesson": "1.4",
+        "Type": "Other",
+        "Hebrew": "הַיי",
+        "English": "Hi",
+        "Notes": "Loan word from English, pronounced the same."
+      },
+      "exercise1_3": null,
+      "audioCandidates": []
+    },
+    {
+      "stableId": "hw-5565f9da1f",
+      "ordinal": 28,
+      "rowSha256": "fc639f63571f298e5570515de75123aaec76303deb430f3c8a32752e3577149b",
+      "cells": {
+        "Ordinals": "28",
+        "Lesson": "1.4",
+        "Type": "Verb",
+        "Hebrew": "נָתַן",
+        "English": "(he) gave",
+        "Notes": "Follows a 3rd person single male (he) noun. \nFor example: “Matan Gave”, “the boy gave” or “he gave”, but not “Tammy gave” (because Tammy is female) or “I gave” (because I is 1st person, not 3rd person).\nMatan Gave = מָתָן נָתַן\n\n[This is also the first name “Nathan”. It's short for Nathanel, whose Hebrew equivalent is \"God gave\" or \"given by God\"]",
+        "Root": "נתנ",
+        "Pattern": "פָּעַל"
+      },
+      "exercise1_3": {
+        "transliteration": "Natan",
+        "meaning": "(he) gave",
+        "exercise1Role": "example",
+        "exercise2Role": "answer",
+        "boldSegment": "תַן"
+      },
+      "audioCandidates": [
+        {
+          "mediaId": 41612,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/natan-gave.mp3",
+          "match": "filename only, unconfirmed"
+        },
+        {
+          "mediaId": 43658,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/natan-noten.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    },
+    {
+      "stableId": "hw-ebb61165b5",
+      "ordinal": 29,
+      "rowSha256": "fe195cf211dc6d7d02838c2d07af7cdd4efe31f7523cb0a867b7bc9861f7b25d",
+      "cells": {
+        "Ordinals": "29",
+        "Lesson": "1.4",
+        "Type": "Verb",
+        "Hebrew": "הָיָה",
+        "English": "(he) was",
+        "Root": "היה",
+        "Pattern": "פָּעַל"
+      },
+      "exercise1_3": null,
+      "audioCandidates": [
+        {
+          "mediaId": 41524,
+          "url": "https://hebleo.com/wp-content/uploads/2025/10/haya-was.mp3",
+          "match": "filename only, unconfirmed"
+        }
+      ]
+    }
+  ]
+}
