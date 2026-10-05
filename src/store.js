@@ -300,15 +300,50 @@ export class Store {
       return { ...this.preview(), draftToken, baseRevisionId: active, unchanged };
     });
   }
+  // Publication diff: canonical key comparison (key order is never a change), array order kept
+  // (`reordered` marks retained IDs whose relative position moved), pack metadata affects every
+  // lesson, and impacts union the published and draft dependency graphs. affectedLessons also
+  // includes any lesson whose prepared learner view (lesson, neighbours, public exercises, words) differs.
   preview() {
     const draft = this.currentDraft(); if (!draft) return { draft: null, changes: [], affectedLessons: [] };
-    const current = this.snapshot(); const changes = [];
+    const current = this.snapshot(), next = draft.content, both = [current, next], changes = [];
+    const same = (a, b) => canonicalJSON(a) === canonicalJSON(b), uniq = list => [...new Set(list.filter(Boolean))];
+    const action = (b, a) => b === undefined ? 'added' : a === undefined ? 'removed' : 'changed';
+    const hasOrdering = (c, lessonId) => c.exercises.some(e => e.type === 'ordering' && e.lessonId === lessonId);
+    // Ordering trays draw distractors from the current and previous two lessons' words.
+    const orderingLessons = (wordId, c) => c.lessons.filter((l, i) => hasOrdering(c, l.id) && c.lessons.slice(Math.max(0, i - 2), i + 1).some(w => w.wordIds.includes(wordId))).map(l => l.id);
+    const impact = {
+      words: (id, b, a) => {
+        const deps = both.map(c => this.dependencies(id, c)), exercises = uniq(deps.flatMap(d => d.exercises));
+        const tray = !b || !a || b.unpointed !== a.unpointed || Boolean(b.noVocab) !== Boolean(a.noVocab);
+        return { lessons: uniq([...deps.flatMap(d => d.lessons), ...both.flatMap(c => c.exercises.filter(e => exercises.includes(e.id)).map(e => e.lessonId)), ...(tray ? both.flatMap(c => orderingLessons(id, c)) : [])]), exercises, review: deps[1].review };
+      },
+      lessons: (id, b, a, reordered) => ({ lessons: uniq([id, ...both.flatMap(c => {
+        const i = c.lessons.findIndex(l => l.id === id), window = !b || !a || reordered || !same(b.wordIds, a.wordIds);
+        return [...c.lessons.filter(l => l.blocks.some(x => x.source === 'words' && x.selector?.lessonId === id)).map(l => l.id), ...(window && i >= 0 ? c.lessons.slice(i + 1, i + 3).filter(l => hasOrdering(c, l.id)).map(l => l.id) : [])];
+      })]) }),
+      exercises: (id, b, a) => ({ lessons: uniq([b?.lessonId, a?.lessonId, ...both.flatMap(c => c.lessons.filter(l => l.exerciseIds.includes(id) || l.checkExerciseIds?.includes(id)).map(l => l.id))]) })
+    };
     for (const kind of ['words', 'lessons', 'exercises']) {
-      const before = new Map(current[kind].map(x => [x.id, x])); const after = new Map(draft.content[kind].map(x => [x.id, x]));
-      for (const key of new Set([...before.keys(), ...after.keys()])) if (JSON.stringify(before.get(key)) !== JSON.stringify(after.get(key))) changes.push({ kind, id: key, action: !before.has(key) ? 'added' : !after.has(key) ? 'removed' : 'changed', impact: kind === 'words' ? this.dependencies(key, draft.content) : null });
+      const before = new Map(current[kind].map(x => [x.id, x])), after = new Map(next[kind].map(x => [x.id, x]));
+      const kept = current[kind].map(x => x.id).filter(id => after.has(id)), keptNext = next[kind].map(x => x.id).filter(id => before.has(id));
+      const moved = new Set(kept.filter((id, i) => keptNext[i] !== id));
+      for (const id of new Set([...before.keys(), ...after.keys()])) {
+        const b = before.get(id), a = after.get(id), reordered = moved.has(id);
+        if (!same(b, a) || reordered) changes.push({ kind, id, action: action(b, a), ...(reordered ? { reordered: true } : {}), impact: impact[kind](id, b, a, reordered) });
+      }
     }
-    if(JSON.stringify(current.reviewPolicy)!==JSON.stringify(draft.content.reviewPolicy))changes.push({kind:'policy',id:'review-defaults',action:'changed',impact:{lessons:[]}});
-    return { draft, changes, affectedLessons: [...new Set(changes.flatMap(c => c.kind === 'lessons' ? [c.id] : c.impact?.lessons || (c.kind === 'exercises' ? [draft.content.exercises.find(e => e.id === c.id)?.lessonId].filter(Boolean) : [])))] };
+    if (!same(current.reviewPolicy, next.reviewPolicy)) changes.push({ kind: 'policy', id: 'review-defaults', action: action(current.reviewPolicy, next.reviewPolicy), impact: { lessons: [] } });
+    const allLessons = uniq(both.flatMap(c => c.lessons.map(l => l.id))), collections = new Set(['words', 'lessons', 'exercises', 'reviewPolicy']);
+    for (const field of uniq([...Object.keys(current), ...Object.keys(next)]).filter(k => !collections.has(k)).sort()) if (!same(current[field], next[field])) changes.push({ kind: 'metadata', id: /^[A-Za-z0-9][A-Za-z0-9_-]*$/.test(field) ? field : 'pack', field, action: action(current[field], next[field]), impact: { lessons: allLessons } });
+    const view = (c, id) => {
+      const i = c.lessons.findIndex(l => l.id === id); if (i < 0) return null;
+      const lesson = c.lessons[i], exercises = c.exercises.filter(e => e.lessonId === id || lesson.exerciseIds.includes(e.id) || lesson.checkExerciseIds?.includes(e.id));
+      const wordIds = new Set([...lesson.wordIds, ...lesson.blocks.flatMap(x => x.source === 'words' ? c.lessons.find(t => t.id === x.selector?.lessonId)?.wordIds || [] : []), ...exercises.flatMap(e => [e.wordId, ...(e.wordIds || [])])]);
+      return canonicalJSON({ lesson, index: i, previous: c.lessons[i - 1]?.id ?? null, following: c.lessons[i + 1]?.id ?? null, exercises: exercises.map(e => [e, this.publicExercise(e, c)]), words: c.words.filter(w => wordIds.has(w.id)) });
+    };
+    const affected = new Set([...changes.flatMap(c => c.impact?.lessons || []), ...allLessons.filter(id => view(current, id) !== view(next, id))]);
+    return { draft, changes, affectedLessons: allLessons.filter(id => affected.has(id)) };
   }
   publish(baseRevisionId, draftToken) {
     if (typeof draftToken !== 'string' || !draftToken) throw this.draftConflict('Publishing needs the reviewed draft token.', 'DRAFT_TOKEN_REQUIRED');
