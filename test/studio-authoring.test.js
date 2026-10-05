@@ -167,3 +167,30 @@ test('import review includes pack-level contracts, approval and unknown metadata
   assert.deepEqual(changes[0].fields,['contracts','approval','unknownPack']);assert.equal(changes[0].collection,'pack');
   assert.match(renderImportReview(previous,candidate),/unknownPack/);
 });
+
+test('import inspection ignores nested JSON object key order but retains metadata and array changes',()=>{
+  const previous=fixture();previous.unknownPack={source:{sheet:'fixture',row:2},flags:['a','b']};
+  previous.words[0].approval={status:'fixture-only',review:{person:'fixture',version:1}};
+  const reorder=value=>Array.isArray(value)?value.map(reorder):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).reverse().map(([key,item])=>[key,reorder(item)])):value;
+  const candidate=reorder(previous),before=structuredClone(candidate);
+  assert.deepEqual(inspectImport(previous,candidate).changes,[]);
+  candidate.unknownPack.flags.reverse();candidate.words[0].approval.review.version=2;
+  const changes=inspectImport(previous,candidate).changes;
+  assert.deepEqual(changes.find(x=>x.collection==='pack').fields,['unknownPack']);
+  assert.deepEqual(changes.find(x=>x.id===previous.words[0].id).fields,['approval']);
+  assert.deepEqual(previous.unknownPack.flags,['a','b']);assert.deepEqual(before.unknownPack.flags,['a','b']);
+});
+
+test('import inspection reports collection order without mutating identities or treating additions as reorders',()=>{
+  const previous=fixture(),candidate=structuredClone(previous);
+  for(const collection of ['words','lessons','exercises'])candidate[collection].reverse();
+  const changes=inspectImport(previous,candidate).changes;
+  assert.equal(changes.length,1);assert.equal(changes[0].collection,'pack');
+  assert.deepEqual(changes[0].fields,['words','lessons','exercises']);
+  assert.match(renderImportReview(previous,candidate),/<th>lessons<\/th>/);
+  const added=structuredClone(previous);added.words.unshift({...added.words[0],id:'fixture-addition'});
+  assert.deepEqual(inspectImport(previous,added).changes.map(x=>[x.id,x.kind]),[['fixture-addition','added']]);
+  const omitted=structuredClone(previous);omitted.words.shift();
+  assert.deepEqual(inspectImport(previous,omitted).changes.map(x=>[x.id,x.kind]),[[previous.words[0].id,'omitted']]);
+  assert.notEqual(previous.lessons[0].id,candidate.lessons[0].id);
+});
