@@ -82,7 +82,12 @@ export function validateContent(content) {
       if (e.type === 'ordering' && (!Array.isArray(e.tokens) || !e.tokens.length || e.tokens.some(t => typeof t !== 'string'))) throw new DomainError('Ordering exercise needs tokens.');
     } else throw new DomainError('Unsupported exercise type: ' + e.type);
     if(e.prefixTokenIndices && (e.type!=='ordering'||!Array.isArray(e.prefixTokenIndices)||new Set(e.prefixTokenIndices).size!==e.prefixTokenIndices.length||e.prefixTokenIndices.some(i=>!Number.isInteger(i)||i<0||i>=e.tokens.length)))throw new DomainError('Invalid prefix tiles.');
-    if (e.type === 'recognition' && (!Array.isArray(e.distractors) || !e.distractors.length || e.distractors.some(x => typeof x !== 'string'))) throw new DomainError('Recognition needs choices.');
+    if (e.type === 'recognition') {
+      if (!Array.isArray(e.distractors) || !e.distractors.length || e.distractors.some(x => typeof x !== 'string')) throw new DomainError('Recognition needs choices.');
+      // Each distractor is shown to learners as a choice; one with nothing visible is refused, never trimmed or dropped.
+      const blank = e.distractors.findIndex(x => !x.replace(/[\s\p{Cc}\p{Default_Ignorable_Code_Point}]/gu, ''));
+      if (blank >= 0) throw new DomainError('Authored distractor meaning ' + (blank + 1) + ' of ' + e.id + ' is blank. Enter a meaning or remove that item.');
+    }
   }
   for (const l of content.lessons) {
     text(l.title, 'lesson title'); if (!l.video || l.explanation) text(l.explanation, 'lesson explanation',100000);

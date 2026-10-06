@@ -1,0 +1,177 @@
+date (local): 2026-10-06 22:33:49 +03:00
+clone: /c/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401
+branch: lead/b2-g401
+HEAD: ee9e2f1beb81285a2a4775c0e76ac67584de8bc5
+node: v24.19.0  npm: 11.17.0
+tested tree = staged index tree b77598c27ad1341298d7bdd7fa2eb3a15beca58f (HEAD + staged G4-01 src/test fix)
+  src daf5c9059c74b518338dd47e17cca746de2b5ffd
+  public 4b6d746a4d9f424601d2a9618107ed1a56ab9459
+  test f0dbbf5095c92eec181a146bb621ede734e4d0e7
+  schemas ef10df024164d96179947f429fc43985af329541
+  package.json 32079f75511a8a379db4633545663816dd9b810d
+  package-lock.json 76c0d5c11e87be92125e28f0304646187b87b9b0
+unstaged tracked non-docs diff vs index (empty = tested files are exactly the staged ones):
+untracked outside docs:
+----
+cmd: npm.cmd run verify
+
+> hebleo-3-local-demo@0.1.0 verify
+> npm run check && npm test
+
+
+> hebleo-3-local-demo@0.1.0 check
+> node --check src/server.js && node --check src/store.js && node --check public/app.js && node --check public/learner-view.js && node --check public/preview/learner-renderer.js
+
+
+> hebleo-3-local-demo@0.1.0 test
+> node --test
+
+✔ Lesson 1 can advance past optional practice with an unresolved Check answer, preserving actual completion and graded history (480.957ms)
+✔ Extra practice can be skipped before submission and after grading, clearing its resume without erasing attempts (409.4191ms)
+✔ The final lesson offers a course exit when incomplete, and core exercises do not show the extra-practice skip (165.8678ms)
+✔ Wrong-answer retry keeps the particular question, only correct answers fill progress, and saved progress survives reload (254.1679ms)
+✔ Finish-screen retry opens only the chosen missed question, then removes the corrected miss without changing other answers (139.8456ms)
+✔ Starting updated lesson through the actual app does not flush the old resume back over the reset (112.9622ms)
+✔ App sentence tiles submit attached prefixes, and source-rich cards/table open without field rendering errors (189.1984ms)
+✔ Studio edits author card policy and lesson highlights through the app draft/publication workflow (406.9384ms)
+✔ Actual app launcher focuses the native answer field and saves pinning through the learner preference API (141.2848ms)
+✔ Lesson help exposes an actual question form and saves it to the author inbox (80.7255ms)
+✔ Learner keyboard shortcuts never activate or handle controls inside a rehearsal root (72.2907ms)
+✔ Studio guided exercise and lesson forms save private drafts, reload discards unsaved edits, a stale token keeps entered values, and publishing stays separate (531.4991ms)
+✔ Studio import review writes nothing until the reviewed candidate is staged, discard writes nothing, and a stale review cannot be staged (484.5906ms)
+✔ Studio draft rehearsal uses the shared renderer and grader, isolates app.js handlers, and leaves every table, learner record and the published pack unchanged (303.7581ms)
+✔ Rehearsal keeps keyboard focus inside the modal across re-renders, so a digit then Enter grade, Retry resets, and a new result is scrolled into view (212.0075ms)
+✔ A rehearsal stops on a changed draft or a newer publication revision, writes nothing itself, and closes when the author navigates away (289.9685ms)
+✔ Switching exercises while a guided lesson save is still reloading keeps re-mounted editors and Publish on the token that save returned (511.0967ms)
+✔ Publishing behind a pending guided save still rejects a newer draft from another tab and publishes nothing (226.1546ms)
+✔ fresh demo progress is an explicit startup switch: npm start flag or env only (3.2855ms)
+✔ startup preparation resets once per build and never when disabled (12.5974ms)
+✔ a running server never resets progress, even after the app build changes on disk (153.335ms)
+✔ completion needs every core question correct within one pinned revision; retries count once (31.9845ms)
+✔ v2 backup carries every referenced revision and restore remaps history consistently (43.9109ms)
+✔ v1 backups still restore; attempts from uncarried revisions keep grades as explicit legacy links (20.2357ms)
+✔ v2 restore rejects inconsistent backups atomically (10.993ms)
+✔ schema migration marks dangling history links legacy once and refuses newer databases (82.6729ms)
+✔ Demo reset clears only progress for all three profiles once per build and survives process restart (163.9352ms)
+✔ Demo fingerprint detects app edits, ignores documentation edits and normalizes Windows line endings (131.463ms)
+✔ Demo fingerprint covers nested executable assets at any depth and ignores docs, data and uploads (251.5768ms)
+✔ Startup reset follows nested-only deployments once per build and keeps settings, content and drafts (114.3749ms)
+✔ The checkout fingerprint includes every nested public module and no docs or mutable data (5.8776ms)
+✔ draft token is canonical and covers unknown fields, provenance, approval, formatting and media refs (15.1534ms)
+✔ stage requires the expected token, creates with null, is a no-op on equal content and conflicts otherwise (47.4475ms)
+✔ publish and rollback compare base and token in one transaction; a stale publish cannot clear a newer draft (37.1051ms)
+✔ preview session returns the learner public shape of the exact draft and writes nothing for any profile (34.1509ms)
+✔ preview is stale after re-stage, publish or rollback and has no no-draft mode (22.5099ms)
+✔ a restored draft is re-based onto the new revision, so its old token is stale (20.4335ms)
+✔ unapproved source candidates stay blocked at stage, including when relabelled as verified (8.0816ms)
+✔ HTTP draft and preview routes are author-only, no-store and return the coded error envelope (319.8457ms)
+✔ all six editors stage and reload exact opaque fields using the actual HTTP CAS contract (1043.3627ms)
+✔ both editor kinds keep rejected input/token, recover after validation error and preserve source/media through reload (398.8039ms)
+✔ controller uses real read-only HTTP preparation/grading; all profiles and database rows survive every rehearsal action (141.3643ms)
+✔ actual HTTP stale-token conflict freezes controller without discarding answer or writing state (98.9699ms)
+✔ actual renderer serializes all six families through author HTTP and preserves every table/profile (769.8447ms)
+✔ renderer keeps invalid HTTP answer drafts for correction and stale responses freeze the UI (162.9814ms)
+✔ keyboard events, remounts and retained detached controls produce one HTTP submission and no late UI work (123.6701ms)
+✔ CSV updates stable IDs while preserving explicit Hebrew, quoting, newlines and formatting (7.0579ms)
+✔ CSV rejects duplicate IDs, column errors and malformed quoting; no forms are guessed (2.9334ms)
+✔ Nikkud uses five sound slots, inserts at the actual caret, and preserves native field editing (453.0624ms)
+✔ Vowel hover waits 1500ms, cancels on early exit, keeps variants reachable, and inserts an alternative (114.8404ms)
+✔ Vowel variants have a keyboard path, include auxiliary marks, and dismiss on Escape (198.5019ms)
+✔ Pin holds the overlay across click-away and lesson context; unpinned click-away dismisses it (151.5102ms)
+✔ Known and new keys derive dark and bright shades from one authored hue, including legacy two-color data (98.6056ms)
+✔ Read-only fields cannot be edited by the custom keyboard (74.9252ms)
+✔ every seed exercise kind submits the learner wire answer through the real controller, is graded correct by the actual draft evaluator, and leaves every row of three profiles unchanged (1708.9362ms)
+✔ wrong answers keep the local draft through re-renders, show the learner feedback, and retry clears only the rehearsal answer (119.462ms)
+✔ settings, keyboard, vocabulary and lookup controls call rehearsal actions and render a read-only entry (247.0805ms)
+✔ dispose removes the root and every listener, stops media, and is idempotent (41.5365ms)
+✔ busy rehearsal disables every control and ignores clicks and shortcuts; a pending check evaluates exactly once (94.4581ms)
+✔ disposable rehearsal navigates, retries, looks up and changes settings without modifying three learner states or source (286.7231ms)
+✔ stale draft evaluation freezes rehearsal and never retries with a different token (40.1145ms)
+✔ renderer wire answers for six families are sent separately from the retained response draft (360.1925ms)
+✔ both conflict codes freeze session loading and evaluation; missing preview targets fail closed (228.373ms)
+✔ INVALID_ANSWER leaves the response draft available for correction and retry (41.1704ms)
+✔ exit drops late loads and evaluations and disposes shared renderer events (57.5339ms)
+✔ rehearsal rejects persistent, mismatched or malformed session responses (150.8033ms)
+✔ media picker preserves supplied revision/hash/source fields, labels legacy references and retains rejection recovery (53.967ms)
+✔ pinned sha256 media can be selected without a URL; unsafe supplied URLs remain disabled (37.7307ms)
+✔ object-key-only differences produce no changes and no affected lessons, including nested unknown fields (41.171ms)
+✔ omitted, added and changed pack metadata are reported and affect every lesson (53.4779ms)
+✔ collection reorders and in-object array order changes stay visible; additions alone are not reorders (111.4086ms)
+✔ word impact unions published and draft dependencies so a moved reference names both lessons (13.2317ms)
+✔ stage (Studio save and import staging) refuses empty, whitespace-only and invisible-only distractors before any write (176.2349ms)
+✔ publish, rollback and restore refuse blank distractors written by an earlier build, leaving every table unchanged (38.9506ms)
+✔ valid authored distractors keep exact text, order and neighbouring fields through stage, preview, publish, session and grading (29.1221ms)
+✔ HTTP: blank distractor saves and legacy publishes return 400 with the field message and write nothing; a filled row saves (154.237ms)
+✔ Studio editor shows the field error, keeps every typed value and re-enables controls; filling or removing the row then saves (552.7745ms)
+✔ Markdown renders headings, tables, images, formatting and authored disclosure while removing executable markup (348.7954ms)
+✔ Hebrew lesson phrases remain in source order inside a single directional isolate (73.1074ms)
+✔ Sheets cell fills, exact RGB colors, and rich runs retain UTF-16 vowel offsets, including explicit bold=false (60.7353ms)
+✔ Source formatting metadata survives publication, JSON export and backup without canonical text changes (36.7561ms)
+✔ Prefixes are separate tray choices but compose and grade as attached forms, without guessed vowel changes (8.5516ms)
+✔ Known and newly taught keyboard keys are independently authored and validated (31.6096ms)
+✔ Owner keyboard floats, shows English equivalents, distinguishes key groups, edits the active field and stays pinned across questions (183.4968ms)
+✔ Matching supports pointer dragging and accessible select-then-place, with one word per meaning (55.2862ms)
+✔ Flashcard front Nikkud follows an author default or a persisted learner override (31.458ms)
+✔ Real lesson questions are isolated per learner, idempotent, author-answerable and included in atomic backups (14.7063ms)
+✔ Starting an updated lesson is explicit and preserves graded attempts and review records (19.7726ms)
+✔ New rich assets, image media and question endpoints work over HTTP with author boundaries (214.2005ms)
+✔ valid v2 backup restores consistent links with unchanged grades, resumed feedback, legacy records and replay (82.5172ms)
+✔ v2 restore rejects nonexistent or existing-but-wrong historical lesson, exercise and word links before any write (217.4799ms)
+✔ restore refuses missing, malformed or unsupported store schema declarations atomically (165.3263ms)
+✔ v1 exports without a schema field still restore; links that disagree with a carried revision become explicit legacy links, never repaired (49.4769ms)
+✔ restore refuses reported attempts with absent, null or empty identities or grades before any write, in v2 and v1 (432.3379ms)
+✔ valid reports on resumed, no-resume and legacy history restore with unchanged grades; lesson-level questions keep optional targets (34.1582ms)
+✔ HTTP restore refuses reported attempts without an exercise, lesson or request ID and writes nothing; a valid report restores (396.5493ms)
+✔ restore refuses report envelopes that disagree with their key and duplicate report keys before any write, in v2 and v1 (326.2435ms)
+✔ valid reports restore under their own identities and resolving one changes only that report, in v2 and v1 (30.3037ms)
+✔ HTTP restore refuses mismatched or duplicate report identities and writes nothing; after a valid restore, resolving the listed report A changes only A (293.6131ms)
+✔ HTTP demo serves assets, grades answers and rejects cross-origin/malformed requests (271.6332ms)
+✔ Hebrew normalization permits vowels, punctuation and direction controls but not misspellings or final-letter substitutions (10.1553ms)
+✔ all six exercise families grade submitted answers; lessons complete and enroll words (45.9392ms)
+✔ nikkud-required typing rejects the unpointed alternative (41.139ms)
+✔ duplicate attempts are idempotent and conflicting payloads fail (6.1381ms)
+✔ draft publication and rollback propagate vocabulary while retaining progress and pinned answers (43.178ms)
+✔ manifest selectors use canonical source objects and permit changing component order (1.9922ms)
+✔ invalid imports fail without changing the active revision or existing draft (83.0947ms)
+✔ membership cancellation preserves course and core review; refunds gate practice but retain data (14.6214ms)
+✔ review ratings schedule and deduplicate without pretending to use FSRS (5.8769ms)
+✔ backup restore preserves both learners and replay receipts, and clears events after the snapshot (19.3135ms)
+✔ invalid restore is atomic, including a malformed saved attempt (6.0465ms)
+✔ SQLite survives reopen and keeps profiles isolated (68.3539ms)
+✔ all six exercise forms save/reload without losing authored answers, extensions or absent defaults (562.0941ms)
+✔ typing edits retain explicit word forms, identity, rich data and Nikkud defaults; immutable fields reject (2.367ms)
+✔ prefix removal remaps stored token indices and never infers or rewrites accepted answers (86.554ms)
+✔ failed draft validation retains the entered text and the previous saved draft (113.0317ms)
+✔ lesson composition preserves blocks, vocabulary/source fields and reference order through save/reload (108.6074ms)
+✔ untrusted authored text is escaped in forms; disposing prevents queued save handlers (45.1411ms)
+✔ import inspection exposes exact forms, formatting, provenance and omissions without mutation (74.0315ms)
+✔ draft editors carry successful CAS tokens forward but retain previous tokens and authored input after rejection (253.3217ms)
+✔ a disposed editor never remounts the workspace when its pending stage returns (35.099ms)
+✔ import review includes pack-level contracts, approval and unknown metadata changes (4.6879ms)
+✔ import inspection ignores nested JSON object key order but retains metadata and array changes (4.9975ms)
+✔ import inspection reports collection order without mutating identities or treating additions as reorders (8.1959ms)
+✔ lesson destinations use stable IDs and finish at course end; text-only lessons have no fake Watch option (3.952ms)
+✔ sentence trays include substantial distractors drawn from current/recent taught vocabulary, without future words (31.744ms)
+✔ ordering publication requires enough taught distractors and never treats an unpointed answer as a distractor (5.1863ms)
+✔ rich CSV fields survive publication and backup with original unknown column labels (41.3463ms)
+✔ saved positions preserve matching answers and feedback against their pinned revision (14.6963ms)
+✔ invalid saved feedback, fabricated completion and out-of-range sentence tokens cannot alter grading records (4.2374ms)
+✔ undo restores the exact preceding schedule, is single-use, and replayed rating receipts do not reschedule (6.989ms)
+✔ reports retain submitted answer and revision; author review never changes accepted answers (6.3572ms)
+✔ targeted extra practice selects unresolved authored mistakes, then falls back to lesson exercises (5.1666ms)
+✔ backup restores reports, undo, and pinned session positions; feedback stays linked to the remapped attempt (13.8672ms)
+✔ fixture enrichment preserves edited fields and does not touch verified source content (1.465ms)
+✔ media schemas reject executable or insecure sources and preserve native HTTPS links (1.3165ms)
+✔ authored help works offline; optional AI sends only source context, uses store:false, and requires membership (9.9271ms)
+✔ HTTP author routes and backup exports reject learner profiles while help and progress remain available (238.4303ms)
+✔ native local media supports seeking and rejects invalid ranges and nonmedia files (97.4533ms)
+✔ Question progress counts each correct question once in its own lesson revision and removes corrected misses (0.7596ms)
+ℹ tests 140
+ℹ suites 0
+ℹ pass 140
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7867.5414
+EXIT=0
