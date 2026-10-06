@@ -1,0 +1,385 @@
+{
+  "label": "fixed (staged on e0cbd5c)",
+  "results": [
+    {
+      "format": "v2",
+      "case": "userId absent",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "userId null",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "userId empty",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "userId unknown",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "userId other",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "requestId absent",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "requestId null",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "requestId empty",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "requestId other",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "unknown userId, matching key",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "reserved requestId, matching key",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "B identity under A key (collision)",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "key renamed away from identity",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "key absent",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "value absent",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "A moved onto B key+identity (duplicate key)",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid backup reports or lesson sessions.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "same report twice (duplicate key)",
+      "reportsSubmitted": 3,
+      "status": 400,
+      "error": "Invalid backup reports or lesson sessions.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "case": "valid control",
+      "reportsSubmitted": 2,
+      "status": 200,
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "reportsAfter": 2,
+      "listedIdentities": [
+        "learner-core/report-b SYNTHETIC report B",
+        "learner-demo/report-a SYNTHETIC report A"
+      ],
+      "resolveA": 200,
+      "resolveChanges": 1,
+      "afterResolve": {
+        "A": "reviewed",
+        "B": "pending"
+      },
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "userId absent",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "userId null",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "userId empty",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "userId unknown",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "userId other",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "requestId absent",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "requestId null",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "requestId empty",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "requestId other",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "unknown userId, matching key",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "reserved requestId, matching key",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "B identity under A key (collision)",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "key renamed away from identity",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "key absent",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "value absent",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid learner report in backup.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "A moved onto B key+identity (duplicate key)",
+      "reportsSubmitted": 2,
+      "status": 400,
+      "error": "Invalid backup reports or lesson sessions.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "same report twice (duplicate key)",
+      "reportsSubmitted": 3,
+      "status": 400,
+      "error": "Invalid backup reports or lesson sessions.",
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "case": "valid control",
+      "reportsSubmitted": 2,
+      "status": 200,
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "reportsAfter": 2,
+      "listedIdentities": [
+        "learner-core/report-b SYNTHETIC report B",
+        "learner-demo/report-a SYNTHETIC report A"
+      ],
+      "resolveA": 200,
+      "resolveChanges": 1,
+      "afterResolve": {
+        "A": "reviewed",
+        "B": "pending"
+      },
+      "passed": true
+    }
+  ]
+}

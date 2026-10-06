@@ -1,0 +1,87 @@
+{
+  "commit": "fixed (staged on e0cbd5c)",
+  "node": "v24.19.0",
+  "results": [
+    {
+      "name": "HTTP simultaneous create/save CAS, stale stage/publish/preview/rollback, all-table isolation",
+      "status": "PASS",
+      "details": {
+        "base": "http://127.0.0.1:50675",
+        "createStatuses": [
+          200,
+          409
+        ],
+        "saveStatuses": [
+          200,
+          409
+        ],
+        "previewExercises": 9,
+        "types": [
+          "recognition",
+          "typing",
+          "matching",
+          "ordering",
+          "cloze",
+          "transformation"
+        ],
+        "allTables": [
+          "events",
+          "kv",
+          "learners",
+          "revisions",
+          "sqlite_sequence"
+        ],
+        "servedRendererMatches": true
+      }
+    },
+    {
+      "name": "Publication diff metadata, nested arrays and collection reorders; object key order no-op",
+      "status": "PASS",
+      "details": {
+        "variants": 12
+      }
+    },
+    {
+      "name": "Backup/restore into populated destination and repeat restore preserve all reference mappings, history grades, draft and replay",
+      "status": "PASS",
+      "details": {
+        "rounds": [
+          {
+            "1": 5,
+            "2": 6
+          },
+          {
+            "5": 7,
+            "6": 8
+          }
+        ],
+        "profiles": 3,
+        "referencedRevisions": 2
+      }
+    },
+    {
+      "name": "Restore failure rolls back every table and revision sequence, including injected SQL failure after writes",
+      "status": "PASS",
+      "details": {
+        "allTables": [
+          "events",
+          "kv",
+          "learners",
+          "revisions",
+          "sqlite_sequence"
+        ],
+        "invalidCardRejected": true,
+        "postWriteFailureRolledBack": true
+      }
+    },
+    {
+      "name": "Cross-revision completion requires one revision and retains already-earned completion",
+      "status": "PASS",
+      "details": {
+        "mixedRevisionRejected": true,
+        "fullRevisionCompletes": true,
+        "attainmentRetainedOnRollback": true
+      }
+    }
+  ]
+}

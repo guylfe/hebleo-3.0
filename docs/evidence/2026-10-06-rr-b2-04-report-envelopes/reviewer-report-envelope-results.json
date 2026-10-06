@@ -1,0 +1,335 @@
+{
+  "commit": "fixed (staged on e0cbd5c)",
+  "results": [
+    {
+      "case": "userAbsent",
+      "restore": {
+        "status": 400,
+        "body": {
+          "error": "Invalid learner report in backup.",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "userNull",
+      "restore": {
+        "status": 400,
+        "body": {
+          "error": "Invalid learner report in backup.",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "userUnknown",
+      "restore": {
+        "status": 400,
+        "body": {
+          "error": "Invalid learner report in backup.",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "userOther",
+      "restore": {
+        "status": 400,
+        "body": {
+          "error": "Invalid learner report in backup.",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "requestAbsent",
+      "restore": {
+        "status": 400,
+        "body": {
+          "error": "Invalid learner report in backup.",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "requestNull",
+      "restore": {
+        "status": 400,
+        "body": {
+          "error": "Invalid learner report in backup.",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "requestEmpty",
+      "restore": {
+        "status": 400,
+        "body": {
+          "error": "Invalid learner report in backup.",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "requestOther",
+      "restore": {
+        "status": 400,
+        "body": {
+          "error": "Invalid learner report in backup.",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "collision",
+      "restore": {
+        "status": 400,
+        "body": {
+          "error": "Invalid learner report in backup.",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "valid",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": "report-a",
+        "userId": "learner-demo",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:44:55.703Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:44:55.703Z"
+      },
+      "resolve": {
+        "status": 200,
+        "body": {
+          "requestId": "report-a",
+          "userId": "learner-demo",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:44:55.703Z"
+          },
+          "status": "reviewed",
+          "at": "2026-10-06T12:44:55.703Z"
+        }
+      },
+      "resolveChanges": 1,
+      "afterResolve": {
+        "a": {
+          "requestId": "report-a",
+          "userId": "learner-demo",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:44:55.703Z"
+          },
+          "status": "reviewed",
+          "at": "2026-10-06T12:44:55.703Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:44:55.703Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:44:55.704Z"
+        }
+      },
+      "passed": true
+    }
+  ]
+}

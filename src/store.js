@@ -412,7 +412,7 @@ export class Store {
     // v1 carried only resumed-lesson snapshots; v2 carries every referenced revision, including the active one.
     const reports=input.reports || [], sessions=(v2 ? input.revisionSnapshots : input.sessionSnapshots) || [], questions=input.questions||[];
     if(!Array.isArray(questions)||new Set(questions.map(q=>q?.key)).size!==questions.length)throw new DomainError('Invalid backup questions.');
-    if(!Array.isArray(reports)||!Array.isArray(sessions)||new Set(sessions.map(x=>x?.revisionId)).size!==sessions.length)throw new DomainError('Invalid backup reports or lesson sessions.');
+    if(!Array.isArray(reports)||new Set(reports.map(r=>r?.key)).size!==reports.length||!Array.isArray(sessions)||new Set(sessions.map(x=>x?.revisionId)).size!==sessions.length)throw new DomainError('Invalid backup reports or lesson sessions.');
     for(const session of sessions){if(!Number.isInteger(session?.revisionId))throw new DomainError('Invalid session revision.');validateContent(session.content);}
     const carried = new Map(sessions.map(s => [s.revisionId, s.content]));
     if (v2) {
@@ -427,7 +427,8 @@ export class Store {
     const validId = value => { try { return id(value) === value; } catch { return false; } };
     const savedAttempt = a => Boolean(a) && typeof a === 'object' && typeof a.correct === 'boolean' && Number.isFinite(Date.parse(a.at)) && [a.requestId, a.exerciseId, a.lessonId].every(validId) && linkable(a);
     for(const entry of questions){const q=entry?.value;if(!q || !users.some(u=>u.id===q.userId)||entry.key!=='question-'+q.userId+'-'+id(q.requestId)||!linkable(q)||typeof q.question!=='string'||!q.question.trim()||q.question.length>1500||typeof q.answer!=='string'||q.answer.length>12000||!['waiting','answered'].includes(q.status)||(q.status==='answered'&&!q.answer.trim()))throw new DomainError('Invalid learner question in backup.');id(q.lessonId);if(q.wordId)id(q.wordId);if(q.exerciseId)id(q.exerciseId);}
-    for(const r of reports){if(typeof r?.key!=='string'||!/^report-(learner-(demo|core)|author-demo)-[A-Za-z0-9_-]+$/.test(r.key)||!['answer','unclear','media'].includes(r.value?.reason)||!['pending','reviewed'].includes(r.value?.status)||typeof r.value.note!=='string'||r.value.note.length>2000||!savedAttempt(r.value.attempt))throw new DomainError('Invalid learner report in backup.');}
+    // Reports are listed and resolved by their own userId/requestId, so the key must be exactly the one report() derives from them; otherwise resolving one report could update another.
+    for(const r of reports){const v=r?.value;if(!v||!users.some(u=>u.id===v.userId)||!validId(v.requestId)||r.key!=='report-'+v.userId+'-'+v.requestId||!['answer','unclear','media'].includes(v.reason)||!['pending','reviewed'].includes(v.status)||typeof v.note!=='string'||v.note.length>2000||!savedAttempt(v.attempt))throw new DomainError('Invalid learner report in backup.');}
     if (!Array.isArray(input.events) || !Array.isArray(input.reviewReceipts)) throw new DomainError('Backup needs replay receipts.');
     if (new Set(input.events.map(e => e?.id)).size !== input.events.length || new Set(input.reviewReceipts.map(r => r?.key)).size !== input.reviewReceipts.length) throw new DomainError('Duplicate backup receipt.');
     for (const e of input.events) { id(e?.id); if (!users.some(u => u.id === e.payload?.userId) || !['membership_cancelled', 'membership_started', 'course_refunded', 'course_purchased'].includes(e.payload?.type)) throw new DomainError('Invalid event receipt.'); }

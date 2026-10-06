@@ -163,3 +163,63 @@ test('HTTP restore refuses reported attempts without an exercise, lesson or requ
     const restored=d.reports('author-demo').find(r=>r.requestId==='report-1').attempt;assert.equal(restored.exerciseId,'ex-1-type');assert.equal(restored.correct,true);
   }finally{await new Promise(resolve=>server.close(resolve));}
 });
+
+// Release recheck RR-B2-04: reports are stored under report-<userId>-<requestId> but listed and resolved by their own userId/requestId, so the two must agree, with one report per key.
+const keyOf=v=>'report-'+v.userId+'-'+v.requestId;
+function malformedEnvelopes(){
+  const a=b=>b.reports.find(r=>r.key===reportKeys.resumed),cases={};
+  for(const [how,value] of Object.entries({...blank,unknown:'learner-unknown',other:'learner-core'}))cases['userId '+how]=b=>setField(a(b).value,'userId',value);
+  for(const [how,value] of Object.entries({...blank,other:'report-elsewhere'}))cases['requestId '+how]=b=>setField(a(b).value,'requestId',value);
+  Object.assign(cases,{
+    'unknown userId with a matching key':b=>{const r=a(b);r.key='report-learner-unknown-report-1';r.value.userId='learner-unknown';},
+    'reserved requestId with a matching key':b=>{const r=a(b);r.key='report-learner-demo-constructor';r.value.requestId='constructor';},
+    'identity copied from report B under report A key':b=>Object.assign(a(b).value,{userId:'learner-core',requestId:'report-history'}),
+    'key renamed away from its identity':b=>{a(b).key='report-learner-demo-report-renamed';},
+    'key absent':b=>{delete a(b).key;},
+    'value absent':b=>{delete a(b).value;},
+    'report A moved onto report B key and identity (two reports, one key)':b=>{const r=a(b);r.key=reportKeys['no-resume'];Object.assign(r.value,{userId:'learner-core',requestId:'report-history'});},
+    'same report twice':b=>{b.reports.push(structuredClone(a(b)));},
+  });
+  return cases;
+}
+
+test('restore refuses report envelopes that disagree with their key and duplicate report keys before any write, in v2 and v1',t=>{
+  const {first,backup}=reportSource(t);
+  for(const [format,base] of [['v2',backup],['v1',v1From(backup,first)]])for(const [name,mutate] of Object.entries(malformedEnvelopes())){
+    const d=destination(t),before=tables(d),beforeChanges=changes(d),bad=structuredClone(base);mutate(bad);
+    assert.throws(()=>d.restore(bad),/Invalid (learner report|backup reports)/,format+' '+name);
+    assert.equal(changes(d)-beforeChanges,0,format+' '+name+': no SQLite change at all');
+    assert.deepEqual(tables(d),before,format+' '+name+': every table and sqlite_sequence unchanged');
+  }
+});
+
+test('valid reports restore under their own identities and resolving one changes only that report, in v2 and v1',t=>{
+  const {first,backup}=reportSource(t);
+  for(const [format,base] of [['v2',backup],['v1',v1From(backup,first)]]){
+    const d=destination(t);d.restore(structuredClone(base));
+    const listed=d.reports('author-demo');assert.deepEqual(listed.map(keyOf).sort(),Object.values(reportKeys).sort(),format+' every listed identity is its stored key');
+    const before=Object.fromEntries(Object.values(reportKeys).map(key=>[key,d.get(key)])),a=listed.find(r=>r.note==='SYNTHETIC report');
+    assert.equal(a.status,'pending');d.resolveReport('author-demo',{userId:a.userId,requestId:a.requestId,status:'reviewed'});
+    for(const [kind,key] of Object.entries(reportKeys))assert.deepEqual(d.get(key),kind==='resumed'?{...before[key],status:'reviewed'}:before[key],format+' '+kind+' report');
+  }
+});
+
+test('HTTP restore refuses mismatched or duplicate report identities and writes nothing; after a valid restore, resolving the listed report A changes only A',async t=>{
+  const {backup}=reportSource(t),d=destination(t),server=createServer(d);
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  try{
+    const api=(path,body)=>fetch('http://127.0.0.1:'+server.address().port+'/api/'+path,{method:body?'POST':'GET',headers:{'content-type':'application/json','x-demo-user':'author-demo'},...(body?{body:JSON.stringify(body)}:{})});
+    const before=tables(d),beforeChanges=changes(d);
+    for(const [name,mutate] of Object.entries(malformedEnvelopes())){
+      const bad=structuredClone(backup);mutate(bad);const response=await api('restore',bad);
+      assert.equal(response.status,400,name);assert.match((await response.json()).error,/Invalid (learner report|backup reports)/,name);
+      assert.equal(changes(d)-beforeChanges,0,name+': no SQLite change at all');assert.deepEqual(tables(d),before,name+': every table and sqlite_sequence unchanged');
+    }
+    assert.equal((await api('restore',structuredClone(backup))).status,200);
+    const listed=await (await api('reports')).json(),a=listed.find(r=>r.note==='SYNTHETIC report');
+    assert.deepEqual(listed.map(keyOf).sort(),Object.values(reportKeys).sort());assert.equal(a.status,'pending');
+    const others=Object.values(reportKeys).filter(key=>key!==reportKeys.resumed),othersBefore=others.map(key=>d.get(key));
+    const resolved=await api('reports/resolve',{userId:a.userId,requestId:a.requestId,status:'reviewed'});assert.equal(resolved.status,200);
+    assert.equal(d.get(reportKeys.resumed).status,'reviewed');assert.deepEqual(others.map(key=>d.get(key)),othersBefore,'report B and the legacy report unchanged');
+  }finally{await new Promise(resolve=>server.close(resolve));}
+});

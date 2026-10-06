@@ -1,0 +1,940 @@
+{
+  "commit": "e0cbd5c (unfixed)",
+  "results": [
+    {
+      "case": "userAbsent",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": "report-a",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 400,
+        "body": {
+          "error": "Invalid ID",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "resolveChanges": 0,
+      "afterResolve": {
+        "a": {
+          "requestId": "report-a",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "passed": false
+    },
+    {
+      "case": "userNull",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": "report-a",
+        "userId": null,
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 400,
+        "body": {
+          "error": "Invalid ID",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "resolveChanges": 0,
+      "afterResolve": {
+        "a": {
+          "requestId": "report-a",
+          "userId": null,
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "passed": false
+    },
+    {
+      "case": "userUnknown",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": "report-a",
+        "userId": "unknown-user",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 404,
+        "body": {
+          "error": "Report not found.",
+          "code": "NOT_FOUND"
+        }
+      },
+      "resolveChanges": 0,
+      "afterResolve": {
+        "a": {
+          "requestId": "report-a",
+          "userId": "unknown-user",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "passed": false
+    },
+    {
+      "case": "userOther",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": "report-a",
+        "userId": "learner-core",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 404,
+        "body": {
+          "error": "Report not found.",
+          "code": "NOT_FOUND"
+        }
+      },
+      "resolveChanges": 0,
+      "afterResolve": {
+        "a": {
+          "requestId": "report-a",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "passed": false
+    },
+    {
+      "case": "requestAbsent",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "userId": "learner-demo",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 400,
+        "body": {
+          "error": "Invalid ID",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "resolveChanges": 0,
+      "afterResolve": {
+        "a": {
+          "userId": "learner-demo",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "passed": false
+    },
+    {
+      "case": "requestNull",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": null,
+        "userId": "learner-demo",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 400,
+        "body": {
+          "error": "Invalid ID",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "resolveChanges": 0,
+      "afterResolve": {
+        "a": {
+          "requestId": null,
+          "userId": "learner-demo",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "passed": false
+    },
+    {
+      "case": "requestEmpty",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": "",
+        "userId": "learner-demo",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 400,
+        "body": {
+          "error": "Invalid ID",
+          "code": "BAD_REQUEST"
+        }
+      },
+      "resolveChanges": 0,
+      "afterResolve": {
+        "a": {
+          "requestId": "",
+          "userId": "learner-demo",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "passed": false
+    },
+    {
+      "case": "requestOther",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": "unbacked-request",
+        "userId": "learner-demo",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 404,
+        "body": {
+          "error": "Report not found.",
+          "code": "NOT_FOUND"
+        }
+      },
+      "resolveChanges": 0,
+      "afterResolve": {
+        "a": {
+          "requestId": "unbacked-request",
+          "userId": "learner-demo",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "passed": false
+    },
+    {
+      "case": "collision",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": "report-b",
+        "userId": "learner-core",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 200,
+        "body": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "reviewed",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "resolveChanges": 1,
+      "afterResolve": {
+        "a": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "reviewed",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "wrongReportModified": true,
+      "passed": false
+    },
+    {
+      "case": "valid",
+      "restore": {
+        "status": 200,
+        "body": {
+          "revisionId": 2,
+          "revisions": {
+            "1": 2
+          }
+        }
+      },
+      "totalChangesDelta": 8,
+      "allTablesEqual": false,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 1
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "listedReportA": {
+        "requestId": "report-a",
+        "userId": "learner-demo",
+        "reason": "unclear",
+        "note": "SYNTHETIC report-a",
+        "attempt": {
+          "requestId": "answer-learner-demo",
+          "exerciseId": "ex-1-type",
+          "lessonId": "lesson-1",
+          "revisionId": 2,
+          "answer": "אני",
+          "correct": true,
+          "expected": "אֲנִי",
+          "at": "2026-10-06T12:41:12.155Z"
+        },
+        "status": "pending",
+        "at": "2026-10-06T12:41:12.156Z"
+      },
+      "resolve": {
+        "status": 200,
+        "body": {
+          "requestId": "report-a",
+          "userId": "learner-demo",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "reviewed",
+          "at": "2026-10-06T12:41:12.156Z"
+        }
+      },
+      "resolveChanges": 1,
+      "afterResolve": {
+        "a": {
+          "requestId": "report-a",
+          "userId": "learner-demo",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-a",
+          "attempt": {
+            "requestId": "answer-learner-demo",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.155Z"
+          },
+          "status": "reviewed",
+          "at": "2026-10-06T12:41:12.156Z"
+        },
+        "b": {
+          "requestId": "report-b",
+          "userId": "learner-core",
+          "reason": "unclear",
+          "note": "SYNTHETIC report-b",
+          "attempt": {
+            "requestId": "answer-learner-core",
+            "exerciseId": "ex-1-type",
+            "lessonId": "lesson-1",
+            "revisionId": 2,
+            "answer": "אני",
+            "correct": true,
+            "expected": "אֲנִי",
+            "at": "2026-10-06T12:41:12.157Z"
+          },
+          "status": "pending",
+          "at": "2026-10-06T12:41:12.157Z"
+        }
+      },
+      "passed": true
+    }
+  ]
+}

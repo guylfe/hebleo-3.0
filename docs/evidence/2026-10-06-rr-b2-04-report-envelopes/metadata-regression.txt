@@ -1,0 +1,159 @@
+date (local): 2026-10-06 15:45:37 +03:00
+clone: /c/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-lead
+branch: lead/b2-draft-api
+HEAD: e0cbd5cd564c8fd790ff039f2c0e34ce4d7d73c6
+node: v24.19.0  npm: 11.17.0
+tested tree = staged index tree bef9650c12b08d6c880b6fc83a716295df109410 (HEAD + staged src/test fixes)
+  src 3f6967371734f79f5ac25fa55e97f93b08570ccd
+  public 4b6d746a4d9f424601d2a9618107ed1a56ab9459
+  test e10bf8cf9ee6f4f2f187929c23d956c866bbbf70
+  schemas ef10df024164d96179947f429fc43985af329541
+  package.json 32079f75511a8a379db4633545663816dd9b810d
+  package-lock.json 76c0d5c11e87be92125e28f0304646187b87b9b0
+unstaged tracked non-docs diff vs index (empty = tested files are exactly the staged ones):
+untracked outside docs:
+----
+cmd: node schemas/tools/reproduce-metadata-diff.mjs --runtime . --require-fixed
+{
+  "runtimeCommit": "e0cbd5cd564c8fd790ff039f2c0e34ce4d7d73c6",
+  "metadata": [
+    {
+      "name": "pack provenance label",
+      "tokenChanged": true,
+      "unchanged": false,
+      "changes": [
+        {
+          "kind": "metadata",
+          "id": "provenance",
+          "field": "provenance",
+          "action": "changed",
+          "impact": {
+            "lessons": [
+              "lesson-1",
+              "lesson-2",
+              "lesson-3"
+            ]
+          }
+        }
+      ],
+      "affectedLessons": [
+        "lesson-1",
+        "lesson-2",
+        "lesson-3"
+      ],
+      "allLessonsAffected": true
+    },
+    {
+      "name": "pack approval",
+      "tokenChanged": true,
+      "unchanged": false,
+      "changes": [
+        {
+          "kind": "metadata",
+          "id": "approval",
+          "field": "approval",
+          "action": "added",
+          "impact": {
+            "lessons": [
+              "lesson-1",
+              "lesson-2",
+              "lesson-3"
+            ]
+          }
+        }
+      ],
+      "affectedLessons": [
+        "lesson-1",
+        "lesson-2",
+        "lesson-3"
+      ],
+      "allLessonsAffected": true
+    },
+    {
+      "name": "pack source map",
+      "tokenChanged": true,
+      "unchanged": false,
+      "changes": [
+        {
+          "kind": "metadata",
+          "id": "contracts",
+          "field": "contracts",
+          "action": "added",
+          "impact": {
+            "lessons": [
+              "lesson-1",
+              "lesson-2",
+              "lesson-3"
+            ]
+          }
+        }
+      ],
+      "affectedLessons": [
+        "lesson-1",
+        "lesson-2",
+        "lesson-3"
+      ],
+      "allLessonsAffected": true
+    },
+    {
+      "name": "pack media manifest",
+      "tokenChanged": true,
+      "unchanged": false,
+      "changes": [
+        {
+          "kind": "metadata",
+          "id": "contracts",
+          "field": "contracts",
+          "action": "added",
+          "impact": {
+            "lessons": [
+              "lesson-1",
+              "lesson-2",
+              "lesson-3"
+            ]
+          }
+        }
+      ],
+      "affectedLessons": [
+        "lesson-1",
+        "lesson-2",
+        "lesson-3"
+      ],
+      "allLessonsAffected": true
+    },
+    {
+      "name": "pack unknown field",
+      "tokenChanged": true,
+      "unchanged": false,
+      "changes": [
+        {
+          "kind": "metadata",
+          "id": "unknownPackMetadata",
+          "field": "unknownPackMetadata",
+          "action": "added",
+          "impact": {
+            "lessons": [
+              "lesson-1",
+              "lesson-2",
+              "lesson-3"
+            ]
+          }
+        }
+      ],
+      "affectedLessons": [
+        "lesson-1",
+        "lesson-2",
+        "lesson-3"
+      ],
+      "allLessonsAffected": true
+    }
+  ],
+  "keyOrderOnly": {
+    "tokenMatchesPublishedContent": true,
+    "firstStageChangeCount": 0,
+    "repeatedStageUnchanged": true,
+    "repeatedStageWrites": false
+  },
+  "fixed": true
+}
+EXIT=0
