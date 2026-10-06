@@ -1,0 +1,17 @@
+{
+  "disabled": 0,
+  "prefixes": [
+    true,
+    false,
+    false,
+    false
+  ],
+  "prompt": "G4-02 owner ordering check (fixture-only)",
+  "status": "Authored token 4 of ex-2-order is blank. Enter a token or remove that item.",
+  "tokens": [
+    "ב",
+    "בית",
+    "אני",
+    "   "
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "ownerEvidenceOnly": true,
+  "checks": [
+    "empty rejection: every table, three learners, published pack and draft unchanged",
+    "whitespace rejection: every table, three learners, published pack and draft unchanged",
+    "invisible rejection: every table, three learners, published pack and draft unchanged",
+    "filled ordering row: only the draft/kv fingerprint changes",
+    "protected owner 4291 database unchanged",
+    "protected listening processes unchanged",
+    "cross-lesson matching autosave and pinned reload",
+    "resumed matching grades correctly and feedback points to the stored attempt",
+    "filled row is stored byte-exact with prefixes, answers and unknown metadata retained",
+    "served browser modules match the tested source hashes"
+  ],
+  "servedHashes": {
+    "public/app.js": "38fd75325a840c147666515a86f2ead64922c375ff45a2c7ba2206f93ddee09d",
+    "public/learner-view.js": "462f2181fa21483b977e1fe47d6ee14f1dc9ddfebedf25101f5cb018df06294d",
+    "public/studio/exercise-editor.js": "9582282d5a1c34160b43dfdf42f6dbfa1d9f195af0a63cff99e327a04cdd29a5"
+  },
+  "orderingExercise": {
+    "id": "ex-2-order",
+    "lessonId": "lesson-2",
+    "type": "ordering",
+    "prompt": "G4-02 owner ordering check (fixture-only)",
+    "tokens": [
+      "ב",
+      "בית",
+      "אני",
+      " ‏שם "
+    ],
+    "answers": [
+      "אני בבית"
+    ],
+    "concept": "Location sentences",
+    "feedback": "אני בבית means “I am at home”. These present-tense examples have no separate word for “am”.",
+    "prefixTokenIndices": [
+      0
+    ],
+    "extension": {
+      "fixture": "owner-browser",
+      "unknown": [
+        "retain"
+      ]
+    }
+  }
+}

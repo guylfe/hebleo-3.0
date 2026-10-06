@@ -1,0 +1,19 @@
+{
+  "revisionId": 2,
+  "progress": {
+    "lessonId": "lesson-1",
+    "revisionId": 2,
+    "step": "apply",
+    "question": 1,
+    "answer": "",
+    "selectedTokens": [],
+    "matching": {
+      "w-sham": "there",
+      "w-ani": "I"
+    },
+    "resultRequestId": null,
+    "practiceIds": [],
+    "updatedAt": "2026-10-06T20:14:35.502Z"
+  },
+  "result": null
+}

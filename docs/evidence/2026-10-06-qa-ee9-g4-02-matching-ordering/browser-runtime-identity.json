@@ -1,0 +1,13 @@
+{
+  "pid": 70256,
+  "port": 61890,
+  "database": "C:\\Users\\Trans\\.openmausbot\\workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\g402-browser-scratch\\fictional-only.sqlite",
+  "fixtureOnly": true,
+  "revision": 2,
+  "sourceHashes": {
+    "src/store.js": "b01f805c49c0c8c967723d2d3acba2252b7126f58ab36a8c4dbc9d1a4d14078b",
+    "src/server.js": "fe27d7ce50d4c8c02cf1a66dda3c7d92e6535735103d0bbe2a9874c941192384",
+    "public/app.js": "38fd75325a840c147666515a86f2ead64922c375ff45a2c7ba2206f93ddee09d",
+    "public/learner-view.js": "462f2181fa21483b977e1fe47d6ee14f1dc9ddfebedf25101f5cb018df06294d"
+  }
+}

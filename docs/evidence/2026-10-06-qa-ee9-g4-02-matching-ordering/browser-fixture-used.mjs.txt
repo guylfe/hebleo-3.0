@@ -1,0 +1,18 @@
+import {Store} from './hebleo-g401/src/store.js';
+import {createServer} from './hebleo-g401/src/server.js';
+import {mkdirSync,writeFileSync,readFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+const directory=resolve('..','g402-browser-scratch');mkdirSync(directory,{recursive:true});
+const database=resolve(directory,'fictional-only.sqlite'),s=new Store(database);
+if(s.get('active')!==1)throw new Error('Expected a fresh disposable database');
+const content=structuredClone(s.snapshot());
+content.exercises.find(e=>e.id==='ex-1-match').wordIds=['w-ani','w-mi','w-sham'];
+content.exercises.find(e=>e.id==='ex-2-order').extension={fixture:'owner-browser',unknown:['retain']};
+s.publish(1,s.stage({baseRevisionId:1,expectedDraftToken:null,content}).draftToken);
+const server=createServer(s);
+server.listen(0,'127.0.0.1',()=>{
+  const identity={pid:process.pid,port:server.address().port,database,fixtureOnly:true,revision:2,sourceHashes:Object.fromEntries(['src/store.js','src/server.js','public/app.js','public/learner-view.js'].map(p=>[p,createHash('sha256').update(readFileSync(p)).digest('hex')]))};
+  writeFileSync(resolve(directory,'identity.json'),JSON.stringify(identity,null,2));console.log(JSON.stringify(identity));
+});
+const stop=()=>server.close(()=>{s.close();process.exit(0);});process.on('SIGINT',stop);process.on('SIGTERM',stop);

@@ -1,0 +1,14 @@
+import {spawn, spawnSync} from 'node:child_process';
+import {createWriteStream, readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {resolve} from 'node:path';
+const [log, command, ...args] = process.argv.slice(2);
+const git = (...a) => spawnSync('git', a, {encoding:'utf8'}).stdout.trim();
+const files = [...new Set([...git('ls-files','src','public','test','schemas','package.json','package-lock.json').split('\n'), ...git('ls-files','--others','--exclude-standard','test').split('\n')])].filter(Boolean);
+const hashes = Object.fromEntries(files.map(p => [p,createHash('sha256').update(readFileSync(p)).digest('hex')]));
+const out = createWriteStream(resolve(log));
+out.write(JSON.stringify({at:new Date().toISOString(),cwd:process.cwd(),head:git('rev-parse','HEAD'),branch:git('branch','--show-current'),indexTree:git('write-tree'),command:[command,...args],hashes},null,2)+'\n');
+const child = spawn(command,args,{shell:false});
+child.stdout.on('data',b=>out.write(b));child.stderr.on('data',b=>out.write(b));
+child.on('error',e=>out.write(String(e)+'\n'));
+child.on('close',code=>{out.end('EXIT='+code+'\n',()=>{console.log(log+' EXIT='+code);process.exitCode=code??1;});});

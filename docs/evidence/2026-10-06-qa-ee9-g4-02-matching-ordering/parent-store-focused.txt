@@ -1,0 +1,731 @@
+{
+  "at": "2026-10-06T20:09:53.925Z",
+  "cwd": "C:\\Users\\Trans\\.openmausbot\\workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\hebleo-g401",
+  "head": "b312cdd294ace379080235d7b7275d99ca9e8612",
+  "branch": "lead/b2-g401",
+  "indexTree": "a16a8618e9c4a29dfd070c6352b1877805d6f1b0",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test",
+    "test/matching-progress.test.js",
+    "test/ordering-tokens.test.js"
+  ],
+  "hashes": {
+    "package-lock.json": "ceb137d2296f6f10ab03a88ddb44c56c695633b46417fc8c20a102e2766082d1",
+    "package.json": "fb44bfbdbdc84990100b512a46124862ed64d23a5fbe0a994de76600dc5c1573",
+    "public/app.js": "38fd75325a840c147666515a86f2ead64922c375ff45a2c7ba2206f93ddee09d",
+    "public/content.js": "1dc071b92eb8e61bfd93f0686a582cfaa3f99a91ee00e40e663b35511956a843",
+    "public/hebleo-lion-mark.svg": "b1a4608d426b2547c64263821cf1a26c496bff1eb1b3a429d1204cc3d386b6f2",
+    "public/index.html": "877d3651d418dcebd99b9741b6d1675651952a6b43ba5a7b487c5928e00d3eb4",
+    "public/interactions.js": "0408795003104dee4976b376f79371a0ca75932ac4c9fb558ec6a5398c22137f",
+    "public/keyboard-owner.css": "8e3c5a05c30ab7b9d4ab34e63a68485c51fd04935e49934d7c94a0dbd5256a62",
+    "public/keyboard-owner.js": "6c876cead604daccc99a890cc118038f580bd4e08ee18a29aeaccdd7282de9df",
+    "public/learner-view.js": "462f2181fa21483b977e1fe47d6ee14f1dc9ddfebedf25101f5cb018df06294d",
+    "public/media.js": "c78cd54d27da51073113154c0edd5d03fe298632565a6ee72a27eec75bdfd9e0",
+    "public/preview/learner-renderer.js": "fcd04da357282e4134d3046abcd964e7c2ef468c522d9f97b425840a38aa9270",
+    "public/preview/lesson-preview.js": "391f8d5f09cea17d303ccd5cf2502bb9364e3469ec4db19c1c0324a748fbae1f",
+    "public/refinement.css": "845cdd8e8b57146bbe55c946c88be7b6ac938efdb843644d462fd2f46aee3481",
+    "public/rich-browser.js": "b9ee02e3efd01a246f138a5795f8d3cb3455bb31a3d6d30164307a03f7a87963",
+    "public/rich.js": "7e700c7509348d243fa091e83e0618d62f68f28703089f8cd325662729b3f1db",
+    "public/studio/editor-fields.js": "ee1230eb481173f834d8910bfdd42523e0ed974853e6eedd1af58933be66b77d",
+    "public/studio/exercise-editor.js": "9582282d5a1c34160b43dfdf42f6dbfa1d9f195af0a63cff99e327a04cdd29a5",
+    "public/studio/import-review.js": "ba600296256dc7069a15c5e50d7d5f1d8214c443a84e72d833799402e76b9a3e",
+    "public/studio/lesson-editor.js": "126c42c549575b8ab4d44542ab9155465bb9a489cf7103fffbb27f2a6805dd7a",
+    "public/studio/media-picker.js": "6eab42a64eafa9f8552258220137962c6f9173c2b3a25046708bc457f69ac9b0",
+    "public/studio/studio.css": "399097636313789ba5300149968b76c709459b9fdbebded68a93010056b20295",
+    "public/styles.css": "40a767f97384ecedabffb9b422947ab1ad18c9b29ee2347e2714d7112121e86e",
+    "public/ux.js": "d6780b739d0bb9ae0049c5894ef181ab6063b5cf4689ef848fe3f9237a68f1be",
+    "schemas/checks/contracts.check.mjs": "c3a962c5f3cca83d1869a91cb3cfe181a9a0f1e63bd38973a90bffff35fa204f",
+    "schemas/common.v1.schema.json": "4e99fbd5ed4c1b9f25fda5c1c61a1267b8a2292069d3d6f2c75561a43479d4e4",
+    "schemas/content-pack.v1.schema.json": "bf6ec6a0db533f046ef29e1d33e4c2a5a2e0b32ff44ce11d091499666fd5bf21",
+    "schemas/examples/synthetic-content.json": "2e939d6d4873258aa11801ba001ca72018fec37defc95db452c48905e739cd25",
+    "schemas/examples/synthetic-wire.json": "3f5aea0f68bb2542fed198dbbde9850f868fa3800a50fa9e99e16d85e5d27ad9",
+    "schemas/learner-content.v1.schema.json": "a8680556c5daf25ce8a1d0fa8148c396854bbafb0e79241bbf85bcf7a14bba57",
+    "schemas/media-manifest.v1.schema.json": "e7ba438b293446ff3d1ea572033f3ae24939e8e6e779d778617b96a0c272f864",
+    "schemas/package-lock.json": "57241530d346d16d9f4e2c74210782dd0c76ac72d83d5c2f4b0e28454beee1b6",
+    "schemas/package.json": "d45af18d58167b5dc2489cafc119f248047302761b9c6750aad5b1d146ad637e",
+    "schemas/source-map.v1.schema.json": "f9be9fbe8ab5691f722412699831c1f7ae556871a843b84a0036a64505aaf994",
+    "schemas/studio-wire.v1.schema.json": "b0c085fb112a7487c7a293175081bdeb603bf37e25bbf94de77258f879795f6f",
+    "schemas/tools/build-examples.mjs": "199560a573edfdf6fe51bdfbec0ba0ff232f8fded071717353fc75008697db4d",
+    "schemas/tools/contracts.mjs": "b431ca7391034080cc5b32a4f9012e7cab304cceaaaa0c2414ac9838ab317701",
+    "schemas/tools/fixtures.mjs": "7dcb565cb7de92868770369aceef4fc6a8138da5740fcd4c1bc5e2716aa2322a",
+    "schemas/tools/reproduce-metadata-diff.mjs": "50b99e720b28a1c5f29d3b54ea8ccbf3add0316abdac9578b10f9ba3d4db175b",
+    "schemas/tools/runtime-check.mjs": "09895b689c8a1db1c469eba748171a1e02478e05ebc7e7a55a0ee32176798d03",
+    "schemas/tools/runtime-utils.mjs": "c47ecab366908dcfe4b3fcda30b4e93f9bfbf32336d2ce1bc6e4b7caf659fbc6",
+    "schemas/tools/validate.mjs": "f857ea8359dbbc25cb594746fcca44f5ef40d4c6eb64d0cfac0cbe61f6f41b81",
+    "src/demo-build.js": "b03afd2b53fd8154f4b2d49f1e1b1e56040e3fa60bddad88d44f892de50e3a2c",
+    "src/errors.js": "d7176f8f5f83e134b7d024d10dcf1b6db0d95a336c7be8299eb2bff3d29c7d29",
+    "src/evaluate.js": "a5a222afcdc548f32cbac52bd5b86f64ba96fa5272f145738fea9b442b430d16",
+    "src/seed.js": "bba9bfbaa113b1fac2858ec0c2572bd8fc5846663219cc8f5b9586069fcfe56d",
+    "src/server.js": "fe27d7ce50d4c8c02cf1a66dda3c7d92e6535735103d0bbe2a9874c941192384",
+    "src/store.js": "eb88234d5a3c758145e4f4edc394ee4e166ebdbfc348d55bb7614fd6646068be",
+    "src/tutor.js": "e13bd63323dd1d5d0edce40b74b5ef16d36470764af77935378ec68b90b0e168",
+    "test/app.test.js": "1711056d391bc8783488dcf6d55fbac2db34e25f6628a8772876e66ea825e602",
+    "test/batch1.test.js": "dc2992f835e297e234ce294c9da3cfca2b46c4f0aa6fa7f269be580f28908b5d",
+    "test/demo-build.test.js": "32050ea50b9c4056a2da2465c6d6938a475d10b33ed5b935d0cf41c38c4de398",
+    "test/draft-api.test.js": "be975bf4284749739f17822aab7fe585b070c3fc7470165ec8628350080a64ab",
+    "test/feature-renderer-http.test.js": "4f52e8fb6fbbd30f3099aeaac12d074292733319bab0924fff931c0ca9e8959a",
+    "test/import.test.js": "8d697c71b02be70c2eb619c38631b9cadb7bf632faf2ca84c2af8fcf715242f3",
+    "test/keyboard.test.js": "8babc96c753a005b7ad524889a880ea6605e6ad9a0ea2da9aa0a97f88ab12153",
+    "test/learner-renderer.test.js": "2942c369ac2d684d1931d25b5ea229744e1c2407707e6deb9602adce82297d96",
+    "test/preview.test.js": "342b4294446f8c419c2e2480a841cd222f3edad79eb75239f4af8f25ac7cc089",
+    "test/publication-diff.test.js": "3a9a796fdae21cc382ca6d3b3262a86e132168d5f8c554ae27d830e50993f24f",
+    "test/recognition-distractors.test.js": "d8bb51d8b21634ce38095c0429a4b4d1fca0a2aa67c18b647ccbd0d8ffd87034",
+    "test/refinement.test.js": "317fa47c6b4d977bcaf8bc77e0aa313697d9c930d0b6a4521b8a1b3ff029bf70",
+    "test/restore-integrity.test.js": "7ec254e24c07cc0d773c32012b19a10523f055b9a1be4b2720ad4ab806a9166f",
+    "test/server.test.js": "9c9eb7616926137b9e4046ca7b13069acc6e2bb57b2318b958a08fa65a3c6cac",
+    "test/store.test.js": "3b32aafe3b549e43b5b6cbb5866959258e5edf1c8890abe2bf90bc0cab24c810",
+    "test/studio-authoring.test.js": "27421be9abcda4cae7227c1b6adb2177786f2e7a85104568ffa109ac7db86f54",
+    "test/ux.test.js": "30a4464bf768e2cf50d687e598e4c24c132be00331bdc8a0bc3c07eed7ec7d8b",
+    "test/matching-progress.test.js": "453a100f11b991e8f651fdd464ada12259b112e35dd2d3e0a1b9c159ac389e3d",
+    "test/ordering-tokens.test.js": "d4a8500d32b201606a1d8791d17b488990fc9d24aa5602363f293e31b17692bd"
+  }
+}
+✖ a partial match on an authored pair word outside the lesson list saves, resumes, and the full set grades and completes the lesson (20.4516ms)
+✖ saved matches are refused unless every key belongs to the matching question at that exact revision, step and position; nothing is written (9.9235ms)
+✖ Check, Core and repeat practice use their own matching question; empty matches preserve transitions and legacy v1 restores (13.9309ms)
+✖ backup restore keeps cross-lesson and older-revision matches and refuses a resume whose keys its pinned matching question does not own (10.4943ms)
+✖ HTTP: progress with a cross-lesson pair word saves (200) and resumes; a key the question does not own returns 400 and writes nothing (86.6061ms)
+✖ stage (Studio save and import staging) refuses empty, whitespace-only and invisible-only ordering tokens before any write (29.5445ms)
+✖ publish, rollback and restore refuse blank ordering tokens written by an earlier build, leaving every table unchanged (20.4625ms)
+✔ valid ordering tokens keep exact text, order, duplicates and prefix positions through stage, preview, publish, session, progress and grading (26.2042ms)
+✖ HTTP: blank token saves and legacy publishes return 400 with the field message and write nothing; a filled row saves (86.7209ms)
+✖ Studio editor shows the token error, keeps typed tokens, prefix ticks and answers, re-enables controls; filling or removing the row then saves (229.3322ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 1
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1909.7323
+
+✖ failing tests:
+
+test at test\matching-progress.test.js:27:1
+✖ a partial match on an authored pair word outside the lesson list saves, resumes, and the full set grades and completes the lesson (20.4516ms)
+  Error: Invalid saved matching answer.
+      at Store.validateProgress (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/src/store.js:260:205)
+      at Store.saveProgress (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/src/store.js:252:10)
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/matching-progress.test.js:31:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    status: 400,
+    code: 'BAD_REQUEST'
+  }
+
+test at test\matching-progress.test.js:55:1
+✖ saved matches are refused unless every key belongs to the matching question at that exact revision, step and position; nothing is written (9.9235ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: lesson word no longer paired in revision 2 (accepted before the fix)
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/matching-progress.test.js:76:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\matching-progress.test.js:84:1
+✖ Check, Core and repeat practice use their own matching question; empty matches preserve transitions and legacy v1 restores (13.9309ms)
+  Error: Invalid saved matching answer.
+      at Store.validateProgress (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/src/store.js:260:205)
+      at Store.saveProgress (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/src/store.js:252:10)
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/matching-progress.test.js:94:7)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    status: 400,
+    code: 'BAD_REQUEST'
+  }
+
+test at test\matching-progress.test.js:117:1
+✖ backup restore keeps cross-lesson and older-revision matches and refuses a resume whose keys its pinned matching question does not own (10.4943ms)
+  Error: Invalid saved matching answer.
+      at Store.validateProgress (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/src/store.js:260:205)
+      at Store.saveProgress (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/src/store.js:252:10)
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/matching-progress.test.js:119:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    status: 400,
+    code: 'BAD_REQUEST'
+  }
+
+test at test\matching-progress.test.js:139:1
+✖ HTTP: progress with a cross-lesson pair word saves (200) and resumes; a key the question does not own returns 400 and writes nothing (86.6061ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  400 !== 200
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/matching-progress.test.js:144:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\ordering-tokens.test.js:34:1
+✖ stage (Studio save and import staging) refuses empty, whitespace-only and invisible-only ordering tokens before any write (29.5445ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: {"exerciseId":"ex-2-order","value":"","at":0}
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/ordering-tokens.test.js:39:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\ordering-tokens.test.js:50:1
+✖ publish, rollback and restore refuse blank ordering tokens written by an earlier build, leaving every table unchanged (20.4625ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/ordering-tokens.test.js:57:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { message: 'Authored token 4 of ex-2-order is blank. Enter a token or remove that item.' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\ordering-tokens.test.js:104:1
+✖ HTTP: blank token saves and legacy publishes return 400 with the field message and write nothing; a filled row saves (86.7209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    {
+      body: {
+  +     affectedLessons: [
+  +       'lesson-2'
+  +     ],
+  +     baseRevisionId: 2,
+  +     changes: [
+  +       {
+  +         action: 'changed',
+  +         id: 'ex-2-order',
+  +         impact: {
+  +           lessons: [
+  +             'lesson-2'
+  +           ]
+  +         },
+  +         kind: 'exercises'
+  +       },
+  +       {
+  +         action: 'changed',
+  +         id: 'ex-2-cloze',
+  +         impact: {
+  +           lessons: [
+  +             'lesson-2'
+  +           ]
+  +         },
+  +         kind: 'exercises'
+  +       }
+  +     ],
+  +     draft: {
+  +       baseRevisionId: 2,
+  +       content: {
+  +         exercises: [
+  +           {
+  +             concept: 'Pronouns and question words',
+  +             distractors: [
+  +               'I',
+  +               'he',
+  +               'she'
+  +             ],
+  +             feedback: 'מִי asks “who”. The pronouns refer to the speaker or another person.',
+  +             id: 'ex-1-recognize',
+  +             lessonId: 'lesson-1',
+  +             prompt: 'Choose the meaning of this word.',
+  +             type: 'recognition',
+  +             wordId: 'w-mi'
+  +           },
+  +           {
+  +             concept: 'Pronouns',
+  +             feedback: 'אֲנִי means “I”.',
+  +             id: 'ex-1-type',
+  +             lessonId: 'lesson-1',
+  +             prompt: 'Type the Hebrew word for “I”.',
+  +             type: 'typing',
+  +             wordId: 'w-ani'
+  +           },
+  +           {
+  +             concept: 'Pronouns and question words',
+  +             feedback: 'הוּא means “he”, הִיא means “she”, and מִי means “who”.',
+  +             id: 'ex-1-match',
+  +             lessonId: 'lesson-1',
+  +             prompt: 'Match each word to its meaning.',
+  +             type: 'matching',
+  +             wordIds: [
+  +               'w-hu',
+  +               'w-hi',
+  +               'w-mi'
+  +             ]
+  +           },
+  +           {
+  +             answers: [
+  +               'אני בבית'
+  +             ],
+  +             concept: 'Location sentences',
+  +             extension: {
+  +               unknown: [
+  +                 'retain',
+  +                 {
+  +                   nested: true
+  +                 }
+  +               ]
+  +             },
+  +             feedback: 'אני בבית means “I am at home”. These present-tense examples have no separate word for “am”.',
+  +             id: 'ex-2-order',
+  +             lessonId: 'lesson-2',
+  +             prefixTokenIndices: [
+  +               0
+  +             ],
+  +             prompt: 'Build: “I am at home.”',
+  +             sourceRef: {
+  +               row: 4,
+  +               sheet: 'fixture-only'
+  +             },
+  +             tokens: [
+  +               'ב',
+  +               'בית',
+  +               'אני',
+  +               ''
+  +             ],
+  +             type: 'ordering'
+  +           },
+  +           {
+  +             answers: [
+  +               'היא'
+  +             ],
+  +             concept: 'Pronouns in context',
+  +             feedback: 'היא is the feminine singular pronoun “she”. Enter the missing pronoun, rather than the full sentence.',
+  +             id: 'ex-2-cloze',
+  +             lessonId: 'lesson-2',
+  +             nikkudOverride: 'none',
+  +             prompt: 'Fixture-only pending draft prompt',
+  +             type: 'cloze'
+  +           },
+  +           {
+  +             answers: [
+  +               'היא בבית'
+  +             ],
+  +             concept: 'Pronouns in context',
+  +             context: 'הוא בבית',
+  +             feedback: 'Replace הוא with היא. The location expression בבית stays the same.',
+  +             id: 'ex-2-transform',
+  +             lessonId: 'lesson-2',
+  +             prompt: 'Change “He is at home” to “She is at home”.',
+  +             type: 'transformation'
+  +           },
+  +           {
+  +             concept: 'Feminine verb forms',
+  +             distractors: [
+  +               'he',
+  +               'at home',
+  +               'writes (masculine singular)'
+  +             ],
+  +             feedback: 'כותבת is the feminine singular present form.',
+  +             id: 'ex-3-recognize',
+  +             lessonId: 'lesson-3',
+  +             prompt: 'Choose the meaning of this form.',
+  +             type: 'recognition',
+  +             wordId: 'w-kotevet'
+  +           },
+  +           {
+  +             answers: [
+  +               'היא כותבת'
+  +             ],
+  +             concept: 'Subject and verb agreement',
+  +             context: 'הוא כותב',
+  +             feedback: 'Use היא with כותבת so both subject and verb are feminine singular.',
+  +             id: 'ex-3-transform',
+  +             lessonId: 'lesson-3',
+  +             prompt: 'Change the subject and verb to feminine.',
+  +             type: 'transformation'
+  +           },
+  +           {
+  +             answers: [
+  +               'היא כותבת פה'
+  +             ],
+  +             concept: 'Subject and verb agreement',
+  +             feedback: 'היא כותבת פה means “She is writing here”. The subject and verb agree.',
+  +             id: 'ex-3-order',
+  +             lessonId: 'lesson-3',
+  +             prompt: 'Build: “She is writing here.”',
+  +             tokens: [
+  +               'פה',
+  +               'כותבת',
+  +               'היא'
+  +             ],
+  +             type: 'ordering'
+  +           }
+  +         ],
+  +         lessons: [
+  +           {
+  +             blocks: [
+  +               {
+  +                 renderer: 'text',
+  +                 type: 'explanation'
+  +               },
+  +               {
+  +                 options: {
+  +                   showNotes: true
+  +                 },
+  +                 renderer: 'vocabulary-table',
+  +                 selector: {
+  +                   lessonId: 'lesson-1'
+  +                 },
+  +                 source: 'words',
+  +                 type: 'vocabulary'
+  +               },
+  +               {
+  +                 renderer: 'practice',
+  +                 selector: {
+  +                   lessonId: 'lesson-1'
+  +                 },
+  +                 source: 'exercises',
+  +                 type: 'exercise-set'
+  +               }
+  +             ],
+  +             chapter: '01 · Getting started',
+  +             checkExerciseIds: [
+  +               'ex-1-recognize'
+  +             ],
+  +             exerciseIds: [
+  +               'ex-1-recognize',
+  +               'ex-1-type',
+  +               'ex-1-match'
+  +             ],
+  +             explanation: 'Begin with a few short words. Notice the same letters returning in different combinations. This demonstration shows how a brief explanation, a small vocabulary set, and a bounded check can fit together.',
+  +             id: 'lesson-1',
+  +             keyboard: {
+  +               knownColor: '#164b81',
+  +               knownKeys: '',
+  +               newColor: '#007b89',
+  +               newKeys: 'אהוימנ'
+  +             },
+  +             letters: 'אהוימנ',
+  +             minutes: 4,
+  +             title: 'Small words, first connections',
+  +             wordIds: [
+  +               'w-ani',
+  +               'w-mi',
+  +               'w-hu',
+  +               'w-hi'
+  +             ]
+  +           },
+  +           {
+  +             blocks: [
+  +               {
+  +                 renderer: 'text',
+  +                 type: 'explanation'
+  +               },
+  +               {
+  +                 options: {
+  +                   showNotes: true
+  +                 },
+  +                 renderer: 'vocabulary-table',
+  +                 selector: {
+  +                   lessonId: 'lesson-2'
+  +                 },
+  +                 source: 'words',
+  +                 type: 'vocabulary'
+  +               },
+  +               {
+  +                 renderer: 'practice',
+  +                 selector: {
+  +                   lessonId: 'lesson-2'
+  +                 },
+  +                 source: 'exercises',
+  +                 type: 'exercise-set'
+  +               }
+  +             ],
+  +             chapter: '02 · Build a sentence',
+  +             exerciseIds: [
+  +               'ex-2-order',
+  +               'ex-2-cloze',
+  +               'ex-2-transform'
+  +             ],
+  +             explanation: 'Use the pronouns from the previous lesson to say where someone is. In these simple present-tense examples, Hebrew does not add a separate word for “am” or “is”: אני בבית — I am at home. Earlier words now become the foundation for a new sentence.',
+  +             id: 'lesson-2',
+  +             keyboard: {
+  +               knownColor: '#164b81',
+  +               knownKeys: 'אהוימנ',
+  +               newColor: '#007b89',
+  +               newKeys: 'בתפש'
+  +             },
+  +             letters: 'אהויבתפשמ',
+  +             minutes: 5,
+  +             title: 'Say where someone is',
+  +             wordIds: [
+  +               'w-ani',
+  +               'w-hu',
+  +               'w-hi',
+  +               'w-bayit',
+  +               'w-po',
+  +               'w-sham'
+  +             ]
+  +           },
+  +           {
+  +             blocks: [
+  +               {
+  +                 renderer: 'text',
+  +                 type: 'explanation'
+  +               },
+  +               {
+  +                 options: {
+  +                   showNotes: true
+  +                 },
+  +                 renderer: 'vocabulary-table',
+  +                 selector: {
+  +                   lessonId: 'lesson-3'
+  +                 },
+  +                 source: 'words',
+  +                 type: 'vocabulary'
+  +               },
+  +               {
+  +                 renderer: 'practice',
+  +                 selector: {
+  +                   lessonId: 'lesson-3'
+  +                 },
+  +                 source: 'exercises',
+  +                 type: 'exercise-set'
+  +               }
+  +             ],
+  +             chapter: '03 · Connect and apply',
+  +             exerciseIds: [
+  +               'ex-3-recognize',
+  +               'ex-3-transform',
+  +               'ex-3-order'
+  +             ],
+  +             explanation: 'Return to familiar pronouns and sentence structure while introducing a verb. Compare הוא כותב and היא כותבת. The form of the verb changes with the subject. This is an illustrative spiral: new information connects to a sentence pattern you have already used.',
+  +             id: 'lesson-3',
+  +             keyboard: {
+  +               knownColor: '#164b81',
+  +               knownKeys: 'אהוימנבתפש',
+  +               newColor: '#007b89',
+  +               newKeys: 'כ'
+  +             },
+  +             letters: 'אהויכבתפשםנ',
+  +             minutes: 5,
+  +             title: 'Make the sentence agree',
+  +             wordIds: [
+  +               'w-hu',
+  +               'w-hi',
+  +               'w-kotev',
+  +               'w-kotevet',
+  +               'w-po',
+  +               'w-sham'
+  +             ]
+  +           }
+  +         ],
+  +         provenance: {
+  +           kind: 'synthetic-demo',
+  +           label: 'Illustrative demo content; not approved replacement curriculum.'
+  +         },
+  +         reviewPolicy: {
+  +           defaultNikkud: 'full'
+  +         },
+  +         schemaVersion: 1,
+  +         uxVersion: 2,
+  +         words: [
+  +           {
+  +             curated: 'אֲנִי',
+  +             english: 'I',
+  +             examples: [
+  +               {
+  +                 english: 'I am at home.',
+  +                 hebrew: 'אני בבית'
+  +               }
+  +             ],
+  +             format: {},
+  +             id: 'w-ani',
+  +             notes: 'The speaker refers to themself.',
+  +             partOfSpeech: 'Pronoun',
+  +             pointed: 'אֲנִי',
+  +             unpointed: 'אני'
+  +           },
+  +           {
+  +             curated: 'מִי',
+  +             english: 'who',
+  +             id: 'w-mi',
+  +             notes: 'A question word.',
+  +             pointed: 'מִי',
+  +             unpointed: 'מי'
+  +           },
+  +           {
+  +             curated: 'הוּא',
+  +             english: 'he',
+  +             gender: 'Masculine singular',
+  +             id: 'w-hu',
+  +             notes: 'Third-person masculine singular.',
+  +             partOfSpeech: 'Pronoun',
+  +             pointed: 'הוּא',
+  +             unpointed: 'הוא'
+  +           },
+  +           {
+  +             curated: 'הִיא',
+  +             english: 'she',
+  +             gender: 'Feminine singular',
+  +             id: 'w-hi',
+  +             notes: 'Third-person feminine singular.',
+  +             partOfSpeech: 'Pronoun',
+  +             pointed: 'הִיא',
+  +             unpointed: 'היא'
+  +           },
+  +           {
+  +             curated: 'בַּיִת',
+  +             english: 'house',
+  +             id: 'w-bayit',
+  +             notes: 'The base form. In the expression בבית, the prefix and pronunciation also change.',
+  +             pointed: 'בַּיִת',
+  +             prefixedForms: [
+  +               {
+  +                 english: 'at home',
+  +                 hebrew: 'בַּבַּיִת',
+  +                 notes: 'In this expression: at home / in the house.',
+  +                 prefix: 'ב'
+  +               }
+  +             ],
+  +             unpointed: 'בית'
+  +           },
+  +           {
+  +             baseWordId: 'w-bayit',
+  +             curated: 'בבית',
+  +             english: 'at home',
+  +             id: 'w-babayit',
+  +             noCard: true,
+  +             noVocab: true,
+  +             notes: 'In this expression: at home / in the house.',
+  +             pointed: 'בַּבַּיִת',
+  +             prefix: 'ב',
+  +             unpointed: 'בבית'
+  +           },
+  +           {
+  +             curated: 'פה',
+  +             english: 'here',
+  +             id: 'w-po',
+  +             notes: 'A location word.',
+  +             pointed: 'פֹּה',
+  +             unpointed: 'פה'
+  +           },
+  +           {
+  +             curated: 'שם',
+  +             english: 'there',
+  +             id: 'w-sham',
+  +             notes: 'A location word.',
+  +             pointed: 'שָׁם',
+  +             unpointed: 'שם'
+  +           },
+  +           {
+  +             curated: 'כּוֹתֵב',
+  +             english: 'writes (masculine singular)',
+  +             examples: [
+  +               {
+  +                 english: 'He is writing here.',
+  +                 hebrew: 'הוא כותב פה'
+  +               }
+  +             ],
+  +             feminine: 'כּוֹתֶבֶת',
+  +             gender: 'Masculine singular',
+  +             id: 'w-kotev',
+  +             infinitive: 'לִכְתּוֹב',
+  +             notes: 'Present-tense masculine singular form; also can mean is writing.',
+  +             partOfSpeech: 'Verb',
+  +             pattern: 'קוֹטֵל',
+  +             pointed: 'כּוֹתֵב',
+  +             root: 'כ־ת־ב',
+  +             unpointed: 'כותב'
+  +           },
+  +           {
+  +             curated: 'כּוֹתֶבֶת',
+  +             english: 'writes (feminine singular)',
+  +             examples: [
+  +               {
+  +                 english: 'She is writing here.',
+  +                 hebrew: 'היא כותבת פה'
+  +               }
+  +             ],
+  +             gender: 'Feminine singular',
+  +             id: 'w-kotevet',
+  +             notes: 'Present-tense feminine singular form; also can mean is writing.',
+  +             partOfSpeech: 'Verb',
+  +             pattern: 'קוֹטֶלֶת',
+  +             pointed: 'כּוֹתֶבֶת',
+  +             root: 'כ־ת־ב',
+  +             unpointed: 'כותבת'
+  +           }
+  +         ]
+  +       },
+  +       draftToken: 'dt1-410e704b8c3162db9cd5a96c50804013f504fb067ba2dbb32b54b56c193468c4',
+  +       stagedAt: '2026-10-06T20:09:55.853Z'
+  +     },
+  +     draftToken: 'dt1-410e704b8c3162db9cd5a96c50804013f504fb067ba2dbb32b54b56c193468c4',
+  +     unchanged: false
+  -     code: 'BAD_REQUEST',
+  -     error: 'Authored token 4 of ex-2-order is blank. Enter a token or remove that item.'
+      },
+  +   status: 200
+  -   status: 400
+    }
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/ordering-tokens.test.js:111:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { status: 200, body: { draft: [Object], changes: [Array], affectedLessons: [Array], draftToken: 'dt1-410e704b8c3162db9cd5a96c50804013f504fb067ba2dbb32b54b56c193468c4', baseRevisionId: 2, unchanged: false } },
+    expected: { status: 400, body: { error: 'Authored token 4 of ex-2-order is blank. Enter a token or remove that item.', code: 'BAD_REQUEST' } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\ordering-tokens.test.js:124:1
+✖ Studio editor shows the token error, keeps typed tokens, prefix ticks and answers, re-enables controls; filling or removing the row then saves (229.3322ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'Draft saved. Reloading author workspace…'
+  - 'Authored token 4 of ex-2-order is blank. Enter a token or remove that item.'
+
+      at refusedAt (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/ordering-tokens.test.js:141:12)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/ordering-tokens.test.js:147:94)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Draft saved. Reloading author workspace…',
+    expected: 'Authored token 4 of ex-2-order is blank. Enter a token or remove that item.',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+EXIT=1

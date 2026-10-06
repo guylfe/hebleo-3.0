@@ -387,3 +387,27 @@ test('Publishing behind a pending guided save still rejects a newer draft from a
   assert.equal(store.get('active'),revision);assert.deepEqual(store.snapshot(),published);assert.equal(store.currentDraft().draftToken,other);
   assert.deepEqual(learnerRecords(store),learners);
 });
+
+test('QA-EE9-G4-02: matching autosave keeps an authored pair word from outside the lesson list, and the match resumes after reload',async t=>{
+  const pairs=['w-ani','w-mi','w-sham'];
+  const {store,w,doc}=await app(t,{page:'lesson/lesson-1/apply',prepare(s){
+    const c=structuredClone(s.snapshot());c.exercises.find(e=>e.id==='ex-1-match').wordIds=pairs;s.publish(1,s.stage({baseRevisionId:1,expectedDraftToken:null,content:c}).draftToken);
+  }});
+  assert.ok(!store.snapshot().lessons.find(l=>l.id==='lesson-1').wordIds.includes('w-sham'));
+  const input=doc.querySelector('#answer');input.value='אני';input.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback:not(.wrong)'));
+  click(doc,'next-question');await settled(()=>doc.querySelector('.matching-game'));
+  const place=(d,id,meaning)=>{d.querySelector('[data-match-word="'+id+'"]').click();d.querySelector('[data-match-target="'+meaning+'"]').click();};
+  const resume=()=>store.learner('learner-demo').resumes['lesson-1'];
+  place(doc,'w-sham','there');
+  await settled(()=>resume()?.matching?.['w-sham']==='there');
+  assert.deepEqual(resume().matching,{'w-sham':'there'});assert.equal(resume().revisionId,2);assert.equal(resume().question,1);
+  const resumed=await app(t,{page:'lesson/lesson-1/apply',store});
+  await settled(()=>resumed.doc.querySelector('.matching-game'));
+  assert.match(resumed.doc.querySelector('[data-match-word="w-sham"] small').textContent,/Placed: there/);
+  assert.ok(resumed.doc.querySelector('[data-match-target="there"]').classList.contains('filled'));
+  place(resumed.doc,'w-ani','I');await settled(()=>resume().matching['w-ani']==='I');
+  place(resumed.doc,'w-mi','who');await settled(()=>resume().matching['w-mi']==='who');
+  click(resumed.doc,'check');await settled(()=>resumed.doc.querySelector('.feedback:not(.wrong)'));
+  const graded=store.learner('learner-demo').attempts.at(-1);
+  assert.deepEqual([graded.exerciseId,graded.revisionId,graded.correct,graded.answer],['ex-1-match',2,true,{'w-sham':'there','w-ani':'I','w-mi':'who'}]);
+});

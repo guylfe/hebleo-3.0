@@ -1,0 +1,33 @@
+{
+  "disabled": 0,
+  "prefixes": [
+    true,
+    false,
+    false,
+    false
+  ],
+  "prompt": "G4-02 owner ordering check (fixture-only)",
+  "requests": [
+    {
+      "code": "BAD_REQUEST",
+      "error": "Authored token 4 of ex-2-order is blank. Enter a token or remove that item.",
+      "method": "POST",
+      "status": 400,
+      "url": "/api/studio/draft"
+    },
+    {
+      "code": "BAD_REQUEST",
+      "error": "Authored token 4 of ex-2-order is blank. Enter a token or remove that item.",
+      "method": "POST",
+      "status": 400,
+      "url": "/api/studio/draft"
+    }
+  ],
+  "status": "Authored token 4 of ex-2-order is blank. Enter a token or remove that item.",
+  "tokens": [
+    "ב",
+    "בית",
+    "אני",
+    "‏"
+  ]
+}
