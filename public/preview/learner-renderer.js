@@ -15,8 +15,11 @@ const draftOf = answer => ({
 // It renders with the learner's lesson/exercise HTML and answer serialization, and reports
 // every change through props.actions. It never fetches, calls the API or touches storage;
 // optional browser-only dependencies (lesson Markdown, audio playback) are injected.
-export function createLearnerRenderer({renderLesson = plainText, playAudio, stopMedia} = {}) {
-  let medium = null;
+// keyScope is the host element whose keys are rehearsal shortcuts (the modal); it defaults to the renderer root.
+export function createLearnerRenderer({renderLesson = plainText, playAudio, stopMedia, keyScope} = {}) {
+  // Kept across mounts: every controller re-render replaces the root, so the focused control and the
+  // last revealed result/entry are carried over instead of dropping focus to the page body.
+  let medium = null, focusKey = null, shownKey = null;
   return {
     mount(container, props) {
       const doc = container.ownerDocument, controller = new doc.defaultView.AbortController(), signal = controller.signal;
@@ -29,8 +32,27 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const root = doc.createElement('div');
       root.className = 'learner-preview';
       root.dataset.previewRoot = '';
+      root.tabIndex = -1;
       container.append(root);
       const active = () => !signal.aborted;
+      // focusKey names the control to refocus after a re-render ('root' for the rehearsal root, null when focus is elsewhere).
+      const quote = value => JSON.stringify(String(value));
+      const focusSelector = el => el.id ? '[id=' + quote(el.id) + ']' : Object.keys(el.dataset).length ? el.tagName.toLowerCase() + Object.entries(el.dataset).map(([k, v]) => '[data-' + k.replace(/[A-Z]/g, c => '-' + c.toLowerCase()) + '=' + quote(v) + ']').join('') : 'root';
+      const captureFocus = () => { const el = doc.activeElement; focusKey = el === root ? 'root' : root.contains(el) ? focusSelector(el) : null; };
+      const restoreFocus = () => {
+        if (focusKey === null) return;
+        const el = focusKey === 'root' ? root : root.querySelector(focusKey);
+        if (el && !el.disabled) el.focus({preventScroll:true});
+        if (!root.contains(doc.activeElement)) root.focus({preventScroll:true});
+      };
+      // A newly shown result (with its retry/next controls) or vocabulary entry is scrolled into the host's visible area.
+      const reveal = () => {
+        const key = lookupId ? 'lookup:' + lookupId : result ? 'result:' + exerciseId : null;
+        if (key && key !== shownKey) root.querySelector(lookupId ? '.preview-lookup' : '.exercise-footer')?.scrollIntoView?.({block:'nearest'});
+        shownKey = key;
+      };
+      // After a shortcut activates a control the root keeps the keys, as the page body does for the learner app.
+      const keepKeys = () => { if (active()) { focusKey = 'root'; root.focus({preventScroll:true}); } };
       const call = (name, ...args) => {
         if (!active() || busy) return;
         try {
@@ -72,8 +94,11 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           + '<div class="toolbar">' + (result && !result.correct ? button('Try this question again', 'retry-question', 'small secondary', exercise.id) : '')
           + (allowed ? '<details class="preview-vocabulary-help"><summary>Vocabulary help</summary>' + lessonWords.map(w => button(esc(w.pointed) + ' · ' + esc(w.english), 'lookup', 'small secondary', w.id)).join('') + '</details>' : '') + '</div></div>';
       }
+      let mounted = false;
       function render() {
         if (!active()) return;
+        if (mounted) captureFocus();
+        mounted = true;
         const body = !lesson ? '<p>This lesson is not in the draft.</p>'
           : step === 'learn' ? learn()
           : step === 'vocabulary' ? vocabulary()
@@ -82,6 +107,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         root.innerHTML = settings() + (exercise ? '' : note()) + '<section class="card lesson-section">' + body + '</section>' + lookupCard();
         if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select').forEach(el => { el.disabled = true; }); }
         if (exercise?.type === 'matching' && !result && !busy) bindMatching(root, (id, meaning) => { if (active()) updateDraft({...draft, matching:matchWord(draft.matching, id, meaning)}); });
+        restoreFocus(); reveal();
       }
       function submit() {
         if (!exercise || result) return;
@@ -130,23 +156,24 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       }, {signal});
       root.addEventListener('input', event => { if (event.target.id === 'answer' && !busy && !result) updateDraft({...draft, text:event.target.value}, false); }, {signal});
       root.addEventListener('change', event => { if (event.target.dataset.previewPref && event.target.tagName === 'SELECT') call('setPreference', event.target.dataset.previewPref, event.target.value); }, {signal});
-      // Rehearsal keyboard shortcuts stay inside the preview root; defaultPrevented keeps the learner's global handler out.
-      root.addEventListener('keydown', event => {
+      // Rehearsal keyboard shortcuts stay inside the preview host; defaultPrevented keeps the learner's global handler out.
+      (keyScope || root).addEventListener('keydown', event => {
         if (event.defaultPrevented || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || busy) return;
         const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName) || event.target.isContentEditable;
         if (typing) { if (event.target.id === 'answer' && event.key === 'Enter' && !result) { event.preventDefault(); submit(); } return; }
         if ((event.key === 'Enter' || event.key === ' ') && ['BUTTON','A','SUMMARY'].includes(event.target.tagName)) return;
         if (event.key === 'Enter' || event.key === ' ') {
           const el = root.querySelector('[data-action="next-question"],[data-action="check"]');
-          if (el && !el.disabled) { event.preventDefault(); el.click(); }
+          if (el && !el.disabled) { event.preventDefault(); el.click(); keepKeys(); }
         } else if (/^[1-9]$/.test(event.key)) {
           const el = root.querySelectorAll('[data-action="choice"]')[Number(event.key) - 1];
-          if (el && !el.disabled) { event.preventDefault(); el.click(); }
+          if (el && !el.disabled) { event.preventDefault(); el.click(); keepKeys(); }
         }
       }, {signal});
       render();
       return function dispose() {
         if (!active()) return;
+        captureFocus();
         controller.abort();
         stopMedia?.();
         root.remove();
