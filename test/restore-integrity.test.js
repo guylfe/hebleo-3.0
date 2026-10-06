@@ -2,6 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {Store,STORE_SCHEMA_VERSION,RESTORABLE_SCHEMA_VERSIONS} from '../src/store.js';
 import {lessonQuestionProgress} from '../public/ux.js';
+import {createServer} from '../src/server.js';
 
 // Release review RR-B2-02/03: restore must refuse contradictory history links and unsupported schema declarations before writing anything.
 const user='learner-demo';
@@ -94,4 +95,71 @@ test('v1 exports without a schema field still restore; links that disagree with 
   // Resumed feedback must still match its own lesson; a v1 resume cannot point at an attempt that would turn legacy.
   const resumed=structuredClone(v1);learnerState(resumed,user).attempts.find(a=>a.requestId==='resumed-correct').lessonId='lesson-2';
   const r=destination(t),before=tables(r);assert.throws(()=>r.restore(resumed),/Saved feedback does not match/);assert.deepEqual(tables(r),before);
+});
+
+// Release recheck RR-B2-02: a reported attempt is a copy of a graded attempt, so it needs the same identity and grade as learner history.
+const changes=s=>s.db.prepare('SELECT total_changes() AS n').get().n;
+// Reports on resumed feedback, on no-resume history and on an explicit legacy record, plus a lesson-level question with no exercise or word.
+function reportSource(t){
+  const {s,first}=source(t);
+  s.report('learner-core',{requestId:'report-history',attemptId:'history-correct',reason:'answer',note:'SYNTHETIC no-resume report'});
+  s.report('author-demo',{requestId:'report-legacy',attemptId:'legacy-answer',reason:'media',note:'SYNTHETIC legacy report'});
+  s.askQuestion(user,{requestId:'question-lesson',revisionId:first,lessonId:'lesson-1',question:'SYNTHETIC lesson-level question'});
+  return {s,first,backup:s.backup()};
+}
+const reportedBy=(b,key)=>b.reports.find(r=>r.key===key).value;
+const reportKeys={resumed:'report-learner-demo-report-1','no-resume':'report-learner-core-report-history',legacy:'report-author-demo-report-legacy'};
+const blank={absent:undefined,null:null,empty:''};
+const setField=(record,field,value)=>{if(value===undefined)delete record[field];else record[field]=value;};
+function malformedReports(){
+  const cases={};
+  for(const [kind,key] of Object.entries(reportKeys))for(const [how,value] of Object.entries(blank))cases[kind+' report, exerciseId '+how]=b=>setField(reportedBy(b,key).attempt,'exerciseId',value);
+  for(const field of ['requestId','lessonId'])for(const [how,value] of Object.entries(blank))cases['resumed report, '+field+' '+how]=b=>setField(reportedBy(b,reportKeys.resumed).attempt,field,value);
+  Object.assign(cases,{
+    'no-resume report, correct absent':b=>{delete reportedBy(b,reportKeys['no-resume']).attempt.correct;},
+    'no-resume report, correct not boolean':b=>{reportedBy(b,reportKeys['no-resume']).attempt.correct='true';},
+    'legacy report, at absent':b=>{delete reportedBy(b,reportKeys.legacy).attempt.at;},
+    'legacy report, at not a date':b=>{reportedBy(b,reportKeys.legacy).attempt.at='SYNTHETIC not a date';},
+    'resumed report, attempt absent':b=>{delete reportedBy(b,reportKeys.resumed).attempt;},
+    'resumed report, attempt is a list':b=>{reportedBy(b,reportKeys.resumed).attempt=[];},
+  });
+  return cases;
+}
+
+test('restore refuses reported attempts with absent, null or empty identities or grades before any write, in v2 and v1',t=>{
+  const {first,backup}=reportSource(t);
+  for(const [format,base] of [['v2',backup],['v1',v1From(backup,first)]])for(const [name,mutate] of Object.entries(malformedReports())){
+    const d=destination(t),before=tables(d),beforeChanges=changes(d),bad=structuredClone(base);mutate(bad);
+    assert.throws(()=>d.restore(bad),/Invalid learner report/,format+' '+name);
+    assert.equal(changes(d)-beforeChanges,0,format+' '+name+': no SQLite change at all');
+    assert.deepEqual(tables(d),before,format+' '+name+': every table and sqlite_sequence unchanged');
+  }
+});
+
+test('valid reports on resumed, no-resume and legacy history restore with unchanged grades; lesson-level questions keep optional targets',t=>{
+  const {first,backup}=reportSource(t);
+  for(const [format,base] of [['v2',backup],['v1',v1From(backup,first)]]){
+    const d=destination(t),input=structuredClone(base);delete input.questions.find(q=>q.key==='question-learner-demo-question-lesson').value.exerciseId;
+    const {revisions}=d.restore(input),restored=Object.fromEntries(d.reports('author-demo').map(r=>[r.requestId,r.attempt]));
+    for(const [kind,key] of Object.entries(reportKeys)){const want=reportedBy(base,key).attempt,got=restored[reportedBy(base,key).requestId];assert.deepEqual(grades([got]),grades([want]),format+' '+kind+' report keeps its identity and grade');}
+    assert.equal(restored['report-1'].revisionId,revisions[first]);assert.equal(restored['report-history'].revisionId,revisions[first]);
+    assert.equal(restored['report-legacy'].revisionId,null);assert.equal(restored['report-legacy'].legacyRevisionId,4242,format+' legacy report stays legacy, not repaired');
+    const lessonQuestion=d.questions('author-demo').find(q=>q.requestId==='question-lesson');assert.equal(lessonQuestion.exerciseId,undefined);assert.equal(lessonQuestion.wordId,null);assert.equal(lessonQuestion.revisionId,revisions[first]);
+  }
+});
+
+test('HTTP restore refuses reported attempts without an exercise, lesson or request ID and writes nothing; a valid report restores',async t=>{
+  const {backup}=reportSource(t),d=destination(t),server=createServer(d);
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  try{
+    const restore=body=>fetch('http://127.0.0.1:'+server.address().port+'/api/restore',{method:'POST',headers:{'content-type':'application/json','x-demo-user':'author-demo'},body:JSON.stringify(body)});
+    const before=tables(d),beforeChanges=changes(d);
+    for(const [kind,key] of [['resumed',reportKeys.resumed],['no-resume',reportKeys['no-resume']]])for(const field of ['exerciseId','lessonId','requestId'])for(const [how,value] of Object.entries(blank)){
+      const bad=structuredClone(backup);setField(reportedBy(bad,key).attempt,field,value);const name=kind+' '+field+' '+how,response=await restore(bad);
+      assert.equal(response.status,400,name);assert.match((await response.json()).error,/Invalid learner report/,name);
+      assert.equal(changes(d)-beforeChanges,0,name+': no SQLite change at all');assert.deepEqual(tables(d),before,name+': every table and sqlite_sequence unchanged');
+    }
+    const ok=await restore(structuredClone(backup));assert.equal(ok.status,200);
+    const restored=d.reports('author-demo').find(r=>r.requestId==='report-1').attempt;assert.equal(restored.exerciseId,'ex-1-type');assert.equal(restored.correct,true);
+  }finally{await new Promise(resolve=>server.close(resolve));}
 });

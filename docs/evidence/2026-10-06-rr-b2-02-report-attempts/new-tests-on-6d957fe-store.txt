@@ -1,0 +1,54 @@
+✔ valid v2 backup restores consistent links with unchanged grades, resumed feedback, legacy records and replay (58.4751ms)
+✔ v2 restore rejects nonexistent or existing-but-wrong historical lesson, exercise and word links before any write (98.5426ms)
+✔ restore refuses missing, malformed or unsupported store schema declarations atomically (81.2569ms)
+✔ v1 exports without a schema field still restore; links that disagree with a carried revision become explicit legacy links, never repaired (26.7489ms)
+✖ restore refuses reported attempts with absent, null or empty identities or grades before any write, in v2 and v1 (19.5616ms)
+✔ valid reports on resumed, no-resume and legacy history restore with unchanged grades; lesson-level questions keep optional targets (19.0083ms)
+✖ HTTP restore refuses reported attempts without an exercise, lesson or request ID and writes nothing; a valid report restores (91.4249ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 687.6658
+
+✖ failing tests:
+
+test at test\restore-integrity.test.js:129:1
+✖ restore refuses reported attempts with absent, null or empty identities or grades before any write, in v2 and v1 (19.5616ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: v2 resumed report, exerciseId absent
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-lead/test/restore-integrity.test.js:133:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Invalid learner report/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\restore-integrity.test.js:151:1
+✖ HTTP restore refuses reported attempts without an exercise, lesson or request ID and writes nothing; a valid report restores (91.4249ms)
+  AssertionError [ERR_ASSERTION]: resumed exerciseId absent
+  
+  200 !== 400
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-lead/test/restore-integrity.test.js:159:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+EXIT=1
