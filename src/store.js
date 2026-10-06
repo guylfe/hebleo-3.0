@@ -8,6 +8,9 @@ import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedE
 // Version 1 databases predate schema tracking. Version 2 adds revision-mapped backups and pinned-revision completion.
 export const STORE_SCHEMA_VERSION = 2;
 const backupFormats = ['hebleo-demo-backup-v1', 'hebleo-demo-backup-v2'];
+// Store schema versions each backup format may declare. v2 exports always declare one, and this build restores schema 2 only.
+// v1 exports predate the field (absent); a declared version must still be one this build supports. Anything else is refused before any write.
+export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2] };
 export { DomainError, normalizeHebrew };
 const clone = value => JSON.parse(JSON.stringify(value));
 // Sorted-key JSON, so the same content always yields the same token whatever key order an import used.
@@ -253,7 +256,7 @@ export class Store {
     if (p.practiceIds && (!Array.isArray(p.practiceIds) || p.practiceIds.some(id => !l.exerciseIds.includes(id)))) throw new DomainError('Invalid practice set.');
     const exercise=content.exercises.find(e=>e.id===stepExercises(l,p.step,p.practiceIds)[p.question]);
     if(p.selectedTokens.length && (!exercise || exercise.type!=='ordering' || p.selectedTokens.some(i=>i>=orderingTokens(exercise,content).length)))throw new DomainError('Invalid saved sentence tokens.');
-    if (p.resultRequestId && !state.attempts.some(a => a.requestId === p.resultRequestId && a.revisionId === p.revisionId && a.exerciseId === stepExercises(l,p.step,p.practiceIds)[p.question])) throw new DomainError('Saved feedback does not match the exercise.');
+    if (p.resultRequestId && !state.attempts.some(a => a.requestId === p.resultRequestId && a.revisionId === p.revisionId && a.lessonId === p.lessonId && a.exerciseId === stepExercises(l,p.step,p.practiceIds)[p.question])) throw new DomainError('Saved feedback does not match the exercise.');
   }
   practice(userId, input) {
     const content = this.snapshot(input.revisionId); const lesson = content.lessons.find(l => l.id === input.lessonId); const state = this.learner(userId);
@@ -403,6 +406,7 @@ export class Store {
   }
   restore(input) {
     if (!backupFormats.includes(input?.format) || !Array.isArray(input.learners) || ![2,3].includes(input.learners.length) || new Set(input.learners.map(x => x?.id)).size !== input.learners.length || !['learner-demo','learner-core'].every(id=>input.learners.some(row=>row.id===id))) throw new DomainError('Invalid demo backup.');
+    if (!RESTORABLE_SCHEMA_VERSIONS[input.format].includes(input.storeSchemaVersion)) throw new DomainError('This backup declares store schema ' + JSON.stringify(input.storeSchemaVersion ?? null) + '; this build restores ' + input.format + ' with schema ' + RESTORABLE_SCHEMA_VERSIONS[input.format].filter(Boolean).join(' or ') + '. Use a newer build.', 409);
     const v2 = input.format === 'hebleo-demo-backup-v2';
     validateContent(input.content);
     // v1 carried only resumed-lesson snapshots; v2 carries every referenced revision, including the active one.
@@ -415,8 +419,9 @@ export class Store {
       if (!carried.has(input.activeRevisionId) || JSON.stringify(carried.get(input.activeRevisionId)) !== JSON.stringify(input.content)) throw new DomainError('Backup active revision does not match its content.');
       if (input.draft != null) { if (typeof input.draft !== 'object' || input.draft.baseRevisionId !== input.activeRevisionId || typeof input.draft.stagedAt !== 'string') throw new DomainError('Invalid backup draft.'); validateContent(input.draft.content); }
     }
-    // A carried revision must contain the linked exercise. v1 history outside the carried set becomes an explicit legacy link; v2 must carry every link.
-    const linked = record => carried.has(record.revisionId) && (!record.exerciseId || carried.get(record.revisionId).exercises.some(e => e.id === record.exerciseId));
+    // A link holds only if its exact carried revision agrees with every reference, as normal writes require: the lesson exists, the exercise belongs to that lesson, an optional word exists.
+    // v2 must carry every link and rejects any disagreement. v1 history that does not hold becomes an explicit legacy link with its grade; nothing is repaired or regraded.
+    const linked = record => { const c = carried.get(record.revisionId); return Boolean(c) && c.lessons.some(l => l.id === record.lessonId) && (!record.exerciseId || c.exercises.some(e => e.id === record.exerciseId && e.lessonId === record.lessonId)) && (!record.wordId || c.words.some(w => w.id === record.wordId)); };
     const linkable = record => record.revisionId === null ? Number.isInteger(record.legacyRevisionId) : Number.isInteger(record.revisionId) && (!v2 || linked(record));
     for(const entry of questions){const q=entry?.value;if(!q || !users.some(u=>u.id===q.userId)||entry.key!=='question-'+q.userId+'-'+id(q.requestId)||!linkable(q)||typeof q.question!=='string'||!q.question.trim()||q.question.length>1500||typeof q.answer!=='string'||q.answer.length>12000||!['waiting','answered'].includes(q.status)||(q.status==='answered'&&!q.answer.trim()))throw new DomainError('Invalid learner question in backup.');id(q.lessonId);if(q.wordId)id(q.wordId);if(q.exerciseId)id(q.exerciseId);}
     for(const r of reports){if(typeof r?.key!=='string'||!/^report-(learner-(demo|core)|author-demo)-[A-Za-z0-9_-]+$/.test(r.key)||!['answer','unclear','media'].includes(r.value?.reason)||!['pending','reviewed'].includes(r.value?.status)||typeof r.value.note!=='string'||r.value.note.length>2000||!r.value.attempt||!linkable(r.value.attempt))throw new DomainError('Invalid learner report in backup.');}

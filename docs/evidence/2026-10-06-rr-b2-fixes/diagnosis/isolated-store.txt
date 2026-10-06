@@ -1,0 +1,20 @@
+✔ Hebrew normalization permits vowels, punctuation and direction controls but not misspellings or final-letter substitutions (1.4917ms)
+✔ all six exercise families grade submitted answers; lessons complete and enroll words (9.1144ms)
+✔ nikkud-required typing rejects the unpointed alternative (12.3964ms)
+✔ duplicate attempts are idempotent and conflicting payloads fail (4.3115ms)
+✔ draft publication and rollback propagate vocabulary while retaining progress and pinned answers (10.7222ms)
+✔ manifest selectors use canonical source objects and permit changing component order (1.3104ms)
+✔ invalid imports fail without changing the active revision or existing draft (26.069ms)
+✔ membership cancellation preserves course and core review; refunds gate practice but retain data (4.5921ms)
+✔ review ratings schedule and deduplicate without pretending to use FSRS (2.5532ms)
+✔ backup restore preserves both learners and replay receipts, and clears events after the snapshot (5.8289ms)
+✔ invalid restore is atomic, including a malformed saved attempt (2.7364ms)
+✔ SQLite survives reopen and keeps profiles isolated (31.9331ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 262.5023

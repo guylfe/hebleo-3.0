@@ -1,0 +1,12 @@
+✔ object-key-only differences produce no changes and no affected lessons, including nested unknown fields (28.8066ms)
+✔ omitted, added and changed pack metadata are reported and affect every lesson (34.1265ms)
+✔ collection reorders and in-object array order changes stay visible; additions alone are not reorders (53.8846ms)
+✔ word impact unions published and draft dependencies so a moved reference names both lessons (6.2211ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 264.1316

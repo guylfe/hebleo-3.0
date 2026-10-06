@@ -1,0 +1,139 @@
+date (local): 2026-10-06 07:19:38 +03:00
+clone: /c/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-lead
+branch: lead/b2-draft-api
+HEAD: 76c2889bbc33c1bb317129e6ba4060fd1d90595a
+node: v24.19.0  npm: 11.17.0
+tested tree = staged index tree b5ec983335f88fd1900a323825cd636b97fcfd3a (HEAD + staged src/test fixes)
+  src dcab6b5e0b45ba080e42ff035110074e40dd9b14
+  public 4b6d746a4d9f424601d2a9618107ed1a56ab9459
+  test 7e858ab77d38ead36fc8fe49870cd227889e597a
+  schemas ef10df024164d96179947f429fc43985af329541
+  package.json 32079f75511a8a379db4633545663816dd9b810d
+  package-lock.json 76c0d5c11e87be92125e28f0304646187b87b9b0
+unstaged tracked non-docs diff vs index (empty = tested files are exactly the staged ones):
+  README.md
+untracked outside docs:
+----
+cmd: npm.cmd run verify
+
+> hebleo-3-local-demo@0.1.0 verify
+> npm run check && npm test
+
+
+> hebleo-3-local-demo@0.1.0 check
+> node --check src/server.js && node --check src/store.js && node --check public/app.js && node --check public/learner-view.js && node --check public/preview/learner-renderer.js
+
+
+> hebleo-3-local-demo@0.1.0 test
+> node --test
+
+✔ Lesson 1 can advance past optional practice with an unresolved Check answer, preserving actual completion and graded history (345.2497ms)
+✔ Extra practice can be skipped before submission and after grading, clearing its resume without erasing attempts (221.0097ms)
+✔ The final lesson offers a course exit when incomplete, and core exercises do not show the extra-practice skip (123.0121ms)
+✔ Wrong-answer retry keeps the particular question, only correct answers fill progress, and saved progress survives reload (150.9566ms)
+✔ Finish-screen retry opens only the chosen missed question, then removes the corrected miss without changing other answers (86.5138ms)
+✔ Starting updated lesson through the actual app does not flush the old resume back over the reset (81.2202ms)
+✔ App sentence tiles submit attached prefixes, and source-rich cards/table open without field rendering errors (146.5459ms)
+✔ Studio edits author card policy and lesson highlights through the app draft/publication workflow (248.4579ms)
+✔ Actual app launcher focuses the native answer field and saves pinning through the learner preference API (91.5374ms)
+✔ Lesson help exposes an actual question form and saves it to the author inbox (57.5022ms)
+✔ Learner keyboard shortcuts never activate or handle controls inside a rehearsal root (45.8559ms)
+✔ Studio guided exercise and lesson forms save private drafts, reload discards unsaved edits, a stale token keeps entered values, and publishing stays separate (418.4634ms)
+✔ Studio import review writes nothing until the reviewed candidate is staged, discard writes nothing, and a stale review cannot be staged (323.2221ms)
+✔ Studio draft rehearsal uses the shared renderer and grader, isolates app.js handlers, and leaves every table, learner record and the published pack unchanged (246.2928ms)
+✔ Rehearsal keeps keyboard focus inside the modal across re-renders, so a digit then Enter grade, Retry resets, and a new result is scrolled into view (144.6022ms)
+✔ A rehearsal stops on a changed draft or a newer publication revision, writes nothing itself, and closes when the author navigates away (214.5296ms)
+✔ Switching exercises while a guided lesson save is still reloading keeps re-mounted editors and Publish on the token that save returned (342.8985ms)
+✔ Publishing behind a pending guided save still rejects a newer draft from another tab and publishes nothing (170.7028ms)
+✔ fresh demo progress is an explicit startup switch: npm start flag or env only (3.5962ms)
+✔ startup preparation resets once per build and never when disabled (14.1288ms)
+✔ a running server never resets progress, even after the app build changes on disk (120.0887ms)
+✔ completion needs every core question correct within one pinned revision; retries count once (20.5284ms)
+✔ v2 backup carries every referenced revision and restore remaps history consistently (29.6783ms)
+✔ v1 backups still restore; attempts from uncarried revisions keep grades as explicit legacy links (16.9339ms)
+✔ v2 restore rejects inconsistent backups atomically (8.6654ms)
+✔ schema migration marks dangling history links legacy once and refuses newer databases (64.9498ms)
+✔ Demo reset clears only progress for all three profiles once per build and survives process restart (125.9688ms)
+✔ Demo fingerprint detects app edits, ignores documentation edits and normalizes Windows line endings (25.3342ms)
+✔ Demo fingerprint covers nested executable assets at any depth and ignores docs, data and uploads (96.8117ms)
+✔ Startup reset follows nested-only deployments once per build and keeps settings, content and drafts (72.7038ms)
+✔ The checkout fingerprint includes every nested public module and no docs or mutable data (4.7653ms)
+✔ draft token is canonical and covers unknown fields, provenance, approval, formatting and media refs (14.2105ms)
+✔ stage requires the expected token, creates with null, is a no-op on equal content and conflicts otherwise (35.9737ms)
+✔ publish and rollback compare base and token in one transaction; a stale publish cannot clear a newer draft (30.3531ms)
+✔ preview session returns the learner public shape of the exact draft and writes nothing for any profile (20.6784ms)
+✔ preview is stale after re-stage, publish or rollback and has no no-draft mode (18.9923ms)
+✔ a restored draft is re-based onto the new revision, so its old token is stale (16.1035ms)
+✔ unapproved source candidates stay blocked at stage, including when relabelled as verified (8.0951ms)
+✔ HTTP draft and preview routes are author-only, no-store and return the coded error envelope (233.1113ms)
+✔ all six editors stage and reload exact opaque fields using the actual HTTP CAS contract (704.3134ms)
+✔ both editor kinds keep rejected input/token, recover after validation error and preserve source/media through reload (252.1738ms)
+✔ controller uses real read-only HTTP preparation/grading; all profiles and database rows survive every rehearsal action (120.446ms)
+✔ actual HTTP stale-token conflict freezes controller without discarding answer or writing state (67.9968ms)
+✔ actual renderer serializes all six families through author HTTP and preserves every table/profile (487.0687ms)
+✔ renderer keeps invalid HTTP answer drafts for correction and stale responses freeze the UI (141.2205ms)
+✔ keyboard events, remounts and retained detached controls produce one HTTP submission and no late UI work (96.9842ms)
+✔ CSV updates stable IDs while preserving explicit Hebrew, quoting, newlines and formatting (6.9441ms)
+✔ CSV rejects duplicate IDs, column errors and malformed quoting; no forms are guessed (2.7673ms)
+✔ Nikkud uses five sound slots, inserts at the actual caret, and preserves native field editing (282.6393ms)
+✔ Vowel hover waits 1500ms, cancels on early exit, keeps variants reachable, and inserts an alternative (77.5114ms)
+✔ Vowel variants have a keyboard path, include auxiliary marks, and dismiss on Escape (106.0697ms)
+✔ Pin holds the overlay across click-away and lesson context; unpinned click-away dismisses it (76.2235ms)
+✔ Known and new keys derive dark and bright shades from one authored hue, including legacy two-color data (47.3324ms)
+✔ Read-only fields cannot be edited by the custom keyboard (52.1809ms)
+✔ every seed exercise kind submits the learner wire answer through the real controller, is graded correct by the actual draft evaluator, and leaves every row of three profiles unchanged (1284.1342ms)
+✔ wrong answers keep the local draft through re-renders, show the learner feedback, and retry clears only the rehearsal answer (68.5136ms)
+✔ settings, keyboard, vocabulary and lookup controls call rehearsal actions and render a read-only entry (171.3266ms)
+✔ dispose removes the root and every listener, stops media, and is idempotent (30.3237ms)
+✔ busy rehearsal disables every control and ignores clicks and shortcuts; a pending check evaluates exactly once (55.4801ms)
+✖ test\preview.test.js (147.7924ms)
+✖ test\publication-diff.test.js (128.958ms)
+✖ test\refinement.test.js (115.2081ms)
+✖ test\restore-integrity.test.js (99.747ms)
+✖ test\server.test.js (83.424ms)
+✖ test\store.test.js (66.4917ms)
+✖ test\studio-authoring.test.js (49.2382ms)
+✖ test\ux.test.js (35.9868ms)
+ℹ tests 67
+ℹ suites 0
+ℹ pass 59
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5063.5987
+
+✖ failing tests:
+
+test at test\preview.test.js:1:1
+✖ test\preview.test.js (147.7924ms)
+  'test failed'
+
+test at test\publication-diff.test.js:1:1
+✖ test\publication-diff.test.js (128.958ms)
+  'test failed'
+
+test at test\refinement.test.js:1:1
+✖ test\refinement.test.js (115.2081ms)
+  'test failed'
+
+test at test\restore-integrity.test.js:1:1
+✖ test\restore-integrity.test.js (99.747ms)
+  'test failed'
+
+test at test\server.test.js:1:1
+✖ test\server.test.js (83.424ms)
+  'test failed'
+
+test at test\store.test.js:1:1
+✖ test\store.test.js (66.4917ms)
+  'test failed'
+
+test at test\studio-authoring.test.js:1:1
+✖ test\studio-authoring.test.js (49.2382ms)
+  'test failed'
+
+test at test\ux.test.js:1:1
+✖ test\ux.test.js (35.9868ms)
+  'test failed'
+EXIT=1
