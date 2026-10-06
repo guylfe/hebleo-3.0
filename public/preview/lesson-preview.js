@@ -19,9 +19,10 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
   const assertMutable = () => { if (!active() || !session || stale || busy) throw new Error('Rehearsal is unavailable or busy.'); };
   function render() {
     if (!active() || !session) return;
+    const focused = container.ownerDocument.activeElement, hadFocus = container.contains(focused), focusedStep = nav.contains(focused) ? focused.dataset.previewStep : null;
     unmount?.(); unmount = undefined;
     nav.innerHTML = session.steps.map(name => `<button type="button" data-preview-step="${e(name)}"${step === name ? ' aria-current="step"' : ''}${busy || stale ? ' disabled' : ''}>${e(stepLabels[name] || name)}</button>`).join('');
-    if (stale) {body.replaceChildren(); return;}
+    if (stale) {body.replaceChildren(); keepFocus(hadFocus, focusedStep); return;}
     const state = currentAnswer();
     unmount = renderer.mount(body, {
       mode:'draft-preview', persistent:false, content:structuredClone(session.content),
@@ -31,6 +32,13 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
       actions: {go, next, setAnswer, submit, retry, lookup, setPreference, exit}
     });
     if (unmount !== undefined && typeof unmount !== 'function') throw new Error('Shared renderer mount must return a disposer or undefined.');
+    keepFocus(hadFocus, focusedStep);
+  }
+  // Re-rendering replaces the focused step button; keep keyboard focus inside the rehearsal (same step, else Exit).
+  function keepFocus(hadFocus, focusedStep) {
+    if (!hadFocus || container.contains(container.ownerDocument.activeElement)) return;
+    const stepButton = focusedStep && [...nav.querySelectorAll('[data-preview-step]')].find(b => b.dataset.previewStep === focusedStep && !b.disabled);
+    (stepButton || container.querySelector('[data-preview-exit]'))?.focus({preventScroll:true});
   }
   function go(nextStep, nextQuestion = 0) {
     assertMutable();
