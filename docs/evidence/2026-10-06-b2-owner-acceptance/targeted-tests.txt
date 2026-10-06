@@ -1,0 +1,95 @@
+date (local): 2026-10-06 06:42:37 +03:00
+clone: C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-lead
+branch: lead/b2-draft-api
+HEAD: 6650c607e2e0fd95147a908698055ac7de681d76
+node: v24.19.0  npm: 11.17.0
+executable tree identity (git tree objects at HEAD):
+  src 6a727a4aff44fac75e43a8d8c2d9592e21669cdd
+  public 4b6d746a4d9f424601d2a9618107ed1a56ab9459
+  test 8fa60fb0767599b98a0bedc00650448c04326fea
+  schemas ef10df024164d96179947f429fc43985af329541
+  package.json 32079f75511a8a379db4633545663816dd9b810d
+  package-lock.json 76c0d5c11e87be92125e28f0304646187b87b9b0
+dirty (docs only expected):
+  M docs/FEATURE_CHECKLIST.md
+  M docs/LEAD_HANDOFF.md
+  M docs/PROJECT_STATUS.md
+ ?? docs/evidence/
+tracked non-docs diff vs HEAD (empty = executable tree identical to HEAD):
+untracked outside docs:
+----
+cmd: node --test test/app.test.js test/studio-authoring.test.js test/learner-renderer.test.js test/preview.test.js test/draft-api.test.js test/publication-diff.test.js test/import.test.js test/feature-renderer-http.test.js
+✔ Lesson 1 can advance past optional practice with an unresolved Check answer, preserving actual completion and graded history (370.0311ms)
+✔ Extra practice can be skipped before submission and after grading, clearing its resume without erasing attempts (203.4661ms)
+✔ The final lesson offers a course exit when incomplete, and core exercises do not show the extra-practice skip (119.7306ms)
+✔ Wrong-answer retry keeps the particular question, only correct answers fill progress, and saved progress survives reload (193.8942ms)
+✔ Finish-screen retry opens only the chosen missed question, then removes the corrected miss without changing other answers (96.6795ms)
+✔ Starting updated lesson through the actual app does not flush the old resume back over the reset (82.888ms)
+✔ App sentence tiles submit attached prefixes, and source-rich cards/table open without field rendering errors (125.7992ms)
+✔ Studio edits author card policy and lesson highlights through the app draft/publication workflow (346.0096ms)
+✔ Actual app launcher focuses the native answer field and saves pinning through the learner preference API (131.5904ms)
+✔ Lesson help exposes an actual question form and saves it to the author inbox (79.7923ms)
+✔ Learner keyboard shortcuts never activate or handle controls inside a rehearsal root (68.629ms)
+✔ Studio guided exercise and lesson forms save private drafts, reload discards unsaved edits, a stale token keeps entered values, and publishing stays separate (491.1738ms)
+✔ Studio import review writes nothing until the reviewed candidate is staged, discard writes nothing, and a stale review cannot be staged (387.4069ms)
+✔ Studio draft rehearsal uses the shared renderer and grader, isolates app.js handlers, and leaves every table, learner record and the published pack unchanged (278.5025ms)
+✔ Rehearsal keeps keyboard focus inside the modal across re-renders, so a digit then Enter grade, Retry resets, and a new result is scrolled into view (190.5004ms)
+✔ A rehearsal stops on a changed draft or a newer publication revision, writes nothing itself, and closes when the author navigates away (289.7514ms)
+✔ Switching exercises while a guided lesson save is still reloading keeps re-mounted editors and Publish on the token that save returned (445.8071ms)
+✔ Publishing behind a pending guided save still rejects a newer draft from another tab and publishes nothing (172.8428ms)
+✔ draft token is canonical and covers unknown fields, provenance, approval, formatting and media refs (12.7891ms)
+✔ stage requires the expected token, creates with null, is a no-op on equal content and conflicts otherwise (31.7057ms)
+✔ publish and rollback compare base and token in one transaction; a stale publish cannot clear a newer draft (29.9296ms)
+✔ preview session returns the learner public shape of the exact draft and writes nothing for any profile (20.2839ms)
+✔ preview is stale after re-stage, publish or rollback and has no no-draft mode (19.0321ms)
+✔ a restored draft is re-based onto the new revision, so its old token is stale (18.5256ms)
+✔ unapproved source candidates stay blocked at stage, including when relabelled as verified (7.9998ms)
+✔ HTTP draft and preview routes are author-only, no-store and return the coded error envelope (216.423ms)
+✔ all six editors stage and reload exact opaque fields using the actual HTTP CAS contract (709.8658ms)
+✔ both editor kinds keep rejected input/token, recover after validation error and preserve source/media through reload (306.9139ms)
+✔ controller uses real read-only HTTP preparation/grading; all profiles and database rows survive every rehearsal action (95.8871ms)
+✔ actual HTTP stale-token conflict freezes controller without discarding answer or writing state (70.4898ms)
+✔ actual renderer serializes all six families through author HTTP and preserves every table/profile (679.4975ms)
+✔ renderer keeps invalid HTTP answer drafts for correction and stale responses freeze the UI (159.108ms)
+✔ keyboard events, remounts and retained detached controls produce one HTTP submission and no late UI work (104.2354ms)
+✔ CSV updates stable IDs while preserving explicit Hebrew, quoting, newlines and formatting (6.8051ms)
+✔ CSV rejects duplicate IDs, column errors and malformed quoting; no forms are guessed (2.7643ms)
+✔ every seed exercise kind submits the learner wire answer through the real controller, is graded correct by the actual draft evaluator, and leaves every row of three profiles unchanged (1270.5101ms)
+✔ wrong answers keep the local draft through re-renders, show the learner feedback, and retry clears only the rehearsal answer (83.2714ms)
+✔ settings, keyboard, vocabulary and lookup controls call rehearsal actions and render a read-only entry (224.5213ms)
+✔ dispose removes the root and every listener, stops media, and is idempotent (38.6832ms)
+✔ busy rehearsal disables every control and ignores clicks and shortcuts; a pending check evaluates exactly once (92.8239ms)
+✔ disposable rehearsal navigates, retries, looks up and changes settings without modifying three learner states or source (238.2178ms)
+✔ stale draft evaluation freezes rehearsal and never retries with a different token (37.933ms)
+✔ renderer wire answers for six families are sent separately from the retained response draft (216.7599ms)
+✔ both conflict codes freeze session loading and evaluation; missing preview targets fail closed (127.2192ms)
+✔ INVALID_ANSWER leaves the response draft available for correction and retry (28.5468ms)
+✔ exit drops late loads and evaluations and disposes shared renderer events (40.5753ms)
+✔ rehearsal rejects persistent, mismatched or malformed session responses (115.488ms)
+✔ media picker preserves supplied revision/hash/source fields, labels legacy references and retains rejection recovery (38.2973ms)
+✔ pinned sha256 media can be selected without a URL; unsafe supplied URLs remain disabled (34.4964ms)
+✔ object-key-only differences produce no changes and no affected lessons, including nested unknown fields (38.2846ms)
+✔ omitted, added and changed pack metadata are reported and affect every lesson (41.8952ms)
+✔ collection reorders and in-object array order changes stay visible; additions alone are not reorders (74.8418ms)
+✔ word impact unions published and draft dependencies so a moved reference names both lessons (8.6167ms)
+✔ all six exercise forms save/reload without losing authored answers, extensions or absent defaults (505.939ms)
+✔ typing edits retain explicit word forms, identity, rich data and Nikkud defaults; immutable fields reject (2.8802ms)
+✔ prefix removal remaps stored token indices and never infers or rewrites accepted answers (46.7672ms)
+✔ failed draft validation retains the entered text and the previous saved draft (81.9812ms)
+✔ lesson composition preserves blocks, vocabulary/source fields and reference order through save/reload (76.5807ms)
+✔ untrusted authored text is escaped in forms; disposing prevents queued save handlers (41.625ms)
+✔ import inspection exposes exact forms, formatting, provenance and omissions without mutation (34.1245ms)
+✔ draft editors carry successful CAS tokens forward but retain previous tokens and authored input after rejection (153.1171ms)
+✔ a disposed editor never remounts the workspace when its pending stage returns (24.9394ms)
+✔ import review includes pack-level contracts, approval and unknown metadata changes (3.9591ms)
+✔ import inspection ignores nested JSON object key order but retains metadata and array changes (3.8018ms)
+✔ import inspection reports collection order without mutating identities or treating additions as reorders (9.404ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 65
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5889.7083
+EXIT=0

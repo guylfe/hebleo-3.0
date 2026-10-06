@@ -1,0 +1,17 @@
+{
+ "tables": {
+  "events": "0 rows 4f53cda18c2baa0c",
+  "kv": "5 rows ec400226ac0a1ddb",
+  "learners": "3 rows f175048c2872076f",
+  "revisions": "2 rows 2a9d9abcf885f342",
+  "sqlite_sequence": "1 rows 4107b3c261ffbfb3"
+ },
+ "learners": {
+  "learner-demo": "8088ced8ce4a4e9f",
+  "learner-core": "c3238b14f385fb3b",
+  "author-demo": "41f05759eea6823f"
+ },
+ "activeRevision": "2",
+ "publishedPack": "dfb41096d51a9277",
+ "draft": "none"
+}
