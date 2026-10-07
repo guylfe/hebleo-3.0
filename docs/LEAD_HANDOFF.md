@@ -1,4 +1,48 @@
-# Lead handoff: B2 Studio candidate (2026-10-06)
+# Current bounded review candidate (2026-10-07)
+
+Owner: Hebleo Lead Engineer. Documentation consolidation only, on private `lead/g5-01-stale-retention` in `C:\Users\Trans\.openmausbot\workspaces\8c900356-50f6-4d41-bbb9-50c8abe09233\hebleo-g401`. Executable baseline: `d42e1cfea9fb1e982651922a2ef2917d6cb5b85a`; parent: `c1b9fb925d0d77d4b7e3d4bf4615d3a55e68e176`. This update adds no behavior. The docs checkpoint SHA and final local/remote identity receipts are recorded in the external `G5_01_DELIVERY.md` beside this checkout.
+
+**Done within the assigned scope:** B20 recognition independent QA PASS at b312cdd; B21/B22 matching/ordering independent QA and focused Release backend PASS at c1b9fb9; B23 G5-01 independent automated recheck 23/23 and separate actual typed two-tab Browser PASS at d42e1cf. Gate 6's learner subset passes at c1b9fb9 for retries, feedback/partial reload, unique progress/completion, settings isolation and old-versus-current revision grading. These are separate frozen artifacts, not a whole-product pass at the branch tip.
+
+**Pending:** actual-Browser pending-autosave overlap and genuine global keyboard-preference event paths (independently automated within the 23 checks, still unobserved in Browser); real touch/device checks; Guy acceptance; three earlier low retry/status/focus/toast findings and B24's low focus-cycle limitation. Feedback/source-payload observation remains unclassified. Full accessibility, production and launch acceptance are not established.
+
+**Blocked:** native import upload and narrow 375/390 CSS-pixel layout gates lack mounted upload/resize capabilities. Gate 6 measured 1280×720 CSS pixels; it remains Partial. The direct-thread lifecycle failures did not negate the later room Browser closure, and no further retry is prescribed here.
+
+**Review recommendation:** accept the listed bounded correction evidence for review; keep main integration and all protected demos on HOLD. No merge, startup, reset, republish, process/DB update, live integration, real-data or production action is part of this handoff. Historical RR01–04 closure remains at ee9e2f1. Release demonstrated that valid parent v1/v2 exports restore; older malformed matching/blank-token exports are intentionally rejected before writes, without repairing or regrading their contents.
+
+## Independent artifact references
+
+QA report root: `C:\Users\Trans\.openmausbot\workspaces\df3d19e5-dedf-4129-9d7a-5b08ffaa6bd9`. Every report below was read; none was edited or rerun for this docs update.
+
+| Gate / frozen revision | Saved report and bounded evidence |
+| --- | --- |
+| B20 / b312cdd294ace379080235d7b7275d99ca9e8612 | `<QA root>\qa-g401-b312cdd-report\README.md`; artifact sibling `qa-g401-b312cdd`; 200 committed files; 9 saved evidence checks. Actual empty/space/invisible distractor rejection retains input/enabled controls without writes; valid recovery is draft-only. |
+| B21/B22 / c1b9fb925d0d77d4b7e3d4bf4615d3a55e68e176 | `<QA root>\qa-g402-c1b9fb9-report\README.md`; artifact sibling `qa-g402-c1b9fb9`; 247 committed files; 14 saved observation checks. Actual cross-lesson matching autosave/reload/grade/feedback and blank ordering rejection/exact valid recovery pass. |
+| Historical Gate 5 / c1b9fb9 | `<QA root>\qa-g5-c1b9fb9-report\README.md`; 49 saved evidence assertions include the original P2 G5-01 failure and two unobserved timing/event paths. They are not 49 passing app cases. Retain failing parent evidence. |
+| Gate 6 / c1b9fb9 | `<QA root>\qa-g6-c1b9fb9-report\README.md`; 75 saved evidence assertions over 29 checkpoints support the passing learner subset, not 75 application checks. Overall Partial; narrow Blocked. Strict preservation failed for one prior transient `.sqlite-shm`; the other 351 files, including original database/WAL, are byte-identical. Precise cause was not instrumented; diagnostic success does not make all-file preservation Pass. |
+| B23 automated / d42e1cfea9fb1e982651922a2ef2917d6cb5b85a | `C:\Users\Trans\.openmausbot\task-workspaces\71c71389-5334-4e0c-9ca8-d80dd28223d1\653fb433-7485-48b1-9f7c-cb22711bda02\hebleo-3\tmp\qa-g501-d42e1cf\README.md`; 260 frozen files; actual independent `node --test --test-name-pattern=G5 test/app.test.js test/stale-preview.test.js`: 23/23. Six-family retention, deferred genuine autosave response/navigation flush and real owner Pin handler event suppression. DOM/HTTP automation, not Browser race/event acceptance. Its earlier pending mounted closure is superseded only by the next report. |
+| B23 typed Browser / d42e1cf | `<QA root>\qa-g501-d42e1cf-room\README.md`; 35 saved evidence assertions, 260 frozen files and 4,708 prior files preserved. Actual B Prompt metadata Save200 → A old-token Enter409 retains exact `אני` and original prompt read-only/ungraded, editing/navigation disabled, Exit focused; no further application requests. Escape closes/restores Rehearse. All tables/three learners/publication equal the post-B-save baseline; B's save changed draft only. Tab briefly moves focus to BODY (B24). Button-click Exit and other answer families were not separately exercised in this Browser closure. |
+
+Release report: `C:\Users\Trans\.openmausbot\workspaces\6fce93a9-6bf0-4d8d-ad11-edd2d2a11700\RELEASE_RECHECK_c1b9fb9.md`; exact artifact `release-review-c1b9fb9`, evidence `review-evidence-c1b9fb9`. Independent 140 focused probes, 22 compatibility/HTTP checks and 2 reused positive groups pass, with explicit parent controls. This is a focused synthetic backend gate; prior RR01–04 evidence remains at ee9e2f1. No new Release review of d42e1cf is claimed.
+
+Owner evidence remains separately attributed: 23 focused, 174 application, 15 schema and 8 runtime checks at d42e1cf, plus owner Browser 61916 with 31 saved-observation assertions; [owner report](evidence/2026-10-07-g5-01-stale-retention/README.md). Owner and independent scopes overlap; no totals are added. No fullsuite or CI was rerun for this documentation correction.
+
+## Documentation verification and executable identity
+
+Only README/documentation paths change. Validate `git diff --check`, stable checklist IDs/Guy-result preservation, current status consistency, report-reference existence and non-documentation diff equality. Committed Git tree/blob IDs below must equal d42e1cf; every other tracked non-documentation path must also remain identical. Final receipts are saved beside external `G5_01_DELIVERY.md`.
+
+| Path | Frozen Git object ID |
+| --- | --- |
+| src | 1af480a8f4437a09e543f94c263ab580f1cf0c0f |
+| public | 152785968adb7e2325b6005e4ff4ae7b051f5ea1 |
+| test | e1d2c052b3825096f563ceac8bd87ea1b98fa8b4 |
+| schemas | ef10df024164d96179947f429fc43985af329541 |
+| package.json | 32079f75511a8a379db4633545663816dd9b810d |
+| package-lock.json | 76c0d5c11e87be92125e28f0304646187b87b9b0 |
+
+---
+
+# Historical lead handoff: B2 Studio candidate (2026-10-06)
 
 Owner: Hebleo Lead Engineer. This is owner evidence, not independent review.
 
