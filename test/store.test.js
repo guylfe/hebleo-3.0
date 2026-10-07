@@ -28,10 +28,12 @@ test('all six exercise families grade submitted answers; lessons complete and en
   assert.equal(s.learner(learner).cards['w-babayit'],undefined,'Prefixed forms belong to the base entry, not separate review words.');
   assert.equal(answer(s, 'ex-3-transform', 'היא כותב').correct, false);
 });
-test('nikkud-required typing rejects the unpointed alternative', t => {
+test('legacy vowel flags remain stored but future typing accepts authored pointed and unpointed forms', t => {
   const s = setup(t); const content = copy(seed); content.exercises[1].requireNikkud = true;
   s.stage({ baseRevisionId: 1, expectedDraftToken: null, content }); s.publish(1, s.currentDraft().draftToken);
-  assert.equal(answer(s, 'ex-1-type', 'אני').correct, false);
+  assert.equal(answer(s, 'ex-1-type', 'אני').correct, true);
+  assert.equal(s.snapshot().exercises[1].requireNikkud,true);
+  assert.equal(answer(s, 'ex-1-type', 'את').correct, false);
   assert.equal(answer(s, 'ex-1-type', 'אֲנִי').correct, true);
 });
 test('duplicate attempts are idempotent and conflicting payloads fail', t => {

@@ -1,0 +1,5 @@
+CONTROL: repeated text content accepted by candidate; unchanged parent rejects it.
+CONTROL: unpointed answer on old vowel-required content passes candidate, fails unchanged parent.
+CONTROL: typed CSV metadata is decoded by candidate; unchanged parent retains an opaque string.
+CONTROL: candidate stores a component cursor; unchanged parent drops it.
+CONTROL: old binary refuses schema-3 database.

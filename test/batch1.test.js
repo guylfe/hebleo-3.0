@@ -77,7 +77,7 @@ test('v2 backup carries every referenced revision and restore remaps history con
 test('v1 backups still restore; attempts from uncarried revisions keep grades as explicit legacy links',t=>{
   const s=setup(t),first=s.get('active');const old=answer(s,'ex-1-type','אני',first);const second=publishWordNote(s,'Revision two');
   const v2=s.backup();
-  const v1={...v2,format:'hebleo-demo-backup-v1',sessionSnapshots:[]};delete v1.revisionSnapshots;delete v1.activeRevisionId;delete v1.draft;
+  const v1={...v2,format:'hebleo-demo-backup-v1',sessionSnapshots:[]};delete v1.revisionSnapshots;delete v1.activeRevisionId;delete v1.draft;delete v1.storeSchemaVersion;
   const target=setup(t);target.restore(v1);
   const restored=target.learner(user).attempts.find(a=>a.requestId===old.requestId);
   assert.equal(restored.revisionId,null);assert.equal(restored.legacyRevisionId,first);assert.equal(restored.correct,true);

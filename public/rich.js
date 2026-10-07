@@ -1,9 +1,10 @@
 // Source formatting uses Sheets' UTF-16 run offsets, including Hebrew vowel marks.
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export function sheetColor(value, theme = []) {
+export function sheetColor(value, theme = [], seen = new Set()) {
+  if(!Array.isArray(theme))theme=[];
   if (typeof value === 'string') return /^#[0-9a-f]{6}$/i.test(value) ? value : null;
   if (!value || typeof value !== 'object') return null;
-  if (value.themeColor) return sheetColor(theme.find(c => c.colorType === value.themeColor)?.color, theme);
+  if (value.themeColor) {if(seen.has(value.themeColor)||seen.size>100)return null;const next=new Set(seen);next.add(value.themeColor);return sheetColor(theme.find(c => c.colorType === value.themeColor)?.color, theme,next);}
   const color = value.rgbColor || value;
   if (['red','green','blue','alpha'].some(k => color[k] !== undefined && (!Number.isFinite(color[k]) || color[k] < 0 || color[k] > 1))) return null;
   return '#' + ['red','green','blue'].map(k => Math.round((color[k] || 0) * 255).toString(16).padStart(2,'0')).join('');

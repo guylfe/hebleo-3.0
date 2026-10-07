@@ -3,14 +3,16 @@ import { createHash } from 'node:crypto';
 import { DomainError } from './errors.js';
 import { normalizeHebrew, evaluateAnswer, matchingPairResults } from './evaluate.js';
 import { seed, upgradeDemo } from './seed.js';
+import {validateCurriculum, validateLessonComposition, resolveComponent, orderedLessons, lessonFlow, keyboardForLesson} from '../public/course.js';
+import {validateFormatting} from '../public/vocabulary-import.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress } from '../public/ux.js';
 
-// Version 1 databases predate schema tracking. Version 2 adds revision-mapped backups and pinned-revision completion.
-export const STORE_SCHEMA_VERSION = 2;
+// Version 2 adds revision-mapped backups; version 3 adds component cursors and additive composition semantics.
+export const STORE_SCHEMA_VERSION = 3;
 const backupFormats = ['hebleo-demo-backup-v1', 'hebleo-demo-backup-v2'];
-// Store schema versions each backup format may declare. v2 exports always declare one, and this build restores schema 2 only.
-// v1 exports predate the field (absent); a declared version must still be one this build supports. Anything else is refused before any write.
-export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2] };
+// Supported backup markers are checked before any restore write.
+// v1 predates the marker; v2 backups from schema 2 and 3 retain their historical snapshot contracts.
+export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3] };
 export { DomainError, normalizeHebrew };
 const clone = value => JSON.parse(JSON.stringify(value));
 // Sorted-key JSON, so the same content always yields the same token whatever key order an import used.
@@ -38,6 +40,8 @@ function validatePreferences(p) {
   if (p.reviewType !== undefined && !['recognition', 'translation', 'listening', 'sentence'].includes(p.reviewType)) throw new DomainError('Invalid review type.');
 }
 
+function validateInteractions(items){if(!Array.isArray(items)||items.length>30)throw new DomainError('Invalid lesson interactions.');for(const item of items){if(!['reveal','choice'].includes(item.type))throw new DomainError('Unsupported lesson interaction.');text(item.prompt,'interaction prompt');if(item.type==='reveal')text(item.answer,'interaction answer',12000);else{if(!Array.isArray(item.choices)||item.choices.length<2||item.choices.length>10||!Number.isInteger(item.correctIndex)||item.correctIndex<0||item.correctIndex>=item.choices.length)throw new DomainError('Invalid inline choices.');item.choices.forEach(v=>text(v,'inline choice'));text(item.feedback,'inline feedback');}}}
+
 export function validateContent(content) {
   if (!content || content.schemaVersion !== 1) throw new DomainError('Expected content schemaVersion 1.');
   if (content.provenance?.kind !== 'synthetic-demo' && content.provenance?.kind !== 'verified-source') throw new DomainError('Content needs explicit provenance.');
@@ -48,12 +52,15 @@ export function validateContent(content) {
     const ids = new Set();
     for (const object of content[key]) { if (!object || typeof object !== 'object') throw new DomainError('Invalid content item.'); id(object.id); if (ids.has(object.id)) throw new DomainError('Duplicate ID: ' + object.id); ids.add(object.id); }
   }
+  try { validateCurriculum(content); } catch(error) { throw new DomainError(error.message); }
   if(content.reviewPolicy && !modes.includes(content.reviewPolicy.defaultNikkud))throw new DomainError('Invalid author flashcard Nikkud.');
   const words = new Set(content.words.map(w => w.id));
   const lessons = new Set(content.lessons.map(l => l.id));
   const exercises = new Map(content.exercises.map(e => [e.id, e]));
   for (const w of content.words) {
     richData(w);
+    if(w.taggingVersion===1 && (!Array.isArray(w.tags)||new Set(w.tags).size!==w.tags.length||w.tags.some(tag=>typeof tag!=='string'||!tag.trim()||tag.length>200)))throw new DomainError('Invalid vocabulary tags.');
+    if(w.formattingVersion!==undefined){if(w.formattingVersion!==1)throw new DomainError('Unsupported formatting version.');const check=validateFormatting(w.fieldFormatting,{word:w,sourceTheme:w.sourceTheme||[]});if(check.errors.length)throw new DomainError(check.errors.join('; '));}
     if(w.fieldFormatting){
       if(typeof w.fieldFormatting!=='object'||Array.isArray(w.fieldFormatting))throw new DomainError('Invalid source cell formatting.');
       for(const cell of Object.values(w.fieldFormatting)){
@@ -94,16 +101,24 @@ export function validateContent(content) {
     }
   }
   for (const l of content.lessons) {
-    text(l.title, 'lesson title'); if (!l.video || l.explanation) text(l.explanation, 'lesson explanation',100000);
+    text(l.title, 'lesson title'); if (l.compositionVersion!==2 && (!l.video || l.explanation)) text(l.explanation, 'lesson explanation',100000);
     if(l.textDirection && !['auto','ltr','rtl'].includes(l.textDirection))throw new DomainError('Invalid lesson direction.');
     if(l.keyboard){for(const k of ['knownKeys','newKeys'])if(typeof l.keyboard[k]!=='string'||l.keyboard[k].length>100)throw new DomainError('Invalid keyboard highlights.');if([...l.keyboard.newKeys].some(k=>l.keyboard.knownKeys.includes(k)))throw new DomainError('Known and new key groups must be distinct.');for(const k of ['knownColor','newColor'])if(l.keyboard[k]&&!/^#[0-9a-f]{6}$/i.test(l.keyboard[k]))throw new DomainError('Invalid highlight color.');}
-    if(l.interactions){if(!Array.isArray(l.interactions)||l.interactions.length>30)throw new DomainError('Invalid lesson interactions.');for(const item of l.interactions){if(!['reveal','choice'].includes(item.type))throw new DomainError('Unsupported lesson interaction.');text(item.prompt,'interaction prompt');if(item.type==='reveal')text(item.answer,'interaction answer',12000);else{if(!Array.isArray(item.choices)||item.choices.length<2||item.choices.length>10||!Number.isInteger(item.correctIndex)||item.correctIndex<0||item.correctIndex>=item.choices.length)throw new DomainError('Invalid inline choices.');item.choices.forEach(v=>text(v,'inline choice'));text(item.feedback,'inline feedback');}}}
+    if(l.interactions)validateInteractions(l.interactions);
     if (l.video && !audioURL(l.video)) throw new DomainError('Video requires an HTTPS URL or local /media path.');
     if (l.checkExerciseIds && (!Array.isArray(l.checkExerciseIds) || new Set(l.checkExerciseIds).size !== l.checkExerciseIds.length || l.checkExerciseIds.some(e => !l.exerciseIds.includes(e)))) throw new DomainError('Check questions must belong to the lesson.');
-    text(l.chapter, 'chapter'); text(l.letters, 'known letters', 100);
+    if(l.compositionVersion!==2){text(l.chapter, 'chapter'); text(l.letters, 'known letters', 100);}
+    try{validateLessonComposition(content,l);}catch(error){throw new DomainError(error.message);}
     if (!Number.isInteger(l.minutes) || l.minutes < 1 || l.minutes > 120) throw new DomainError('Invalid lesson duration.');
     if (!Array.isArray(l.wordIds) || !l.wordIds.length || l.wordIds.some(w => !words.has(w))) throw new DomainError('Lesson references a missing word: ' + l.id);
     if (!Array.isArray(l.exerciseIds) || !l.exerciseIds.length || new Set(l.exerciseIds).size !== l.exerciseIds.length || l.exerciseIds.some(e => !exercises.has(e) || exercises.get(e).lessonId !== l.id)) throw new DomainError('Invalid lesson exercise reference: ' + l.id);
+    if(l.compositionVersion===2){
+      for(const b of l.blocks){
+        if(b.video&&!audioURL(b.video))throw new DomainError('Video requires an HTTPS URL or local /media path.');
+        if(b.interactions)validateInteractions(b.interactions);
+      }
+      continue;
+    }
     if (!Array.isArray(l.blocks) || l.blocks.length !== 3 || new Set(l.blocks.map(b => b?.type)).size !== 3) throw new DomainError('Each demo manifest needs one explanation, vocabulary, and exercise set.');
     for (const b of l.blocks) {
       if (b.type === 'explanation') { if (b.renderer !== 'text') throw new DomainError('Unsupported explanation renderer.'); }
@@ -147,6 +162,7 @@ export class Store {
       for (const row of this.db.prepare("SELECT key,value FROM kv WHERE key LIKE 'question-%' OR key LIKE 'report-%'").all()) { const value = JSON.parse(row.value); unlink(row.key.startsWith('report-') ? value.attempt : value); this.set(row.key, value); }
       this.set('schema-version', 2);
     });
+    if(version<3)this.transaction(()=>this.set('schema-version',3));
   }
   transaction(fn) { this.db.exec('BEGIN IMMEDIATE'); try { const result = fn(); this.db.exec('COMMIT'); return result; } catch (e) { this.db.exec('ROLLBACK'); throw e; } }
   get(key) { const row = this.db.prepare('SELECT value FROM kv WHERE key=?').get(key); return row ? JSON.parse(row.value) : null; }
@@ -176,12 +192,17 @@ export class Store {
   expectBase(baseRevisionId, message = 'Published content changed. Refresh before editing.') { if (baseRevisionId !== this.get('active')) throw this.draftConflict(message, 'STALE_BASE'); }
   active() { return { revisionId: this.get('active'), content: this.snapshot(), draft: this.currentDraft(), history: this.db.prepare('SELECT id,created_at AS createdAt,reason FROM revisions ORDER BY id DESC').all() }; }
   dependencies(wordId, content = this.snapshot()) {
-    return { lessons: content.lessons.filter(l => l.wordIds.includes(wordId) || l.blocks.some(b => b.source === 'words' && content.lessons.find(target => target.id === b.selector.lessonId)?.wordIds.includes(wordId))).map(l => l.id), exercises: content.exercises.filter(e => e.wordId === wordId || e.wordIds?.includes(wordId)).map(e => e.id), review: 'All enrolled cards for this word resolve the latest published vocabulary.' };
+    return { lessons: content.lessons.filter(l => l.wordIds.includes(wordId) || l.blocks.some(b => b.source === 'words' && resolveComponent(content,l,b).some(word=>word.id===wordId))).map(l => l.id), exercises: content.exercises.filter(e => e.wordId === wordId || e.wordIds?.includes(wordId)).map(e => e.id), review: 'All enrolled cards for this word resolve the latest published vocabulary.' };
   }
   bootstrap(userId) {
     const content = this.snapshot(); const learner = this.learner(userId);
     const due = Object.entries(learner.cards).filter(([, c]) => Date.parse(c.due) <= Date.now()).map(([wordId, card]) => ({ word: content.words.find(w => w.id === wordId), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
-    return { revisionId: this.get('active'), content: { ...content, exercises: content.exercises.map(e => this.publicExercise(e, content)) }, learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
+    return { revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
+  }
+  publicContent(content) {
+    const projected={...content,words:content.words.map(word=>{const safe=clone(word);delete safe.importSource;return safe;}),exercises:content.exercises.map(e=>this.publicExercise(e,content))};
+    projected.lessons=content.lessons.map(lesson=>{if(lesson.compositionVersion!==2)return lesson;return {...lesson,blocks:lesson.blocks.map(block=>Object.fromEntries(Object.entries(block).filter(([key])=>['id','type','title','source','selector','renderer','role','text','video','interactions','options'].includes(key))))};});
+    return projected;
   }
   publicExercise(exercise, content) {
     const e = clone(exercise); delete e.answers;
@@ -246,7 +267,8 @@ export class Store {
     const savedResult = progress?.resultRequestId ? state.attempts.find(a => a.requestId === progress.resultRequestId) || null : null;
     const resultExercise = savedResult && content.exercises.find(e=>e.id===savedResult.exerciseId);
     const result = savedResult && resultExercise?.type==='matching' && !savedResult.pairResults ? {...savedResult, pairResults:matchingPairResults(resultExercise,savedResult)} : savedResult;
-    return { revisionId: progress?.revisionId || this.get('active'), content: { ...content, exercises: content.exercises.map(e => this.publicExercise(e, content)) }, progress, result };
+    const lesson=content.lessons.find(l=>l.id===lessonId);
+    return { revisionId: progress?.revisionId || this.get('active'), content: this.publicContent(content), flow:lessonFlow(content,lesson), keyboard:keyboardForLesson(content,lessonId), progress, result };
   }
   startLatestLesson(userId,lessonId) {
     const state=this.learner(userId);if(!state.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
@@ -257,19 +279,29 @@ export class Store {
   saveProgress(userId, input) {
     const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     this.validateProgress(input, state);
-    const safe = { lessonId: input.lessonId, revisionId: input.revisionId, step: input.step, question: input.question, answer: input.answer, selectedTokens: input.selectedTokens, matching: input.matching, resultRequestId: input.resultRequestId || null, practiceIds: input.practiceIds || [], updatedAt: new Date().toISOString() };
+    const safe = { ...(input.componentId!==undefined ? {componentId:input.componentId} : {}), lessonId: input.lessonId, revisionId: input.revisionId, step: input.step, question: input.question, answer: input.answer, selectedTokens: input.selectedTokens, matching: input.matching, resultRequestId: input.resultRequestId || null, practiceIds: input.practiceIds || [], updatedAt: new Date().toISOString() };
     state.resumes[input.lessonId] = safe; state.lastLessonId = input.lessonId; this.saveLearner(userId, state); return safe;
   }
   validateProgress(p, state, backupContent) {
     if (!Number.isInteger(p?.revisionId)) throw new DomainError('Invalid saved lesson revision.');
     const content = backupContent || this.snapshot(p.revisionId); const l = content.lessons.find(l => l.id === p.lessonId);
     if (!l || !lessonSteps(l).includes(p.step) || !Number.isInteger(p.question) || p.question < 0 || p.question > l.exerciseIds.length || typeof p.answer !== 'string' || p.answer.length > 2000 || !Array.isArray(p.selectedTokens) || p.selectedTokens.length > 100 || new Set(p.selectedTokens).size !== p.selectedTokens.length || p.selectedTokens.some(i => !Number.isInteger(i) || i < 0 || i > 100)) throw new DomainError('Invalid saved lesson position.');
-    if (p.practiceIds && (!Array.isArray(p.practiceIds) || p.practiceIds.some(id => !l.exerciseIds.includes(id)))) throw new DomainError('Invalid practice set.');
-    const exercise=content.exercises.find(e=>e.id===stepExercises(l,p.step,p.practiceIds)[p.question]);
+    if (p.practiceIds && (!Array.isArray(p.practiceIds) || new Set(p.practiceIds).size!==p.practiceIds.length || p.practiceIds.some(id => !l.exerciseIds.includes(id)) || (l.compositionVersion===2&&p.practiceIds.length&&p.step!=='apply'))) throw new DomainError('Invalid practice set.');
+    let component;
+    if(l.compositionVersion===2 || p.componentId!==undefined){
+      let flow;try{flow=lessonFlow(content,l);}catch(error){throw new DomainError(error.message);}
+      component=flow.find(entry=>entry.blockId===p.componentId);
+      if(!component||component.kind!==p.step)throw new DomainError('Saved component does not match its portion.');
+      const ids=p.practiceIds?.length&&p.step==='apply'?p.practiceIds:component.exerciseIds;
+      if(p.question>ids.length || (!['check','apply'].includes(p.step)&&p.question!==0))throw new DomainError('Invalid component question position.');
+      if((!['check','apply'].includes(p.step)||p.question===ids.length)&&(p.answer||p.resultRequestId||p.selectedTokens.length||Object.keys(p.matching||{}).length))throw new DomainError('Terminal or text component cannot carry exercise input.');
+    }
+    const questionIDs=component?(p.practiceIds?.length&&p.step==='apply'?p.practiceIds:component.exerciseIds):stepExercises(l,p.step,p.practiceIds);
+    const exercise=content.exercises.find(e=>e.id===questionIDs[p.question]);
     // Saved matches belong to the matching question at this exact revision, step and position. Its authored pairs may use any pack word, not only the lesson's list.
     if (!p.matching || typeof p.matching !== 'object' || Array.isArray(p.matching) || Object.entries(p.matching).some(([k,v]) => !['check','apply'].includes(p.step) || exercise?.type !== 'matching' || !exercise.wordIds.includes(k) || typeof v !== 'string' || v.length > 1000)) throw new DomainError('Invalid saved matching answer.');
     if(p.selectedTokens.length && (!exercise || exercise.type!=='ordering' || p.selectedTokens.some(i=>i>=orderingTokens(exercise,content).length)))throw new DomainError('Invalid saved sentence tokens.');
-    if (p.resultRequestId && !state.attempts.some(a => a.requestId === p.resultRequestId && a.revisionId === p.revisionId && a.lessonId === p.lessonId && a.exerciseId === stepExercises(l,p.step,p.practiceIds)[p.question])) throw new DomainError('Saved feedback does not match the exercise.');
+    if (p.resultRequestId && !state.attempts.some(a => a.requestId === p.resultRequestId && a.revisionId === p.revisionId && a.lessonId === p.lessonId && a.exerciseId === questionIDs[p.question])) throw new DomainError('Saved feedback does not match the exercise.');
   }
   practice(userId, input) {
     const content = this.snapshot(input.revisionId); const lesson = content.lessons.find(l => l.id === input.lessonId); const state = this.learner(userId);
@@ -310,6 +342,9 @@ export class Store {
       let content = input.content ? clone(input.content) : clone(current?.content || this.snapshot());
       if (input.word) { const index = content.words.findIndex(w => w.id === input.word.id); if (index < 0) throw new DomainError('Word not found.', 404); content.words[index] = { ...content.words[index], ...input.word, id: content.words[index].id }; }
       validateContent(content);
+      const previous=current?.content || this.snapshot();
+      for(const word of content.words){const old=previous.words.find(item=>item.id===word.id);if(canonicalJSON(old?.tags)!==canonicalJSON(word.tags)&&word.tags!==undefined&&(!Array.isArray(word.tags)||new Set(word.tags).size!==word.tags.length||word.tags.some(tag=>typeof tag!=='string'||!tag.trim()||tag.length>200)))throw new DomainError('New vocabulary tags need a unique explicit string array.');}
+      for(const word of content.words){const old=previous.words.find(item=>item.id===word.id);if(canonicalJSON(old?.fieldFormatting)!==canonicalJSON(word.fieldFormatting)||canonicalJSON(old?.sourceTheme)!==canonicalJSON(word.sourceTheme)){const checked=validateFormatting(word.fieldFormatting,{word,sourceTheme:word.sourceTheme||[]});if(checked.errors.length)throw new DomainError(checked.errors.join('; '));}}
       const draftToken = draftTokenFor(active, content), unchanged = current?.draftToken === draftToken;
       // Re-staging the exact same draft writes nothing and keeps its token and stagedAt.
       if (!unchanged) this.set('draft', { baseRevisionId: active, content, stagedAt: new Date().toISOString() });
@@ -327,7 +362,7 @@ export class Store {
     const action = (b, a) => b === undefined ? 'added' : a === undefined ? 'removed' : 'changed';
     const hasOrdering = (c, lessonId) => c.exercises.some(e => e.type === 'ordering' && e.lessonId === lessonId);
     // Ordering trays draw distractors from the current and previous two lessons' words.
-    const orderingLessons = (wordId, c) => c.lessons.filter((l, i) => hasOrdering(c, l.id) && c.lessons.slice(Math.max(0, i - 2), i + 1).some(w => w.wordIds.includes(wordId))).map(l => l.id);
+    const orderingLessons = (wordId, c) => orderedLessons(c).filter((l, i) => hasOrdering(c, l.id) && orderedLessons(c).slice(Math.max(0, i - 2), i + 1).some(w => w.wordIds.includes(wordId))).map(l => l.id);
     const impact = {
       words: (id, b, a) => {
         const deps = both.map(c => this.dependencies(id, c)), exercises = uniq(deps.flatMap(d => d.exercises));
@@ -335,8 +370,8 @@ export class Store {
         return { lessons: uniq([...deps.flatMap(d => d.lessons), ...both.flatMap(c => c.exercises.filter(e => exercises.includes(e.id)).map(e => e.lessonId)), ...(tray ? both.flatMap(c => orderingLessons(id, c)) : [])]), exercises, review: deps[1].review };
       },
       lessons: (id, b, a, reordered) => ({ lessons: uniq([id, ...both.flatMap(c => {
-        const i = c.lessons.findIndex(l => l.id === id), window = !b || !a || reordered || !same(b.wordIds, a.wordIds);
-        return [...c.lessons.filter(l => l.blocks.some(x => x.source === 'words' && x.selector?.lessonId === id)).map(l => l.id), ...(window && i >= 0 ? c.lessons.slice(i + 1, i + 3).filter(l => hasOrdering(c, l.id)).map(l => l.id) : [])];
+        const ordered=orderedLessons(c), i = ordered.findIndex(l => l.id === id), window = !b || !a || reordered || !same(b.wordIds, a.wordIds);
+        return [...c.lessons.filter(l => l.blocks.some(x => x.source === 'words' && x.selector?.lessonId === id)).map(l => l.id), ...(window && i >= 0 ? ordered.slice(i + 1, i + 3).filter(l => hasOrdering(c, l.id)).map(l => l.id) : [])];
       })]) }),
       exercises: (id, b, a) => ({ lessons: uniq([b?.lessonId, a?.lessonId, ...both.flatMap(c => c.lessons.filter(l => l.exerciseIds.includes(id) || l.checkExerciseIds?.includes(id)).map(l => l.id))]) })
     };
@@ -353,10 +388,10 @@ export class Store {
     const allLessons = uniq(both.flatMap(c => c.lessons.map(l => l.id))), collections = new Set(['words', 'lessons', 'exercises', 'reviewPolicy']);
     for (const field of uniq([...Object.keys(current), ...Object.keys(next)]).filter(k => !collections.has(k)).sort()) if (!same(current[field], next[field])) changes.push({ kind: 'metadata', id: /^[A-Za-z0-9][A-Za-z0-9_-]*$/.test(field) ? field : 'pack', field, action: action(current[field], next[field]), impact: { lessons: allLessons } });
     const view = (c, id) => {
-      const i = c.lessons.findIndex(l => l.id === id); if (i < 0) return null;
-      const lesson = c.lessons[i], exercises = c.exercises.filter(e => e.lessonId === id || lesson.exerciseIds.includes(e.id) || lesson.checkExerciseIds?.includes(e.id));
-      const wordIds = new Set([...lesson.wordIds, ...lesson.blocks.flatMap(x => x.source === 'words' ? c.lessons.find(t => t.id === x.selector?.lessonId)?.wordIds || [] : []), ...exercises.flatMap(e => [e.wordId, ...(e.wordIds || [])])]);
-      return canonicalJSON({ lesson, index: i, previous: c.lessons[i - 1]?.id ?? null, following: c.lessons[i + 1]?.id ?? null, exercises: exercises.map(e => [e, this.publicExercise(e, c)]), words: c.words.filter(w => wordIds.has(w.id)) });
+      const ordered=orderedLessons(c), i = ordered.findIndex(l => l.id === id); if (i < 0) return null;
+      const lesson = ordered[i], exercises = c.exercises.filter(e => e.lessonId === id || lesson.exerciseIds.includes(e.id) || lesson.checkExerciseIds?.includes(e.id));
+      const wordIds = new Set([...lesson.wordIds, ...lesson.blocks.flatMap(x => x.source === 'words' ? resolveComponent(c,lesson,x).map(word=>word.id) : []), ...exercises.flatMap(e => [e.wordId, ...(e.wordIds || [])])]);
+      return canonicalJSON({ lesson, index: i, previous: ordered[i - 1]?.id ?? null, following: ordered[i + 1]?.id ?? null, keyboard:keyboardForLesson(c,lesson.id), flow:lessonFlow(c,lesson), exercises: exercises.map(e => [e, this.publicExercise(e, c)]), words: c.words.filter(w => wordIds.has(w.id)) });
     };
     const affected = new Set([...changes.flatMap(c => c.impact?.lessons || []), ...allLessons.filter(id => view(current, id) !== view(next, id))]);
     return { draft, changes, affectedLessons: allLessons.filter(id => affected.has(id)) };
@@ -389,7 +424,7 @@ export class Store {
   previewSession(input) {
     const draft = this.previewDraft(input.draftToken), content = draft.content, lesson = content.lessons.find(l => l.id === input.lessonId);
     if (!lesson) throw new DomainError('Lesson not found in this draft.', 404, 'PREVIEW_TARGET_NOT_FOUND');
-    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, baseRevisionId: draft.baseRevisionId, lessonId: lesson.id, content: { ...content, exercises: content.exercises.map(e => this.publicExercise(e, content)) }, steps: lessonSteps(lesson) };
+    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, baseRevisionId: draft.baseRevisionId, lessonId: lesson.id, content: this.publicContent(content), steps: lessonSteps(lesson), flow:lessonFlow(content,lesson), keyboard:keyboardForLesson(content,lesson.id) };
   }
   previewEvaluate(input) {
     const draft = this.previewDraft(input.draftToken), content = draft.content, exercise = content.exercises.find(e => e.id === input.exerciseId);

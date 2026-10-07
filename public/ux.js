@@ -1,6 +1,8 @@
+import {orderedLessons,lessonFlow} from './course.js';
 // Shared, deterministic UX contracts. No generated linguistic content.
 export const stepLabels = { learn: 'Learn', check: 'Check', vocabulary: 'Vocabulary', apply: 'Apply', complete: 'Finish' };
 export function lessonSteps(lesson) {
+  if(lesson.compositionVersion===2)return lesson.blocks.map(b=>b.type==='explanation'?'learn':b.type==='vocabulary'?'vocabulary':b.role==='check'?'check':'apply').concat('complete');
   return lesson.blocks.flatMap(b => b.type === 'explanation' ? ['learn', ...(lesson.checkExerciseIds?.length ? ['check'] : [])] : b.type === 'vocabulary' ? ['vocabulary'] : ['apply']).concat('complete');
 }
 export function stepExercises(lesson, step, practiceIds) {
@@ -8,8 +10,8 @@ export function stepExercises(lesson, step, practiceIds) {
   return step === 'check' ? lesson.checkExerciseIds || [] : lesson.exerciseIds.filter(id => !lesson.checkExerciseIds?.includes(id));
 }
 export function followingLesson(content, lessonId) {
-  const index = content.lessons.findIndex(l => l.id === lessonId);
-  return index < 0 ? null : content.lessons[index + 1] || null;
+  const lessons=orderedLessons(content),index = lessons.findIndex(l => l.id === lessonId);
+  return index < 0 ? null : lessons[index + 1] || null;
 }
 export function defaultMedium(lesson) { return lesson.video ? 'watch' : 'read'; }
 export function audioURL(value) {
@@ -20,8 +22,8 @@ export function audioURL(value) {
 }
 export function orderingTokens(exercise, content) {
   const base = [...exercise.tokens];
-  const lessonIndex = content.lessons.findIndex(l => l.id === exercise.lessonId);
-  const recent = content.lessons.slice(Math.max(0, lessonIndex - 2), lessonIndex + 1).reverse().flatMap(l => l.wordIds);
+  const lessons=orderedLessons(content),lessonIndex = lessons.findIndex(l => l.id === exercise.lessonId);
+  const recent = lessons.slice(Math.max(0, lessonIndex - 2), lessonIndex + 1).reverse().flatMap(l => l.wordIds);
   const candidates = [...new Set(recent)].map(id => content.words.find(w => w.id === id)).filter(w=>w && !w.noVocab).map(w=>w.unpointed);
   const key=t=>t.normalize('NFD').replace(/[\u0591-\u05c7]/g,'').trim();
   const seen=new Set(base.map(key));
@@ -47,7 +49,7 @@ export function targetedExercises(content, lesson, attempts) {
 }
 export function searchableWord(word) { return JSON.stringify(word).normalize('NFD').replace(/[\u0591-\u05c7]/g, '').toLowerCase(); }
 export function wordFields(word) {
-  const skip = new Set(['id', 'pointed', 'unpointed', 'curated', 'english', 'notes', 'format', 'sourceFields', 'audio', 'fieldFormatting', 'sourceTheme', 'baseWordId', 'prefix']);
+  const skip = new Set(['id', 'pointed', 'unpointed', 'curated', 'english', 'notes', 'format', 'sourceFields', 'audio', 'fieldFormatting', 'sourceTheme', 'baseWordId', 'prefix', 'importSource', 'formattingVersion', 'taggingVersion']);
   const fields = Object.entries(word).filter(([key, value]) => !skip.has(key) && value != null && value !== '');
   return [...fields, ...Object.entries(word.sourceFields || {}).filter(([, value]) => value != null && value !== '')];
 }

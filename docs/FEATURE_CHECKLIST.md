@@ -254,3 +254,7 @@ New requirements go in an added row and remain distinct from current implementat
 | FB16 | Recognized-column mapping + preview before Stage | Pending contract and implementation; unknown/style fields preserved | Pending | Retest pending |
 | FB17 | Coherent Studio overhaul | Pending integration | Pending | Retest pending |
 | FB18 | Optional structured chapters and chapter/lesson ordering | Pending contract and implementation | Pending | Retest pending |
+
+### FB18 shared-contract checkpoint (2026-10-08)
+
+See [18-finding ledger](FRONTEND_FEEDBACK_18.md) and [exact shared APIs/limits](FEEDBACK18_SHARED_CONTRACT_HANDOFF.md). Reusable Feature UI is integrated, and Lead model/Store/CSV-formatting contracts have owner checks. Unified Studio/learner instance wiring and schema surfaces remain incomplete. 217 automated owner checks passed with no skips; independent candidate QA and Guy results are still pending. Protected demo4173 and other runtimes remain unchanged.
