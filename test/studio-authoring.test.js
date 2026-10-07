@@ -49,8 +49,9 @@ test('all six exercise forms save/reload without losing authored answers, extens
 
 test('typing edits retain explicit word forms, identity, rich data and Nikkud defaults; immutable fields reject',()=>{
   const content=fixture(),original=content.exercises.find(x=>x.type==='typing');
-  const next=applyExerciseEdits(original,{prompt:'Author-provided fixture prompt',requireNikkud:'true',allowLookup:'false'});
+  const next=applyExerciseEdits({...original,requireNikkud:true},{prompt:'Author-provided fixture prompt',allowLookup:'false'});
   assert.equal(next.requireNikkud,true);assert.equal(next.allowLookup,false);
+  assert.throws(()=>applyExerciseEdits(next,{requireNikkud:false}),/read-only/);
   assert.equal(next.id,original.id);assert.deepEqual(next.extension,original.extension);
   assert.equal(next.nikkudOverride,undefined);assert.equal(original.requireNikkud,undefined);
   for(const key of ['id','type','lessonId','extension']) assert.throws(()=>applyExerciseEdits(original,{[key]:'changed'}),/read-only/);

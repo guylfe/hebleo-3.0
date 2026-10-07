@@ -89,7 +89,8 @@ test('preview session returns the learner public shape of the exact draft and wr
   assert.equal(s.previewEvaluate({lessonId:'lesson-1',exerciseId:'ex-1-recognize',draftToken:staged.draftToken,answer:'who'}).result.correct,false,'never falls back to published answers');
   const match=s.previewEvaluate({lessonId:'lesson-1',exerciseId:'ex-1-match',draftToken:staged.draftToken,answer:{'w-hu':'he','w-hi':'she','w-mi':'who (draft)'}});
   assert.deepEqual(Object.keys(match).sort(),['draftToken','exerciseId','mode','persistent','result']);
-  assert.deepEqual(Object.keys(match.result).sort(),['answer','correct','exerciseId','expected','lessonId']);
+  assert.deepEqual(Object.keys(match.result).sort(),['answer','correct','exerciseId','expected','lessonId','pairResults']);
+  assert.deepEqual(match.result.pairResults,{'w-hu':true,'w-hi':true,'w-mi':true});
   assert.equal(match.result.correct,true);assert.equal(match.result.expected['w-mi'],'who (draft)');
   assert.equal(s.previewEvaluate({lessonId:'lesson-2',exerciseId:'ex-2-order',draftToken:staged.draftToken,answer:'אני בבית'}).result.correct,true,'ordering takes the composed sentence');
   rejects(()=>s.previewEvaluate({lessonId:'lesson-1',exerciseId:'ex-1-match',draftToken:staged.draftToken,answer:['he']}),400,'INVALID_ANSWER');

@@ -11,3 +11,30 @@
 .studio-import-review { overflow-x: auto; }
 .studio-import-review pre { white-space: pre-wrap; overflow-wrap: anywhere; max-width: 28rem; }
 @media (max-width: 35rem) { .studio-editor .studio-list-row { display: grid; } }
+.studio-vocabulary { display:grid; gap:.7rem; }
+.studio-vocabulary-filters { display:flex; flex-wrap:wrap; gap:1rem; }
+.studio-vocabulary-filters label { display:grid; gap:.3rem; flex:1 1 12rem; min-width:0; }
+.studio-vocabulary input, .studio-vocabulary select, .studio-tag-selector input { width:100%; font:inherit; box-sizing:border-box; }
+.studio-vocabulary ul { list-style:none; padding:0; margin:0; display:grid; gap:.3rem; }
+.studio-vocabulary [data-vocab-id] { width:100%; text-align:start; overflow-wrap:anywhere; }
+.studio-vocabulary nav { display:flex; align-items:center; justify-content:space-between; }
+.studio-vocabulary button, .studio-tag-selector button { min-height:2.75rem; }
+.studio-vocabulary [aria-pressed="true"], .studio-tag-selector [aria-pressed="true"] { background:#e0f1eb; border:2px solid #17644f; }
+.studio-tag-selector [data-tag-results], .studio-tag-selector [data-selected-tags] { display:flex; flex-wrap:wrap; gap:.4rem; margin-block:.5rem; }
+.studio-markdown { min-width:0; display:grid; gap:.5rem; }
+.studio-markdown textarea { width:100%; font:inherit; box-sizing:border-box; }
+.studio-markdown .editor-toolbar { display:flex; flex-wrap:wrap; gap:.2rem; opacity:1; }
+.studio-markdown .editor-toolbar button { width:auto; height:auto; min-height:2.4rem; padding:.25rem .6rem; font:inherit; color:#173c34; }
+.studio-markdown .CodeMirror { font:inherit; line-height:1.6; }
+.studio-markdown .editor-preview, .studio-markdown .editor-preview-side { background:#fff; overflow-wrap:anywhere; }
+.studio-markdown .editor-preview img, .studio-markdown .editor-preview-side img { max-width:100%; }
+.studio-markdown .editor-preview table, .studio-markdown .editor-preview-side table { border-collapse:collapse; }
+.studio-markdown .editor-preview td, .studio-markdown .editor-preview th { border:1px solid #cbd5dd; padding:.3rem; }
+.studio-markdown-direction { justify-self:end; }
+.studio-concept-metadata { background:#f1f5f8; display:grid; gap:.6rem; }
+.studio-authored-feedback { border-inline-start:4px solid #17644f!important; display:grid; gap:.6rem; }
+.studio-exercise-settings { display:grid; gap:.6rem; }
+.studio-editor [role="group"] { min-width:0; border:1px solid #cbd5dd; border-radius:.6rem; padding:1rem; }
+.studio-editor [role="group"] h4 { margin:0; }
+.studio-editor legend { font-weight:700; }
+.studio-vocabulary button:focus-visible, .studio-tag-selector button:focus-visible, .studio-markdown button:focus-visible { outline:3px solid #17644f; outline-offset:2px; }

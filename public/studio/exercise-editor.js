@@ -1,7 +1,7 @@
 import { escapeHTML as e, field, listField, booleanOptions, nikkudOptions, wordOptions, bindLists, markDirty, readFields, replaceObject, draftSaveError } from './editor-fields.js';
 
 export const exerciseTypes = ['recognition', 'typing', 'matching', 'ordering', 'cloze', 'transformation'];
-const shared = ['prompt', 'feedback', 'feedbackDetails', 'concept', 'explanationTime', 'nikkudOverride', 'requireNikkud', 'allowLookup'];
+const shared = ['prompt', 'feedback', 'feedbackDetails', 'concept', 'explanationTime', 'nikkudOverride', 'allowLookup'];
 const specific = {recognition:['wordId','distractors'], typing:['wordId'], matching:['wordIds'], ordering:['tokens','prefixTokenIndices','answers'], cloze:['context','answers'], transformation:['context','answers']};
 const arrays = ['distractors','wordIds','tokens','answers','prefixTokenIndices'];
 
@@ -15,7 +15,7 @@ export function applyExerciseEdits(original, edits) {
       if (!Array.isArray(value)) throw new Error(`${key} must be a list.`);
       next[key] = structuredClone(value);
     } else if (value === '' && key !== 'prompt' && key !== 'wordId') delete next[key];
-    else if (['requireNikkud', 'allowLookup'].includes(key)) {
+    else if (key === 'allowLookup') {
       if (![true, false, 'true', 'false'].includes(value)) throw new Error(`Invalid ${key}.`);
       next[key] = value === true || value === 'true';
     } else if (key === 'explanationTime') {
@@ -41,7 +41,7 @@ export function renderExerciseEditor(exercise, content) {
   if (type === 'ordering') controls += listField('tokens', 'Authored tokens in stored order', exercise.tokens || [], {prefixes: exercise.prefixTokenIndices || []}) + '<p>Prefix positions follow the stored tokens. Ordering also requires four distinct taught distractor words; the server validates the lesson vocabulary.</p>';
   if (['cloze','transformation'].includes(type)) controls += field('context', 'Authored context', exercise.context, {multiline:true});
   if (['ordering','cloze','transformation'].includes(type)) controls += listField('answers', 'Explicit accepted answers', exercise.answers || []) + '<p>Enter each approved answer separately. Forms and Nikkud are preserved exactly.</p>';
-  return `<form class="studio-editor" data-exercise-editor><h3>Edit ${e(type)} exercise</h3><p>ID: <b>${e(exercise.id)}</b> · Lesson: ${e(exercise.lessonId)}</p>${field('prompt','Prompt',exercise.prompt,{multiline:true})}${controls}${field('nikkudOverride','Display Nikkud',exercise.nikkudOverride,{options:nikkudOptions})}${field('requireNikkud','Require Nikkud in the answer',exercise.requireNikkud,{options:booleanOptions})}${field('allowLookup','Allow lookup',exercise.allowLookup,{options:booleanOptions})}${field('concept','Concept',exercise.concept)}${field('feedback','Authored feedback',exercise.feedback,{multiline:true})}${field('feedbackDetails','Detailed feedback',exercise.feedbackDetails,{multiline:true})}${field('explanationTime','Explanation timestamp (seconds)',exercise.explanationTime,{type:'number'})}<p data-editor-status role="status"></p><button type="submit">Save exercise draft</button><p>Saving stages a draft. Publication is a separate action.</p></form>`;
+  return `<form class="studio-editor" data-exercise-editor><h3>Edit ${e(type)} exercise</h3><p>ID: <b>${e(exercise.id)}</b> · Lesson: ${e(exercise.lessonId)}</p>${field('prompt','Prompt',exercise.prompt,{multiline:true})}${controls}<section role="group" aria-label="Exercise settings" class="studio-exercise-settings"><h4>Exercise settings</h4>${field('nikkudOverride','Display Nikkud',exercise.nikkudOverride,{options:nikkudOptions})}${field('allowLookup','Allow lookup',exercise.allowLookup,{options:booleanOptions})}</section><section role="group" aria-label="Concept metadata" class="studio-concept-metadata"><h4>Concept metadata</h4>${field('concept','Concept reference',exercise.concept)}${field('explanationTime','Explanation timestamp (seconds)',exercise.explanationTime,{type:'number'})}</section><section role="group" aria-label="Authored feedback" class="studio-authored-feedback"><h4>Authored feedback</h4>${field('feedback','Short feedback',exercise.feedback,{multiline:true})}${field('feedbackDetails','Detailed feedback',exercise.feedbackDetails,{multiline:true})}</section><p data-editor-status role="status"></p><button type="submit">Save exercise draft</button><p>Saving stages a draft. Publication is a separate action.</p></form>`;
 }
 
 // saveDraft receives {baseRevisionId, expectedDraftToken, content}; it must invoke
