@@ -494,3 +494,17 @@ test('QA-EE9-G4-02: matching autosave keeps an authored pair word from outside t
   const graded=store.learner('learner-demo').attempts.at(-1);
   assert.deepEqual([graded.exerciseId,graded.revisionId,graded.correct,graded.answer],['ex-1-match',2,true,{'w-sham':'there','w-ani':'I','w-mi':'who'}]);
 });
+
+
+test('fresh home says Start, a saved lesson says Continue, and a completed lesson says Revisit', async t=>{
+  const {doc,store}=await app(t,{page:'home',realHTTP:true});
+  assert.match(doc.querySelector('.hero button').textContent,/^Start · Learn/);
+  assert.ok([...doc.querySelectorAll('.lesson-card button')].every(b=>b.textContent==='Start →'));
+  doc.querySelector('.hero button').click();
+  await settled(()=>store.learner('learner-demo').resumes['lesson-1']);
+  click(doc,'page'); await settled(()=>doc.querySelector('.hero'));
+  assert.match(doc.querySelector('.hero button').textContent,/^Continue · Learn/);
+  assert.equal(doc.querySelector('[data-value="lesson-2"].button').textContent,'Start →');
+  const completed=await app(t,{page:'home',prepare(s){const learner=s.learner('learner-demo');learner.completed=['lesson-1'];s.saveLearner('learner-demo',learner);}});
+  assert.equal(completed.doc.querySelector('[data-value="lesson-1"].button').textContent,'Revisit');
+});

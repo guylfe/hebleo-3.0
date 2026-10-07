@@ -414,6 +414,12 @@
                   "maxProperties": 100
                 }
               ]
+            },
+            "pairResults": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "boolean"
+              }
             }
           },
           "required": [

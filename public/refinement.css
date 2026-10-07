@@ -33,3 +33,7 @@ dialog#context-panel{max-width:760px;border-radius:13px;padding:28px;color:var(-
 /* Studio guided authoring and disposable draft rehearsal */
 .guided-authoring{margin-top:20px}.guided-authoring .field-grid select{width:100%}.guided-editors{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;margin-top:18px}.studio-mount{min-width:0}.import-review-panel{margin-top:14px;border-top:1px solid var(--line,#d9e2e8);padding-top:12px}
 dialog.rehearsal-dialog{width:min(960px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;border-radius:13px;padding:24px;color:var(--ink)}dialog.rehearsal-dialog h2{font-size:22px}
+
+.match-target.pair-correct,.match-tile.pair-correct{border-color:#147347;background:#e8f5ed;color:#145334;opacity:1}
+.match-target.pair-incorrect,.match-tile.pair-incorrect{border-color:#b42318;background:#fff0ee;color:#8f2018;opacity:1}
+.pair-status{font-weight:700;display:block}

@@ -1,7 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 import { createHash } from 'node:crypto';
 import { DomainError } from './errors.js';
-import { normalizeHebrew, evaluateAnswer } from './evaluate.js';
+import { normalizeHebrew, evaluateAnswer, matchingPairResults } from './evaluate.js';
 import { seed, upgradeDemo } from './seed.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress } from '../public/ux.js';
 
@@ -207,8 +207,8 @@ export class Store {
     if (!Number.isInteger(input.revisionId)) throw new DomainError('An exact content revision is required.');
     const content = this.snapshot(input.revisionId); const exercise = content.exercises.find(e => e.id === input.exerciseId);
     if (!exercise) throw new DomainError('Exercise not found.', 404);
-    const { correct, expected } = evaluateAnswer(exercise, content, input.answer);
-    const result = { requestId, exerciseId: exercise.id, lessonId: exercise.lessonId, revisionId: input.revisionId, answer: input.answer, correct, expected, at: new Date().toISOString() };
+    const grade = evaluateAnswer(exercise, content, input.answer);
+    const result = { requestId, exerciseId: exercise.id, lessonId: exercise.lessonId, revisionId: input.revisionId, answer: input.answer, ...grade, at: new Date().toISOString() };
     state.attempts.push(result);
     const lesson = content.lessons.find(l => l.id === exercise.lessonId);
     // Completion needs every core question answered correctly in this one pinned revision; retries count once and revisions never combine.
@@ -243,7 +243,10 @@ export class Store {
     let content; try { content = this.snapshot(progress?.revisionId); } catch { progress = null; content = this.snapshot(); }
     if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     if (!content.lessons.some(l => l.id === lessonId)) throw new DomainError('Lesson not found.', 404);
-    return { revisionId: progress?.revisionId || this.get('active'), content: { ...content, exercises: content.exercises.map(e => this.publicExercise(e, content)) }, progress, result: progress?.resultRequestId ? state.attempts.find(a => a.requestId === progress.resultRequestId) || null : null };
+    const savedResult = progress?.resultRequestId ? state.attempts.find(a => a.requestId === progress.resultRequestId) || null : null;
+    const resultExercise = savedResult && content.exercises.find(e=>e.id===savedResult.exerciseId);
+    const result = savedResult && resultExercise?.type==='matching' && !savedResult.pairResults ? {...savedResult, pairResults:matchingPairResults(resultExercise,savedResult)} : savedResult;
+    return { revisionId: progress?.revisionId || this.get('active'), content: { ...content, exercises: content.exercises.map(e => this.publicExercise(e, content)) }, progress, result };
   }
   startLatestLesson(userId,lessonId) {
     const state=this.learner(userId);if(!state.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
@@ -391,8 +394,8 @@ export class Store {
   previewEvaluate(input) {
     const draft = this.previewDraft(input.draftToken), content = draft.content, exercise = content.exercises.find(e => e.id === input.exerciseId);
     if (!content.lessons.some(l => l.id === input.lessonId) || !exercise || exercise.lessonId !== input.lessonId) throw new DomainError('Exercise not found in this draft lesson.', 404, 'PREVIEW_TARGET_NOT_FOUND');
-    const { correct, expected } = evaluateAnswer(exercise, content, input.answer);
-    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, exerciseId: exercise.id, result: { exerciseId: exercise.id, lessonId: exercise.lessonId, answer: input.answer, correct, expected } };
+    const grade = evaluateAnswer(exercise, content, input.answer);
+    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, exerciseId: exercise.id, result: { exerciseId: exercise.id, lessonId: exercise.lessonId, answer: input.answer, ...grade } };
   }
   entitlement(userId, input) {
     const eventId = id(input.eventId);
