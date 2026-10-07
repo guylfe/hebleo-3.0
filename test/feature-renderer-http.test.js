@@ -164,7 +164,7 @@ test('renderer keeps invalid HTTP answer drafts for correction and stale respons
   assert.equal(h.root().querySelector('#answer').value,'אנ');assert.equal(h.views.at(-1).result,null);input(h,'אני');await check(h);
   h.preview.retry();input(h,'אני');await h.api('/api/studio/draft',{baseRevisionId:1,expectedDraftToken:h.staged.draftToken,word:{id:'w-mi',notes:'Synthetic concurrent draft'}});
   const before=dump(h.store);choose(h,'[data-action="check"]');await settled(()=>/draft changed/.test(h.container.textContent));
-  assert.equal(h.root(),null);assert.throws(()=>h.preview.retry(),/unavailable/);h.preview.exit();assert.equal(dump(h.store),before);
+  assert.equal(h.root().querySelector('#answer').value,'אני');assert.equal(h.root().querySelector('#answer').readOnly,true);assert.throws(()=>h.preview.retry(),/unavailable/);h.preview.exit();assert.equal(dump(h.store),before);
 });
 
 test('keyboard events, remounts and retained detached controls produce one HTTP submission and no late UI work',async t=>{

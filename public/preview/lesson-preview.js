@@ -20,9 +20,12 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
   function render() {
     if (!active() || !session) return;
     const focused = container.ownerDocument.activeElement, hadFocus = container.contains(focused), focusedStep = nav.contains(focused) ? focused.dataset.previewStep : null;
+    // Retain the actual displayed draft before disposing its renderer. Cloning drops
+    // listeners; the disposer still removes scoped keys/matching handlers and media.
+    const frozen = stale ? frozenPresentation(body) : null;
     unmount?.(); unmount = undefined;
     nav.innerHTML = session.steps.map(name => `<button type="button" data-preview-step="${e(name)}"${step === name ? ' aria-current="step"' : ''}${busy || stale ? ' disabled' : ''}>${e(stepLabels[name] || name)}</button>`).join('');
-    if (stale) {body.replaceChildren(); keepFocus(hadFocus, focusedStep); return;}
+    if (stale) {body.replaceChildren(...frozen.childNodes); keepFocus(hadFocus, focusedStep); return;}
     const state = currentAnswer();
     unmount = renderer.mount(body, {
       mode:'draft-preview', persistent:false, content:structuredClone(session.content),
@@ -33,6 +36,25 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
     });
     if (unmount !== undefined && typeof unmount !== 'function') throw new Error('Shared renderer mount must return a disposer or undefined.');
     keepFocus(hadFocus, focusedStep);
+  }
+  function frozenPresentation(source) {
+    const copy = source.cloneNode(true);
+    const originals = source.querySelectorAll('input,textarea,select');
+    copy.querySelectorAll('input,textarea,select').forEach((el, index) => {
+      const original = originals[index];
+      el.value = original.value;
+      if (el.tagName === 'INPUT') el.checked = original.checked;
+      if (el.tagName === 'SELECT') [...el.options].forEach((option, i) => {option.selected = original.options[i].selected;});
+    });
+    copy.querySelectorAll('button,input,textarea,select').forEach(el => {el.disabled = true;});
+    copy.querySelectorAll('input,textarea').forEach(el => {el.readOnly = true;});
+    copy.querySelectorAll('[aria-busy]').forEach(el => el.removeAttribute('aria-busy'));
+    copy.querySelectorAll('[draggable]').forEach(el => {el.draggable = false;});
+    copy.querySelectorAll('[contenteditable]').forEach(el => {el.contentEditable = 'false';});
+    copy.querySelectorAll('a[href],summary').forEach(el => {el.removeAttribute('href');el.inert = true;el.tabIndex = -1;el.setAttribute('aria-disabled','true');});
+    copy.querySelectorAll('audio,video').forEach(el => {el.removeAttribute('autoplay');el.removeAttribute('controls');el.removeAttribute('src');el.querySelectorAll('source').forEach(source => source.remove());});
+    copy.querySelector('[data-preview-root]')?.setAttribute('data-preview-frozen','');
+    return copy;
   }
   // Re-rendering replaces the focused step button; keep keyboard focus inside the rehearsal (same step, else Exit).
   function keepFocus(hadFocus, focusedStep) {
@@ -72,7 +94,8 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
       if (!active() || current !== generation) return;
       const code = error.status ?? error.statusCode;
       stale = code === 409 || (code === 404 && error.code === 'PREVIEW_TARGET_NOT_FOUND');
-      status.textContent = code === 409 ? 'This draft changed. Exit and reopen rehearsal.' : error.message;
+      status.textContent = (code === 409 ? 'This draft changed. Exit and reopen rehearsal.' : error.message)
+        + (stale ? ' The displayed answer is read-only and has not been checked against the changed draft.' : '');
     } finally {if (active() && current === generation) {busy = false; render();}}
   }
   function retry() {assertMutable(); const item = exercise(); if (item) {answers.delete(item.id); lookupId = null; render();}}

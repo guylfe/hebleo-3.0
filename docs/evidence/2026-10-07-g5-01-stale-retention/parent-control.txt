@@ -1,0 +1,338 @@
+✖ G5-01 actual app over HTTP: a second author window saves while rehearsal retains its typed answer frozen; Escape restores focus (1916.5987ms)
+✔ G5 automated HTTP overlap: learner autosave response is pending when Studio navigation starts, flush completes before rehearsal and preview writes nothing (1195.7467ms)
+✔ G5 automated HTTP owner-event: the real keyboard Pin handler emits its preference event during rehearsal and app persistence is suppressed until Exit (292.4974ms)
+▶ G5-01 actual renderer/controller and HTTP keep six answer families frozen across conflict and missing-target errors with zero writes
+  ✖ draft / recognition (1862.1557ms)
+  ✖ draft / typing (1675.9964ms)
+  ✖ draft / cloze (1611.8478ms)
+  ✖ draft / transformation (1627.3511ms)
+  ✖ draft / matching (1661.279ms)
+  ✖ draft / ordering (1607.4715ms)
+  ✖ publication / recognition (1612.2269ms)
+  ✖ publication / typing (1618.1676ms)
+  ✖ publication / cloze (1592.179ms)
+  ✖ publication / transformation (1595.3689ms)
+  ✖ publication / matching (1600.0373ms)
+  ✖ publication / ordering (1633.9392ms)
+  ✖ missing-target / recognition (1632.9546ms)
+  ✖ missing-target / typing (1575.1185ms)
+  ✖ missing-target / cloze (1531.955ms)
+  ✖ missing-target / transformation (1638.1015ms)
+  ✖ missing-target / matching (1611.6311ms)
+  ✖ missing-target / ordering (1654.0795ms)
+✖ G5-01 actual renderer/controller and HTTP keep six answer families frozen across conflict and missing-target errors with zero writes (29351.8823ms)
+✖ G5-01 freezes the existing displayed feedback and live field values before the renderer disposer removes them (40.1496ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 2
+ℹ fail 21
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30752.4648
+
+✖ failing tests:
+
+test at test\app.test.js:179:1
+✖ G5-01 actual app over HTTP: a second author window saves while rehearsal retains its typed answer frozen; Escape restores focus (1916.5987ms)
+  Error: App condition did not settle.
+      at settled (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/app.test.js:21:124)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/app.test.js:194:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at test\stale-preview.test.js:112:13
+✖ draft / recognition (1862.1557ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ draft / typing (1675.9964ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ draft / cloze (1611.8478ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ draft / transformation (1627.3511ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ draft / matching (1661.279ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ draft / ordering (1607.4715ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ publication / recognition (1612.2269ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ publication / typing (1618.1676ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ publication / cloze (1592.179ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ publication / transformation (1595.3689ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ publication / matching (1600.0373ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ publication / ordering (1633.9392ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ missing-target / recognition (1632.9546ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ missing-target / typing (1575.1185ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ missing-target / cloze (1531.955ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ missing-target / transformation (1638.1015ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ missing-target / matching (1611.6311ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:112:13
+✖ missing-target / ordering (1654.0795ms)
+  AssertionError [ERR_ASSERTION]: the existing question remains visible after conflict
+      at setup (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:79:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:112:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\stale-preview.test.js:116:1
+✖ G5-01 freezes the existing displayed feedback and live field values before the renderer disposer removes them (40.1496ms)
+  TypeError: Cannot read properties of null (reading 'value')
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/stale-preview.test.js:125:43)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

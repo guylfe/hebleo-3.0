@@ -52,7 +52,7 @@ test('stale draft evaluation freezes rehearsal and never retries with a differen
   let count = 0;
   const h = harness(t,{evaluate:async() => {count++;throw Object.assign(new Error('stale'),{status:409});}});
   await h.preview.ready;h.preview.go('apply');h.preview.setAnswer('fixture');await h.preview.submit();
-  assert.match(h.container.textContent,/draft changed/);assert.equal(h.container.querySelector('[data-preview-content]').childElementCount,0);
+  assert.match(h.container.textContent,/draft changed/);assert.equal(h.container.querySelector('[data-preview-content]').textContent,'Fixture adapter: apply');
   assert.throws(() => h.preview.retry(),/unavailable/);assert.throws(() => h.preview.go('learn'),/unavailable/);assert.equal(count,1);
 });
 
@@ -85,7 +85,7 @@ test('both conflict codes freeze session loading and evaluation; missing preview
     await h.preview.ready;
     if(phase==='evaluate'){h.preview.go('apply');await h.preview.submit('Fixture answer');}
     assert.match(h.container.textContent,status===409?/draft changed/:/Fixture target unavailable/);
-    assert.equal(h.container.querySelector('[data-preview-content]').childElementCount,0);
+    assert.equal(h.container.querySelector('[data-preview-content]').textContent,phase==='evaluate'?'Fixture adapter: apply':'');
     assert.throws(()=>h.preview.go('learn'),/unavailable/);
     h.preview.exit();assert.equal(h.container.childElementCount,0);
   }

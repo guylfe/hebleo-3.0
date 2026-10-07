@@ -6,6 +6,7 @@ import {JSDOM} from 'jsdom';
 import {marked} from 'marked';
 import createPurifier from 'dompurify';
 import {Store} from '../src/store.js';
+import {createServer} from '../src/server.js';
 import {resolveBlock,importVocabularyCSV} from '../public/content.js';
 import * as ux from '../public/ux.js';
 import {composeSentence,bindMatching,matchWord} from '../public/interactions.js';
@@ -14,17 +15,21 @@ import * as learnerView from '../public/learner-view.js';
 import {mountLessonEditor} from '../public/studio/lesson-editor.js';
 import {mountExerciseEditor} from '../public/studio/exercise-editor.js';
 import {inspectImport,renderImportReview} from '../public/studio/import-review.js';
-import {mountLessonPreview} from '../public/preview/lesson-preview.js';
+import {pathToFileURL} from 'node:url';
+const {mountLessonPreview} = await import(process.env.HEBLEO_PREVIEW_CONTROLLER ? pathToFileURL(process.env.HEBLEO_PREVIEW_CONTROLLER) : '../public/preview/lesson-preview.js');
 import {createLearnerRenderer} from '../public/preview/learner-renderer.js';
 async function settled(predicate){for(let i=0;i<80;i++){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle.');}
-async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore}={}){
+async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false}={}){
   const store=providedStore||new Store();prepare?.(store);const d=new JSDOM('<div id="app"></div><div id="toast"></div>',{url:'http://127.0.0.1/#'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=d.window;
-  t.after(()=>{w.close();if(!providedStore)store.close();});w.matchMedia=()=>({matches:false});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
+  let server,origin;
+  if(realHTTP){server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
+  t.after(async()=>{w.close();if(server)await new Promise(r=>server.close(r));if(!providedStore)store.close();});w.matchMedia=()=>({matches:false});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
   Object.assign(w,ux,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},stopMedia(){},clearRecording(){},feedbackSound(){}});
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
+    if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
     if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
     else if(url.pathname==='/api/questions')value=input?store.askQuestion(user,input):store.questions(user);
     else if(url.pathname==='/api/session')value=store.session(user,url.searchParams.get('lessonId'));
@@ -170,6 +175,84 @@ const edit=(w,el,value)=>{el.value=value;el.dispatchEvent(new w.Event('input',{b
 const submit=(w,form)=>form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
 const stageDraft=(s,change)=>{const c=structuredClone(s.currentDraft()?.content||s.snapshot());change(c);return s.stage({baseRevisionId:s.get('active'),expectedDraftToken:s.currentDraft()?.draftToken??null,content:c});};
 const draftPrompt='Synthetic draft prompt: choose the meaning.';
+
+test('G5-01 actual app over HTTP: a second author window saves while rehearsal retains its typed answer frozen; Escape restores focus',async t=>{
+  const store=new Store();t.after(()=>store.close());
+  stageDraft(store,c=>{c.exercises[0].prompt=draftPrompt;});
+  const a=await app(t,{page:'studio',author:true,store,realHTTP:true});
+  const b=await app(t,{page:'studio',author:true,store,realHTTP:true});
+  await settled(()=>a.doc.querySelector('[data-action="rehearse"]:not([disabled])')&&b.doc.querySelector('#guided-exercise-editor form'));
+  click(a.doc,'rehearse');await settled(()=>a.doc.querySelector('#rehearsal-panel [data-preview-step="apply"]'));
+  const dialog=()=>a.doc.querySelector('#rehearsal-panel');
+  dialog().querySelector('[data-preview-step="apply"]').click();
+  const answer=dialog().querySelector('#answer');edit(a.w,answer,'אני');
+  const choice=b.doc.querySelector('#guided-exercise');choice.value='ex-1-type';choice.dispatchEvent(new b.w.Event('change',{bubbles:true}));
+  const form=b.doc.querySelector('#guided-exercise-editor form');edit(b.w,form.elements.prompt,'Synthetic G5-01 two-window change');submit(b.w,form);
+  await settled(()=>store.currentDraft().content.exercises.find(e=>e.id==='ex-1-type').prompt==='Synthetic G5-01 two-window change');
+  const baseline=tables(store),learners=learnerRecords(store),published=store.snapshot(),seen=a.calls.length;
+  answer.focus();answer.dispatchEvent(new a.w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
+  await settled(()=>dialog().querySelector('[data-preview-frozen]'));
+  assert.equal(dialog().querySelector('#answer').value,'אני');assert.equal(dialog().querySelector('#answer').readOnly,true);
+  assert.equal(dialog().querySelector('#answer').disabled,true);assert.equal(dialog().querySelector('.feedback'),null);
+  assert.equal(a.doc.activeElement,dialog().querySelector('[data-preview-exit]'));
+  for(const key of ['1','Enter'])dialog().querySelector('.learner-preview').dispatchEvent(new a.w.KeyboardEvent('keydown',{key,bubbles:true,cancelable:true}));
+  assert.deepEqual(a.calls.slice(seen),['/api/studio/preview/evaluate']);
+  assert.deepEqual(tables(store),baseline);assert.deepEqual(learnerRecords(store),learners);assert.deepEqual(store.snapshot(),published);
+  dialog().dispatchEvent(new a.w.Event('cancel',{cancelable:true}));await settled(()=>!dialog());
+  assert.equal(a.doc.activeElement,a.doc.querySelector('[data-action="rehearse"]'));
+});
+
+test('G5 automated HTTP overlap: learner autosave response is pending when Studio navigation starts, flush completes before rehearsal and preview writes nothing',async t=>{
+  const h=await app(t,{page:'lesson/lesson-1/apply',author:true,realHTTP:true,prepare(s){stageDraft(s,c=>{c.exercises[0].prompt=draftPrompt;});}});
+  const {store,w,doc,calls}=h,published=store.snapshot(),before=tables(store),otherProfiles=learnerRecords(store).slice(0,2);
+  const original=w.fetch,payloads=[];let release,arrived;
+  const blocked=new Promise(r=>release=r),firstResponse=new Promise(r=>arrived=r);
+  t.after(()=>release());
+  w.fetch=async(path,options={})=>{
+    const progress=new URL(path,w.location.href).pathname==='/api/progress';
+    if(progress)payloads.push(JSON.parse(options.body));
+    const result=await original(path,options);
+    if(progress&&payloads.length===1){arrived();await blocked;}
+    return result;
+  };
+  edit(w,doc.querySelector('#answer'),'אני');await firstResponse;
+  const seen=calls.length;
+  doc.querySelector('[data-action="page"][data-value="studio"]').click();
+  await new Promise(r=>setTimeout(r,25));
+  assert.equal(w.location.hash,'#lesson/lesson-1/apply','navigation waits for the pending real response');
+  assert.ok(doc.querySelector('#answer'));assert.equal(doc.querySelector('#rehearsal-panel'),null);
+  assert.equal(calls.slice(seen).includes('/api/studio'),false);
+  release();await settled(()=>w.location.hash==='#studio'&&doc.querySelector('[data-action="rehearse"]:not([disabled])'));
+  assert.equal(payloads.length,2,'autosave plus intentional navigation flush');
+  assert.ok(payloads.every(p=>p.answer==='אני'&&p.lessonId==='lesson-1'));
+  const afterFlush=tables(store);assert.deepEqual(learnerRecords(store).slice(0,2),otherProfiles);
+  for(const table of Object.keys(before).filter(name=>name!=='learners'))assert.deepEqual(afterFlush[table],before[table],table+' did not change');
+  assert.equal(store.learner('author-demo').resumes['lesson-1'].answer,'אני');assert.deepEqual(store.snapshot(),published);
+  const previewSeen=calls.length;click(doc,'rehearse');await settled(()=>doc.querySelector('#rehearsal-panel [data-preview-step="apply"]'));
+  doc.querySelector('#rehearsal-panel [data-preview-step="apply"]').click();edit(w,doc.querySelector('#rehearsal-panel #answer'),'הוא');
+  doc.querySelector('#rehearsal-panel [data-preview-exit]').click();
+  await new Promise(r=>setTimeout(r,450));
+  assert.deepEqual(calls.slice(previewSeen),['/api/studio/preview/session']);assert.deepEqual(tables(store),afterFlush);
+  assert.equal(store.learner('author-demo').resumes['lesson-1'].answer,'אני');
+});
+
+test('G5 automated HTTP owner-event: the real keyboard Pin handler emits its preference event during rehearsal and app persistence is suppressed until Exit',async t=>{
+  const {store,w,doc,calls}=await app(t,{page:'studio',author:true,ownerKeyboard:true,realHTTP:true,prepare(s){stageDraft(s,c=>{c.exercises[0].prompt=draftPrompt;});}});
+  await settled(()=>doc.querySelector('[data-action="rehearse"]:not([disabled])'));
+  const events=[];w.addEventListener('hebleo-keyboard-preference',event=>events.push(structuredClone(event.detail)));
+  const before=tables(store),seen=calls.length,pin=()=>doc.querySelector('#hebleo-keyboard-root [data-action="pin"]');
+  click(doc,'rehearse');await settled(()=>doc.querySelector('#rehearsal-panel .learner-preview'));
+  assert.ok(pin());pin().click();await new Promise(r=>setTimeout(r,25));
+  assert.equal(events.length,1);assert.equal(events[0].keyboardPinned,true,'event originates in the actual owner keyboard click handler');
+  assert.deepEqual(calls.slice(seen),['/api/studio/preview/session']);assert.deepEqual(tables(store),before);
+  doc.querySelector('#rehearsal-panel [data-preview-exit]').click();
+  const beforePreference=store.db.prepare('SELECT total_changes() AS n').get().n;
+  pin().click();await settled(()=>calls.includes('/api/preferences'));
+  await settled(()=>store.db.prepare('SELECT total_changes() AS n').get().n>beforePreference);
+  assert.equal(store.learner('author-demo').preferences.keyboardPinned,false);
+  assert.equal(events.length,2,'same handler operates after disposal');
+  assert.equal(calls.filter(path=>path==='/api/preferences').length,1,'positive control proves active persistence outside rehearsal');
+});
 
 test('Studio guided exercise and lesson forms save private drafts, reload discards unsaved edits, a stale token keeps entered values, and publishing stays separate',async t=>{
   const {store,w,doc}=await app(t,{page:'studio',author:true});
@@ -321,7 +404,7 @@ test('A rehearsal stops on a changed draft or a newer publication revision, writ
   stageDraft(store,c=>{c.lessons[0].title='Synthetic title from another tab';});
   let after=tables(store),seen=calls.length;
   inside('[data-action="check"]').click();await settled(()=>/This draft changed/.test(inside('[data-preview-status]').textContent));
-  assert.ok([...dialog().querySelectorAll('[data-preview-step]')].every(b=>b.disabled));assert.equal(inside('.learner-preview'),null);
+  assert.ok([...dialog().querySelectorAll('[data-preview-step]')].every(b=>b.disabled));assert.ok(inside('[data-preview-frozen]'));assert.equal(inside('[data-action="check"]').disabled,true);
   assert.deepEqual(tables(store),after);assert.deepEqual(calls.slice(seen),['/api/studio/preview/evaluate']);
   inside('[data-preview-exit]').click();await settled(()=>!dialog());
   click(doc,'studio-reload');await settled(()=>/another tab/.test(doc.querySelector('#guided-lesson-editor form')?.elements.title.value||''));

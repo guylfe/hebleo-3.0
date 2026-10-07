@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"dialog\": false,\n  \"focus\": \"<button type=\\\"button\\\" class=\\\"button secondary\\\" data-action=\\\"rehearse\\\" data-value=\\\"lesson-1\\\">Rehearse saved draft</button>\",\n  \"rehearseFocused\": true\n}"
+    }
+  ],
+  "isError": false
+}

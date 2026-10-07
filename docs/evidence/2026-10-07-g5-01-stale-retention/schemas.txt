@@ -1,0 +1,27 @@
+
+> test
+> node --test checks/*.check.mjs
+
+✔ seed and synthetic interchange are valid without mutation; seed is private-demo only (32.764ms)
+✔ required explicit Hebrew forms cannot be inferred by validation (1.0279ms)
+✔ unknown values, rich formatting, themes and explicit forms survive JSON unchanged (3.8876ms)
+✔ stable IDs and dependency/selector references reject ambiguity (1.856ms)
+✔ same-snapshot row lookup works; reorder in a new snapshot never auto-assigns identity (0.8809ms)
+✔ duplicate row hashes stay ambiguous; duplicate frozen locators are invalid (0.761ms)
+✔ source omissions retain work; simultaneous source and Studio edits require resolution (0.39ms)
+✔ media pins must resolve exact asset, revision and hash; legacy URLs remain unpinned (7.128ms)
+✔ pending source objects cannot inherit synthetic or verified pack approval (1.5399ms)
+✔ pending fields veto the private synthetic compatibility exception (1.4017ms)
+✔ changed content or dependency invalidates approval digests (10.6995ms)
+✔ pending fields, unpinned media and missing approval dependencies stay ineligible (10.6191ms)
+✔ wire fixtures validate by named definitions and missing CAS token is invalid (19.3722ms)
+✔ media approval binds asset identity and revision metadata; no bytes are fetched (1.6757ms)
+✔ preview response schemas reject learner writes and answer-key leakage (9.4105ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 613.6699

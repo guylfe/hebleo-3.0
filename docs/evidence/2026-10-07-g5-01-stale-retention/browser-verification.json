@@ -1,0 +1,223 @@
+{
+  "assertions": 31,
+  "passed": true,
+  "ownerEvidence": true,
+  "typedAnswer": "אני",
+  "deliberateSaves": "draft KV only",
+  "conflictAndExit": "all tables identical, including three profiles/revisions/sequence",
+  "traffic": [
+    {
+      "at": "2026-10-07T00:46:48.093Z",
+      "method": "GET",
+      "url": "/api/bootstrap",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:46:48.098Z",
+      "method": "GET",
+      "url": "/api/questions",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:46:48.105Z",
+      "method": "GET",
+      "url": "/api/bootstrap",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:46:48.110Z",
+      "method": "GET",
+      "url": "/api/questions",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:46:56.337Z",
+      "method": "GET",
+      "url": "/api/bootstrap",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:46:56.342Z",
+      "method": "GET",
+      "url": "/api/questions",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:46:58.779Z",
+      "method": "GET",
+      "url": "/api/bootstrap",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:46:58.789Z",
+      "method": "GET",
+      "url": "/api/questions",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:46:58.794Z",
+      "method": "GET",
+      "url": "/api/studio",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:46:58.798Z",
+      "method": "GET",
+      "url": "/api/reports",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:23.613Z",
+      "method": "POST",
+      "url": "/api/studio/draft",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:23.618Z",
+      "method": "GET",
+      "url": "/api/bootstrap",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:23.621Z",
+      "method": "GET",
+      "url": "/api/questions",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:23.630Z",
+      "method": "GET",
+      "url": "/api/studio",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:23.634Z",
+      "method": "GET",
+      "url": "/api/reports",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:33.111Z",
+      "method": "GET",
+      "url": "/api/bootstrap",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:33.115Z",
+      "method": "GET",
+      "url": "/api/questions",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:33.123Z",
+      "method": "GET",
+      "url": "/api/bootstrap",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:33.134Z",
+      "method": "GET",
+      "url": "/api/questions",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:33.144Z",
+      "method": "GET",
+      "url": "/api/studio",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:33.148Z",
+      "method": "GET",
+      "url": "/api/reports",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:47:50.779Z",
+      "method": "POST",
+      "url": "/api/studio/preview/session",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:48:27.216Z",
+      "method": "POST",
+      "url": "/api/studio/draft",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:48:27.221Z",
+      "method": "GET",
+      "url": "/api/bootstrap",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:48:27.226Z",
+      "method": "GET",
+      "url": "/api/questions",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:48:27.236Z",
+      "method": "GET",
+      "url": "/api/studio",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:48:27.241Z",
+      "method": "GET",
+      "url": "/api/reports",
+      "status": 200
+    },
+    {
+      "at": "2026-10-07T00:48:41.918Z",
+      "method": "POST",
+      "url": "/api/studio/preview/evaluate",
+      "status": 409,
+      "answer": "אני"
+    }
+  ],
+  "fingerprints": {
+    "initial": {
+      "events": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "kv": "eedfc0eec8fb111e1071b1d3dcec9446cdbb9c384866f6544534ed4b86f518f9",
+      "learners": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db",
+      "revisions": "f2b9adb04ff89af35b2db314d4b4796dc673021d1ea64f8e0430ef3b38a82f78",
+      "sqlite_sequence": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+    },
+    "staged": {
+      "events": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "kv": "a4f2735da48e759e3df62d9003a3f8db5221ca52f2a43d0ff50f8c1a8729e4bc",
+      "learners": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db",
+      "revisions": "f2b9adb04ff89af35b2db314d4b4796dc673021d1ea64f8e0430ef3b38a82f78",
+      "sqlite_sequence": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+    },
+    "before": {
+      "events": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "kv": "a4f2735da48e759e3df62d9003a3f8db5221ca52f2a43d0ff50f8c1a8729e4bc",
+      "learners": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db",
+      "revisions": "f2b9adb04ff89af35b2db314d4b4796dc673021d1ea64f8e0430ef3b38a82f78",
+      "sqlite_sequence": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+    },
+    "otherTabSave": {
+      "events": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "kv": "18809c226b4a08b3d564128eb913cd3e08da062af397ed4463c31b5e7839f3ea",
+      "learners": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db",
+      "revisions": "f2b9adb04ff89af35b2db314d4b4796dc673021d1ea64f8e0430ef3b38a82f78",
+      "sqlite_sequence": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+    },
+    "conflict": {
+      "events": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "kv": "18809c226b4a08b3d564128eb913cd3e08da062af397ed4463c31b5e7839f3ea",
+      "learners": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db",
+      "revisions": "f2b9adb04ff89af35b2db314d4b4796dc673021d1ea64f8e0430ef3b38a82f78",
+      "sqlite_sequence": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+    },
+    "exit": {
+      "events": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "kv": "18809c226b4a08b3d564128eb913cd3e08da062af397ed4463c31b5e7839f3ea",
+      "learners": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db",
+      "revisions": "f2b9adb04ff89af35b2db314d4b4796dc673021d1ea64f8e0430ef3b38a82f78",
+      "sqlite_sequence": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+    }
+  }
+}
