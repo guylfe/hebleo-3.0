@@ -1,4 +1,4 @@
-import {lessonSteps, stepLabels, stepExercises} from '../ux.js';
+import {lessonSteps, stepLabels, stepExercises, lessonPortions, portionKind, portionExercises, portionLabel} from '../ux.js';
 import {escapeHTML as e} from '../studio/editor-fields.js';
 
 // Inject only author preview APIs and the shared learner renderer. No learner
@@ -13,7 +13,7 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
   container.innerHTML = '<section class="lesson-preview"><h2>Draft rehearsal</h2><p>Changes here are temporary.</p><nav aria-label="Rehearsal steps" data-preview-nav></nav><p data-preview-status role="status">Loading draft…</p><div data-preview-content></div><button type="button" data-preview-exit>Exit rehearsal</button></section>';
   const body = container.querySelector('[data-preview-content]'), nav = container.querySelector('[data-preview-nav]'), status = container.querySelector('[data-preview-status]');
   const active = () => !controller.signal.aborted;
-  const exerciseIds = () => ['check','apply'].includes(step) ? stepExercises(lesson, step, []) : [];
+  const exerciseIds = () => ['check','apply'].includes(portionKind(lesson,step)) ? portionExercises(session.content,lesson,step) : [];
   const exercise = () => session.content.exercises.find(x => x.id === exerciseIds()[question]);
   const currentAnswer = () => answers.get(exercise()?.id) || {answer:'',result:null};
   const assertMutable = () => { if (!active() || !session || stale || busy) throw new Error('Rehearsal is unavailable or busy.'); };
@@ -24,12 +24,12 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
     // listeners; the disposer still removes scoped keys/matching handlers and media.
     const frozen = stale ? frozenPresentation(body) : null;
     unmount?.(); unmount = undefined;
-    nav.innerHTML = session.steps.map(name => `<button type="button" data-preview-step="${e(name)}"${step === name ? ' aria-current="step"' : ''}${busy || stale ? ' disabled' : ''}>${e(stepLabels[name] || name)}</button>`).join('');
+    nav.innerHTML = session.steps.map(name => `<button type="button" data-preview-step="${e(name)}"${step === name ? ' aria-current="step"' : ''}${busy || stale ? ' disabled' : ''}>${e(portionLabel(lesson,name))}</button>`).join('');
     if (stale) {body.replaceChildren(...frozen.childNodes); keepFocus(hadFocus, focusedStep); return;}
     const state = currentAnswer();
     unmount = renderer.mount(body, {
       mode:'draft-preview', persistent:false, content:structuredClone(session.content),
-      lessonId, step, question, exerciseId:exercise()?.id ?? null,
+      lessonId, step:portionKind(lesson,step), componentId:lesson.compositionVersion===2?(step==='complete'?null:step):undefined, question, exerciseId:exercise()?.id ?? null,
       answer:structuredClone(state.answer), result:structuredClone(state.result),
       preferences:structuredClone(localPreferences), lookupId, busy,
       actions: {go, next, setAnswer, submit, retry, lookup, setPreference, exit}
@@ -65,7 +65,7 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
   function go(nextStep, nextQuestion = 0) {
     assertMutable();
     if (!session.steps.includes(nextStep)) throw new Error('Invalid rehearsal step.');
-    const ids = ['check','apply'].includes(nextStep) ? stepExercises(lesson, nextStep, []) : [];
+    const ids = ['check','apply'].includes(portionKind(lesson,nextStep)) ? portionExercises(session.content,lesson,nextStep) : [];
     if (!Number.isInteger(nextQuestion) || nextQuestion < 0 || nextQuestion >= Math.max(1, ids.length)) throw new Error('Invalid rehearsal question.');
     step = nextStep; question = nextQuestion; lookupId = null; render();
   }
@@ -127,7 +127,7 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
       if (!active()) return;
       if (response?.mode !== 'draft-preview' || response.persistent !== false || response.draftToken !== draftToken || response.lessonId !== lessonId) throw new Error('Invalid draft preview session.');
       session = structuredClone(response); lesson = session.content.lessons.find(x => x.id === lessonId);
-      const allowed = lesson && lessonSteps(lesson);
+      const allowed = lesson && lessonPortions(session.content,lesson).map(p=>p.key);
       if (!allowed || !Array.isArray(session.steps) || !session.steps.length || new Set(session.steps).size !== session.steps.length || session.steps.some(name => !allowed.includes(name))) throw new Error('Invalid draft preview steps.');
       step = session.steps[0]; status.textContent = 'Draft rehearsal. Nothing here is saved to your learner profile.'; render();
     } catch (error) {

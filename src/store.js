@@ -5,7 +5,7 @@ import { normalizeHebrew, evaluateAnswer, matchingPairResults } from './evaluate
 import { seed, upgradeDemo } from './seed.js';
 import {validateCurriculum, validateLessonComposition, resolveComponent, orderedLessons, lessonFlow, keyboardForLesson} from '../public/course.js';
 import {validateFormatting} from '../public/vocabulary-import.js';
-import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress } from '../public/ux.js';
+import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
 
 // Version 2 adds revision-mapped backups; version 3 adds component cursors and additive composition semantics.
 export const STORE_SCHEMA_VERSION = 3;
@@ -285,14 +285,14 @@ export class Store {
   validateProgress(p, state, backupContent) {
     if (!Number.isInteger(p?.revisionId)) throw new DomainError('Invalid saved lesson revision.');
     const content = backupContent || this.snapshot(p.revisionId); const l = content.lessons.find(l => l.id === p.lessonId);
-    if (!l || !lessonSteps(l).includes(p.step) || !Number.isInteger(p.question) || p.question < 0 || p.question > l.exerciseIds.length || typeof p.answer !== 'string' || p.answer.length > 2000 || !Array.isArray(p.selectedTokens) || p.selectedTokens.length > 100 || new Set(p.selectedTokens).size !== p.selectedTokens.length || p.selectedTokens.some(i => !Number.isInteger(i) || i < 0 || i > 100)) throw new DomainError('Invalid saved lesson position.');
-    if (p.practiceIds && (!Array.isArray(p.practiceIds) || new Set(p.practiceIds).size!==p.practiceIds.length || p.practiceIds.some(id => !l.exerciseIds.includes(id)) || (l.compositionVersion===2&&p.practiceIds.length&&p.step!=='apply'))) throw new DomainError('Invalid practice set.');
+    if (!l || !(lessonSteps(l).includes(p.step)||(p.practiceIds?.length&&['check','apply'].includes(p.step))) || !Number.isInteger(p.question) || p.question < 0 || p.question > l.exerciseIds.length || typeof p.answer !== 'string' || p.answer.length > 2000 || !Array.isArray(p.selectedTokens) || p.selectedTokens.length > 100 || new Set(p.selectedTokens).size !== p.selectedTokens.length || p.selectedTokens.some(i => !Number.isInteger(i) || i < 0 || i > 100)) throw new DomainError('Invalid saved lesson position.');
+    if (p.practiceIds && (!Array.isArray(p.practiceIds) || new Set(p.practiceIds).size!==p.practiceIds.length || p.practiceIds.some(id => !l.exerciseIds.includes(id)) || (l.compositionVersion===2&&p.practiceIds.length&&!['check','apply'].includes(p.step)))) throw new DomainError('Invalid practice set.');
     let component;
     if(l.compositionVersion===2 || p.componentId!==undefined){
       let flow;try{flow=lessonFlow(content,l);}catch(error){throw new DomainError(error.message);}
       component=flow.find(entry=>entry.blockId===p.componentId);
       if(!component||component.kind!==p.step)throw new DomainError('Saved component does not match its portion.');
-      const ids=p.practiceIds?.length&&p.step==='apply'?p.practiceIds:component.exerciseIds;
+      const ids=p.practiceIds?.length&&['check','apply'].includes(p.step)?p.practiceIds:component.exerciseIds;
       if(p.question>ids.length || (!['check','apply'].includes(p.step)&&p.question!==0))throw new DomainError('Invalid component question position.');
       if((!['check','apply'].includes(p.step)||p.question===ids.length)&&(p.answer||p.resultRequestId||p.selectedTokens.length||Object.keys(p.matching||{}).length))throw new DomainError('Terminal or text component cannot carry exercise input.');
     }
@@ -424,7 +424,7 @@ export class Store {
   previewSession(input) {
     const draft = this.previewDraft(input.draftToken), content = draft.content, lesson = content.lessons.find(l => l.id === input.lessonId);
     if (!lesson) throw new DomainError('Lesson not found in this draft.', 404, 'PREVIEW_TARGET_NOT_FOUND');
-    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, baseRevisionId: draft.baseRevisionId, lessonId: lesson.id, content: this.publicContent(content), steps: lessonSteps(lesson), flow:lessonFlow(content,lesson), keyboard:keyboardForLesson(content,lesson.id) };
+    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, baseRevisionId: draft.baseRevisionId, lessonId: lesson.id, content: this.publicContent(content), steps: lessonPortions(content,lesson).map(p=>p.key), flow:lessonFlow(content,lesson), keyboard:keyboardForLesson(content,lesson.id) };
   }
   previewEvaluate(input) {
     const draft = this.previewDraft(input.draftToken), content = draft.content, exercise = content.exercises.find(e => e.id === input.exerciseId);

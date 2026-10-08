@@ -129,9 +129,9 @@ export function introductionWarnings(content) {
 export function keyboardForLesson(content, lessonId) {
   const lessons=orderedLessons(content),index=lessons.findIndex(l=>l.id===lessonId),lesson=lessons[index];
   if(!lesson)fail('Keyboard lesson not found.');
-  if(lesson.introducedLetters===undefined) return {...copy(lesson.keyboard||{knownKeys:lesson.letters||'',newKeys:''}),legacy:true};
+  if(lesson.introducedLetters===undefined&&typeof lesson.keyboard?.newKeys!=='string') return {...copy(lesson.keyboard||{knownKeys:lesson.letters||'',newKeys:''}),legacy:true};
   const prior=unique(lessons.slice(0,index).flatMap(l=>[...(l.introducedLetters??l.keyboard?.newKeys??'')]));
-  const introduced=[...lesson.introducedLetters],newKeys=introduced.filter(key=>!prior.includes(key)).join('');
+  const introduced=[...(lesson.introducedLetters??lesson.keyboard.newKeys)],newKeys=introduced.filter(key=>!prior.includes(key)).join('');
   return {...lesson.keyboard,knownKeys:prior.join(''),newKeys,availableKeys:unique([...prior,...introduced]).join(''),missingIntroductionLessonIds:lessons.slice(0,index).filter(l=>l.introducedLetters===undefined&&typeof l.keyboard?.newKeys!=='string').map(l=>l.id)};
 }
 export function validateLessonComposition(content,lesson) {

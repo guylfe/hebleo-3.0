@@ -1,0 +1,37 @@
+✖ v2 actual app over HTTP navigates two text instances, pins second-instance resume and ignores a newer reorder (1402.4284ms)
+✖ v2 saved draft preview shows both text instances and grades its selected component with zero writes (1828.424ms)
+✖ My Hebrew combines tag, lesson and review filters, bounds results, and empty review explicitly enrolls synthetic words (130.4391ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5084.7798
+
+✖ failing tests:
+
+test at test\app.test.js:504:1
+✖ v2 actual app over HTTP navigates two text instances, pins second-instance resume and ignores a newer reorder (1402.4284ms)
+  Error: App condition did not settle.
+      at settled (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-integration-parent/test/app.test.js:24:124)
+      at async app (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-integration-parent/test/app.test.js:56:3)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-integration-parent/test/app.test.js:506:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at test\app.test.js:524:1
+✖ v2 saved draft preview shows both text instances and grades its selected component with zero writes (1828.424ms)
+  Error: App condition did not settle.
+      at settled (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-integration-parent/test/app.test.js:24:124)
+      at async TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-integration-parent/test/app.test.js:527:24)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at test\app.test.js:536:1
+✖ My Hebrew combines tag, lesson and review filters, bounds results, and empty review explicitly enrolls synthetic words (130.4391ms)
+  TypeError: Cannot set properties of null (setting 'value')
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-integration-parent/test/app.test.js:538:41)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

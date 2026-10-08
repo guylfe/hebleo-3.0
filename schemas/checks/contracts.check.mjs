@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import {projectLesson,deriveLessonIndices} from '../../public/course.js';
 import { seed } from '../../src/seed.js';
 import { syntheticPack } from '../tools/fixtures.mjs';
 import { validateSchema, semanticErrors, publicationEligibility, resolveSourceIdentity, mergeSourceField, objectDigest, mediaDigest, dependenciesFor, collections, sha256, draftTokenFor } from '../tools/contracts.mjs';
@@ -98,4 +99,13 @@ test('media approval binds asset identity and revision metadata; no bytes are fe
 test('preview response schemas reject learner writes and answer-key leakage', () => {
   assert.ok(validateSchema('studio-wire', { mode: 'draft-preview', persistent: true }, 'previewSessionResponse').length);
   assert.ok(validateSchema('learner-content', syntheticPack()).length, 'raw author exercises are not the learner wire shape');
+});
+
+test('additive v2 schemas accept repeated text, optional mixed chapters and keyed preview; malformed typed selectors fail without rewriting legacy',()=>{
+ const p=syntheticPack();p.lessons=p.lessons.map(l=>projectLesson(p,l));const l=p.lessons[0];l.blocks.push({...structuredClone(l.blocks[0]),id:'synthetic-second-text',text:'SYNTHETIC schema-only text'});p.lessons[0]=deriveLessonIndices(p,l);
+ p.curriculum={version:1,chapters:[{id:'synthetic-ch',title:'Synthetic chapter',lessonIds:['lesson-2']}],order:[{lessonId:'lesson-1'},{chapterId:'synthetic-ch'},{lessonId:'lesson-3'}]};
+ const before=JSON.stringify(p);assert.deepEqual(validateSchema('content-pack',p),[]);assert.deepEqual(semanticErrors(p),[]);assert.equal(JSON.stringify(p),before);
+ const bad=structuredClone(p);bad.lessons[0].blocks[1].selector={mode:'tags',tags:['qa']};assert.ok(validateSchema('content-pack',bad).length);
+ const legacy=syntheticPack();legacy.words[0].tags={legacyOpaque:true};assert.deepEqual(validateSchema('content-pack',legacy),[]);
+ legacy.words[0].taggingVersion=1;assert.ok(validateSchema('content-pack',legacy).length);
 });

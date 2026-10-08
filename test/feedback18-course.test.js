@@ -56,9 +56,10 @@ test('cumulative keyboard uses the exact authored course order and highlights on
  c.curriculum={version:1,chapters:[],order:[{lessonId:b.id},{lessonId:a.id},{lessonId:d.id}]};validateCurriculum(c);
  k=keyboardForLesson(c,a.id);assert.equal(k.knownKeys,'בג');assert.equal(k.newKeys,'א');
 });
-test('legacy keyboards remain authored and missing introduction evidence is reported',()=>{
+test('explicit legacy new letters accumulate without rewriting authored keyboards; missing evidence is reported',()=>{
  const c=fixture(),legacy=c.lessons[0];delete legacy.introducedLetters;
- assert.deepEqual(keyboardForLesson(c,legacy.id),{...legacy.keyboard,legacy:true});
+ const before=JSON.stringify(c);assert.deepEqual(keyboardForLesson(c,legacy.id),{...legacy.keyboard,availableKeys:legacy.keyboard.newKeys,missingIntroductionLessonIds:[]});
+ assert.equal(JSON.stringify(c),before);delete c.lessons[1].introducedLetters;assert.equal(keyboardForLesson(c,c.lessons[1].id).knownKeys,legacy.keyboard.newKeys);
  const current=projectLesson(c,c.lessons[1]);current.introducedLetters='ת';c.lessons[1]=current;delete legacy.keyboard;
  assert.deepEqual(keyboardForLesson(c,current.id).missingIntroductionLessonIds,[legacy.id]);assert.match(introductionWarnings(c)[0],/missing/);
 });

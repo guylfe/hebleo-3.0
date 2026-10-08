@@ -1,0 +1,68 @@
+✔ Lesson 1 can advance past optional practice with an unresolved Check answer, preserving actual completion and graded history (358.6425ms)
+✔ Extra practice can be skipped before submission and after grading, clearing its resume without erasing attempts (198.8912ms)
+✔ The final lesson offers a course exit when incomplete, and core exercises do not show the extra-practice skip (97.2492ms)
+✔ Wrong-answer retry keeps the particular question, only correct answers fill progress, and saved progress survives reload (277.4082ms)
+✔ Finish-screen retry opens only the chosen missed question, then removes the corrected miss without changing other answers (112.7423ms)
+✔ Starting updated lesson through the actual app does not flush the old resume back over the reset (82.173ms)
+✔ App sentence tiles submit attached prefixes, and source-rich cards/table open without field rendering errors (156.176ms)
+✔ Studio edits author card policy and cumulative introductions while retaining legacy keyboard metadata (886.471ms)
+✔ Actual app launcher focuses the native answer field and saves pinning through the learner preference API (118.9604ms)
+✔ Lesson help exposes an actual question form and saves it to the author inbox (65.4945ms)
+✔ Learner keyboard shortcuts never activate or handle controls inside a rehearsal root (68.8773ms)
+✔ G5-01 actual app over HTTP: a second author window saves while rehearsal retains its typed answer frozen; Escape restores focus (718.3698ms)
+✔ G5 automated HTTP overlap: learner autosave response is pending when Studio navigation starts, flush completes before rehearsal and preview writes nothing (1290.2485ms)
+✔ G5 automated HTTP owner-event: the real keyboard Pin handler emits its preference event during rehearsal and app persistence is suppressed until Exit (391.405ms)
+✔ Studio guided exercise and lesson forms save private drafts, reload discards unsaved edits, a stale token keeps entered values, and publishing stays separate (1153.0441ms)
+✔ Studio native JSON import Review/Discard write nothing; Stage stays separate, stale Stage retains file/mapping and invalidates after reload (697.0851ms)
+✔ Studio draft rehearsal uses the shared renderer and grader, isolates app.js handlers, and leaves every table, learner record and the published pack unchanged (328.6741ms)
+✔ Rehearsal keeps keyboard focus inside the modal across re-renders, so a digit then Enter grade, Retry resets, and a new result is scrolled into view (267.7748ms)
+✔ A rehearsal stops on a changed draft or a newer publication revision, writes nothing itself, and closes when the author navigates away (383.5181ms)
+✔ A pending unified save locks every sibling and lesson switch; subsequent save and queued Publish name the saved token (934.1056ms)
+✔ Publishing behind a pending guided save still rejects a newer draft from another tab and publishes nothing (430.1148ms)
+✔ QA-EE9-G4-02: matching autosave keeps an authored pair word from outside the lesson list, and the match resumes after reload (218.8606ms)
+✔ fresh home says Start, a saved lesson says Continue, and a completed lesson says Revisit (177.918ms)
+✔ Native import Stage locks sibling lesson/exercise/Markdown inputs until workspace reload finishes (436.2126ms)
+✔ v2 actual app over HTTP navigates two text instances, pins second-instance resume and ignores a newer reorder (239.6318ms)
+✖ v2 saved draft preview shows both text instances and grades its selected component with zero writes (324.7113ms)
+✔ My Hebrew combines tag, lesson and review filters, bounds results, and empty review explicitly enrolls synthetic words (176.4738ms)
+✔ every seed exercise kind submits the learner wire answer through the real controller, is graded correct by the actual draft evaluator, and leaves every row of three profiles unchanged (1334.5459ms)
+✔ wrong answers keep the local draft through re-renders, show the learner feedback, and retry clears only the rehearsal answer (85.1377ms)
+✔ settings, keyboard, vocabulary and lookup controls call rehearsal actions and render a read-only entry (205.0443ms)
+✔ dispose removes the root and every listener, stops media, and is idempotent (44.2108ms)
+✔ busy rehearsal disables every control and ignores clicks and shortcuts; a pending check evaluates exactly once (97.9929ms)
+✔ disposable rehearsal navigates, retries, looks up and changes settings without modifying three learner states or source (222.3325ms)
+✔ stale draft evaluation freezes rehearsal and never retries with a different token (44.2286ms)
+✔ renderer wire answers for six families are sent separately from the retained response draft (194.4381ms)
+✔ both conflict codes freeze session loading and evaluation; missing preview targets fail closed (133.5934ms)
+✔ INVALID_ANSWER leaves the response draft available for correction and retry (23.7819ms)
+✔ exit drops late loads and evaluations and disposes shared renderer events (34.794ms)
+✔ rehearsal rejects persistent, mismatched or malformed session responses (100.9997ms)
+✔ media picker preserves supplied revision/hash/source fields, labels legacy references and retains rejection recovery (44.3913ms)
+✔ pinned sha256 media can be selected without a URL; unsafe supplied URLs remain disabled (102.0308ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 40
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12354.9633
+
+✖ failing tests:
+
+test at test\app.test.js:524:1
+✖ v2 saved draft preview shows both text instances and grades its selected component with zero writes (324.7113ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(doc.querySelector('.learner-preview .feedback.correct'))
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/app.test.js:533:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,30 @@
+PASS GET null draft and empty diff match schemas
+PASS no-draft, missing token and stale base errors are coded and write nothing
+PASS stage preserves every field and emits first-stage unchanged false
+PASS full-token scope and key-order-only restage preserve time and database rows
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: previewEvaluateResponse
++ actual - expected
+
++ [
++   '/result must NOT have additional properties'
++ ]
+- []
+
+    at schema (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/schemas/tools/runtime-check.mjs:13:45)
+    at file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/schemas/tools/runtime-check.mjs:65:105
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async check (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/schemas/tools/runtime-check.mjs:12:37)
+    at async file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/schemas/tools/runtime-check.mjs:58:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ '/result must NOT have additional properties' ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

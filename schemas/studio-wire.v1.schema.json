@@ -295,17 +295,19 @@
         "steps": {
           "type": "array",
           "items": {
-            "enum": [
-              "learn",
-              "check",
-              "vocabulary",
-              "apply",
-              "complete"
-            ]
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           },
-          "minItems": 4,
-          "maxItems": 5,
+          "minItems": 2,
+          "maxItems": 101,
           "uniqueItems": true
+        },
+        "flow": {
+          "$ref": "course-model.v1.schema.json#/definitions/flow"
+        },
+        "keyboard": {
+          "$ref": "course-model.v1.schema.json#/definitions/keyboard"
         }
       },
       "required": [
@@ -420,6 +422,9 @@
               "additionalProperties": {
                 "type": "boolean"
               }
+            },
+            "evaluationPolicy": {
+              "const": "ignore-nikkud-v1"
             }
           },
           "required": [

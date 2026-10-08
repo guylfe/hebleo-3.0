@@ -1,4 +1,5 @@
-import {stepExercises, audioURL} from '../ux.js';
+import {stepExercises, audioURL, portionExercises, portionLesson} from '../ux.js';
+import {keyboardForLesson,resolveComponent} from '../course.js';
 import {resolveBlock} from '../content.js';
 import {bindMatching, matchWord} from '../interactions.js';
 import {esc, button, wordText, fieldText, cellAttribute, audioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseFeedback, wireAnswer} from '../learner-view.js';
@@ -19,13 +20,16 @@ const draftOf = answer => ({
 export function createLearnerRenderer({renderLesson = plainText, playAudio, stopMedia, keyScope} = {}) {
   // Kept across mounts: every controller re-render replaces the root, so the focused control and the
   // last revealed result/entry are carried over instead of dropping focus to the page body.
-  let medium = null, focusKey = null, shownKey = null;
+  let medium = null, mediumKey = null, focusKey = null, shownKey = null;
   return {
     mount(container, props) {
       const doc = container.ownerDocument, controller = new doc.defaultView.AbortController(), signal = controller.signal;
-      const {content, lessonId, step, question, exerciseId, result, lookupId, busy, actions} = props;
+      const {content, lessonId, step, componentId, question, exerciseId, result, lookupId, busy, actions} = props;
       const preferences = props.preferences || {};
       const lesson = content.lessons.find(l => l.id === lessonId);
+      const presentation=portionLesson(lesson,componentId);
+      const keyboard=keyboardForLesson(content,lessonId);
+      const context=lessonId+'|'+(componentId||step);if(context!==mediumKey){medium=null;mediumKey=context;}
       const word = id => content.words.find(w => w.id === id);
       const exercise = exerciseId ? content.exercises.find(x => x.id === exerciseId) : null;
       let draft = draftOf(props.answer), message = '';
@@ -64,7 +68,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const updateDraft = (next, rerender = true) => { draft = next; message = ''; call('setAnswer', structuredClone(draft)); if (rerender && active()) render(); };
       const settings = () => '<div class="mode-bar preview-settings" role="group" aria-label="Rehearsal settings (not saved)"><label for="preview-nikkud">Exercise Nikkud</label><select id="preview-nikkud" data-preview-pref="nikkud">' + [['curated','Lesson-authored Nikkud'],['full','With Nikkud'],['none','Without Nikkud']].map(([v, t]) => '<option value="' + v + '"' + ((preferences.nikkud || 'full') === v ? ' selected' : '') + '>' + t + '</option>').join('') + '</select><small>Rehearsal settings are temporary.</small></div>';
       const keypad = () => preferences.keyboardVisible
-        ? '<div class="preview-keypad" role="group" aria-label="Hebrew keyboard">' + HEBREW_KEYS.map(k => '<button type="button" class="key" data-preview-key="' + k + '">' + k + '</button>').join('') + '<button type="button" class="key" data-preview-key=" ">Space</button><button type="button" class="key" data-preview-key="" aria-label="Backspace">⌫</button><button type="button" class="button small outline" data-preview-keyboard="hide">Hide keyboard</button></div>'
+        ? '<div class="preview-keypad" role="group" aria-label="Hebrew keyboard">' + HEBREW_KEYS.filter(k=>(keyboard.availableKeys||keyboard.knownKeys+keyboard.newKeys).includes(k)).map(k => '<button type="button" class="key '+(keyboard.newKeys.includes(k)?'new-key':'')+'" data-preview-key="' + k + '">' + k + '</button>').join('') + '<button type="button" class="key" data-preview-key=" ">Space</button><button type="button" class="key" data-preview-key="" aria-label="Backspace">⌫</button><button type="button" class="button small outline" data-preview-keyboard="hide">Hide keyboard</button></div>'
         : '<div class="keyboard-tools"><button type="button" class="button small secondary" data-preview-keyboard="show">Open Hebrew keyboard</button><small>Rehearsal keyboard · not saved</small></div>';
       const lookupCard = () => {
         const w = lookupId && word(lookupId);
@@ -73,16 +77,16 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const note = () => message ? '<p class="hint" role="alert" data-preview-message>' + esc(message) + '</p>' : '';
       const continueRow = () => '<div class="lesson-footer">' + button('Continue →', 'next-step', 'primary') + '</div>';
       function learn() {
-        const hasText = Boolean(lesson.explanation?.trim()), video = Boolean(audioURL(lesson.video)), mode = video && hasText ? (medium || 'watch') : video ? 'watch' : 'read';
-        return (video && hasText ? '<div class="mode-bar"><h2>Your explanation</h2><div class="segmented" role="group" aria-label="Lesson format">' + [['watch','Watch'],['read','Read']].map(([v, t]) => '<button type="button" data-preview-medium="' + v + '" aria-pressed="' + (mode === v) + '">' + t + '</button>').join('') + '</div></div>' : '') + learnMedia(lesson, mode, renderLesson) + continueRow();
+        const hasText = Boolean(presentation.explanation?.trim()), video = Boolean(audioURL(presentation.video)), mode = video && hasText ? (medium || 'watch') : video ? 'watch' : 'read';
+        return (video && hasText ? '<div class="mode-bar"><h2>Your explanation</h2><div class="segmented" role="group" aria-label="Lesson format">' + [['watch','Watch'],['read','Read']].map(([v, t]) => '<button type="button" data-preview-medium="' + v + '" aria-pressed="' + (mode === v) + '">' + t + '</button>').join('') + '</div></div>' : '') + learnMedia(presentation, mode, renderLesson) + continueRow();
       }
       function vocabulary() {
-        const block = lesson.blocks?.find(b => b.type === 'vocabulary'), words = block ? resolveBlock(content, lesson, block).filter(w => !w.noVocab) : [];
+        const block = lesson.blocks?.find(b => lesson.compositionVersion===2?b.id===componentId:b.type==='vocabulary'), words = block ? (lesson.compositionVersion===2?resolveComponent(content,lesson,block):resolveBlock(content,lesson,block)).filter(w => !w.noVocab) : [];
         const view = preferences.vocabularyView === 'table' ? 'table' : 'cards', notes = block?.options?.showNotes !== false;
         return '<h2>Your building blocks</h2><div class="mode-bar"><span>' + (view === 'cards' ? 'Fully pointed Hebrew' : 'All source fields') + '</span><div class="segmented" role="group" aria-label="Vocabulary view">' + [['cards','Cards'],['table','Table']].map(([v, t]) => '<button type="button" data-preview-pref="vocabularyView" data-preview-value="' + v + '" aria-pressed="' + (view === v) + '">' + t + '</button>').join('') + '</div></div>' + (view === 'cards' ? '<div class="word-grid">' + words.map(w => wordCard(w, {notes})).join('') + '</div>' : vocabularyTable(words)) + continueRow();
       }
       function practice() {
-        const count = stepExercises(lesson, step, []).length;
+        const count = portionExercises(content,lesson,componentId||step).length;
         if (!exercise) return '<h2>That portion is finished.</h2>' + continueRow();
         const mode = exercise.nikkudOverride || preferences.nikkud || 'full', allowed = exercise.allowLookup || Boolean(result);
         const lessonWords = content.words.filter(w => lesson.wordIds?.includes(w.id));
@@ -151,7 +155,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         else if (action === 'exit') call('exit');
         else if (action === 'audio' || action === 'audio-replay') { if (value) playAudio?.(value, Number(preferences.audioSpeed) || 1, action === 'audio-replay')?.catch?.(error => { if (active()) show(error.message); }); }
         else if (action === 'inline-choice') {
-          const [i, j] = value.split('|').map(Number), item = lesson.interactions[i], box = root.querySelector('#inline-feedback-' + i);
+          const [i, j] = value.split('|').map(Number), item = presentation.interactions[i], box = root.querySelector('#inline-feedback-' + i);
           if (box) box.textContent = (item.correctIndex === j ? 'Correct. ' : 'Try again. ') + item.feedback;
         }
       }, {signal});

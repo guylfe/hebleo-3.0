@@ -1,5 +1,6 @@
 import { resolveBlock, importVocabularyCSV } from './content.js';
-import { lessonSteps, stepLabels, stepExercises, followingLesson, lessonQuestionProgress, defaultMedium, audioURL, wordFields, fieldLabel, searchableWord } from './ux.js';
+import { lessonSteps, stepLabels, stepExercises, followingLesson, lessonQuestionProgress, defaultMedium, audioURL, wordFields, fieldLabel, searchableWord, lessonPortions, portionKind, portionExercises, portionLesson, portionLabel, libraryWords } from './ux.js';
+import {orderedLessons,courseOutline,keyboardForLesson,resolveComponent} from './course.js';
 import {richCell,cellCSS} from './rich.js';
 import {renderLesson} from './rich-browser.js';
 import {composeSentence,bindMatching,matchWord} from './interactions.js';
@@ -14,7 +15,7 @@ import {mountLessonPreview} from './preview/lesson-preview.js';
 import {createLearnerRenderer} from './preview/learner-renderer.js';
 
 const root = document.querySelector('#app');
-const state = { page:'home', user:localStorage.getItem('hebleo-demo-user') || 'learner-demo', data:null, lessonId:'lesson-1', step:'learn', question:0, answer:'', matching:{}, selectedTokens:[], result:null, practiceIds:[], medium:'watch', wordId:'w-ani', search:'', studio:null, reports:[], questions:[], authorLessonId:'lesson-1', authorExerciseId:null, importCandidate:null, studioImport:{}, panel:null, reviewSession:null, revealReview:false, recording:'empty' };
+const state = { page:'home', user:localStorage.getItem('hebleo-demo-user') || 'learner-demo', data:null, lessonId:'lesson-1', step:'learn', question:0, answer:'', matching:{}, selectedTokens:[], result:null, practiceIds:[], medium:'watch', wordId:'w-ani', search:'', libraryTag:'', libraryLesson:'', libraryState:'', libraryPage:0, studio:null, reports:[], questions:[], authorLessonId:'lesson-1', authorExerciseId:null, importCandidate:null, studioImport:{}, panel:null, reviewSession:null, revealReview:false, recording:'empty' };
 const uid = () => crypto.randomUUID();
 const pref = () => state.data.learner.preferences;
 let saveTimer, saveChain=Promise.resolve(), submitting=false, routeGeneration=0, lastFocus=null;
@@ -40,18 +41,23 @@ function draftToken() { return state.studio?.draft?.draftToken ?? null; }
 function content() { return state.page==='lesson' && state.session ? state.session.content : state.data.content; }
 function word(id) { return content().words.find(w=>w.id===id); }
 function lessonObject() { return content().lessons.find(l=>l.id===state.lessonId); }
-function currentExercise() { const l=lessonObject();return l ? content().exercises.find(e=>e.id===stepExercises(l,state.step,state.practiceIds)[state.question]) : null; }
-function keyboardContext(){return state.page==='lesson'?lessonObject()?.keyboard || {knownKeys:lessonObject()?.letters||'',newKeys:''}:{knownKeys:'',newKeys:''};}
+function currentExercise() { const l=lessonObject();return l ? content().exercises.find(e=>e.id===portionExercises(content(),l,state.step,state.practiceIds)[state.question]) : null; }
+function keyboardContext(){return state.page==='lesson'?state.session.keyboard||keyboardForLesson(content(),state.lessonId):{knownKeys:'',newKeys:''};}
+const portionKeys=l=>lessonPortions(content(),l).map(p=>p.key);
+const currentKind=()=>portionKind(lessonObject(),state.step);
+const label=key=>lessonObject()?portionLabel(lessonObject(),key):stepLabels[key]||key;
+function practicePortion(){return lessonObject().compositionVersion===2?lessonPortions(content(),lessonObject()).find(p=>['check','apply'].includes(p.kind))?.key:'apply';}
 function syncKeyboard(){window.HebleoKeyboard?.sync(keyboardContext(),pref(),state.page==='lesson'?state.lessonId+'|'+state.step+'|'+state.question:state.page);}
 function returnKeyboard(){window.HebleoKeyboard?.mount(document.body);}
-function nextLesson() { return state.data.content.lessons.find(l=>!state.data.learner.completed.includes(l.id)) || null; }
+const chapterName=(c,id)=>courseOutline(c).find(g=>g.kind==='chapter'&&g.lessons.some(l=>l.id===id))?.title||'';
+function nextLesson() { return orderedLessons(state.data.content).find(l=>!state.data.learner.completed.includes(l.id)) || null; }
 function continueLesson() { const l=state.data.content.lessons.find(l=>l.id===state.data.learner.lastLessonId && !state.data.learner.completed.includes(l.id));return l || nextLesson(); }
 function clearQuestionAnswer() { state.answer='';state.matching={};state.selectedTokens=[];state.result=null; }
 function answerDraft() { return {text:state.answer,matching:state.matching,selectedTokens:state.selectedTokens}; }
 function resetQuestion() { state.question=0;clearQuestionAnswer(); }
 function questionProgress(l) { return lessonQuestionProgress(l,state.data.learner.attempts,state.session.revisionId); }
 function lessonProgressBar(l) { const n=questionProgress(l).correctIds.length,total=l.exerciseIds.length;return '<div class="lesson-progress"><label for="lesson-question-progress">'+n+' of '+total+' questions answered correctly</label><progress id="lesson-question-progress" value="'+n+'" max="'+(total||1)+'" aria-label="Lesson questions answered correctly" aria-valuetext="'+n+' of '+total+'"></progress></div>'; }
-function progressPayload() { return {lessonId:state.lessonId,revisionId:state.session.revisionId,step:state.step,question:state.question,answer:state.answer,selectedTokens:[...state.selectedTokens],matching:{...state.matching},resultRequestId:state.result?.requestId || null,practiceIds:state.practiceIds}; }
+function progressPayload() { return {lessonId:state.lessonId,revisionId:state.session.revisionId,step:currentKind(),...(lessonObject().compositionVersion===2?{componentId:state.step==='complete'?null:state.step}:{}),question:state.question,answer:state.answer,selectedTokens:[...state.selectedTokens],matching:{...state.matching},resultRequestId:state.result?.requestId || null,practiceIds:state.practiceIds}; }
 function queueSave() {
   if(state.page!=='lesson' || !state.session)return saveChain;
   const payload=progressPayload(),user=state.user;
@@ -66,10 +72,11 @@ async function openLesson(id, step, replace=false) {
   const session=await api('session?lessonId='+encodeURIComponent(id));
   state.session=session;state.lessonId=id;state.page='lesson';state.practiceIds=[];resetQuestion();
   const p=session.progress;
-  if(p){state.step=p.step;state.question=p.question;state.answer=p.answer;state.matching=p.matching;state.selectedTokens=p.selectedTokens;state.practiceIds=p.practiceIds || [];state.result=session.result;}
-  else state.step=lessonSteps(lessonObject())[0];
-  if(step && lessonSteps(lessonObject()).includes(step) && step!==state.step){state.step=step;resetQuestion();state.practiceIds=[];}
-  state.medium=defaultMedium(lessonObject());state.panel=null;setRoute(replace);await queueSave();render();focusHeading();
+  if(p){state.step=lessonObject().compositionVersion===2?(p.componentId??'complete'):p.step;state.question=p.question;state.answer=p.answer;state.matching=p.matching;state.selectedTokens=p.selectedTokens;state.practiceIds=p.practiceIds || [];state.result=session.result;}
+  else state.step=portionKeys(lessonObject())[0];
+  step=portionKeys(lessonObject()).includes(step)?step:lessonObject().compositionVersion===2?lessonPortions(content(),lessonObject()).find(p=>p.kind===step)?.key:step;
+  if(step && portionKeys(lessonObject()).includes(step) && step!==state.step){state.step=step;resetQuestion();state.practiceIds=[];}
+  state.medium=defaultMedium(portionLesson(lessonObject(),state.step));state.panel=null;setRoute(replace);await queueSave();render();focusHeading();
 }
 function focusHeading() { window.scrollTo({top:0,behavior:pref().animations?'smooth':'instant'});document.querySelector('h1')?.focus({preventScroll:true}); }
 function nav() {
@@ -84,20 +91,20 @@ function render() {
   returnKeyboard();document.querySelector('#context-panel')?.remove();
   const pages={home,course,lesson,review,library,studio,settings};const u=state.data.users.find(u=>u.id===state.user);
   if(state.page==='studio'&&!state.data.canAuthor)state.page='home';
-  root.innerHTML='<div class="shell '+(!pref().animations?'reduce-motion':'')+'"><aside class="sidebar"><a class="brand" href="#home" data-action="page" data-value="home">hebleo<span>.</span></a><div class="brand-sub">Hebrew makes sense here</div><nav class="nav" aria-label="Main navigation">'+nav()+'</nav><div class="side-foot"><strong>Your course. Your next step.</strong><p>Local demonstration</p></div></aside><main class="main"><header class="topbar"><div class="breadcrumb">Your Hebrew / '+esc({home:'Your path',course:'Foundations',lesson:stepLabels[state.step],review:'Review',library:'My Hebrew',studio:'Author workspace',settings:'Settings'}[state.page])+'</div><div class="profile"><span class="demo-pill">DEMO CONTENT</span><select id="demo-user" aria-label="Demo profile">'+state.data.users.map(x=>'<option value="'+x.id+'" '+(x.id===state.user?'selected':'')+'>'+esc(x.name)+' · '+esc(x.role)+'</option>').join('')+'</select></div></header><div class="content">'+pages[state.page]()+'</div></main></div>';
+  root.innerHTML='<div class="shell '+(!pref().animations?'reduce-motion':'')+'"><aside class="sidebar"><a class="brand" href="#home" data-action="page" data-value="home">hebleo<span>.</span></a><div class="brand-sub">Hebrew makes sense here</div><nav class="nav" aria-label="Main navigation">'+nav()+'</nav><div class="side-foot"><strong>Your course. Your next step.</strong><p>Local demonstration</p></div></aside><main class="main"><header class="topbar"><div class="breadcrumb">Your Hebrew / '+esc({home:'Your path',course:'Foundations',lesson:label(state.step),review:'Review',library:'My Hebrew',studio:'Author workspace',settings:'Settings'}[state.page])+'</div><div class="profile"><span class="demo-pill">DEMO CONTENT</span><select id="demo-user" aria-label="Demo profile">'+state.data.users.map(x=>'<option value="'+x.id+'" '+(x.id===state.user?'selected':'')+'>'+esc(x.name)+' · '+esc(x.role)+'</option>').join('')+'</select></div></header><div class="content">'+pages[state.page]()+'</div></main></div>';
   bind();if(state.page==='studio'&&state.studio)mountStudioEditors();syncKeyboard();if(state.panel)showPanel();
 }
 function lessonStarted(id) { const l=state.data.learner; return Boolean(l.resumes[id] || l.attempts.some(a=>a.lessonId===id)); }
 function lessonCards() {
-  return state.data.content.lessons.map((l,i)=>'<article class="card lesson-card"><div class="lesson-number '+(state.data.learner.completed.includes(l.id)?'done':'')+'">'+(state.data.learner.completed.includes(l.id)?'✓':i+1)+'</div><div class="lesson-copy"><h3>'+esc(l.title)+'</h3><p>'+esc(l.chapter)+' · '+l.minutes+' min</p></div>'+button(state.data.learner.completed.includes(l.id)?'Revisit':lessonStarted(l.id)?'Continue →':'Start →','lesson','small '+(l.id===continueLesson()?.id?'primary':'secondary'),l.id)+'</article>').join('');
+  return orderedLessons(state.data.content).map((l,i)=>'<article class="card lesson-card"><div class="lesson-number '+(state.data.learner.completed.includes(l.id)?'done':'')+'">'+(state.data.learner.completed.includes(l.id)?'✓':i+1)+'</div><div class="lesson-copy"><h3>'+esc(l.title)+'</h3><p>'+esc(chapterName(content(),l.id))+' · '+l.minutes+' min</p></div>'+button(state.data.learner.completed.includes(l.id)?'Revisit':lessonStarted(l.id)?'Continue →':'Start →','lesson','small '+(l.id===continueLesson()?.id?'primary':'secondary'),l.id)+'</article>').join('');
 }
 function home() {
   const {learner,due,content:c}=state.data,l=continueLesson(),position=l&&learner.resumes[l.id];
   return '<div class="intro-row"><div><div class="eyebrow">YOUR PATH</div><h1 tabindex="-1">Welcome back, '+esc(state.data.users.find(u=>u.id===state.user).name)+'.</h1><p>A short lesson. A useful connection.</p></div></div><section class="hero"><div class="hero-copy"><div class="eyebrow">'+(l?'YOUR NEXT STEP':'COURSE COMPLETE')+'</div><h2>'+(l?esc(l.title):'Keep your Hebrew growing.')+'</h2><p>'+(l?esc(l.chapter)+' · '+esc(stepLabels[position?.step || lessonSteps(l)[0]]):'Revisit a lesson or start your scheduled review.')+'</p>'+(l?button((lessonStarted(l.id)?'Continue':'Start')+' · '+esc(stepLabels[position?.step || lessonSteps(l)[0]])+' →','lesson','light',l.id):button('Open review →','page','light','review'))+'</div></section><div class="grid-2"><article class="card"><h2>Your course</h2><p>'+learner.completed.length+' / '+c.lessons.length+' lessons complete</p><progress max="'+c.lessons.length+'" value="'+learner.completed.length+'" aria-label="Course completion"></progress></article><article class="card"><h2>'+due.length+' cards due</h2><p>Bring familiar words back into focus.</p>'+button('Start review →','page','secondary','review')+'</article></div><div class="section-heading"><h2>Your course</h2></div><div class="lesson-list">'+lessonCards()+'</div>';
 }
 function course() {
-  const groups=Map.groupBy(state.data.content.lessons,l=>l.chapter);
-  return '<div class="eyebrow">FOUNDATIONS</div><h1 tabindex="-1">Your course.</h1><p>Choose a lesson or return to your saved place.</p>'+Array.from(groups).map(([chapter,ls])=>'<details class="card course-chapter" open><summary>'+esc(chapter)+'</summary>'+ls.map(l=>'<div class="chapter-lesson"><strong>'+esc(l.title)+'</strong><span class="tag">'+(state.data.learner.completed.includes(l.id)?'Complete':lessonStarted(l.id)?'In progress':'Not started')+'</span>'+button('Open lesson →','lesson','small secondary',l.id)+'</div>').join('')+'</details>').join('');
+ const item=l=>'<div class="chapter-lesson"><strong>'+esc(l.title)+'</strong><span class="tag">'+(state.data.learner.completed.includes(l.id)?'Complete':lessonStarted(l.id)?'In progress':'Not started')+'</span>'+button(state.data.learner.completed.includes(l.id)?'Revisit':lessonStarted(l.id)?'Continue →':'Start →','lesson','small secondary',l.id)+'</div>';
+ return '<div class="eyebrow">FOUNDATIONS</div><h1 tabindex="-1">Your course.</h1><p>Choose a lesson or return to your saved place.</p>'+courseOutline(state.data.content).map(g=>g.kind==='chapter'?'<details class="card course-chapter" open><summary>'+esc(g.title)+'</summary>'+g.lessons.map(item).join('')+'</details>':'<section class="card">'+item(g.lesson)+'</section>').join('');
 }
 function vocabulary(w,notes=true) {
   return wordCard(w,{notes,before:'<button class="bookmark '+(state.data.learner.bookmarks.includes(w.id)?'saved':'')+'" data-action="bookmark" data-value="'+w.id+'" aria-label="Bookmark '+esc(w.english)+'">'+(state.data.learner.bookmarks.includes(w.id)?'★':'☆')+'</button>',after:button(state.data.learner.cards[w.id]?'In your review':'+ Add to review','enroll','small secondary',w.id)});
@@ -109,31 +116,33 @@ function vocabularyView(words,notes=true) {
   return '<div class="mode-bar"><span>All source fields</span>'+controls+'</div>'+vocabularyTable(words);
 }
 function learnBody(l,conceptTime) {
+  l=portionLesson(l,state.step);
   const hasText=Boolean(l.explanation?.trim()),video=audioURL(l.video),mode=video&&hasText?state.medium:video?'watch':'read';
   return (video&&hasText?'<div class="mode-bar"><h2>Your explanation</h2>'+segmented([['watch','Watch'],['read','Read']],mode,'medium','Lesson format')+'</div>':'')+learnMedia(l,mode,renderLesson,conceptTime)+'<div class="button-row">'+button('Lesson help & questions','help','outline small',l.id)+'</div>';
 }
 function lessonOutline(l) {
-  return '<details class="card lesson-toc" '+(window.matchMedia('(max-width:1100px)').matches?'':'open')+'><summary>Course outline</summary><div class="course-outline-content">'+state.session.content.lessons.map(x=>'<details '+(x.id===l.id?'open':'')+'><summary>'+esc(x.title)+(state.data.learner.completed.includes(x.id)?' ✓':'')+'</summary>'+lessonSteps(x).map(step=>'<button data-action="outline" data-value="'+x.id+'|'+step+'" class="outline-step '+(x.id===l.id&&state.step===step?'active':'')+'" '+(x.id===l.id&&state.step===step?'aria-current="step"':'')+'>'+esc(stepLabels[step])+'</button>').join('')+'</details>').join('')+'<small>Answers and your place are saved.</small></div></details>';
+ const item=x=>'<details '+(x.id===l.id?'open':'')+'><summary>'+esc(x.title)+(state.data.learner.completed.includes(x.id)?' ✓':'')+'</summary>'+lessonPortions(content(),x).map(p=>'<button data-action="outline" data-value="'+x.id+'|'+p.key+'" class="outline-step '+(x.id===l.id&&state.step===p.key?'active':'')+'" '+(x.id===l.id&&state.step===p.key?'aria-current="step"':'')+'>'+esc(portionLabel(x,p.key))+'</button>').join('')+'</details>';
+ return '<details class="card lesson-toc" '+(window.matchMedia('(max-width:1100px)').matches?'':'open')+'><summary>Course outline</summary><div class="course-outline-content">'+courseOutline(content()).map(g=>g.kind==='chapter'?'<details open><summary>'+esc(g.title)+'</summary>'+g.lessons.map(item).join('')+'</details>':item(g.lesson)).join('')+'<small>Answers and your place are saved.</small></div></details>';
 }
 function lesson() {
-  const l=lessonObject(),steps=lessonSteps(l);let body;
-  if(state.step==='learn')body=learnBody(l);
-  else if(state.step==='vocabulary'){const block=l.blocks.find(b=>b.type==='vocabulary');body='<h2>Your building blocks</h2>'+vocabularyView(resolveBlock(content(),l,block),block.options?.showNotes!==false);}
+  const l=lessonObject(),steps=portionKeys(l);let body;
+  if(currentKind()==='learn')body=learnBody(l);
+  else if(currentKind()==='vocabulary'){const block=l.blocks.find(b=>l.compositionVersion===2?b.id===state.step:b.type==='vocabulary');body='<h2>Your building blocks</h2>'+vocabularyView(l.compositionVersion===2?resolveComponent(content(),l,block):resolveBlock(content(),l,block),block.options?.showNotes!==false);}
   else if(state.step==='complete')body=completion(l);
   else body=exercisePanel(l);
-  const index=steps.indexOf(state.step),isExercise=['check','apply'].includes(state.step);
+  const index=steps.indexOf(state.step),isExercise=['check','apply'].includes(currentKind());
   if(state.session.revisionId!==state.data.revisionId)body='<div class="hint">This saved session uses an earlier lesson. Starting the updated lesson resets this lesson’s current answers; your graded attempts and review progress remain. '+button('Start updated lesson','latest-lesson','small secondary')+'</div>'+body;
-  return '<div class="intro-row"><div><div class="eyebrow">'+esc(l.chapter)+'</div><h1 tabindex="-1">'+esc(l.title)+'</h1><p>'+esc(stepLabels[state.step])+' · Step '+(index+1)+' of '+steps.length+'</p></div>'+button('← Course','page','outline small','course')+'</div><div class="lesson-layout"><div><nav class="step-strip" aria-label="Lesson portions">'+steps.map(s=>'<button data-action="step" data-value="'+s+'" class="'+(s===state.step?'active':'')+'" '+(s===state.step?'aria-current="step"':'')+'>'+esc(stepLabels[s])+'</button>').join('')+'</nav>'+lessonProgressBar(l)+'<section class="card lesson-section" id="practice">'+body+'</section>'+(!isExercise&&state.step!=='complete'?'<div class="lesson-footer">'+button('← Back','step','outline',steps[index-1]||'',index===0)+button('Continue →','step','primary',steps[index+1])+'</div>':'')+'</div>'+lessonOutline(l)+'</div>';
+  return '<div class="intro-row"><div><div class="eyebrow">'+esc(l.chapter)+'</div><h1 tabindex="-1">'+esc(l.title)+'</h1><p>'+esc(label(state.step))+' · Step '+(index+1)+' of '+steps.length+'</p></div>'+button('← Course','page','outline small','course')+'</div><div class="lesson-layout"><div><nav class="step-strip" aria-label="Lesson portions">'+steps.map(s=>'<button data-action="step" data-value="'+s+'" class="'+(s===state.step?'active':'')+'" '+(s===state.step?'aria-current="step"':'')+'>'+esc(portionLabel(l,s))+'</button>').join('')+'</nav>'+lessonProgressBar(l)+'<section class="card lesson-section" id="practice">'+body+'</section>'+(!isExercise&&state.step!=='complete'?'<div class="lesson-footer">'+button('← Back','step','outline',steps[index-1]||'',index===0)+button('Continue →','step','primary',steps[index+1])+'</div>':'')+'</div>'+lessonOutline(l)+'</div>';
 }
 function completion(l) {
-  const completed=state.data.learner.completed.includes(l.id),next=followingLesson(state.data.content,l.id),missed=questionProgress(l).missedIds;
+  const completed=state.data.learner.completed.includes(l.id),next=followingLesson(content(),l.id),missed=questionProgress(l).missedIds;
   const onward=next?button('Next lesson →','lesson','primary',next.id):button(completed?'Course complete →':'Return to course →','page','primary','course');
   return '<div class="empty '+(completed&&pref().animations?'celebrate':'')+'"><div class="empty-symbol" aria-hidden="true">'+(completed?'✓':'↻')+'</div><h2>'+(completed?'Lesson complete.':'You finished this set.')+'</h2><p>'+(completed?'A new connection made.':'Some core questions still need a correct answer. Extra practice is optional; you can continue and return later.')+'</p><div class="button-row centered">'+onward+button('Practice more','target-practice','secondary')+'</div>'+(missed.length?'<div class="missed-questions"><h3>Retry a missed question</h3><div class="retry-list">'+missed.map(id=>button('Question '+(l.exerciseIds.indexOf(id)+1)+': '+esc(content().exercises.find(e=>e.id===id).prompt),'retry-question','small outline',id)).join('')+'</div></div>':'')+'<p>Your answers are saved. This session is not a mastery assessment.</p></div>';
 }
 function keyboard(){return '<div class="keyboard-tools">'+button('Open Hebrew keyboard','keyboard-open','small secondary')+'<small>Floating keyboard · English key equivalents · pin to keep open</small></div>';}
 function exercisePanel(l) {
-  const ids=stepExercises(l,state.step,state.practiceIds),e=currentExercise();
-  if(!e)return '<h2>That portion is finished.</h2>'+button('Continue →','step','primary',lessonSteps(l)[lessonSteps(l).indexOf(state.step)+1]);
+  const ids=portionExercises(content(),l,state.step,state.practiceIds),e=currentExercise();
+  if(!e)return '<h2>That portion is finished.</h2>'+button('Continue →','step','primary',portionKeys(l)[portionKeys(l).indexOf(state.step)+1]);
   const mode=e.nikkudOverride||pref().nikkud,input=exerciseInput(e,{mode,word,draft:answerDraft(),result:state.result,keyboard:keyboard(l.letters)});
   const allowed=e.allowLookup || Boolean(state.result);
   const feedback=exerciseFeedback(e,state.result);
@@ -143,14 +152,16 @@ function reviewWord() { return state.reviewSession ? state.data.content.words.fi
 function voiceControls() { return '<details class="voice-comparison" '+(state.recording!=='empty'?'open':'')+'><summary>Record yourself and compare</summary><p>Your recording stays in this tab and is cleared when you leave this item. Maximum 60 seconds.</p><div class="toolbar">'+button(state.recording==='recording'?'Recording…':'Record yourself','record','small secondary','',state.recording==='recording')+button('Stop recording','record-stop','small outline','',state.recording!=='recording')+button('Replay my voice','voice-replay','small outline','',state.recording!=='ready')+'</div></details>'; }
 function review() {
   const undo=state.data.learner.lastReview?button('Undo last rating','review-undo','small outline'):'',session=state.reviewSession,w=reviewWord();
-  if(!session)return '<div class="eyebrow">A SHORT RETURN TO FAMILIAR WORDS</div><h1 tabindex="-1">Your review.</h1><section class="card"><h2>'+state.data.due.length+' cards due</h2><label for="review-limit">Cards in this session</label><input id="review-limit" type="number" min="1" max="100" value="'+pref().reviewLimit+'"><label for="review-type">Card presentation</label><select id="review-type">'+[['recognition','Hebrew → meaning'],['translation','English → Hebrew'],['listening','Listening first'],['sentence','Sentence context']].map(([v,l])=>'<option value="'+v+'" '+(pref().reviewType===v?'selected':'')+'>'+l+'</option>').join('')+'</select>'+reviewNikkudControl()+'<div class="button-row">'+button('Start review','review-start','primary','',!state.data.due.length)+undo+'</div><p>Listening and sentence cards appear when their source media or examples are available. These are initial presentation options; final card pedagogy remains to be defined.</p></section>';
+  if(!session)return '<div class="eyebrow">A SHORT RETURN TO FAMILIAR WORDS</div><h1 tabindex="-1">Your review.</h1><section class="card"><h2>'+state.data.due.length+' cards due</h2><label for="review-limit">Cards in this session</label><input id="review-limit" type="number" min="1" max="100" value="'+pref().reviewLimit+'"><label for="review-type">Card presentation</label><select id="review-type">'+[['recognition','Hebrew → meaning'],['translation','English → Hebrew'],['listening','Listening first'],['sentence','Sentence context']].map(([v,l])=>'<option value="'+v+'" '+(pref().reviewType===v?'selected':'')+'>'+l+'</option>').join('')+'</select>'+reviewNikkudControl()+(!state.data.due.length?'<p>'+(!Object.keys(state.data.learner.cards).length?'Your review deck is empty. Add a word from a lesson or My Hebrew.':'No cards are due yet. They will return on their scheduled date.')+'</p>'+((state.data.content.provenance?.kind==='synthetic-demo'&&!Object.keys(state.data.learner.cards).length)?button('Add 3 synthetic demo words to review','review-demo','secondary'):''):'')+'<div class="button-row">'+button('Start review','review-start','primary','',!state.data.due.length)+undo+'</div><p>Listening and sentence cards appear when their source media or examples are available. These are initial presentation options; final card pedagogy remains to be defined.</p></section>';
   if(!w)return '<h1 tabindex="-1">Review finished.</h1><section class="card empty"><h2>You reviewed '+session.index+' cards.</h2><div class="button-row centered">'+button('Continue learning','lesson','primary',continueLesson()?.id||state.data.content.lessons[0].id)+button('Review overview','review-end','secondary')+undo+'</div></section>';
   const frontMode=reviewNikkud(state.data.content,pref().reviewNikkud),type=session.type,example=w.examples?.[0],sentence=typeof example==='string'?example:example?.hebrew;
   return '<h1 tabindex="-1">Your review.</h1><p>Card '+(session.index+1)+' of '+session.ids.length+'</p><article class="card review-card"><span class="tag">'+esc({recognition:'HEBREW → MEANING',translation:'ENGLISH → HEBREW',listening:'LISTENING FIRST',sentence:'SENTENCE CONTEXT'}[type])+'</span><div class="card-side-label">'+(state.revealReview?'ANSWER':'QUESTION')+'</div>'+(state.revealReview?'<div class="hebrew">'+wordText(w)+'</div><div class="review-meaning">'+esc(w.english)+'</div><p>'+esc(w.notes)+'</p>'+audioControls(w.audio,w.english)+'<details><summary>Full entry</summary>'+richFields(w)+'</details>'+voiceControls()+'<div class="review-ratings">'+[['Again',1],['Hard',2],['Good',3],['Easy',4]].map(([label,rating])=>button(label+' <small>'+rating+'</small>','review-rate',rating===3?'primary':'secondary',rating)).join('')+'</div>':(type==='listening'?audioControls(w.audio,w.english):type==='translation'?'<div class="review-meaning">'+esc(w.english)+'</div>':type==='sentence'?'<div class="hebrew">'+esc(frontMode==='none'?sentence?.replace(/[\u0591-\u05c7]/g,''):sentence)+'</div>':'<div class="hebrew">'+wordText(w,frontMode)+'</div>')+button('Show answer','review-reveal','primary'))+'</article><div class="toolbar centered">'+undo+button('Finish session','review-end','small outline')+'</div>';
 }
 function library() {
-  const query=state.search.normalize('NFD').replace(/[\u0591-\u05c7]/g,'').toLowerCase(),words=state.data.content.words.filter(w=>!w.noVocab&&searchableWord(w).includes(query));
-  return '<div class="eyebrow">YOUR GROWING HEBREW</div><h1 tabindex="-1">My Hebrew.</h1><p>Search words, notes, roots, patterns, and forms.</p><input id="library-search" class="search-input" type="search" placeholder="Search Hebrew, English, root, pattern, or notes…" aria-label="Search vocabulary" value="'+esc(state.search)+'">'+(words.length?vocabularyView(words):'<div class="card empty">No matching words.</div>');
+ const c=state.data.content,words=libraryWords(c,state.data.learner,{search:state.search,tag:state.libraryTag,lessonId:state.libraryLesson,learningState:state.libraryState});
+ const pages=Math.max(1,Math.ceil(words.length/50));state.libraryPage=Math.min(state.libraryPage,pages-1);
+ const select=(id,title,values,value)=>'<label for="'+id+'">'+title+'</label><select id="'+id+'"><option value="">All</option>'+values.map(([v,name])=>'<option value="'+esc(v)+'" '+(v===value?'selected':'')+'>'+esc(name)+'</option>').join('')+'</select>';
+ return '<div class="eyebrow">YOUR GROWING HEBREW</div><h1 tabindex="-1">My Hebrew.</h1><p>Search words, notes, roots, patterns, and forms.</p><input id="library-search" class="search-input" type="search" placeholder="Search Hebrew, English, root, pattern, or notes…" aria-label="Search vocabulary" value="'+esc(state.search)+'"><div class="field-grid">'+select('library-tag','Tag',[...new Set(c.words.flatMap(w=>Array.isArray(w.tags)?w.tags:[]))].sort().map(t=>[t,t]),state.libraryTag)+select('library-lesson','Lesson',orderedLessons(c).map(l=>[l.id,l.title]),state.libraryLesson)+select('library-state','Learning state',[['new','Not in review'],['review','In review'],['due','Due'],['saved','Bookmarked']],state.libraryState)+'</div><p role="status">'+words.length+' words · Page '+(state.libraryPage+1)+' of '+pages+'</p>'+(words.length?vocabularyView(words.slice(state.libraryPage*50,state.libraryPage*50+50)):'<div class="card empty">No matching words.</div>')+'<div class="button-row">'+button('Previous','library-page','outline small',state.libraryPage-1,state.libraryPage===0)+button('Next','library-page','outline small',state.libraryPage+1,state.libraryPage+1>=pages)+'</div>';
 }
 function settings() {
   const l=state.data.learner;const checks=[['immediateAnswers','Submit multiple-choice answers immediately'],['sounds','Play feedback sounds'],['animations','Show brief completion animations'],['keyboardPinned','Keep the floating keyboard open between questions'],['keyboardConvert','Convert physical English keys to Hebrew while the Hebrew keyboard is open']];
@@ -230,14 +241,14 @@ function insertKey(value,backspace=false) {
 }
 async function updatePreference(key,value) { await api('preferences',{[key]:value});await load(); }
 async function act(action,value) {
-  if(action==='latest-lesson'){await flushSave();await api('session/latest',{lessonId:state.lessonId});state.session=null;await openLesson(state.lessonId,'learn');return;}
+  if(action==='latest-lesson'){await flushSave();await api('session/latest',{lessonId:state.lessonId});state.session=null;await openLesson(state.lessonId);return;}
   if(action==='page'){await flushSave();closePanel();stopMedia();state.page=value;state.reviewSession=null;state.revealReview=false;state.search='';await load();setRoute();render();focusHeading();return;}
   if(action==='lesson'){await openLesson(value);return;}
   if(action==='outline'){const [id,step]=value.split('|');if(id!==state.lessonId){await openLesson(id,step);return;}action='step';value=step;}
-  if(action==='step'){if(value===state.step || !lessonSteps(lessonObject()).includes(value))return;closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(lessonObject());stopMedia();setRoute();await queueSave();render();focusHeading();return;}
+  if(action==='step'){if(value===state.step || !portionKeys(lessonObject()).includes(value))return;closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(portionLesson(lessonObject(),state.step));stopMedia();setRoute();await queueSave();render();focusHeading();return;}
   if(action==='mode'||action==='vocab-view'){await updatePreference(action==='mode'?'nikkud':'vocabularyView',value);render();return;}
   if(action==='keyboard-open'){window.HebleoKeyboard?.open(document.querySelector('#answer'));return;}
-  if(action==='inline-choice'){const [i,j]=value.split('|').map(Number),item=lessonObject().interactions[i];document.querySelector('#inline-feedback-'+i).textContent=(item.correctIndex===j?'Correct. ':'Try again. ')+item.feedback;return;}
+  if(action==='inline-choice'){const [i,j]=value.split('|').map(Number),item=portionLesson(lessonObject(),state.step).interactions[i];document.querySelector('#inline-feedback-'+i).textContent=(item.correctIndex===j?'Correct. ':'Try again. ')+item.feedback;return;}
   if(action==='author-lesson'){state.authorLessonId=value;render();return;}
   if(action==='medium'){state.medium=value;render();return;}
   if(action==='lookup'){replacePanel({type:'word',id:value});return;}
@@ -255,16 +266,18 @@ async function act(action,value) {
   if(action==='check'){await submitAnswer();return;}
   if(action==='token'){if(state.result)return;state.selectedTokens.push(Number(value));await queueSave();render();return;}
   if(action==='remove-token'){if(state.result)return;state.selectedTokens.splice(Number(value),1);await queueSave();render();return;}
-  if(action==='next-question'){if(!state.result)return;const ids=stepExercises(lessonObject(),state.step,state.practiceIds);if(state.question+1>=ids.length){state.step=lessonSteps(lessonObject())[lessonSteps(lessonObject()).indexOf(state.step)+1];state.practiceIds=[];resetQuestion();}else{state.question++;clearQuestionAnswer();}setRoute();await queueSave();render();focusHeading();return;}
+  if(action==='next-question'){if(!state.result)return;const ids=portionExercises(content(),lessonObject(),state.step,state.practiceIds);if(state.question+1>=ids.length){state.step=portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1];state.practiceIds=[];resetQuestion();}else{state.question++;clearQuestionAnswer();}setRoute();await queueSave();render();focusHeading();return;}
   if(action==='retry-question'){
     if(submitting || !questionProgress(lessonObject()).missedIds.includes(value))return;
     await flushSave();closePanel();
     if(currentExercise()?.id===value && state.result&&!state.result.correct)clearQuestionAnswer();
-    else{state.step='apply';resetQuestion();state.practiceIds=[value];}
+    else{state.step=practicePortion();resetQuestion();state.practiceIds=[value];}
     setRoute();await queueSave();render();focusHeading();document.querySelector('#answer,#practice [data-action="choice"],#practice .match-tile,#practice [data-action="token"]')?.focus({preventScroll:true});return;
   }
-  if(action==='target-practice'){const result=await api('practice',{revisionId:state.session.revisionId,lessonId:state.lessonId});closePanel();state.step='apply';resetQuestion();state.practiceIds=result.exerciseIds;toast('Repeating '+result.exerciseIds.length+' authored questions from this lesson.');setRoute();await queueSave();render();focusHeading();return;}
+  if(action==='target-practice'){const result=await api('practice',{revisionId:state.session.revisionId,lessonId:state.lessonId});closePanel();state.step=practicePortion();resetQuestion();state.practiceIds=result.exerciseIds;toast('Repeating '+result.exerciseIds.length+' authored questions from this lesson.');setRoute();await queueSave();render();focusHeading();return;}
   if(action==='report-open'){if(state.result)replacePanel({type:'report'});return;}
+  if(action==='library-page'){state.libraryPage=Math.max(0,Number(value));render();return;}
+  if(action==='review-demo'){const candidates=state.data.content.words.filter(w=>!w.noCard).slice(0,3);for(const w of candidates)if(!state.data.learner.cards[w.id])await api('enroll',{wordId:w.id});await load();render();toast('Existing synthetic words are ready for review.');return;}
   if(action==='review-start'){
     const limit=Number(document.querySelector('#review-limit').value),type=document.querySelector('#review-type').value;await api('preferences',{reviewLimit:limit,reviewType:type});await load();
     const ids=state.data.due.filter(({word:w})=>type==='listening'?audioURL(w.audio):type==='sentence'?w.examples?.length:true).slice(0,limit).map(({word:w})=>w.id);
@@ -296,7 +309,8 @@ function bind(scope=root) {
   scope.querySelector('#answer')?.addEventListener('input',event=>{state.answer=event.target.value;scheduleSave();});
   scope.querySelectorAll('[data-match]').forEach(el=>el.addEventListener('change',()=>{state.matching[el.dataset.match]=el.value;scheduleSave();}));
   scope.querySelector('#demo-user')?.addEventListener('change',async event=>{try{await flushSave();closePanel();clearRecording();state.user=event.target.value;localStorage.setItem('hebleo-demo-user',state.user);state.page='home';state.session=null;state.reviewSession=null;resetQuestion();await load();setRoute();render();}catch(error){toast(error.message);}});
-  scope.querySelector('#library-search')?.addEventListener('input',event=>{const position=event.target.selectionStart;state.search=event.target.value;render();const el=document.querySelector('#library-search');el.focus();el.setSelectionRange(position,position);});
+  scope.querySelector('#library-search')?.addEventListener('input',event=>{const position=event.target.selectionStart;state.search=event.target.value;state.libraryPage=0;render();const el=document.querySelector('#library-search');el.focus();el.setSelectionRange(position,position);});
+  for(const [id,key] of [['library-tag','libraryTag'],['library-lesson','libraryLesson'],['library-state','libraryState']])scope.querySelector('#'+id)?.addEventListener('change',event=>{state[key]=event.target.value;state.libraryPage=0;render();});
   scope.querySelectorAll('[data-preference]').forEach(el=>el.addEventListener('change',async()=>{try{await updatePreference(el.dataset.preference,el.checked);render();}catch(error){toast(error.message);}}));
   scope.querySelector('#audio-speed')?.addEventListener('change',async event=>{try{await updatePreference('audioSpeed',Number(event.target.value));}catch(error){toast(error.message);}});
   scope.querySelector('#report-form')?.addEventListener('submit',async event=>{event.preventDefault();const el=event.target.querySelector('button');el.disabled=true;try{await api('report',{requestId:uid(),attemptId:state.result.requestId,...Object.fromEntries(new FormData(event.target))});closePanel();toast('Report saved for author review.');}catch(error){toast(error.message);}finally{el.disabled=false;}});

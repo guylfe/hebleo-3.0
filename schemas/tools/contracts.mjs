@@ -1,6 +1,8 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import Ajv from 'ajv';
+import {validateCurriculum,validateLessonComposition,resolveComponent,orderedLessons} from '../../public/course.js';
+import {validateFormatting} from '../../public/vocabulary-import.js';
 import { audioURL } from '../../public/ux.js';
 
 // Validation never coerces, strips fields, adds defaults or normalizes Hebrew.
@@ -34,8 +36,8 @@ export function dependenciesFor(collection, object, pack) {
     for (const id of object.wordIds || []) add('words', id);
     // Ordering prepares distractors from the current and previous two lessons.
     if (object.type === 'ordering') {
-      const index = pack.lessons.findIndex(l => l.id === object.lessonId);
-      for (const lesson of pack.lessons.slice(Math.max(0, index - 2), index + 1)) {
+      const index = orderedLessons(pack).findIndex(l => l.id === object.lessonId);
+      for (const lesson of orderedLessons(pack).slice(Math.max(0, index - 2), index + 1)) {
         add('lessons', lesson.id);
         for (const id of lesson.wordIds) add('words', id);
       }
@@ -45,6 +47,7 @@ export function dependenciesFor(collection, object, pack) {
     for (const id of object.wordIds) add('words', id);
     for (const id of object.exerciseIds) add('exercises', id);
     for (const block of object.blocks) {
+      if(object.compositionVersion===2&&block.source!=='inline'){try{for(const selected of resolveComponent(pack,object,block))add(block.source,selected.id);}catch{/* Semantic validation reports invalid selectors separately. */}}
       const selected = pack.lessons.find(l => l.id === block.selector?.lessonId);
       if (selected && selected.id !== object.id) {
         add('lessons', selected.id);
@@ -57,6 +60,9 @@ export function dependenciesFor(collection, object, pack) {
 
 export function semanticErrors(pack) {
   const errors = [], seen = new Set();
+  try{validateCurriculum(pack);}catch(error){errors.push(error.message);}
+  for(const lesson of pack.lessons)try{validateLessonComposition(pack,lesson);}catch(error){errors.push(error.message);}
+  for(const word of pack.words)if(word.formattingVersion===1)errors.push(...validateFormatting(word.fieldFormatting,{word,sourceTheme:word.sourceTheme}).errors);
   const has = (kind, id) => pack[kind].some(o => o.id === id);
   for (const kind of collections) for (const object of pack[kind]) {
     if (seen.has(`${kind}/${object.id}`)) errors.push(`duplicate ID ${kind}/${object.id}`);
@@ -69,8 +75,8 @@ export function semanticErrors(pack) {
     if (kind === 'lessons') {
       for (const id of object.exerciseIds) if (!pack.exercises.some(e => e.id === id && e.lessonId === object.id)) errors.push(`exercise belongs to another lesson ${id}`);
       if (object.checkExerciseIds?.some(id => !object.exerciseIds.includes(id))) errors.push(`invalid check reference ${object.id}`);
-      if (new Set(object.blocks.map(b => b.type)).size !== 3) errors.push(`invalid block families ${object.id}`);
-      for (const b of object.blocks) {
+      if (object.compositionVersion!==2&&new Set(object.blocks.map(b => b.type)).size !== 3) errors.push(`invalid block families ${object.id}`);
+      for (const b of object.blocks.filter(()=>object.compositionVersion!==2)) {
         if (b.type === 'explanation' && b.renderer !== 'text') errors.push(`invalid explanation renderer ${object.id}`);
         if (b.type !== 'explanation' && (!has('lessons', b.selector?.lessonId) || b.source !== (b.type === 'vocabulary' ? 'words' : 'exercises') || b.renderer !== (b.type === 'vocabulary' ? 'vocabulary-table' : 'practice'))) errors.push(`invalid selector or renderer ${object.id}`);
         if (b.type === 'exercise-set' && b.selector?.lessonId !== object.id) errors.push(`cross-lesson core practice ${object.id}`);

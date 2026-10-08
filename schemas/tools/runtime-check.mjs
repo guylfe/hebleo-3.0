@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { runtimeFromArgs, reverseKeys, dump } from './runtime-utils.mjs';
 import { validateSchema, draftTokenFor, semanticErrors } from './contracts.mjs';
+import {projectLesson,deriveLessonIndices} from '../../public/course.js';
 import { syntheticPack } from './fixtures.mjs';
 
 const { Store, directory, commit, draftTokenFor: runtimeToken } = await runtimeFromArgs();
@@ -94,6 +95,15 @@ try {
     await reject('/rollback', { revisionId: revision, baseRevisionId: r.body.revisionId }, 400, 'DRAFT_TOKEN_REQUIRED');
     const rollback = await request('/rollback', { revisionId: revision, baseRevisionId: r.body.revisionId, expectedDraftToken: null }); assert.equal(rollback.status, 200); schema('rollbackResponse', rollback.body); assert.equal(s.currentDraft(), null);
     schema('noDraftResponse', (await request('')).body.preview);
+  });
+  await check('HTTP v2 repeated instances, mixed curriculum and keyed rehearsal validate without writes; a forged selector rejects atomically',async()=>{
+    const base=s.get('active'),c=s.snapshot();c.lessons=c.lessons.map(l=>projectLesson(c,l));c.lessons[0].blocks.push({...structuredClone(c.lessons[0].blocks[0]),id:'synthetic-text-two',text:'SYNTHETIC runtime fixture'});c.lessons[0]=deriveLessonIndices(c,c.lessons[0]);
+    c.curriculum={version:1,chapters:[{id:'synthetic-ch',title:'Synthetic chapter',lessonIds:['lesson-2']}],order:[{lessonId:'lesson-1'},{chapterId:'synthetic-ch'},{lessonId:'lesson-3'}]};
+    assert.deepEqual(validateSchema('content-pack',c),[]);assert.deepEqual(semanticErrors(c),[]);
+    const stage=(await request('/draft',{baseRevisionId:base,expectedDraftToken:null,content:c})).body;schema('stageResponse',stage);
+    const before=dump(s),preview=(await request('/preview/session',{lessonId:'lesson-1',draftToken:stage.draftToken})).body;schema('previewSessionResponse',preview);
+    assert.equal(preview.steps.filter(k=>preview.flow.find(p=>p.key===k)?.kind==='learn').length,2);assert.equal(preview.steps.at(-2),'synthetic-text-two');assert.equal(dump(s),before);
+    const malformed=structuredClone(c);malformed.lessons[0].blocks[1].selector={mode:'ids',ids:['missing']};const rejectBefore=dump(s);const rejected=await request('/draft',{baseRevisionId:base,expectedDraftToken:stage.draftToken,content:malformed});assert.equal(rejected.status,400);assert.equal(dump(s),rejectBefore);
   });
   console.log(JSON.stringify({ runtimeCommit: commit, passed, database: ':memory:', transport: 'ephemeral loopback HTTP; closed on exit', limits: 'Contract and backend checks only; no app renderer, browser or independent release acceptance.' }));
 } finally { await new Promise(resolve => server.close(resolve)); s.close(); }

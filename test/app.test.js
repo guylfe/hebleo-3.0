@@ -9,6 +9,7 @@ import {Store} from '../src/store.js';
 import {createServer} from '../src/server.js';
 import {resolveBlock,importVocabularyCSV} from '../public/content.js';
 import * as ux from '../public/ux.js';
+import * as courseHelpers from '../public/course.js';
 import {composeSentence,bindMatching,matchWord} from '../public/interactions.js';
 import {richCell,cellCSS,createLessonRenderer} from '../public/rich.js';
 import * as learnerView from '../public/learner-view.js';
@@ -28,7 +29,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   t.after(async()=>{w.close();if(server)await new Promise(r=>server.close(r));if(!providedStore)store.close();});w.matchMedia=()=>({matches:false});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,ux,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  Object.assign(w,ux,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},stopMedia(){},clearRecording(){},feedbackSound(){}});
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
     if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
@@ -490,4 +491,67 @@ test('Native import Stage locks sibling lesson/exercise/Markdown inputs until wo
  assert.ok([...doc.querySelectorAll('#unified-studio-mount input,#unified-studio-mount textarea,#unified-studio-mount select,#unified-studio-mount button')].every(el=>el.disabled));const token=store.currentDraft().draftToken;
  const form=doc.querySelector('[data-owned-exercise="ex-1-recognize"] form');submit(w,form);await settled(()=>/still reloading/.test(form.querySelector('[data-editor-status]').textContent));assert.equal(store.currentDraft().draftToken,token);
  reload.release();await settled(()=>!doc.querySelector('[data-stage-import]')&&!doc.querySelector('[data-current-lesson]').disabled);assert.equal(store.currentDraft().draftToken,token);assert.deepEqual(store.snapshot(),published);
+});
+
+const repeatedPack=s=>{
+ const c=s.snapshot(),l=courseHelpers.projectLesson(c,c.lessons[0]);
+ l.blocks[0].text='SYNTHETIC INSTANCE ONE';
+ l.blocks.splice(1,0,{id:'synthetic-text-two',type:'explanation',source:'inline',renderer:'text',text:'SYNTHETIC INSTANCE TWO',options:{textDirection:'rtl'}});
+ c.lessons[0]=courseHelpers.deriveLessonIndices(c,l);
+ c.curriculum={version:1,chapters:[{id:'synthetic-chapter',title:'Synthetic chapter',lessonIds:['lesson-2']}],order:[{lessonId:'lesson-1'},{chapterId:'synthetic-chapter'},{lessonId:'lesson-3'}]};
+ return c;
+};
+test('v2 actual app over HTTP navigates two text instances, pins second-instance resume and ignores a newer reorder',async t=>{
+ const store=new Store();t.after(()=>store.close());const c=repeatedPack(store);const d=store.stage({baseRevisionId:1,expectedDraftToken:null,content:c});const rev=store.publish(1,d.draftToken).revisionId;
+ const first=await app(t,{store,page:'lesson/lesson-1/legacy-explanation',realHTTP:true});
+ assert.match(first.doc.querySelector('#practice').textContent,/SYNTHETIC INSTANCE ONE/);
+ assert.equal(first.doc.querySelectorAll('.step-strip [data-value="synthetic-text-two"]').length,1);
+ first.doc.querySelector('.step-strip [data-value="synthetic-text-two"]').click();
+ await settled(()=>first.doc.querySelector('#practice').textContent.includes('SYNTHETIC INSTANCE TWO'));
+ assert.equal(first.doc.querySelector('.explanation').dir,'rtl');
+ assert.equal(store.learner('learner-demo').resumes['lesson-1'].componentId,'synthetic-text-two');
+ assert.equal(store.learner('learner-demo').resumes['lesson-1'].step,'learn');
+ const latest=structuredClone(c);latest.lessons[0].blocks.reverse();latest.lessons[0]=courseHelpers.deriveLessonIndices(latest,latest.lessons[0]);const changed=store.stage({baseRevisionId:rev,expectedDraftToken:null,content:latest});store.publish(rev,changed.draftToken);
+ const resumed=await app(t,{store,page:'lesson/lesson-1',realHTTP:true});
+ assert.match(resumed.doc.querySelector('#practice').textContent,/SYNTHETIC INSTANCE TWO/);
+ assert.match(resumed.doc.querySelector('#practice').textContent,/earlier lesson/);
+ assert.equal(store.session('learner-demo','lesson-1').revisionId,rev);
+ assert.equal(resumed.doc.querySelector('.step-strip [aria-current]').dataset.value,'synthetic-text-two');
+ resumed.doc.querySelector('.step-strip [data-value="legacy-check"]').click();await settled(()=>resumed.doc.querySelector('[data-action="choice"]'));
+ assert.equal(store.learner('learner-demo').resumes['lesson-1'].componentId,'legacy-check');
+ assert.equal(store.learner('learner-demo').resumes['lesson-1'].step,'check');
+});
+test('v2 saved draft preview shows both text instances and grades its selected component with zero writes',async t=>{
+ const {store,doc}=await app(t,{author:true,page:'studio',realHTTP:true,prepare(s){s.stage({baseRevisionId:1,expectedDraftToken:null,content:repeatedPack(s)});}});
+ const dump=()=>JSON.stringify(['kv','learners','events','revisions'].map(name=>store.db.prepare('SELECT * FROM '+name+' ORDER BY 1').all()));const before=dump();
+ click(doc,'rehearse');await settled(()=>doc.querySelector('[data-preview-step="synthetic-text-two"]'));
+ doc.querySelector('[data-preview-step="synthetic-text-two"]').click();await settled(()=>doc.querySelector('.learner-preview').textContent.includes('SYNTHETIC INSTANCE TWO'));
+ doc.querySelector('[data-preview-step="legacy-check"]').click();await settled(()=>doc.querySelector('.learner-preview [data-action="choice"]'));
+ const e=store.currentDraft().content.exercises.find(e=>e.id==='ex-1-recognize'),correct=store.currentDraft().content.words.find(w=>w.id===e.wordId).english;
+ [...doc.querySelectorAll('.learner-preview [data-action="choice"]')].find(el=>el.dataset.value===correct).click();
+ doc.querySelector('.learner-preview [data-action="check"]').click();await settled(()=>doc.querySelector('.learner-preview .feedback'));
+ assert.match(doc.querySelector('.learner-preview .feedback strong').textContent,/That’s right/);assert.equal(doc.querySelector('.learner-preview .feedback').classList.contains('wrong'),false);
+ assert.equal(dump(),before);
+});
+test('My Hebrew combines tag, lesson and review filters, bounds results, and empty review explicitly enrolls synthetic words',async t=>{
+ const {store,doc}=await app(t,{page:'library',realHTTP:true,prepare(s){const c=s.snapshot();c.words[0].tags=['synthetic-tag'];const d=s.stage({baseRevisionId:1,expectedDraftToken:null,content:c});s.publish(1,d.draftToken);}});
+ doc.querySelector('#library-tag').value='synthetic-tag';doc.querySelector('#library-tag').dispatchEvent(new doc.defaultView.Event('change'));
+ doc.querySelector('#library-lesson').value='lesson-1';doc.querySelector('#library-lesson').dispatchEvent(new doc.defaultView.Event('change'));
+ assert.equal(doc.querySelectorAll('.word-card').length,1);
+ doc.querySelector('#library-state').value='review';doc.querySelector('#library-state').dispatchEvent(new doc.defaultView.Event('change'));assert.match(doc.body.textContent,/No matching words/);
+ doc.querySelector('[data-action="page"][data-value="review"]').click();await settled(()=>doc.querySelector('[data-action="review-demo"]'));
+ assert.match(doc.body.textContent,/deck is empty/);click(doc,'review-demo');await settled(()=>store.bootstrap('learner-demo').due.length===3);
+ await settled(()=>doc.querySelector('[data-action="review-start"]')&&!doc.querySelector('[data-action="review-start"]').disabled);
+ assert.equal(Object.keys(store.learner('learner-demo').cards).length,3);
+});
+
+test('v2 extra practice works when all authored exercise components are checks; skip and reload retain unique grading history',async t=>{
+ const {store,doc}=await app(t,{page:'lesson/lesson-1/complete',realHTTP:true,prepare(s){const c=repeatedPack(s),l=c.lessons[0];for(const b of l.blocks)if(b.type==='exercise-set')b.role='check';c.lessons[0]=courseHelpers.deriveLessonIndices(c,l);const d=s.stage({baseRevisionId:1,expectedDraftToken:null,content:c});s.publish(1,d.draftToken);}});
+ click(doc,'target-practice');await settled(()=>doc.querySelector('#practice [data-action="choice"]'));
+ const p=store.learner('learner-demo').resumes['lesson-1'];assert.equal(p.step,'check');assert.equal(p.componentId,'legacy-check');assert.equal(p.practiceIds.length,3);
+ const correct=store.snapshot().words.find(w=>w.id===store.snapshot().exercises.find(e=>e.id===p.practiceIds[0]).wordId).english;
+ doc.querySelector('#practice [data-action="choice"][data-value="'+correct+'"]').click();await settled(()=>store.learner('learner-demo').resumes['lesson-1'].answer===correct);
+ doc.querySelector('#practice [data-action="check"]').click();await settled(()=>doc.querySelector('#practice .feedback'));
+ const before=JSON.stringify(store.learner('learner-demo').attempts);doc.querySelector('#practice [data-action="step"][data-value="complete"]').click();await settled(()=>store.learner('learner-demo').resumes['lesson-1'].componentId===null);
+ assert.equal(store.learner('learner-demo').resumes['lesson-1'].practiceIds.length,0);assert.equal(JSON.stringify(store.learner('learner-demo').attempts),before);
 });

@@ -189,7 +189,7 @@ test('settings, keyboard, vocabulary and lookup controls call rehearsal actions 
   assert.deepEqual(keys.calls, [['setPreference','keyboardVisible',true]]);
   keys.dispose();
   const pad = direct(t, session, {exerciseId:'ex-1-type', question:1, preferences:{keyboardVisible:true}});
-  for (const key of ['א','נ','י','ס']) pad.root().querySelector('[data-preview-key="' + key + '"]').click();
+  for (const key of ['א','נ','י','ה']) pad.root().querySelector('[data-preview-key="' + key + '"]').click();
   pad.root().querySelector('[data-preview-key=""]').click();
   assert.equal(pad.root().querySelector('#answer').value, 'אני');
   assert.deepEqual(pad.calls.at(-1), ['setAnswer',{text:'אני', matching:{}, selectedTokens:[]}]);
