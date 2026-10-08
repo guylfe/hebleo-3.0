@@ -81,7 +81,7 @@
                 }
               },
               "importSource": {
-                "type": "object"
+                "$ref": "vocabulary-import.v1.schema.json"
               }
             },
             "required": [

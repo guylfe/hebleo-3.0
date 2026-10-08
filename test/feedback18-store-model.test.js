@@ -49,7 +49,7 @@ test('schema-2 backup remains supported; schema-3 refuses future versions and le
  old.storeSchemaVersion=4;assert.throws(()=>target.restore(old));assert.equal(tables(target),before);
 });
 test('HTTP serves local editor assets with CSS MIME; learner projection hides new import author records',async t=>{
- const s=setup(t),c=candidate(s);c.words[0].importSource={version:1,headers:['raw'],values:['private author record']};publish(s,c);
+ const s=setup(t),c=candidate(s);c.words[0].importSource={version:1,headers:['id','pointed','unpointed','curated','english','raw'],values:[...['id','pointed','unpointed','curated','english'].map(k=>c.words[0][k]),'SYNTHETIC private author record'],columns:['id','pointed','unpointed','curated','english'].map((target,columnIndex)=>({columnIndex,target,decode:'string'}))};publish(s,c);
  const server=createServer(s);await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));t.after(()=>new Promise(resolve=>server.close(resolve)));const base='http://127.0.0.1:'+server.address().port;
  for(const route of ['/course.js','/vocabulary-import.js','/studio/markdown-editor.js','/studio/vocabulary-browser.js','/studio/vendor/easymde.min.js','/studio/vendor/easymde.min.css']){const response=await fetch(base+route);assert.equal(response.status,200);assert.match(response.headers.get('content-type'),route.endsWith('.css')?/text\/css/:/text\/javascript/);}
  const wire=await (await fetch(base+'/api/session?lessonId=lesson-1')).json();assert.equal(wire.content.words[0].importSource,undefined);assert.ok(wire.flow.length);assert.equal(wire.content.exercises.some(e=>'answers' in e),false);

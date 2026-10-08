@@ -1,0 +1,130 @@
+✖ RR-F18-01 every HTTP learner word surface excludes import records while author/backup retain source bytes (84.2084ms)
+✖ RR-F18-02 check practice subset/reorder validates actual receipts across HTTP/reload/pinned revision/restore: check-only (38.4613ms)
+✖ RR-F18-02 check practice subset/reorder validates actual receipts across HTTP/reload/pinned revision/restore: mixed-role (29.2955ms)
+✖ RR-F18-03 check practice rejects foreign receipts and malformed sets atomically in HTTP and restore (25.9209ms)
+✖ RR-F18-02 check practice matching input and ordering tokens resolve the practice list (14.1633ms)
+✖ RR-F18-04 malformed declared source records reject Stage/Publish/restore with every table unchanged (8.9297ms)
+✔ RR-F18-04 mapped source survives same-token Stage, later authored edits, publish and restore without repair (22.9687ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 1
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 477.5425
+
+✖ failing tests:
+
+test at test\feedback18-release-regression.test.js:18:1
+✖ RR-F18-01 every HTTP learner word surface excludes import records while author/backup retain source bytes (84.2084ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  true !== false
+
+      at visit (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:13:99)
+      at visit (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:13:188)
+      at visit (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:13:188)
+      at visit (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:13:188)
+      at noImportRecords (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:13:203)
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:20:82)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\feedback18-release-regression.test.js:25:37
+✖ RR-F18-02 check practice subset/reorder validates actual receipts across HTTP/reload/pinned revision/restore: check-only (38.4613ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  400 !== 200
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:27:373)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\feedback18-release-regression.test.js:25:37
+✖ RR-F18-02 check practice subset/reorder validates actual receipts across HTTP/reload/pinned revision/restore: mixed-role (29.2955ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  400 !== 200
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:27:373)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\feedback18-release-regression.test.js:33:1
+✖ RR-F18-03 check practice rejects foreign receipts and malformed sets atomically in HTTP and restore (25.9209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  200 !== 400
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:36:125)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\feedback18-release-regression.test.js:41:1
+✖ RR-F18-02 check practice matching input and ordering tokens resolve the practice list (14.1633ms)
+  Error: Invalid saved matching answer.
+      at Store.validateProgress (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/src/store.js:302:284)
+      at Store.saveProgress (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/src/store.js:281:10)
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:43:4)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    status: 400,
+    code: 'BAD_REQUEST'
+  }
+
+test at test\feedback18-release-regression.test.js:52:1
+✖ RR-F18-04 malformed declared source records reject Stage/Publish/restore with every table unchanged (8.9297ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate/test/feedback18-release-regression.test.js:54:108)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

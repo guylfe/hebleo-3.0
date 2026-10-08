@@ -1,0 +1,26 @@
+✔ seed and synthetic interchange are valid without mutation; seed is private-demo only (33.9164ms)
+✔ required explicit Hebrew forms cannot be inferred by validation (1.0561ms)
+✔ unknown values, rich formatting, themes and explicit forms survive JSON unchanged (4.0312ms)
+✔ stable IDs and dependency/selector references reject ambiguity (1.4959ms)
+✔ same-snapshot row lookup works; reorder in a new snapshot never auto-assigns identity (0.7317ms)
+✔ duplicate row hashes stay ambiguous; duplicate frozen locators are invalid (0.6487ms)
+✔ source omissions retain work; simultaneous source and Studio edits require resolution (0.3315ms)
+✔ media pins must resolve exact asset, revision and hash; legacy URLs remain unpinned (3.8735ms)
+✔ pending source objects cannot inherit synthetic or verified pack approval (2.7626ms)
+✔ pending fields veto the private synthetic compatibility exception (1.2161ms)
+✔ changed content or dependency invalidates approval digests (9.2872ms)
+✔ pending fields, unpinned media and missing approval dependencies stay ineligible (12.4137ms)
+✔ wire fixtures validate by named definitions and missing CAS token is invalid (23.9863ms)
+✔ media approval binds asset identity and revision metadata; no bytes are fetched (1.9366ms)
+✔ preview response schemas reject learner writes and answer-key leakage (10.7404ms)
+✔ additive v2 schemas accept repeated text, optional mixed chapters and keyed preview; malformed typed selectors fail without rewriting legacy (7.8548ms)
+✔ RR-F18-01 learner schema forbids author import records and retains other source fields (7.2652ms)
+✔ RR-F18-04 structural and semantic source validation rejects malformed records without changing source (9.0641ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 682.4247

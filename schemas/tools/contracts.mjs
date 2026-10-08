@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import Ajv from 'ajv';
 import {validateCurriculum,validateLessonComposition,resolveComponent,orderedLessons} from '../../public/course.js';
-import {validateFormatting} from '../../public/vocabulary-import.js';
+import {validateFormatting,validateImportSource} from '../../public/vocabulary-import.js';
 import { audioURL } from '../../public/ux.js';
 
 // Validation never coerces, strips fields, adds defaults or normalizes Hebrew.
@@ -63,6 +63,7 @@ export function semanticErrors(pack) {
   try{validateCurriculum(pack);}catch(error){errors.push(error.message);}
   for(const lesson of pack.lessons)try{validateLessonComposition(pack,lesson);}catch(error){errors.push(error.message);}
   for(const word of pack.words)if(word.formattingVersion===1)errors.push(...validateFormatting(word.fieldFormatting,{word,sourceTheme:word.sourceTheme}).errors);
+  for(const word of pack.words)if(word.importSource!==undefined)try{validateImportSource(word.importSource);}catch(error){errors.push(word.id+': '+error.message);}
   const has = (kind, id) => pack[kind].some(o => o.id === id);
   for (const kind of collections) for (const object of pack[kind]) {
     if (seen.has(`${kind}/${object.id}`)) errors.push(`duplicate ID ${kind}/${object.id}`);

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {projectLesson,deriveLessonIndices} from '../../public/course.js';
+import {Store} from '../../src/store.js';
 import { seed } from '../../src/seed.js';
 import { syntheticPack } from '../tools/fixtures.mjs';
 import { validateSchema, semanticErrors, publicationEligibility, resolveSourceIdentity, mergeSourceField, objectDigest, mediaDigest, dependenciesFor, collections, sha256, draftTokenFor } from '../tools/contracts.mjs';
@@ -108,4 +109,15 @@ test('additive v2 schemas accept repeated text, optional mixed chapters and keye
  const bad=structuredClone(p);bad.lessons[0].blocks[1].selector={mode:'tags',tags:['qa']};assert.ok(validateSchema('content-pack',bad).length);
  const legacy=syntheticPack();legacy.words[0].tags={legacyOpaque:true};assert.deepEqual(validateSchema('content-pack',legacy),[]);
  legacy.words[0].taggingVersion=1;assert.ok(validateSchema('content-pack',legacy).length);
+});
+
+
+test('RR-F18-01 learner schema forbids author import records and retains other source fields',()=>{
+ const p=structuredClone(seed),source={version:1,headers:['id','pointed','unpointed','curated','english'],values:['id','pointed','unpointed','curated','english'].map(k=>p.words[0][k]),columns:['id','pointed','unpointed','curated','english'].map((target,columnIndex)=>({columnIndex,target,decode:'string'}))};
+ p.words[0].sourceFields={synthetic:'SYNTHETIC preserved unknown'};const s=new Store();try{const wire=s.publicContent(p);assert.deepEqual(validateSchema('learner-content',wire),[]);wire.words[0].importSource=source;assert.ok(validateSchema('learner-content',wire).some(e=>e.includes('importSource')));}finally{s.close();}p.words[0].importSource=source;assert.deepEqual(validateSchema('content-pack',p),[]);
+});
+test('RR-F18-04 structural and semantic source validation rejects malformed records without changing source',()=>{
+ const p=structuredClone(seed),w=p.words[0],source={version:1,headers:['id','pointed','unpointed','curated','english','note'],values:[...['id','pointed','unpointed','curated','english'].map(k=>w[k]),'SYNTHETIC exact unknown'],columns:['id','pointed','unpointed','curated','english'].map((target,columnIndex)=>({columnIndex,target,decode:'string'}))};w.importSource=source;const before=JSON.stringify(p);assert.deepEqual(validateSchema('content-pack',p),[]);assert.deepEqual(semanticErrors(p),[]);assert.equal(JSON.stringify(p),before);
+ for(const bad of ['malformed',null,{...source,version:2},{...source,columns:undefined},{...source,values:[1,...source.values.slice(1)]},{...source,columns:source.columns.map((x,i)=>i?x:{...x,decode:'json'})}]){const c=structuredClone(p);c.words[0].importSource=bad;const unchanged=JSON.stringify(c);assert.ok(validateSchema('content-pack',c).length);assert.ok(semanticErrors(c).length);assert.equal(JSON.stringify(c),unchanged);}
+ for(const bad of [{...source,values:source.values.slice(1)},{...source,columns:source.columns.slice(1)},{...source,columns:source.columns.map((x,i)=>i===1?{...x,columnIndex:0}:x)}]){const c=structuredClone(p);c.words[0].importSource=bad;assert.ok(semanticErrors(c).length);}
 });

@@ -4,7 +4,7 @@ import { DomainError } from './errors.js';
 import { normalizeHebrew, evaluateAnswer, matchingPairResults } from './evaluate.js';
 import { seed, upgradeDemo } from './seed.js';
 import {validateCurriculum, validateLessonComposition, resolveComponent, orderedLessons, lessonFlow, keyboardForLesson} from '../public/course.js';
-import {validateFormatting} from '../public/vocabulary-import.js';
+import {validateFormatting,validateImportSource} from '../public/vocabulary-import.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
 
 // Version 2 adds revision-mapped backups; version 3 adds component cursors and additive composition semantics.
@@ -59,6 +59,7 @@ export function validateContent(content) {
   const exercises = new Map(content.exercises.map(e => [e.id, e]));
   for (const w of content.words) {
     richData(w);
+    if(w.importSource!==undefined)try{validateImportSource(w.importSource);}catch(error){throw new DomainError(error.message);}
     if(w.taggingVersion===1 && (!Array.isArray(w.tags)||new Set(w.tags).size!==w.tags.length||w.tags.some(tag=>typeof tag!=='string'||!tag.trim()||tag.length>200)))throw new DomainError('Invalid vocabulary tags.');
     if(w.formattingVersion!==undefined){if(w.formattingVersion!==1)throw new DomainError('Unsupported formatting version.');const check=validateFormatting(w.fieldFormatting,{word:w,sourceTheme:w.sourceTheme||[]});if(check.errors.length)throw new DomainError(check.errors.join('; '));}
     if(w.fieldFormatting){
@@ -196,11 +197,15 @@ export class Store {
   }
   bootstrap(userId) {
     const content = this.snapshot(); const learner = this.learner(userId);
-    const due = Object.entries(learner.cards).filter(([, c]) => Date.parse(c.due) <= Date.now()).map(([wordId, card]) => ({ word: content.words.find(w => w.id === wordId), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
+    const due = Object.entries(learner.cards).filter(([, c]) => Date.parse(c.due) <= Date.now()).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
     return { revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
   }
+  publicWord(word) {
+    if(!word)return word;
+    const safe=clone(word);delete safe.importSource;return safe;
+  }
   publicContent(content) {
-    const projected={...content,words:content.words.map(word=>{const safe=clone(word);delete safe.importSource;return safe;}),exercises:content.exercises.map(e=>this.publicExercise(e,content))};
+    const projected={...content,words:content.words.map(word=>this.publicWord(word)),exercises:content.exercises.map(e=>this.publicExercise(e,content))};
     projected.lessons=content.lessons.map(lesson=>{if(lesson.compositionVersion!==2)return lesson;return {...lesson,blocks:lesson.blocks.map(block=>Object.fromEntries(Object.entries(block).filter(([key])=>['id','type','title','source','selector','renderer','role','text','video','interactions','options'].includes(key))))};});
     return projected;
   }
@@ -287,16 +292,23 @@ export class Store {
     const content = backupContent || this.snapshot(p.revisionId); const l = content.lessons.find(l => l.id === p.lessonId);
     if (!l || !(lessonSteps(l).includes(p.step)||(p.practiceIds?.length&&['check','apply'].includes(p.step))) || !Number.isInteger(p.question) || p.question < 0 || p.question > l.exerciseIds.length || typeof p.answer !== 'string' || p.answer.length > 2000 || !Array.isArray(p.selectedTokens) || p.selectedTokens.length > 100 || new Set(p.selectedTokens).size !== p.selectedTokens.length || p.selectedTokens.some(i => !Number.isInteger(i) || i < 0 || i > 100)) throw new DomainError('Invalid saved lesson position.');
     if (p.practiceIds && (!Array.isArray(p.practiceIds) || new Set(p.practiceIds).size!==p.practiceIds.length || p.practiceIds.some(id => !l.exerciseIds.includes(id)) || (l.compositionVersion===2&&p.practiceIds.length&&!['check','apply'].includes(p.step)))) throw new DomainError('Invalid practice set.');
-    let component;
+    let component,questionIDs;
     if(l.compositionVersion===2 || p.componentId!==undefined){
       let flow;try{flow=lessonFlow(content,l);}catch(error){throw new DomainError(error.message);}
       component=flow.find(entry=>entry.blockId===p.componentId);
       if(!component||component.kind!==p.step)throw new DomainError('Saved component does not match its portion.');
-      const ids=p.practiceIds?.length&&['check','apply'].includes(p.step)?p.practiceIds:component.exerciseIds;
-      if(p.question>ids.length || (!['check','apply'].includes(p.step)&&p.question!==0))throw new DomainError('Invalid component question position.');
-      if((!['check','apply'].includes(p.step)||p.question===ids.length)&&(p.answer||p.resultRequestId||p.selectedTokens.length||Object.keys(p.matching||{}).length))throw new DomainError('Terminal or text component cannot carry exercise input.');
+      questionIDs=p.practiceIds?.length&&['check','apply'].includes(p.step)?p.practiceIds:component.exerciseIds;
+      if(p.question>questionIDs.length || (!['check','apply'].includes(p.step)&&p.question!==0))throw new DomainError('Invalid component question position.');
+      if((!['check','apply'].includes(p.step)||p.question===questionIDs.length)&&(p.answer||p.resultRequestId||p.selectedTokens.length||Object.keys(p.matching||{}).length))throw new DomainError('Terminal or text component cannot carry exercise input.');
     }
-    const questionIDs=component?(p.practiceIds?.length&&p.step==='apply'?p.practiceIds:component.exerciseIds):stepExercises(l,p.step,p.practiceIds);
+    // One validated list governs bounds, terminal input, matching/tokens and receipt identity.
+    if(!component){
+      questionIDs=p.practiceIds?.length&&['check','apply'].includes(p.step)?p.practiceIds:stepExercises(l,p.step,p.practiceIds);
+      if(p.practiceIds?.length&&['check','apply'].includes(p.step)){
+        if(p.question>questionIDs.length)throw new DomainError('Invalid practice question position.');
+        if(p.question===questionIDs.length&&(p.answer||p.resultRequestId||p.selectedTokens.length||Object.keys(p.matching||{}).length))throw new DomainError('Terminal practice cannot carry exercise input.');
+      }
+    }
     const exercise=content.exercises.find(e=>e.id===questionIDs[p.question]);
     // Saved matches belong to the matching question at this exact revision, step and position. Its authored pairs may use any pack word, not only the lesson's list.
     if (!p.matching || typeof p.matching !== 'object' || Array.isArray(p.matching) || Object.entries(p.matching).some(([k,v]) => !['check','apply'].includes(p.step) || exercise?.type !== 'matching' || !exercise.wordIds.includes(k) || typeof v !== 'string' || v.length > 1000)) throw new DomainError('Invalid saved matching answer.');

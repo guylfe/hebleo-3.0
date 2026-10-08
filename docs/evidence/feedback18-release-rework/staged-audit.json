@@ -1,0 +1,181 @@
+{
+  "date": "2026-10-08",
+  "base": "f150aef45ba4d90babc4a1a1a6469965388cf58d",
+  "branch": "lead/feedback18-studio",
+  "sourceFiles": [
+    {
+      "file": "public/vocabulary-import.js",
+      "bytes": 16820,
+      "sha256": "21b34685e4115791362705ad35db604a658d05216044fd4bf861666710025d58"
+    },
+    {
+      "file": "schemas/checks/contracts.check.mjs",
+      "bytes": 12174,
+      "sha256": "1f49de52e8a7bb6c72d01734da0b2dd3db438cedc2d82594dcdceb01abc176ad"
+    },
+    {
+      "file": "schemas/content-pack.v1.schema.json",
+      "bytes": 15444,
+      "sha256": "7f3f0b68890e6e03de76e7aff45e3a50cf64030e81b5fed302e3f559096b1b4c"
+    },
+    {
+      "file": "schemas/learner-content.v1.schema.json",
+      "bytes": 15027,
+      "sha256": "74c3036893c6d3aca3a752e72e79bb472746796a8b13f6105c8ce47fb1f05935"
+    },
+    {
+      "file": "schemas/tools/contracts.mjs",
+      "bytes": 14897,
+      "sha256": "76363120302aed2790ed5438e79cf4795edf5fc078d622a5146a292a9dc36227"
+    },
+    {
+      "file": "schemas/vocabulary-import.v1.schema.json",
+      "bytes": 5581,
+      "sha256": "b07c958427750b87cce602e0ca973527a86add5aa8a4e7df53cae15a16df332a"
+    },
+    {
+      "file": "src/store.js",
+      "bytes": 63751,
+      "sha256": "b8f4a2c2a2a5548b930eff1258e57a2a907b18ad2e896b5aabf6e7c3d8fb9f55"
+    },
+    {
+      "file": "test/app.test.js",
+      "bytes": 63154,
+      "sha256": "eb72255d0e9c2d01ad005228d3c093fb385d19d4684d67cec92cd1baabe3186a"
+    },
+    {
+      "file": "test/feedback18-release-regression.test.js",
+      "bytes": 12057,
+      "sha256": "4a05f93c17b5c6795e0a01df044cf70457f09693c4697fb4047348bcb4a39356"
+    },
+    {
+      "file": "test/feedback18-store-model.test.js",
+      "bytes": 7954,
+      "sha256": "19026a29a34d5f7b974f3c1be0ac32352b7a22d0ce0357e6f14df3c47747bc28"
+    }
+  ],
+  "files": [
+    {
+      "file": "docs/FEATURE_CHECKLIST.md",
+      "bytes": 73804,
+      "sha256": "f843510d681781871700b8ab9da9da05405a35c1f89283cb613526d572dd88df"
+    },
+    {
+      "file": "docs/FEEDBACK18_RELEASE_REWORK.md",
+      "bytes": 6069,
+      "sha256": "e793adc1a9b6e79a425d81f49793d9f9e22a877ed45338c8b8a0eeed5b9fb7f1"
+    },
+    {
+      "file": "docs/FRONTEND_FEEDBACK_18.md",
+      "bytes": 10665,
+      "sha256": "27b13b32ccaeefbd4dae887446e9b1078f16adf8d5250a446e74d29137ff3186"
+    },
+    {
+      "file": "docs/evidence/feedback18-release-rework/app-http-focused.txt",
+      "bytes": 1204,
+      "sha256": "f8da3d14e62c241387aadf29062190cc0fe620c85242dbb28d44191e88378a2f"
+    },
+    {
+      "file": "docs/evidence/feedback18-release-rework/browser-fixture.mjs",
+      "bytes": 2314,
+      "sha256": "2e931e458f786c3aeea89cf957dc85fc5b3ff7fd171b54d0f2fd7a74dc3aad21"
+    },
+    {
+      "file": "docs/evidence/feedback18-release-rework/browser-summary.json",
+      "bytes": 2804,
+      "sha256": "a8d711af5f3d56929295877a9a9d7ae0f702542cebdff660aca15516e6950326"
+    },
+    {
+      "file": "docs/evidence/feedback18-release-rework/focused.txt",
+      "bytes": 3497,
+      "sha256": "44c9200ade0dd2be72082838d6b0d44406b0ce5d514d0660c1467e3eafafc06c"
+    },
+    {
+      "file": "docs/evidence/feedback18-release-rework/parent-regressions.txt",
+      "bytes": 7508,
+      "sha256": "0d22e53f8374bf78028731c0a961875e71232d909b95d279357f9a4ed1458a04"
+    },
+    {
+      "file": "docs/evidence/feedback18-release-rework/schema-checks.txt",
+      "bytes": 1851,
+      "sha256": "1b4992707cde49efaac7fc2c7eb1df104b4019e70892bbc57b4b209fc27eaaa9"
+    },
+    {
+      "file": "docs/evidence/feedback18-release-rework/schema-runtime.txt",
+      "bytes": 1000,
+      "sha256": "d5922543e093c9b0ee4cbc3e5d5cd8efca0dcb491734fd20bbe2d69df1fa5ba7"
+    },
+    {
+      "file": "docs/evidence/feedback18-release-rework/schema-seed.txt",
+      "bytes": 375,
+      "sha256": "17fb20800690ffc53f321c48575bce5eda338713fab529d3d574adeff981cbb8"
+    },
+    {
+      "file": "docs/evidence/feedback18-release-rework/verify.txt",
+      "bytes": 28198,
+      "sha256": "377d65f88e300e31911e05a2a4cb5a27f8233cdb7e400168b4bdfb164fabd7a9"
+    },
+    {
+      "file": "public/vocabulary-import.js",
+      "bytes": 16820,
+      "sha256": "21b34685e4115791362705ad35db604a658d05216044fd4bf861666710025d58"
+    },
+    {
+      "file": "schemas/checks/contracts.check.mjs",
+      "bytes": 12174,
+      "sha256": "1f49de52e8a7bb6c72d01734da0b2dd3db438cedc2d82594dcdceb01abc176ad"
+    },
+    {
+      "file": "schemas/content-pack.v1.schema.json",
+      "bytes": 15444,
+      "sha256": "7f3f0b68890e6e03de76e7aff45e3a50cf64030e81b5fed302e3f559096b1b4c"
+    },
+    {
+      "file": "schemas/learner-content.v1.schema.json",
+      "bytes": 15027,
+      "sha256": "74c3036893c6d3aca3a752e72e79bb472746796a8b13f6105c8ce47fb1f05935"
+    },
+    {
+      "file": "schemas/tools/contracts.mjs",
+      "bytes": 14897,
+      "sha256": "76363120302aed2790ed5438e79cf4795edf5fc078d622a5146a292a9dc36227"
+    },
+    {
+      "file": "schemas/vocabulary-import.v1.schema.json",
+      "bytes": 5581,
+      "sha256": "b07c958427750b87cce602e0ca973527a86add5aa8a4e7df53cae15a16df332a"
+    },
+    {
+      "file": "src/store.js",
+      "bytes": 63751,
+      "sha256": "b8f4a2c2a2a5548b930eff1258e57a2a907b18ad2e896b5aabf6e7c3d8fb9f55"
+    },
+    {
+      "file": "test/app.test.js",
+      "bytes": 63154,
+      "sha256": "eb72255d0e9c2d01ad005228d3c093fb385d19d4684d67cec92cd1baabe3186a"
+    },
+    {
+      "file": "test/feedback18-release-regression.test.js",
+      "bytes": 12057,
+      "sha256": "4a05f93c17b5c6795e0a01df044cf70457f09693c4697fb4047348bcb4a39356"
+    },
+    {
+      "file": "test/feedback18-store-model.test.js",
+      "bytes": 7954,
+      "sha256": "19026a29a34d5f7b974f3c1be0ac32352b7a22d0ce0357e6f14df3c47747bc28"
+    }
+  ],
+  "boundedBrowserSummary": true,
+  "rawRecords": false,
+  "databases": false,
+  "unrelatedFiles": false,
+  "highConfidenceSecretMatches": [],
+  "commands": {
+    "app": 246,
+    "schemas": 18,
+    "httpStore": 9,
+    "allPassed": true
+  },
+  "logFormatting": "Only blank-line trailing spaces removed from parent failure output; original preserved outside checkout."
+}

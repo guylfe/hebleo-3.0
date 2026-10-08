@@ -29,7 +29,7 @@ export function parseVocabularyCSV(csv) {
  }
  if(quoted)fail('Unclosed quoted CSV field.');endRow();
  const headers=rows.shift();
- if(!headers||headers.some(h=>!h.trim()||h.length>100||reserved.includes(h.trim()))||new Set(headers).size!==headers.length)fail('CSV needs unique nonempty headers without reserved names.');
+ validateHeaders(headers);
  if(!rows.length||rows.length>2000)fail('CSV needs 1–2000 vocabulary rows.');
  if(rows.some(values=>values.length!==headers.length))fail('CSV row has a different number of columns.');
  return {headers,rows};
@@ -113,9 +113,12 @@ export function validateFormatting(fieldFormatting, {word={},sourceTheme=[]}={})
  }
  return {errors,warnings};
 }
-export function mapVocabularyRows(parsed,mapping,baseContent) {
- if(!mapping||mapping.version!==1||!Array.isArray(mapping.columns))fail('Mapping version 1 and explicit columns are required.');
- const {headers,rows}=parsed;if(!Array.isArray(headers)||!Array.isArray(rows))fail('Parse the CSV before mapping.');
+function validateHeaders(headers) {
+ if(!Array.isArray(headers)||!headers.length||headers.length>2000||headers.some(h=>typeof h!=='string'||!h.trim()||h.length>100||reserved.includes(h.trim()))||new Set(headers).size!==headers.length)fail('CSV needs unique nonempty bounded headers without reserved names.');
+}
+export function validateColumnMapping(headers,mapping) {
+ validateHeaders(headers);
+ if(!object(mapping)||mapping.version!==1||!Array.isArray(mapping.columns)||mapping.columns.length>headers.length)fail('Mapping version 1 and bounded explicit columns are required.');
  const columns=new Set(),targets=new Set(),styleTargets=new Set(),styles=[];
  for(const column of mapping.columns){
   if(!object(column)||!Number.isInteger(column.columnIndex)||column.columnIndex<0||column.columnIndex>=headers.length||columns.has(column.columnIndex)||!vocabularyMappingTargets.includes(column.target))fail('Invalid or duplicate mapping column.');
@@ -132,12 +135,45 @@ export function mapVocabularyRows(parsed,mapping,baseContent) {
  }
  if(vocabularyRequiredFields.some(field=>!targets.has(field)))fail('Map id, pointed, unpointed, curated and english explicitly; no forms are generated.');
  if(targets.has('fieldFormatting')&&styles.length)fail('Whole formatting and scalar styles cannot target the same import.');
+ return {columns,targets,styles};
+}
+function decodeColumn(raw,column,headers) {
+ if(column.decode==='string')return raw;
+ if(column.decode==='boolean'){if(!['true','false'].includes(raw))fail('Column '+headers[column.columnIndex]+' must contain true or false.');return raw==='true';}
+ try{const value=JSON.parse(raw);safeMetadata(value);return value;}catch(error){fail('Column '+headers[column.columnIndex]+': '+error.message);}
+}
+// Frozen provenance is validated without comparing it to later authored field edits.
+// Exact raw strings, unknown columns and supported extra metadata are never repaired.
+export function validateImportSource(source) {
+ if(!object(source)||source.version!==1)fail('Invalid importSource: version 1 object required.');
+ safeMetadata(source);
+ const {headers,values,columns}=source;
+ const {styles}=validateColumnMapping(headers,{version:source.version,columns});
+ if(!Array.isArray(values)||values.length!==headers.length||values.some(v=>typeof v!=='string'||v.length>12000))fail('Invalid importSource values: bounded strings must match headers.');
+ const fields={};
+ for(const column of columns){
+  const value=decodeColumn(values[column.columnIndex],column,headers);
+  if(column.target!=='fieldStyle')fields[column.target]=value;
+  if(vocabularyRequiredFields.includes(column.target)&&(typeof value!=='string'||!value.trim()))fail('Import source needs all explicit identity/forms/meaning.');
+ }
+ if(fields.tags!==undefined&&(!Array.isArray(fields.tags)||new Set(fields.tags).size!==fields.tags.length||fields.tags.some(t=>typeof t!=='string'||!t.trim()||t.length>200)))fail('Invalid importSource tags.');
+ if(fields.color&&!/^#[0-9a-f]{6}$/i.test(fields.color))fail('Invalid importSource color.');
+ const check=validateFormatting(fields.fieldFormatting,{word:fields,sourceTheme:fields.sourceTheme===undefined?[]:fields.sourceTheme});
+ if(check.errors.length)fail('Invalid importSource formatting: '+check.errors.join('; '));
+ for(const column of styles){
+  const value=decodeColumn(values[column.columnIndex],column,headers),format={};
+  if(['bold','italic','foregroundColor'].includes(column.property))format.textFormat={[column.property]:value};else format[column.property]=value;
+  const checked=validateFormatting({[column.field]:{formattedValue:'',userEnteredFormat:format}});
+  if(checked.errors.length)fail('Invalid importSource scalar style: '+checked.errors.join('; '));
+ }
+ return source;
+}
+export function mapVocabularyRows(parsed,mapping,baseContent) {
+ if(!mapping||mapping.version!==1||!Array.isArray(mapping.columns))fail('Mapping version 1 and explicit columns are required.');
+ const {headers,rows}=parsed;if(!Array.isArray(headers)||!Array.isArray(rows))fail('Parse the CSV before mapping.');
+ const {columns,targets,styles}=validateColumnMapping(headers,mapping);
  const next=structuredClone(baseContent),seen=new Set(),warnings=[];
- const decode=(raw,column)=>{
-  if(column.decode==='string')return raw;
-  if(column.decode==='boolean'){if(!['true','false'].includes(raw))fail('Column '+headers[column.columnIndex]+' must contain true or false.');return raw==='true';}
-  try{const value=JSON.parse(raw);safeMetadata(value);return value;}catch(error){fail('Column '+headers[column.columnIndex]+': '+error.message);}
- };
+ const decode=(raw,column)=>decodeColumn(raw,column,headers);
  for(const [rowIndex,values] of rows.entries()){
   if(values.length!==headers.length)fail('CSV row has a different number of columns.');
   const fields={};for(const column of mapping.columns)if(column.target!=='fieldStyle')fields[column.target]=decode(values[column.columnIndex],column);

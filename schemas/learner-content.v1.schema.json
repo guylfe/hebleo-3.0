@@ -80,9 +80,7 @@
                   "type": "object"
                 }
               },
-              "importSource": {
-                "type": "object"
-              }
+              "importSource": false
             },
             "required": [
               "id",
