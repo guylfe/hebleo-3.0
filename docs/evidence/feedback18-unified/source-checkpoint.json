@@ -1,0 +1,90 @@
+{
+  "base": "95b24b950935c1fc15ee607c5f0c175f8d12b04e\n",
+  "savedVerifyUTC": "2026-10-07T23:50:12.079Z",
+  "files": [
+    {
+      "file": "public/app.js",
+      "sha256": "8e9685440269cd659f2a1528640eb08b66554c3d8b06ae1442dc704697c99e4c",
+      "lastModifiedUTC": "2026-10-07T23:49:25.212Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "public/studio/editor-fields.js",
+      "sha256": "db37c84cb6f30c368437ea3781352d485f2379c258f42d265a06f05622d96eba",
+      "lastModifiedUTC": "2026-10-07T23:32:35.214Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "public/studio/exercise-editor.js",
+      "sha256": "b16f081d91bc90902252cebfedecf905d928f77f556beb9cfba93360ebfef0e3",
+      "lastModifiedUTC": "2026-10-07T23:36:37.533Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "public/studio/import-review.js",
+      "sha256": "164b43f28f15e1f0d9e6b9ede84d67b683b4589aaffd35f0622b1e0a5328d7b1",
+      "lastModifiedUTC": "2026-10-07T23:24:43.287Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "public/studio/studio.css",
+      "sha256": "3a7e05fc7fbd25bc9bc82b41926e006ef3e6293a9b96afa630ebcb3590bef1cb",
+      "lastModifiedUTC": "2026-10-07T23:36:37.525Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "public/studio/vocabulary-browser.js",
+      "sha256": "62a5096f30a3ff93547c5209b3503cd0dbeb3df392ad8784b6cb800b5c72224a",
+      "lastModifiedUTC": "2026-10-07T23:47:47.863Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "src/server.js",
+      "sha256": "e46af3348f46e41b941c3318254913d3877ff334528677e102cb597a58d5b176",
+      "lastModifiedUTC": "2026-10-07T23:28:00.877Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "test/app.test.js",
+      "sha256": "28dcc4564fea0a4394af1aad01bbefececa0f2c457fe6e4bc35e342d5fbab596",
+      "lastModifiedUTC": "2026-10-07T23:49:25.262Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "test/recognition-distractors.test.js",
+      "sha256": "8a7b5edfcf91fb092f9464693892783393a6f29ab0a32ed01bf0e12dd5e52eaf",
+      "lastModifiedUTC": "2026-10-07T23:46:11.049Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "public/studio/unified-studio.js",
+      "sha256": "10c57b7b9f26e1fd66299421cacfa0bbb94cbeb225cb5939a1301580d0d9c1c9",
+      "lastModifiedUTC": "2026-10-07T23:47:47.857Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "public/studio/selector-editor.js",
+      "sha256": "ec1c60218c5c577ae2993d4e9499956f094aa0c448acd266028ce40d2a01c959",
+      "lastModifiedUTC": "2026-10-07T23:36:37.531Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "public/studio/curriculum-editor.js",
+      "sha256": "ace2883485748e39ce2f35d2f3207988eb08b804c6790471a0e242f97c32808d",
+      "lastModifiedUTC": "2026-10-07T23:47:47.859Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "public/studio/import-workflow.js",
+      "sha256": "28c1be7f5ce382824c809430677bfdc079bd124c37e171d2ec757d19c956f6bc",
+      "lastModifiedUTC": "2026-10-07T23:47:47.866Z",
+      "savedVerifyNewer": true
+    },
+    {
+      "file": "test/feedback18-unified-studio.test.js",
+      "sha256": "c5d74c77856f6709d4d601801c11672659ca1791c4bbcc598bb1093bbde72dd0",
+      "lastModifiedUTC": "2026-10-07T23:47:47.868Z",
+      "savedVerifyNewer": true
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+✔ 2000 synthetic words: complete search, tag/lesson intersection and bounded pagination without mutation (434.3317ms)
+✔ word selector keeps authored order and unresolved references through filters/remount; old buttons become inert (128.8465ms)
+✔ tag selectors retain unknown tags, cap lists and keep multiple mounts independent (58.0843ms)
+✔ search blur does not replace the pending pointer target or swallow the first selection (108.9555ms)
+✔ full source labels/search escape hostile content, preserve Nikkud and include unknown nested fields (40.2864ms)
+✔ actual EasyMDE bundle: Hebrew/RTL, toolbar formatting, sanitized preview, input bytes and disposal (512.0011ms)
+✔ Markdown loader cancellation/failure leaves input intact and callbacks stop after disposal (69.5876ms)
+✔ preview sanitizer rejects form/style/svg payloads while retaining pointed authored source (48.0442ms)
+✔ vendored editor bytes match locked installed distribution and have license notices (18.5949ms)
+✔ native exercise HTTP save retains legacy flags/source metadata; CAS failure preserves input and all database tables (280.2135ms)
+✔ two distinct text IDs, source metadata, sibling exercise input and legacy flags survive reorder/HTTP save/reload (1023.6635ms)
+✔ single lesson context, full-width components, no nested forms/manual indices, no write on mount; legacy newKeys projection is exact (231.6346ms)
+✔ CAS rejection retains both text inputs, selectors and exercise input; locked pending save cannot accept overlapping save (330.5676ms)
+✔ tag membership derives stable indices before save and order-preserving specific word selections do not mutate canonical objects (539.4351ms)
+✔ 2000 synthetic clones keep selector result DOM at 50 and filters preserve source and ordered IDs (196.1ms)
+✔ chapter create/move/order/remove preserves every lesson, IDs and legacy metadata atomically (5.0714ms)
+✔ mapped Review/Discard write zero tables, show actual styles/typed values/raw cells; Stage over HTTP preserves source and same-token no-op (376.499ms)
+✔ mapping/file/base changes invalidate frozen candidate; stale HTTP Stage retains source/mapping and every table (326.582ms)
+✔ malformed typed map and stale v2 indices reject Review atomically; JSON import remains lossless (7.5364ms)
+✔ accessible move and pointer ordering keep stable text IDs, no exercise clones, and disposal removes drag listeners (629.4752ms)
+✔ successive text edits bind to the saved workspace; invalid sibling JSON keeps the selected lesson and input intact (659.1548ms)
+✔ native chapter controls rename without swallowing first move click and remove a nonempty chapter by preserving its children (1384.0132ms)
+✔ guided specific-word selection is an unsaved edit even though hidden values emit no input event; frozen reviewed candidates cannot change (187.2571ms)
+✔ stage (Studio save and import staging) refuses empty, whitespace-only and invisible-only distractors before any write (159.0766ms)
+✔ publish, rollback and restore refuse blank distractors written by an earlier build, leaving every table unchanged (25.3033ms)
+✔ valid authored distractors keep exact text, order and neighbouring fields through stage, preview, publish, session and grading (28.7924ms)
+✔ HTTP: blank distractor saves and legacy publishes return 400 with the field message and write nothing; a filled row saves (158.7472ms)
+✔ Studio editor shows the field error, keeps every typed value and re-enables controls; filling or removing the row then saves (427.9193ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8056.8461

@@ -127,7 +127,8 @@ test('Studio editor shows the field error, keeps every typed value and re-enable
     assert.equal(status.textContent,message('ex-1-recognize',4));
     assert.deepEqual(rows().map(x=>x.value),[...original.distractors,value]);
     assert.equal(form.elements.prompt.value,'Fixture-only edited prompt');
-    assert.ok([...form.querySelectorAll('input,select,textarea,button')].every(el=>!el.disabled));
+    assert.ok([...form.querySelectorAll('input,select,textarea,button:not([data-vocab-page])')].every(el=>!el.disabled));
+    assert.equal(form.querySelector('[data-vocab-page="-1"]').disabled,true,'first-page navigation stays correctly bounded');
     unchanged(s,was);
   }
   type(rows()[3],'there');await submit();

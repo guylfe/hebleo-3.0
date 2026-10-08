@@ -14,7 +14,7 @@ export function createVocabularyIndex({words = [], lessons = []}) {
     tags, lessons: lessons.map(l => ({id:l.id, title:l.title})),
     query({search = '', tag = '', lessonId = '', page = 0, pageSize = 50} = {}) {
       const terms = searchKey(search).trim().split(/\s+/).filter(Boolean);
-      const matches = entries.filter(x => terms.every(term => x.key.includes(term)) && (!tag || x.word.tags?.includes(tag)) && (!lessonId || x.lessons?.has(lessonId)));
+      const matches = entries.filter(x => terms.every(term => x.key.includes(term)) && (!tag || Array.isArray(x.word.tags) && x.word.tags.includes(tag)) && (!lessonId || x.lessons?.has(lessonId)));
       const size = Math.min(50, Math.max(1, Math.trunc(Number(pageSize)) || 50));
       const pages = Math.max(1, Math.ceil(matches.length / size));
       const current = Math.min(pages - 1, Math.max(0, Math.trunc(Number(page)) || 0));

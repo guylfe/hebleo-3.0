@@ -44,7 +44,12 @@ export function readFields(form, dirty, arrays = []) {
   const data = new form.ownerDocument.defaultView.FormData(form), edits = {};
   for (const name of dirty) {
     if (name === 'prefixTokenIndices') edits[name] = [...form.querySelectorAll('[data-list="tokens"] [data-list-row]')].flatMap((row, i) => row.querySelector('[data-prefix]').checked ? [i] : []);
-    else edits[name] = arrays.includes(name) ? data.getAll(name) : data.get(name);
+    else {
+      // A unified save may collect sibling fields after the submitting editor locked its controls.
+      // Read authored values even while disabled; dirty names are a closed guided field registry.
+      const controls=[...form.querySelectorAll('[name]')].filter(el=>el.name===name);
+      edits[name]=arrays.includes(name)?controls.map(el=>el.value):(controls[0]?.value??data.get(name));
+    }
   }
   return edits;
 }

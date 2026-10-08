@@ -241,20 +241,24 @@ New requirements go in an added row and remain distinct from current implementat
 | FB03 | Keyboard outside click activates first click; pin | Independent baseline bounded pass; candidate recheck pending | Pending | Retest pending |
 | FB04 | Individual matching verdict/color/icon/accessible status + ordered summary | Implemented; server, resume, legacy read-only and renderer regressions passed | Pending | Retest pending |
 | FB05 | Zero-due diagnosis; testable synthetic review flow | Independent baseline no bug reproduced; improve empty-state/enrollment guidance pending | Pending | Retest pending |
-| FB06 | Studio scalable vocabulary search/tag/lesson filters and bounded DOM | Pending implementation | Pending | Retest pending |
-| FB07 | Tag/word selectors and repeatable stable component instances | Pending contract and implementation | Pending | Retest pending |
-| FB08 | One lesson context with full-width ordered editors and exercises below | Pending implementation | Pending | Retest pending |
-| FB09 | Cumulative introduced letters; current new letters only | Legacy authored sets baseline pass; automatic accumulation pending | Pending | Retest pending |
+| FB06 | Studio scalable vocabulary search/tag/lesson filters and bounded DOM | Unified Studio browser/pickers mounted; <=50 rows, source retained; owner Store/HTTP and Browser evidence | Pending | Retest pending |
+| FB07 | Tag/word selectors and repeatable stable component instances | Shared IDs/tags selectors and repeated stable instances mounted; owner save/reorder/reload checks; learner wiring pending | Pending | Retest pending |
+| FB08 | One lesson context with full-width ordered editors and exercises below | One lesson workspace with full-width ordered editors and exercises below; owner tests/Browser pass; actual pointer drag unverified | Pending | Retest pending |
+| FB09 | Cumulative introduced letters; current new letters only | Author introducedLetters field and shared cumulative preview mounted; legacy projection exact; Lead learner wiring pending | Pending | Retest pending |
 | FB10 | Remove Require Nikkud control and answer requirement | Pending; preserve historical grades/metadata and authored forms | Pending | Retest pending |
 | FB11 | Separate concept metadata and short/detailed feedback groups | Pending implementation | Pending | Retest pending |
 | FB12 | My Hebrew filters for tag/lesson/learning state | Pending implementation | Pending | Retest pending |
-| FB13 | Established local Markdown editor, toolbar, safe RTL preview | Pending official dependency/license verification and implementation | Pending | Retest pending |
-| FB14 | Prominent disposable Preview saved draft | Existing isolation baseline pass; label/layout overhaul pending | Pending | Retest pending |
-| FB15 | Import at Studio top | Pending implementation | Pending | Retest pending |
-| FB16 | Recognized-column mapping + preview before Stage | Pending contract and implementation; unknown/style fields preserved | Pending | Retest pending |
-| FB17 | Coherent Studio overhaul | Pending integration | Pending | Retest pending |
-| FB18 | Optional structured chapters and chapter/lesson ordering | Pending contract and implementation | Pending | Retest pending |
+| FB13 | Established local Markdown editor, toolbar, safe RTL preview | Local EasyMDE mounted per text instance; prior dependency/license and toolbar/RTL checks retained | Pending | Retest pending |
+| FB14 | Prominent disposable Preview saved draft | Prominent Preview saved draft uses existing isolated callback; Lead v2 preview navigation pending | Pending | Retest pending |
+| FB15 | Import at Studio top | Import workflow mounted at Studio top; owner app and Browser evidence | Pending | Retest pending |
+| FB16 | Recognized-column mapping + preview before Stage | Explicit CSV mapping, typed/style preview, frozen Review -> Stage with CAS retention; owner tests and bounded Browser hash captures | Pending | Retest pending |
+| FB17 | Coherent Studio overhaul | Studio slice implemented locally on 95b; final candidate integration and independent QA pending | Pending | Retest pending |
+| FB18 | Optional structured chapters and chapter/lesson ordering | Optional chapters/create/rename/moves/order/remove-to-ungrouped mounted; owner checks and bounded Browser evidence | Pending | Retest pending |
 
 ### FB18 shared-contract checkpoint (2026-10-08)
 
 See [18-finding ledger](FRONTEND_FEEDBACK_18.md) and [exact shared APIs/limits](FEEDBACK18_SHARED_CONTRACT_HANDOFF.md). Reusable Feature UI is integrated, and Lead model/Store/CSV-formatting contracts have owner checks. Unified Studio/learner instance wiring and schema surfaces remain incomplete. 217 automated owner checks passed with no skips; independent candidate QA and Guy results are still pending. Protected demo4173 and other runtimes remain unchanged.
+
+### Unified Studio local Feature checkpoint (2026-10-08)
+
+[Exact implementation handoff](FEEDBACK18_UNIFIED_HANDOFF.md): the saved full owner verification passed 231/231, with no failures or skips. Recovery changed evidence/documentation only, verified source hashes/timestamps, and captured mounted Browser save/reload, chapter and mapped import/CAS invariants without raw records. Actual mounted pointer drag remains unverified because the active core profile has no lower-level mouse tools. Lead learner/runtime/schema/preview integration, finished-candidate independent QA and Guy acceptance remain pending. No push or protected demo update.

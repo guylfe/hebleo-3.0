@@ -12,6 +12,8 @@ import * as ux from '../public/ux.js';
 import {composeSentence,bindMatching,matchWord} from '../public/interactions.js';
 import {richCell,cellCSS,createLessonRenderer} from '../public/rich.js';
 import * as learnerView from '../public/learner-view.js';
+import {mountUnifiedStudio} from '../public/studio/unified-studio.js';
+import {mountImportWorkflow} from '../public/studio/import-workflow.js';
 import {mountLessonEditor} from '../public/studio/lesson-editor.js';
 import {mountExerciseEditor} from '../public/studio/exercise-editor.js';
 import {inspectImport,renderImportReview} from '../public/studio/import-review.js';
@@ -26,7 +28,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   t.after(async()=>{w.close();if(server)await new Promise(r=>server.close(r));if(!providedStore)store.close();});w.matchMedia=()=>({matches:false});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,ux,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  Object.assign(w,ux,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},stopMedia(){},clearRecording(){},feedbackSound(){}});
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
     if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
@@ -131,14 +133,12 @@ test('App sentence tiles submit attached prefixes, and source-rich cards/table o
   assert.equal(doc.querySelector('.assembled-sentence').textContent,'אני בבית');assert.equal(doc.querySelector('.prefix-token'),null);assert.equal(doc.querySelector('[data-action="token"] small'),null);const groups=[...doc.querySelectorAll('.sentence-tile-group')];assert.deepEqual(groups.map(g=>g.textContent),['אני','בבית']);assert.equal(groups[1].querySelectorAll('button').length,2);click(doc,'check');await settled(()=>doc.querySelector('.feedback'));assert.equal(store.learner('learner-demo').attempts[0].correct,true);
   doc.querySelector('[data-action="step"][data-value="vocabulary"]').click();await settled(()=>doc.querySelector('.word-grid'));assert.equal(doc.querySelectorAll('.word-card').length,6);assert.ok(doc.querySelector('.word-details dd'));
 });
-test('Studio edits author card policy and lesson highlights through the app draft/publication workflow',async t=>{
-  const {store,w,doc}=await app(t,{page:'studio',author:true});await settled(()=>doc.querySelector('#review-policy-form'));
-  const form=doc.querySelector('#review-policy-form');form.querySelector('select').value='none';form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.get('draft')?.content.reviewPolicy.defaultNikkud==='none');await settled(()=>doc.querySelector('[data-action="publish"]'));
-  click(doc,'publish');await settled(()=>store.snapshot().reviewPolicy.defaultNikkud==='none');
-  await settled(()=>doc.body.textContent.includes('PUBLISHED VERSION 2'));
-  const lessonForm=doc.querySelector('#lesson-form');lessonForm.elements.knownKeys.value='א';lessonForm.elements.newKeys.value='ב';lessonForm.elements.newColor.value='#abcdef';lessonForm.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.get('draft')?.content.lessons[0].keyboard.newKeys==='ב');
-  assert.equal(doc.querySelector('#known-color'),null);
-  assert.equal(store.get('draft').content.lessons[0].keyboard.newColor,'#abcdef');
+test('Studio edits author card policy and cumulative introductions while retaining legacy keyboard metadata',async t=>{
+ const {store,w,doc}=await app(t,{page:'studio',author:true});await settled(()=>doc.querySelector('[data-review-policy-form]'));
+ const initial=structuredClone(store.snapshot().lessons[0].keyboard),form=doc.querySelector('[data-review-policy-form]');edit(w,form.querySelector('select'),'none');submit(w,form);await settled(()=>store.currentDraft()?.content.reviewPolicy.defaultNikkud==='none'&&doc.querySelector('[data-action="publish"]'));
+ click(doc,'publish');await settled(()=>store.snapshot().reviewPolicy.defaultNikkud==='none'&&doc.body.textContent.includes('PUBLISHED VERSION 2'));
+ const lesson=doc.querySelector('[data-lesson-metadata]');edit(w,lesson.elements.introducedLetters,'ב');edit(w,doc.querySelector('[data-keyboard-color]'),'#abcdef');submit(w,lesson);await settled(()=>store.currentDraft()?.content.lessons[0].introducedLetters==='ב');
+ assert.equal(doc.querySelector('[name="knownKeys"]'),null);assert.equal(store.currentDraft().content.lessons[0].keyboard.newKeys,initial.newKeys);assert.equal(store.currentDraft().content.lessons[0].keyboard.knownKeys,initial.knownKeys);assert.equal(store.currentDraft().content.lessons[0].keyboard.newColor,'#abcdef');
 });
 
 test('Actual app launcher focuses the native answer field and saves pinning through the learner preference API',async t=>{
@@ -181,13 +181,12 @@ test('G5-01 actual app over HTTP: a second author window saves while rehearsal r
   stageDraft(store,c=>{c.exercises[0].prompt=draftPrompt;});
   const a=await app(t,{page:'studio',author:true,store,realHTTP:true});
   const b=await app(t,{page:'studio',author:true,store,realHTTP:true});
-  await settled(()=>a.doc.querySelector('[data-action="rehearse"]:not([disabled])')&&b.doc.querySelector('#guided-exercise-editor form'));
+  await settled(()=>a.doc.querySelector('[data-action="rehearse"]:not([disabled])')&&b.doc.querySelector('[data-owned-exercise="ex-1-recognize"] form'));
   click(a.doc,'rehearse');await settled(()=>a.doc.querySelector('#rehearsal-panel [data-preview-step="apply"]'));
   const dialog=()=>a.doc.querySelector('#rehearsal-panel');
   dialog().querySelector('[data-preview-step="apply"]').click();
   const answer=dialog().querySelector('#answer');edit(a.w,answer,'אני');
-  const choice=b.doc.querySelector('#guided-exercise');choice.value='ex-1-type';choice.dispatchEvent(new b.w.Event('change',{bubbles:true}));
-  const form=b.doc.querySelector('#guided-exercise-editor form');edit(b.w,form.elements.prompt,'Synthetic G5-01 two-window change');submit(b.w,form);
+  const form=b.doc.querySelector('[data-owned-exercise="ex-1-type"] form');edit(b.w,form.elements.prompt,'Synthetic G5-01 two-window change');submit(b.w,form);
   await settled(()=>store.currentDraft().content.exercises.find(e=>e.id==='ex-1-type').prompt==='Synthetic G5-01 two-window change');
   const baseline=tables(store),learners=learnerRecords(store),published=store.snapshot(),seen=a.calls.length;
   answer.focus();answer.dispatchEvent(new a.w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
@@ -256,15 +255,15 @@ test('G5 automated HTTP owner-event: the real keyboard Pin handler emits its pre
 
 test('Studio guided exercise and lesson forms save private drafts, reload discards unsaved edits, a stale token keeps entered values, and publishing stays separate',async t=>{
   const {store,w,doc}=await app(t,{page:'studio',author:true});
-  const exerciseForm=()=>doc.querySelector('#guided-exercise-editor form'),lessonForm=()=>doc.querySelector('#guided-lesson-editor form');
+  const exerciseForm=()=>doc.querySelector('[data-owned-exercise="ex-1-recognize"] form'),lessonForm=()=>doc.querySelector('[data-lesson-metadata]');
   await settled(()=>exerciseForm()&&lessonForm());
   const published=structuredClone(store.snapshot()),revision=store.get('active'),learners=learnerRecords(store);
   assert.equal(doc.querySelector('[data-action="rehearse"]').disabled,true,'rehearsal needs an explicitly saved draft');
-  assert.equal(doc.querySelector('#guided-exercise').value,'ex-1-recognize');
+  assert.equal(doc.querySelector('#guided-exercise'),null,'every owned exercise is inline in learner order');
   edit(w,exerciseForm().elements.prompt,draftPrompt);submit(w,exerciseForm());
   await settled(()=>store.currentDraft()?.content.exercises.find(e=>e.id==='ex-1-recognize').prompt===draftPrompt&&doc.querySelector('[data-action="rehearse"]:not([disabled])'));
   assert.deepEqual(store.snapshot(),published);assert.equal(store.get('active'),revision);
-  assert.match(doc.querySelector('.studio-preview table').textContent,/ex-1-recognize/);
+  assert.match(doc.querySelector('.studio-preview').textContent,/ex-1-recognize/);
   edit(w,exerciseForm().elements.prompt,'Unsaved edit');click(doc,'studio-reload');
   await settled(()=>exerciseForm()?.elements.prompt.value===draftPrompt);
   const saved=store.currentDraft();stageDraft(store,c=>{c.lessons[0].title='Synthetic title from another tab';});const otherToken=store.currentDraft().draftToken;
@@ -277,35 +276,27 @@ test('Studio guided exercise and lesson forms save private drafts, reload discar
   edit(w,lessonForm().elements.title,'Synthetic lesson title');submit(w,lessonForm());
   await settled(()=>store.currentDraft()?.content.lessons[0].title==='Synthetic lesson title'&&lessonForm()?.elements.title.value==='Synthetic lesson title');
   assert.equal(store.currentDraft().content.exercises.find(e=>e.id==='ex-1-recognize').prompt,draftPrompt);
-  const select=doc.querySelector('#guided-exercise');select.value='ex-1-type';select.dispatchEvent(new w.Event('change',{bubbles:true}));
-  await settled(()=>/ex-1-type/.test(exerciseForm()?.textContent||''));
+  assert.ok(doc.querySelector('[data-owned-exercise="ex-1-type"] form'),'typing editor is already below its component');
   assert.deepEqual(store.snapshot(),published);assert.deepEqual(learnerRecords(store),learners);
   click(doc,'publish');await settled(()=>store.get('active')===revision+1&&store.currentDraft()===null);
   assert.equal(store.snapshot().lessons[0].title,'Synthetic lesson title');assert.equal(store.snapshot().exercises.find(e=>e.id==='ex-1-recognize').prompt,draftPrompt);
   assert.deepEqual(learnerRecords(store),learners);
 });
 
-test('Studio import review writes nothing until the reviewed candidate is staged, discard writes nothing, and a stale review cannot be staged',async t=>{
-  const {store,doc}=await app(t,{page:'studio',author:true});await settled(()=>doc.querySelector('#import-file'));
-  const before=tables(store),published=structuredClone(store.snapshot()),learners=learnerRecords(store);
-  const choose=(name,value)=>{const raw=JSON.stringify(value);Object.defineProperty(doc.querySelector('#import-file'),'files',{configurable:true,value:[{name,size:raw.length,text:async()=>raw}]});};
-  const candidate=structuredClone(published);candidate.words.find(x=>x.id==='w-ani').english='I (synthetic import)';candidate.provenance={...candidate.provenance,label:'Synthetic import fixture'};
-  choose('synthetic-pack.json',candidate);click(doc,'import-review');await settled(()=>doc.querySelector('#import-review'));
-  assert.match(doc.querySelector('#import-review').textContent,/words · w-ani · changed/);assert.match(doc.querySelector('#import-review').textContent,/I \(synthetic import\)/);
-  assert.deepEqual(tables(store),before,'reviewing writes nothing');
-  click(doc,'import-discard');await settled(()=>!doc.querySelector('#import-review'));assert.deepEqual(tables(store),before,'discarding writes nothing');
-  choose('synthetic-pack.json',candidate);click(doc,'import-review');await settled(()=>doc.querySelector('#import-review [data-action="import"]'));
-  click(doc,'import');await settled(()=>store.currentDraft()&&!doc.querySelector('#import-review'));
-  assert.deepEqual(store.currentDraft().content,candidate);assert.deepEqual(store.snapshot(),published);
-  assert.match(doc.querySelector('.studio-preview table').textContent,/Pack provenance/);
-  const second=structuredClone(candidate);second.words.find(x=>x.id==='w-ani').notes='Synthetic note';
-  choose('second.json',second);click(doc,'import-review');await settled(()=>doc.querySelector('#import-review [data-action="import"]'));
-  stageDraft(store,c=>{c.lessons[0].title='Synthetic title from another tab';});const otherToken=store.currentDraft().draftToken;
-  click(doc,'import');await settled(()=>/changed elsewhere/.test(doc.querySelector('#toast').textContent));
-  assert.equal(store.currentDraft().draftToken,otherToken,'a stale review cannot overwrite the newer draft');
-  click(doc,'studio-reload');await settled(()=>doc.querySelector('#import-review [role="alert"]'));
-  assert.equal(doc.querySelector('#import-review [data-action="import"]'),null);
-  assert.deepEqual(store.snapshot(),published);assert.deepEqual(learnerRecords(store),learners);
+test('Studio native JSON import Review/Discard write nothing; Stage stays separate, stale Stage retains file/mapping and invalidates after reload',async t=>{
+ const {store,w,doc}=await app(t,{page:'studio',author:true});await settled(()=>doc.querySelector('[data-import-file]'));
+ const before=tables(store),published=structuredClone(store.snapshot()),learners=learnerRecords(store);
+ const choose=async(name,value)=>{const raw=JSON.stringify(value),el=doc.querySelector('[data-import-file]');Object.defineProperty(el,'files',{configurable:true,value:[{name,size:raw.length,text:async()=>raw}]});el.dispatchEvent(new w.Event('change',{bubbles:true}));await settled(()=>doc.querySelector('[data-prepare-import]:not([disabled])'));};
+ const candidate=structuredClone(published);candidate.words[0].english='I (synthetic import)';candidate.provenance={...candidate.provenance,label:'Synthetic import fixture'};
+ await choose('synthetic-pack.json',candidate);doc.querySelector('[data-prepare-import]').click();await settled(()=>doc.querySelector('[data-stage-import]'));
+ assert.match(doc.querySelector('[data-import-review]').textContent,/words · w-ani · changed/);assert.match(doc.querySelector('[data-import-review]').textContent,/I \(synthetic import\)/);assert.deepEqual(tables(store),before);
+ doc.querySelector('[data-discard-import]').click();assert.equal(doc.querySelector('[data-stage-import]'),null);assert.deepEqual(tables(store),before);
+ await choose('synthetic-pack.json',candidate);doc.querySelector('[data-prepare-import]').click();doc.querySelector('[data-stage-import]').click();await settled(()=>store.currentDraft()&&!doc.querySelector('[data-stage-import]'));
+ assert.deepEqual(store.currentDraft().content,candidate);assert.deepEqual(store.snapshot(),published);assert.match(doc.querySelector('.studio-preview').textContent,/Pack provenance/);
+ const second=structuredClone(candidate);second.words[0].notes='Synthetic note';await choose('second.json',second);doc.querySelector('[data-prepare-import]').click();
+ stageDraft(store,c=>{c.lessons[0].title='Synthetic title from another tab';});const token=store.currentDraft().draftToken,after=tables(store);
+ doc.querySelector('[data-stage-import]').click();await settled(()=>/Draft changed elsewhere/.test(doc.querySelector('[data-import-status]').textContent));assert.equal(store.currentDraft().draftToken,token);assert.deepEqual(tables(store),after);assert.match(doc.querySelector('#studio-import-mount').textContent,/second.json/);
+ click(doc,'studio-reload');await settled(()=>doc.querySelector('[data-import-review] [role="alert"]'));assert.equal(doc.querySelector('[data-stage-import]').disabled,true);assert.deepEqual(store.snapshot(),published);assert.deepEqual(learnerRecords(store),learners);
 });
 
 test('Studio draft rehearsal uses the shared renderer and grader, isolates app.js handlers, and leaves every table, learner record and the published pack unchanged',async t=>{
@@ -407,7 +398,7 @@ test('A rehearsal stops on a changed draft or a newer publication revision, writ
   assert.ok([...dialog().querySelectorAll('[data-preview-step]')].every(b=>b.disabled));assert.ok(inside('[data-preview-frozen]'));assert.equal(inside('[data-action="check"]').disabled,true);
   assert.deepEqual(tables(store),after);assert.deepEqual(calls.slice(seen),['/api/studio/preview/evaluate']);
   inside('[data-preview-exit]').click();await settled(()=>!dialog());
-  click(doc,'studio-reload');await settled(()=>/another tab/.test(doc.querySelector('#guided-lesson-editor form')?.elements.title.value||''));
+  click(doc,'studio-reload');await settled(()=>/another tab/.test(doc.querySelector('[data-lesson-metadata]')?.elements.title.value||''));
   await openCheck();
   store.publish(store.get('active'),store.currentDraft().draftToken);
   after=tables(store);seen=calls.length;
@@ -425,39 +416,22 @@ function holdStudioReload(w){
 }
 const publishBody=reload=>reload.bodies.filter(b=>b.path==='/api/studio/publish').at(-1)?.body;
 
-test('Switching exercises while a guided lesson save is still reloading keeps re-mounted editors and Publish on the token that save returned',async t=>{
-  const {store,w,doc}=await app(t,{page:'studio',author:true,prepare(s){stageDraft(s,c=>{c.exercises.find(e=>e.id==='ex-1-recognize').prompt=draftPrompt;});}});
-  const reload=holdStudioReload(w),exerciseForm=()=>doc.querySelector('#guided-exercise-editor form'),lessonForm=()=>doc.querySelector('#guided-lesson-editor form'),status=()=>exerciseForm().querySelector('[data-editor-status]').textContent;
-  await settled(()=>exerciseForm()&&lessonForm()&&doc.querySelector('[data-action="publish"]'));
-  const revision=store.get('active'),learners=learnerRecords(store);
-  reload.hold();edit(w,lessonForm().elements.title,'Synthetic lesson title');submit(w,lessonForm());
-  await settled(()=>store.currentDraft()?.content.lessons[0].title==='Synthetic lesson title'&&reload.waiting);
-  let saved=store.currentDraft().draftToken;
-  const select=doc.querySelector('#guided-exercise');select.value='ex-1-type';select.dispatchEvent(new w.Event('change',{bubbles:true}));
-  await settled(()=>/ex-1-type/.test(exerciseForm()?.textContent||''));
-  assert.ok([...exerciseForm().elements].every(el=>el.disabled),'an editor mounted from the pre-save state stays disabled');
-  submit(w,exerciseForm());await settled(()=>/still reloading/.test(status()));
-  assert.equal(store.currentDraft().draftToken,saved,'a pre-save editor cannot write');
-  reload.release();await settled(()=>!reload.waiting&&exerciseForm()&&!exerciseForm().elements.prompt.disabled&&/ex-1-type/.test(exerciseForm().textContent));
-  // The re-mounted editor names the current token, so its save succeeds and keeps the lesson change.
-  const mounted=exerciseForm();edit(w,mounted.elements.prompt,'Synthetic typing prompt');submit(w,mounted);
-  await settled(()=>store.currentDraft()?.content.exercises.find(e=>e.id==='ex-1-type').prompt==='Synthetic typing prompt'&&exerciseForm()&&exerciseForm()!==mounted);
-  assert.equal(store.currentDraft().content.lessons[0].title,'Synthetic lesson title');assert.notEqual(store.currentDraft().draftToken,saved);
-  reload.hold();edit(w,lessonForm().elements.chapter,'Synthetic chapter');submit(w,lessonForm());
-  await settled(()=>store.currentDraft()?.content.lessons[0].chapter==='Synthetic chapter'&&reload.waiting);
-  saved=store.currentDraft().draftToken;
-  click(doc,'publish');await new Promise(r=>setTimeout(r,20));
-  assert.equal(store.get('active'),revision,'Publish waits for the pending reload');assert.equal(publishBody(reload),undefined);
-  reload.release();await settled(()=>store.get('active')===revision+1&&store.currentDraft()===null&&/Published locally/.test(doc.querySelector('#toast').textContent));
-  assert.equal(publishBody(reload).draftToken,saved,'Publish names the token this tab saved');
-  const live=store.snapshot();assert.equal(live.lessons[0].title,'Synthetic lesson title');assert.equal(live.lessons[0].chapter,'Synthetic chapter');
-  assert.equal(live.exercises.find(e=>e.id==='ex-1-type').prompt,'Synthetic typing prompt');assert.equal(live.exercises.find(e=>e.id==='ex-1-recognize').prompt,draftPrompt);
-  assert.deepEqual(learnerRecords(store),learners);
+test('A pending unified save locks every sibling and lesson switch; subsequent save and queued Publish name the saved token',async t=>{
+ const {store,w,doc}=await app(t,{page:'studio',author:true,prepare(s){stageDraft(s,c=>{c.exercises[0].prompt=draftPrompt;});}});
+ const reload=holdStudioReload(w),exercise=()=>doc.querySelector('[data-owned-exercise="ex-1-type"] form'),lesson=()=>doc.querySelector('[data-lesson-metadata]');await settled(()=>exercise()&&lesson()&&doc.querySelector('[data-action="publish"]'));
+ const revision=store.get('active'),learners=learnerRecords(store);
+ reload.hold();edit(w,lesson().elements.title,'Synthetic lesson title');edit(w,exercise().elements.prompt,'Synthetic sibling typing prompt');submit(w,lesson());await settled(()=>store.currentDraft()?.content.lessons[0].title==='Synthetic lesson title'&&reload.waiting);
+ const saved=store.currentDraft().draftToken;assert.equal(store.currentDraft().content.exercises.find(e=>e.id==='ex-1-type').prompt,'Synthetic sibling typing prompt');assert.ok([...exercise().querySelectorAll('input,select,textarea,button')].every(el=>el.disabled));assert.equal(doc.querySelector('[data-current-lesson]').disabled,true);
+ submit(w,exercise());await settled(()=>/still reloading/.test(exercise().querySelector('[data-editor-status]').textContent));assert.equal(store.currentDraft().draftToken,saved);
+ reload.release();await settled(()=>exercise()&&!exercise().elements.prompt.disabled&&lesson().elements.title.value==='Synthetic lesson title');
+ const mounted=exercise();edit(w,mounted.elements.prompt,'Synthetic typing prompt');submit(w,mounted);await settled(()=>store.currentDraft()?.content.exercises.find(e=>e.id==='ex-1-type').prompt==='Synthetic typing prompt'&&exercise()!==mounted);assert.equal(store.currentDraft().content.lessons[0].title,'Synthetic lesson title');
+ reload.hold();edit(w,lesson().elements.estimatedMinutes,'8');submit(w,lesson());await settled(()=>store.currentDraft()?.content.lessons[0].estimatedMinutes===8&&reload.waiting);const latest=store.currentDraft().draftToken;
+ click(doc,'publish');await new Promise(r=>setTimeout(r,20));assert.equal(store.get('active'),revision);assert.equal(publishBody(reload),undefined);reload.release();await settled(()=>store.get('active')===revision+1&&store.currentDraft()===null&&/Published locally/.test(doc.querySelector('#toast').textContent));assert.equal(publishBody(reload).draftToken,latest);assert.equal(store.snapshot().lessons[0].estimatedMinutes,8);assert.equal(store.snapshot().exercises.find(e=>e.id==='ex-1-type').prompt,'Synthetic typing prompt');assert.deepEqual(learnerRecords(store),learners);
 });
 
 test('Publishing behind a pending guided save still rejects a newer draft from another tab and publishes nothing',async t=>{
   const {store,w,doc}=await app(t,{page:'studio',author:true,prepare(s){stageDraft(s,c=>{c.exercises.find(e=>e.id==='ex-1-recognize').prompt=draftPrompt;});}});
-  const reload=holdStudioReload(w),lessonForm=()=>doc.querySelector('#guided-lesson-editor form');
+  const reload=holdStudioReload(w),lessonForm=()=>doc.querySelector('[data-lesson-metadata]');
   await settled(()=>lessonForm()&&doc.querySelector('[data-action="publish"]'));
   const revision=store.get('active'),published=structuredClone(store.snapshot()),learners=learnerRecords(store);
   reload.hold();edit(w,lessonForm().elements.title,'Synthetic lesson title');submit(w,lessonForm());
@@ -507,4 +481,13 @@ test('fresh home says Start, a saved lesson says Continue, and a completed lesso
   assert.equal(doc.querySelector('[data-value="lesson-2"].button').textContent,'Start →');
   const completed=await app(t,{page:'home',prepare(s){const learner=s.learner('learner-demo');learner.completed=['lesson-1'];s.saveLearner('learner-demo',learner);}});
   assert.equal(completed.doc.querySelector('[data-value="lesson-1"].button').textContent,'Revisit');
+});
+
+test('Native import Stage locks sibling lesson/exercise/Markdown inputs until workspace reload finishes',async t=>{
+ const {store,w,doc}=await app(t,{page:'studio',author:true});await settled(()=>doc.querySelector('[data-import-file]'));
+ const published=structuredClone(store.snapshot()),candidate=structuredClone(published);candidate.words[0].notes='Synthetic import lock fixture';const raw=JSON.stringify(candidate),input=doc.querySelector('[data-import-file]');Object.defineProperty(input,'files',{configurable:true,value:[{name:'synthetic-lock.json',size:raw.length,text:async()=>raw}]});input.dispatchEvent(new w.Event('change',{bubbles:true}));await settled(()=>doc.querySelector('[data-prepare-import]:not([disabled])'));doc.querySelector('[data-prepare-import]').click();
+ const reload=holdStudioReload(w);reload.hold();doc.querySelector('[data-stage-import]').click();await settled(()=>reload.waiting&&store.currentDraft()?.content.words[0].notes==='Synthetic import lock fixture');
+ assert.ok([...doc.querySelectorAll('#unified-studio-mount input,#unified-studio-mount textarea,#unified-studio-mount select,#unified-studio-mount button')].every(el=>el.disabled));const token=store.currentDraft().draftToken;
+ const form=doc.querySelector('[data-owned-exercise="ex-1-recognize"] form');submit(w,form);await settled(()=>/still reloading/.test(form.querySelector('[data-editor-status]').textContent));assert.equal(store.currentDraft().draftToken,token);
+ reload.release();await settled(()=>!doc.querySelector('[data-stage-import]')&&!doc.querySelector('[data-current-lesson]').disabled);assert.equal(store.currentDraft().draftToken,token);assert.deepEqual(store.snapshot(),published);
 });

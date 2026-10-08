@@ -1,0 +1,39 @@
+{
+  "syntheticFixture": true,
+  "fixture": "Existing fictional seed plus synthetic 2000-word Browser fixture; no user data",
+  "capture": {
+    "source": "Recovered browser-state.json",
+    "capturedUTC": "2026-10-07T23:42:20.176Z",
+    "rawArtifactSHA256": "e8e9e45d45392d7988aab7c3cc35c46fc26a420d9084b42fd650402375486798"
+  },
+  "tables": [
+    {
+      "name": "events",
+      "rowCount": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "name": "kv",
+      "rowCount": 3,
+      "sha256": "0c987b739e4977b169f7e2a0e0489e6c86e627290406199fb4da93388fec94aa"
+    },
+    {
+      "name": "learners",
+      "rowCount": 3,
+      "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+    },
+    {
+      "name": "revisions",
+      "rowCount": 1,
+      "sha256": "da86043de5130efcc0c2e490b177ce8f04a56354a99f82631f28661197fc5bde"
+    },
+    {
+      "name": "sqlite_sequence",
+      "rowCount": 1,
+      "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+    }
+  ],
+  "learnersUnchanged": true,
+  "publishedUnchanged": true,
+  "limits": "Recovered final capture has no preserved paired before/after table hashes. It proves only the reported final learner/published comparisons. Separate tests assert Review/Discard and stale Stage zero-write invariants."
+}

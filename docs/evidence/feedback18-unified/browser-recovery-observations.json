@@ -1,0 +1,167 @@
+{
+  "syntheticFixture": true,
+  "limits": "Mounted move buttons; pointer drag unavailable. Incorrect/hidden-control probes are retained with subsequent corrected observations.",
+  "observations": [
+    {
+      "capture": "accessible-move-save-reload",
+      "capturedUTC": "2026-10-07T23:57:33.988Z",
+      "componentIds": [
+        "legacy-explanation",
+        "legacy-check",
+        "legacy-vocabulary",
+        "synthetic-browser-second-text",
+        "legacy-apply"
+      ],
+      "distinctTextRetained": true,
+      "exerciseIdsUnchanged": true,
+      "method": "Mounted Browser move button; Markdown source set through actual CodeMirror editor API. Not pointer drag.",
+      "sourceSentinelRetained": true,
+      "textIDs": [
+        "legacy-explanation",
+        "synthetic-browser-second-text"
+      ]
+    },
+    {
+      "capture": "chapter-created-moved-ordered-saved",
+      "capturedUTC": "2026-10-07T23:58:35.642Z",
+      "chapterID": "chapter-9fb8d46b-152a-4e5f-a1ad-0a3ef4aadd14",
+      "lessonIdsUnchanged": true,
+      "lessonInChapter": [],
+      "order": [
+        {
+          "chapterId": "legacy-ch-lesson-1-620292af"
+        },
+        {
+          "chapterId": "legacy-ch-lesson-2-63029442"
+        },
+        {
+          "chapterId": "legacy-ch-lesson-3-640295d5"
+        },
+        {
+          "chapterId": "chapter-9fb8d46b-152a-4e5f-a1ad-0a3ef4aadd14"
+        }
+      ]
+    },
+    {
+      "capture": "chapter-removed-child-ungrouped-ordered-save-reload",
+      "capturedUTC": "2026-10-07T23:58:48.706Z",
+      "chapterAbsent": false,
+      "lessonIdsUnchanged": true,
+      "lessonNowUngrouped": false,
+      "order": [
+        {
+          "chapterId": "legacy-ch-lesson-1-620292af"
+        },
+        {
+          "chapterId": "legacy-ch-lesson-2-63029442"
+        },
+        {
+          "chapterId": "legacy-ch-lesson-3-640295d5"
+        },
+        {
+          "chapterId": "chapter-9fb8d46b-152a-4e5f-a1ad-0a3ef4aadd14"
+        }
+      ]
+    },
+    {
+      "capture": "chapter-move-order-corrected-open-details",
+      "capturedUTC": "2026-10-07T23:59:20.189Z",
+      "chapterID": "chapter-9fb8d46b-152a-4e5f-a1ad-0a3ef4aadd14",
+      "lessonInChapter": [
+        "lesson-1"
+      ],
+      "order": [
+        {
+          "chapterId": "legacy-ch-lesson-1-620292af"
+        },
+        {
+          "chapterId": "legacy-ch-lesson-2-63029442"
+        },
+        {
+          "chapterId": "chapter-9fb8d46b-152a-4e5f-a1ad-0a3ef4aadd14"
+        },
+        {
+          "chapterId": "legacy-ch-lesson-3-640295d5"
+        }
+      ]
+    },
+    {
+      "capture": "chapter-remove-ungrouped-order-corrected-save-reload",
+      "capturedUTC": "2026-10-07T23:59:47.052Z",
+      "chapterAbsent": true,
+      "lessonIdsUnchanged": true,
+      "lessonNowUngrouped": true,
+      "order": [
+        {
+          "chapterId": "legacy-ch-lesson-1-620292af"
+        },
+        {
+          "lessonId": "lesson-1"
+        },
+        {
+          "chapterId": "legacy-ch-lesson-2-63029442"
+        },
+        {
+          "chapterId": "legacy-ch-lesson-3-640295d5"
+        }
+      ]
+    },
+    {
+      "boldRendered": true,
+      "capture": "mapped-review",
+      "capturedUTC": "2026-10-08T00:00:19.627Z",
+      "colorRendered": true,
+      "mappingRows": 9,
+      "stageVisible": true,
+      "status": "Review complete. No persistent writes. Inspect typed values and the rendered table before Stage."
+    },
+    {
+      "capture": "mapping-invalidates-review",
+      "capturedUTC": "2026-10-08T00:00:27.343Z",
+      "stageAbsent": true
+    },
+    {
+      "boldTyped": false,
+      "capture": "mapped-stage",
+      "capturedUTC": "2026-10-08T00:00:39.450Z",
+      "formattingPresent": true,
+      "rawCellsRetained": true,
+      "tagsTyped": true,
+      "wordCount": 2000
+    },
+    {
+      "capture": "typed-style-storage-correction",
+      "capturedUTC": "2026-10-08T00:01:06.413Z",
+      "formattingBooleanPresent": false,
+      "note": "Mapped bold belongs to fieldFormatting, not top-level word.bold."
+    },
+    {
+      "capture": "stale-stage",
+      "capturedUTC": "2026-10-08T00:01:26.577Z",
+      "retainedFilename": true,
+      "retainedMappingRows": 9,
+      "status": "Draft changed elsewhere — reload (active revision: 1; draft token: dt1-52b86e319349d350c8782d4e63dd529beb5a7808886bbfc3d70f99b19d3a1746) · Source and mapping retained."
+    },
+    {
+      "boldBooleanRetained": true,
+      "capture": "typed-bold-storage-verified",
+      "capturedUTC": "2026-10-08T00:02:12.293Z",
+      "colorRetained": true,
+      "note": "Earlier probes queried wrong storage paths; this checks the shared mapper actual representation.",
+      "storagePath": "word.format.bold"
+    },
+    {
+      "browserText": "י · I · (synthetic-browser-32)\nאֲנִי · אני · אֲנִי · I · (synthetic-browser-33)\nאֲנִי · אני · אֲנִי · I · (synthetic-browser-34)\nאֲנִי · אני · אֲנִי · I · (synthetic-browser-35)\nאֲנִי · אני · אֲנִי · I · (synthetic-browser-36)\nאֲנִי · אני · אֲנִי · I · (synthetic-browser-37)\nאֲנִי · אני · אֲנִי · I · (synthetic-browser-38)\nאֲנִי · אני · אֲנִי · I · (synthetic-browser-39)\nPrevious\nPage 1 of 40\nNext",
+      "capture": "2000-word-browser-bound",
+      "capturedUTC": "2026-10-08T00:02:20.865Z",
+      "resultButtons": 0
+    },
+    {
+      "capture": "2000-word-bound-corrected-selector",
+      "capturedUTC": "2026-10-08T00:02:42.607Z",
+      "note": "The previous probe used a nonexistent data-vocab-select attribute; this counts actual result rows.",
+      "resultRows": 50,
+      "status": "2000 matching words"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import {mountVocabularyBrowser,mountWordSelector} from './vocabulary-browser.js';
 import { escapeHTML as e, field, listField, booleanOptions, nikkudOptions, wordOptions, bindLists, markDirty, readFields, replaceObject, draftSaveError } from './editor-fields.js';
 
 export const exerciseTypes = ['recognition', 'typing', 'matching', 'ordering', 'cloze', 'transformation'];
@@ -33,11 +34,11 @@ export function applyExerciseEdits(original, edits) {
 
 export function renderExerciseEditor(exercise, content) {
   if (!exerciseTypes.includes(exercise.type)) throw new Error('Unsupported exercise type.');
-  const words = wordOptions(content.words), type = exercise.type;
+  const type = exercise.type;
   let controls = '';
-  if (['recognition','typing'].includes(type)) controls += field('wordId', 'Vocabulary reference (explicit stored forms)', exercise.wordId, {options: words});
+  if (['recognition','typing'].includes(type)) controls += '<fieldset><legend>Vocabulary reference (explicit stored forms)</legend><input type="hidden" name="wordId" value="'+e(exercise.wordId)+'"><p data-word-reference>'+e(exercise.wordId)+'</p><details><summary>Find or change the specific word</summary><div data-exercise-word-picker></div></details></fieldset>';
   if (type === 'recognition') controls += listField('distractors', 'Authored distractor meanings', exercise.distractors || []);
-  if (type === 'matching') controls += listField('wordIds', 'Vocabulary pairs', exercise.wordIds || [], {options: words});
+  if (type === 'matching') controls += '<fieldset><legend>Vocabulary pairs</legend><div data-word-ids-values>'+ (exercise.wordIds||[]).map(id=>'<input type="hidden" name="wordIds" value="'+e(id)+'">').join('')+'</div><details><summary>Select vocabulary pairs</summary><div data-exercise-pairs-picker></div></details></fieldset>';
   if (type === 'ordering') controls += listField('tokens', 'Authored tokens in stored order', exercise.tokens || [], {prefixes: exercise.prefixTokenIndices || []}) + '<p>Prefix positions follow the stored tokens. Ordering also requires four distinct taught distractor words; the server validates the lesson vocabulary.</p>';
   if (['cloze','transformation'].includes(type)) controls += field('context', 'Authored context', exercise.context, {multiline:true});
   if (['ordering','cloze','transformation'].includes(type)) controls += listField('answers', 'Explicit accepted answers', exercise.answers || []) + '<p>Enter each approved answer separately. Forms and Nikkud are preserved exactly.</p>';
@@ -56,6 +57,11 @@ export function mountExerciseEditor(container, {content, exerciseId, baseRevisio
   const change = event => {markDirty(event, dirty); if (event.target.name === 'tokens') dirty.add('prefixTokenIndices');};
   form.addEventListener('input', change, {signal:controller.signal});
   form.addEventListener('change', change, {signal:controller.signal});
+  const pickers=[];
+  const single=form.querySelector('[data-exercise-word-picker]');
+  if(single)pickers.push(mountVocabularyBrowser(single,{words:frozen.words,lessons:frozen.lessons,onSelect:id=>{form.elements.wordId.value=id;form.querySelector('[data-word-reference]').textContent=id;dirty.add('wordId');}}));
+  const pairs=form.querySelector('[data-exercise-pairs-picker]');
+  if(pairs)pickers.push(mountWordSelector(pairs,{words:frozen.words,lessons:frozen.lessons,selectedIds:original.wordIds,onSelectionChange:ids=>{form.querySelector('[data-word-ids-values]').innerHTML=ids.map(id=>'<input type="hidden" name="wordIds" value="'+e(id)+'">').join('');dirty.add('wordIds');}}));
   let saving = false;
   form.addEventListener('submit', async event => {
     event.preventDefault(); if (saving) return;
@@ -77,5 +83,9 @@ export function mountExerciseEditor(container, {content, exerciseId, baseRevisio
     } catch (error) {if (!controller.signal.aborted) status.textContent = draftSaveError(error);}
     finally {saving = false; controls.forEach((el,i)=>el.disabled=disabled[i]);}
   }, {signal:controller.signal});
-  return () => {controller.abort(); unbind();};
+  const dispose = () => {controller.abort(); unbind();pickers.forEach(p=>p.dispose());};
+  // Unified workspace reads dirty patches from every mounted sibling before one CAS save.
+  dispose.snapshot = () => applyExerciseEdits(original,readFields(form,dirty,arrays));
+  dispose.getEdits = () => readFields(form,dirty,arrays);
+  return dispose;
 }
