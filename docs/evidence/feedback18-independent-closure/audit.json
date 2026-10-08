@@ -1,0 +1,467 @@
+{
+  "date": "2026-10-08T01:46:37.120Z",
+  "applicationSHA": "b3445bd191d1766c42ddaeddccf802022c2467d2",
+  "checkout": "C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate",
+  "reportHashes": [
+    {
+      "path": "C:/Users/Trans/.openmausbot/workspaces/6fce93a9-6bf0-4d8d-ad11-edd2d2a11700/feedback18-recheck-evidence-b3445bd/RELEASE_RECHECK.md",
+      "sha256": "9fecef5e4f3cb68f5b24b854dd1989c2a030cb7daef961d2a5faf74b560c03db"
+    },
+    {
+      "path": "C:/Users/Trans/.openmausbot/workspaces/df3d19e5-dedf-4129-9d7a-5b08ffaa6bd9/feedback18-qa-recheck-evidence-b3445bd/QA_RECHECK.md",
+      "sha256": "34df48b89cb5cdbef8e46048755da37e835b536e2dca245940da6965604207af"
+    }
+  ],
+  "scope": "Lead report/transcript inspection, narrow test-wait correction and docs; no new independent or Browser executions",
+  "ownerCommands": [
+    {
+      "command": "node --test test/app.test.js",
+      "pass": 30,
+      "fail": 0,
+      "log": "app-tests.txt"
+    },
+    {
+      "command": "node <installed npm-cli.js> run verify",
+      "pass": 246,
+      "fail": 0,
+      "log": "verify.txt"
+    }
+  ],
+  "independentGroups": {
+    "release": {
+      "application": 246,
+      "schema": 18,
+      "runtime": 9,
+      "originalCompatibility": 12,
+      "additionalBoundaries": 8
+    },
+    "qa": {
+      "initialApplication": {
+        "pass": 245,
+        "fail": 1
+      },
+      "rerunApplication": {
+        "pass": 246,
+        "fail": 0
+      },
+      "schema": 18,
+      "runtime": 9,
+      "focused": 12,
+      "additionalHTTP": 4
+    }
+  },
+  "countsOverlap": true,
+  "runtimeContractsDependenciesUnchanged": true,
+  "sourceInventory": [
+    {
+      "path": "package-lock.json",
+      "committedSha256": "a11ed9f60673beda82c2ae4d11a53f3b8c887f97aa4c4c7785102f45af41dc8b",
+      "testedSha256": "08977e9117f66d82dec7709bad9e48ee9a76b24b852bb2f215f9251586d322cd",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "package.json",
+      "committedSha256": "109e8f09221a3be1620b2c34167b585dbbe08e814f610cbc7825de977a53fa11",
+      "testedSha256": "972148721a0f9621b6b4349d56fc1f3dfca734ce5db9d11d5a81921fb767f4c1",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/app.js",
+      "committedSha256": "da918cbf0052e5262660f25a7b2aacc3ecfb86bb6978d7a04ad7cfc23d9fe035",
+      "testedSha256": "9333430eb7b43e0ef8b3a77d450fc94b6b46f288df9254a38decaf83926c648d",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/content.js",
+      "committedSha256": "569fa98be9feaee32156f7015bdc0646485c9cc5e773dbb6b7c3d53d22653952",
+      "testedSha256": "b7edc47d5b1a0e66622bd3ae753b65cdca56986d1b9783c97fb94ceaa75bd77a",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/course.js",
+      "committedSha256": "08e8ebdc2f1290a6b8635e850826a852a18980cf73deb53a7aae2b24a5b632d6",
+      "testedSha256": "08e8ebdc2f1290a6b8635e850826a852a18980cf73deb53a7aae2b24a5b632d6",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/hebleo-lion-mark.svg",
+      "committedSha256": "df564addfc5f638a702aaaa2575dff7956251bdc0963f4d90f1b957b1c11715e",
+      "testedSha256": "b1a4608d426b2547c64263821cf1a26c496bff1eb1b3a429d1204cc3d386b6f2",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/index.html",
+      "committedSha256": "998fb97720650c54b8c02065c52d3359cc6503a4240c04c29d991f47b602f343",
+      "testedSha256": "877d3651d418dcebd99b9741b6d1675651952a6b43ba5a7b487c5928e00d3eb4",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/interactions.js",
+      "committedSha256": "80e553b534c01e1582a55c3e84b081481ecc96ef4df5c0e34cf5f6e47361800a",
+      "testedSha256": "0408795003104dee4976b376f79371a0ca75932ac4c9fb558ec6a5398c22137f",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/keyboard-owner.css",
+      "committedSha256": "7748ceb2f4825981432014d3cc4b918a1fc2a2866169139083084a22ea13a51a",
+      "testedSha256": "8e3c5a05c30ab7b9d4ab34e63a68485c51fd04935e49934d7c94a0dbd5256a62",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/keyboard-owner.js",
+      "committedSha256": "f0b5c746b6497be78c4745e6cfd9092790ddfb8531194afb314c58b2aacad85b",
+      "testedSha256": "6c876cead604daccc99a890cc118038f580bd4e08ee18a29aeaccdd7282de9df",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/learner-view.js",
+      "committedSha256": "49fae27933e2530e0369abb9db08056830a46f337b6f46e37a3a5f82055fd298",
+      "testedSha256": "3bc87676052c3cc29218d2a8c993389c677659a1397d24c6d66a9d5ac0e15f67",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/media.js",
+      "committedSha256": "6cbdf722e5c3ac54fa342021beda7c8c8b50be07f86cb339ac4f7d6bc5e732b5",
+      "testedSha256": "c78cd54d27da51073113154c0edd5d03fe298632565a6ee72a27eec75bdfd9e0",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/preview/learner-renderer.js",
+      "committedSha256": "56378fe9113b938af0df33996d7e6a4b528638e38c31f1c894a7cd8614bd16d5",
+      "testedSha256": "a9bf9620e301294c4ff3852faaedbba3f6e0ac47d09332c2c3406394021962c2",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/preview/lesson-preview.js",
+      "committedSha256": "c4c4e3cd2de4b930080dd6eacab6803f431bd98221408ccbd8da5841792b00a9",
+      "testedSha256": "64c90c656e2993b8e85126aca9a1e1b5652b912cfb232dec36acbb63e6c9efba",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/refinement.css",
+      "committedSha256": "801a13f57535a6f71b47e5350b4caaa9bf0664ac0a45301b0d22c98e455bc90f",
+      "testedSha256": "a192db7c3b690d289f95987b4affbe0a5be512fb1f34a6f09442bde95daeb26d",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/rich-browser.js",
+      "committedSha256": "153ee516575ac48872497c60c6057a9e0bc6afd332f1ab0e2d19fb5f6a650a43",
+      "testedSha256": "b9ee02e3efd01a246f138a5795f8d3cb3455bb31a3d6d30164307a03f7a87963",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/rich.js",
+      "committedSha256": "99f202a7937214d325d18f4d29fd2041d5d8eaccc16c646ac022ad1af35a4b09",
+      "testedSha256": "a867a0dc5fafe01908bd0e669430456c58af1d5f1d82feb9db051e8f39db93ec",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/curriculum-editor.js",
+      "committedSha256": "ace2883485748e39ce2f35d2f3207988eb08b804c6790471a0e242f97c32808d",
+      "testedSha256": "7195328371c57e898a51e0c932094a955d5117dda4b5c4b7d2e140b04177ab81",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/editor-fields.js",
+      "committedSha256": "bed3cc3d894ec25acee6c710ba3a6b03b10620d9fca7a6db7e0e3b298eeb69f0",
+      "testedSha256": "8a2c32f1dc6575574d2ef8f35228a05c6d336b1349584dbb639b4cb0e5fa9174",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/exercise-editor.js",
+      "committedSha256": "f344e6258aff8a3ae696bd9ed185530df8aa071271b5388208e65f11bca2263c",
+      "testedSha256": "d2982291f5d2cc38b35f558357e20b204164f45ce68cdb41ad395eba7d39aa62",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/import-review.js",
+      "committedSha256": "159ae05d4b9f94a638c25e53309733d3fa3c63cccbf88cff7299e8d17a16f806",
+      "testedSha256": "718c318ec8303f08d25a81864cd15c8705e68bf9cfcee4c5c37c3784e2e8ae93",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/import-workflow.js",
+      "committedSha256": "28c1be7f5ce382824c809430677bfdc079bd124c37e171d2ec757d19c956f6bc",
+      "testedSha256": "f4527beaab6388f1d90233f3271e7e5399b2405d99c0bb5c0e42555326c986cb",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/lesson-editor.js",
+      "committedSha256": "2fb39754417b2c41a7579dfa6e581c6701ae4f2c0b9cd0030d9c60fc8a5dd2e8",
+      "testedSha256": "126c42c549575b8ab4d44542ab9155465bb9a489cf7103fffbb27f2a6805dd7a",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/markdown-editor.js",
+      "committedSha256": "8315478e2e74c0b4020109f7d605c8c6a761f75190eec6c7ceec2a51f094e327",
+      "testedSha256": "9231018782f54876de8ff940ff720fe8199132ca3f3fb23ac577db80cda761eb",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/media-picker.js",
+      "committedSha256": "07957e8ae6bf35cd2d5422060c1c89d17f72aad2063e6f925aeba395ecd17c84",
+      "testedSha256": "6eab42a64eafa9f8552258220137962c6f9173c2b3a25046708bc457f69ac9b0",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/selector-editor.js",
+      "committedSha256": "ec1c60218c5c577ae2993d4e9499956f094aa0c448acd266028ce40d2a01c959",
+      "testedSha256": "2c7025a21afd9b934d7f92562f5e79ae480e9646e30d2a162a3ec52a5d5cd1e0",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/studio.css",
+      "committedSha256": "78fb8afde07fbbf546c1e642c67182998c94b60a6e45e66cb5849da235a90050",
+      "testedSha256": "a13dc0f1dc9542e1c241be11f703ecedad4815277fa9517b146fe28c0469611f",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/unified-studio.js",
+      "committedSha256": "10c57b7b9f26e1fd66299421cacfa0bbb94cbeb225cb5939a1301580d0d9c1c9",
+      "testedSha256": "d13bca299f7cae2d0f2eb3f81ccd76d8e16700d07504869b0aead76e03e39945",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/vendor/.gitattributes",
+      "committedSha256": "70d58f4945e448028ed64cce771e9decf957c5d79b8ffa25575a66c5196112f1",
+      "testedSha256": "22e9574ea2596be17118531ee716a7757a851839b66b0b363dba96ae270461a8",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/vendor/CodeMirror-LICENSE.txt",
+      "committedSha256": "168a4becc968f5001e2ee2e0291b6e4daabafc1894a11ade1e11d56e96096e07",
+      "testedSha256": "fb157923657be7506d658d64cfeddf7d79d5eddeea2af59e2855c58f2fdd91cb",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/vendor/EasyMDE-LICENSE.txt",
+      "committedSha256": "98eee44a1cdad5ad0bb0ea976791ab57b5eef7ac4cafeb162f30e3808564a564",
+      "testedSha256": "21daaae0a5babf78fafeae341366dda074270c1a2a5a85f4237dd605137a2bdf",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/vendor/Marked-bundled-LICENSE.txt",
+      "committedSha256": "8e3a3f82f59a60958f56ca08f445647c32a4733dc7ca6c2c46f6eb898471ab9c",
+      "testedSha256": "ce0bfbb1e2d31127e33538a15a0ae4a12d3408036ae6f894e3498a52c634c4fa",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/vendor/SpellChecker-LICENSE.txt",
+      "committedSha256": "911f2f448d471b622194893fb25ed8b282c173d60cf18e647aa8301aa67e616e",
+      "testedSha256": "8896b84d273cd3a17249f7a2423690b6abb94025c06b5b99f06dfda29ea8c571",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/vendor/TypoJS-LICENSE.txt",
+      "committedSha256": "d36ddbbca5451e2799557c158305096ed88f0fa1f32f5542130954528cd61602",
+      "testedSha256": "ec1c95261571d2f2ae373dfba94f493ecb27535e06f3fecbdf2660d791b724ae",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/vendor/easymde.min.css",
+      "committedSha256": "6eee36340432776d682e7372ec4a7eb29be4fdb3ffada32c0bfa5e31a5ef34a2",
+      "testedSha256": "6eee36340432776d682e7372ec4a7eb29be4fdb3ffada32c0bfa5e31a5ef34a2",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/vendor/easymde.min.js",
+      "committedSha256": "2c06bddfd0c89176db08ccf9d42e2beaa9b4f1a4ff8fb2ec0bf1bed25ce08e05",
+      "testedSha256": "2c06bddfd0c89176db08ccf9d42e2beaa9b4f1a4ff8fb2ec0bf1bed25ce08e05",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/studio/vocabulary-browser.js",
+      "committedSha256": "62a5096f30a3ff93547c5209b3503cd0dbeb3df392ad8784b6cb800b5c72224a",
+      "testedSha256": "145633a98c624a50f8627bc9c186d447173c8364069b3b9aa689b541f8833000",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/styles.css",
+      "committedSha256": "e60a71efed3e03d3d1421b4ec2e54c85656b4526692dfe8577ba6d85ad9db1d0",
+      "testedSha256": "40a767f97384ecedabffb9b422947ab1ad18c9b29ee2347e2714d7112121e86e",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/ux.js",
+      "committedSha256": "1c05c2a3ea58ce220198e98272a72bd98faa2c74a7cdbd2f489dc44af2f11785",
+      "testedSha256": "6a2b3ee93a89a43b2fccd18ef65e454d6aac6e4c23ff7ab5d7f3fa8177cf3619",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "public/vocabulary-import.js",
+      "committedSha256": "21b34685e4115791362705ad35db604a658d05216044fd4bf861666710025d58",
+      "testedSha256": "21b34685e4115791362705ad35db604a658d05216044fd4bf861666710025d58",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/checks/contracts.check.mjs",
+      "committedSha256": "5a8e50d5aec74adc64e9b3b10a48ca36c60685459c98135efebd0c70b0a20d49",
+      "testedSha256": "1f49de52e8a7bb6c72d01734da0b2dd3db438cedc2d82594dcdceb01abc176ad",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/common.v1.schema.json",
+      "committedSha256": "82cbd7f5be5537d9d5c0739170b7a8533a2a61e3c0aabd1eca0884e8908b2ca8",
+      "testedSha256": "4e99fbd5ed4c1b9f25fda5c1c61a1267b8a2292069d3d6f2c75561a43479d4e4",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/content-pack.v1.schema.json",
+      "committedSha256": "7f3f0b68890e6e03de76e7aff45e3a50cf64030e81b5fed302e3f559096b1b4c",
+      "testedSha256": "7f3f0b68890e6e03de76e7aff45e3a50cf64030e81b5fed302e3f559096b1b4c",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/course-model.v1.schema.json",
+      "committedSha256": "efcdd2d9453df49b0c1c7bacf847a274541da79f653e5e7d7d71d0631d7382ea",
+      "testedSha256": "efcdd2d9453df49b0c1c7bacf847a274541da79f653e5e7d7d71d0631d7382ea",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/examples/synthetic-content.json",
+      "committedSha256": "b070d1725d4dd4739abc5c788f6ca935867e8c20bcd08950b982e19cf9c6ed4c",
+      "testedSha256": "2e939d6d4873258aa11801ba001ca72018fec37defc95db452c48905e739cd25",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/examples/synthetic-wire.json",
+      "committedSha256": "476b2a3d250cbff982ab7a0a4466ca2ce531b0544432646a7485374681ff73fa",
+      "testedSha256": "3f5aea0f68bb2542fed198dbbde9850f868fa3800a50fa9e99e16d85e5d27ad9",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/learner-content.v1.schema.json",
+      "committedSha256": "74c3036893c6d3aca3a752e72e79bb472746796a8b13f6105c8ce47fb1f05935",
+      "testedSha256": "74c3036893c6d3aca3a752e72e79bb472746796a8b13f6105c8ce47fb1f05935",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/media-manifest.v1.schema.json",
+      "committedSha256": "82a5c3d09720fcac537a676b02550676152282f16c7e0ff512a1df2c93c01d07",
+      "testedSha256": "e7ba438b293446ff3d1ea572033f3ae24939e8e6e779d778617b96a0c272f864",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/package-lock.json",
+      "committedSha256": "5b1f15e15adaed672f9a902e5b5ac760e75a9b45db6c7f8629ba72a7ef60f08d",
+      "testedSha256": "57241530d346d16d9f4e2c74210782dd0c76ac72d83d5c2f4b0e28454beee1b6",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/package.json",
+      "committedSha256": "7e7b52a174f76783900317ce03fc1de7544f1424320aa1b05ad7a936112314e3",
+      "testedSha256": "d45af18d58167b5dc2489cafc119f248047302761b9c6750aad5b1d146ad637e",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/source-map.v1.schema.json",
+      "committedSha256": "016ff1f0ea3c18c3cb2c1752cae643ff86d976b19b20baf4697e133ef97191ec",
+      "testedSha256": "f9be9fbe8ab5691f722412699831c1f7ae556871a843b84a0036a64505aaf994",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/studio-wire.v1.schema.json",
+      "committedSha256": "c130132f07ac251df9b22bb37f91692d116329c4153b34d75cde5446a9ad8dec",
+      "testedSha256": "c130132f07ac251df9b22bb37f91692d116329c4153b34d75cde5446a9ad8dec",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/tools/build-examples.mjs",
+      "committedSha256": "583ee5f11a632293038025c891450b5381869fdf990e84ebbaad30981c9438c5",
+      "testedSha256": "199560a573edfdf6fe51bdfbec0ba0ff232f8fded071717353fc75008697db4d",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/tools/contracts.mjs",
+      "committedSha256": "09fe3c9d816f5a38c63c268a2b7cc3eca8ee3e2ff48d4497ac46db921654dde2",
+      "testedSha256": "76363120302aed2790ed5438e79cf4795edf5fc078d622a5146a292a9dc36227",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/tools/fixtures.mjs",
+      "committedSha256": "e5aa02304f9f2376eb4619775d11e899d1d50f15cd0c39fbe25d836901ed0641",
+      "testedSha256": "7dcb565cb7de92868770369aceef4fc6a8138da5740fcd4c1bc5e2716aa2322a",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/tools/reproduce-metadata-diff.mjs",
+      "committedSha256": "36676235bdd744af160d6ff44daef259ba5d73495fd2a7e0c274e523942e1b76",
+      "testedSha256": "50b99e720b28a1c5f29d3b54ea8ccbf3add0316abdac9578b10f9ba3d4db175b",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/tools/runtime-check.mjs",
+      "committedSha256": "ae34d700c24d5d53324b18e0f067f93477009c3b65364cd2b16b4223a67a16a5",
+      "testedSha256": "6b8e3e873a5347fbe62ecfde56ed9edc514b8d7cb0ee0986140063f3810883c8",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/tools/runtime-utils.mjs",
+      "committedSha256": "37fa8827e185baff714a2b2b15366b06a2955f2e11e7838e24565fe813cfc3eb",
+      "testedSha256": "c47ecab366908dcfe4b3fcda30b4e93f9bfbf32336d2ce1bc6e4b7caf659fbc6",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/tools/validate.mjs",
+      "committedSha256": "d7147990903ac04f882b8b201aacf2591281a068c2d8543f3e5a5581880d8d5d",
+      "testedSha256": "f857ea8359dbbc25cb594746fcca44f5ef40d4c6eb64d0cfac0cbe61f6f41b81",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "schemas/vocabulary-import.v1.schema.json",
+      "committedSha256": "b07c958427750b87cce602e0ca973527a86add5aa8a4e7df53cae15a16df332a",
+      "testedSha256": "b07c958427750b87cce602e0ca973527a86add5aa8a4e7df53cae15a16df332a",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "src/demo-build.js",
+      "committedSha256": "4cd30046bde90e9bafd943ad9804652620c925a9692567c71f8d61941fa8cd08",
+      "testedSha256": "b03afd2b53fd8154f4b2d49f1e1b1e56040e3fa60bddad88d44f892de50e3a2c",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "src/errors.js",
+      "committedSha256": "fd463d0b4e34631d07dc6ea5de9c695c9ffa1619c0ce1e2ff39efae8a28659f5",
+      "testedSha256": "d7176f8f5f83e134b7d024d10dcf1b6db0d95a336c7be8299eb2bff3d29c7d29",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "src/evaluate.js",
+      "committedSha256": "bf0588c4c42143d0e7e86f900c382531e3486f69608cc9fd596c1a81f21da806",
+      "testedSha256": "7490ce5c678de2938fe744650babd179f9836f78e11279dee387103df2602cf1",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "src/seed.js",
+      "committedSha256": "06faf4145529b3991968c7e7025a10281f034980d3dbe6edb78f46651563dcfd",
+      "testedSha256": "bba9bfbaa113b1fac2858ec0c2572bd8fc5846663219cc8f5b9586069fcfe56d",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "src/server.js",
+      "committedSha256": "1b76b571766e5a1aa8a7a2814f1fc2ee51e6be69243fb882122a346754db3281",
+      "testedSha256": "e46af3348f46e41b941c3318254913d3877ff334528677e102cb597a58d5b176",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "src/store.js",
+      "committedSha256": "722a9b2e6fa6eeb631e0fc0f2e957626f69312856a5e262bc5b292fdf17c6a89",
+      "testedSha256": "b8f4a2c2a2a5548b930eff1258e57a2a907b18ad2e896b5aabf6e7c3d8fb9f55",
+      "lfNormalizedMatches": true
+    },
+    {
+      "path": "src/tutor.js",
+      "committedSha256": "829f65217c7b45606d0fc77dbf306e4c100998238434575adb628abb30d4a394",
+      "testedSha256": "e13bd63323dd1d5d0edce40b74b5ef16d36470764af77935378ec68b90b0e168",
+      "lfNormalizedMatches": true
+    }
+  ],
+  "limits": [
+    "Native drag unverified / FB07 Partial",
+    "B24 and low status/focus/toast open",
+    "QA original timing failure retained; test-wait correction owner-verified only",
+    "Mobile/touch/APK Deferred",
+    "Chief acceptance/demo update/Guy acceptance pending"
+  ],
+  "containsRawLearnerRows": false
+}

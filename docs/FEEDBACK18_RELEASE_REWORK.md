@@ -1,6 +1,6 @@
 # Release correction candidate — 2026-10-08
 
-Base f150aef45ba4d90babc4a1a1a6469965388cf58d, branch lead/feedback18-studio, isolated Lead checkout C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate. The bounded independent QA pass and Release HOLD apply only to that base. This correction requires independent closure before the Chief's demo gate. Demo4173, main, protected runtimes and authored user data were not edited or reset. No canonical curriculum, live integration, APK, production or Guy-acceptance claim.
+Base f150aef45ba4d90babc4a1a1a6469965388cf58d, branch lead/feedback18-studio, isolated Lead checkout C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-candidate. The bounded independent QA pass and Release HOLD apply only to that base. The independent closure recorded below now passes at b3445bd; Chief acceptance remains pending. Demo4173, main, protected runtimes and authored user data were not edited or reset. No canonical curriculum, live integration, APK, production or Guy-acceptance claim.
 
 ## Corrections
 
@@ -31,4 +31,17 @@ Reviewed actual artifacts:
 - QA base report: C:/Users/Trans/.openmausbot/workspaces/df3d19e5-dedf-4129-9d7a-5b08ffaa6bd9/feedback18-qa-evidence/QA_REPORT.md. Independent 235/235 app, 16/16 schema, 9/9 HTTP/Store, bounded Browser findings; FB07 Partial. It did not find the later Release probes.
 - Release base report: C:/Users/Trans/.openmausbot/workspaces/6fce93a9-6bf0-4d8d-ad11-edd2d2a11700/feedback18-release-evidence/RELEASE_REVIEW.md. Independent HOLD for RR-F18-01, 02/03 and 04 despite passing suites. Migration, old-binary refusal and historical grading tests passed in that review; those are still base evidence.
 
-Send the corrected exact pushed SHA to Release Reviewer to run the original probes against its actual artifact and inspect closure; send QA a bounded changed-boundary app/HTTP/Browser recheck. Neither owner results nor their previous f150 suites close the corrected candidate. Chief review, pre-update demo backup/guide and actual revised demo verification follow only after closure. Guy acceptance stays Retest pending. Native pointer drag remains unverified; accessible move controls and dispatched events do not count. Mobile/touch remains Deferred until APK. The earlier B24 focus-cycle limitation stays open.
+Both corrected-candidate assignments completed and their actual reports/transcripts were inspected. Release reran the original probes with corrected HTTP expectations; QA performed the bounded current Browser recheck. The current independent results below close those boundaries. Chief review, pre-update demo backup/guide and actual revised-demo verification remain pending. Guy acceptance stays Retest pending. Native pointer drag remains unverified; accessible move controls and dispatched events do not count. Mobile/touch remains Deferred until APK. The earlier B24 focus-cycle limitation stays open.
+
+
+## Independent correction closure — 2026-10-08
+
+Executable/source artifact: b3445bd191d1766c42ddaeddccf802022c2467d2. Lead inspected both actual reports and saved transcripts. [Chief gate handoff and revised-demo guide](FEEDBACK18_CHIEF_GATE.md) preserves the evidence paths and exact scope.
+
+Release independently closes RR-F18-01, RR-F18-02/03 and RR-F18-04: 246 application, 18 schema, 9 HTTP/Store, 12 original/compatibility and 8 additional boundary checks. Invalid operations compare every table; good source, pinned content and receipts remain intact. Its 22-file inventory audit records working-file/committed/tested hashes separately and explains LF/CRLF differences.
+
+QA independently passes the corrected practice/save/reload/restore, learner-word filtering and mapped-import Review/Stage/409 retention boundaries: 246 application on unchanged rerun, 18 schema, 9 HTTP/Store, 12 focused and 4 independent HTTP scenarios. The first full run was 245/246; its Start/Continue timing failure and the successful rerun are both retained. The earlier f150aef whole-18 Browser evidence stays historical; this was a changed-boundary recheck. Counts overlap and are not additive.
+
+Lead subsequently tightened only the Start/Continue test wait to require the rendered lesson before navigating and the settled Continue label afterward. Actual owner `node --test test/app.test.js` passes 30/30; the installed npm CLI `run verify` passes 246/246. No application, contract, dependency or runtime source changed from b3445bd. This test-reliability correction has owner verification; independent Chief review of the overlay remains pending. Original QA failure is not erased. Evidence: docs/evidence/feedback18-independent-closure.
+
+Chief acceptance and the backed-up revised-demo update remain pending. Demo4173/main/protected runtimes and user data are untouched. FB07 native pointer drag remains unverified; B24 and existing low status/focus/toast findings remain open; mobile/touch/APK Deferred; Guy cells remain Retest pending. No canonical curriculum, live import, production or launch acceptance.

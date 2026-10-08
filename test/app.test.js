@@ -476,8 +476,8 @@ test('fresh home says Start, a saved lesson says Continue, and a completed lesso
   assert.match(doc.querySelector('.hero button').textContent,/^Start · Learn/);
   assert.ok([...doc.querySelectorAll('.lesson-card button')].every(b=>b.textContent==='Start →'));
   doc.querySelector('.hero button').click();
-  await settled(()=>store.learner('learner-demo').resumes['lesson-1']);
-  click(doc,'page'); await settled(()=>doc.querySelector('.hero'));
+  await settled(()=>store.learner('learner-demo').resumes['lesson-1'] && doc.querySelector('.step-strip') && !doc.querySelector('.hero'));
+  click(doc,'page'); await settled(()=>/^Continue · Learn/.test(doc.querySelector('.hero button')?.textContent || ''));
   assert.match(doc.querySelector('.hero button').textContent,/^Continue · Learn/);
   assert.equal(doc.querySelector('[data-value="lesson-2"].button').textContent,'Start →');
   const completed=await app(t,{page:'home',prepare(s){const learner=s.learner('learner-demo');learner.completed=['lesson-1'];s.saveLearner('learner-demo',learner);}});
