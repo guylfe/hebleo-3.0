@@ -32,7 +32,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const context=lessonId+'|'+(componentId||step);if(context!==mediumKey){medium=null;mediumKey=context;}
       const word = id => content.words.find(w => w.id === id);
       const exercise = exerciseId ? content.exercises.find(x => x.id === exerciseId) : null;
-      let draft = draftOf(props.answer), message = '';
+      let draft = draftOf(props.answer), message = '', conceptOpen = false;
       const root = doc.createElement('div');
       root.className = 'learner-preview';
       root.dataset.previewRoot = '';
@@ -94,9 +94,11 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           + exerciseInput(exercise, {mode, word, draft, result, keyboard:keypad()})
           + note()
           + exerciseFeedback(exercise, result)
-          + '<div class="exercise-footer">' + (result ? button(question + 1 === count ? 'Continue →' : 'Next question →', 'next-question', 'primary') : button('Check answer', 'check', 'primary'))
+          + '<div class="exercise-footer">' + (result ? button(question + 1 === count ? 'Continue →' : 'Next question →', 'next-question', 'primary') : button('Review this concept', 'concept', 'small outline'))
           + '<div class="toolbar">' + (result && !result.correct ? button('Try this question again', 'retry-question', 'small secondary', exercise.id) : '')
-          + (allowed ? '<details class="preview-vocabulary-help"><summary>Vocabulary help</summary>' + lessonWords.map(w => button(esc(w.pointed) + ' · ' + esc(w.english), 'lookup', 'small secondary', w.id)).join('') + '</details>' : '') + '</div></div>';
+          + (result ? button('Review this concept', 'concept', 'small outline') : button('Check answer', 'check', 'primary'))
+          + (allowed ? '<details class="preview-vocabulary-help"><summary>Vocabulary help</summary>' + lessonWords.map(w => button(esc(w.pointed) + ' · ' + esc(w.english), 'lookup', 'small secondary', w.id)).join('') + '</details>' : '') + '</div></div>'
+          + (conceptOpen ? '<section class="preview-concept"><h3>Review this concept</h3>' + learnMedia(presentation, audioURL(presentation.video)?'watch':'read',renderLesson,exercise.explanationTime) + button('Close concept','concept-close','small outline') + '</section>' : '');
       }
       let mounted = false;
       function render() {
@@ -149,6 +151,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         else if (action === 'token') { if (!result) { updateDraft({...draft, selectedTokens:[...draft.selectedTokens, Number(value)]}); keepKeys(); } }
         else if (action === 'remove-token') { if (!result) { updateDraft({...draft, selectedTokens:draft.selectedTokens.filter((_, i) => i !== Number(value))}); keepKeys(); } }
         else if (action === 'check') submit();
+        else if (action === 'concept' || action === 'concept-close') { conceptOpen = action === 'concept'; render(); }
         else if (action === 'retry-question') call('retry');
         else if (action === 'next-question' || action === 'next-step') call('next');
         else if (action === 'lookup') call('lookup', value);

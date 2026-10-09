@@ -1,5 +1,6 @@
 import { DatabaseSync } from 'node:sqlite';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
+import {scheduleReview} from '../public/review-schedule.js';
 import { DomainError } from './errors.js';
 import { normalizeHebrew, evaluateAnswer, matchingPairResults } from './evaluate.js';
 import { seed, upgradeDemo } from './seed.js';
@@ -7,12 +8,12 @@ import {validateCurriculum, validateLessonComposition, resolveComponent, ordered
 import {validateFormatting,validateImportSource} from '../public/vocabulary-import.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
 
-// Version 2 adds revision-mapped backups; version 3 adds component cursors and additive composition semantics.
-export const STORE_SCHEMA_VERSION = 3;
+// v2: revision-mapped backups; v3: component cursors; v4: opt-in shared discussions.
+export const STORE_SCHEMA_VERSION = 4;
 const backupFormats = ['hebleo-demo-backup-v1', 'hebleo-demo-backup-v2'];
 // Supported backup markers are checked before any restore write.
-// v1 predates the marker; v2 backups from schema 2 and 3 retain their historical snapshot contracts.
-export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3] };
+// v1 predates the marker; v2 backups retain each supported historical contract.
+export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3,4] };
 export { DomainError, normalizeHebrew };
 const clone = value => JSON.parse(JSON.stringify(value));
 // Sorted-key JSON, so the same content always yields the same token whatever key order an import used.
@@ -164,6 +165,8 @@ export class Store {
       this.set('schema-version', 2);
     });
     if(version<3)this.transaction(()=>this.set('schema-version',3));
+    // Discussion metadata is additive. Never publish or rewrite old private questions.
+    if(version<4)this.transaction(()=>this.set('schema-version',4));
   }
   transaction(fn) { this.db.exec('BEGIN IMMEDIATE'); try { const result = fn(); this.db.exec('COMMIT'); return result; } catch (e) { this.db.exec('ROLLBACK'); throw e; } }
   get(key) { const row = this.db.prepare('SELECT value FROM kv WHERE key=?').get(key); return row ? JSON.parse(row.value) : null; }
@@ -198,7 +201,7 @@ export class Store {
   bootstrap(userId) {
     const content = this.snapshot(); const learner = this.learner(userId);
     const due = Object.entries(learner.cards).filter(([, c]) => Date.parse(c.due) <= Date.now()).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
-    return { revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
+    return { revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
   }
   publicWord(word) {
     if(!word)return word;
@@ -251,9 +254,9 @@ export class Store {
     if (!card || !this.snapshot().words.some(w => w.id === input.wordId)) throw new DomainError('Review card not found.', 404);
     const requestId = id(input.requestId); const previous = this.get('review-' + userId + '-' + requestId);
     if (previous) { if (previous.wordId !== input.wordId || previous.rating !== input.rating) throw new DomainError('Conflicting review request ID.', 409); return { ...previous, duplicate: true }; }
+    if (Object.hasOwn(input,'expectedCard') && canonicalJSON(input.expectedCard) !== canonicalJSON(card)) throw new DomainError('This card changed elsewhere. Refresh its review choices.',409,'REVIEW_CARD_CHANGED');
     const before = clone(card);
-    card.intervalDays = input.rating === 1 ? 0 : input.rating === 2 ? 1 : Math.max(1, Math.round((card.intervalDays || 1) * (input.rating === 3 ? 2 : 3)));
-    card.repetitions += 1; card.due = new Date(Date.now() + (input.rating === 1 ? 600000 : card.intervalDays * 86400000)).toISOString();
+    Object.assign(card,scheduleReview(card,input.rating,Date.now()).card);
     const result = { wordId: input.wordId, rating: input.rating, requestId, card: clone(card) };
     state.lastReview = { requestId, wordId: input.wordId, before, after: clone(card) };
     return this.transaction(() => { this.saveLearner(userId, state); this.set('review-' + userId + '-' + requestId, result); return result; });
@@ -331,7 +334,15 @@ export class Store {
     this.set(key,report); return report;
   }
   reports(userId) { this.requireAuthor(userId); return this.db.prepare("SELECT value FROM kv WHERE key LIKE 'report-%' ORDER BY key").all().map(r => JSON.parse(r.value)); }
-  questions(userId) { return this.db.prepare("SELECT value FROM kv WHERE key LIKE 'question-%' ORDER BY key").all().map(r=>JSON.parse(r.value)).filter(q=>users.find(u=>u.id===userId)?.canAuthor || q.userId===userId); }
+  questionView(userId,q) {
+    if(users.find(u=>u.id===userId)?.canAuthor || (q.discussionVersion!==1 && q.userId===userId))return q;
+    // A whitelist prevents identity, replay IDs and moderation metadata leaking through extensions.
+    return {commentId:q.commentId,discussionVersion:1,lessonId:q.lessonId,revisionId:q.revisionId,wordId:q.wordId,exerciseId:q.exerciseId,question:q.question,answer:q.answer,status:q.status,at:q.at,answeredAt:q.answeredAt,anonymous:q.anonymous,posterName:q.anonymous?'Anonymous':users.find(u=>u.id===q.userId).name,own:q.userId===userId,visibility:q.visibility};
+  }
+  questions(userId) {
+    const state=this.learner(userId),author=users.find(u=>u.id===userId)?.canAuthor;
+    return this.db.prepare("SELECT value FROM kv WHERE key LIKE 'question-%' ORDER BY key").all().map(r=>JSON.parse(r.value)).filter(q=>author || (state.purchasedCourses.includes('demo-foundations') && (q.userId===userId && q.discussionVersion!==1 || q.discussionVersion===1 && q.visibility==='visible'))).map(q=>this.questionView(userId,q));
+  }
   askQuestion(userId,input) {
     const state=this.learner(userId);if(!state.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
     if(!Number.isInteger(input.revisionId))throw new DomainError('Question needs a content revision.');
@@ -339,8 +350,23 @@ export class Store {
     if(input.wordId && !c.words.some(w=>w.id===input.wordId))throw new DomainError('Word not found.',404);
     if(input.exerciseId && !c.exercises.some(e=>e.id===input.exerciseId && e.lessonId===input.lessonId))throw new DomainError('Exercise not found.',404);
     const question=text(input.question,'question',1500),requestId=id(input.requestId),key='question-'+userId+'-'+requestId;
+    if(input.discussionVersion!==undefined && input.discussionVersion!==1)throw new DomainError('Unsupported discussion version.');
+    if(input.anonymous!==undefined && typeof input.anonymous!=='boolean')throw new DomainError('Anonymous must be a boolean.');
+    if(input.anonymous!==undefined && input.discussionVersion!==1)throw new DomainError('Anonymity requires an explicit discussion post.');
     const q={requestId,userId,lessonId:input.lessonId,revisionId:input.revisionId,wordId:input.wordId||null,exerciseId:input.exerciseId||null,question,status:'waiting',answer:'',at:new Date().toISOString()};
-    const old=this.get(key);if(old){if(['question','lessonId','revisionId','wordId','exerciseId'].some(k=>old[k]!==q[k]))throw new DomainError('Conflicting question request.',409);return old;}
+    if(input.discussionVersion===1)Object.assign(q,{discussionVersion:1,commentId:randomUUID(),anonymous:input.anonymous??false,visibility:'visible',moderation:[]});
+    const old=this.get(key);if(old){if(['question','lessonId','revisionId','wordId','exerciseId','discussionVersion'].some(k=>old[k]!==q[k]) || old.discussionVersion===1 && old.anonymous!==q.anonymous)throw new DomainError('Conflicting question request.',409);return this.questionView(userId,old);}
+    this.set(key,q);return this.questionView(userId,q);
+  }
+  moderateQuestion(userId,input) {
+    this.requireAuthor(userId);
+    if(!['keep','remove'].includes(input.action))throw new DomainError('Choose Keep or Remove.');
+    const key='question-'+id(input.userId)+'-'+id(input.requestId),q=this.get(key);
+    if(!q)throw new DomainError('Question not found.',404);
+    if(q.discussionVersion!==1)throw new DomainError('Historical private questions remain private.');
+    const visibility=input.action==='keep'?'visible':'removed';
+    if(q.visibility===visibility && q.moderation.at(-1)?.action===input.action)return q;
+    q.visibility=visibility;q.moderation.push({action:input.action,by:userId,at:new Date().toISOString()});
     this.set(key,q);return q;
   }
   answerQuestion(userId,input) { this.requireAuthor(userId);const key='question-'+id(input.userId)+'-'+id(input.requestId),q=this.get(key);if(!q)throw new DomainError('Question not found.',404);q.answer=text(input.answer,'author answer',12000);q.status='answered';q.answeredAt=new Date().toISOString();this.set(key,q);return q; }
@@ -486,7 +512,18 @@ export class Store {
     // A reported attempt is a copy of a graded attempt, so it needs the same identity and grade as learner history; only questions have optional targets.
     const validId = value => { try { return id(value) === value; } catch { return false; } };
     const savedAttempt = a => Boolean(a) && typeof a === 'object' && typeof a.correct === 'boolean' && Number.isFinite(Date.parse(a.at)) && [a.requestId, a.exerciseId, a.lessonId].every(validId) && linkable(a);
-    for(const entry of questions){const q=entry?.value;if(!q || !users.some(u=>u.id===q.userId)||entry.key!=='question-'+q.userId+'-'+id(q.requestId)||!linkable(q)||typeof q.question!=='string'||!q.question.trim()||q.question.length>1500||typeof q.answer!=='string'||q.answer.length>12000||!['waiting','answered'].includes(q.status)||(q.status==='answered'&&!q.answer.trim()))throw new DomainError('Invalid learner question in backup.');id(q.lessonId);if(q.wordId)id(q.wordId);if(q.exerciseId)id(q.exerciseId);}
+    const commentIds=new Set();
+    for(const entry of questions){
+      const q=entry?.value;
+      if(!q || !users.some(u=>u.id===q.userId)||entry.key!=='question-'+q.userId+'-'+id(q.requestId)||!linkable(q)||typeof q.question!=='string'||!q.question.trim()||q.question.length>1500||typeof q.answer!=='string'||q.answer.length>12000||!['waiting','answered'].includes(q.status)||(q.status==='answered'&&!q.answer.trim()))throw new DomainError('Invalid learner question in backup.');
+      id(q.lessonId);if(q.wordId)id(q.wordId);if(q.exerciseId)id(q.exerciseId);
+      if(q.discussionVersion===undefined){if(['anonymous','commentId','visibility','moderation'].some(k=>Object.hasOwn(q,k)))throw new DomainError('Private question has discussion metadata.');continue;}
+      if(q.discussionVersion!==1 || typeof q.anonymous!=='boolean' || !/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(q.commentId) || commentIds.has(q.commentId) || !['visible','removed'].includes(q.visibility) || !Array.isArray(q.moderation))throw new DomainError('Invalid discussion metadata.');
+      commentIds.add(q.commentId);
+      let previousTime=-Infinity;
+      for(const audit of q.moderation){const at=Date.parse(audit?.at);if(!['keep','remove'].includes(audit?.action)||!users.some(u=>u.id===audit.by&&u.canAuthor)||!Number.isFinite(at)||at<previousTime)throw new DomainError('Invalid discussion moderation audit.');previousTime=at;}
+      if(q.visibility!==(!q.moderation.length || q.moderation.at(-1).action==='keep'?'visible':'removed'))throw new DomainError('Discussion visibility disagrees with moderation audit.');
+    }
     // Reports are listed and resolved by their own userId/requestId, so the key must be exactly the one report() derives from them; otherwise resolving one report could update another.
     for(const r of reports){const v=r?.value;if(!v||!users.some(u=>u.id===v.userId)||!validId(v.requestId)||r.key!=='report-'+v.userId+'-'+v.requestId||!['answer','unclear','media'].includes(v.reason)||!['pending','reviewed'].includes(v.status)||typeof v.note!=='string'||v.note.length>2000||!savedAttempt(v.attempt))throw new DomainError('Invalid learner report in backup.');}
     if (!Array.isArray(input.events) || !Array.isArray(input.reviewReceipts)) throw new DomainError('Backup needs replay receipts.');

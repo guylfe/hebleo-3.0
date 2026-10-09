@@ -77,7 +77,7 @@ test('Vowel variants have a keyboard path, include auxiliary marks, and dismiss 
 
 test('Pin holds the overlay across click-away and lesson context; unpinned click-away dismisses it',t=>{
   const {d,doc,k,input,click}=keyboard(t);
-  const outside=()=>doc.querySelector('#outside').dispatchEvent(new d.window.Event('pointerdown',{bubbles:true}));
+  const outside=()=>{doc.querySelector('#outside').dispatchEvent(new d.window.Event('pointerdown',{bubbles:true}));doc.querySelector('#outside').click();};
   outside();assert.equal(doc.querySelector('.hebleo-keyboard--open'),null);
   k.open(input);click('[data-action="pin"]');
   assert.ok(doc.querySelector('.hebleo-keyboard--pinned'));assert.equal(doc.querySelector('[data-action="pin"]').getAttribute('aria-pressed'),'true');

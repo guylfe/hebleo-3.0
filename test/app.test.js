@@ -9,6 +9,7 @@ import {Store} from '../src/store.js';
 import {createServer} from '../src/server.js';
 import {resolveBlock,importVocabularyCSV} from '../public/content.js';
 import * as ux from '../public/ux.js';
+import * as reviewScheduler from '../public/review-schedule.js';
 import * as courseHelpers from '../public/course.js';
 import {composeSentence,bindMatching,matchWord} from '../public/interactions.js';
 import {richCell,cellCSS,createLessonRenderer} from '../public/rich.js';
@@ -28,8 +29,8 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   if(realHTTP){server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
   t.after(async()=>{w.close();if(server)await new Promise(r=>server.close(r));if(!providedStore)store.close();});w.matchMedia=()=>({matches:false});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
-  if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,ux,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
+  Object.assign(w,ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},stopMedia(){},clearRecording(){},feedbackSound(){}});
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
     if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
@@ -52,10 +53,74 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else throw new Error('Unexpected app API '+url.pathname);
     return {ok:true,json:async()=>structuredClone(value)};
   }catch(e){return {ok:false,status:e.status||500,json:async()=>({error:e.message,code:e.code,...e.details})};}};
-  w.eval(readFileSync(new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
+  w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+
+test('FB8 outside first-click lifecycle: Check and concept survive typing/cloze, closed/open/pinned keyboards and old revision pins',async t=>{
+  for(const cloze of [false,true])for(const mode of ['closed','open','pinned'])for(const action of ['concept','check'])await t.test((cloze?'cloze':'typing')+' '+mode+' '+action,async t=>{
+    const lessonId=cloze?'lesson-2':'lesson-1',exerciseId=cloze?'ex-2-cloze':'ex-1-type',text=cloze?'היא':'אני';
+    const {store,w,doc,calls}=await app(t,{page:'lesson/'+lessonId+'/apply',ownerKeyboard:true,realHTTP:true,prepare(s){
+      s.updateLearner('learner-demo',{keyboardPinned:mode==='pinned'});
+      s.saveProgress('learner-demo',{lessonId,revisionId:1,step:'apply',question:cloze?1:0,answer:text,matching:{},selectedTokens:[],resultRequestId:null,practiceIds:[]});
+      const content=s.snapshot();content.lessons.find(l=>l.id===lessonId).title+=' SYNTHETIC next release';const draft=s.stage({content,baseRevisionId:1,expectedDraftToken:null});s.publish(1,draft.draftToken);
+    }});
+    assert.ok(doc.querySelector('.hint').textContent.includes('earlier lesson'));assert.equal(doc.querySelector('#answer').value,text);
+    const footer=doc.querySelector('#practice .exercise-footer');assert.equal(footer.firstElementChild.dataset.action,'concept');assert.equal(footer.querySelector('.toolbar').firstElementChild.dataset.action,'check');
+    if(mode!=='closed')click(doc,'keyboard-open');
+    const el=doc.querySelector('#practice [data-action="'+action+'"]'),seen=calls.length;
+    el.dispatchEvent(new w.MouseEvent('pointerdown',{bubbles:true,cancelable:true}));
+    assert.equal(el.isConnected,true);assert.equal(doc.querySelector('#practice [data-action="'+action+'"]'),el);
+    if(mode!=='closed')assert.ok(doc.body.classList.contains('hebleo-keyboard-is-open'),'layout must survive pointerdown until click target is resolved');
+    el.dispatchEvent(new w.MouseEvent('pointerup',{bubbles:true,cancelable:true}));el.click();
+    if(action==='concept'){
+      await settled(()=>doc.querySelector('#context-panel'));assert.equal(store.learner('learner-demo').attempts.length,0);assert.equal(calls.slice(seen).filter(p=>p==='/api/attempt').length,0);
+      assert.equal(doc.querySelector('#answer').value,text);click(doc,'panel-close');assert.equal(doc.querySelector('#answer').value,text);
+      const answer=doc.querySelector('#answer');answer.focus();answer.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
+    }
+    await settled(()=>doc.querySelector('#practice .feedback'));
+    const attempts=store.learner('learner-demo').attempts;assert.equal(attempts.length,1);assert.equal(attempts[0].correct,true);assert.equal(attempts[0].exerciseId,exerciseId);assert.equal(attempts[0].revisionId,1);
+    assert.equal(store.learner('learner-demo').resumes[lessonId].resultRequestId,attempts[0].requestId);
+    assert.equal(Boolean(doc.querySelector('.hebleo-keyboard--open')),mode==='pinned');
+  });
+});
+
+test('FB8 saved-draft Preview swaps controls, preserves typed answer through concept and inline keyboard, and grades with zero stored writes',async t=>{
+  const {store,w,doc}=await app(t,{page:'studio',author:true,realHTTP:true,ownerKeyboard:true,prepare(s){stageDraft(s,c=>{c.lessons[0].title+=' SYNTHETIC preview';});}});
+  click(doc,'rehearse');await settled(()=>doc.querySelector('[data-preview-step="apply"]'));
+  const before=tables(store),inside=s=>doc.querySelector('#rehearsal-panel '+s);
+  inside('[data-preview-step="apply"]').click();await settled(()=>inside('#answer'));
+  let answer=inside('#answer');answer.value='אני';answer.dispatchEvent(new w.Event('input',{bubbles:true}));
+  inside('[data-preview-keyboard="show"]').click();await settled(()=>inside('[data-preview-key]'));
+  const footer=inside('.exercise-footer');assert.equal(footer.firstElementChild.dataset.action,'concept');assert.equal(footer.querySelector('.toolbar').firstElementChild.dataset.action,'check');
+  const concept=inside('[data-action="concept"]');concept.dispatchEvent(new w.MouseEvent('pointerdown',{bubbles:true}));concept.dispatchEvent(new w.MouseEvent('pointerup',{bubbles:true}));concept.click();
+  assert.ok(inside('.preview-concept'));assert.equal(inside('#answer').value,'אני');assert.deepEqual(tables(store),before);
+  inside('[data-action="concept-close"]').click();const check=inside('[data-action="check"]');check.dispatchEvent(new w.MouseEvent('pointerdown',{bubbles:true}));check.dispatchEvent(new w.MouseEvent('pointerup',{bubbles:true}));check.click();await settled(()=>inside('.feedback'));
+  assert.ok(inside('.feedback').textContent.includes('right'));assert.deepEqual(tables(store),before);
+});
+
+test('FB8 actual lesson comments post anonymously, render to another learner without identity and disappear after Author Remove',async t=>{
+  const {store,w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true});click(doc,'help');await settled(()=>doc.querySelector('#author-question-form'));
+  const form=doc.querySelector('#author-question-form');form.elements.question.value='SYNTHETIC anonymous discussion';form.elements.anonymous.checked=true;form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.questions('author-demo').length===1&&doc.querySelector('#context-panel .question-item'));
+  const q=store.questions('author-demo')[0];assert.equal(q.anonymous,true);assert.equal(q.revisionId,1);
+  const sam=await app(t,{page:'lesson/lesson-1/learn',store,realHTTP:true});sam.doc.querySelector('#demo-user').value='learner-core';sam.doc.querySelector('#demo-user').dispatchEvent(new sam.w.Event('change',{bubbles:true}));await settled(()=>sam.doc.querySelector('h1').textContent.includes('Sam'));
+  sam.doc.querySelector('[data-action="lesson"][data-value="lesson-1"]').click();await settled(()=>sam.doc.querySelector('.question-item'));
+  assert.ok(sam.doc.querySelector('.question-item').textContent.includes('Anonymous'));assert.equal(sam.doc.querySelector('.question-item').outerHTML.includes('Alex'),false);assert.equal(sam.doc.querySelector('.question-item').outerHTML.includes('learner-demo'),false);
+  const authorApp=await app(t,{page:'studio',author:true,store,realHTTP:true});const remove=authorApp.doc.querySelector('[data-action="comment-moderate"][data-value$="|remove"]');assert.ok(remove);remove.click();await settled(()=>store.questions('learner-core').length===0);
+  assert.equal(store.questions('author-demo')[0].visibility,'removed');assert.equal(store.questions('author-demo')[0].moderation[0].action,'remove');
+  const reloaded=await app(t,{page:'lesson/lesson-1/learn',store,realHTTP:true});assert.equal(reloaded.doc.querySelector('.question-item'),null);
+});
+
+test('FB8 actual review buttons show shared scheduler durations and refresh after Undo',async t=>{
+  const {store,doc}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');const state=s.learner('learner-demo');state.cards['w-ani'].intervalDays=4;state.cards['w-ani'].repetitions=3;s.saveLearner('learner-demo',state);}});
+  click(doc,'review-start');await settled(()=>doc.querySelector('[data-action="review-reveal"]'));click(doc,'review-reveal');
+  const labels=()=>[...doc.querySelectorAll('[data-action="review-rate"]')].map(el=>el.textContent);
+  assert.deepEqual(labels(),['Again 10 minutes','Hard 1 day','Good 8 days','Easy 12 days']);
+  const before=structuredClone(store.learner('learner-demo').cards['w-ani']);doc.querySelector('[data-action="review-rate"][data-value="3"]').click();await settled(()=>store.learner('learner-demo').lastReview&&doc.querySelector('[data-action="review-undo"]'));
+  assert.equal(store.learner('learner-demo').cards['w-ani'].intervalDays,8);click(doc,'review-undo');await settled(()=>doc.querySelector('[data-action="review-reveal"]'));assert.deepEqual(store.learner('learner-demo').cards['w-ani'],before);
+  click(doc,'review-reveal');assert.deepEqual(labels(),['Again 10 minutes','Hard 1 day','Good 8 days','Easy 12 days']);
+});
 
 test('Lesson 1 can advance past optional practice with an unresolved Check answer, preserving actual completion and graded history',async t=>{
   const {store,w,doc}=await app(t,{page:'lesson/lesson-1/complete',prepare(s){
@@ -148,10 +213,10 @@ test('Actual app launcher focuses the native answer field and saves pinning thro
   await settled(()=>doc.activeElement===answer);assert.equal(answer.readOnly,false);
   doc.querySelector('[data-insert="א"]').click();assert.equal(answer.value,'א');
   doc.querySelector('[data-action="pin"]').click();await settled(()=>store.learner('learner-demo').preferences.keyboardPinned);
-  doc.querySelector('h1').dispatchEvent(new w.Event('pointerdown',{bubbles:true}));
+  doc.querySelector('h1').dispatchEvent(new w.Event('pointerdown',{bubbles:true}));doc.querySelector('h1').click();
   assert.ok(doc.querySelector('.hebleo-keyboard--open'));
   doc.querySelector('[data-action="pin"]').click();await settled(()=>!store.learner('learner-demo').preferences.keyboardPinned);
-  doc.querySelector('h1').dispatchEvent(new w.Event('pointerdown',{bubbles:true}));assert.equal(doc.querySelector('.hebleo-keyboard--open'),null);
+  doc.querySelector('h1').dispatchEvent(new w.Event('pointerdown',{bubbles:true}));doc.querySelector('h1').click();assert.equal(doc.querySelector('.hebleo-keyboard--open'),null);
 });
 test('Lesson help exposes an actual question form and saves it to the author inbox',async t=>{
   const {store,w,doc}=await app(t);click(doc,'help');await settled(()=>doc.querySelector('#author-question-form'));

@@ -363,8 +363,16 @@
         setActiveTarget(editable);
       } else {
         clearActiveTarget();
-        if (isOpen && !pinned) closeKeyboard();
       }
+    }, true);
+
+    // Removing the bottom keyboard space can clamp scrollY and move the pressed
+    // button before pointerup. Wait until the browser has resolved its click
+    // target; that same native event then reaches the button's normal handler.
+    document.addEventListener('click', function (event) {
+      if (root.contains(event.target) || !isOpen || pinned) return;
+      var editable = event.target.closest('input, textarea, [contenteditable=""], [contenteditable="true"]');
+      if (!isEditable(editable)) closeKeyboard();
     }, true);
 
     document.addEventListener('selectionchange', function () {
