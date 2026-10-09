@@ -7,11 +7,11 @@ export function draftSaveError(error) {
   }
   return error.message;
 }
-export const field = (name, label, value, { multiline = false, type = 'text', options, hint } = {}) => {
-  const e = escapeHTML;
-  const control = options ? `<select name="${e(name)}">${options.map(([v, text]) => `<option value="${e(v)}"${String(value ?? '') === String(v) ? ' selected' : ''}>${e(text)}</option>`).join('')}</select>`
-    : multiline ? `<textarea name="${e(name)}" dir="auto" rows="3">${e(value)}</textarea>`
-      : `<input name="${e(name)}" type="${type}" dir="auto" value="${e(value)}"${type === 'number' ? ' min="0" step="any"' : ''}>`;
+export const field = (name, label, value, { multiline = false, type = 'text', options, hint, form } = {}) => {
+  const e = escapeHTML, owner = form ? ` form="${e(form)}"` : '';
+  const control = options ? `<select name="${e(name)}"${owner}>${options.map(([v, text]) => `<option value="${e(v)}"${String(value ?? '') === String(v) ? ' selected' : ''}>${e(text)}</option>`).join('')}</select>`
+    : multiline ? `<textarea name="${e(name)}"${owner} dir="auto" rows="3">${e(value)}</textarea>`
+      : `<input name="${e(name)}"${owner} type="${type}" dir="auto" value="${e(value)}"${type === 'number' ? ' min="0" step="any"' : ''}>`;
   return `<label class="studio-field"><span>${e(label)}</span>${control}${hint ? `<small>${e(hint)}</small>` : ''}</label>`;
 };
 export const booleanOptions = [['', 'Use existing default'], ['true', 'Yes'], ['false', 'No']];
