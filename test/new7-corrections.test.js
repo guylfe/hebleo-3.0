@@ -74,3 +74,13 @@ test('RR-NEW7-02 preserves exact legacy grade copies and rejects mismatched lega
  const d=setup(t);d.restore(backup);assert.equal(d.learner(U).attempts[0].correct,false);assert.equal(d.reports(A)[0].attempt.legacyRevisionId,77);
  const bad=structuredClone(backup);bad.reports[0].value.attempt.legacyRevisionId=78;rejectWithoutWrites(d,()=>d.restore(bad));
 });
+
+test('browser module dependency graph serves as JavaScript over real HTTP, including shared answer policy',async t=>{
+ const s=setup(t),server=createServer(s);await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(()=>new Promise(r=>server.close(r)));
+ const base='http://127.0.0.1:'+server.address().port,queue=['/app.js','/studio/unified-studio.js','/preview/learner-renderer.js'],seen=new Set(),before=rows(s),n=changes(s);
+ while(queue.length){const path=queue.pop();if(seen.has(path))continue;seen.add(path);const response=await fetch(base+path);assert.equal(response.status,200,path);assert.match(response.headers.get('content-type'),/javascript/,path);const source=await response.text();
+  const references=[...source.matchAll(/\b(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"](\.{1,2}\/[^'"]+)['"]/g),...source.matchAll(/\bimport\s*\(\s*['"](\.{1,2}\/[^'"]+)['"]/g)];
+  for(const match of references)queue.push(new URL(match[1],base+path).pathname);
+ }
+ assert.ok(seen.has('/answer-policy.js'));assert.equal(rows(s),before);assert.equal(changes(s),n);
+});
