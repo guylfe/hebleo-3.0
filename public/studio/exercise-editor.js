@@ -1,4 +1,5 @@
 import {mountVocabularyBrowser,mountWordSelector} from './vocabulary-browser.js';
+import {hasGradingContent} from '../answer-policy.js';
 import { escapeHTML as e, field, listField, booleanOptions, nikkudOptions, wordOptions, bindLists, markDirty, readFields, replaceObject, draftSaveError } from './editor-fields.js';
 
 export const exerciseTypes = ['recognition', 'typing', 'matching', 'ordering', 'cloze', 'transformation'];
@@ -42,7 +43,7 @@ export function blankExercise(type,{id,lessonId}) {
 export function validateExerciseDraft(exercise,content) {
   const fail=message=>{throw Object.assign(new Error(message+' · '+exercise.id),{exerciseId:exercise.id});};
   if(typeof exercise.prompt!=='string'||!exercise.prompt.trim())fail('Invalid exercise prompt. Enter an authored prompt');
-  const list=(key,label)=>{const values=exercise[key];if(!Array.isArray(values)||!values.length)fail('Exercise needs '+label);values.forEach((v,i)=>{if(typeof v!=='string'||!v.trim())fail(label+' row '+(i+1)+' is blank. Fill or remove it');});};
+  const list=(key,label)=>{const values=exercise[key];if(!Array.isArray(values)||!values.length)fail('Exercise needs '+label);values.forEach((v,i)=>{if(typeof v!=='string'||!v.trim())fail(label+' row '+(i+1)+' is blank. Fill or remove it');if(key==='answers'&&!hasGradingContent(v))fail(label+' row '+(i+1)+' needs content beyond marks, ignored punctuation or invisible characters');});};
   const word=id=>content.words.some(w=>w.id===id);
   if(exercise.type==='recognition'){if(!word(exercise.wordId))fail('Choose an existing vocabulary reference');list('distractors','authored distractor meanings');}
   else if(exercise.type==='typing'){if(exercise.answers!==undefined)list('answers','explicit accepted answers');else if(!word(exercise.wordId))fail('Choose a linked word or enter explicit accepted answers');}

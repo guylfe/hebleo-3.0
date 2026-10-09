@@ -1,6 +1,7 @@
 import { DomainError } from './errors.js';
 
-export const normalizeHebrew = (value, requireNikkud = false) => String(value).normalize('NFC').replace(requireNikkud ? /[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g : /[\u0591-\u05c7\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, '').replace(/[.,!?;:״„“”"׳‘’']/g, '').trim().replace(/\s+/g, ' ');
+import {normalizeHebrew,hasGradingContent} from '../public/answer-policy.js';
+export {normalizeHebrew};
 
 // The one grader for learner attempts and author draft preview: same content in, same verdict out, no state.
 export function evaluateAnswer(exercise, content, answer) {
@@ -14,7 +15,7 @@ export function evaluateAnswer(exercise, content, answer) {
   } else {
     if (typeof answer !== 'string' || answer.length > 2000) throw new DomainError('Invalid answer.', 400, 'INVALID_ANSWER');
     if (exercise.type === 'recognition') { expected = content.words.find(w => w.id === exercise.wordId).english; correct = answer === expected; }
-    else { const w = content.words.find(w => w.id === exercise.wordId); const answers = exercise.type === 'typing' ? (Object.hasOwn(exercise,'answers') ? exercise.answers : [w.pointed, w.unpointed]) : exercise.answers; expected = answers[0]; correct = answers.some(a => normalizeHebrew(a) === normalizeHebrew(answer)); }
+    else { const w = content.words.find(w => w.id === exercise.wordId); const answers = exercise.type === 'typing' ? (Object.hasOwn(exercise,'answers') ? exercise.answers : [w.pointed, w.unpointed]) : exercise.answers; expected = answers[0]; correct = hasGradingContent(answer) && answers.some(a => hasGradingContent(a) && normalizeHebrew(a) === normalizeHebrew(answer)); }
   }
   return { correct: Boolean(correct), expected, ...(pairResults ? {pairResults} : {}), ...(!['matching','recognition'].includes(exercise.type) ? {evaluationPolicy:'ignore-nikkud-v1'} : {}) };
 }

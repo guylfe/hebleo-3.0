@@ -4,6 +4,7 @@ import Ajv from 'ajv';
 import {validateCurriculum,validateLessonComposition,resolveComponent,orderedLessons} from '../../public/course.js';
 import {validateFormatting,validateImportSource} from '../../public/vocabulary-import.js';
 import { audioURL } from '../../public/ux.js';
+import {hasGradingContent} from '../../public/answer-policy.js';
 
 // Validation never coerces, strips fields, adds defaults or normalizes Hebrew.
 const directory = new URL('../', import.meta.url);
@@ -71,6 +72,11 @@ export function semanticErrors(pack) {
     for (const dependency of dependenciesFor(kind, object, pack)) if (!has(dependency.collection, dependency.id)) errors.push(`missing dependency ${object.id} -> ${dependency.id}`);
     if (kind === 'exercises') {
       if (!has('lessons', object.lessonId)) errors.push(`missing lesson ${object.id}`);
+      if (['typing','ordering','cloze','transformation'].includes(object.type)) {
+        const word = pack.words.find(w => w.id === object.wordId);
+        const answers = object.type === 'typing' && !Object.hasOwn(object,'answers') ? [word?.pointed,word?.unpointed] : object.answers;
+        if (!Array.isArray(answers) || !answers.length || answers.some(a => !hasGradingContent(a))) errors.push(`accepted answers need grading content ${object.id}`);
+      }
       if (object.prefixTokenIndices?.some(i => object.type !== 'ordering' || i >= (object.tokens?.length ?? 0))) errors.push(`invalid prefix index ${object.id}`);
     }
     if (kind === 'lessons') {

@@ -3,6 +3,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import {scheduleReview} from '../public/review-schedule.js';
 import { DomainError } from './errors.js';
 import { normalizeHebrew, evaluateAnswer, matchingPairResults } from './evaluate.js';
+import {hasGradingContent} from '../public/answer-policy.js';
 import { seed, upgradeDemo } from './seed.js';
 import {exerciseInLesson, validateCurriculum, validateLessonComposition, resolveComponent, orderedLessons, lessonFlow, keyboardForLesson} from '../public/course.js';
 import {validateFormatting,validateImportSource} from '../public/vocabulary-import.js';
@@ -100,6 +101,12 @@ export function validateContent(content) {
       const blank = e.type === 'ordering' ? blankEntry(e.tokens) : -1;
       if (blank >= 0) throw new DomainError('Authored token ' + (blank + 1) + ' of ' + e.id + ' is blank. Enter a token or remove that item.');
     } else throw new DomainError('Unsupported exercise type: ' + e.type);
+    if (['typing','ordering','cloze','transformation'].includes(e.type)) {
+      const word = content.words.find(w => w.id === e.wordId);
+      const answers = e.type === 'typing' && !Object.hasOwn(e,'answers') ? [word.pointed,word.unpointed] : e.answers;
+      const invalid = answers.findIndex(a => !hasGradingContent(a));
+      if (invalid >= 0) throw new DomainError('Accepted answer ' + (invalid + 1) + ' of ' + e.id + ' needs content beyond marks, ignored punctuation or invisible characters.');
+    }
     if(e.prefixTokenIndices && (e.type!=='ordering'||!Array.isArray(e.prefixTokenIndices)||new Set(e.prefixTokenIndices).size!==e.prefixTokenIndices.length||e.prefixTokenIndices.some(i=>!Number.isInteger(i)||i<0||i>=e.tokens.length)))throw new DomainError('Invalid prefix tiles.');
     if (e.type === 'recognition') {
       if (!Array.isArray(e.distractors) || !e.distractors.length || e.distractors.some(x => typeof x !== 'string')) throw new DomainError('Recognition needs choices.');
@@ -286,7 +293,10 @@ export class Store {
     let content; try { content = this.snapshot(progress?.revisionId); } catch { progress = null; content = this.snapshot(); }
     if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     if (!content.lessons.some(l => l.id === lessonId)) throw new DomainError('Lesson not found.', 404);
-    const savedResult = progress?.resultRequestId ? state.attempts.find(a => a.requestId === progress.resultRequestId) || null : null;
+    if (progress && progress.lessonId !== lessonId) throw new DomainError('Saved lesson context does not match the requested lesson.');
+    // Validate the actual question and all receipt joins before exposing saved feedback.
+    // A damaged Store must not pick the first receipt with a matching ID from another context.
+    const savedResult = progress ? this.validateProgress(progress,state,content) : null;
     const resultExercise = savedResult && content.exercises.find(e=>e.id===savedResult.exerciseId);
     const result = savedResult && resultExercise?.type==='matching' && !savedResult.pairResults ? {...savedResult, pairResults:matchingPairResults(resultExercise,savedResult)} : savedResult;
     const lesson=content.lessons.find(l=>l.id===lessonId);
@@ -330,7 +340,10 @@ export class Store {
     // Saved matches belong to the matching question at this exact revision, step and position. Its authored pairs may use any pack word, not only the lesson's list.
     if (!p.matching || typeof p.matching !== 'object' || Array.isArray(p.matching) || Object.entries(p.matching).some(([k,v]) => !['check','apply'].includes(p.step) || exercise?.type !== 'matching' || !exercise.wordIds.includes(k) || typeof v !== 'string' || v.length > 1000)) throw new DomainError('Invalid saved matching answer.');
     if(p.selectedTokens.length && (!exercise || exercise.type!=='ordering' || p.selectedTokens.some(i=>i>=orderingTokens(exercise,content,p.lessonId).length)))throw new DomainError('Invalid saved sentence tokens.');
-    if (p.resultRequestId && !state.attempts.some(a => a.requestId === p.resultRequestId && a.revisionId === p.revisionId && a.lessonId === p.lessonId && a.exerciseId === questionIDs[p.question])) throw new DomainError('Saved feedback does not match the exercise.');
+    const receipts = p.resultRequestId ? state.attempts.filter(a => a.requestId === p.resultRequestId) : [];
+    const result = receipts.length === 1 && receipts[0].revisionId === p.revisionId && receipts[0].lessonId === p.lessonId && receipts[0].exerciseId === questionIDs[p.question] ? receipts[0] : null;
+    if (p.resultRequestId && !result) throw new DomainError('Saved feedback does not match the exercise.');
+    return result;
   }
   practice(userId, input) {
     const content = this.snapshot(input.revisionId); const lesson = content.lessons.find(l => l.id === input.lessonId); const state = this.learner(userId);
@@ -571,11 +584,21 @@ export class Store {
       if (Array.isArray(s.cards) || Array.isArray(s.notes) || typeof s.cards !== 'object' || typeof s.notes !== 'object') throw new DomainError('Invalid learner state objects.');
       for (const list of [s.completed, s.bookmarks, s.purchasedCourses]) list.forEach(id);
       for (const a of s.attempts) if (!savedAttempt(a)) throw new DomainError('Invalid saved attempt.');
+      // Receipt IDs are unique within each learner, including identical duplicates.
+      if (new Set(s.attempts.map(a => a.requestId)).size !== s.attempts.length) throw new DomainError('Duplicate saved attempt receipt.');
       for (const [key, note] of Object.entries(s.notes)) { id(key); if (typeof note !== 'string' || note.length > 2000) throw new DomainError('Invalid saved note.'); }
       validatePreferences(s.preferences);
       if(s.resumes){if(typeof s.resumes!=='object'||Array.isArray(s.resumes))throw new DomainError('Invalid saved lesson sessions.');for(const [lessonId,p] of Object.entries(s.resumes)){if(p.lessonId!==lessonId)throw new DomainError('Invalid resume key.');const snapshot=sessions.find(x=>x.revisionId===p.revisionId);if(!snapshot)throw new DomainError('Missing pinned session snapshot.');this.validateProgress(p,s,snapshot.content);}}
       if(s.lastReview){const r=s.lastReview;id(r.requestId);id(r.wordId);for(const card of [r.before,r.after])if(!card||!Number.isFinite(Date.parse(card.due))||!Number.isInteger(card.repetitions)||card.repetitions<0||!Number.isFinite(card.intervalDays)||card.intervalDays<0||typeof card.suspended!=='boolean')throw new DomainError('Invalid review undo state.');}
       for (const [key, c] of Object.entries(s.cards)) { id(key); if (!c || !Number.isFinite(Date.parse(c.due)) || !Number.isFinite(c.intervalDays) || !Number.isInteger(c.repetitions) || c.intervalDays < 0 || c.repetitions < 0 || typeof c.suspended !== 'boolean') throw new DomainError('Invalid review card in backup.'); }
+    }
+    // Reports retain the exact saved grade copy. Reconcile any surviving history before
+    // insertion, including legacy-link metadata and grading extensions, without regrading.
+    // Standalone historical reports remain valid after a deliberate demo progress reset.
+    const histories = new Map(input.learners.map(row => [row.id,new Map(row.state.attempts.map(a => [a.requestId,a]))]));
+    for (const {value} of reports) {
+      const history = histories.get(value.userId)?.get(value.attempt.requestId);
+      if (history && canonicalJSON(history) !== canonicalJSON(value.attempt)) throw new DomainError('Reported attempt disagrees with learner history.');
     }
     return this.transaction(() => {
       const ids = new Map(); let revisionId;
