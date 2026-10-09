@@ -632,3 +632,10 @@ for(const checkOnly of [true,false])test('RR-F18-02 real HTTP app saves and relo
  const history=JSON.stringify(store.learner('learner-demo').attempts),resumed=await app(t,{store,page:w.location.hash.slice(1),realHTTP:true});assert.ok(resumed.doc.querySelector('.feedback:not(.wrong)'));assert.equal(resumed.doc.querySelector('#answer').value,correct);assert.equal(JSON.stringify(store.learner('learner-demo').attempts),history);
  const restored=new Store();t.after(()=>restored.close());restored.restore(store.backup());const reloaded=await app(t,{store:restored,page:w.location.hash.slice(1),realHTTP:true});assert.ok(reloaded.doc.querySelector('.feedback:not(.wrong)'));assert.equal(restored.session('learner-demo','lesson-1').result.exerciseId,'ex-1-type');assert.equal(restored.learner('learner-demo').completed.includes('lesson-1'),false);
 });
+
+test('NEW7 publication impact displays authoritative affected lesson names before Publish',async t=>{
+ const {store,doc}=await app(t,{page:'studio',author:true,realHTTP:true,prepare(s){const c=s.snapshot();c.words[0].notes='SYNTHETIC publication scope';s.stage({content:c,baseRevisionId:1,expectedDraftToken:null});}});
+ const list=doc.querySelector('[aria-label="Affected lessons"]');assert.ok(list);
+ const expected=store.preview().affectedLessons.map(id=>store.currentDraft().content.lessons.find(l=>l.id===id).title+' '+id);
+ assert.deepEqual([...list.querySelectorAll('li')].map(el=>el.textContent),expected);assert.ok(doc.querySelector('[data-action="publish"]'));
+});
