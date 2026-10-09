@@ -189,6 +189,28 @@
         },
         "unchanged": {
           "type": "boolean"
+        },
+        "mediaWarnings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [

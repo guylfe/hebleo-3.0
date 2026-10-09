@@ -1,3 +1,4 @@
+import {MediaStore} from './media-store.js';
 import {validateSourceState} from './source-state.js';
 import { DatabaseSync } from 'node:sqlite';
 import { createHash, randomUUID } from 'node:crypto';
@@ -11,11 +12,11 @@ import {validateFormatting,validateImportSource} from '../public/vocabulary-impo
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
 
 // v2: revision-mapped backups; v3: component cursors; v4: shared discussions; v5: authored typing/context; v6: retained source authoring bundles.
-export const STORE_SCHEMA_VERSION = 6;
+export const STORE_SCHEMA_VERSION = 7;
 const backupFormats = ['hebleo-demo-backup-v1', 'hebleo-demo-backup-v2'];
 // Supported backup markers are checked before any restore write.
 // v1 predates the marker; v2 backups retain each supported historical contract.
-export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3,4,5,6] };
+export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3,4,5,6,7] };
 export { DomainError, normalizeHebrew };
 const clone = value => JSON.parse(JSON.stringify(value));
 // Sorted-key JSON, so the same content always yields the same token whatever key order an import used.
@@ -186,6 +187,8 @@ export class Store {
     // No grades, identities or historical snapshots are rewritten.
     if(version<5)this.transaction(()=>this.set('schema-version',5));
     if(version<6)this.transaction(()=>this.set('schema-version',6));
+    if(version<7)this.transaction(()=>this.set('schema-version',7));
+    this.media=new MediaStore(this);
     this.sourcePermit=Symbol('internal-source-commit');
   }
   transaction(fn) { const nested=(this.transactionDepth||0)>0,name='nested_'+(this.transactionDepth||0);this.db.exec(nested?'SAVEPOINT '+name:'BEGIN IMMEDIATE');this.transactionDepth=(this.transactionDepth||0)+1;try{const result=fn();if(result?.then)throw new DomainError('Database transactions must be synchronous.');this.db.exec(nested?'RELEASE '+name:'COMMIT');return result;}catch(e){this.db.exec(nested?'ROLLBACK TO '+name:'ROLLBACK');if(nested)this.db.exec('RELEASE '+name);throw e;}finally{this.transactionDepth--;} }
@@ -424,9 +427,10 @@ export class Store {
       const draftToken = draftTokenFor(active, content);
       if(input.reviewedDraftToken!==undefined && input.reviewedDraftToken!==draftToken)throw this.draftConflict('Workspace changed after impact review. Review again.','IMPACT_CHANGED');
       const unchanged = current?.draftToken === draftToken;
+      const mediaPlan=this.media.plan(content);if(!unchanged&&sourcePermit!==this.sourcePermit)this.sourceAuthoring?.validateLocalContent(content);
       // Re-staging the exact same draft writes nothing and keeps its token and stagedAt.
-      if (!unchanged) {if(sourcePermit!==this.sourcePermit)this.sourceAuthoring?.onLocalStage(content,draftToken);this.set('draft', { baseRevisionId: active, content, stagedAt: new Date().toISOString() });}
-      return { ...this.preview(), draftToken, baseRevisionId: active, unchanged };
+      if (!unchanged) {this.media.persistPlan(mediaPlan);if(sourcePermit!==this.sourcePermit)this.sourceAuthoring?.onLocalStage(content,draftToken);this.set('draft', { baseRevisionId: active, content, stagedAt: new Date().toISOString() });}
+      return { ...this.preview(), draftToken, baseRevisionId: active, unchanged,mediaWarnings:mediaPlan.warnings };
     });
   }
   exerciseDependencies(input) {
@@ -499,16 +503,17 @@ export class Store {
     // Base and token are compared inside the transaction that creates the release, so a stale request cannot publish or clear a newer draft.
     return this.transaction(() => {
       this.expectBase(baseRevisionId, 'Stale publication request.'); this.expectDraft(draftToken);
-      const draft = this.currentDraft(); validateContent(draft.content);
+      const draft = this.currentDraft(); validateContent(draft.content);this.media.checkPublication(draft.content,{trustedContentApproval:sourcePermit===this.sourcePermit});this.media.persistPlan(this.media.plan(draft.content,{strict:true}));
       const revisionId = this.addRevision(draft.content, 'Published draft'); this.set('active', revisionId); this.set('draft', null); return { revisionId };
     });
   }
   rollback(revisionId, baseRevisionId, expectedDraftToken,sourcePermit) {
+    if(!Number.isInteger(revisionId)||revisionId<1)throw new DomainError('Choose an explicit historical revision ID.',400,'ROLLBACK_TARGET_REQUIRED');
     if(Object.keys(this.get('source-state')?.sources||{}).length&&!this.sourceAuthoring)throw new DomainError('Source authoring engine is required for historical source rollback.',409,'SOURCE_ENGINE_REQUIRED');
     if (expectedDraftToken === undefined) throw this.draftConflict('Rollback discards the draft; name it, or null when there is none.', 'DRAFT_TOKEN_REQUIRED');
     return this.transaction(() => {
       this.expectBase(baseRevisionId, 'Stale rollback request.'); this.expectDraft(expectedDraftToken);
-      const content = this.snapshot(revisionId); validateContent(content);
+      const content = this.snapshot(revisionId); validateContent(content);this.media.persistPlan(this.media.plan(content,{strict:true}));
       const next = this.addRevision(content, 'Restored content revision ' + revisionId); this.set('active', next); this.set('draft', null);if(sourcePermit!==this.sourcePermit)this.sourceAuthoring?.onRollback(revisionId,next); return { revisionId: next };
     });
   }
@@ -548,9 +553,9 @@ export class Store {
     const learners = users.map(u => ({ id: u.id, state: this.learner(u.id) })), questions = rows('question-'), reports = rows('report-'), activeRevisionId = this.get('active'), draft = this.get('draft');
     // Every revision that history points at travels with the backup, so restore can remap IDs instead of guessing.
     const sourceAuthoring=this.get('source-state');
-    const referenced = [...Object.keys(sourceAuthoring?.revisions||{}).map(Number),activeRevisionId, draft?.baseRevisionId, ...learners.flatMap(({ state }) => [...state.attempts.map(a => a.revisionId), ...Object.values(state.resumes).map(p => p.revisionId)]), ...questions.map(q => q.value.revisionId), ...reports.map(r => r.value.attempt?.revisionId)];
+    const referenced = [...this.db.prepare('SELECT id FROM revisions').all().map(r=>r.id),...Object.keys(sourceAuthoring?.revisions||{}).map(Number),activeRevisionId, draft?.baseRevisionId, ...learners.flatMap(({ state }) => [...state.attempts.map(a => a.revisionId), ...Object.values(state.resumes).map(p => p.revisionId)]), ...questions.map(q => q.value.revisionId), ...reports.map(r => r.value.attempt?.revisionId)];
     const revisionSnapshots = [...new Set(referenced.filter(Number.isInteger))].sort((a, b) => a - b).map(revisionId => ({ revisionId, content: this.snapshot(revisionId) }));
-    return { format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),...(sourceAuthoring?{sourceAuthoring}: {}) };
+    return { format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),mediaRecovery:this.media.backup([...revisionSnapshots.map(r=>r.content),...(draft?[draft.content]:[])]),...(sourceAuthoring?{sourceAuthoring}: {}) };
   }
   restore(input) {
     if (!backupFormats.includes(input?.format) || !Array.isArray(input.learners) || ![2,3].includes(input.learners.length) || new Set(input.learners.map(x => x?.id)).size !== input.learners.length || !['learner-demo','learner-core'].every(id=>input.learners.some(row=>row.id===id))) throw new DomainError('Invalid demo backup.');
@@ -568,6 +573,8 @@ export class Store {
       if (input.draft != null) { if (typeof input.draft !== 'object' || input.draft.baseRevisionId !== input.activeRevisionId || typeof input.draft.stagedAt !== 'string') throw new DomainError('Invalid backup draft.'); validateContent(input.draft.content); }
     }
     const restoredSource=validateSourceState(input.sourceAuthoring??null,carried,input.draft,input.content);
+    if(input.mediaRecovery!==undefined&&!(Number.isInteger(input.storeSchemaVersion)&&input.storeSchemaVersion>=7))throw new DomainError('Media-bearing backups require Store/backup reader 7.',409,'MEDIA_READER_MISMATCH');
+    const restoredMedia=this.media.validateBackup(input.mediaRecovery??null,[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[])],{required:input.storeSchemaVersion>=7});
     // A link holds only if its exact carried revision agrees with every reference, as normal writes require: the lesson exists, the exercise belongs to that lesson, an optional word exists.
     // v2 must carry every link and rejects any disagreement. v1 history that does not hold becomes an explicit legacy link with its grade; nothing is repaired or regraded.
     const linked = record => { const c = carried.get(record.revisionId); return Boolean(c) && c.lessons.some(l => l.id === record.lessonId) && (!record.exerciseId || c.exercises.some(e => e.id === record.exerciseId && (e.lessonId===record.lessonId || exerciseInLesson(c,record.lessonId,e.id)))) && (!record.wordId || c.words.some(w => w.id === record.wordId)); };
@@ -621,6 +628,7 @@ export class Store {
       else { revisionId = this.addRevision(input.content, 'Restored local demo backup'); for (const s of sessions) ids.set(s.revisionId, this.addRevision(s.content, 'Restored pinned lesson session')); }
       // Attempts, resumes, questions and reports move together, so a resumed result still points at the attempt graded in that same revision.
       const relink = record => { if (!record || record.revisionId == null) return; if (linked(record)) record.revisionId = ids.get(record.revisionId); else { record.legacyRevisionId = record.revisionId; record.revisionId = null; } };
+      this.media.restore(restoredMedia);
       this.set('active', revisionId); this.set('draft', v2 && input.draft ? { ...clone(input.draft), baseRevisionId: revisionId } : null);
       for (const row of input.learners) { const state = clone(row.state); state.attempts.forEach(relink); Object.values(state.resumes || {}).forEach(relink); this.saveLearner(row.id, state); }
       this.db.exec("DELETE FROM events; DELETE FROM kv WHERE key LIKE 'review-%' OR key LIKE 'report-%' OR key LIKE 'question-%';");

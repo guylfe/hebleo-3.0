@@ -44,7 +44,7 @@ test('invalid curriculum, stale indices and newly changed unsafe styles fail Sta
  for(const mutate of [c=>c.curriculum.order.push({lessonId:c.lessons[0].id}),c=>c.lessons[0].exerciseIds.reverse(),c=>c.words[0].fieldFormatting={pointed:{effectiveFormat:{textFormat:{foregroundColor:'url(https://bad)'}}}}]){const c=structuredClone(good);mutate(c);assert.throws(()=>s.stage({baseRevisionId:s.get('active'),expectedDraftToken:null,content:c}));assert.equal(tables(s),before);}
 });
 test('schema-2 backup remains supported; schema-3 refuses future versions and leaves legacy reads unchanged',t=>{
- const s=setup(t),old=s.backup();old.storeSchemaVersion=2;const target=setup(t);target.restore(old);assert.equal(target.get('schema-version'),STORE_SCHEMA_VERSION);
+ const s=setup(t),old=s.backup();old.storeSchemaVersion=2;delete old.mediaRecovery;const target=setup(t);target.restore(old);assert.equal(target.get('schema-version'),STORE_SCHEMA_VERSION);
  const before=tables(target);target.session('learner-demo','lesson-1');target.bootstrap('learner-demo');target.active();assert.equal(tables(target),before);
  old.storeSchemaVersion=STORE_SCHEMA_VERSION+1;assert.throws(()=>target.restore(old));assert.equal(tables(target),before);
 });

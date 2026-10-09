@@ -18,6 +18,7 @@ export const demoFreshProgressEnabled = (argv = process.argv, env = process.env)
 // Runs once before listening. A running server never re-fingerprints, so saving files mid-session cannot wipe new progress.
 export async function prepareDemoProgress(store, { enabled = demoFreshProgressEnabled(), fingerprint = demoBuildFingerprint } = {}) { return enabled ? store.resetDemoProgressForBuild(await fingerprint()) : false; }
 export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourceAuth,sourceTransport,sourceClock } = {}) {
+  store.media.bindRoot(mediaRoot);
   const auth=sourceAuth||new GoogleAuth({vault:windowsCredentialVault(resolve(root,'.private','google-auth.bin'))});
   const sources=new SourceAuthoring(store,{auth,transport:sourceTransport||new GoogleSourceTransport({auth}),...(sourceClock?{clock:sourceClock}:{})});
   sources.validatePersistent();
@@ -30,11 +31,13 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
       if (!['localhost', '127.0.0.1', '[::1]'].includes(host)) throw new DomainError('This demonstration is available only on localhost.', 403);
       if (req.headers.origin && req.headers.origin !== 'http://' + req.headers.host) throw new DomainError('Cross-origin requests are not allowed.', 403);
       const sourceCookie=String(req.headers.cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('hebleo-source='))?.slice(14)||null;
-      if(url.pathname==='/oauth/google/callback'&&req.method==='GET'){const result=await auth.finish({state:url.searchParams.get('state'),code:url.searchParams.get('code')});const cookie=sources.establishSession(result);res.writeHead(200,{...headers,'Content-Type':'text/html; charset=utf-8','Set-Cookie':'hebleo-source='+cookie+'; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800'});return res.end('<!doctype html><html lang="en"><meta charset="utf-8"><title>Hebleo Google connection</title><p>Application Google connection verified. Return to Studio and refresh connection status. No content was changed.</p><a href="/">Return to Hebleo</a></html>');}
+      if(url.pathname==='/oauth/google/callback'&&req.method==='GET'){if(url.searchParams.has('error'))auth.cancel({state:url.searchParams.get('state'),error:url.searchParams.get('error')});const result=await auth.finish({state:url.searchParams.get('state'),code:url.searchParams.get('code')});const cookie=sources.establishSession(result);res.writeHead(200,{...headers,'Content-Type':'text/html; charset=utf-8','Set-Cookie':'hebleo-source='+cookie+'; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800'});return res.end('<!doctype html><html lang="en"><meta charset="utf-8"><title>Hebleo Google connection</title><p>Application Google connection verified. Return to Studio and refresh connection status. No content was changed.</p><a href="/">Return to Hebleo</a></html>');}
       if (url.pathname === '/api/health' && req.method === 'GET') return json(200, { ok: true, demo: true });
       if (url.pathname.startsWith('/api/')) {
         const userId = req.headers['x-demo-user'] || 'learner-demo'; store.learner(userId);
         if (req.method === 'GET') {
+          if(url.pathname==='/api/studio/media/status'){store.requireAuthor(userId);return json(200,store.media.status(store.currentDraft()?.content||store.snapshot()));}
+          if(url.pathname==='/api/studio/sources/auth/setup'){store.requireAuthor(userId);return json(200,auth.setup('http://127.0.0.1:'+server.address().port+'/oauth/google/callback'));}
           if(url.pathname==='/api/studio/sources/status'){store.requireAuthor(userId);return json(200,sources.status(userId,sourceCookie));}
           if (url.pathname === '/api/bootstrap') return json(200, store.bootstrap(userId));
           if (url.pathname === '/api/session') return json(200,store.session(userId,url.searchParams.get('lessonId')));
@@ -48,11 +51,12 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
         if (req.method === 'POST') {
           if (!String(req.headers['content-type']).startsWith('application/json')) throw new DomainError('JSON content type required.', 415);
           // Backups carry every referenced revision, so restore gets a larger bound than ordinary edits.
-          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? 60000000 : url.pathname.startsWith('/api/studio/sources/')?20000000:750000;
+          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? 200000000 : url.pathname==='/api/studio/media/import'?30000000:url.pathname.startsWith('/api/studio/sources/')?20000000:750000;
           for await (const chunk of req) { bytes += chunk.length; if (bytes > limit) throw new DomainError('Request exceeds the local import limit.', 413); chunks.push(chunk); }
           let input; try { input = parseStrictJSON(Buffer.concat(chunks).toString()); } catch { throw new DomainError('Malformed JSON.'); }
           if (!input || typeof input !== 'object' || Array.isArray(input)) throw new DomainError('Expected a JSON object.');
           if (url.pathname.startsWith('/api/studio/') || ['/api/restore','/api/reports/resolve','/api/questions/answer','/api/questions/moderate'].includes(url.pathname)) store.requireAuthor(userId);
+          if(url.pathname==='/api/studio/media/import')return json(200,store.media.importAsset(userId,input));
           if(url.pathname.startsWith('/api/studio/sources/')){const action=url.pathname.slice('/api/studio/sources/'.length);
             if(action==='auth/configure'){const status=auth.configureClient(input.clientJSON);sources.sessions.clear();return json(200,status);}
             if(action==='auth/begin')return json(200,auth.begin({...input,authorId:userId,redirectUri:'http://127.0.0.1:'+server.address().port+'/oauth/google/callback'}));
@@ -87,7 +91,8 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
         return json(404, { error: 'API endpoint not found.', code: 'NOT_FOUND' });
       }
       if (url.pathname.startsWith('/media/') && ['GET','HEAD'].includes(req.method)) {
-        const mediaTypes={'.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.m4a':'audio/mp4','.mp4':'video/mp4','.webm':'video/webm','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif'};
+        let stored;try{stored=store.media.resolveLocal(url.pathname);}catch(error){if(error.code==='MEDIA_PATH')throw new DomainError('Media not found.',404,'NOT_FOUND');throw error;}if(stored){let start=0,end=stored.byteLength-1,status=200;if(req.headers.range){const range=/^bytes=(\d*)-(\d*)$/.exec(req.headers.range);if(!range||(!range[1]&&!range[2])){res.writeHead(416,{...headers,'Content-Range':'bytes */'+stored.byteLength});return res.end();}start=range[1]?Number(range[1]):Math.max(0,stored.byteLength-Number(range[2]));end=range[1]&&range[2]?Math.min(end,Number(range[2])):end;if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start>end||start>=stored.byteLength){res.writeHead(416,{...headers,'Content-Range':'bytes */'+stored.byteLength});return res.end();}status=206;}res.writeHead(status,{...headers,'Content-Type':stored.mimeType,'Content-Length':end-start+1,'Accept-Ranges':'bytes',...(status===206?{'Content-Range':'bytes '+start+'-'+end+'/'+stored.byteLength}:{})});return res.end(req.method==='HEAD'?undefined:stored.bytes.subarray(start,end+1));}
+        const mediaTypes={'.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.m4a':'audio/mp4','.mp4':'video/mp4','.webm':'video/webm','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif','.pdf':'application/pdf'};
         const name=url.pathname.slice(7),type=mediaTypes[extname(name).toLowerCase()];
         if(!type || !/^[A-Za-z0-9_./-]+$/.test(name) || name.includes('..'))throw new DomainError('Media not found.',404);
         let file,base;

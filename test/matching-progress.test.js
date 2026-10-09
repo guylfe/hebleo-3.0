@@ -102,7 +102,7 @@ test('Check, Core and repeat practice use their own matching question; empty mat
     s.saveProgress(user,at({revisionId:3,step,question:2}));assert.deepEqual(s.session(user,'lesson-1').progress.matching,{});
   }
   s.saveProgress(user,check);s.saveProgress('learner-core',core);s.saveProgress('author-demo',repeat);
-  const v1=s.backup();v1.format='hebleo-demo-backup-v1';v1.sessionSnapshots=v1.revisionSnapshots;delete v1.revisionSnapshots;delete v1.storeSchemaVersion;
+  const v1=s.backup();v1.format='hebleo-demo-backup-v1';v1.sessionSnapshots=v1.revisionSnapshots;delete v1.revisionSnapshots;delete v1.storeSchemaVersion;delete v1.mediaRecovery;
   const fresh=new Store();t.after(()=>fresh.close());fresh.restore(v1);
   for(const [u,p] of [[user,check],['learner-core',core],['author-demo',repeat]]){
     const session=fresh.session(u,'lesson-1');

@@ -62,7 +62,7 @@ test('FB8 schema-3 migration retains all private questions, drafts and learner s
   s.stage({content:s.snapshot(),baseRevisionId:s.get('active'),expectedDraftToken:null});s.updateLearner(alex,{bookmark:'w-ani',note:{wordId:'w-ani',text:'SYNTHETIC saved note'}});
   s.set('schema-version',3);const before=tables(s);s.close();s=new Store(path);t.after(()=>{s.close();rmSync(dir,{recursive:true,force:true});});const after=tables(s);
   assert.equal(s.get('schema-version'),STORE_SCHEMA_VERSION);for(const t of Object.keys(before))assert.deepEqual(after[t],t==='kv'?before[t].map(r=>r.key==='schema-version'?{...r,value:JSON.stringify(STORE_SCHEMA_VERSION)}:r):before[t]);
-  for(const version of [2,3]){const backup=s.backup();backup.storeSchemaVersion=version;const d=setup(t);d.restore(backup);assert.equal(d.questions(sam).length,0);assert.equal(d.questions(author)[0].question,input.question);assert.ok(d.currentDraft());}
+  for(const version of [2,3]){const backup=s.backup();backup.storeSchemaVersion=version;delete backup.mediaRecovery;const d=setup(t);d.restore(backup);assert.equal(d.questions(sam).length,0);assert.equal(d.questions(author)[0].question,input.question);assert.ok(d.currentDraft());}
 });
 
 test('FB8 rating choices equal persisted schedule after successive ratings, Undo and a midnight boundary',t=>{
