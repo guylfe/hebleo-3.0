@@ -2,6 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Store} from '../src/store.js';
 import {createServer} from '../src/server.js';
+import {mkdtempSync,writeFileSync,rmSync} from 'node:fs';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {createHash} from 'node:crypto';
 
 const bytes=Buffer.from('%PDF-1.4\n% SYNTHETIC retained alias recovery fixture\n%%EOF');
 let sequence=0;
@@ -24,4 +28,21 @@ test('valid unused and historical aliases export/restore exact bytes alongside p
  const grade=f.store.attempt('learner-demo',{requestId:'synthetic-alias-grade',revisionId:f.store.get('active'),exerciseId:'ex-1-type',answer:'אני'});const content=f.store.snapshot();content.lessons[0].title='SYNTHETIC pending local title';f.store.stage({content,baseRevisionId:f.store.get('active'),expectedDraftToken:null});
  const before=fingerprint(f.store),exported=await f.get('/api/export');assert.equal(exported.status,200);assert.deepEqual(fingerprint(f.store),before);assert.equal(exported.body.mediaRecovery.aliases.length,2);assert.equal(exported.body.mediaRecovery.localReferences.length,0);
  const dest=new Store(':memory:');t.after(()=>dest.close());dest.restore(exported.body);assert(dest.media.resolveLocal('/media/synthetic-unused.pdf').bytes.equals(bytes));assert(dest.media.resolveLocal('/media/history/synthetic-old.PDF').bytes.equals(bytes));assert.equal(dest.currentDraft().content.lessons[0].title,content.lessons[0].title);assert.equal(dest.learner('learner-demo').attempts[0].correct,grade.correct);assert.deepEqual(dest.backup().mediaRecovery,exported.body.mediaRecovery);
+});
+
+test('RR-MED-05 missing retained bytes never fall back to a different external file or rebind an exported alias',async t=>{
+ const f=await runtime(t),dir=mkdtempSync(join(tmpdir(),'hebleo-synthetic-missing-pin-'));t.after(()=>rmSync(dir,{recursive:true,force:true}));f.store.media.bindRoot(dir);const name='synthetic-retained.pdf',url='/media/'+name,replacement=Buffer.from('%PDF-1.4\n% SYNTHETIC different external bytes\n%%EOF');writeFileSync(join(dir,name),bytes);
+ const content=f.store.snapshot();content.lessons[0].document=url;f.store.stage({content,baseRevisionId:f.store.get('active'),expectedDraftToken:null});const originalHash=f.store.media.alias(name);assert(f.store.media.blob(originalHash).bytes.equals(bytes));
+ f.store.db.exec('PRAGMA foreign_keys=OFF');f.store.db.prepare('DELETE FROM media_blobs WHERE sha256=?').run(originalHash);writeFileSync(join(dir,name),replacement);const before=fingerprint(f.store);let externalReads=0;const readExternal=f.store.media.readExternal.bind(f.store.media);f.store.media.readExternal=(...args)=>{externalReads++;return readExternal(...args);};
+ assert.throws(()=>f.store.backup(),e=>e.code==='MEDIA_BACKUP_INVALID');assert.equal(externalReads,0,'Retained rows must validate before any external acquisition');
+ for(const checkExternal of [false,true])assert.throws(()=>f.store.media.resolveLocal(url,{checkExternal}),e=>e.code==='MEDIA_MISSING');
+ const plan=f.store.media.plan(content);assert(plan.warnings.some(w=>w.code==='MEDIA_MISSING'&&w.url===url));assert.equal(plan.entries.length,0);
+ for(const endpoint of ['/api/export','/api/studio/media/status']){const result=await f.get(endpoint);assert.equal(result.status,409);assert.equal(result.body.code,'MEDIA_BACKUP_INVALID');}
+ const served=await fetch(f.origin+url);assert.equal(served.status,409);assert.equal((await served.json()).code,'MEDIA_MISSING');assert.equal(externalReads,0);assert.deepEqual(fingerprint(f.store),before);assert.equal(f.store.media.alias(name),originalHash);assert.equal(f.store.media.blob(createHash('sha256').update(replacement).digest('hex')),null);
+});
+
+test('new external paths export exact bytes read-only, while intact retained aliases reject replacement and recover original bytes',async t=>{
+ const f=await runtime(t),dir=mkdtempSync(join(tmpdir(),'hebleo-synthetic-new-pin-'));t.after(()=>rmSync(dir,{recursive:true,force:true}));f.store.media.bindRoot(dir);const name='synthetic-new.pdf',url='/media/'+name,content=f.store.snapshot();content.lessons[0].document=url;writeFileSync(join(dir,name),bytes);const beforeNew=fingerprint(f.store),prospective=f.store.media.backup([content]);assert.equal(prospective.aliases[0].path,name);assert.equal(prospective.aliases[0].sha256,createHash('sha256').update(bytes).digest('hex'));assert.deepEqual(fingerprint(f.store),beforeNew);assert.equal(f.store.media.alias(name),null);
+ f.store.stage({content,baseRevisionId:f.store.get('active'),expectedDraftToken:null});const retained=f.store.media.alias(name),before=fingerprint(f.store);writeFileSync(join(dir,name),Buffer.from('%PDF-1.4\n% SYNTHETIC replacement control\n%%EOF'));const rejected=await f.get('/api/export');assert.equal(rejected.status,409);assert.equal(rejected.body.code,'MEDIA_REPLACED');assert.deepEqual(fingerprint(f.store),before);assert.equal(f.store.media.alias(name),retained);assert(f.store.media.blob(retained).bytes.equals(bytes));
+ writeFileSync(join(dir,name),bytes);const exported=await f.get('/api/export');assert.equal(exported.status,200);assert.deepEqual(fingerprint(f.store),before);const dest=new Store(':memory:');t.after(()=>dest.close());dest.restore(exported.body);assert(dest.media.resolveLocal(url).bytes.equals(bytes));assert.equal(dest.media.alias(name),retained);
 });
