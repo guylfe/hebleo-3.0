@@ -425,7 +425,7 @@ export class Store {
       if(input.reviewedDraftToken!==undefined && input.reviewedDraftToken!==draftToken)throw this.draftConflict('Workspace changed after impact review. Review again.','IMPACT_CHANGED');
       const unchanged = current?.draftToken === draftToken;
       // Re-staging the exact same draft writes nothing and keeps its token and stagedAt.
-      if (!unchanged) {this.set('draft', { baseRevisionId: active, content, stagedAt: new Date().toISOString() });if(sourcePermit!==this.sourcePermit)this.sourceAuthoring?.onLocalStage(content,draftToken);}
+      if (!unchanged) {if(sourcePermit!==this.sourcePermit)this.sourceAuthoring?.onLocalStage(content,draftToken);this.set('draft', { baseRevisionId: active, content, stagedAt: new Date().toISOString() });}
       return { ...this.preview(), draftToken, baseRevisionId: active, unchanged };
     });
   }
