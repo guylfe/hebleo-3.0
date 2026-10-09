@@ -117,7 +117,7 @@
           }
         ]
       },
-      "minItems": 1,
+      "minItems": 0,
       "maxItems": 2000
     },
     "lessons": {
@@ -534,7 +534,7 @@
           }
         ]
       },
-      "minItems": 1,
+      "minItems": 0,
       "maxItems": 2000
     },
     "approval": {

@@ -160,7 +160,7 @@ export function validateLessonComposition(content,lesson) {
     } else fail('Unsupported component type.');
   }
   const derived=deriveLessonIndices(content,lesson);
-  if(!derived.exerciseIds.length||!same(derived.exerciseIds,lesson.exerciseIds)||!same(derived.checkExerciseIds,lesson.checkExerciseIds||[]))fail('Lesson exercise indices are empty or stale.');
+  if(!same(derived.exerciseIds,lesson.exerciseIds)||!same(derived.checkExerciseIds,lesson.checkExerciseIds||[]))fail('Lesson exercise indices are stale.');
 }
 
 // Canonical exercises may have explicit placements in several v2 lessons.

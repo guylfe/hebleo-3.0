@@ -9,3 +9,9 @@ test('QA-NEW7-01 schema semantics reject empty-effective authored keys without r
  }
  const pack=structuredClone(seed),e=pack.exercises.find(e=>e.type==='typing');e.answers=['  אֲנִי  '];const before=JSON.stringify(pack);assert.deepEqual(semanticErrors(pack),[]);assert.equal(JSON.stringify(pack),before);
 });
+
+import {validateSchema} from '../tools/contracts.mjs';
+import {projectLesson,deriveLessonIndices} from '../../public/course.js';
+test('optional v2 text-only course validates author and learner schemas without invented registry objects',()=>{
+ const c=structuredClone(seed);c.lessons=c.lessons.map(l=>projectLesson(c,l));for(const l of c.lessons){l.wordIds=[];l.blocks=l.blocks.filter(b=>b.type==='explanation');}c.lessons=c.lessons.map(l=>deriveLessonIndices(c,l));c.words=[];c.exercises=[];const before=JSON.stringify(c);assert.deepEqual(validateSchema('content-pack',c),[]);assert.deepEqual(validateSchema('learner-content',c),[]);assert.deepEqual(semanticErrors(c),[]);assert.equal(JSON.stringify(c),before);
+});

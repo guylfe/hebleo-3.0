@@ -50,7 +50,7 @@ export function validateContent(content) {
   // A verified pack may not smuggle in objects still awaiting the owner's approval; candidate packs stay blocked until each object is approved.
   if (content.provenance.kind === 'verified-source' && ['words', 'lessons', 'exercises'].some(kind => Array.isArray(content[kind]) && content[kind].some(o => o?.provenance?.approval !== undefined && o.provenance.approval !== 'approved'))) throw new DomainError('Verified-source content cannot include objects pending approval.');
   for (const key of ['words', 'lessons', 'exercises']) {
-    if (!Array.isArray(content[key]) || content[key].length > 2000 || !content[key].length) throw new DomainError('Invalid ' + key + ' collection.');
+    if (!Array.isArray(content[key]) || content[key].length > 2000 || (key === 'lessons' && !content[key].length)) throw new DomainError('Invalid ' + key + ' collection.');
     const ids = new Set();
     for (const object of content[key]) { if (!object || typeof object !== 'object') throw new DomainError('Invalid content item.'); id(object.id); if (ids.has(object.id)) throw new DomainError('Duplicate ID: ' + object.id); ids.add(object.id); }
   }
@@ -124,8 +124,8 @@ export function validateContent(content) {
     if(l.compositionVersion!==2){text(l.chapter, 'chapter'); text(l.letters, 'known letters', 100);}
     try{validateLessonComposition(content,l);}catch(error){throw new DomainError(error.message);}
     if (!Number.isInteger(l.minutes) || l.minutes < 1 || l.minutes > 120) throw new DomainError('Invalid lesson duration.');
-    if (!Array.isArray(l.wordIds) || !l.wordIds.length || l.wordIds.some(w => !words.has(w))) throw new DomainError('Lesson references a missing word: ' + l.id);
-    if (!Array.isArray(l.exerciseIds) || !l.exerciseIds.length || new Set(l.exerciseIds).size !== l.exerciseIds.length || l.exerciseIds.some(e => !exercises.has(e) || (l.compositionVersion!==2 && exercises.get(e).lessonId !== l.id))) throw new DomainError('Invalid lesson exercise reference: ' + l.id);
+    if (!Array.isArray(l.wordIds) || new Set(l.wordIds).size !== l.wordIds.length || l.wordIds.some(w => !words.has(w))) throw new DomainError('Lesson references a missing word: ' + l.id);
+    if (!Array.isArray(l.exerciseIds) || new Set(l.exerciseIds).size !== l.exerciseIds.length || l.exerciseIds.some(e => !exercises.has(e) || (l.compositionVersion!==2 && exercises.get(e).lessonId !== l.id))) throw new DomainError('Invalid lesson exercise reference: ' + l.id);
     if(l.compositionVersion===2){
       for(const b of l.blocks){
         if(b.video&&!audioURL(b.video))throw new DomainError('Video requires an HTTPS URL or local /media path.');
@@ -146,7 +146,7 @@ export function validateContent(content) {
   }
   for(const e of content.exercises)if(e.type==='ordering'){
     const placements=content.lessons.filter(l=>exerciseInLesson(content,l.id,e.id));
-    for(const l of placements.length?placements:[{id:e.lessonId}])if(orderingTokens(e,content,l.id).length-e.tokens.length<4)throw new DomainError('Ordering exercise needs at least four distinct taught distractor words: '+e.id+' in '+l.id);
+    for(const l of placements)if(orderingTokens(e,content,l.id).length-e.tokens.length<4)throw new DomainError('Ordering exercise needs at least four distinct taught distractor words: '+e.id+' in '+l.id);
   }
   return content;
 }
@@ -312,6 +312,13 @@ export class Store {
     const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     this.validateProgress(input, state);
     const safe = { ...(input.componentId!==undefined ? {componentId:input.componentId} : {}), lessonId: input.lessonId, revisionId: input.revisionId, step: input.step, question: input.question, answer: input.answer, selectedTokens: input.selectedTokens, matching: input.matching, resultRequestId: input.resultRequestId || null, practiceIds: input.practiceIds || [], updatedAt: new Date().toISOString() };
+    // Optional lessons with no assessed questions complete only after an explicit,
+    // validated Finish position. Merely opening a lesson never completes it.
+    const content = this.snapshot(input.revisionId), lesson = content.lessons.find(l => l.id === input.lessonId);
+    if (input.step === 'complete' && lesson.exerciseIds.length === 0) {
+      if (!state.completed.includes(lesson.id)) state.completed.push(lesson.id);
+      for (const wordId of lesson.wordIds) if (!content.words.find(w=>w.id===wordId)?.noCard && !state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false };
+    }
     state.resumes[input.lessonId] = safe; state.lastLessonId = input.lessonId; this.saveLearner(userId, state); return safe;
   }
   validateProgress(p, state, backupContent) {
