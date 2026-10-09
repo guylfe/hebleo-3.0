@@ -10,7 +10,7 @@
     "start": "node --env-file-if-exists=.env src/server.js --demo-fresh-progress",
     "dev": "node --env-file-if-exists=.env --watch src/server.js",
     "test": "node --test",
-    "check": "node --check src/server.js && node --check src/store.js && node --check public/app.js && node --check public/learner-view.js && node --check public/preview/learner-renderer.js && node --check src/google-auth.js && node --check src/google-source.js && node --check src/source-authoring.js && node --check src/source-mapping.js && node --check src/source-state.js && node --check public/studio/sources-editor.js && node --check src/source-invariants.js",
+    "check": "node --check src/server.js && node --check src/store.js && node --check public/app.js && node --check public/learner-view.js && node --check public/preview/learner-renderer.js && node --check src/google-auth.js && node --check src/google-source.js && node --check src/source-authoring.js && node --check src/source-mapping.js && node --check src/source-state.js && node --check public/studio/sources-editor.js && node --check src/source-invariants.js && node --check src/media-store.js && node --check public/google-setup.js && node --check public/studio/media-library.js",
     "verify": "npm run check && npm test"
   },
   "dependencies": {
