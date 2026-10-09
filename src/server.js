@@ -1,4 +1,8 @@
 import http from 'node:http';
+import {GoogleAuth,windowsCredentialVault} from './google-auth.js';
+import {GoogleSourceTransport} from './google-source.js';
+import {SourceAuthoring} from './source-authoring.js';
+import {parseStrictJSON} from './source-utils.js';
 import { readFile, stat, realpath } from 'node:fs/promises';
 import { mkdirSync, createReadStream } from 'node:fs';
 import { resolve, dirname, relative, isAbsolute, extname } from 'node:path';
@@ -13,8 +17,11 @@ const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/cs
 export const demoFreshProgressEnabled = (argv = process.argv, env = process.env) => argv.includes('--demo-fresh-progress') || env.HEBLEO_DEMO_FRESH_PROGRESS === '1';
 // Runs once before listening. A running server never re-fingerprints, so saving files mid-session cannot wipe new progress.
 export async function prepareDemoProgress(store, { enabled = demoFreshProgressEnabled(), fingerprint = demoBuildFingerprint } = {}) { return enabled ? store.resetDemoProgressForBuild(await fingerprint()) : false; }
-export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {}) {
-  return http.createServer(async (req, res) => {
+export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourceAuth,sourceTransport,sourceClock } = {}) {
+  const auth=sourceAuth||new GoogleAuth({vault:windowsCredentialVault(resolve(root,'.private','google-auth.bin'))});
+  const sources=new SourceAuthoring(store,{auth,transport:sourceTransport||new GoogleSourceTransport({auth}),...(sourceClock?{clock:sourceClock}:{})});
+  sources.validatePersistent();
+  const server=http.createServer(async (req, res) => {
     const headers = { 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store', 'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' https: data:; media-src 'self' https: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'", 'Referrer-Policy': 'no-referrer' };
     const json = (status, data) => { res.writeHead(status, { ...headers, 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(data)); };
     try {
@@ -22,10 +29,13 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
       let host; try { host = new URL('http://' + req.headers.host).hostname; } catch { throw new DomainError('Invalid host.', 403); }
       if (!['localhost', '127.0.0.1', '[::1]'].includes(host)) throw new DomainError('This demonstration is available only on localhost.', 403);
       if (req.headers.origin && req.headers.origin !== 'http://' + req.headers.host) throw new DomainError('Cross-origin requests are not allowed.', 403);
+      const sourceCookie=String(req.headers.cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('hebleo-source='))?.slice(14)||null;
+      if(url.pathname==='/oauth/google/callback'&&req.method==='GET'){const result=await auth.finish({state:url.searchParams.get('state'),code:url.searchParams.get('code')});const cookie=sources.establishSession(result);res.writeHead(200,{...headers,'Content-Type':'text/html; charset=utf-8','Set-Cookie':'hebleo-source='+cookie+'; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800'});return res.end('<!doctype html><html lang="en"><meta charset="utf-8"><title>Hebleo Google connection</title><p>Application Google connection verified. Return to Studio and refresh connection status. No content was changed.</p><a href="/">Return to Hebleo</a></html>');}
       if (url.pathname === '/api/health' && req.method === 'GET') return json(200, { ok: true, demo: true });
       if (url.pathname.startsWith('/api/')) {
         const userId = req.headers['x-demo-user'] || 'learner-demo'; store.learner(userId);
         if (req.method === 'GET') {
+          if(url.pathname==='/api/studio/sources/status'){store.requireAuthor(userId);return json(200,sources.status(userId,sourceCookie));}
           if (url.pathname === '/api/bootstrap') return json(200, store.bootstrap(userId));
           if (url.pathname === '/api/session') return json(200,store.session(userId,url.searchParams.get('lessonId')));
           if (url.pathname === '/api/questions') return json(200,store.questions(userId));
@@ -38,11 +48,17 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
         if (req.method === 'POST') {
           if (!String(req.headers['content-type']).startsWith('application/json')) throw new DomainError('JSON content type required.', 415);
           // Backups carry every referenced revision, so restore gets a larger bound than ordinary edits.
-          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? 10000000 : 750000;
+          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? 60000000 : url.pathname.startsWith('/api/studio/sources/')?20000000:750000;
           for await (const chunk of req) { bytes += chunk.length; if (bytes > limit) throw new DomainError('Request exceeds the local import limit.', 413); chunks.push(chunk); }
-          let input; try { input = JSON.parse(Buffer.concat(chunks).toString()); } catch { throw new DomainError('Malformed JSON.'); }
+          let input; try { input = parseStrictJSON(Buffer.concat(chunks).toString()); } catch { throw new DomainError('Malformed JSON.'); }
           if (!input || typeof input !== 'object' || Array.isArray(input)) throw new DomainError('Expected a JSON object.');
           if (url.pathname.startsWith('/api/studio/') || ['/api/restore','/api/reports/resolve','/api/questions/answer','/api/questions/moderate'].includes(url.pathname)) store.requireAuthor(userId);
+          if(url.pathname.startsWith('/api/studio/sources/')){const action=url.pathname.slice('/api/studio/sources/'.length);
+            if(action==='auth/configure'){const status=auth.configureClient(input.clientJSON);sources.sessions.clear();return json(200,status);}
+            if(action==='auth/begin')return json(200,auth.begin({...input,authorId:userId,redirectUri:'http://127.0.0.1:'+server.address().port+'/oauth/google/callback'}));
+            if(action==='auth/disconnect'){const session=sources.session(sourceCookie,userId);if(input.connectionSlot!==session.connectionSlot)throw new DomainError('Connection slot differs.',403);sources.sessions.clear();return json(200,auth.disconnect(input.connectionSlot));}
+            const session=sources.session(sourceCookie,userId);if(['register','refreshPreview','resolveReview','discardReview','stageSourceReview','publishStagedSource','rollbackSourceRevision','approveStagedSource'].includes(action))return json(200,await sources[action](userId,input,session));
+          }
           if (url.pathname === '/api/progress') return json(200, store.saveProgress(userId,input));
           if (url.pathname === '/api/session/latest') return json(200,store.startLatestLesson(userId,input.lessonId));
           if (url.pathname === '/api/practice') return json(200,store.practice(userId,input));
@@ -91,13 +107,14 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
         const stream=createReadStream(file,{start,end});stream.on('error',()=>res.destroy());res.on('close',()=>stream.destroy());stream.pipe(res);return;
       }
       if (req.method !== 'GET') return json(405, { error: 'Method not allowed.', code: 'METHOD_NOT_ALLOWED' });
-      const allowed = { '/': 'index.html', '/app.js': 'app.js', '/content.js': 'content.js', '/course.js':'course.js', '/vocabulary-import.js':'vocabulary-import.js', '/studio/markdown-editor.js':'studio/markdown-editor.js', '/studio/vocabulary-browser.js':'studio/vocabulary-browser.js', '/studio/vendor/easymde.min.js':'studio/vendor/easymde.min.js', '/studio/vendor/easymde.min.css':'studio/vendor/easymde.min.css', '/answer-policy.js':'answer-policy.js', '/review-schedule.js':'review-schedule.js', '/ux.js': 'ux.js', '/media.js': 'media.js', '/styles.css': 'styles.css', '/refinement.css':'refinement.css', '/rich.js':'rich.js', '/rich-browser.js':'rich-browser.js', '/interactions.js':'interactions.js', '/learner-view.js':'learner-view.js', '/preview/learner-renderer.js':'preview/learner-renderer.js', '/preview/lesson-preview.js':'preview/lesson-preview.js', '/studio/unified-studio.js':'studio/unified-studio.js', '/studio/selector-editor.js':'studio/selector-editor.js', '/studio/curriculum-editor.js':'studio/curriculum-editor.js', '/studio/import-workflow.js':'studio/import-workflow.js', '/studio/editor-fields.js':'studio/editor-fields.js', '/studio/lesson-editor.js':'studio/lesson-editor.js', '/studio/exercise-editor.js':'studio/exercise-editor.js', '/studio/import-review.js':'studio/import-review.js', '/studio/studio.css':'studio/studio.css', '/keyboard-owner.js':'keyboard-owner.js', '/keyboard-owner.css':'keyboard-owner.css', '/hebleo-lion-mark.svg':'hebleo-lion-mark.svg', '/vendor/marked.js':'../node_modules/marked/lib/marked.esm.js', '/vendor/purify.js':'../node_modules/dompurify/dist/purify.es.mjs' };
+      const allowed = { '/': 'index.html', '/app.js': 'app.js', '/content.js': 'content.js', '/course.js':'course.js', '/vocabulary-import.js':'vocabulary-import.js', '/studio/markdown-editor.js':'studio/markdown-editor.js', '/studio/vocabulary-browser.js':'studio/vocabulary-browser.js', '/studio/vendor/easymde.min.js':'studio/vendor/easymde.min.js', '/studio/vendor/easymde.min.css':'studio/vendor/easymde.min.css', '/answer-policy.js':'answer-policy.js', '/review-schedule.js':'review-schedule.js', '/ux.js': 'ux.js', '/media.js': 'media.js', '/styles.css': 'styles.css', '/refinement.css':'refinement.css', '/rich.js':'rich.js', '/rich-browser.js':'rich-browser.js', '/interactions.js':'interactions.js', '/learner-view.js':'learner-view.js', '/preview/learner-renderer.js':'preview/learner-renderer.js', '/preview/lesson-preview.js':'preview/lesson-preview.js', '/studio/unified-studio.js':'studio/unified-studio.js', '/studio/selector-editor.js':'studio/selector-editor.js', '/studio/curriculum-editor.js':'studio/curriculum-editor.js', '/studio/import-workflow.js':'studio/import-workflow.js', '/studio/editor-fields.js':'studio/editor-fields.js', '/studio/lesson-editor.js':'studio/lesson-editor.js', '/studio/exercise-editor.js':'studio/exercise-editor.js', '/studio/import-review.js':'studio/import-review.js', '/studio/studio.css':'studio/studio.css','/studio/sources-editor.js':'studio/sources-editor.js','/studio/sources.css':'studio/sources.css', '/keyboard-owner.js':'keyboard-owner.js', '/keyboard-owner.css':'keyboard-owner.css', '/hebleo-lion-mark.svg':'hebleo-lion-mark.svg', '/vendor/marked.js':'../node_modules/marked/lib/marked.esm.js', '/vendor/purify.js':'../node_modules/dompurify/dist/purify.es.mjs' };
       if (!allowed[url.pathname]) return json(404, { error: 'Page not found.', code: 'NOT_FOUND' });
       const file = allowed[url.pathname]; const ext = url.pathname.startsWith('/vendor/') ? '.js' : '.' + file.split('.').pop();
       const body = await readFile(resolve(root, 'public', file));
       res.writeHead(200, { ...headers, 'Content-Type': types[ext] + '; charset=utf-8' }); res.end(body);
     } catch (e) { json(e instanceof DomainError ? e.status : 500, e instanceof DomainError ? { error: e.message, code: e.code, ...e.details } : { error: 'Local server error. See terminal for details.', code: 'SERVER_ERROR' }); if (!(e instanceof DomainError)) console.error(e.message); }
   });
+  server.sourceAuthoring=sources;return server;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   mkdirSync(resolve(root, 'data'), { recursive: true });

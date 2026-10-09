@@ -8,6 +8,7 @@ import {reviewNikkud} from './ux.js';
 import {scheduleReview,reviewIntervalLabel} from './review-schedule.js';
 import { playAudio, stopMedia, recordVoice, stopRecording, replayVoice, clearRecording, feedbackSound } from './media.js';
 import {esc,button,wordText,fieldText,cellAttribute,audioControls,richFields,wordCard,vocabularyTable,learnMedia,exerciseInput,exerciseFeedback,wireAnswer} from './learner-view.js';
+import {mountSourceAuthoring} from './studio/sources-editor.js';
 import {mountUnifiedStudio} from './studio/unified-studio.js';
 import {mountImportWorkflow} from './studio/import-workflow.js';
 import {mountExerciseEditor} from './studio/exercise-editor.js';
@@ -21,7 +22,7 @@ const uid = () => crypto.randomUUID();
 const pref = () => state.data.learner.preferences;
 let saveTimer, saveChain=Promise.resolve(), submitting=false, routeGeneration=0, lastFocus=null;
 // Studio form mounts are disposed before every render; at most one disposable rehearsal is open.
-let studioMounts=[], rehearsal=null;
+let studioMounts=[], rehearsal=null, sourceWorkspaceState=null;
 // This tab's in-flight guided draft save and workspace reload. Until it settles state.studio still holds the previous draft,
 // so Studio writes wait for it and then name the token that save returned: another tab's newer draft is still rejected.
 let studioSave=null;
@@ -30,7 +31,7 @@ function trackStudioSave(task){let run;const done=()=>{if(studioSave===run)studi
 async function settledDraftToken(){let token=draftToken();while(studioSave){const pending=studioSave;try{token=(await pending)?.draftToken??token;}catch{}}return token;}
 async function api(path, body, user=state.user) {
   const response=await fetch('/api/'+path,{method:body===undefined?'GET':'POST',headers:{'x-demo-user':user,...(body===undefined?{}:{'content-type':'application/json'})},...(body===undefined?{}:{body:JSON.stringify(body)})});
-  const value=await response.json(); if(!response.ok)throw Object.assign(new Error(value.error || 'Request failed'),{status:response.status,code:value.code,current:value.current}); return value;
+  const value=await response.json(); if(!response.ok)throw Object.assign(new Error(value.error || 'Request failed'),{status:response.status,...value}); return value;
 }
 function toast(message) { const box=document.querySelector('#toast');box.textContent=message;box.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>box.classList.remove('visible'),5000); }
 async function load() {
@@ -177,7 +178,7 @@ function studio() {
  if(!state.studio)return '<p>Opening Studio…</p>';
  const s=state.studio,c=s.draft?.content||s.content,l=c.lessons.find(l=>l.id===state.authorLessonId)||c.lessons[0];
  state.authorLessonId=l.id;
- return '<div class="intro-row"><div><div class="eyebrow">ONE SOURCE · MANY LEARNING EXPERIENCES</div><h1>Content Studio.</h1><p>Edit the lesson in learner order. Save a draft, preview it, then publish.</p></div><span class="tag teal">PUBLISHED VERSION '+s.revisionId+'</span></div><div id="studio-import-mount"></div><section class="card studio-lesson-actions"><h2>Selected lesson workspace</h2><div class="button-row">'+button('Preview saved draft','rehearse','primary',l.id,!s.draft)+button('Reload saved draft (discard workspace edits)','studio-reload','outline')+button('Export content JSON','export-content','outline')+'</div><p>Preview is disposable and unpublished. It saves no learner progress or settings. Unsaved edits are excluded.</p></section><div id="unified-studio-mount"></div><section class="card studio-preview"><h2>Publication impact</h2><p>'+s.preview.changes.length+' unpublished changes · '+s.preview.affectedLessons.length+' affected lessons.</p><ul aria-label="Affected lessons">'+s.preview.affectedLessons.map(id=>'<li>'+esc((c.lessons.find(l=>l.id===id)||s.content.lessons.find(l=>l.id===id))?.title||id)+' <small>'+esc(id)+'</small></li>').join('')+'</ul>'+s.preview.changes.slice(0,50).map(c=>'<p>'+esc(changeLabel(c))+' · '+esc(c.action+(c.reordered?' · order changed':''))+'</p>').join('')+(s.draft?button('Publish saved draft →','publish','primary'):'<p>No saved draft to publish.</p>')+'</section><section class="card"><h2>Published history</h2><p>Restoring creates a new revision and retains learner progress.</p>'+s.history.map(r=>'<div class="revision-row">Version '+r.id+' · '+esc(r.reason)+(r.id!==s.revisionId?button('Restore','rollback','small outline',r.id):'<span class="tag">Current</span>')+'</div>').join('')+'</section>'+questionList(true)+reportList();
+ return '<div class="intro-row"><div><div class="eyebrow">ONE SOURCE · MANY LEARNING EXPERIENCES</div><h1>Content Studio.</h1><p>Edit the lesson in learner order. Save a draft, preview it, then publish.</p></div><span class="tag teal">PUBLISHED VERSION '+s.revisionId+'</span></div><div id="studio-import-mount"></div><div id="studio-sources-mount"></div><section class="card studio-lesson-actions"><h2>Selected lesson workspace</h2><div class="button-row">'+button('Preview saved draft','rehearse','primary',l.id,!s.draft)+button('Reload saved draft (discard workspace edits)','studio-reload','outline')+button('Export content JSON','export-content','outline')+'</div><p>Preview is disposable and unpublished. It saves no learner progress or settings. Unsaved edits are excluded.</p></section><div id="unified-studio-mount"></div><section class="card studio-preview"><h2>Publication impact</h2><p>'+s.preview.changes.length+' unpublished changes · '+s.preview.affectedLessons.length+' affected lessons.</p><ul aria-label="Affected lessons">'+s.preview.affectedLessons.map(id=>'<li>'+esc((c.lessons.find(l=>l.id===id)||s.content.lessons.find(l=>l.id===id))?.title||id)+' <small>'+esc(id)+'</small></li>').join('')+'</ul>'+s.preview.changes.slice(0,50).map(c=>'<p>'+esc(changeLabel(c))+' · '+esc(c.action+(c.reordered?' · order changed':''))+'</p>').join('')+(s.draft?button('Publish saved draft →','publish','primary'):'<p>No saved draft to publish.</p>')+'</section><section class="card"><h2>Published history</h2><p>Restoring creates a new revision and retains learner progress.</p>'+s.history.map(r=>'<div class="revision-row">Version '+r.id+' · '+esc(r.reason)+(r.id!==s.revisionId?button('Restore','rollback','small outline',r.id):'<span class="tag">Current</span>')+'</div>').join('')+'</section>'+questionList(true)+reportList();
 }
 const changeLabel=c=>c.kind==='metadata'?'Pack '+c.field:c.kind==='policy'?'Review defaults':c.id;
 function disposeStudioMounts(){for(const dispose of studioMounts.splice(0))try{dispose();}catch{}}
@@ -192,6 +193,8 @@ function mountStudioEditors(){
  studioMounts.push(()=>unified.dispose());
  const importer=mountImportWorkflow(root.querySelector('#studio-import-mount'),{session:state.studioImport,getSnapshot:()=>({content:state.studio.draft?.content||state.studio.content,baseRevisionId:state.studio.revisionId,expectedDraftToken:draftToken()}),saveDraft:input=>{if(unified.isDirty())return Promise.reject(new Error('Save workspace edits or explicitly Reload saved draft before staging an import.'));return saveDraft(input,false);},onStaged:()=>render(),renderWord:word=>vocabularyTable([word])});
  studioMounts.push(()=>importer.dispose());
+ const sourceMount=mountSourceAuthoring(root.querySelector('#studio-sources-mount'),{api,initialState:sourceWorkspaceState,getSnapshot:()=>{if(studioSave)throw new Error('The previous draft save is still reloading.');return {content:unified.getContent(),baseRevisionId:state.studio.revisionId,expectedDraftToken:draftToken(),hasUnsavedChanges:unified.isDirty()};},onStaged:async(result,guard)=>{const next=await api('studio');if(guard?.isCurrent&&!await guard.isCurrent()){toast('Saved source draft retained. Newer local sibling edits remain in this workspace.');return;}state.studio=next;render();},onPreview:async({draftToken:token})=>{const current=await api('studio');if(current.draft?.draftToken!==token)throw new Error('Saved source draft changed; refresh source status.');state.studio=current;await startRehearsal(state.authorLessonId);},onChanged:()=>{}});
+ studioMounts.push(()=>{try{sourceWorkspaceState=sourceMount.exportState();}catch{}sourceMount.dispose();});
  if(studioSave){root.querySelector('#unified-studio-mount').setAttribute('aria-busy','true');root.querySelectorAll('#unified-studio-mount input,#unified-studio-mount select,#unified-studio-mount textarea,#unified-studio-mount button').forEach(el=>el.disabled=true);}
 }
 // Rehearsal runs in a modal outside #app (learner controls inert), marked data-preview-root so app handlers ignore it.

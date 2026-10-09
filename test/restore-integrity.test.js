@@ -75,7 +75,7 @@ test('v2 restore rejects nonexistent or existing-but-wrong historical lesson, ex
 
 test('restore refuses missing, malformed or unsupported store schema declarations atomically',t=>{
   const {first,backup}=source(t);
-  assert.deepEqual(RESTORABLE_SCHEMA_VERSIONS['hebleo-demo-backup-v2'],[2,3,4,STORE_SCHEMA_VERSION]);assert.equal(backup.storeSchemaVersion,STORE_SCHEMA_VERSION);
+  assert.deepEqual(RESTORABLE_SCHEMA_VERSIONS['hebleo-demo-backup-v2'],[2,3,4,5,STORE_SCHEMA_VERSION]);assert.equal(backup.storeSchemaVersion,STORE_SCHEMA_VERSION);
   const v2Cases={future:999,next:STORE_SCHEMA_VERSION+1,older:1,zero:0,negative:-1,fraction:2.5,string:'2',null:null,missing:undefined};
   const v1Cases={future:999,next:STORE_SCHEMA_VERSION+1,string:'1',null:null};
   for(const [format,base,cases] of [['v2',backup,v2Cases],['v1',v1From(backup,first),v1Cases]])for(const [name,version] of Object.entries(cases)){

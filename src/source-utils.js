@@ -10,7 +10,7 @@ export const sha256=v=>createHash('sha256').update(canonicalJSON(v),'utf8').dige
 export const equal=(a,b)=>a===undefined||b===undefined?a===b:canonicalJSON(a)===canonicalJSON(b);
 export const safeID=v=>typeof v==='string'&&/^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$/.test(v)&&!['__proto__','constructor','prototype'].includes(v);
 // Reject duplicate object keys before canonical hashing, rather than letting JSON.parse choose one.
-export function parseStrictJSON(source){let i=0,depth=0;const ws=()=>{while(/\s/.test(source[i]||'')&&i<source.length)i++;};
+export function parseStrictJSON(source){let i=0,depth=0;const ws=()=>{while(/[ \t\r\n]/.test(source[i]||'')&&i<source.length)i++;};
  function string(){const start=i++;for(;i<source.length;i++){if(source[i]==='\\'){i++;continue;}if(source[i]==='"'){i++;return JSON.parse(source.slice(start,i));}}throw Error('Invalid JSON string');}
  function value(){ws();if(++depth>100)throw Error('JSON nesting exceeds limit');let v;const c=source[i];
   if(c==='"')v=string();else if(c==='{'||c==='['){const object=c==='{';i++;v=object?{}:[];const seen=new Set();ws();if(source[i]===(object?'}':']'))i++;else for(;;){ws();let key;if(object){if(source[i]!=='"')throw Error('Invalid JSON key');key=string();if(seen.has(key)||['__proto__','constructor','prototype'].includes(key))throw Error('Duplicate or reserved JSON key');seen.add(key);ws();if(source[i++]!==':')throw Error('Invalid JSON colon');}const next=value();if(object)Object.defineProperty(v,key,{value:next,enumerable:true,writable:true,configurable:true});else v.push(next);ws();const end=source[i++];if(end===(object?'}':']'))break;if(end!==',')throw Error('Invalid JSON separator');}}
