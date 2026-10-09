@@ -74,7 +74,7 @@ export function semanticErrors(pack) {
       if (object.prefixTokenIndices?.some(i => object.type !== 'ordering' || i >= (object.tokens?.length ?? 0))) errors.push(`invalid prefix index ${object.id}`);
     }
     if (kind === 'lessons') {
-      for (const id of object.exerciseIds) if (!pack.exercises.some(e => e.id === id && e.lessonId === object.id)) errors.push(`exercise belongs to another lesson ${id}`);
+      for (const id of object.exerciseIds) if (!pack.exercises.some(e => e.id === id && (object.compositionVersion===2 || e.lessonId === object.id))) errors.push(`exercise belongs to another lesson ${id}`);
       if (object.checkExerciseIds?.some(id => !object.exerciseIds.includes(id))) errors.push(`invalid check reference ${object.id}`);
       if (object.compositionVersion!==2&&new Set(object.blocks.map(b => b.type)).size !== 3) errors.push(`invalid block families ${object.id}`);
       for (const b of object.blocks.filter(()=>object.compositionVersion!==2)) {

@@ -44,6 +44,8 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else if(url.pathname==='/api/practice')value=store.practice(user,input);
     else if(url.pathname==='/api/studio'){store.requireAuthor(user);value={...store.active(),preview:store.preview()};}
     else if(url.pathname==='/api/reports')value=store.reports(user);
+    else if(url.pathname==='/api/studio/impact'){store.requireAuthor(user);value=store.workspaceImpact(input);}
+    else if(url.pathname==='/api/studio/dependencies'){store.requireAuthor(user);value=store.exerciseDependencies(input);}
     else if(url.pathname==='/api/studio/draft'){store.requireAuthor(user);value=store.stage(input);}
     else if(url.pathname==='/api/studio/publish'){store.requireAuthor(user);value=store.publish(input.baseRevisionId,input.draftToken);}
     else if(url.pathname==='/api/studio/rollback'){store.requireAuthor(user);value=store.rollback(input.revisionId,input.baseRevisionId,input.expectedDraftToken);}
@@ -67,16 +69,16 @@ test('FB8 outside first-click lifecycle: Check and concept survive typing/cloze,
       const content=s.snapshot();content.lessons.find(l=>l.id===lessonId).title+=' SYNTHETIC next release';const draft=s.stage({content,baseRevisionId:1,expectedDraftToken:null});s.publish(1,draft.draftToken);
     }});
     assert.ok(doc.querySelector('.hint').textContent.includes('earlier lesson'));assert.equal(doc.querySelector('#answer').value,text);
-    const footer=doc.querySelector('#practice .exercise-footer');assert.equal(footer.firstElementChild.dataset.action,'concept');assert.equal(footer.querySelector('.toolbar').firstElementChild.dataset.action,'check');
+    const support=doc.querySelector('#practice .keyboard-tools');assert.equal(support.querySelector('[data-action=concept]').dataset.action,'concept');assert.ok(doc.querySelector('#practice .answer-commit [data-action=check]'));assert.equal(doc.querySelector('#answer').tagName,'TEXTAREA');
     if(mode!=='closed')click(doc,'keyboard-open');
-    const el=doc.querySelector('#practice [data-action="'+action+'"]'),seen=calls.length;
+    const answerBefore=doc.querySelector('#answer');answerBefore.setSelectionRange(1,2);const el=doc.querySelector('#practice [data-action="'+action+'"]'),seen=calls.length;
     el.dispatchEvent(new w.MouseEvent('pointerdown',{bubbles:true,cancelable:true}));
     assert.equal(el.isConnected,true);assert.equal(doc.querySelector('#practice [data-action="'+action+'"]'),el);
     if(mode!=='closed')assert.ok(doc.body.classList.contains('hebleo-keyboard-is-open'),'layout must survive pointerdown until click target is resolved');
     el.dispatchEvent(new w.MouseEvent('pointerup',{bubbles:true,cancelable:true}));el.click();
     if(action==='concept'){
       await settled(()=>doc.querySelector('#context-panel'));assert.equal(store.learner('learner-demo').attempts.length,0);assert.equal(calls.slice(seen).filter(p=>p==='/api/attempt').length,0);
-      assert.equal(doc.querySelector('#answer').value,text);click(doc,'panel-close');assert.equal(doc.querySelector('#answer').value,text);
+      assert.equal(doc.querySelector('#answer').value,text);click(doc,'panel-close');assert.equal(doc.querySelector('#answer').value,text);assert.equal(doc.activeElement,doc.querySelector('#answer'));assert.equal(doc.querySelector('#answer').selectionStart,1);assert.equal(doc.querySelector('#answer').selectionEnd,2);
       const answer=doc.querySelector('#answer');answer.focus();answer.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
     }
     await settled(()=>doc.querySelector('#practice .feedback'));
@@ -92,8 +94,8 @@ test('FB8 saved-draft Preview swaps controls, preserves typed answer through con
   const before=tables(store),inside=s=>doc.querySelector('#rehearsal-panel '+s);
   inside('[data-preview-step="apply"]').click();await settled(()=>inside('#answer'));
   let answer=inside('#answer');answer.value='אני';answer.dispatchEvent(new w.Event('input',{bubbles:true}));
-  inside('[data-preview-keyboard="show"]').click();await settled(()=>inside('[data-preview-key]'));
-  const footer=inside('.exercise-footer');assert.equal(footer.firstElementChild.dataset.action,'concept');assert.equal(footer.querySelector('.toolbar').firstElementChild.dataset.action,'check');
+  inside('[data-preview-owner-keyboard]').click();await settled(()=>doc.querySelector('.hebleo-keyboard--open'));assert.equal(doc.querySelectorAll('.hebleo-keyboard [data-insert]').length>=33,true);
+  assert.ok(inside('.keyboard-tools [data-action=concept]'));assert.ok(inside('.answer-commit [data-action=check]'));
   const concept=inside('[data-action="concept"]');concept.dispatchEvent(new w.MouseEvent('pointerdown',{bubbles:true}));concept.dispatchEvent(new w.MouseEvent('pointerup',{bubbles:true}));concept.click();
   assert.ok(inside('.preview-concept'));assert.equal(inside('#answer').value,'אני');assert.deepEqual(tables(store),before);
   inside('[data-action="concept-close"]').click();const check=inside('[data-action="check"]');check.dispatchEvent(new w.MouseEvent('pointerdown',{bubbles:true}));check.dispatchEvent(new w.MouseEvent('pointerup',{bubbles:true}));check.click();await settled(()=>inside('.feedback'));
@@ -311,10 +313,11 @@ test('G5 automated HTTP owner-event: the real keyboard Pin handler emits its pre
   assert.equal(events.length,1);assert.equal(events[0].keyboardPinned,true,'event originates in the actual owner keyboard click handler');
   assert.deepEqual(calls.slice(seen),['/api/studio/preview/session']);assert.deepEqual(tables(store),before);
   doc.querySelector('#rehearsal-panel [data-preview-exit]').click();
+  assert.equal(pin().getAttribute('aria-pressed'),'false','Exit restores the persisted pin preference before a new click');
   const beforePreference=store.db.prepare('SELECT total_changes() AS n').get().n;
   pin().click();await settled(()=>calls.includes('/api/preferences'));
   await settled(()=>store.db.prepare('SELECT total_changes() AS n').get().n>beforePreference);
-  assert.equal(store.learner('author-demo').preferences.keyboardPinned,false);
+  assert.equal(store.learner('author-demo').preferences.keyboardPinned,true);
   assert.equal(events.length,2,'same handler operates after disposal');
   assert.equal(calls.filter(path=>path==='/api/preferences').length,1,'positive control proves active persistence outside rehearsal');
 });
@@ -431,7 +434,7 @@ test('Rehearsal keeps keyboard focus inside the modal across re-renders, so a di
   scrolled.length=0;assert.ok(key('Enter'));await settled(()=>inside('[data-action="retry-question"]'));
   assert.ok(focusInside(),'focus survives grading');
   assert.equal(scrolled.length,1,'only the newly shown result is scrolled');
-  assert.equal(scrolled[0],inside('.exercise-footer'));assert.ok(scrolled[0].contains(inside('[data-action="retry-question"]')),'Retry is inside the revealed area');
+  assert.equal(scrolled[0],inside('.answer-result'));assert.ok(scrolled[0].contains(inside('[data-action="retry-question"]')),'Retry is inside the revealed area');
   press(inside('[data-action="retry-question"]'));await settled(()=>inside('[data-action="check"]'));
   assert.equal(inside('[data-action="retry-question"]'),null);assert.doesNotMatch(inside('.lesson-section').textContent,/Accepted answer/,'Retry clears the feedback');
   assert.deepEqual(choices().filter(b=>b.classList.contains('selected')),[],'Retry clears the selection');

@@ -57,6 +57,8 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads') } = {
           if (url.pathname === '/api/attempt') return json(200, store.attempt(userId, input));
           if (url.pathname === '/api/review') return json(200, store.review(userId, input));
           if (url.pathname === '/api/enroll') return json(200, store.enroll(userId, input.wordId));
+          if (url.pathname === '/api/studio/impact') return json(200,store.workspaceImpact(input));
+          if (url.pathname === '/api/studio/dependencies') return json(200,store.exerciseDependencies(input));
           if (url.pathname === '/api/studio/draft') return json(200, store.stage(input));
           if (url.pathname === '/api/studio/publish') return json(200, store.publish(input.baseRevisionId, input.draftToken));
           if (url.pathname === '/api/studio/rollback') return json(200, store.rollback(input.revisionId, input.baseRevisionId, input.expectedDraftToken));

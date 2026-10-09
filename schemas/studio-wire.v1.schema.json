@@ -33,6 +33,9 @@
             "id"
           ],
           "additionalProperties": true
+        },
+        "reviewedDraftToken": {
+          "$ref": "common.v1.schema.json#/definitions/token"
         }
       },
       "required": [
@@ -576,6 +579,62 @@
           }
         }
       ]
+    },
+    "workspaceImpactRequest": {
+      "type": "object",
+      "required": [
+        "baseRevisionId",
+        "expectedDraftToken",
+        "content"
+      ],
+      "properties": {
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "expectedDraftToken": {
+          "anyOf": [
+            {
+              "$ref": "common.v1.schema.json#/definitions/token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content": {
+          "$ref": "content-pack.v1.schema.json"
+        }
+      },
+      "additionalProperties": false
+    },
+    "exerciseDependenciesRequest": {
+      "type": "object",
+      "required": [
+        "baseRevisionId",
+        "expectedDraftToken",
+        "exerciseId"
+      ],
+      "properties": {
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "expectedDraftToken": {
+          "anyOf": [
+            {
+              "$ref": "common.v1.schema.json#/definitions/token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exerciseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      },
+      "additionalProperties": false
     }
   },
   "anyOf": [

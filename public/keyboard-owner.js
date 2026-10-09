@@ -906,6 +906,7 @@
   }
 
   window.HebleoKeyboard={
+    listen:function(callback,signal){window.addEventListener('hebleo-keyboard-preference',function(event){callback(event.detail);},{signal:signal});},
     mount:function(parent){if(parent.tagName==='DIALOG' && activeTarget && !parent.contains(activeTarget))clearActiveTarget();if(root && root.parentNode!==parent)parent.appendChild(root);},
     close:closeKeyboard,
     open:function(target){if(target && isEditable(target))setActiveTarget(target);openKeyboard();},
@@ -918,7 +919,7 @@
       updateHintState();updateConvertState();updatePinState();
       root.querySelectorAll('[data-insert]').forEach(function(key){var letter=key.dataset.insert;key.classList.toggle('known-key',(config.knownKeys||'').includes(letter));key.classList.toggle('new-key',(config.newKeys||'').includes(letter));});
       var shades=highlightShades(config.newColor);root.style.setProperty('--known-key',shades.known);root.style.setProperty('--new-key',shades.new);
-      if(isOpen && !activeTarget){var dialog=root.closest('dialog'),answer=dialog?dialog.querySelector('textarea,input:not([disabled]):not([readonly])'):document.getElementById('answer');if(answer&&!answer.disabled&&isEditable(answer)){setActiveTarget(answer);focusTarget(answer);}}
+      if(isOpen && !activeTarget){var dialog=root.closest('dialog'),answer=dialog?dialog.querySelector('#answer:not([disabled]),textarea:not([disabled]):not([readonly]),input:not([disabled]):not([readonly])'):document.getElementById('answer');if(answer&&!answer.disabled&&isEditable(answer)){setActiveTarget(answer);focusTarget(answer);}}
     }
   };
   if (document.readyState === 'loading') {

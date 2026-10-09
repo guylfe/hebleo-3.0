@@ -20,9 +20,9 @@ export function audioURL(value) {
   if (/^\/media\/[A-Za-z0-9_./-]+$/.test(candidate) && !candidate.includes('..')) return candidate;
   try { const url = new URL(candidate); return url.protocol === 'https:' && !url.username && !url.password ? url.href : null; } catch { return null; }
 }
-export function orderingTokens(exercise, content) {
+export function orderingTokens(exercise, content, lessonId = exercise.lessonId) {
   const base = [...exercise.tokens];
-  const lessons=orderedLessons(content),lessonIndex = lessons.findIndex(l => l.id === exercise.lessonId);
+  const lessons=orderedLessons(content),lessonIndex = lessons.findIndex(l => l.id === lessonId);
   const recent = lessons.slice(Math.max(0, lessonIndex - 2), lessonIndex + 1).reverse().flatMap(l => l.wordIds);
   const candidates = [...new Set(recent)].map(id => content.words.find(w => w.id === id)).filter(w=>w && !w.noVocab).map(w=>w.unpointed);
   const key=t=>t.normalize('NFD').replace(/[\u0591-\u05c7]/g,'').trim();

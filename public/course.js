@@ -55,7 +55,7 @@ export function courseOutline(content) {
 export function orderedLessons(content) {
   return content.curriculum ? courseOutline(content).flatMap(entry=>entry.kind==='chapter'?entry.lessons:[entry.lesson]) : [...content.lessons];
 }
-export function resolveSelector(content, source, selector, ownerLessonId = null) {
+export function resolveSelector(content, source, selector, ownerLessonId = null, allowSharedIDs = false) {
   if (!['words','exercises'].includes(source)) fail('Unsupported component source.');
   const collection = content[source], registry = new Map(collection.map(item=>[item.id,item]));
   const mode = selector?.mode || (selector?.lessonId ? 'lesson' : null);
@@ -78,12 +78,12 @@ export function resolveSelector(content, source, selector, ownerLessonId = null)
     ids=collection.filter(item=>(source!=='exercises'||!ownerLessonId||item.lessonId===ownerLessonId) && selector.tags[selector.match==='all'?'every':'some'](tag=>Array.isArray(item.tags)&&item.tags.includes(tag))).map(item=>item.id);
     ids=unique([...ids,...include]).filter(id=>!exclude.includes(id));
   } else fail('Missing selector mode.');
-  if (source==='exercises' && ownerLessonId && ids.some(id=>registry.get(id)?.lessonId!==ownerLessonId)) fail('Exercise components must belong to their lesson.');
+  if (source==='exercises' && ownerLessonId && !(allowSharedIDs && mode==='ids') && ids.some(id=>registry.get(id)?.lessonId!==ownerLessonId)) fail('Exercise components must belong to their lesson.');
   return ids.map(id=>registry.get(id));
 }
 export function resolveComponent(content, lesson, block) {
   if (block.type==='explanation') return lesson.compositionVersion===2 ? block.text || '' : lesson.explanation;
-  return resolveSelector(content,block.source,block.selector,block.source==='exercises'?lesson.id:null);
+  return resolveSelector(content,block.source,block.selector,block.source==='exercises'?lesson.id:null,lesson.compositionVersion===2);
 }
 export function deriveLessonIndices(content, lesson) {
   const next=copy(lesson);
@@ -161,4 +161,13 @@ export function validateLessonComposition(content,lesson) {
   }
   const derived=deriveLessonIndices(content,lesson);
   if(!derived.exerciseIds.length||!same(derived.exerciseIds,lesson.exerciseIds)||!same(derived.checkExerciseIds,lesson.checkExerciseIds||[]))fail('Lesson exercise indices are empty or stale.');
+}
+
+// Canonical exercises may have explicit placements in several v2 lessons.
+export function exerciseInLesson(content, lessonId, exerciseId) {
+ const lesson=content.lessons.find(l=>l.id===lessonId),exercise=content.exercises.find(e=>e.id===exerciseId);
+ if(!lesson||!exercise)return false;
+ return lesson.compositionVersion===2
+  ? lesson.blocks.some(b=>b.type==='exercise-set'&&resolveComponent(content,lesson,b).some(e=>e.id===exerciseId))
+  : exercise.lessonId===lessonId&&lesson.exerciseIds.includes(exerciseId);
 }

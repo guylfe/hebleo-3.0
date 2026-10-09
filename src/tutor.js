@@ -8,7 +8,7 @@ export async function help(store, userId, input, { fetcher = fetch, key = proces
   const content = store.snapshot(input.revisionId); const lesson = content.lessons.find(l => l.id === input.lessonId);
   if (!lesson) throw new DomainError('Lesson not found.',404);
   const word = content.words.find(w => w.id === input.wordId && lesson.wordIds.includes(w.id));
-  const exercise = content.exercises.find(e => e.id === input.exerciseId && e.lessonId === lesson.id);
+  const exercise = content.exercises.find(e => e.id === input.exerciseId && lesson.exerciseIds.includes(e.id));
   const authored = [word?.notes, exercise?.feedbackDetails || exercise?.feedback, lesson.explanation].filter(Boolean).join('\n\n');
   if (!input.useAI) return { text: authored, source: content.provenance.kind === 'synthetic-demo' ? 'demo-authored' : 'authored', aiAvailable: Boolean(key && model) };
   if (!state.membership) throw new DomainError('AI support requires active membership.',403);
