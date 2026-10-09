@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102c44">
+  <title>Hebleo · Google connection setup</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/studio/studio.css">
+  <script type="module" src="/google-setup.js"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/">hebleo<span>.</span></a><span class="demo-pill">Local author setup</span><a href="/#studio">Return to Studio</a></header>
+  <main class="content">
+    <section class="card" data-google-setup aria-label="Google connection setup"><p>Loading safe application connection status…</p></section>
+    <section class="card" id="setup-guide">
+      <h2>Use an existing authorized client first</h2>
+      <p>Select an existing Google Desktop or Web OAuth client JSON on this computer. Choose Configure, then Connect. Credentials go only to this local application’s protected storage, never source content, exports, backups or chat.</p>
+      <p>Desktop clients support the loopback callback. A Web client must include the exact callback shown above. If no suitable client file or project configuration exists, create or configure a client with Sheets and Drive enabled; a new client is not automatically required.</p>
+      <p>Open the consent link yourself, consent as guylfe@gmail.com, return through the local callback and press Refresh. Connection verification is separate from canonical lesson, form, membership or recording approval.</p>
+      <ul>
+        <li><a href="https://developers.google.com/identity/protocols/oauth2/native-app" target="_blank" rel="noopener noreferrer">Official Desktop OAuth and loopback/PKCE guidance</a></li>
+        <li><a href="https://developers.google.com/identity/protocols/oauth2/web-server" target="_blank" rel="noopener noreferrer">Official Web client and exact redirect guidance</a></li>
+        <li><a href="https://developers.google.com/workspace/sheets/api/scopes" target="_blank" rel="noopener noreferrer">Readonly Sheets scopes</a></li>
+        <li><a href="https://developers.google.com/workspace/drive/api/guides/api-specific-auth" target="_blank" rel="noopener noreferrer">Drive metadata scopes</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
