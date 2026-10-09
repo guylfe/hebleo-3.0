@@ -124,7 +124,7 @@ export function validateContent(content) {
     if(l.compositionVersion!==2){text(l.chapter, 'chapter'); text(l.letters, 'known letters', 100);}
     try{validateLessonComposition(content,l);}catch(error){throw new DomainError(error.message);}
     if (!Number.isInteger(l.minutes) || l.minutes < 1 || l.minutes > 120) throw new DomainError('Invalid lesson duration.');
-    if (!Array.isArray(l.wordIds) || new Set(l.wordIds).size !== l.wordIds.length || l.wordIds.some(w => !words.has(w))) throw new DomainError('Lesson references a missing word: ' + l.id);
+    if (!Array.isArray(l.wordIds) || l.wordIds.some(w => !words.has(w))) throw new DomainError('Lesson references a missing word: ' + l.id);
     if (!Array.isArray(l.exerciseIds) || new Set(l.exerciseIds).size !== l.exerciseIds.length || l.exerciseIds.some(e => !exercises.has(e) || (l.compositionVersion!==2 && exercises.get(e).lessonId !== l.id))) throw new DomainError('Invalid lesson exercise reference: ' + l.id);
     if(l.compositionVersion===2){
       for(const b of l.blocks){
