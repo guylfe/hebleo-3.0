@@ -1,16 +1,76 @@
 import {copy,sha256,safeID,fail,equal} from './source-utils.js';
 import {validateMapping,rowFields} from './source-mapping.js';
 import {validateRegistration,validateCapture} from './google-source.js';
+import {validateSourceOwnership,validateSourceTargets,registrationForCapture} from './source-invariants.js';
 export const emptySourceState=()=>({version:1,sources:{},captures:{},bundles:{},revisions:{},draftBinding:null,authorBundle:null,operations:{}});
 const hashRE=/^[a-f0-9]{64}$/;
-function noSecrets(value){if(value&&typeof value==='object')for(const [key,v]of Object.entries(value)){if(['accessToken','refreshToken','approvalKey','clientSecret','clientJSON','access_token','refresh_token','client_secret','authorization','cookie'].includes(key))fail('SOURCE_BACKUP_SECRET','Credential fields cannot enter source state/export.');noSecrets(v);}}
-export function validateSourceState(state,revisionContents,draft){
- if(state==null)return null;noSecrets(state);if(state.version!==1||!state.sources||!state.captures||!state.bundles||!state.revisions||!state.operations)fail('SOURCE_BACKUP_INVALID','Malformed source state.');
+const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
+function noSecrets(value){
+ if(value&&typeof value==='object')for(const [key,child]of Object.entries(value)){
+  if(['accessToken','refreshToken','approvalKey','clientSecret','clientJSON','access_token','refresh_token','client_secret','authorization','cookie'].includes(key))fail('SOURCE_BACKUP_SECRET','Credential fields cannot enter source state/export.');
+  noSecrets(child);
+ }
+}
+export function validateSourceState(state,revisionContents,draft,activeContent){
+ if(state==null)return null;noSecrets(state);
+ if(state.version!==1||!['sources','captures','bundles','revisions','operations'].every(key=>object(state[key])))fail('SOURCE_BACKUP_INVALID','Malformed source state.');
  if(Object.keys(state.sources).length>10||Object.keys(state.captures).length>1000||Object.keys(state.bundles).length>1000)fail('SOURCE_BACKUP_INVALID','Source history exceeds the bounded local limit.');
- const checkSources=sources=>{for(const [id,s]of Object.entries(sources)){if(!Array.isArray(s.identity)||!s.mapping)fail('SOURCE_BACKUP_INVALID','Malformed mapping or identity history.');if(!safeID(id)||s.registration?.sourceId!==id)fail('SOURCE_BACKUP_INVALID','Broken source registration identity.');validateRegistration(s.registration);if(s.baseline){const capture=state.captures[s.baseline.captureSha256];if(!capture)fail('SOURCE_BACKUP_INVALID','Missing retained source capture.');validateCapture(capture,{...s.registration,extent:capture.extent,gridExtent:capture.gridExtent,headers:capture.headers,headerSha256:sha256(capture.headers)});if(sha256(s.baseline)!==s.baselineSha256)fail('SOURCE_BACKUP_INVALID','Baseline digest disagrees.');}if(s.identityCaptureSha256&&!state.captures[s.identityCaptureSha256])fail('SOURCE_BACKUP_INVALID','Missing capture backing confirmed identity locators.');if(s.baseline&&s.mapping.columns.some(c=>c.target!=='sourceForm')&&s.identity.some(e=>e.objectId&&!Object.hasOwn(s.baseline.remoteFields||{},e.entryId)))fail('SOURCE_BACKUP_INVALID','Missing remote baseline fields for a canonical source entry.');if(s.baseline)for(const [id,fields]of Object.entries(s.baseline.remoteFields||{})){const entry=s.identity.find(e=>e.entryId===id),capture=state.captures[s.baseline.captureSha256];try{if(!entry||!equal(fields,rowFields(capture,s.mapping,entry.rowIndex)))fail('SOURCE_BACKUP_INVALID','Remote baseline does not equal its retained mapped source cells.');}catch(e){if(e.code==='SOURCE_BACKUP_INVALID')throw e;fail('SOURCE_BACKUP_INVALID','Invalid retained field baseline.');}}if(s.identityCaptureSha256)for(const e of s.identity){const c=state.captures[s.identityCaptureSha256];if(!c.cells[e.rowIndex]||sha256(c.cells[e.rowIndex])!==e.rowSha256)fail('SOURCE_BACKUP_INVALID','Confirmed identity row hash disagrees with its frozen capture.');}if(!Array.isArray(s.identity)||new Set(s.identity.map(e=>e.entryId)).size!==s.identity.length||s.identity.some(e=>!safeID(e.entryId)||e.objectId!==undefined&&!safeID(e.objectId)||!Number.isInteger(e.rowIndex)||e.rowIndex<1||!hashRE.test(e.rowSha256)))fail('SOURCE_BACKUP_INVALID','Invalid stable identity history.');if(s.registryRevision!=='registry-'+sha256(s.registration)||s.mappingRevision!=='mapping-'+sha256(s.mapping)||s.identityRevision!=='identity-'+sha256(s.identity))fail('SOURCE_BACKUP_INVALID','Source configuration, mapping or identity digest disagrees.');if(s.baseline&&(!s.baseline.remoteFields||Object.keys(s.baseline.remoteFields).some(id=>!s.identity.some(e=>e.entryId===id&&e.objectId))))fail('SOURCE_BACKUP_INVALID','Baseline field ownership identity is unreachable.');}};
- checkSources(state.sources);for(const [hash,c]of Object.entries(state.captures))if(!hashRE.test(hash)||c.capturePayloadSha256!==hash)fail('SOURCE_BACKUP_INVALID','Invalid capture index.');
- for(const [hash,b]of Object.entries(state.bundles)){if(!hashRE.test(hash)||sha256(b)!==hash||b.version!==1||!hashRE.test(b.contentSha256)||!b.sources)fail('SOURCE_BACKUP_INVALID','Missing or tampered source bundle.');checkSources(b.sources);const content=[...revisionContents.values(),draft?.content].find(c=>c&&sha256(c)===b.contentSha256);if(content)for(const s of Object.values(b.sources)){validateMapping(s.mapping,s.registration,content);for(const e of s.identity)if(e.objectId&&!content.words.some(w=>w.id===e.objectId))fail('SOURCE_BACKUP_INVALID','Source object identity has no carried canonical word.');}}
- for(const [id,hash]of Object.entries(state.revisions)){const b=state.bundles[hash],content=revisionContents.get(Number(id));if(!b||!content||sha256(content)!==b.contentSha256)fail('SOURCE_BACKUP_INVALID','Source/content revision binding disagrees.');}
- if(state.draftBinding){const b=state.bundles[state.draftBinding.bundleSha256];if(!draft||!b||sha256(draft.content)!==b.contentSha256)fail('SOURCE_BACKUP_INVALID','Source/draft binding disagrees.');}
- if(state.authorBundle&&!state.bundles[state.authorBundle])fail('SOURCE_BACKUP_INVALID','Missing author-state bundle.');return copy(state);
+ // Validate every raw capture, including inert historical snapshots.
+ for(const [hash,capture]of Object.entries(state.captures)){
+  if(!hashRE.test(hash)||capture?.capturePayloadSha256!==hash)fail('SOURCE_BACKUP_INVALID','Invalid capture index.');
+  try{validateCapture(capture,{sourceId:'retained-capture',connectionSlot:'retained-readonly',expectedAccount:capture.account,spreadsheetId:capture.spreadsheetId,sheetId:capture.sheetId,extent:capture.extent,gridExtent:capture.gridExtent,headers:capture.headers,headerSha256:sha256(capture.headers)});}
+  catch(error){fail('SOURCE_BACKUP_INVALID','Invalid retained capture: '+error.message,{causeCode:error.code});}
+ }
+ const checkSources=sources=>{
+  if(!object(sources))fail('SOURCE_BACKUP_INVALID','Malformed source collection.');
+  for(const [id,source]of Object.entries(sources)){
+   if(!source||!safeID(id)||source.registration?.sourceId!==id||!Array.isArray(source.identity)||!source.mapping)fail('SOURCE_BACKUP_INVALID','Malformed source mapping or identity history.');
+   validateRegistration(source.registration);
+   const baselineCapture=state.captures[source.baseline?.captureSha256];
+   // A newer registration may retain its previously confirmed mapping schema.
+   const mappingRegistration=source.mapping.columns?.some(c=>c.header!==source.registration.headers[c.columnIndex])&&baselineCapture?registrationForCapture(source.registration,baselineCapture):source.registration;
+   validateMapping(source.mapping,mappingRegistration,null);
+   if(source.registryRevision!=='registry-'+sha256(source.registration)||source.mappingRevision!=='mapping-'+sha256(source.mapping)||source.identityRevision!=='identity-'+sha256(source.identity))fail('SOURCE_BACKUP_INVALID','Source configuration, mapping or identity digest disagrees.');
+   if(source.baseline){
+    if(!baselineCapture||!object(source.baseline.remoteFields)||sha256(source.baseline)!==source.baselineSha256)fail('SOURCE_BACKUP_INVALID','Missing retained capture or invalid baseline digest.');
+    validateCapture(baselineCapture,registrationForCapture(source.registration,baselineCapture));
+    if(source.mapping.columns.some(c=>c.target!=='sourceForm')&&source.identity.some(e=>e.objectId&&!Object.hasOwn(source.baseline.remoteFields,e.entryId)))fail('SOURCE_BACKUP_INVALID','Missing remote baseline fields for a canonical source entry.');
+    for(const [entryId,fields]of Object.entries(source.baseline.remoteFields)){
+     const entry=source.identity.find(e=>e.entryId===entryId&&e.objectId);
+     try{if(!entry||!equal(fields,rowFields(baselineCapture,source.mapping,entry.rowIndex)))fail('SOURCE_BACKUP_INVALID','Remote baseline does not equal its retained mapped source cells.');}
+     catch(error){if(error.code==='SOURCE_BACKUP_INVALID')throw error;fail('SOURCE_BACKUP_INVALID','Invalid retained field baseline.');}
+    }
+   }
+   if(source.identityCaptureSha256){
+    const capture=state.captures[source.identityCaptureSha256];if(!capture)fail('SOURCE_BACKUP_INVALID','Missing capture backing confirmed identity locators.');
+    for(const entry of source.identity)if(!capture.cells[entry.rowIndex]||sha256(capture.cells[entry.rowIndex])!==entry.rowSha256)fail('SOURCE_BACKUP_INVALID','Confirmed identity row hash disagrees with its frozen capture.');
+   }else if(source.identity.length)fail('SOURCE_BACKUP_INVALID','Confirmed identities have no retained capture.');
+  }
+  validateSourceOwnership(sources);
+ };
+ try{
+  checkSources(state.sources);
+  if(Object.keys(state.sources).length)validateSourceTargets(state.sources,draft?.content||activeContent,state.captures);
+  for(const [hash,bundle]of Object.entries(state.bundles)){
+   if(!hashRE.test(hash)||sha256(bundle)!==hash||bundle.version!==1||!hashRE.test(bundle.contentSha256)||!object(bundle.sources))fail('SOURCE_BACKUP_INVALID','Missing or tampered source bundle.');
+   checkSources(bundle.sources);
+   const content=[...revisionContents.values(),draft?.content].find(c=>c&&sha256(c)===bundle.contentSha256);
+   // Unreferenced superseded draft bundles are inert audit data. Current and
+   // reachable bundles additionally validate against their carried content.
+   if(content)validateSourceTargets(bundle.sources,content,state.captures);
+  }
+ }catch(error){
+  if(error.code?.startsWith('SOURCE_BACKUP'))throw error;
+  fail('SOURCE_BACKUP_INVALID','Invalid retained source relationship: '+error.message,{causeCode:error.code});
+ }
+ for(const [id,hash]of Object.entries(state.revisions)){
+  const bundle=state.bundles[hash],content=revisionContents.get(Number(id));
+  if(!bundle||!content||sha256(content)!==bundle.contentSha256)fail('SOURCE_BACKUP_INVALID','Source/content revision binding disagrees.');
+ }
+ if(state.draftBinding){
+  const bundle=state.bundles[state.draftBinding.bundleSha256];
+  if(!draft||!bundle||sha256(draft.content)!==bundle.contentSha256)fail('SOURCE_BACKUP_INVALID','Source/draft binding disagrees.');
+ }
+ if(state.authorBundle&&!state.bundles[state.authorBundle])fail('SOURCE_BACKUP_INVALID','Missing author-state bundle.');
+ return copy(state);
 }
