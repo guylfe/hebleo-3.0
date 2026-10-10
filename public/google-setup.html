@@ -13,16 +13,54 @@
   <header class="topbar"><a class="brand" href="/">hebleo<span>.</span></a><span class="demo-pill">Local author setup</span><a href="/#studio">Return to Studio</a></header>
   <main class="content">
     <section class="card" data-google-setup aria-label="Google connection setup"><p>Loading safe application connection status…</p></section>
-    <section class="card" id="setup-guide">
-      <h2>Use an existing authorized client first</h2>
-      <p>Select an existing Google Desktop or Web OAuth client JSON on this computer. Choose Configure, then Connect. Credentials go only to this local application’s protected storage, never source content, exports, backups or chat.</p>
-      <p>Desktop clients support the loopback callback. A Web client must include the exact callback shown above. If no suitable client file or project configuration exists, create or configure a client with Sheets and Drive enabled; a new client is not automatically required.</p>
-      <p>Open the consent link yourself, consent as guylfe@gmail.com, return through the local callback and press Refresh. Connection verification is separate from canonical lesson, form, membership or recording approval.</p>
+    <section class="card" id="setup-guide" aria-labelledby="setup-guide-heading">
+      <h2 id="setup-guide-heading" tabindex="-1">Setup instructions</h2>
+      <p><strong>The JSON file connects this app to Google. It is not a lesson, spreadsheet or other learning file.</strong> Google creates the OAuth client JSON; you do not need to write it yourself.</p>
+      <p>Use one Google connection for multiple spreadsheet sources. You do not need a separate client for each Sheet. Choose the route that fits what you already have.</p>
+
+      <h3>Route 1 · You already have an authorized client JSON</h3>
+      <p>Use an existing Google <strong>Desktop</strong> or <strong>Web</strong> OAuth client file that you are authorized to use. A new client is not automatically required. Continue with “Finish here” below.</p>
+      <p>For an existing <strong>Web</strong> client, add the exact address reported by this app to that client's authorized redirect URIs. Copy it exactly; the port belongs to this running app.</p>
+      <p>Current callback: <code data-guide-callback>Use “Exact runtime callback” above once status loads.</code></p>
+
+      <h3>Route 2 · You do not have a client JSON yet</h3>
+      <ol>
+        <li>Open <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer">Google Cloud Console</a> as <strong>guylfe@gmail.com</strong>. Select an existing project you can use, or create a project for this app.</li>
+        <li>In <strong>APIs &amp; Services → Library</strong>, find and enable both <strong>Google Sheets API</strong> and <strong>Google Drive API</strong> in that project.</li>
+        <li>Open <strong>Google Auth platform → Branding</strong>. If setup has not started, choose <strong>Get Started</strong>. Enter an app name such as “Hebleo local authoring”, a support email and your contact email.</li>
+        <li>Choose <strong>External</strong> as the audience. In <strong>Audience → Test users</strong>, add <strong>guylfe@gmail.com</strong> and save.</li>
+        <li>In <strong>Data Access → Add or Remove Scopes</strong>, select these permissions, then save:
+          <ul>
+            <li><code>https://www.googleapis.com/auth/spreadsheets.readonly</code> — read spreadsheets.</li>
+            <li><code>https://www.googleapis.com/auth/drive.metadata.readonly</code> — read file metadata.</li>
+            <li><code>openid</code> and <code>email</code> — identify your Google account.</li>
+          </ul>
+        </li>
+        <li>Open <strong>Clients → Create Client</strong>. Select <strong>Desktop app</strong>, give the client a name and create it.</li>
+        <li>Download the client's <strong>JSON</strong> file to this computer. Select that downloaded file in this page's file chooser; do not paste it into chat.</li>
+      </ol>
+
+      <h3>Finish here · Connect this app</h3>
+      <ol>
+        <li>Use <strong>Choose OAuth client JSON</strong> above to select the existing or downloaded file.</li>
+        <li>Press <strong>Configure selected file securely</strong>. This configures the app; it has not connected your Google account yet.</li>
+        <li>Press <strong>Connect Google</strong>, then use the displayed <strong>Open Google consent yourself</strong> link.</li>
+        <li>Sign in as <strong>guylfe@gmail.com</strong> and grant the requested read-only and identity permissions. Google returns you to this app's callback.</li>
+        <li>Return to this setup page and press <strong>Refresh connection status manually</strong>. Check that the account is verified and the source session is authorized.</li>
+      </ol>
+      <p>Your client file and connection tokens go only to this local app's protected storage. They are excluded from learning content, exports and backups.</p>
+
+      <h3>Then add the learning sources in Studio</h3>
+      <p>Return to <a href="/#studio">Studio</a> to add sources, one registration per spreadsheet tab, using the same Google connection. The team prepares spreadsheet IDs, headers, grid ranges and mappings; you do not need to build source JSON. Connecting Google does not import arbitrary documents or media, or approve teaching content.</p>
+    </section>
+    <section class="card" aria-labelledby="google-official-links">
+      <h2 id="google-official-links">Official Google documentation</h2>
+      <p>These external links open Google's instructions in a separate tab. The setup instructions above are specific to this app; you do not need to install or run Google's sample code.</p>
       <ul>
-        <li><a href="https://developers.google.com/identity/protocols/oauth2/native-app" target="_blank" rel="noopener noreferrer">Official Desktop OAuth and loopback/PKCE guidance</a></li>
-        <li><a href="https://developers.google.com/identity/protocols/oauth2/web-server" target="_blank" rel="noopener noreferrer">Official Web client and exact redirect guidance</a></li>
-        <li><a href="https://developers.google.com/workspace/sheets/api/scopes" target="_blank" rel="noopener noreferrer">Readonly Sheets scopes</a></li>
-        <li><a href="https://developers.google.com/workspace/drive/api/guides/api-specific-auth" target="_blank" rel="noopener noreferrer">Drive metadata scopes</a></li>
+        <li><a href="https://developers.google.com/workspace/sheets/api/quickstart/nodejs" target="_blank" rel="noopener noreferrer">Google Sheets: enable the API and create a Desktop client</a></li>
+        <li><a href="https://developers.google.com/workspace/drive/api/quickstart/nodejs" target="_blank" rel="noopener noreferrer">Google Drive: enable the API and use read-only metadata access</a></li>
+        <li><a href="https://developers.google.com/workspace/guides/configure-oauth-consent" target="_blank" rel="noopener noreferrer">Google Auth platform: Branding, External audience, test users and scopes</a></li>
+        <li><a href="https://developers.google.com/identity/protocols/oauth2/native-app" target="_blank" rel="noopener noreferrer">Desktop OAuth: local callback and consent flow</a></li>
       </ul>
     </section>
   </main>
