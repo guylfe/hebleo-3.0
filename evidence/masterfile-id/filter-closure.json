@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-10-12T13:51:04.391Z",
+  "method": "Read-only Composio GOOGLESHEETS_GET_SPREADSHEET_INFO; local validateIdentitySortRanges applied to live metadata",
+  "metadata": {
+    "display_url": "https://docs.google.com/spreadsheets/d/1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc/edit",
+    "sheets": [
+      {
+        "basicFilter": {
+          "range": {
+            "endColumnIndex": 31,
+            "endRowIndex": 1059,
+            "sheetId": 1022865870,
+            "startColumnIndex": 0,
+            "startRowIndex": 0
+          }
+        },
+        "properties": {
+          "gridProperties": {
+            "columnCount": 31,
+            "columnGroupControlAfter": true,
+            "rowCount": 1059,
+            "rowGroupControlAfter": true
+          },
+          "sheetId": 1022865870,
+          "title": "Masterfile"
+        }
+      },
+      {
+        "properties": {
+          "gridProperties": {
+            "columnCount": 26,
+            "rowCount": 1000
+          },
+          "sheetId": 1304557482,
+          "title": "Missing Vocab"
+        }
+      }
+    ],
+    "spreadsheetId": "1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc"
+  },
+  "result": "Masterfile filter includes AE: A1:AE1059. The filter coverage blocker is resolved.",
+  "limits": "Only current filter/grid metadata checked here. Curriculum reports no sorting and zero before/after cell changes; the original full snapshot was not retained, so those cell/association claims are not repeated independent evidence. Backend activation and live source import remain pending."
+}
