@@ -36,8 +36,8 @@ export function formatValue(value,field='') {
 }
 export function richFields(w) { const fields=wordFields(w);return fields.length?'<dl class="word-details">'+fields.map(([k,v])=>'<dt>'+esc(fieldLabel(k))+'</dt><dd'+cellAttribute(w,k)+'>'+(typeof v==='string'?fieldText(w,k,v):formatValue(v,k))+'</dd>').join('')+'</dl>':'<p>No additional source fields for this demo entry.</p>'; }
 // before/after carry the learner-only bookmark and review controls; rehearsal passes none.
-export function wordCard(w,{notes=true,before='',after=''}={}) {
-  return '<article class="word-card">'+before+'<button class="hebrew-word" data-action="lookup" data-value="'+w.id+'" aria-label="Open full entry for '+esc(w.english)+'">'+wordText(w)+'</button><div class="meaning">'+fieldText(w,'english',w.english)+'</div>'+audioControls(w.audio,w.english)+(notes&&w.notes?'<p class="note"'+cellAttribute(w,'notes')+'>'+fieldText(w,'notes',w.notes)+'</p>':'')+'<details><summary>Full vocabulary entry</summary>'+richFields(w)+'</details>'+after+'</article>';
+export function wordCard(w,{notes=true,before='',after='',privateNote=''}={}) {
+  return '<article class="word-card">'+before+'<button class="hebrew-word" data-action="lookup" data-value="'+w.id+'" aria-label="Open full entry for '+esc(w.english)+'">'+wordText(w)+'</button><div class="meaning">'+fieldText(w,'english',w.english)+'</div>'+audioControls(w.audio,w.english)+(notes&&w.notes?'<p class="note"'+cellAttribute(w,'notes')+'>'+fieldText(w,'notes',w.notes)+'</p>':'')+'<details><summary>Full vocabulary entry</summary>'+richFields(w)+privateNote+'</details>'+after+'</article>';
 }
 export function vocabularyTable(words) {
   const extras=[...new Set(words.flatMap(w=>wordFields(w).map(([k])=>k)))];
