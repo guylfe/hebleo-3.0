@@ -279,3 +279,128 @@ QA independently passes the corrected practice/save/reload/restore, learner-word
 Lead subsequently tightened only the Start/Continue test wait to require the rendered lesson before navigating and the settled Continue label afterward. Actual owner `node --test test/app.test.js` passes 30/30; the installed npm CLI `run verify` passes 246/246. No application, contract, dependency or runtime source changed from b3445bd. This test-reliability correction has owner verification; independent Chief review of the overlay remains pending. Original QA failure is not erased. Evidence: docs/evidence/feedback18-independent-closure.
 
 Chief acceptance and the backed-up revised-demo update remain pending. Demo4173/main/protected runtimes and user data are untouched. FB07 native pointer drag remains unverified; B24 and existing low status/focus/toast findings remain open; mobile/touch/APK Deferred; Guy cells remain Retest pending. No canonical curriculum, live import, production or launch acceptance.
+
+
+## Runtime source-authoring checkpoint — 2026-10-09
+
+APPLICATION9695505820bba78aeebb798a67deb7672d836acf, private branch lead/sheets-authoring, baseaf902. U11 now has installed application readonly Sheets/Drive capture, app OAuth/PKCE/DPAPI secure setup, numeric source/full-range registration, retained exact rich captures, closed field ownership/mapping and independent Lesson+Part membership sets, stable identity confirmation, three-way conflict review, manual refresh/no_op, atomic CAS Stage, separate signed owner approval/Publish, and historical source rollback/backup/restore. This is actual source/API/DOM implementation; application live Google acquisition is still BLOCKED because no local OAuth client/authorization exists. No bot connector or cached packet is treated as live integration.
+
+Owner fresh exact-SHA:382/382 application,20/20schema,9/9HTTP, zero skips. Synthetic source coordinator/HTTP/adversarial34, UI DOM25 and Google/auth10 are included, not additive. S01/S02/S03/S04/S05/S06/S07/S09/D02/D03/D04/D05/D06/P07 and prior NEW7/FB8/FB10/FB16 regressions remain covered. Exact all28-case dispositions and limits: task workspace sheets-runtime-20261009/ACCEPTANCE_RESULTS.md plus HANDOFF/MANIFEST/SOURCE_CHECKPOINT. Independent QA/Release for9695505 PENDING; previous af902 closures preserved. User Pass/Fail/Blocked acceptance remains unchanged.
+
+U01/U03/U04 real representative content remains UNAPPROVED: exact lesson, 1.3/1.3.5/four1.4 membership, Note17/spelling, native audio/no-audio and full/unpointed/curated forms require human decisions. Raw author-state-only Stage/private Preview permitted; canonical publication requires verified designated-owner approval bound to content/source bundle, valid media and fresh source checks. No invented content/forms/answers/audio/semantics. Typing and cloze remain separate. No source writeback/polling/ID columns or unreviewed aesthetics.
+
+Store marker6 rejects older schema5 executables; backups2/3/4/5 supported as documented. Source captures/maps/baselines/identities/bundles/revision bindings and old learner grades round-trip without network; credentials/signing key never exported. Tampered hashes, remote-field baselines or row locators reject before writes. Connections/reviews clear and rebind separately after restore; restored operation receipts require new action IDs. Media references travel but bytes recovery is NOT implemented/verified. No atomic external-latest claim: Publish records exact checked snapshot/time.
+
+Native caret/Pin/drag/rendered375/390/touch PAUSED; no handback. Real repeated unchanged captures, real source edits/membership and Guy acceptance NOT RUN. Separate demo63351/PID90480 uses only synthetic data; protected4173/4174/63248/63249/63250 preserved. No source/production migration, live Sheet/WordPress write, protected progress reset or docs push.
+
+
+## Source integrity correction checkpoint — 2026-10-09
+
+U11/S01/S02/S03/S04/S05/S06/S07/S09/D02/D03/D04/D05/D06/P07: independent QA/Release at9695505 found QA-SRC-01/02 and RR-SRC-01..05 (CHANGES REQUIRED). Owner corrected all seven atAPPLICATIONbafdb8047059ef1894858d4b8f345c2ca7c0e427. Old executable reproduced13pass/10fail across23 retained probes; corrected owner reruns23/23. Fresh exact-SHA397 application/20 schema/9 HTTP pass, no skips;14 new source and1 UI cases are included. Fresh named independent rechecks PENDING; no user acceptance changed.
+
+Stage binds original reviewed pins and full source set, validates all prospective source/content/capture/ownership relationships before writes. Publish/approval/eligibility bind current full sources to staged bundle before/after freshness. Config changes get server-owned nonce, while identical registration remains zero-write; A->B->A cannot revive old approval. Entry uniqueness includes ignored rows; missing ignored rows can be explicitly detached through UI. Source membership scopes actual lesson/component pairs; global canonical field/word-format and component ownership prevents competing sources and supports explicit release/transfer. Restore validates current draft/active targets, carried history and all raw header cells, preserving legitimate pending newer schema registration. Normative reader/additive rules are in docs/SOURCE_AUTHORING_RUNTIME.md; original packet untouched.
+
+Store6/source bundle1; no production migration or docs push. All28 acceptance dispositions retained with live OAuth/acquisition, canonical representative content/forms/audio/membership, native/Guy and media-byte recovery limits. Existing63351/PID90480 and4173/4174/63248/63249/63250 preserved; new63352/PID107184 is separate synthetic corrected demo with HTTP asset proof. No source writeback/polling/ID columns, curriculum invention, typing/cloze grouping, unreviewed aesthetics or protected progress reset. Code-only private checkpoint and local docs overlay remain distinct.
+
+
+## Pending-source-header local Save — 2026-10-09
+
+U11/S01/S05/D03/D05: actual independent QA closes QA-SRC-01/02 and Release closes RR-SRC-01..05 atbafdb80. Remaining RR-SRC-06(P2) rejected unrelated local Save after valid changed-header registration, before/after restore. Owner fixes atAPPLICATION31406477afc30f94348727ac1b83bf63e3fca178 share retained-capture anchor/target ownership validation through bundle() and perform the source hook before the draft write in one transaction. No implicit remapping/acquisition/baseline replacement. Three actual HTTP/Store regressions preserve siblings, current headers, old source/raw baseline, existing grades and CAS; malformed identity rejects with total_changes unchanged.
+
+Owner fresh400 application/20schema/9HTTP zero skips,3 tests included; retained RR06 reproduction oldFAIL/newPASS. Current independent rechecks PENDING; earlier actual closure receipts/hashes are in source-save-handoff-20261009/PREVIOUS_INDEPENDENT_REVIEW. All previous ledger bytes and user acceptance cells retained. Store6 readers unchanged; unsafe older binaries unsupported, source/legacy backups tested. New63353/PID58304 separate synthetic corrected demo; all prior protected services/data preserved. Live OAuth/Google source capture, representative approval, native and media-byte recovery remain blocked/unverified. No public release, production migration, source write, reset or docs push.
+
+
+## Final independent source backend gates — 2026-10-09
+
+APPLICATION31406477afc30f94348727ac1b83bf63e3fca178: actual QA targeted boundedPASS and Release synthetic backendPASS. QA-SRC-01/02 and RR-SRC-01..06 independentlyCLOSED; no new defects found. Both fresh400app/20schema/9HTTP pass, zero skips. QA additional13retained/7focused/4targeted/2backups; Release48independent cases (overlap, not additive acceptance totals). Lead inspected full reports/commands, actual old409/new200 before/after restore and fault-trigger rollback evidence, and matched sealed hashes. Exact request IDs/copies are in source-save-handoff-20261009/INDEPENDENT_REVIEW.json.
+
+AC27 backend gate passed; all28-case ledger retains live app Google OAuth/acquisition/idempotency, representative lesson/forms/audio/membership approval, native caret/Pin/drag/rendered375/390/touch, media-byte recovery and Guy/Chief acceptance limits. No human-result cells changed. Code frozen/private push verified; local ledger/evidence overlay only, no docs push. Demo63353/PID58304 current; all prior eight-service roles are distinct and preserved. Source/data/typing/cloze/NEW7/FB8/optional/integrity behavior preserved. Backend candidate and synthetic recovery handoff ready for Chief private acceptance; public/production/live-source acceptance NOT claimed.
+
+
+## Concrete OAuth and local byte recovery — 2026-10-10
+
+Application 4a5950b9615971ad82124334f0d8302793861621, private branch lead/source-recovery, adds the integrated Google setup route and immutable SQLite media library/recovery. Setup reports the exact runtime callback, designated account and readonly scopes. Existing authorized Desktop/Web client files are supported; a new Console client is conditional. The designated app client is currently unconfigured, so live application Google acquisition remains pending. Credentials are excluded from source/Git/backups; connector credentials were not reused.
+
+D02/D03/D04/S03/S04/U03/U11: local bytes, immutable revision IDs, legacy aliases and all published/current/staged references travel with the existing source baseline/draft/history/learner recovery. Missing/replaced/corrupt assets fail or warn without discarding retained data. Store reader 7 and mediaRecovery 1 reject incompatible older readers; actual prior reader 6 database/backup rejection was verified. Genuine source/media-absent legacy imports remain explicitly unbound. Remote URLs remain reference-only. Limits: 20 MB per asset, 50 MB retained recovery.
+
+Two actual source PDFs matched the historical supplied SHA256 values and passed HTTP byte serving plus offline export/restore. They remain pending verified-source assets; no canonical lesson, missing forms, answers, membership or audio were approved or invented. Owner exact-SHA results: 437 application, 20 schema and 9 HTTP pass, zero skips. The 12 media/auth, 21 UI/HTTP and four integration cases are included. Final focused named QA/Release review of this revision is pending; previous 3140647 closures remain historical evidence.
+
+All 28 acceptance cases and the precise human OAuth/content steps are recorded in source-recovery-handoff-20261010. New review runtime 63354/PID103092 has a separate database. The eight previous protected services, authored state/settings/progress and native-control pause are preserved. No source writes, production migration, public release, reset, docs push, unreviewed modernization or typing/cloze grouping. User acceptance cells are unchanged.
+
+
+## Media integrity corrections — 2026-10-10
+
+The independent gate at 4a5950b9615971ad82124334f0d8302793861621 is CHANGES REQUIRED: QA-REC-01/02 and RR-MED-01..04 identify overlapping cross-kind recovery plus alias approval, 20 MB decode, malformed URL and restored receipt defects. Application 06927387ff0aaaf53a9274f1ebd71fad661c8c62 corrects these in src/media-store.js, with ten new installed HTTP/Store regressions in test/media-integrity.test.js. An asset keeps its kind; approval follows resolved byte hashes; managed URL/history/receipt dependencies validate before writes; the Base64 decoder is stack-safe through the documented inclusive limit. Valid old bytes, exact synthetic source permits, receipt key-order/extensions and legacy aliases remain. Store7/mediaRecovery1 format is unchanged.
+
+Owner full 447 application, 20 schema and 9 HTTP pass, zero skips. Full app/schema logs are from the working tree immediately frozen into this SHA; frozen targeted 10 regressions, 17 retained reviewer cases and 9 HTTP pass. Counts overlap. Original retained probes reproduced 10 pass/7 fail; corrected probes pass 17/17. Current named independent closure is PENDING, and prior reports are retained unchanged. No Guy acceptance cell changed.
+
+D02/D03/D04/S03/S04/U03/U11 current evidence and all 28 limits are in recovery-corrections-handoff-20261010. Actual two-PDF source bytes remain pending content approval; remote references remain reference-only, Google app client/consent/acquisition and native/Guy acceptance are pending. New review runtime uses separate data at 63355; all nine previous services/data remain preserved. No source writes, public release, production migration, progress reset, docs push, new aesthetics, content invention or typing/cloze grouping.
+
+
+## Complete alias export validation — 2026-10-10
+
+Independent QA at 06927387ff0aaaf53a9274f1ebd71fad661c8c62 closes QA-REC-01/02; Release closes RR-MED-01..04 and keeps source SCR/SRC checks passing. RR-MED-05(P2) remains: successful export could carry an unused wrong-type/reserved alias that restore rejects. Application b135001dc3a81b30fe0f6c062b2c2a5ae5e3683b uses one complete alias validator for export/status/restore without rewriting retained aliases, bytes or history. Two new installed HTTP/Store cases cover invalid paths, MIME, missing targets, no writes, and exact recovery of valid unused/historical aliases with drafts/grades.
+
+Owner focused media/source45, schema20 and HTTP9 pass; exact frozen two new/six retained/nine HTTP cases pass, zero skips. Original retained H05/H06 both fail on069; new code passes all six including four connected positive probes. Prior independent broad447/20/9 are historical evidence, not a current broad rerun. Current named targeted QA/Release closure PENDING. All prior ledger bytes and Guy acceptance cells retained.
+
+D02/D03/D04/S03/S04/U03/U11/all28 dispositions and actual prior reviewer reports/hash proof are in alias-export-handoff-20261010. Store7/media1 unchanged; older unqualified binaries unsupported. New separate review63356 preserves all ten prior services/state. Actual two-PDF bytes remain unapproved; Google app client/consent/live reads, representative content/membership/forms/audio and native/Guy steps remain pending. No source write, release, production migration, reset, docs push, content invention, new aesthetics or typing/cloze grouping.
+
+
+## Retained alias identity under missing bytes — 2026-10-10
+
+Actual QA at b135001 passes its targeted paths; Release closes H05/H06 but retains residual RR-MED-05(P2): a damaged missing blob could let exported/restored aliases acquire replacement filesystem bytes. Both reports were read; all35 QA/84 Release manifest files match. Current application b6fd05ab1de1d37f49747e6698a7d2986efc04d0 validates retained alias rows against stored blobs before external planning and refuses missing known pins with MEDIA_MISSING rather than fallback. No alias, byte or history repair/discard/relabel occurs. Genuinely new paths and intact aliases remain supported.
+
+Owner connected media/source47, schema20 and HTTP9 pass, zero skips. Frozen four alias cases/nine unchanged peer probes/nine HTTP pass; counts overlap. Original J01 reproduces (8pass/1fail), corrected9/9. Two new tests assert zero external reads before validation, typed export/status/serving failure, unchanged every table/total_changes and original alias identity, plus new-path/intact-replacement/recovery controls. Current named QA/Release closure PENDING; no current broad449/451 claim or Guy verdict. Prior closed media/source findings remain historical verified evidence.
+
+D02/D03/D04/S03/S04/U03/U11/all28 evidence are in alias-pin-handoff-20261010. Store7/media1/source bundle/capture1 unchanged; older unqualified binaries unsupported. New review63357/PID81072 has separate fictional course/learner data and actual pending PDFs; all eleven prior services are preserved. Google app client/consent/live acquisition, canonical lesson/forms/audio/membership and native/Guy acceptance remain pending. No source write, reset, public release, production migration, docs push, new UX/grouping, teaching or approval invention. User acceptance cells unchanged.
+
+
+Current b6fd05a independent dispatch is BLOCKED: both named coordinate_bots rework calls returned "Room handoff budget exhausted"; neither queued. Exact failures in alias-pin-handoff-20261010/REVIEW_DISPATCH.json; tool supplied no reset time. Owner47/20/9 and frozen4/9/9 are evidence only, not current independent closure. No user-result cell changed.
+
+
+## Google setup instructions only — 2026-10-10
+
+User reports unclear instructions and inert-looking setup/documentation jump. Original #setup-guide target exists; no native defect reproduction claimed. Setup asset commit77f5cd91edbf71321b80bb740e117844407134eb adds visible two-route instructions, an explicit reveal/focus button and separate direct official links. Callback comes from the runtime DTO; client JSON is connection settings, one authorization supports multiple source tabs, and technical source mappings remain team preparation. No arbitrary file-import or extra-client-per-Sheet promise.
+
+Only public/google-setup.html/js were refreshed on63357/PID81072 without restart. Served hashes match the bounded revision; DB/WAL hashes and safe auth/source state remain unchanged (unconfigured/disconnected, zero sources). Frozen b6fd05a backend/schema/tests remain identical. Existing focused setup10/10 plus necessary DOM inspection pass; no new committed tests, broad/publish/recovery suite or teammate dispatch. Native click QA paused, no browser-control workaround. Further publishing/release checks deferred per user; source acquisition remains read-only and awaiting app client/consent. Setup handoff contains exact assets, patch, hashes and limits. User acceptance cells unchanged.
+
+
+## Guy Oct12 retest and bounded usability correction
+
+Human feedback received through Chief request4099d232-6e0b-43df-aaf0-5cca7b3e9606: latest guide1–6 work well WITH the eight exceptions below;7 onward NOT TESTED because Studio UX blocked inspection, except9 tested with comments feedback. Exact guide numbering is retained, not inferred to mean all older feature cells passed. Last hands-on build SHA beyond the supplied63357 target is not independently recorded here. Original user-result cells are unchanged.
+
+UI application74fb359ad9589347a3cc4df709c8c33ee25184d7 (private lead/oct12-usability); backendsrc/schema/package remain frozenb6fd05a, setup77f5cd9 retained. Six served static assets refreshed only at63357/PID81072. Actual DB/WAL hashes and safe Google configuration/connection/account/source-count metadata unchanged; all twelve listener PIDs preserved. No reset/restart, Sheet/source registration or edits, Stage/canonical approval/Publish, production, generated teaching/audio or browser workaround.
+
+| ID / existing features | Guy report Oct12 | Delivered correction | Guy outcome |
+|---|---|---|---|
+| UX12-01 / L08, NEW7-01 | Excess empty space; outline should be left/collapsible; desktop content needs width | Full-width lesson/library/Studio surface; left outline collapses without retaining an empty column; collapse survives portion changes | Correction retest pending; prior exception retained |
+| UX12-02 / L07, B12/13 | How do I enter practice mode? | Practice lesson questions beside Your path/Course lessons invokes existing missed-item practice; finish Practice more/Next/Skip retained; distinction from Review/Preview documented | Discoverability retest pending |
+| UX12-03 / H02, D01 | Where does Your note appear on vocabulary? | Private-note summary and Add/Edit action on Cards/Table; existing full-entry textarea/Save note and privacy/persistence retained | Discoverability/privacy retest pending |
+| UX12-04 / L04, P06, FB02 | Examples/table oddly spaced | Natural wrapping/normal display whitespace; full fields/native rich styles/source strings retained | Visual retest pending |
+| UX12-05 / M01, P02, S02 | Playback speed on every audio page | Shared Normal/Slower control, existing persistent preference, active/native player speed preserves position/state; Preview choice temporary | Real/native playback retest pending; unlinked media remains unavailable |
+| UX12-06 / P05, FB06/08/14/17 | Studio overwhelming; no pagination/headings/task menu; cannot inspect changes | Six task panes, one lesson context, explicit whole-workspace draft Save; mounted forms survive switches; comments/history/reports20 plus existing source/vocabulary/media paging | Old later tests remain Not tested/UX-blocked; correction retest pending |
+| UX12-07 / X03, P11 | Comments barely visible; Author cannot find approval/rejection/reply | Expanded beneath-lesson discussion/composer; Comments & replies task, statuses, Approve/keep, Reject/hide, visible reply form; privacy and soft removal unchanged | Prior step9 comments exception retained; correction retest pending; immediate-visibility vs preapproval expectation flagged |
+| UX12-08 / U11, S09 | Does Masterfile load without input? Need unique IDs? | Visible workflow/identity explanation; no automatic load; row position not identity; current A–AD adapter does not read proposed AE ID column | Clarification delivered; ID-aware importer/registration/mapping remains separate, not implemented here |
+
+Validation: ten focused checks passed, no skips, covering new DOM/installed HTTP flows, fake active audio state, native-element rate assignment and CSS rule behavior plus retained shared-ID/sibling/CAS tests. After the final small CSS/context-label adjustments, affected audio/layout4 and task-state1 passed (overlapping counts). Syntax/diff checks passed. No unchanged broad or publishing/recovery suite. These are source/DOM/HTTP checks, not native click/pixel/playback/Guy acceptance. Earlier failed development logs are preserved. See OCT12_RETEST.md and oct12-usability-handoff/SERVED_VERIFICATION.json for exact paths/actions/hashes.
+
+
+## Guy Oct12 23:33 follow-up — navigation and word-note clarity
+
+User acceptance: Studio NAVIGATION improved only; appearance/geometry/comments unresolved; word-note visibility defect reported; audio DEFERRED until Guy explicitly reopens it. Earlier guide1–6 results/exceptions and untested Studio statuses remain unchanged. No inferred full acceptance.
+
+Candidate82d4f4c34d7895e2a9d750b3aac00a3586f97da1, private lead/oct12-navigation; backendb6fd05a/setup77f5cd9 frozen. Three UI files and two focused test files changed. UX Owner's specification receipt54be2a97 was used; that receipt was consultation with admitted tool-read limits, not finished-artifact review. Finished-artifact UX review PENDING. Native/browser/pixel acceptance unavailable under the binding pause.
+
+| Stable mapping | Actual correction / limit | Guy status |
+|---|---|---|
+| UX2333-01 / UX12-01, L08 | Three sibling navigation/content regions; independent main/course rails, reclaimed tracks, narrow drawer/overlay, focus return; discussion does not control lesson geometry | Unresolved report preserved; new revision retest pending |
+| UX2333-02 / UX12-07, X03 | Stacked fluid96px comment/88px reply; reply collapsed; dirty text, pending/error and existing moderation/privacy retained | Unresolved composer report preserved; retest pending |
+| UX2333-03 / UX12-03, H02/D01 | Save note private word/profile storage survives HTTP/SQLite reopen and displays on matching Card/Table/full entry. Prior full-entry readable summary absent; added. Existing public word control posts word-linked LESSON discussion, not a standalone vocabulary feed. Destination, word context and route made explicit; no conversion of private notes | Reported note defect not overwritten by synthetic result; retest pending; no storage fault reproduced |
+| UX2333-04 / UX12-06, P05/FB17 | Existing six Studio tasks/unsaved editors retained; restrained title/tab/workspace styling and practical draft/Preview/inspection guide | Navigation improved per Guy; appearance still awaits Guy |
+| UX2333-05 / UX12-05, M01/P02 | Audio DEFERRED. No audio work, retest or pass claim in this revision | DEFERRED |
+
+Focused validation: six new/affected source/DOM/installed HTTP cases cover sibling tracks, narrow overlays/focus, compact/closed replies and dirty fields, private note word/profile/Preview separation, public word-control destination, pending/error retention, and SQLite reopen. Passed with no skips after retained development failures; counts are owner evidence, not pixel/native/Guy acceptance. No broad, audio, publishing or recovery suites or QA/Release dispatches.
+
+ShapeUI entry/bundled shape/craft and context were read/run; source brief and incumbent constraints supplied the already-authorized refinement direction. One changed-target mechanical detector ran. It flagged incumbent font/active-marker/blockquote styles and an existing reply accent; reply accent reduced, incumbent human-requested styles retained. Full premium/native certification is not claimed; scoped state/privacy/layout guidance applied. DESIGN.md records ModelB token ownership.
+
+Separate importer work3479743/b9664f0 preserves permanentAE IDs and filterA1:AE1059, but its own handoff says backend activation/live import pending. That checkout and source modules are untouched; no registration, source acquisition, Stage, Publish, Sheet edit, teaching approval, new media or reset. NAV2333_RETEST.md supersedes active audio instructions with DEFERRED.

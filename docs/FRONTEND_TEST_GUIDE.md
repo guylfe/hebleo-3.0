@@ -1,3 +1,5 @@
+Current override: audio testing is **DEFERRED** until Guy explicitly reopens it. This older guide is historical; use NAV2333_RETEST.md for the current bounded revision.
+
 # Hebleo frontend test guide
 
 Local demo updated to reviewed commit `f47d2d288956782b1d6631c40a19c1c9585a141c` (executable identical to `d42e1cf`). Updated 2026-10-07T16:02:07.802Z. Remaining QA disposition: Leo reviewed the actual request-799 independent artifacts: Import B details, Stage POST 200 and native reload PASS; Import A and prior bounded G4/G5/Release closures retained. Exact 375/390 CSS-pixel layout and physical/mobile touch remain UNVERIFIED and Deferred until the future APK under Guy's instruction; no longer a local-demo gate. Low Retry/status/focus/toast and B24 remain open. Actual-browser autosave/global-event paths remain unobserved despite separate independent 23-check automated coverage. Guy acceptance remains Pending..
