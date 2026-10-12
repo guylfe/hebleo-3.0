@@ -2,16 +2,20 @@ import {randomUUID} from 'node:crypto';
 import {copy,sha256,equal,safeID,fail} from './source-utils.js';
 import {validateFormatting,vocabularyMappingTargets} from '../public/vocabulary-import.js';
 import {deriveLessonIndices,projectLesson} from '../public/course.js';
+import {validateIdentitySortRanges} from './google-source.js';
 const stringFields=new Set(['pointed','unpointed','curated','english','notes','root','pattern','gender','plural','feminine','pluralFeminine','infinitive','partOfSpeech','audio','introducedLesson','part']);
 const boolFields=new Set(['bold','noVocab','noCard']);
 const jsonFields=new Set(['tags','fieldFormatting','sourceTheme']);
-const targets=new Set([...vocabularyMappingTargets.filter(x=>!['id','fieldStyle'].includes(x)),'sourceForm']);
+const targets=new Set([...vocabularyMappingTargets.filter(x=>x!=='fieldStyle'),'sourceForm']);
 export const emptyMapping=()=>({version:1,columns:[],membership:{sets:[]}});
 export const cellText=cell=>cell?.formattedValue??cell?.userEnteredValue?.stringValue??(cell?.effectiveValue?.stringValue??'');
 const issue=(code,message,pointer)=>({code,message,...(pointer?{pointer}:{}),nextAction:'Review the exact source mapping or author decision; inputs are retained.'});
 export function validateMapping(mapping,registration,content){
  if(mapping?.version!==1||!Array.isArray(mapping.columns)||mapping.columns.length>registration.headers.length||!mapping.membership||!Array.isArray(mapping.membership.sets))fail('MAPPING_INVALID','Explicit version-1 field and membership mapping required.');
  const used=new Set(),cols=new Set();for(const c of mapping.columns){if(!Number.isInteger(c.columnIndex)||c.columnIndex<0||c.columnIndex>=registration.headers.length||c.header!==registration.headers[c.columnIndex]||!targets.has(c.target)||used.has(c.target)||cols.has(c.columnIndex)||!['source','studio'].includes(c.owner)||typeof c.allowBlank!=='boolean')fail('MAPPING_INVALID','Invalid index, exact header, target, ownership, blank policy or duplicate mapping.');used.add(c.target);cols.add(c.columnIndex);}
+ const identityColumn=mapping.columns.find(c=>c.target==='id');
+ if(identityColumn&&(identityColumn.owner!=='source'||identityColumn.allowBlank))fail('MAPPING_INVALID','The immutable ID column must be source-owned and cannot permit blanks.');
+ if(registration.headers.includes('ID')&&mapping.columns.some(c=>!['id','sourceForm'].includes(c.target))&&identityColumn?.columnIndex!==registration.headers.indexOf('ID'))fail('MAPPING_INVALID','Map the exact ID header before canonical import; it cannot be silently ignored.');
  const m=mapping.membership,sets=new Set(),relations=new Set(),components=new Set();
  if(m.sets.length){if(!safeID(m.courseVersionId)||![m.lessonColumnIndex,m.partColumnIndex].every(i=>Number.isInteger(i)&&i>=0&&i<registration.headers.length))fail('MEMBERSHIP_INVALID','Membership needs explicit course version and Lesson/Part columns.');}
  for(const s of m.sets){const relation=sha256([s.lessonLabel,s.partLabel]);if(!safeID(s.membershipSetId)||!safeID(s.lessonId)||sets.has(s.membershipSetId)||relations.has(relation)||typeof s.lessonLabel!=='string'||typeof s.partLabel!=='string'||s.ordering!=='source-row'||!Array.isArray(s.componentIds)||!s.componentIds.length||!Array.isArray(s.additions)||!Array.isArray(s.exclusions)||s.additions.some(x=>s.exclusions.includes(x)))fail('MEMBERSHIP_INVALID','Exact unique Lesson/Part sets, components and disjoint authored overlays required.');
@@ -22,30 +26,55 @@ export function validateMapping(mapping,registration,content){
  return mapping;
 }
 function decoded(cell,column){const raw=cellText(cell);if(raw===''&&!column.allowBlank)throw new Error('Blank is not permitted for '+column.target+'.');if(boolFields.has(column.target)){const v=cell?.effectiveValue?.boolValue??cell?.userEnteredValue?.boolValue;if(typeof v!=='boolean')throw new Error('A native explicit boolean is required for '+column.target+'.');return v;}if(jsonFields.has(column.target)){let v;try{v=JSON.parse(raw);}catch{throw new Error('An explicit JSON value is required for '+column.target+'.');}return v;}if(typeof raw!=='string')throw new Error('Exact string required for '+column.target+'.');return raw;}
-export function rowFields(capture,mapping,rowIndex){const remote={},formatting={},cells=capture.cells[rowIndex];for(const column of mapping.columns){if(column.target==='sourceForm')continue;remote[column.target]=decoded(cells[column.columnIndex],column);if(stringFields.has(column.target)){const cell=copy(cells[column.columnIndex]);cell.effectiveFormat={...copy(capture.properties.defaultFormat||{}),...copy(cell.effectiveFormat||{}),textFormat:{...copy(capture.properties.defaultFormat?.textFormat||{}),...copy(cell.effectiveFormat?.textFormat||{})}};formatting[column.target]=cell;}}if(Object.keys(formatting).length&&!Object.hasOwn(remote,'fieldFormatting'))remote.fieldFormatting=formatting;if(Object.keys(formatting).length&&!Object.hasOwn(remote,'sourceTheme'))remote.sourceTheme=copy(capture.properties.spreadsheetTheme?.themeColors||[]);return remote;}
-const newID=prefix=>prefix+'-'+randomUUID();
-export function mapReview({capture,registration,mapping,previous,local,identityMatches=[],fieldResolutions=[]}){
- validateMapping(mapping,registration,local);identityMatches=copy(identityMatches);const errors=[],warnings=[],rows=[],identities=[],conflicts=[],changes=[],candidate=copy(local),identity=[],remoteFields={},membershipChanges=[];
- const old=previous?.identity||[],oldById=new Map(old.map(e=>[e.entryId,e])),decisions=new Map(),usedIds=new Set();
- for(const d of identityMatches){if(!Number.isInteger(d.rowIndex)||decisions.has(d.rowIndex)||!['reuse','create','ignore','tombstone','detach'].includes(d.action))fail('IDENTITY_INVALID','One explicit identity action per row is required.');decisions.set(d.rowIndex,d);}
- const resolutions=new Map();for(const r of fieldResolutions){const key=sha256([r.entryId,r.target]);if(resolutions.has(key)||!safeID(r.entryId)||!targets.has(r.target)&&!['fieldFormatting','sourceTheme'].includes(r.target)||!['remote','local','authored'].includes(r.choice))fail('RESOLUTION_INVALID','Invalid or duplicated exact field resolution.');resolutions.set(key,r);}
- const canonical=mapping.columns.some(c=>c.target!=='sourceForm');
+export function rowFields(capture,mapping,rowIndex){const remote={},formatting={},cells=capture.cells[rowIndex];for(const column of mapping.columns){if(['sourceForm','id'].includes(column.target))continue;remote[column.target]=decoded(cells[column.columnIndex],column);if(stringFields.has(column.target)){const cell=copy(cells[column.columnIndex]);cell.effectiveFormat={...copy(capture.properties.defaultFormat||{}),...copy(cell.effectiveFormat||{}),textFormat:{...copy(capture.properties.defaultFormat?.textFormat||{}),...copy(cell.effectiveFormat?.textFormat||{})}};formatting[column.target]=cell;}}if(Object.keys(formatting).length&&!Object.hasOwn(remote,'fieldFormatting'))remote.fieldFormatting=formatting;if(Object.keys(formatting).length&&!Object.hasOwn(remote,'sourceTheme'))remote.sourceTheme=copy(capture.properties.spreadsheetTheme?.themeColors||[]);return remote;}
+const populated=cells=>cells.some(c=>cellText(c)!==''||c.userEnteredValue||c.note);
+export function sourceRowIDs(capture,registration,mapping){
+ const column=mapping.columns.find(c=>c.target==='id'),ids=new Map(),errors=[],seen=new Map();
+ if(!column)return {ids,errors};
+ try{validateIdentitySortRanges(registration,capture.sortRanges,column.columnIndex);}catch(error){errors.push(issue(error.code,error.message));}
+ const masterfile=registration.spreadsheetId==='1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc'&&registration.sheetId===1022865870;
  for(let rowIndex=1;rowIndex<capture.cells.length;rowIndex++){
-  const cells=capture.cells[rowIndex];if(!cells.some(c=>cellText(c)!==''||c.userEnteredValue||c.note))continue;
-  const rowSha256=sha256(cells),previousAtRow=old.find(e=>e.rowIndex===rowIndex&&e.rowSha256===rowSha256),sameCapture=previous?.identityCaptureSha256===capture.capturePayloadSha256;
-  const matches=old.filter(e=>e.rowSha256===rowSha256);const sameLocator=old.find(e=>e.rowIndex===rowIndex);const proposals=[...matches,...(sameLocator&&!matches.includes(sameLocator)?[sameLocator]:[])];const row={rowIndex,values:cells.map(cellText),cells:copy(cells),sourceForm:'',english:'',lessonLabel:'',partLabel:''};
+  const cells=capture.cells[rowIndex];if(!populated(cells))continue;
+  const value=cells[column.columnIndex]?.userEnteredValue;
+  if(!value||typeof value.stringValue!=='string'||Object.keys(value).length!==1||!safeID(value.stringValue)||masterfile&&!/^mf-[0-9]{6}$/.test(value.stringValue)){
+   errors.push(issue('SOURCE_ID_INVALID','Every populated row requires an immutable plain-text '+(masterfile?'mf-NNNNNN':'safe')+' ID; blanks, formulas and numbers are rejected.','rows/'+rowIndex));continue;
+  }
+  const id=value.stringValue;ids.set(rowIndex,id);
+  if(seen.has(id)){errors.push(issue('SOURCE_ID_DUPLICATE','Duplicate source ID '+id+' at rows '+seen.get(id)+' and '+rowIndex+'.','rows/'+rowIndex));}else seen.set(id,rowIndex);
+ }
+ return {ids,errors};
+}
+const newID=prefix=>prefix+'-'+randomUUID();
+export function mapReview({capture,registration,mapping,previous,local,identityMatches=[],fieldResolutions=[],historicalIdentity=[]}){
+ validateMapping(mapping,registration,local);identityMatches=copy(identityMatches);const errors=[],warnings=[],rows=[],identities=[],conflicts=[],changes=[],candidate=copy(local),identity=[],remoteFields={},membershipChanges=[];
+ const old=previous?.identity||[],oldById=new Map(old.map(e=>[e.entryId,e])),historicalIds=new Set(historicalIdentity.map(e=>e.sourceRowId).filter(Boolean)),decisions=new Map(),usedIds=new Set();
+ for(const d of identityMatches){if(!Number.isInteger(d.rowIndex)||decisions.has(d.rowIndex)||!['reuse','create','ignore','tombstone','detach'].includes(d.action))fail('IDENTITY_INVALID','One explicit identity action per row is required.');decisions.set(d.rowIndex,d);}
+ const resolutions=new Map();for(const r of fieldResolutions){const key=sha256([r.entryId,r.target]);if(resolutions.has(key)||!safeID(r.entryId)||r.target==='id'||!targets.has(r.target)&&!['fieldFormatting','sourceTheme'].includes(r.target)||!['remote','local','authored'].includes(r.choice))fail('RESOLUTION_INVALID','Invalid or duplicated exact field resolution; identity is immutable.');resolutions.set(key,r);}
+ const canonical=mapping.columns.some(c=>!['sourceForm','id'].includes(c.target)),idColumn=mapping.columns.find(c=>c.target==='id'),sourceIds=sourceRowIDs(capture,registration,mapping);
+ errors.push(...sourceIds.errors);
+ for(let rowIndex=1;rowIndex<capture.cells.length;rowIndex++){
+  const cells=capture.cells[rowIndex];if(!populated(cells))continue;
+  const sourceRowId=sourceIds.ids.get(rowIndex),priorBySource=idColumn&&sourceRowId?old.find(e=>e.sourceRowId===sourceRowId):null;
+  const rowSha256=sha256(cells),previousAtRow=idColumn?priorBySource:old.find(e=>e.rowIndex===rowIndex&&e.rowSha256===rowSha256),sameCapture=previous?.identityCaptureSha256===capture.capturePayloadSha256;
+  const matches=idColumn?(priorBySource?[priorBySource]:[]):old.filter(e=>e.rowSha256===rowSha256);const sameLocator=idColumn?null:old.find(e=>e.rowIndex===rowIndex);const proposals=[...matches,...(sameLocator&&!matches.includes(sameLocator)?[sameLocator]:[])];const row={rowIndex,values:cells.map(cellText),cells:copy(cells),sourceForm:'',english:'',lessonLabel:'',partLabel:'',...(idColumn?{sourceRowId:sourceRowId??null}:{})};
   if(mapping.membership.sets.length){row.lessonLabel=cellText(cells[mapping.membership.lessonColumnIndex]);row.partLabel=cellText(cells[mapping.membership.partColumnIndex]);}
   for(const c of mapping.columns)if(['sourceForm','english'].includes(c.target))row[c.target]=cellText(cells[c.columnIndex]);rows.push(row);
+  if(mapping.columns.some(c=>c.target==='sourceForm')&&!row.sourceForm.trim())warnings.push(issue('SOURCE_FORM_MISSING','This populated source row has no Hebrew source form; retain it for human review.','rows/'+rowIndex));
   if(!canonical)continue;
   let d=decisions.get(rowIndex),entry;
-  if(!d&&sameCapture&&previousAtRow)d={action:previousAtRow.ignored?'ignore':'reuse',entryId:previousAtRow.entryId,objectId:previousAtRow.objectId};
+  if(!d&&previousAtRow&&(idColumn||sameCapture))d={action:previousAtRow.ignored?'ignore':'reuse',entryId:previousAtRow.entryId,objectId:previousAtRow.objectId};
   let status=d?'confirmed':matches.length>1?'ambiguous':matches.length?'review-required':'new';
-  identities.push({rowIndex,rowSha256,previousEntryId:previousAtRow?.entryId??null,previousObjectId:previousAtRow?.objectId??null,candidates:proposals.map(e=>({entryId:e.entryId,objectId:e.objectId??null,oldRowIndex:e.rowIndex})),status});
+  identities.push({rowIndex,rowSha256,...(idColumn?{sourceRowId:sourceRowId??null}:{}),previousEntryId:previousAtRow?.entryId??null,previousObjectId:previousAtRow?.objectId??null,candidates:proposals.map(e=>({entryId:e.entryId,objectId:e.objectId??null,oldRowIndex:e.rowIndex})),status});
+  if(idColumn&&!sourceRowId)continue;
+  if(idColumn&&!priorBySource&&historicalIds.has(sourceRowId)){errors.push(issue('SOURCE_ID_RETIRED','This source ID was previously detached or tombstoned. Use a new never-used ID for a new entry, or restore its historical source bundle.','rows/'+rowIndex));continue;}
+  const selectedPrior=d?.entryId&&oldById.get(d.entryId);
+  if(idColumn&&d&&(selectedPrior?.sourceRowId&&selectedPrior.sourceRowId!==sourceRowId||priorBySource&&d.entryId&&d.entryId!==priorBySource.entryId||priorBySource?.objectId&&['create','reuse'].includes(d.action)&&(d.action==='create'||d.objectId!==priorBySource.objectId))){errors.push(issue('IDENTITY_INVALID','An immutable source ID cannot rename or rebind a retained entry/object pair.','rows/'+rowIndex));continue;}
   if(!d){errors.push(issue('IDENTITY_REVIEW_REQUIRED','Confirm identity, create with exact forms, or ignore this source row.','rows/'+rowIndex));continue;}
-  if(d.action==='ignore'){entry={entryId:d.entryId&&oldById.has(d.entryId)?d.entryId:(d._entryId??=newID('entry')),rowIndex,rowSha256,ignored:true};if(usedIds.has(entry.entryId)){errors.push(issue('IDENTITY_AMBIGUOUS','Ignored and canonical entries must have distinct stable entry IDs.','rows/'+rowIndex));continue;}usedIds.add(entry.entryId);identity.push(entry);continue;}
+  if(d.action==='ignore'){entry={entryId:idColumn?(priorBySource?.entryId||selectedPrior?.entryId||sourceRowId):d.entryId&&oldById.has(d.entryId)?d.entryId:(d._entryId??=newID('entry')),rowIndex,rowSha256,ignored:true,...(idColumn?{sourceRowId}:{})};if(usedIds.has(entry.entryId)){errors.push(issue('IDENTITY_AMBIGUOUS','Ignored and canonical entries must have distinct stable entry IDs.','rows/'+rowIndex));continue;}usedIds.add(entry.entryId);identity.push(entry);continue;}
   if(!['reuse','create'].includes(d.action)){errors.push(issue('IDENTITY_INVALID','Deletion actions apply only to missing rows.','rows/'+rowIndex));continue;}
-  if(d.action==='reuse'){const prior=oldById.get(d.entryId),existing=candidate.words.find(w=>w.id===d.objectId);if(prior&&prior.objectId===d.objectId&&existing)entry={...copy(prior),rowIndex,rowSha256};else if(!d.entryId&&existing&&!old.some(e=>e.objectId===d.objectId))entry={entryId:d._entryId??=newID('entry'),objectId:d.objectId,rowIndex,rowSha256};else{errors.push(issue('IDENTITY_INVALID','Reuse requires a retained entry/object pair, or an explicitly selected unbound existing canonical word.','rows/'+rowIndex));continue;}}
-  else entry={entryId:d._entryId??=newID('entry'),objectId:d._objectId??=newID('word'),rowIndex,rowSha256};
+  if(d.action==='reuse'){const prior=oldById.get(d.entryId),existing=candidate.words.find(w=>w.id===d.objectId);if(prior&&prior.objectId===d.objectId&&existing)entry={...copy(prior),rowIndex,rowSha256};else if(!d.entryId&&existing&&!old.some(e=>e.objectId===d.objectId))entry={entryId:idColumn?sourceRowId:(d._entryId??=newID('entry')),objectId:d.objectId,rowIndex,rowSha256};else{errors.push(issue('IDENTITY_INVALID','Reuse requires a retained entry/object pair, or an explicitly selected unbound existing canonical word.','rows/'+rowIndex));continue;}}
+  else {if(idColumn&&candidate.words.some(w=>w.id===sourceRowId)){errors.push(issue('IDENTITY_COLLISION','The source ID already names a canonical word. Explicitly review reuse; creation cannot overwrite it.','rows/'+rowIndex));continue;}entry={entryId:idColumn?(priorBySource?.entryId||sourceRowId):(d._entryId??=newID('entry')),objectId:idColumn?sourceRowId:(d._objectId??=newID('word')),rowIndex,rowSha256};}
+  if(idColumn)entry.sourceRowId=sourceRowId;
   if(usedIds.has(entry.entryId)||usedIds.has(entry.objectId)){errors.push(issue('IDENTITY_AMBIGUOUS','One source entry and canonical word may be used only once in this source.','rows/'+rowIndex));continue;}usedIds.add(entry.entryId);usedIds.add(entry.objectId);identity.push(entry);
   const word=candidate.words.find(w=>w.id===entry.objectId)||{id:entry.objectId},isNew=!candidate.words.includes(word),remote={},formatting={};
   try{Object.assign(remote,rowFields(capture,mapping,rowIndex));}catch(e){errors.push(issue('FIELD_INVALID',e.message,'rows/'+rowIndex));}

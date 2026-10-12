@@ -1,0 +1,58 @@
+{
+  "checkedDate": "2026-10-12",
+  "method": "Native Sheets API get_spreadsheet_metadata and get_spreadsheet_cells; Composio GOOGLESHEETS_GET_SPREADSHEET_INFO with explicit basicFilter/filterViews/tables field mask",
+  "spreadsheetId": "1d9b3mFnRhubmdq7gJ5VMJBA9dyhwS6GSI6V95M0xSVc",
+  "sheetId": 1022865870,
+  "title": "Masterfile",
+  "gridExtent": {
+    "rowCount": 1059,
+    "columnCount": 31
+  },
+  "headers": [
+    "Ordinals",
+    "Lesson",
+    "Part",
+    "Type",
+    "No_Vocab",
+    "No_Card",
+    "Hebrew",
+    "English",
+    "Notes",
+    "Gender",
+    "Plural",
+    "Root",
+    "Pattern",
+    "Feminine",
+    "Plural Feminine",
+    "Audio",
+    "Pl. Audio",
+    "Fem. Audio",
+    "Pl.Fem. Audio",
+    "Infinitive",
+    "I",
+    "he",
+    "she",
+    "אתה",
+    "את",
+    "אתם",
+    "אתן",
+    "הם",
+    "הן",
+    "אנחנו",
+    "ID"
+  ],
+  "headerSha256": "4c1458511cba79737e668c3f2b02a5dcadea5dc4267876e0af6c4c0fcd1b7014",
+  "basicFilter": {
+    "range": {
+      "sheetId": 1022865870,
+      "startRowIndex": 0,
+      "endRowIndex": 1059,
+      "startColumnIndex": 0,
+      "endColumnIndex": 30
+    }
+  },
+  "filterViewsReturned": false,
+  "tablesReturned": false,
+  "conclusion": "Existing basic filter excludes AE. Source owner must extend it without sorting before registration. No Sheet writes were performed.",
+  "scope": "Header and sortable-range verification only. Full ID count, string formats and A:AD preservation are Curriculum Designer handoff evidence, not repeated independent checks."
+}

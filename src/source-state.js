@@ -1,5 +1,5 @@
 import {copy,sha256,safeID,fail,equal} from './source-utils.js';
-import {validateMapping,rowFields} from './source-mapping.js';
+import {validateMapping,rowFields,sourceRowIDs} from './source-mapping.js';
 import {validateRegistration,validateCapture} from './google-source.js';
 import {validateSourceOwnership,validateSourceTargets,registrationForCapture} from './source-invariants.js';
 export const emptySourceState=()=>({version:1,sources:{},captures:{},bundles:{},revisions:{},draftBinding:null,authorBundle:null,operations:{}});
@@ -34,7 +34,7 @@ export function validateSourceState(state,revisionContents,draft,activeContent){
    if(source.baseline){
     if(!baselineCapture||!object(source.baseline.remoteFields)||sha256(source.baseline)!==source.baselineSha256)fail('SOURCE_BACKUP_INVALID','Missing retained capture or invalid baseline digest.');
     validateCapture(baselineCapture,registrationForCapture(source.registration,baselineCapture));
-    if(source.mapping.columns.some(c=>c.target!=='sourceForm')&&source.identity.some(e=>e.objectId&&!Object.hasOwn(source.baseline.remoteFields,e.entryId)))fail('SOURCE_BACKUP_INVALID','Missing remote baseline fields for a canonical source entry.');
+    if(source.mapping.columns.some(c=>!['sourceForm','id'].includes(c.target))&&source.identity.some(e=>e.objectId&&!Object.hasOwn(source.baseline.remoteFields,e.entryId)))fail('SOURCE_BACKUP_INVALID','Missing remote baseline fields for a canonical source entry.');
     for(const [entryId,fields]of Object.entries(source.baseline.remoteFields)){
      const entry=source.identity.find(e=>e.entryId===entryId&&e.objectId);
      try{if(!entry||!equal(fields,rowFields(baselineCapture,source.mapping,entry.rowIndex)))fail('SOURCE_BACKUP_INVALID','Remote baseline does not equal its retained mapped source cells.');}
@@ -43,6 +43,8 @@ export function validateSourceState(state,revisionContents,draft,activeContent){
    }
    if(source.identityCaptureSha256){
     const capture=state.captures[source.identityCaptureSha256];if(!capture)fail('SOURCE_BACKUP_INVALID','Missing capture backing confirmed identity locators.');
+    const idColumn=source.mapping.columns.find(c=>c.target==='id');
+    if(idColumn){const checked=sourceRowIDs(capture,registrationForCapture(source.registration,capture),source.mapping);if(checked.errors.length||source.identity.some(e=>e.sourceRowId!==checked.ids.get(e.rowIndex)))fail('SOURCE_BACKUP_INVALID','Confirmed source ID disagrees with its frozen plain-text cell or sort range.');}
     for(const entry of source.identity)if(!capture.cells[entry.rowIndex]||sha256(capture.cells[entry.rowIndex])!==entry.rowSha256)fail('SOURCE_BACKUP_INVALID','Confirmed identity row hash disagrees with its frozen capture.');
    }else if(source.identity.length)fail('SOURCE_BACKUP_INVALID','Confirmed identities have no retained capture.');
   }

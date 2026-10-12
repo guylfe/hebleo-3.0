@@ -146,3 +146,12 @@ test('missing ignored entries can be explicitly detached without inventing a can
  change(h.d,h.host.querySelector('[data-identity-action]'),'detach');change(h.d,h.host.querySelector('[data-identity-candidate]'),'0');check(h.d,h.host.querySelector('[data-identity-confirm]'));
  h.host.querySelector('[data-resolve]').click();await settled(h.host);const call=callNamed(h,'resolveReview').at(-1);assert(call);assert.deepEqual(call.body.identityMatches,[{rowIndex:-2,action:'detach',entryId:'synthetic-ignored-entry'}]);
 });
+
+
+test('immutable source ID is an explicit mapping choice and confirmed ID refresh needs no invented decisions',async t=>{
+ const registration={...clone(reg),headers:['ID',...reg.headers.slice(1)]},statusResponse=safeStatus();statusResponse.sources[0].registration=clone(registration);
+ const response=dto({registration,identityCandidates:[{rowIndex:1,sourceRowId:'mf-000001',previousEntryId:'mf-000001',previousObjectId:'mf-000001',rowSha256:'synthetic-row-hash',candidates:[{entryId:'mf-000001',objectId:'mf-000001',oldRowIndex:3}],status:'confirmed'}]});
+ const h=harness(t,{response,statusResponse});await capture(h);assert.match(h.host.querySelector('[data-identities]').textContent,/mf-000001/);
+ const target=h.host.querySelector('[data-map-row="0"] [data-map-target]');assert([...target.options].some(o=>o.value==='id'));change(h.d,target,'id');h.host.querySelector('[data-resolve]').click();await settled(h.host);
+ const call=callNamed(h,'resolveReview').at(-1);assert.deepEqual(call.body.mapping.columns[0],{columnIndex:0,header:'ID',target:'id',owner:'source',allowBlank:false});assert.deepEqual(call.body.identityMatches,[]);
+});

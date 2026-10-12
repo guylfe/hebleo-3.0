@@ -1,5 +1,18 @@
 # Hebleo implementation and acceptance checklist
 
+## 2026-10-12 Masterfile identity checkpoint (lead/masterfile-id; not activated)
+
+This isolated patch is based on `77f5cd9`. It does not overwrite the prior acceptance ledger, frozen integrity evidence, separate Oct12 UX correction, or running 63357 backend/assets. [Exact contract, verification and integration handoff](MASTERFILE_ID_IMPORT.md).
+
+| Stable feature ID | Bounded result | Evidence | Guy acceptance |
+| --- | --- | --- | --- |
+| SID01 (U11, S06, S07) | A:AE template and explicit immutable source ID mapping implemented. IDs survive row moves/content edits; new entries still require review/forms. Blank/formula/duplicate/malformed IDs, renames/rebinding and known retired-ID recycling block Stage. Existing explicitly reused canonical word IDs stay unchanged. Not registered, staged or activated on the live app. | Owner automated: 69 focused checks; synthetic transport and disposable DBs; DOM checks through jsdom only. | Pending; no new user result |
+| SID02 (U11, S07) | Live header/grid independently read. Existing basic filter is A1:AD1059 and excludes AE; source registration/import remains blocked until the source owner extends it through AE without sorting. Patch checks filter/filter-view/table coverage. | Native Sheet header and scoped sort metadata read; `evidence/masterfile-id/header-and-filter.json`. No Sheet write. | Blocked by source configuration; no acceptance inferred |
+| S05 (identity persistence) | Confirmed IDs tied to retained raw cells; pending-draft restore accepts valid source ID state and rejects recomputed identity tampering with zero writes. Learner note/card retention checked on synthetic states. SQLite version remains 7. | Owner automated only; prior acceptance remains unchanged. | Pending |
+
+
+## Earlier ledger and acceptance evidence (unchanged)
+
 Local-demo documentation overlay for reviewed candidate `f47d2d288956782b1d6631c40a19c1c9585a141c`, executable identical to `d42e1cfea9fb1e982651922a2ef2917d6cb5b85a`, 2026-10-07. Leo reviewed the actual independent request-799 artifacts: Import B details, Stage POST 200, persisted fixture and native reload PASS (private draft only; IDs, unknown source fields, order and linguistic bytes retained; other tables/profiles/publication unchanged). Import A and prior bounded G4/G5/Release closures are retained. Exact 375/390 CSS-pixel layout and mobile/physical touch are **UNVERIFIED, Deferred until a future APK** under Guy's instruction, and no longer block this local update. Native 627 outer-pixel Studio reflow was only a partial visual observation, not a CSS-width/device pass. No APK build requested. Low Retry/status/focus/toast and B24 remain open; no broad accessibility or Guy acceptance claim. This is a docs-only overlay, not a new reviewed application SHA; stable IDs, Guy-result cells and historical ledger remain intact.
 
 Initial inventory baseline: 2026-10-03; inspected application commit `0bcd99988a8acce9ee91d8d7d2106e46590d539f` and documentation commit `c0bb85d9370b4f1c4b4222b574f6fa6d1121801e`. This inventory covers the initial-build brief and feature families in the supplied master specification. Future/optional features listed here are not a promise that all belong in the first release.

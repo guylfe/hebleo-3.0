@@ -1,0 +1,38 @@
+[
+  {
+    "file": "src/source-template.js",
+    "exit": 0
+  },
+  {
+    "file": "src/source-mapping.js",
+    "exit": 0
+  },
+  {
+    "file": "src/google-source.js",
+    "exit": 0
+  },
+  {
+    "file": "src/source-state.js",
+    "exit": 0
+  },
+  {
+    "file": "src/source-invariants.js",
+    "exit": 0
+  },
+  {
+    "file": "src/source-authoring.js",
+    "exit": 0
+  },
+  {
+    "file": "public/studio/sources-editor.js",
+    "exit": 0
+  },
+  {
+    "file": "test/source-id.test.js",
+    "exit": 0
+  },
+  {
+    "file": "test/sources-editor.test.js",
+    "exit": 0
+  }
+]

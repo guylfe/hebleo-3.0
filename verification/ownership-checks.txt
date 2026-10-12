@@ -1,0 +1,12 @@
+✔ QA-SRC-01 ignored and canonical entry IDs share uniqueness; invalid prospective state never reaches a draft write (67.1964ms)
+✔ RR-SRC-03 a second source cannot acquire an owned field by choosing remote; explicit release and fresh review preserves canonical ID (158.1368ms)
+✔ RR-SRC-03 global component ownership is lesson-scoped and rejects competing maps before mutation (40.6868ms)
+✔ RR-SRC-03 independent nonoverlapping typed fields may share a canonical word; formatting ownership is explicit (68.7523ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 557.3471

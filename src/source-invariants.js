@@ -19,13 +19,15 @@ export function validateSourceOwnership(sources) {
   };
   for (const [sourceId, source] of Object.entries(sources)) {
     if (!Array.isArray(source.identity) || !Array.isArray(source.mapping?.columns) || !Array.isArray(source.mapping?.membership?.sets)) fail('SOURCE_IDENTITY_INVALID', 'Malformed source mapping or identity history.');
-    const objects = new Set(), rows = new Set();
+    const objects = new Set(), rows = new Set(), sourceIds = new Set();
     for (const entry of source.identity) {
       if (!entry || !safeID(entry.entryId) || entries.has(entry.entryId) || !Number.isInteger(entry.rowIndex) || entry.rowIndex < 1 || rows.has(entry.rowIndex) || !hashPattern.test(entry.rowSha256) || (entry.ignored === true ? entry.objectId !== undefined : !safeID(entry.objectId)) || entry.objectId !== undefined && objects.has(entry.objectId)) fail('SOURCE_IDENTITY_INVALID', 'Source entries, row locators and canonical objects must have unique stable identities.', {sourceId});
+      if (entry.sourceRowId !== undefined && (!safeID(entry.sourceRowId) || sourceIds.has(entry.sourceRowId))) fail('SOURCE_IDENTITY_INVALID', 'Source row IDs must be immutable and distinct within the source.', {sourceId});
+      if (entry.sourceRowId !== undefined) sourceIds.add(entry.sourceRowId);
       entries.add(entry.entryId); rows.add(entry.rowIndex);
       if (!entry.objectId) continue;
       objects.add(entry.objectId);
-      const owned = new Set(source.mapping.columns.filter(c => c.owner === 'source' && c.target !== 'sourceForm').map(c => c.target));
+      const owned = new Set(source.mapping.columns.filter(c => c.owner === 'source' && !['sourceForm','id'].includes(c.target)).map(c => c.target));
       // The installed vocabulary renderer stores formatting/theme per word.
       // These automatically mapped fields also require a single explicit owner.
       if (source.mapping.columns.some(c => c.owner === 'source' && strings.has(c.target))) {

@@ -1,0 +1,22 @@
+✔ AC01 synthetic registration changes only configuration and enforces its CAS, replay and complete numeric metadata (30.4535ms)
+✔ AC18 Preview/resolve/discard are ephemeral including identity IDs and sequences (41.5104ms)
+✔ AC18 expired reviews reject Stage before acquisition or writes (25.0644ms)
+✔ AC04/05 synthetic repeated unchanged review and version-only advance produce no_op without any DB or ID write (87.89ms)
+✔ AC07 changed capture requires explicit ID confirmation even a unique same-row match (71.0831ms)
+✔ AC11/12 three-way conflicts retain source baseline and local override, with absent fields staying local (76.7946ms)
+✔ AC13 complete absent row needs a tombstone/detach decision and rejects removal with canonical dependencies atomically (58.448ms)
+✔ AC14/16 source freshness or outage fails without replacing source, draft or learner tables (15.8993ms)
+✔ AC17 second editor saves during Stage network wait; transaction CAS refuses all source mutation (21.4402ms)
+✔ AC25 exact canonical forms absent blocks Stage without generating unpointed or curated strings (12.0566ms)
+✔ raw source-only baseline Stage is author-state-only and does not turn source text into canonical vocabulary (15.106ms)
+✔ first binding may reuse an explicitly selected existing canonical word without cloning, generating forms or dropping unknown fields (22.5139ms)
+✔ baseline and confirmed row reachability rejects recomputed missing-field or locator tampering before restore writes (31.456ms)
+✔ source-only inspection cannot silently confirm canonical IDs across a changed capture (53.8803ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 876.7234
