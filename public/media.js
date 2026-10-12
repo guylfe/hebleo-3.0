@@ -16,6 +16,10 @@ export async function playAudio(value, speed = 1, replay = false) {
   player.playbackRate = speed; player.preservesPitch = true;
   try { await player.play(); return 'playing'; } catch { throw new Error('Could not play this recording. Check the media link or try again.'); }
 }
+export function setPlaybackSpeed(speed) {
+  if(![0.75,1].includes(speed))throw new Error('Unsupported playback speed.');
+  if(player){player.playbackRate=speed;player.preservesPitch=true;}
+}
 export function stopMedia() { player?.pause(); }
 export async function recordVoice(onChange) {
   if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') throw new Error('Voice recording is unavailable in this browser.');
@@ -40,4 +44,4 @@ export function feedbackSound(enabled, success = true) {
   if (!enabled) return;
   try { feedbackContext ||= new (window.AudioContext || window.webkitAudioContext)(); const oscillator=feedbackContext.createOscillator();const gain=feedbackContext.createGain();oscillator.frequency.value=success?660:330;gain.gain.setValueAtTime(.04,feedbackContext.currentTime);gain.gain.exponentialRampToValueAtTime(.001,feedbackContext.currentTime+.15);oscillator.connect(gain);gain.connect(feedbackContext.destination);oscillator.start();oscillator.stop(feedbackContext.currentTime+.15); } catch { /* Optional feedback is nonessential. */ }
 }
-window.addEventListener('pagehide',clearRecording);
+if(typeof window!=='undefined')window.addEventListener('pagehide',clearRecording);

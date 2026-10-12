@@ -107,7 +107,7 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
   function setPreference(key, value) {
     assertMutable();
     if (!['nikkud','vocabularyView','immediateAnswers','sounds','animations','keyboardHints','keyboardConvert','keyboardVisible','keyboardPinned','audioSpeed'].includes(key)) throw new Error('Unsupported rehearsal setting.');
-    localPreferences[key] = structuredClone(value); render();
+    localPreferences[key] = structuredClone(value); if(key!=='audioSpeed')render();
   }
   function dispose() {
     if (!active()) return;

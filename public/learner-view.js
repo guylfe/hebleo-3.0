@@ -14,9 +14,19 @@ export function wordText(w,mode='full') {
 }
 export function fieldText(w,key,value){return richCell(value,sourceCell(w,key),w.sourceTheme);}
 export function cellAttribute(w,key){return ' style="'+cellCSS(sourceCell(w,key),w.sourceTheme)+'"';}
+export function playbackSpeedControl(disabled=false) {
+  return '<label class="playback-speed">Playback speed <select data-audio-speed aria-label="Playback speed" '+(disabled?'disabled':'')+'><option value="1">Normal (1×)</option><option value="0.75">Slower (0.75×)</option></select></label>';
+}
+export function syncAudioControls(root,speed=1) {
+  for(const media of root.querySelectorAll('audio,video')) {
+    media.playbackRate=speed;media.preservesPitch=true;
+    if(!media.previousElementSibling?.matches('[data-native-speed]')) {const slot=media.ownerDocument.createElement('div');slot.dataset.nativeSpeed='';slot.innerHTML=playbackSpeedControl();media.before(slot);}
+  }
+  for(const input of root.querySelectorAll('[data-audio-speed]'))input.value=String(speed);
+}
 export function audioControls(audio,label) {
   const url=audioURL(audio);
-  return '<div class="audio-controls" role="group" aria-label="'+esc(label)+' recording">'+button('▶ Play / Pause','audio','small secondary',url||'',!url)+button('↻ Replay','audio-replay','small outline',url||'',!url)+(url?'':'<small>Recording not linked</small>')+'</div>';
+  return '<div class="audio-controls" role="group" aria-label="'+esc(label)+' recording">'+button('▶ Play / Pause','audio','small secondary',url||'',!url)+button('↻ Replay','audio-replay','small outline',url||'',!url)+playbackSpeedControl(!url)+(url?'':'<small>Recording not linked</small>')+'</div>';
 }
 export function formatValue(value,field='') {
   if(value===null || value===undefined)return '';

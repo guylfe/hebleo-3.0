@@ -37,3 +37,49 @@ dialog.rehearsal-dialog{width:min(960px,calc(100vw - 24px));max-height:calc(100v
 .match-target.pair-correct,.match-tile.pair-correct{border-color:#147347;background:#e8f5ed;color:#145334;opacity:1}
 .match-target.pair-incorrect,.match-tile.pair-incorrect{border-color:#b42318;background:#fff0ee;color:#8f2018;opacity:1}
 .pair-status{font-weight:700;display:block}
+
+/* Oct12: usable desktop space and focused tasks; source field styles stay intact. */
+.page-lesson .content,.page-studio .content,.page-library .content{max-width:none;width:100%;padding:20px 20px 60px;box-sizing:border-box}
+.page-lesson .intro-row,.page-studio .intro-row{margin-bottom:16px}
+.lesson-layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:16px;direction:ltr;align-items:start}
+.lesson-layout>.lesson-toc{grid-column:1;order:0;position:sticky;top:12px;padding:14px;max-height:75vh;overflow:auto}
+.lesson-layout>.lesson-content{grid-column:2;min-width:0}
+.lesson-layout:has(>.lesson-toc:not([open])){display:block}
+.lesson-toc:not([open]){position:static;display:inline-block;margin:0 0 12px;max-height:none}
+.lesson-section{padding:22px;min-height:0;margin-bottom:12px}
+.lesson-footer{margin-top:20px;padding-top:16px}
+.vocabulary-table{width:100%;min-width:0;table-layout:auto}
+.vocabulary-table td{white-space:normal;min-width:7rem;max-width:24rem;overflow-wrap:break-word;word-spacing:normal;text-align-last:start}
+.vocabulary-table .hebrew{white-space:normal}
+.word-details{grid-template-columns:minmax(6rem,max-content) minmax(0,1fr);align-items:start}
+.word-details dd,.word-details dd bdi,.word-details dd dl{white-space:normal;word-spacing:normal;overflow-wrap:break-word}
+.word-details dd ul{margin:.3rem 0;padding-inline-start:1.4rem}
+.word-details dd dl{display:block}.word-details dd dl dt{margin-top:.6rem}
+.personal-note-summary{border-top:1px solid #d9e5e8;margin-top:12px;padding-top:10px;font-size:14px}
+.personal-note-summary p{white-space:pre-wrap;margin:6px 0;overflow-wrap:anywhere}
+.audio-controls{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.playback-speed{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;margin:0}
+.playback-speed select{width:auto;max-width:12rem;padding:6px;margin:0;min-height:34px}
+[data-native-speed]{margin:8px 0}
+.studio-task-menu{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.studio-task-menu [aria-current=page]{background:#07577b;color:white;border-color:#07577b}
+.studio-task-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.studio-task-actions p{margin:0;font-size:14px}
+[data-studio-pane][hidden],.unified-studio [hidden]{display:none!important}
+[data-studio-pane]>h2{margin:12px 0}
+.studio-source-browser>summary{display:none}
+.lesson-comments{margin-top:24px;border:2px solid #a8c9d4;border-radius:12px;padding:22px}
+.lesson-comments header h2{font-size:24px;margin:0 0 6px}
+.comment-composer{background:#f1f7f9;padding:16px;border-radius:10px}
+.comment-composer textarea{min-height:90px;resize:vertical}
+.comment-composer label{display:block;margin:6px 0}
+.comment-composer [type=checkbox]{width:auto;margin-right:8px}
+.comment-composer p{font-size:13px;margin:8px 0}
+.question-item{display:flex;align-items:start;gap:12px;border-top:1px solid #d9e4e8;padding:18px 0}
+.comment-avatar{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:grid;place-items:center;background:#deedf3;color:#194d64;font-weight:700}
+.comment-body{min-width:0;flex:1}.comment-body>small{display:block;color:#516b7a;margin:4px 0}
+.comment-text{white-space:pre-wrap;overflow-wrap:anywhere;direction:auto;margin:12px 0}
+.comment-reply{border-inline-start:3px solid #80b1c1;padding:10px 14px;background:#f5f9fa;margin-bottom:12px}
+.comment-body form textarea{min-height:74px;resize:vertical}.comment-body form label{display:block}
+@media(max-width:900px){.lesson-layout{display:block}.lesson-layout>.lesson-toc{position:static;max-height:none;margin-bottom:12px}.page-lesson .content,.page-studio .content,.page-library .content{padding:16px 14px 70px}}
+@media(max-width:520px){.lesson-section,.lesson-comments{padding:16px}.studio-task-menu .button{flex:1 1 45%;font-size:13px}.word-details{grid-template-columns:minmax(5rem,1fr) minmax(0,2fr)}}

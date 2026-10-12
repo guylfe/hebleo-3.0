@@ -1,8 +1,9 @@
+import {setPlaybackSpeed} from '../media.js';
 import {stepExercises, audioURL, portionExercises, portionLesson} from '../ux.js';
 import {keyboardForLesson,resolveComponent} from '../course.js';
 import {resolveBlock} from '../content.js';
 import {bindMatching, matchWord} from '../interactions.js';
-import {esc, button, wordText, fieldText, cellAttribute, audioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseFeedback, wireAnswer} from '../learner-view.js';
+import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseFeedback, wireAnswer} from '../learner-view.js';
 
 const KEY_ROWS=[
     [
@@ -160,6 +161,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           : step === 'complete' ? '<div class="empty"><h2>Rehearsal finished.</h2><p>Nothing in this rehearsal was saved to a learner profile.</p><div class="button-row centered">' + button('Exit rehearsal', 'exit', 'primary') + '</div></div>'
           : practice();
         root.innerHTML = settings() + (exercise ? '' : note()) + '<section class="card lesson-section">' + body + '</section>' + lookupCard();
+        syncAudioControls(root,Number(preferences.audioSpeed)||1);
         if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select').forEach(el => { el.disabled = true; }); }
         if (exercise?.type === 'matching' && !result && !busy) bindMatching(root, (id, meaning) => { if (active()) updateDraft({...draft, matching:matchWord(draft.matching, id, meaning)}); });
         restoreFocus(); reveal();
@@ -215,7 +217,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         }
       }, {signal});
       root.addEventListener('input', event => { if (event.target.id === 'answer' && !busy && !result) updateDraft({...draft, text:event.target.value}, false); }, {signal});
-      root.addEventListener('change', event => { if (event.target.dataset.previewPref && event.target.tagName === 'SELECT') call('setPreference', event.target.dataset.previewPref, event.target.value); }, {signal});
+      root.addEventListener('change', event => { if(event.target.matches('[data-audio-speed]')&&!busy){const speed=Number(event.target.value);preferences.audioSpeed=speed;call('setPreference','audioSpeed',speed);setPlaybackSpeed(speed);syncAudioControls(root,speed);return;} if (event.target.dataset.previewPref && event.target.tagName === 'SELECT') call('setPreference', event.target.dataset.previewPref, event.target.value); }, {signal});
       // Rehearsal keyboard shortcuts stay inside the preview host; defaultPrevented keeps the learner's global handler out.
       (keyScope || root).addEventListener('keydown', event => {
         if (event.defaultPrevented || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || busy) return;

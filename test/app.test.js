@@ -32,7 +32,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   t.after(async()=>{w.close();if(server)await new Promise(r=>server.close(r));if(!providedStore)store.close();});w.matchMedia=()=>({matches:false});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  Object.assign(w,ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
     if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
@@ -61,6 +61,43 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+
+test('OCT12 lesson practice uses existing missed-item context and keeps its optional exit',async t=>{
+ const {store,doc}=await app(t,{page:'course',realHTTP:true,prepare(s){s.attempt('learner-demo',{requestId:randomUUID(),revisionId:1,exerciseId:'ex-1-type',answer:'wrong'});}});
+ const entry=doc.querySelector('[data-action=lesson-practice][data-value=lesson-1]');assert.ok(entry);entry.click();
+ await settled(()=>doc.querySelector('[data-action=step][data-value=complete]')&&store.learner('learner-demo').resumes['lesson-1']?.practiceIds?.length);
+ const resume=store.learner('learner-demo').resumes['lesson-1'];assert.deepEqual(resume.practiceIds,['ex-1-type']);assert.equal(resume.revisionId,1);
+ assert.ok(doc.querySelector('#practice [data-action=step][data-value=complete]').textContent.includes('Skip extra practice'));assert.equal(store.learner('learner-demo').attempts.length,1);assert.deepEqual(store.learner('learner-demo').completed,[]);
+});
+
+test('OCT12 left outline and private notes remain discoverable through reload-equivalent navigation',async t=>{
+ const {store,w,doc}=await app(t,{page:'lesson/lesson-1/vocabulary',prepare(s){s.updateLearner('learner-demo',{note:{wordId:'w-ani',text:'SYNTHETIC private learner note'}});}});
+ assert.ok(doc.querySelector('.lesson-layout').firstElementChild.matches('.lesson-toc'));assert.equal(doc.querySelector('.lesson-comments').closest('.lesson-layout'),null);assert.ok(doc.querySelector('[data-lesson-comment]'));
+ const toc=doc.querySelector('.lesson-toc');toc.open=false;toc.dispatchEvent(new w.Event('toggle'));
+ doc.querySelector('[data-action=step][data-value=learn]').click();await settled(()=>doc.querySelector('#practice .explanation'));assert.equal(doc.querySelector('.lesson-toc').open,false);
+ doc.querySelector('[data-action=step][data-value=vocabulary]').click();await settled(()=>doc.querySelector('.personal-note-summary'));assert.ok(doc.querySelector('#app').textContent.includes('SYNTHETIC private learner note'));
+ doc.querySelector('[data-action=note-open][data-value=w-ani]').click();assert.equal(doc.querySelector('#personal-note').value,'SYNTHETIC private learner note');doc.querySelector('#personal-note').value='SYNTHETIC amended private note';click(doc,'save-panel-note');await settled(()=>!doc.querySelector('#context-panel'));assert.equal(store.learner('learner-demo').notes['w-ani'],'SYNTHETIC amended private note');
+ doc.querySelector('[data-action=vocab-view][data-value=table]').click();await settled(()=>doc.querySelector('.vocabulary-table'));assert.ok(doc.querySelector('.vocabulary-table').textContent.includes('SYNTHETIC amended private note'));assert.ok(doc.querySelector('.vocabulary-table thead').textContent.includes('Your private note'));
+ const sam=store.bootstrap('learner-demo').users.find(u=>u.name==='Sam').id;const user=doc.querySelector('#demo-user');user.value=sam;user.dispatchEvent(new w.Event('change'));await settled(()=>doc.querySelector('#demo-user').value===sam&&!doc.querySelector('#app').textContent.includes('SYNTHETIC amended private note'));assert.equal(store.learner(sam).notes['w-ani'],undefined);
+});
+
+test('OCT12 task switching and moderation retain unsaved title and reply, with a paged author feed',async t=>{
+ const {store,w,doc}=await app(t,{page:'studio',author:true,realHTTP:true,prepare(s){for(let i=0;i<23;i++)s.askQuestion('learner-demo',{requestId:randomUUID(),revisionId:1,lessonId:'lesson-1',discussionVersion:1,anonymous:true,question:'SYNTHETIC comment '+i});}});
+ const title=doc.querySelector('[name=title]');title.value='SYNTHETIC unsaved title';title.dispatchEvent(new w.Event('input',{bubbles:true}));const beforeToken=store.currentDraft()?.draftToken??null;
+ doc.querySelector('[data-action=studio-task][data-value=sources]').click();assert.equal(doc.querySelector('[data-studio-pane=sources]').hidden,false);assert.equal(doc.querySelector('[name=title]'),title);assert.equal(title.value,'SYNTHETIC unsaved title');
+ doc.querySelector('[data-action=studio-task][data-value=comments]').click();assert.equal(doc.querySelectorAll('[data-comment-feed] .question-item').length,20);assert.equal(doc.querySelector('[data-studio-pane=media]').hidden,true);
+ const reply=doc.querySelector('[data-question-answer] textarea');reply.value='SYNTHETIC unsaved reply';doc.querySelector('[data-action=studio-task][data-value=media]').click();doc.querySelector('[data-action=studio-task][data-value=comments]').click();assert.equal(doc.querySelector('[data-question-answer] textarea').value,'SYNTHETIC unsaved reply');
+ const hide=doc.querySelector('[data-action=comment-moderate][data-value$="|remove"]');assert.ok(hide.textContent.includes('Reject'));hide.click();await settled(()=>store.questions('author-demo').some(q=>q.visibility==='removed'));assert.equal(title.isConnected,true);assert.equal(title.value,'SYNTHETIC unsaved title');assert.equal(store.currentDraft()?.draftToken??null,beforeToken);
+ doc.querySelector('[data-action=comment-page][data-value="1"]').click();assert.equal(doc.querySelectorAll('[data-comment-feed] .question-item').length,3);doc.querySelector('[data-action=comment-page][data-value="0"]').click();assert.equal(doc.querySelector('[data-question-answer] textarea').value,'SYNTHETIC unsaved reply');
+ doc.querySelector('[data-action=studio-task][data-value=lesson]').click();assert.equal(doc.querySelector('[name=title]').value,'SYNTHETIC unsaved title');
+});
+
+test('OCT12 inline comment posting retains rejected input and uses existing scoped anonymous projection',async t=>{
+ const {store,w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true});const form=doc.querySelector('[data-lesson-comment]');assert.ok(form);form.querySelector('textarea').value='SYNTHETIC anonymous inline comment';form.querySelector('[name=anonymous]').checked=true;
+ const oldFetch=w.fetch;let reject=true;w.fetch=async(path,options)=>path==='/api/questions'&&options?.method==='POST'&&reject?{ok:false,status:403,json:async()=>({error:'SYNTHETIC denied'})}:oldFetch(path,options);
+ form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>form.querySelector('[data-comment-status]').textContent==='SYNTHETIC denied');assert.equal(form.querySelector('textarea').value,'SYNTHETIC anonymous inline comment');assert.equal(store.questions('author-demo').length,0);
+ reject=false;form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>doc.querySelector('.comment-text'));assert.equal(form.querySelector('textarea').value,'');const q=store.questions('author-demo')[0];assert.equal(q.lessonId,'lesson-1');assert.equal(q.revisionId,1);assert.equal(q.anonymous,true);assert.ok(doc.querySelector('[data-comment-feed]').textContent.includes('Anonymous'));assert.ok(!doc.querySelector('[data-comment-feed]').textContent.includes('learner-demo'));
+});
 
 test('FB8 outside first-click lifecycle: Check and concept survive typing/cloze, closed/open/pinned keyboards and old revision pins',async t=>{
   for(const cloze of [false,true])for(const mode of ['closed','open','pinned'])for(const action of ['concept','check'])await t.test((cloze?'cloze':'typing')+' '+mode+' '+action,async t=>{
