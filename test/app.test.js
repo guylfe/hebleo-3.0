@@ -25,12 +25,13 @@ import {pathToFileURL} from 'node:url';
 const {mountLessonPreview} = await import(process.env.HEBLEO_PREVIEW_CONTROLLER ? pathToFileURL(process.env.HEBLEO_PREVIEW_CONTROLLER) : '../public/preview/lesson-preview.js');
 import {createLearnerRenderer} from '../public/preview/learner-renderer.js';
 async function settled(predicate){for(let i=0;i<80;i++){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle.');}
-async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,width=1024}={}){
+async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,width=1024,navigationPrefs}={}){
   const store=providedStore||new Store();prepare?.(store);const d=new JSDOM('<div id="app"></div><div id="toast"></div>',{url:'http://127.0.0.1/#'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=d.window;
   Object.defineProperty(w,'innerWidth',{value:width,writable:true});let server,origin;
   if(realHTTP){server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
   t.after(async()=>{w.close();if(server)await new Promise(r=>server.close(r));if(!providedStore)store.close();});w.matchMedia=()=>({matches:false});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
+  if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
   Object.assign(w,ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   const calls=[];
@@ -61,6 +62,49 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+
+// JSDOM does not lay out viewports. Apply the real loaded stylesheet order with
+// only the width media queries matching this fixture; this checks the cascade,
+// not pixels or native drawer geometry.
+function loadViewportStyles(doc,width){
+ const index=readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
+ for(const [,href]of index.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g)){
+  const source=href==='/refinement.css'&&process.env.HEBLEO_REFINEMENT_SOURCE?process.env.HEBLEO_REFINEMENT_SOURCE:new URL('../public'+href,import.meta.url),style=doc.createElement('style');style.textContent=readFileSync(source,'utf8');doc.head.append(style);
+  const flatten=rules=>[...rules].map(rule=>{if(rule.type!==4)return rule.cssText;const bounds=[...rule.conditionText.matchAll(/(min|max)-width\s*:\s*([\d.]+)px/g)];return bounds.length&&bounds.every(([,kind,size])=>kind==='min'?width>=Number(size):width<=Number(size))?flatten(rule.cssRules):'';}).join('\n');
+  const css=flatten(style.sheet.cssRules);style.textContent=css;
+ }
+}
+
+test('UX2333-REWORK narrow expanded main navigation stays vertical with visible destination labels',async t=>{
+ for(const width of [790,700,480])await t.test(String(width)+'px stylesheet cascade',async t=>{
+  const {w,doc,calls}=await app(t,{width});loadViewportStyles(doc,width);const shell=doc.querySelector('.nav-shell'),before=calls.length,toggle=doc.querySelector((width<768?'.shell-nav-toolbar':'#main-menu')+' [data-value=main]');toggle.click();await settled(()=>!toggle.disabled&&shell.dataset.mainOverlay==='true');
+  const menu=doc.querySelector('#main-menu');assert.equal(w.getComputedStyle(menu).display,'flex');assert.equal(w.getComputedStyle(menu).flexDirection,'column');assert.equal(w.getComputedStyle(menu).alignItems,'stretch');assert.equal(w.getComputedStyle(menu.querySelector('.nav')).display,'grid');for(const label of menu.querySelectorAll('.nav-label'))assert.equal(w.getComputedStyle(label).display,'block');assert.equal(calls.length,before);
+ });
+});
+
+test('UX2333-REWORK same-lesson outline selection dismisses drawer and desktop overlay including current portion',async t=>{
+ for(const width of [700,1024])await t.test(String(width)+'px outline selection',async t=>{
+  const {w,doc}=await app(t,{width,navigationPrefs:width>=768?{main:false,course:true}:undefined});
+  for(const portion of ['learn','vocabulary']){
+   const toggle=doc.querySelector((width<768?'.shell-nav-toolbar':'#course-navigation')+' [data-value=course]');if(width>=768&&doc.querySelector('.nav-shell').dataset.courseCollapsed!=='true'){toggle.click();await settled(()=>!toggle.disabled);}toggle.click();await settled(()=>!toggle.disabled&&doc.querySelector('.nav-shell').dataset.courseOverlay==='true');assert.equal(doc.querySelector('#main-content').hasAttribute('inert'),true);
+   const target=doc.querySelector('[data-action=outline][data-value="lesson-2|'+portion+'"]');assert.ok(target);target.click();await settled(()=>doc.querySelector('[data-action=outline][aria-current=step]')?.dataset.value==='lesson-2|'+portion&&doc.querySelector('.nav-shell').dataset.courseOverlay==='false');assert.equal(doc.querySelector('#main-content').hasAttribute('inert'),false);
+  }
+  assert.ok(w.location.hash.includes('vocabulary'));
+ });
+});
+
+test('UX2333-REWORK desktop overlay dismissal persists collapse through application reload without learner writes',async t=>{
+ const {w,doc,calls,store}=await app(t,{width:1024,navigationPrefs:{main:false,course:true}}),before=structuredClone(store.learner('learner-demo'));const toggle=doc.querySelector('#course-navigation [data-value=course]');toggle.click();await settled(()=>!toggle.disabled&&doc.querySelector('.nav-shell').dataset.courseOverlay==='true');const count=calls.length;click(doc,'navigation-close');await settled(()=>doc.querySelector('.nav-shell').dataset.courseOverlay==='false');const saved=JSON.parse(w.localStorage.getItem('hebleo-navigation-learner-demo'));assert.deepEqual(saved,{main:false,course:true});assert.equal(calls.length,count);assert.deepEqual(store.learner('learner-demo'),before);
+ const {doc:reloaded}=await app(t,{width:1024,navigationPrefs:saved});assert.equal(reloaded.querySelector('.nav-shell').dataset.mainOverlay,'false');assert.equal(reloaded.querySelector('.nav-shell').dataset.courseOverlay,'false');assert.equal(reloaded.querySelector('#main-content').hasAttribute('inert'),false);assert.equal(reloaded.querySelector('.nav-shell').style.getPropertyValue('--course-track'),'48px');
+});
+
+test('UX2333-REWORK drawer Tab trap excludes lesson summaries beneath closed chapters',async t=>{
+ const {w,doc,calls}=await app(t,{width:700});const course=doc.querySelector('#course-navigation'),chapters=[...course.querySelectorAll('.course-outline-content>details')];assert.equal(chapters.length,3);chapters[0].open=false;chapters[1].open=true;chapters[2].open=false;const visibleLesson=chapters[1].querySelector('details');visibleLesson.open=false;const visibleSummary=visibleLesson.querySelector('summary'),hiddenSummary=chapters[2].querySelector('details>summary');assert.ok(hiddenSummary);const toggle=doc.querySelector('.shell-nav-toolbar [data-value=course]');toggle.click();await settled(()=>!toggle.disabled);const count=calls.length;
+ const first=course.querySelector('.nav-toggle'),last=chapters[2].querySelector(':scope>summary');first.focus();first.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Tab',shiftKey:true,bubbles:true,cancelable:true}));assert.equal(doc.activeElement,last);last.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true}));assert.equal(doc.activeElement,first);
+ // A lesson summary remains reachable when its own closed parent is the sole
+ // closed ancestor; opening that chapter exposes it at the end of the trap.
+ chapters[2].open=true;const lastLesson=chapters[2].querySelector('details');lastLesson.open=false;first.focus();first.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Tab',shiftKey:true,bubbles:true,cancelable:true}));assert.equal(doc.activeElement,lastLesson.querySelector('summary'));assert.notEqual(visibleSummary,hiddenSummary);assert.equal(calls.length,count);
+});
 
 test('UX2333 independent sibling navigation reclaims all four tracks without touching the answer or server state',async t=>{
  const {store,w,doc,calls}=await app(t,{page:'lesson/lesson-1/apply',width:1400});const shell=doc.querySelector('.nav-shell'),main=doc.querySelector('#main-content'),menu=doc.querySelector('#main-menu'),course=doc.querySelector('#course-navigation');assert.equal(menu.parentElement,main.parentElement);assert.equal(course.parentElement,main.parentElement);assert.equal(main.contains(course),false);assert.equal(doc.querySelector('.lesson-layout').contains(course),false);const answer=doc.querySelector('#answer');answer.value='SYNTHETIC untouched draft';
