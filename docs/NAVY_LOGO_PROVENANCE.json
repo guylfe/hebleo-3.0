@@ -1,0 +1,18 @@
+{
+  "source": "C:/Users/Trans/.openmausbot/attachments/d172fe3c-13f0-4919-bd7f-1eba631b61bc.png",
+  "destination": "public/assets/hebleo-wide-navy.png",
+  "publicURL": "/assets/hebleo-wide-navy.png",
+  "suppliedBy": "Guy",
+  "sha256": "D744D37A3A10F315D58372B3A8F557B2913C04F6D6065C4F15AE26FC10789971",
+  "bytes": 137630,
+  "width": 3693,
+  "height": 1198,
+  "format": "PNG RGBA8",
+  "byteIdentical": true,
+  "transformation": "none",
+  "cssWidth": 160,
+  "geometry": "height:auto;object-fit:contain;intrinsic dimensions reserved",
+  "accessibleName": "Hebleo home",
+  "imageAlt": "",
+  "nativeRenderedReview": "OPEN; no candidate captures"
+}

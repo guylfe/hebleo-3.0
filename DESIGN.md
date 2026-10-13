@@ -51,7 +51,7 @@ components:
 
 The course is the spine. Quiet, seamless teaching prose and a clearly bounded current question carry attention. The blue palette, horizontal main navigation, separate course outline and wide authentic logo follow the selected Oct13 prototype and its application handoff; they supersede the prior Oct12 two-rail shell. This is a product surface for Hebrew learners and authors, using the existing application, source content and permissions.
 
-The wide header artwork is the signature. Guy's 17:37 navy-wide preference supersedes cyan. FINAL LOGO ASSET PENDING: no verified original navy-wide asset has arrived. The reserved 160px slot is visibly labelled pending in this private candidate. No recoloring, reconstructed lettering or emblem-only substitution is permitted. Cyan stays in the reference directory only.
+The wide header artwork is the signature. Guy's supplied original navy PNG is installed unchanged at public/assets/hebleo-wide-navy.png (3693x1198,137630 bytes,SHA256 D744D37A3A10F315D58372B3A8F557B2913C04F6D6065C4F15AE26FC10789971). Both app and Google setup use the image in the160px wide home link with intrinsic dimensions, height:auto/object-fit:contain and preserved transparency. The decorative image has empty alt; the home link supplies its accessible name. No recoloring, reconstruction, crop or emblem-only substitution. The placeholder is removed; rendered legibility remains for UX critique.
 
 ## Colors
 
