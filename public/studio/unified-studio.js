@@ -29,7 +29,7 @@ export function mountComponentDrag(host,{onMove,onStart=()=>{}}){
 // One content snapshot, one CAS save. All sibling editors contribute patches before any save.
 export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expectedDraftToken=null,saveDraft,onSaved=()=>{},onLessonSelect=()=>{},onChanged=()=>{},getExerciseDependencies,getWorkspaceImpact,newId=prefix=>prefix+'-'+crypto.randomUUID(),markdownDependencies}){
  let workspace=structuredClone(content),selected=lessonId||workspace.lessons[0]?.id,disposed=false,saving=false,dirty=false,children=[],exerciseMounts=[],wordId=workspace.words[0]?.id,wordOriginal=null,layout=false;
- const dependencyRequests=new WeakMap();
+ const dependencyRequests=new WeakMap(),saveWaiters=[];
  const ctl=new host.ownerDocument.defaultView.AbortController(),doc=host.ownerDocument;
  const status=message=>{const el=host.querySelector('[data-unified-status]');if(el)el.textContent=message;};
  const touch=()=>{dirty=true;onChanged();host.querySelector('[data-unsaved-status]').textContent='Unsaved workspace edits. Save includes lesson, component, exercise and vocabulary edits.';};
@@ -136,7 +136,7 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
    const result=await saveDraft({baseRevisionId,expectedDraftToken,content:next,...(reviewedDraftToken?{reviewedDraftToken}:{})});if(disposed)return result;
    workspace=structuredClone(next);expectedDraftToken=result?.draftToken??expectedDraftToken;dirty=false;status('Draft saved. Publish separately.');await onSaved(result,next);if(!disposed){renderLesson();renderWord();curriculum.refresh();host.querySelector('[data-unsaved-status]').textContent='All workspace edits saved to the private draft.';status('Draft saved. Publish separately.');}return result;
   }catch(err){if(!disposed)status(draftSaveError(err)+' · All entered values retained.');throw err;}
-  finally{saving=false;if(!disposed)lock(false);}
+  finally{saving=false;if(!disposed)lock(false);saveWaiters.splice(0).forEach(resolve=>resolve());}
  }
  host.innerHTML='<section class="card unified-studio"><div data-curriculum-editor></div><p data-unsaved-status role="status">Opening the workspace writes nothing. Changes are staged only by explicit Save.</p><p data-unified-status role="status"></p><p data-workspace-impact role="status" hidden></p><div data-lesson-workspace></div><details><summary>Author card presentation default</summary><form data-review-policy-form><label>Default flashcard front Nikkud<select data-review-policy><option value="full">With Nikkud</option><option value="curated">Authored Nikkud</option><option value="none">Without Nikkud</option></select></label><button type="submit">Save default & workspace edits</button></form></details><details class="studio-source-browser"><summary>Vocabulary source · search, tags and lesson filters</summary><div data-source-browser></div><div data-word-editor></div></details></section>';
  const curriculum=mountCurriculumEditor(host.querySelector('[data-curriculum-editor]'),{getContent:collectAll,selectedLessonId:selected,newId:()=>newId('chapter'),onChange:next=>{workspace=next;touch();renderLesson();renderWord();},onLessonSelect:id=>{try{collectAll();selected=id;onLessonSelect(id);renderLesson();return true;}catch(err){status(err.message);return false;}}});
@@ -158,5 +158,5 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
  const block=type==='explanation'?{id,type,source:'inline',renderer:'text',text:'',options:{textDirection:'auto'}}:type==='vocabulary'?{id,type,source:'words',renderer:'vocabulary-table',selector:{mode:'lesson',lessonId:selected}}:{id,type,source:'exercises',renderer:'practice',role:b.matches('[data-add-check]')?'check':'apply',selector:{mode:'ids',ids:[]}};
  const index=b.matches('[data-add-check]')?next.blocks.findIndex(x=>x.id===b.dataset.addCheck)+1:next.blocks.length;next.blocks.splice(index,0,block);return next;});
  },{signal:ctl.signal});
- return {getContent:collectAll,save:stage,isDirty:()=>dirty||exerciseMounts.some(({mount})=>Object.keys(mount.getEdits()).length>0),dispose(){disposed=true;ctl.abort();clearChildren();curriculum.dispose();browser.dispose();host.replaceChildren();}};
+ return {getContent:collectAll,save:stage,whenIdle:()=>saving?new Promise(resolve=>saveWaiters.push(resolve)):Promise.resolve(),isDirty:()=>dirty||exerciseMounts.some(({mount})=>Object.keys(mount.getEdits()).length>0),dispose(){disposed=true;ctl.abort();clearChildren();curriculum.dispose();browser.dispose();host.replaceChildren();}};
 }
