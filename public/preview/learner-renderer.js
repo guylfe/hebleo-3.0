@@ -162,7 +162,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           : practice();
         root.innerHTML = settings() + (exercise ? '' : note()) + '<section class="card lesson-section">' + body + '</section>' + lookupCard();
         syncAudioControls(root,Number(preferences.audioSpeed)||1);
-        if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select').forEach(el => { el.disabled = true; }); }
+        if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select,textarea').forEach(el => { el.disabled = true; }); }
         if (exercise?.type === 'matching' && !result && !busy) bindMatching(root, (id, meaning) => { if (active()) updateDraft({...draft, matching:matchWord(draft.matching, id, meaning)}); });
         restoreFocus(); reveal();
         if(ownerKeyboard){ownerKeyboard.mount(container.closest('dialog')||container);ownerKeyboard.sync(keyboard,preferences,'preview|'+lessonId+'|'+(componentId||step)+'|'+question);}
@@ -205,7 +205,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         else if (action === 'token') { if (!result) { updateDraft({...draft, selectedTokens:[...draft.selectedTokens, Number(value)]}); keepKeys(); } }
         else if (action === 'remove-token') { if (!result) { updateDraft({...draft, selectedTokens:draft.selectedTokens.filter((_, i) => i !== Number(value))}); keepKeys(); } }
         else if (action === 'check') submit();
-        else if (action === 'concept' || action === 'concept-close') {const input=root.querySelector('#answer');if(action==='concept'&&input)answerSelection={start:input.selectionStart,end:input.selectionEnd};conceptOpen=action==='concept';render();if(!conceptOpen){const next=root.querySelector('#answer');if(next&&!next.disabled){next.focus({preventScroll:true});if(answerSelection)next.setSelectionRange(answerSelection.start,answerSelection.end);}}}
+        else if (action === 'concept' || action === 'concept-close') {const input=root.querySelector('#answer');if(input)answerSelection={start:input.selectionStart,end:input.selectionEnd};conceptOpen=action==='concept';render();const next=root.querySelector('#answer');if(next&&!next.disabled){next.focus({preventScroll:true});if(answerSelection)next.setSelectionRange(answerSelection.start,answerSelection.end);}}
         else if (action === 'retry-question') call('retry');
         else if (action === 'next-question' || action === 'next-step') call('next');
         else if (action === 'lookup') call('lookup', value);

@@ -11,4 +11,4 @@ jobs:
         with:
           node-version: '24'
       - run: npm ci --ignore-scripts
-      - run: npm run verify
+      - run: npm run verify:candidate
