@@ -227,7 +227,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         if (typing) { if (event.target.id === 'answer' && event.key === 'Enter' && !event.shiftKey && !result) { event.preventDefault(); submit(); } return; }
         if ((event.key === 'Enter' || event.key === ' ') && ['BUTTON','A','SUMMARY'].includes(event.target.tagName)) return;
         if (event.key === 'Enter' || event.key === ' ') {
-          const el = root.querySelector('[data-action="next-question"],[data-action="check"]');
+          const el = root.querySelector(result ? '[data-action="next-question"]' : '[data-action="check"]');
           if (el && !el.disabled) { event.preventDefault(); el.click(); keepKeys(); }
         } else if (/^[1-9]$/.test(event.key)) {
           const el = root.querySelectorAll('[data-action="choice"]')[Number(event.key) - 1];

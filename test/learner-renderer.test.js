@@ -127,7 +127,9 @@ test('wrong answers keep the local draft through re-renders, show the learner fe
   h.root().querySelector('#answer').dispatchEvent(new h.w.KeyboardEvent('keydown', {key:'Enter', bubbles:true, cancelable:true}));
   await settled(() => h.root()?.querySelector('.feedback.wrong'));
   assert.equal(h.evaluations.length, 1); assert.equal(h.evaluations[0].answer, 'הוא');
-  assert.match(h.root().querySelector('.feedback').textContent, /Your answer: הוא/);
+  assert.equal(h.root().querySelector('.feedback').getAttribute('aria-label'),'Incorrect');
+  assert.equal(h.root().querySelector('#answer').value,'הוא');
+  assert.doesNotMatch(h.root().querySelector('.feedback').textContent,/Your answer:|Accepted answer:/);
   assert.equal(h.root().querySelector('#answer').disabled, true);
   h.root().querySelector('[data-action="retry-question"]').click();
   assert.equal(h.root().querySelector('.feedback'), null);

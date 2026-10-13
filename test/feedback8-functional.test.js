@@ -40,9 +40,9 @@ test('FB8 moderation is author-only, soft and audited; old/new records and revis
   s.moderateQuestion(author,{userId:alex,requestId:input.requestId,action:'keep'});
   s.moderateQuestion(author,{userId:alex,requestId:input.requestId,action:'remove'});
   assert.deepEqual(s.questions(sam),[]);assert.deepEqual(s.questions(alex),[]);
-  const raw=s.questions(author)[0];assert.equal(raw.question,input.question);assert.equal(raw.revisionId,pin);assert.deepEqual(raw.moderation.map(m=>m.action),['keep','remove']);
+  assert.deepEqual(s.questions(author),[]);const raw=s.questionAudit(author)[0];assert.equal(raw.question,input.question);assert.equal(raw.revisionId,pin);assert.deepEqual(raw.moderation.map(m=>m.action),['keep','remove']);
   const removed=tables(s);s.moderateQuestion(author,{userId:alex,requestId:input.requestId,action:'remove'});assert.deepEqual(tables(s),removed);
-  const b=s.backup(),d=setup(t),r=d.restore(b);const restored=d.questions(author)[0];
+  const b=s.backup(),d=setup(t),r=d.restore(b);assert.deepEqual(d.questions(author),[]);const restored=d.questionAudit(author)[0];
   assert.equal(restored.commentId,q.commentId);assert.deepEqual(restored.moderation,raw.moderation);assert.equal(restored.revisionId,r.revisions[pin]);assert.deepEqual(d.questions(sam),[]);
   d.moderateQuestion(author,{userId:alex,requestId:input.requestId,action:'keep'});assert.equal(d.questions(sam).length,1);
   assert.deepEqual(d.questions(author)[0].moderation.map(m=>m.action),['keep','remove','keep']);

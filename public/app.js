@@ -412,7 +412,7 @@ async function act(action,value,source) {
   }
   if(action==='choice'){if(state.result||submitting)return;state.answer=value;if(pref().immediateAnswers)await submitAnswer();else{await queueSave();render();}return;}
   if(action==='check'){await submitAnswer();return;}
-  if(action==='save-answer-position'){if(!state.result||submitting)return;const scope=root.querySelector('#practice'),owner=state.user;await queueSave();if(owner===state.user&&root.querySelector('#practice')===scope){scope.querySelector('[data-position-recovery]')?.remove();scope.querySelector('[data-action="next-question"]').disabled=false;}return;}
+  if(action==='save-answer-position'){if(!state.result||submitting)return;const scope=root.querySelector('#practice'),owner=state.user;await load();if(owner!==state.user||root.querySelector('#practice')!==scope)return;await queueSave();if(owner===state.user&&root.querySelector('#practice')===scope){showAnswerResult(scope,currentExercise());scope.querySelector('[data-position-recovery]')?.remove();}return;}
   if(action==='token'){if(state.result)return;state.selectedTokens.push(Number(value));await queueSave();render();return;}
   if(action==='remove-token'){if(state.result)return;state.selectedTokens.splice(Number(value),1);await queueSave();render();return;}
   if(action==='next-question'){if(!state.result)return;const ids=portionExercises(content(),lessonObject(),state.step,state.practiceIds);if(state.question+1>=ids.length){state.step=portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1];state.practiceIds=[];resetQuestion();}else{state.question++;clearQuestionAnswer();}setRoute();await queueSave();render();focusHeading();return;}
