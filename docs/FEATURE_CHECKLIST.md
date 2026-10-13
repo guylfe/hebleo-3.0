@@ -459,3 +459,14 @@ Baseline5150f950; exact successor SHA and sealed command evidence are in the iso
 | UXI13-05 / E05, H03 | Inline Watch/Read updates explanation body only and retains help/answer/caret/valid Keep open. Synthetic format-state fixture asserts zero request/store/attempt changes | No canonical content/media addition; audio-speed/playback DEFERRED; rendered/RTL/native acceptance open |
 
 Commands/counts and per-ID cases are recorded in docs/UXI13_CORRECTIONS.md and the evidence handoff. Browser-control pause and mobile/APK deferral remain binding. No new design audit, QA/Release dispatch, public launch or WordPress action. One consolidated independent QA milestone follows corrections.
+
+
+## QA-UXI13-09 — stale Help entry correction, 2026-10-13
+
+UX Owner closed UXI13-01–05 at source/test level on1669a10 (reported independent25/25). Consolidated QA55 PASS/1 FAIL blocks activation on the additional stale Help defect. These prior source closures and original Guy-result cells are retained.
+
+| Stable ID | Owner implementation / actual evidence | Independent / human boundary |
+| --- | --- | --- |
+| QA-UXI13-09 / UXI13-02 / X03,D01 | Help captures initiating profile, route/history, lesson session/portion/question and panel request identity. Monotonic dismissal/replacement/new Help generations reject obsolete success/error before panel entry. Newer note/comment fields and exact text/selection remain. Original independent QA regression is retained unchanged; 18 added delayed-response lifecycle cases. Corrected affected batch52/52 PASS; archived1669a10 negative batch2 PASS/17 FAIL expected; syntax/diff PASS. Exact SHA/seal/log paths in docs/UXI13_CORRECTIONS.md | Owner FIXED; corrected-SHA independent QA recheck PENDING; activation gate BLOCKED until QA returns. Native/rendered/Guy acceptance OPEN. No acceptance claim from automated evidence |
+
+Existing horizontal/blue design and original navy PNG hash D744D37A3A10F315D58372B3A8F557B2913C04F6D6065C4F15AE26FC10789971 are retained. No demo63357 activation/restart, protected data/config/auth/source/reset/publish or WordPress changes. Browser pause persists; mobile/physical deferred to APK; audio-speed/playback DEFERRED and excluded. No broad local/manual suite or design audit repeated. Independent recheck and subsequent concrete state-preserving activation belong to Leo's next handoff.
