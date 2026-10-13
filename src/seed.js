@@ -1,3 +1,4 @@
+import {demoSignalReference} from './demo-signal.js';
 // Illustrative fixtures only. These are not imported or approved Hebleo lessons.
 export const seed = {
   schemaVersion: 1,
@@ -82,3 +83,11 @@ export function upgradeDemo(content) {
   return next;
 }
 Object.assign(seed,upgradeDemo(seed));
+
+// Explicitly authorized demo-only signal. Existing linked audio, source content and saved drafts are untouched.
+export function upgradeDemoSignal(content){
+ if(content.provenance?.kind!=='synthetic-demo'||content.demoSignalVersion===1)return null;const next=structuredClone(content);next.demoSignalVersion=1;
+ for(const id of ['w-ani','w-mi']){const word=next.words.find(w=>w.id===id),original=seed.words.find(w=>w.id===id);if(word&&!word.audio&&word.pointed===original?.pointed)word.audio=structuredClone(demoSignalReference);}
+ return next;
+}
+Object.assign(seed,upgradeDemoSignal(seed));

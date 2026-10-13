@@ -17,7 +17,7 @@ export function evaluateAnswer(exercise, content, answer) {
     if (exercise.type === 'recognition') { expected = content.words.find(w => w.id === exercise.wordId).english; correct = answer === expected; }
     else { const w = content.words.find(w => w.id === exercise.wordId); const answers = exercise.type === 'typing' ? (Object.hasOwn(exercise,'answers') ? exercise.answers : [w.pointed, w.unpointed]) : exercise.answers; expected = answers[0]; correct = hasGradingContent(answer) && answers.some(a => hasGradingContent(a) && normalizeHebrew(a) === normalizeHebrew(answer)); }
   }
-  return { correct: Boolean(correct), expected, ...(pairResults ? {pairResults} : {}), ...(!['matching','recognition'].includes(exercise.type) ? {evaluationPolicy:'ignore-nikkud-v1'} : {}) };
+  return { correct: Boolean(correct), expected, ...(Array.isArray(exercise.answers)&&new Set(exercise.answers).size>1?{acceptedAnswers:[...new Set(exercise.answers)]}:{}), ...(pairResults ? {pairResults} : {}), ...(!['matching','recognition'].includes(exercise.type) ? {evaluationPolicy:'ignore-nikkud-v1'} : {}) };
 }
 
 // Derive display verdicts on the server from the saved submitted/expected pairs.

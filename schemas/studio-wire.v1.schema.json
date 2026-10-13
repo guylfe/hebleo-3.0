@@ -450,6 +450,17 @@
             },
             "evaluationPolicy": {
               "const": "ignore-nikkud-v1"
+            },
+            "acceptedAnswers": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 100,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
             }
           },
           "required": [

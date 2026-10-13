@@ -17,31 +17,40 @@ export function cellAttribute(w,key){return ' style="'+cellCSS(sourceCell(w,key)
 export function playbackSpeedControl(disabled=false) {
   return '<label class="playback-speed">Playback speed <select data-audio-speed aria-label="Playback speed" '+(disabled?'disabled':'')+'><option value="1">Normal (1×)</option><option value="0.75">Slower (0.75×)</option></select></label>';
 }
-export function syncAudioControls(root,speed=1) {
-  for(const media of root.querySelectorAll('audio,video')) {
-    media.playbackRate=speed;media.preservesPitch=true;
-    if(!media.previousElementSibling?.matches('[data-native-speed]')) {const slot=media.ownerDocument.createElement('div');slot.dataset.nativeSpeed='';slot.innerHTML=playbackSpeedControl();media.before(slot);}
-  }
-  for(const input of root.querySelectorAll('[data-audio-speed]'))input.value=String(speed);
+export function syncReferenceControls(scope,state={}) {
+ for(const control of scope.querySelectorAll('[data-reference-control]')){const current=control.dataset.value===state.url?state.status:'idle',active=['playing','buffering'].includes(current),error=current==='error';control.dataset.playbackState=current||'idle';control.setAttribute('aria-pressed',String(active));control.setAttribute('aria-busy',String(current==='buffering'));control.textContent=active?'Ⅱ Pause':error?'↻ Retry':'▶ Play';control.setAttribute('aria-label',(active?'Pause':error?'Retry':'Play')+' recording for '+control.dataset.referenceLabel);const status=control.parentElement.querySelector('[data-reference-status]');if(status)status.textContent=error?(state.error||'Recording could not play. Retry.'):current==='buffering'?'Loading recording…':'';}
+}
+export function syncAudioControls(scope,speed=1,state={}) {
+ for(const media of scope.querySelectorAll('audio,video')){media.playbackRate=speed;media.preservesPitch=true;}
+ const marked=[...(scope.matches?.('[data-audio-surface]')?[scope]:[]),...scope.querySelectorAll('[data-audio-surface]')],surfaces=marked.length?marked.filter(el=>!marked.some(parent=>parent!==el&&parent.contains(el))):[scope];
+ for(const surface of surfaces){let toolbar=surface.querySelector(':scope > [data-audio-toolbar]');const available=Boolean(surface.querySelector('[data-reference-control],audio[src],video[src]'));if(!available){toolbar?.remove();continue;}if(!toolbar){toolbar=surface.ownerDocument.createElement('div');toolbar.dataset.audioToolbar='';toolbar.className='surface-media-toolbar';toolbar.innerHTML=playbackSpeedControl();surface.prepend(toolbar);}toolbar.querySelector('[data-audio-speed]').value=String(speed);}
+ for(const input of scope.querySelectorAll('[data-audio-speed]'))input.value=String(speed);syncReferenceControls(scope,state);
 }
 export function audioControls(audio,label) {
-  const url=audioURL(audio);
-  return '<div class="audio-controls" role="group" aria-label="'+esc(label)+' recording">'+button('▶ Play / Pause','audio','small secondary',url||'',!url)+button('↻ Replay','audio-replay','small outline',url||'',!url)+playbackSpeedControl(!url)+(url?'':'<small>Recording not linked</small>')+'</div>';
+ const url=audioURL(audio);if(!url)return '';const synthetic=audio?.kind==='synthetic-demo';
+ return '<div class="audio-controls" role="group" aria-label="'+esc(label)+' recording">'+button('▶ Play','audio','small secondary',url).replace('<button','<button data-reference-control data-reference-label="'+esc(label)+'" aria-pressed="false" aria-label="Play recording for '+esc(label)+'"')+'<span class="reference-status" data-reference-status role="status"></span>'+(synthetic?'<small class="synthetic-audio-note">Demo sound · not Hebrew pronunciation</small>':'')+'</div>';
+}
+export function structuredExamples(value) {
+ const render=item=>{if(!item||typeof item!=='object'||Array.isArray(item)||typeof item.hebrew!=='string')return '<div class="example-fallback">'+formatValue(item,'')+'</div>';
+ const cell=key=>item.fieldFormatting?.[key],theme=item.sourceTheme||[],rich=(key,dir)=>'<bdi dir="'+dir+'" style="'+cellCSS(cell(key),theme)+'">'+richCell(item[key],cell(key),theme)+'</bdi>',remaining=Object.entries(item).filter(([key])=>!['hebrew','english','notes','prefix','fieldFormatting','sourceTheme'].includes(key));
+ return '<div class="authored-example"><div class="example-hebrew" dir="rtl">'+rich('hebrew','rtl')+'</div>'+(typeof item.english==='string'?'<div class="example-english" dir="ltr">'+rich('english','ltr')+'</div>':item.english!=null?formatValue(item.english):'')+(item.notes!=null?'<div class="example-notes" dir="auto">'+(typeof item.notes==='string'?rich('notes','auto'):formatValue(item.notes))+'</div>':'')+(item.prefix!=null?'<div class="example-prefix">Prefix: '+(typeof item.prefix==='string'?rich('prefix','rtl'):formatValue(item.prefix))+'</div>':'')+(remaining.length?'<dl class="example-extra">'+remaining.map(([key,v])=>'<dt>'+esc(fieldLabel(key))+'</dt><dd>'+formatValue(v,key)+'</dd>').join('')+'</dl>':'')+'</div>';};
+ return '<div class="authored-examples">'+(Array.isArray(value)?value:[value]).map(render).join('')+'</div>';
 }
 export function formatValue(value,field='') {
   if(value===null || value===undefined)return '';
+  if(/^(examples?|prefixed[ _-]?forms?)$/i.test(field))return structuredExamples(value);
   if(typeof value==='object')return Array.isArray(value)?'<ul>'+value.map(v=>'<li>'+formatValue(v,field)+'</li>').join('')+'</ul>':audioURL(value)&&/audio|recording/i.test(field)?audioControls(value,'Related form'):'<dl>'+Object.entries(value).map(([k,v])=>'<dt>'+esc(fieldLabel(k))+'</dt><dd>'+formatValue(v,k)+'</dd>').join('')+'</dl>';
   if(audioURL(value)&&/audio|recording/i.test(field))return audioControls(value,'Related form');
   return '<bdi>'+esc(value)+'</bdi>';
 }
-export function richFields(w) { const fields=wordFields(w);return fields.length?'<dl class="word-details">'+fields.map(([k,v])=>'<dt>'+esc(fieldLabel(k))+'</dt><dd'+cellAttribute(w,k)+'>'+(typeof v==='string'?fieldText(w,k,v):formatValue(v,k))+'</dd>').join('')+'</dl>':'<p>No additional source fields for this demo entry.</p>'; }
+export function richFields(w) { const fields=wordFields(w);return fields.length?'<dl class="word-details">'+fields.map(([k,v])=>'<dt>'+esc(fieldLabel(k))+'</dt><dd'+cellAttribute(w,k)+'>'+(/audio|recording/i.test(k)?formatValue(v,k):typeof v==='string'?fieldText(w,k,v):formatValue(v,k))+'</dd>').join('')+'</dl>':'<p>No additional source fields for this demo entry.</p>'; }
 // before/after carry the learner-only bookmark and review controls; rehearsal passes none.
 export function wordCard(w,{notes=true,before='',after='',privateNote=''}={}) {
   return '<article class="word-card">'+before+'<button class="hebrew-word" data-action="lookup" data-value="'+w.id+'" aria-label="Open full entry for '+esc(w.english)+'">'+wordText(w)+'</button><div class="meaning">'+fieldText(w,'english',w.english)+'</div>'+audioControls(w.audio,w.english)+(notes&&w.notes?'<p class="note"'+cellAttribute(w,'notes')+'>'+fieldText(w,'notes',w.notes)+'</p>':'')+'<details><summary>Full vocabulary entry</summary>'+richFields(w)+privateNote+'</details>'+after+'</article>';
 }
 export function vocabularyTable(words) {
   const extras=[...new Set(words.flatMap(w=>wordFields(w).map(([k])=>k)))];
-  return '<div class="table-scroll" role="region" aria-label="Vocabulary table" tabindex="0"><table class="table vocabulary-table"><thead><tr>'+['Hebrew','English','Audio','Notes',...extras.map(fieldLabel),'Entry'].map(x=>'<th scope="col">'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+words.map(w=>'<tr><td'+cellAttribute(w,'pointed')+'>'+wordText(w)+'</td><td'+cellAttribute(w,'english')+'>'+fieldText(w,'english',w.english)+'</td><td>'+audioControls(w.audio,w.english)+'</td><td'+cellAttribute(w,'notes')+'>'+fieldText(w,'notes',w.notes)+'</td>'+extras.map(k=>{const value=wordFields(w).find(([key])=>key===k)?.[1];return '<td'+cellAttribute(w,k)+'>'+(typeof value==='string'?fieldText(w,k,value):formatValue(value,k))+'</td>';}).join('')+'<td>'+button('Open entry','lookup','small secondary',w.id)+'</td></tr>').join('')+'</tbody></table></div>';
+  return '<div class="table-scroll" role="region" aria-label="Vocabulary table" tabindex="0"><table class="table vocabulary-table"><thead><tr>'+['Hebrew','English','Audio','Notes',...extras.map(fieldLabel),'Entry'].map(x=>'<th scope="col">'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+words.map(w=>'<tr><td'+cellAttribute(w,'pointed')+'>'+wordText(w)+'</td><td'+cellAttribute(w,'english')+'>'+fieldText(w,'english',w.english)+'</td><td>'+audioControls(w.audio,w.english)+'</td><td'+cellAttribute(w,'notes')+'>'+fieldText(w,'notes',w.notes)+'</td>'+extras.map(k=>{const value=wordFields(w).find(([key])=>key===k)?.[1];return '<td'+cellAttribute(w,k)+'>'+(/audio|recording/i.test(k)?formatValue(value,k):typeof value==='string'?fieldText(w,k,value):formatValue(value,k))+'</td>';}).join('')+'<td>'+button('Open entry','lookup','small secondary',w.id)+'</td></tr>').join('')+'</tbody></table></div>';
 }
 export function lessonInteractions(l,renderLesson){return (l.interactions||[]).map((item,i)=>item.type==='reveal'?'<details class="lesson-interaction"><summary>'+esc(item.prompt)+'</summary>'+renderLesson(item.answer)+'</details>':'<section class="lesson-interaction"><h3>'+esc(item.prompt)+'</h3><div class="choices">'+item.choices.map((choice,j)=>button(esc(choice),'inline-choice','secondary',i+'|'+j)).join('')+'</div><p class="inline-feedback" role="status" id="inline-feedback-'+i+'"></p></section>').join('');}
 export function learnMedia(l,mode,renderLesson,conceptTime) {
@@ -61,7 +70,7 @@ export function sentenceTiles(e,selectedTokens,result) {
     if(groups.length && prefixes.has(selectedTokens[position-1]))groups.at(-1).push({position,index});
     else groups.push([{position,index}]);
   }
-  return groups.map(group=>'<span class="sentence-tile-group">'+group.map(({position,index})=>'<button class="token target" data-action="remove-token" data-value="'+position+'" '+(result?'disabled':'')+'>'+esc(e.tokens[index])+'</button>').join('')+'</span>').join('');
+  return groups.map(group=>'<span class="sentence-tile-group">'+group.map(({position,index},member)=>'<button class="token target '+(member>0?'joined-previous ':'')+(member<group.length-1?'joined-next':'')+'" data-action="remove-token" data-value="'+position+'" '+(result?'disabled':'')+'>'+esc(e.tokens[index])+'</button>').join('')+'</span>').join('');
 }
 export function exerciseInput(e,{mode,word,draft,result,keyboard=''}) {
   if(e.type==='recognition')return '<div class="hebrew large">'+wordText(word(e.wordId),mode)+'</div><div class="choices">'+e.choices.map((c,i)=>'<button class="choice '+(draft.text===c?'selected':'')+'" data-action="choice" data-value="'+esc(c)+'" '+(result?'disabled':'')+'><span class="shortcut">'+(i+1)+'</span>'+esc(c)+'</button>').join('')+'</div>';
@@ -70,7 +79,12 @@ export function exerciseInput(e,{mode,word,draft,result,keyboard=''}) {
   return (e.context?'<div class="hebrew large">'+esc(e.context)+'</div>':'')+(e.type==='cloze'?'<label for="answer">Type the missing word</label>':'<label for="answer">Your Hebrew answer</label>')+'<textarea id="answer" class="answer-input" dir="rtl" rows="2" autocomplete="off" spellcheck="false" inputmode="text" '+(result?'disabled':'')+'>'+esc(draft.text)+'</textarea>'+(result?'':keyboard);
 }
 export function exerciseFeedback(e,result) {
-  return result?'<div class="feedback '+(result.correct?'':'wrong')+'" role="status"><strong>'+(result.correct?'That’s right.':'Let’s look at this answer.')+'</strong><p>Your answer: <bdi>'+esc(typeof result.answer==='object'?(e.type==='matching'?e.wordIds.map(id=>result.answer[id]??'—'):Object.values(result.answer)).join(' · '):result.answer)+'</bdi></p><p>Accepted answer: <bdi>'+esc(typeof result.expected==='object'?(e.type==='matching'?e.wordIds.map(id=>result.expected[id]??'—'):Object.values(result.expected)).join(' · '):result.expected)+'</bdi></p>'+(e.feedback?'<p>'+esc(e.feedback)+'</p>':'')+(e.feedbackDetails?'<details><summary>Explain further</summary><p>'+esc(e.feedbackDetails)+'</p></details>':'')+'</div>':'';
+ if(!result)return '';const status=result.correct?'Correct':'Incorrect',explanation=[e.feedback,e.feedbackDetails].filter(value=>typeof value==='string'&&value.trim()),alternatives=Array.isArray(result.acceptedAnswers)?[...new Set(result.acceptedAnswers)].filter(value=>typeof value==='string'&&value.trim()):[],meaningful=explanation.length||alternatives.length>1;
+ const icon='<span aria-hidden="true">'+(result.correct?'✓':'✕')+'</span><span class="sr-only">'+status+'</span>',body=explanation.map(value=>'<p dir="auto">'+esc(value)+'</p>').join('')+(alternatives.length>1?'<p>Authored alternatives</p><ul>'+alternatives.map(value=>'<li><bdi dir="auto">'+esc(value)+'</bdi></li>').join('')+'</ul>':'');
+ return '<div class="feedback compact-result '+(result.correct?'':'wrong')+'" role="status" aria-label="'+status+'">'+(meaningful?'<span class="result-explanation"><button type="button" class="result-icon" data-result-explanation aria-label="'+status+'. Show explanation" aria-expanded="false">'+icon+'</button><span class="result-popover" data-result-popover role="note" hidden>'+body+'</span></span>':'<span class="result-icon" aria-label="'+status+'">'+icon+'</span>')+'</div>';
+}
+export function bindResultExplanations(scope){
+ for(const trigger of scope.querySelectorAll('[data-result-explanation]')){const box=trigger.parentElement,popover=box.querySelector('[data-result-popover]');let dismissed=false,pointerWasOpen=null;trigger.addEventListener('pointerdown',()=>pointerWasOpen=!popover.hidden);const show=()=>{if(dismissed)return;popover.hidden=false;trigger.setAttribute('aria-expanded','true');},hide=()=>{popover.hidden=true;trigger.setAttribute('aria-expanded','false');};box.addEventListener('pointerenter',event=>{if(event.pointerType==='touch')return;dismissed=false;show();});box.addEventListener('pointerleave',()=>{if(!box.contains(box.ownerDocument.activeElement))hide();});trigger.addEventListener('focus',()=>{dismissed=false;show();});trigger.addEventListener('blur',()=>{if(!box.matches(':hover'))hide();});trigger.addEventListener('click',()=>{dismissed=pointerWasOpen??!popover.hidden;pointerWasOpen=null;if(dismissed)hide();else show();});box.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();dismissed=true;hide();}});}
 }
 // Wire answer exactly as graded by the learner attempt and draft preview evaluate endpoints.
 export function wireAnswer(e,draft) {

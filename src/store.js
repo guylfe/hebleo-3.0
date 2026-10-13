@@ -6,7 +6,8 @@ import {scheduleReview} from '../public/review-schedule.js';
 import { DomainError } from './errors.js';
 import { normalizeHebrew, evaluateAnswer, matchingPairResults } from './evaluate.js';
 import {hasGradingContent} from '../public/answer-policy.js';
-import { seed, upgradeDemo } from './seed.js';
+import {demoSignalBlob,demoSignalReference} from './demo-signal.js';
+import { seed, upgradeDemo, upgradeDemoSignal } from './seed.js';
 import {exerciseInLesson, validateCurriculum, validateLessonComposition, resolveComponent, orderedLessons, lessonFlow, keyboardForLesson} from '../public/course.js';
 import {validateFormatting,validateImportSource} from '../public/vocabulary-import.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
@@ -162,10 +163,11 @@ export class Store {
     this.db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; CREATE TABLE IF NOT EXISTS kv(key TEXT PRIMARY KEY, value TEXT NOT NULL); CREATE TABLE IF NOT EXISTS revisions(id INTEGER PRIMARY KEY AUTOINCREMENT, snapshot TEXT NOT NULL, created_at TEXT NOT NULL, reason TEXT NOT NULL); CREATE TABLE IF NOT EXISTS learners(id TEXT PRIMARY KEY, state TEXT NOT NULL); CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY, payload TEXT NOT NULL);');
     // A refused migration must release the file, or the database stays locked for the caller.
     try { this.migrate(); } catch (e) { this.db.close(); throw e; }
-    if (!this.get('active')) this.transaction(() => { const r = this.addRevision(seed, 'Initial illustrative demo'); this.set('active', r); });
+    if (!this.get('active')) this.transaction(() => { this.media.putBlob(demoSignalBlob);const r = this.addRevision(seed, 'Initial illustrative demo'); this.set('active', r); });
     for (const u of users) if (!this.db.prepare('SELECT id FROM learners WHERE id=?').get(u.id)) { const state = emptyLearner(); if (u.id === 'learner-core') state.membership = false; this.saveLearner(u.id, state); }
-    const upgraded = !this.get('draft') && upgradeDemo(this.snapshot());
-    if (upgraded) { validateContent(upgraded); this.transaction(()=>this.set('active',this.addRevision(upgraded,'Additive UX demo fixture upgrade; learner records retained'))); }
+    const foundation=!this.get('draft')&&upgradeDemo(this.snapshot());
+    const upgraded=!this.get('draft')&&(upgradeDemoSignal(foundation||this.snapshot())||foundation);
+    if (upgraded) { validateContent(upgraded); this.transaction(()=>{if(upgraded.words.some(w=>w.audio?.url===demoSignalReference.url))this.media.putBlob(demoSignalBlob);this.set('active',this.addRevision(upgraded,'Additive synthetic demo presentation fixture; learner records retained'));}); }
   }
   close() { this.db.close(); }
   migrate() {
@@ -381,8 +383,9 @@ export class Store {
   }
   questions(userId) {
     const state=this.learner(userId),author=users.find(u=>u.id===userId)?.canAuthor;
-    return this.db.prepare("SELECT value FROM kv WHERE key LIKE 'question-%' ORDER BY key").all().map(r=>JSON.parse(r.value)).filter(q=>author || (state.purchasedCourses.includes('demo-foundations') && (q.userId===userId && q.discussionVersion!==1 || q.discussionVersion===1 && q.visibility==='visible'))).map(q=>this.questionView(userId,q));
+    return this.db.prepare("SELECT value FROM kv WHERE key LIKE 'question-%' ORDER BY key").all().map(r=>JSON.parse(r.value)).filter(q=>(q.discussionVersion!==1||q.visibility!=='removed')&&(author || (state.purchasedCourses.includes('demo-foundations') && (q.userId===userId && q.discussionVersion!==1 || q.discussionVersion===1 && q.visibility==='visible')))).map(q=>this.questionView(userId,q));
   }
+  questionAudit(userId){this.requireAuthor(userId);return this.db.prepare("SELECT value FROM kv WHERE key LIKE 'question-%' ORDER BY key").all().map(row=>JSON.parse(row.value));}
   askQuestion(userId,input) {
     const state=this.learner(userId);if(!state.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
     if(!Number.isInteger(input.revisionId))throw new DomainError('Question needs a content revision.');

@@ -470,3 +470,21 @@ UX Owner closed UXI13-01–05 at source/test level on1669a10 (reported independe
 | QA-UXI13-09 / UXI13-02 / X03,D01 | Help captures initiating profile, route/history, lesson session/portion/question and panel request identity. Monotonic dismissal/replacement/new Help generations reject obsolete success/error before panel entry. Newer note/comment fields and exact text/selection remain. Original independent QA regression is retained unchanged; 18 added delayed-response lifecycle cases. Corrected affected batch52/52 PASS; archived1669a10 negative batch2 PASS/17 FAIL expected; syntax/diff PASS. Exact SHA/seal/log paths in docs/UXI13_CORRECTIONS.md | Owner FIXED; corrected-SHA independent QA recheck PENDING; activation gate BLOCKED until QA returns. Native/rendered/Guy acceptance OPEN. No acceptance claim from automated evidence |
 
 Existing horizontal/blue design and original navy PNG hash D744D37A3A10F315D58372B3A8F557B2913C04F6D6065C4F15AE26FC10789971 are retained. No demo63357 activation/restart, protected data/config/auth/source/reset/publish or WordPress changes. Browser pause persists; mobile/physical deferred to APK; audio-speed/playback DEFERRED and excluded. No broad local/manual suite or design audit repeated. Independent recheck and subsequent concrete state-preserving activation belong to Leo's next handoff.
+
+
+## Oct14 Guy-feedback refinement — candidate owner evidence
+
+Baseline207628b962b47c8179c9c1c5ff1878b4c926ed14; exact corrected SHA/evidence in feedback14-integration-evidence/FREEZE.json. This bounded batch implements authorized1–6,9–11,13–14, preserves prior UXI13-01..05 and QA-UXI13-09, and leaves all original human-result cells unchanged. See [OCT14_REFINEMENTS.md](OCT14_REFINEMENTS.md) for per-item behavior, actual check scope and unsupported cases. Candidate is not activated during this work.
+
+| Stable mapping | Implemented correction | Acceptance boundary |
+| --- | --- | --- |
+| FB14-01 / DESIGN13-01 / L08,UXI13-03 | Directional rail/grid transition, immediate inert/ARIA, safe reversal/focus, OS+app reduced motion | Source/DOM owner checks; native geometry OPEN |
+| FB14-02 / DESIGN13-02 / H02 | Intact authored RTL/LTR examples, notes/prefix/rich fields, lossless unknown fallback and contained minimum widths | No invented Hebrew or broader vocabulary architecture |
+| FB14-03..05 / M01,P02,R01 | Compact honest shared Play/Pause/retry, one surface preference; private optional recording outside card/rating; actual synthetic nonlinguistic blob on some cards, absent controls on others | Actual module evidence and UI mocks distinguished; native mic/playback OPEN; speed quality/rate tests DEFERRED |
+| FB14-06 / R01–R05 | Separate rating label/real interval lines; actions/order/Undo retained | Colors held, scheduler unchanged |
+| FB14-09 / S01,FB17 | Label/control and filter-group spacing | Native rendering OPEN |
+| FB14-10..11 / D01,X03 | Removed comments absent ordinary projections/counts; retained Author-only off-default audit, filtered centered pager/clamp/singular counts/drafts | No audit deletion or privilege expansion; owner HTTP/Store/DOM evidence |
+| FB14-13 / E02 | Touching-prefix edges only, explicit index grouping and removal/logical spaces retained | Real RTL geometry OPEN |
+| FB14-14 / E02,E05 | Stable actual Check/answer DOM, non-scroll focus/dock reserve, compact conditional authored result, authoritative alternatives and persistence-only recovery | Main-node/Store/wire owner evidence; Preview disposable-root contract retained; native viewport OPEN |
+
+Items7 rating colors,8 general label removals,12 vocabulary architecture and15 blanket motion remain HOLD. After this candidate and UX Owner's bounded review, vocabulary returns to Guy BEFORE phase3/broader walkthrough; no option is selected. Audio control/fixture functionality is authorized here; speed-quality/playback-rate testing remains DEFERRED. Browser/native pause, APK/mobile deferral, one consolidated verification milestone and critique-before-activation remain. No protected demo/service/data/source/WordPress/public action.

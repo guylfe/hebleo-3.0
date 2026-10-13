@@ -1,9 +1,11 @@
-import {setPlaybackSpeed} from '../media.js';
+import * as referenceMedia from '../media.js';
+const {setPlaybackSpeed}=referenceMedia;
+const getPlaybackState=()=>referenceMedia.getPlaybackState?.()||{};
 import {stepExercises, audioURL, portionExercises, portionLesson} from '../ux.js';
 import {keyboardForLesson,resolveComponent} from '../course.js';
 import {resolveBlock} from '../content.js';
 import {bindMatching, matchWord} from '../interactions.js';
-import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseFeedback, wireAnswer} from '../learner-view.js';
+import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls} from '../learner-view.js';
 
 const KEY_ROWS=[
     [
@@ -100,7 +102,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       // A newly shown result (with its retry/next controls) or vocabulary entry is scrolled into the host's visible area.
       const reveal = () => {
         const key = lookupId ? 'lookup:' + lookupId : result ? 'result:' + exerciseId : null;
-        if (key && key !== shownKey) root.querySelector(lookupId ? '.preview-lookup' : '.answer-result')?.scrollIntoView?.({block:'nearest'});
+        if (lookupId && key && key !== shownKey) root.querySelector(lookupId ? '.preview-lookup' : '.answer-result')?.scrollIntoView?.({block:'nearest'});
         shownKey = key;
       };
       // After a shortcut activates a control the root keeps the keys, as the page body does for the learner app.
@@ -145,7 +147,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           + exerciseInput(exercise, {mode, word, draft, result, keyboard:keypad()})
           + note()
           + '<div class="answer-result">'+exerciseFeedback(exercise, result)
-          + (!result?'<div class="answer-commit">'+button('Check answer','check','primary')+'</div>':'')
+          + '<div class="answer-commit">'+button('Check answer','check','primary','',Boolean(result)).replace('<button','<button data-keyboard-preserve')+'</div>'
           + '<div class="toolbar">'+(result&&!result.correct?button('Try this question again','retry-question','small secondary',exercise.id):'')+(allowed?'<details class="preview-vocabulary-help"><summary>Vocabulary help</summary>'+lessonWords.map(w=>button(esc(w.pointed)+' · '+esc(w.english),'lookup','small secondary',w.id)).join('')+'</details>':'')+'</div></div>'
           + '<nav class="exercise-footer lesson-footer" aria-label="Lesson navigation">'+(result?button(question+1===count?'Continue →':'Next question →','next-question','secondary'):'<span>Check your answer to continue.</span>')+'</nav>'
           + (conceptOpen ? '<section class="preview-concept"><h3>Review this concept</h3>' + learnMedia(presentation, audioURL(presentation.video)?'watch':'read',renderLesson,exercise.explanationTime) + button('Close concept','concept-close','small outline') + '</section>' : '');
@@ -161,7 +163,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           : step === 'complete' ? '<div class="empty"><h2>Rehearsal finished.</h2><p>Nothing in this rehearsal was saved to a learner profile.</p><div class="button-row centered">' + button('Exit rehearsal', 'exit', 'primary') + '</div></div>'
           : practice();
         root.innerHTML = settings() + (exercise ? '' : note()) + '<section class="card lesson-section">' + body + '</section>' + lookupCard();
-        syncAudioControls(root,Number(preferences.audioSpeed)||1);
+        syncAudioControls(root,Number(preferences.audioSpeed)||1,getPlaybackState());bindResultExplanations(root);
         if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select,textarea').forEach(el => { el.disabled = true; }); }
         if (exercise?.type === 'matching' && !result && !busy) bindMatching(root, (id, meaning) => { if (active()) updateDraft({...draft, matching:matchWord(draft.matching, id, meaning)}); });
         restoreFocus(); reveal();
@@ -217,7 +219,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         }
       }, {signal});
       root.addEventListener('input', event => { if (event.target.id === 'answer' && !busy && !result) updateDraft({...draft, text:event.target.value}, false); }, {signal});
-      root.addEventListener('change', event => { if(event.target.matches('[data-audio-speed]')&&!busy){const speed=Number(event.target.value);preferences.audioSpeed=speed;call('setPreference','audioSpeed',speed);setPlaybackSpeed(speed);syncAudioControls(root,speed);return;} if (event.target.dataset.previewPref && event.target.tagName === 'SELECT') call('setPreference', event.target.dataset.previewPref, event.target.value); }, {signal});
+      root.addEventListener('change', event => { if(event.target.matches('[data-audio-speed]')&&!busy){const speed=Number(event.target.value);preferences.audioSpeed=speed;call('setPreference','audioSpeed',speed);setPlaybackSpeed(speed);syncAudioControls(root,speed,getPlaybackState());return;} if (event.target.dataset.previewPref && event.target.tagName === 'SELECT') call('setPreference', event.target.dataset.previewPref, event.target.value); }, {signal});
       // Rehearsal keyboard shortcuts stay inside the preview host; defaultPrevented keeps the learner's global handler out.
       (keyScope || root).addEventListener('keydown', event => {
         if (event.defaultPrevented || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || busy) return;
@@ -233,6 +235,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         }
       }, {signal});
       ownerKeyboard?.listen?.(detail=>{for(const [key,value] of Object.entries(detail))if(preferences[key]!==value){call('setPreference',key,value);break;}},signal);
+      doc.defaultView.addEventListener('hebleo-reference-state',event=>syncReferenceControls(root,event.detail),{signal});
       render();
       return function dispose() {
         if (!active()) return;

@@ -17,7 +17,7 @@ const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/cs
 export const demoFreshProgressEnabled = (argv = process.argv, env = process.env) => argv.includes('--demo-fresh-progress') || env.HEBLEO_DEMO_FRESH_PROGRESS === '1';
 // Runs once before listening. A running server never re-fingerprints, so saving files mid-session cannot wipe new progress.
 export async function prepareDemoProgress(store, { enabled = demoFreshProgressEnabled(), fingerprint = demoBuildFingerprint } = {}) { return enabled ? store.resetDemoProgressForBuild(await fingerprint()) : false; }
-export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourceAuth,sourceTransport,sourceClock } = {}) {
+export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourceAuth,sourceTransport,sourceClock,developerAudit=false } = {}) {
   store.media.bindRoot(mediaRoot);
   const auth=sourceAuth||new GoogleAuth({vault:windowsCredentialVault(resolve(root,'.private','google-auth.bin'))});
   const sources=new SourceAuthoring(store,{auth,transport:sourceTransport||new GoogleSourceTransport({auth}),...(sourceClock?{clock:sourceClock}:{})});
@@ -41,6 +41,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           if(url.pathname==='/api/studio/sources/status'){store.requireAuthor(userId);return json(200,sources.status(userId,sourceCookie));}
           if (url.pathname === '/api/bootstrap') return json(200, store.bootstrap(userId));
           if (url.pathname === '/api/session') return json(200,store.session(userId,url.searchParams.get('lessonId')));
+          if(url.pathname==='/api/debug/questions'){if(!developerAudit)return json(404,{error:'Not found.',code:'NOT_FOUND'});return json(200,store.questionAudit(userId));}
           if (url.pathname === '/api/questions') return json(200,store.questions(userId));
           if (url.pathname === '/api/reports') return json(200,store.reports(userId));
           if (['/api/studio','/api/export','/api/content'].includes(url.pathname)) store.requireAuthor(userId);
@@ -125,7 +126,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   mkdirSync(resolve(root, 'data'), { recursive: true });
   const store = new Store(resolve(root, 'data', 'hebleo-demo.sqlite'));
   if (await prepareDemoProgress(store)) console.log('Fresh demo progress for this app build: fictional lesson/review progress cleared; settings and content kept.');
-  const server = createServer(store); const port = Number(process.env.PORT || 4173);
+  const server = createServer(store,{developerAudit:process.argv.includes('--developer-audit')}); const port = Number(process.env.PORT || 4173);
   server.listen(port, '127.0.0.1', () => console.log('Hebleo local demo: http://127.0.0.1:' + port));
   const stop = () => server.close(() => { store.close(); process.exit(0); });
   process.on('SIGINT', stop); process.on('SIGTERM', stop);

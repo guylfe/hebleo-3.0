@@ -90,3 +90,8 @@ This candidate has source/DOM/HTTP evidence only. Native rendered layout, real p
 ## Prior checkpoint context
 
 Oct12 private notes, comments/replies and Studio state improvements remain implemented. The two-rail navigation geometry is superseded by the selected Oct13 shell; historical reports and Guy-result cells remain unchanged. The Masterfile-ID importer remains a separate unactivated revision; this design change does not establish live Sheet capture/import or source readiness.
+
+
+## Oct14 refinement of the selected design
+
+The approved horizontal shell/navy artwork remain. Runtime refinement.css owns200ms directional course-rail/grid motion (off for OS/app reduced motion),8px Studio label gaps/20px group gaps, joined-prefix inward padding3px, compact32px result icons and a stable48px answer action/status region. Main question DOM survives grading; local dock reserve offsets keyboard collapse. Structured authored examples receive intact RTL and LTR lines; unknown fields remain lossless. Cards/table retain the same source/filter membership and contained table overflow. One speed selector belongs to each playable media surface. Private pronunciation practice sits outside the flashcard/rating body; actual nonlinguistic demo audio stays explicitly labelled. Rating colors and broader vocabulary architecture remain pending. Audio controls/fixture functionality is now authorized; speed-quality/playback-rate testing remains DEFERRED. No broad redesign or native visual acceptance is implied.

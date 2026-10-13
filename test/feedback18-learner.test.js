@@ -24,8 +24,7 @@ test('matching verdicts are supplied by the server, retained on resume and indiv
   assert.equal(JSON.stringify(s.learner('learner-demo')),before);
 });
 
-test('correct matching summary follows authored ID order regardless of selection order',()=>{
-  const e={type:'matching',wordIds:['w-hu','w-hi','w-mi']};
-  const html=exerciseFeedback(e,{correct:true,answer:{'w-hu':'he','w-mi':'who','w-hi':'she'},expected:{'w-hu':'he','w-hi':'she','w-mi':'who'}});
-  assert.equal(html.match(/Your answer: <bdi>([^<]*)/)[1],html.match(/Accepted answer: <bdi>([^<]*)/)[1]);
+test('correct matching feedback preserves authoritative status without repeating submitted and key blocks',()=>{
+ const e={type:'matching',wordIds:['w-hu','w-hi','w-mi']},d=new JSDOM(exerciseFeedback(e,{correct:true,answer:{'w-hu':'he','w-mi':'who','w-hi':'she'},expected:{'w-hu':'he','w-hi':'she','w-mi':'who'}}));
+ assert.equal(d.window.document.querySelector('[role=status]').getAttribute('aria-label'),'Correct');assert.equal(d.window.document.querySelector('[data-result-explanation]'),null);assert.ok(!d.window.document.body.textContent.includes('Your answer:'));assert.ok(!d.window.document.body.textContent.includes('Accepted answer:'));d.window.close();
 });
