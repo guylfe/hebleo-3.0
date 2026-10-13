@@ -120,7 +120,7 @@ test('UX2333 reply pending and failure retain exact text and leave unrelated Stu
 test('OCT12 lesson practice uses existing missed-item context and keeps its optional exit',async t=>{
  const {store,doc}=await app(t,{page:'course',realHTTP:true,prepare(s){s.attempt('learner-demo',{requestId:randomUUID(),revisionId:1,exerciseId:'ex-1-type',answer:'wrong'});}});
  const entry=doc.querySelector('[data-action=lesson-practice][data-value=lesson-1]');assert.ok(entry);entry.click();
- await settled(()=>doc.querySelector('[data-action=step][data-value=complete]')&&store.learner('learner-demo').resumes['lesson-1']?.practiceIds?.length);
+ await settled(()=>doc.querySelector('#practice [data-action=step][data-value=complete]')&&store.learner('learner-demo').resumes['lesson-1']?.practiceIds?.length);
  const resume=store.learner('learner-demo').resumes['lesson-1'];assert.deepEqual(resume.practiceIds,['ex-1-type']);assert.equal(resume.revisionId,1);
  assert.ok(doc.querySelector('#practice [data-action=step][data-value=complete]').textContent.includes('Skip extra practice'));assert.equal(store.learner('learner-demo').attempts.length,1);assert.deepEqual(store.learner('learner-demo').completed,[]);
 });

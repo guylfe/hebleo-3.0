@@ -69,3 +69,8 @@ Candidate checkout: C:\Users\Trans\.openmausbot\task-workspaces\8c900356-50f6-4d
 Final logo: original NAVY WIDE PENDING. Reserved160px/auto-ratio slot; cyan is reference-only and was not installed/recolored/reconstructed. No emblem-only header substitute.
 
 No route or existing content object was removed. Backend, data models, fixtures, scheduler, source integration and publishing contracts are unchanged. Automated evidence does not certify rendered wrapping/logo size, true keyboard dock visibility,200% zoom, native interaction or Guy acceptance. No current candidate captures exist. Browser/person-control pause respected; mobile/physical acceptance deferred to APK; audio-speed DEFERRED.
+
+
+### Exact private CI race correction
+
+First candidate CI run38422226591 at080fcac finished486/487, failing the inherited OCT12 direct-practice test. Its wait predicate observed saved practiceIds plus the general Finish portion tab before the asynchronous extra-practice render added the actual Skip extra practice control. The correction waits for that real control, then retains the same IDs/revision/attempt/completion assertions. No application/source/data behavior changed. The narrow actual-HTTP case is rechecked locally; the final exact-HEAD CI result is in the task's FREEZE.json. This failure and correction are retained; first CI was not reported as a pass.
