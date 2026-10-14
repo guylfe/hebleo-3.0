@@ -79,12 +79,30 @@ export function exerciseInput(e,{mode,word,draft,result,keyboard=''}) {
   return (e.context?'<div class="hebrew large">'+esc(e.context)+'</div>':'')+(e.type==='cloze'?'<label for="answer">Type the missing word</label>':'<label for="answer">Your Hebrew answer</label>')+'<textarea id="answer" class="answer-input" dir="rtl" rows="2" autocomplete="off" spellcheck="false" inputmode="text" '+(result?'disabled':'')+'>'+esc(draft.text)+'</textarea>'+(result?'':keyboard);
 }
 export function exerciseFeedback(e,result) {
- if(!result)return '';const status=result.correct?'Correct':'Incorrect',explanation=[e.feedback,e.feedbackDetails].filter(value=>typeof value==='string'&&value.trim()),alternatives=Array.isArray(result.acceptedAnswers)?[...new Set(result.acceptedAnswers)].filter(value=>typeof value==='string'&&value.trim()):[],meaningful=explanation.length||alternatives.length>1;
+ if(!result)return '';const status=result.correct?'Correct':'Incorrect',explanation=[e.feedback,e.feedbackDetails].filter(value=>typeof value==='string'&&value.trim()),alternatives=!['recognition','matching'].includes(e.type)&&Array.isArray(result.acceptedAnswers)?[...new Set(result.acceptedAnswers)].filter(value=>typeof value==='string'&&value.trim()):[],meaningful=explanation.length||alternatives.length>1;
  const icon='<span aria-hidden="true">'+(result.correct?'✓':'✕')+'</span><span class="sr-only">'+status+'</span>',body=explanation.map(value=>'<p dir="auto">'+esc(value)+'</p>').join('')+(alternatives.length>1?'<p>Authored alternatives</p><ul>'+alternatives.map(value=>'<li><bdi dir="auto">'+esc(value)+'</bdi></li>').join('')+'</ul>':'');
  return '<div class="feedback compact-result '+(result.correct?'':'wrong')+'" role="status" aria-label="'+status+'">'+(meaningful?'<span class="result-explanation"><button type="button" class="result-icon" data-result-explanation aria-label="'+status+'. Show explanation" aria-expanded="false">'+icon+'</button><span class="result-popover" data-result-popover role="note" hidden>'+body+'</span></span>':'<span class="result-icon" aria-label="'+status+'">'+icon+'</span>')+'</div>';
 }
+const boundResultExplanations=new WeakSet();
 export function bindResultExplanations(scope){
- for(const trigger of scope.querySelectorAll('[data-result-explanation]')){const box=trigger.parentElement,popover=box.querySelector('[data-result-popover]');let dismissed=false,pointerWasOpen=null;trigger.addEventListener('pointerdown',()=>pointerWasOpen=!popover.hidden);const show=()=>{if(dismissed)return;popover.hidden=false;trigger.setAttribute('aria-expanded','true');},hide=()=>{popover.hidden=true;trigger.setAttribute('aria-expanded','false');};box.addEventListener('pointerenter',event=>{if(event.pointerType==='touch')return;dismissed=false;show();});box.addEventListener('pointerleave',()=>{if(!box.contains(box.ownerDocument.activeElement))hide();});trigger.addEventListener('focus',()=>{dismissed=false;show();});trigger.addEventListener('blur',()=>{if(!box.matches(':hover'))hide();});trigger.addEventListener('click',()=>{dismissed=pointerWasOpen??!popover.hidden;pointerWasOpen=null;if(dismissed)hide();else show();});box.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();dismissed=true;hide();}});}
+ for(const trigger of scope.querySelectorAll('[data-result-explanation]')){
+  if(boundResultExplanations.has(trigger))continue;boundResultExplanations.add(trigger);
+  const box=trigger.parentElement,popover=box.querySelector('[data-result-popover]'),view=box.ownerDocument.defaultView||globalThis;
+  let dismissed=false,pointerWasOpen=null,hovered=false,leaveTimer=null;
+  const clearLeave=()=>{view.clearTimeout(leaveTimer);leaveTimer=null;},focused=()=>box.contains(box.ownerDocument.activeElement),inside=target=>Boolean(target?.nodeType&&box.contains(target));
+  const show=()=>{clearLeave();if(dismissed||!box.isConnected)return;popover.hidden=false;trigger.setAttribute('aria-expanded','true');};
+  const hide=()=>{clearLeave();popover.hidden=true;trigger.setAttribute('aria-expanded','false');};
+  const leave=event=>{if(inside(event.relatedTarget))return;hovered=false;clearLeave();if(focused())return;leaveTimer=view.setTimeout(()=>{leaveTimer=null;if(box.isConnected&&!hovered&&!focused())hide();},180);};
+  box.addEventListener('pointerenter',event=>{if(event.pointerType==='touch')return;hovered=true;dismissed=false;show();});
+  box.addEventListener('pointerleave',leave);
+  popover.addEventListener('pointerenter',event=>{if(event.pointerType==='touch'||popover.hidden||dismissed)return;hovered=true;show();});
+  popover.addEventListener('pointerleave',leave);
+  trigger.addEventListener('pointerdown',()=>{clearLeave();pointerWasOpen=!popover.hidden;});
+  trigger.addEventListener('focus',()=>{dismissed=false;show();});
+  trigger.addEventListener('blur',event=>{if(!hovered&&!inside(event.relatedTarget))leave(event);});
+  trigger.addEventListener('click',()=>{dismissed=pointerWasOpen??!popover.hidden;pointerWasOpen=null;if(dismissed)hide();else show();});
+  box.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();dismissed=true;hide();}});
+ }
 }
 // Wire answer exactly as graded by the learner attempt and draft preview evaluate endpoints.
 export function wireAnswer(e,draft) {

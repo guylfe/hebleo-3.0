@@ -492,3 +492,15 @@ Items7 rating colors,8 general label removals,12 vocabulary architecture and15 b
 ### Oct14 integrated control checkpoint and CI correction
 
 Actual Feature Engineer receipt426b6f45 returned a two-file media patch; Lead read/hash/path/drift verified it and executed15 module cases plus five actual-app integrated cases. Checkpoint55569c5 automatic CI failed20/557; retained logs and concrete corrections are described in OCT14_REFINEMENTS.md. No assertion was hidden/skipped to pass: legacy display expectations follow authorized1/10/14 while draft/revision/permission checks remain. Shared safe audioURL handles the labelled existing representation; signed exact canonical approval, media bytes/pending real-media guard, source CAS/freshness and separate importer remain. CI installs its existing locked schemas dependency for the new wire check. Preview Enter and confirmed-grade refresh recovery are repaired; focused4 Preview/result and6 media/source-gate checks pass. Exact final SHA/CI in feedback14-integration-evidence/FREEZE.json; UX Owner finished review and native/Guy acceptance remain separate pending steps before activation.
+
+
+## UX14-01/02 — actual UX Owner result critique correction
+
+Actual UX Owner reviewed cleanf9c9490c03c346171ae81c610d501587daf17168: authorized1–6,9–11,13 source-pass; item14 partial with two IDs. These scoped corrections have owner source/probe evidence; corrected-SHA UX Owner recheck remains PENDING and working-demo activation is not performed. Original human and earlier independent-result cells are preserved. Exact corrected SHA/seal: task ux14-result-correction-evidence/FREEZE.json; details in [UX14_RESULT_CORRECTIONS.md](UX14_RESULT_CORRECTIONS.md).
+
+| ID / mapping | Owner implementation and actual evidence | Remaining boundary |
+| --- | --- | --- |
+| UX14-01 / FB14-14 / E02,E05 | Alternatives derived only inside the branch evaluating the exact explicit string list; recognition/matching omit it. Historical renderer ignores inapplicable metadata without rewriting grades. Supplied2 failures reproduce baseline and pass corrected; four string-family fidelity/schema/Preview/learner and implicit/legacy-state cases pass | Unknown authored data/raw unrelated answers retained; no source stripping/pedagogy/key change. Named UX recheck PENDING |
+| UX14-02 / FB14-14 / E05 |180ms cancelable close across existing8px gap, content/trigger enter/leave, focus/tap/Escape retained; scoped timers and idempotent bind. Supplied hover regression passes plus deterministic lifecycle/detached-context/no-empty cases | Real hover geometry/native/Guy acceptance OPEN |
+
+Expanded scoped11/11 and existing affected10/10PASS; repository/changed-module syntax and diff checks PASS. No repeated manual broad audit/suite, new QA/Release dispatch or protected demo63357/4173/4174/data/source/WordPress/public action. Canonical approval/CAS/media/source code and navy artwork unchanged. Held colors/general labels/vocabulary/broader motion, browser pause and audio-speed-quality/playback-rate/APK deferrals persist. Vocabulary returns to Guy after review/corrections BEFORE phase3/broader walkthrough.
