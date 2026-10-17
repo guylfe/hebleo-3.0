@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "scope": "Source/fixture integrity and reproducibility only",
+  "fixtureSha256": "1601f231797714021a9ee11f812d461b415599c74094a3284050509b57520957",
+  "cases": 34,
+  "words": 7,
+  "exactBindings": 69,
+  "semanticSlots": 42,
+  "checks": 2075,
+  "generation": {
+    "artifact": "FIXTURES.json",
+    "cases": 34,
+    "words": 7,
+    "bindings": 69,
+    "semanticSlots": 42,
+    "sourceApproval": false
+  },
+  "rebuiltMatchesSuppliedExceptRelocatedInputPaths": true,
+  "originalFixtureUnchanged": true,
+  "applicationRuntimeTested": false,
+  "nativeRenderingTested": false,
+  "linguisticApproval": false,
+  "testOverlaysPublishable": false
+}
