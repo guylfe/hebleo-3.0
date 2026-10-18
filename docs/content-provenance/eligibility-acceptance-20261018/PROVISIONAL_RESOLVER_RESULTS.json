@@ -1,0 +1,2357 @@
+{
+  "status": "PASS",
+  "scope": "Pure resolver projection against a provisional implementation; not full application acceptance",
+  "contract": {
+    "path": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\71c71389-5334-4e0c-9ca8-d80dd28223d1\\653fb433-7485-48b1-9f7c-cb22711bda02\\hebleo-3\\architect-lexical-20261018\\public\\lexical-contract.js",
+    "sha256": "52e48f82c6819b717062f41f431843e20ee0289bb57a37382d374fa00756abf7",
+    "revision": "uncommitted provisional snapshot"
+  },
+  "fixtureSha256": "1601f231797714021a9ee11f812d461b415599c74094a3284050509b57520957",
+  "casesExecuted": 34,
+  "casesPassed": 34,
+  "assertions": 3962,
+  "negativeControls": [
+    {
+      "id": "source-presence-unlocks",
+      "status": "PASS",
+      "defectDetected": true
+    },
+    {
+      "id": "cross-course-leak",
+      "status": "PASS",
+      "defectDetected": true
+    },
+    {
+      "id": "citation-order-substitution",
+      "status": "PASS",
+      "defectDetected": true
+    },
+    {
+      "id": "unapproved-form-eligible",
+      "status": "PASS",
+      "defectDetected": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "V00-citation-with-no-expanded-unlocks",
+      "status": "PASS",
+      "assertions": 118,
+      "visibleSlots": [],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [],
+      "inheritedSlots": [],
+      "addedHereSlots": [],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": [
+        {
+          "field": "citation.separator",
+          "reason": "API provides the hyphen token; rendered spacing is not exercised."
+        }
+      ]
+    },
+    {
+      "id": "V01-early-one-slot",
+      "status": "PASS",
+      "assertions": 126,
+      "visibleSlots": [
+        "verb.past.he"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.past.he"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.past.he"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": [
+        {
+          "field": "citation.separator",
+          "reason": "API provides the hyphen token; rendered spacing is not exercised."
+        }
+      ]
+    },
+    {
+      "id": "V02-partial-past-present",
+      "status": "PASS",
+      "assertions": 147,
+      "visibleSlots": [
+        "verb.past.I",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.past.I",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.past.I",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": [
+        {
+          "field": "sharedCells",
+          "reason": "Logical shared-slot metadata verified; DOM colspan/rowspan remains untested."
+        },
+        {
+          "field": "citation.separator",
+          "reason": "API provides the hyphen token; rendered spacing is not exercised."
+        }
+      ]
+    },
+    {
+      "id": "V03-all-28-unlocked-source-remains-incomplete",
+      "status": "PASS",
+      "assertions": 146,
+      "visibleSlots": [
+        "verb.past.I",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": [
+        {
+          "field": "citation.separator",
+          "reason": "API provides the hyphen token; rendered spacing is not exercised."
+        }
+      ]
+    },
+    {
+      "id": "V04-full-tense-layers-secondary-evidence",
+      "status": "PASS",
+      "assertions": 302,
+      "visibleSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.I",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.אתן",
+          "verb.future.they"
+        ],
+        "unapproved": [
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "missing": [
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00147",
+            "binding-00153",
+            "document-binding-0006"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00151",
+            "binding-00154",
+            "document-binding-0012"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "V05-secondary-evidence-without-review",
+      "status": "PASS",
+      "assertions": 104,
+      "visibleSlots": [],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.I",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.she",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.past.they",
+          "verb.present.Singular F",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.אתן",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "unresolved": [
+          "verb.past.he",
+          "verb.present.Singular M"
+        ],
+        "missing": [
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "unresolved",
+          "variantIds": []
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "unresolved",
+          "variantIds": []
+        }
+      ],
+      "pendingIntegration": [
+        {
+          "field": "citationPlaceholders",
+          "reason": "Source states match fixture placeholders; rendered labels are outside this API."
+        }
+      ]
+    },
+    {
+      "id": "V06-missing-and-inapplicable",
+      "status": "PASS",
+      "assertions": 145,
+      "visibleSlots": [
+        "verb.infinitive",
+        "verb.past.he"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "verb.infinitive",
+          "verb.past.he"
+        ],
+        "missing": [
+          "verb.gerund",
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ],
+        "unapproved": [
+          "verb.past.I",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.she",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.past.they",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "inapplicable": [
+          "verb.present.Singular M",
+          "verb.present.Singular F",
+          "verb.present.Plural M",
+          "verb.present.Plural F"
+        ]
+      },
+      "introducedSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00012",
+            "binding-00013",
+            "binding-00014"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "inapplicable",
+          "variantIds": []
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "V07-missing-citation-test-mutation",
+      "status": "PASS",
+      "assertions": 110,
+      "visibleSlots": [],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.present.Singular M",
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [],
+      "inheritedSlots": [],
+      "addedHereSlots": [],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "missing",
+          "variantIds": []
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "V08-unapproved-draft-never-eligible",
+      "status": "PASS",
+      "assertions": 115,
+      "visibleSlots": [],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.infinitive"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.infinitive"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": [
+        {
+          "field": "mustNotUseAsAnswerKey",
+          "reason": "Resolver excludes draft variants; no grader/answer-key integration is exercised."
+        }
+      ]
+    },
+    {
+      "id": "V09-equal-future-strings-do-not-share-gate",
+      "status": "PASS",
+      "assertions": 142,
+      "visibleSlots": [
+        "verb.future.אתם"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.I",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.אתן",
+          "verb.future.they"
+        ],
+        "unapproved": [
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "missing": [
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.future.אתם"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.future.אתם"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00147",
+            "binding-00153",
+            "document-binding-0006"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00151",
+            "binding-00154",
+            "document-binding-0012"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "A01-early",
+      "status": "PASS",
+      "assertions": 83,
+      "visibleSlots": [
+        "adjective.ms"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "adjective.ms",
+          "adjective.fs",
+          "adjective.mp",
+          "adjective.fp"
+        ]
+      },
+      "introducedSlots": [
+        "adjective.ms"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "adjective.ms"
+      ],
+      "citation": null,
+      "pendingIntegration": [
+        {
+          "field": "lexicalRows",
+          "reason": "Available model identity count verified; actual rendered table rows remain untested."
+        }
+      ]
+    },
+    {
+      "id": "A02-partial",
+      "status": "PASS",
+      "assertions": 87,
+      "visibleSlots": [
+        "adjective.ms",
+        "adjective.fs"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "adjective.ms",
+          "adjective.fs",
+          "adjective.mp",
+          "adjective.fp"
+        ]
+      },
+      "introducedSlots": [
+        "adjective.ms",
+        "adjective.fs"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "adjective.ms",
+        "adjective.fs"
+      ],
+      "citation": null,
+      "pendingIntegration": [
+        {
+          "field": "lexicalRows",
+          "reason": "Available model identity count verified; actual rendered table rows remain untested."
+        }
+      ]
+    },
+    {
+      "id": "A03-full",
+      "status": "PASS",
+      "assertions": 95,
+      "visibleSlots": [
+        "adjective.ms",
+        "adjective.fs",
+        "adjective.mp",
+        "adjective.fp"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "adjective.ms",
+          "adjective.fs",
+          "adjective.mp",
+          "adjective.fp"
+        ]
+      },
+      "introducedSlots": [
+        "adjective.ms",
+        "adjective.fs",
+        "adjective.mp",
+        "adjective.fp"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "adjective.ms",
+        "adjective.fs",
+        "adjective.mp",
+        "adjective.fp"
+      ],
+      "citation": null,
+      "pendingIntegration": [
+        {
+          "field": "lexicalRows",
+          "reason": "Available model identity count verified; actual rendered table rows remain untested."
+        }
+      ]
+    },
+    {
+      "id": "P01-early",
+      "status": "PASS",
+      "assertions": 94,
+      "visibleSlots": [
+        "preposition.I"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "preposition.I",
+          "preposition.אתה",
+          "preposition.את",
+          "preposition.he",
+          "preposition.she",
+          "preposition.אנחנו",
+          "preposition.אתם",
+          "preposition.אתן",
+          "preposition.הם",
+          "preposition.הן"
+        ]
+      },
+      "introducedSlots": [
+        "preposition.I"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "preposition.I"
+      ],
+      "citation": null,
+      "pendingIntegration": [
+        {
+          "field": "layout",
+          "reason": "No renderer, viewport measurement or scrolling is exercised."
+        },
+        {
+          "field": "localScrollIfNeeded",
+          "reason": "No renderer, viewport measurement or scrolling is exercised."
+        },
+        {
+          "field": "lexicalRows",
+          "reason": "Available model identity count verified; actual rendered table rows remain untested."
+        }
+      ]
+    },
+    {
+      "id": "P02-seven",
+      "status": "PASS",
+      "assertions": 128,
+      "visibleSlots": [
+        "preposition.I",
+        "preposition.אתה",
+        "preposition.את",
+        "preposition.he",
+        "preposition.she",
+        "preposition.אנחנו",
+        "preposition.אתם"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "preposition.I",
+          "preposition.אתה",
+          "preposition.את",
+          "preposition.he",
+          "preposition.she",
+          "preposition.אנחנו",
+          "preposition.אתם",
+          "preposition.אתן",
+          "preposition.הם",
+          "preposition.הן"
+        ]
+      },
+      "introducedSlots": [
+        "preposition.I",
+        "preposition.אתה",
+        "preposition.את",
+        "preposition.he",
+        "preposition.she",
+        "preposition.אנחנו",
+        "preposition.אתם"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "preposition.I",
+        "preposition.אתה",
+        "preposition.את",
+        "preposition.he",
+        "preposition.she",
+        "preposition.אנחנו",
+        "preposition.אתם"
+      ],
+      "citation": null,
+      "pendingIntegration": [
+        {
+          "field": "layout",
+          "reason": "No renderer, viewport measurement or scrolling is exercised."
+        },
+        {
+          "field": "localScrollIfNeeded",
+          "reason": "No renderer, viewport measurement or scrolling is exercised."
+        },
+        {
+          "field": "lexicalRows",
+          "reason": "Available model identity count verified; actual rendered table rows remain untested."
+        }
+      ]
+    },
+    {
+      "id": "P03-ten",
+      "status": "PASS",
+      "assertions": 140,
+      "visibleSlots": [
+        "preposition.I",
+        "preposition.אתה",
+        "preposition.את",
+        "preposition.he",
+        "preposition.she",
+        "preposition.אנחנו",
+        "preposition.אתם",
+        "preposition.אתן",
+        "preposition.הם",
+        "preposition.הן"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "preposition.I",
+          "preposition.אתה",
+          "preposition.את",
+          "preposition.he",
+          "preposition.she",
+          "preposition.אנחנו",
+          "preposition.אתם",
+          "preposition.אתן",
+          "preposition.הם",
+          "preposition.הן"
+        ]
+      },
+      "introducedSlots": [
+        "preposition.I",
+        "preposition.אתה",
+        "preposition.את",
+        "preposition.he",
+        "preposition.she",
+        "preposition.אנחנו",
+        "preposition.אתם",
+        "preposition.אתן",
+        "preposition.הם",
+        "preposition.הן"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "preposition.I",
+        "preposition.אתה",
+        "preposition.את",
+        "preposition.he",
+        "preposition.she",
+        "preposition.אנחנו",
+        "preposition.אתם",
+        "preposition.אתן",
+        "preposition.הם",
+        "preposition.הן"
+      ],
+      "citation": null,
+      "pendingIntegration": [
+        {
+          "field": "layout",
+          "reason": "No renderer, viewport measurement or scrolling is exercised."
+        },
+        {
+          "field": "localScrollIfNeeded",
+          "reason": "No renderer, viewport measurement or scrolling is exercised."
+        },
+        {
+          "field": "lexicalRows",
+          "reason": "Available model identity count verified; actual rendered table rows remain untested."
+        }
+      ]
+    },
+    {
+      "id": "P04-ten-with-unreviewed-gender-mappings",
+      "status": "PASS",
+      "assertions": 137,
+      "visibleSlots": [
+        "preposition.I",
+        "preposition.אתה",
+        "preposition.את",
+        "preposition.he",
+        "preposition.she",
+        "preposition.אנחנו",
+        "preposition.אתם",
+        "preposition.אתן"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "preposition.I",
+          "preposition.אתה",
+          "preposition.את",
+          "preposition.he",
+          "preposition.she",
+          "preposition.אנחנו",
+          "preposition.אתם",
+          "preposition.אתן"
+        ],
+        "unresolved": [
+          "preposition.הם",
+          "preposition.הן"
+        ]
+      },
+      "introducedSlots": [
+        "preposition.I",
+        "preposition.אתה",
+        "preposition.את",
+        "preposition.he",
+        "preposition.she",
+        "preposition.אנחנו",
+        "preposition.אתם",
+        "preposition.אתן",
+        "preposition.הם",
+        "preposition.הן"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "preposition.I",
+        "preposition.אתה",
+        "preposition.את",
+        "preposition.he",
+        "preposition.she",
+        "preposition.אנחנו",
+        "preposition.אתם",
+        "preposition.אתן",
+        "preposition.הם",
+        "preposition.הן"
+      ],
+      "citation": null,
+      "pendingIntegration": []
+    },
+    {
+      "id": "H-000132",
+      "status": "PASS",
+      "assertions": 82,
+      "visibleSlots": [],
+      "wordState": "unapproved",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "adjective.ms",
+          "adjective.fs"
+        ],
+        "unapproved": [
+          "adjective.mp",
+          "adjective.fp"
+        ]
+      },
+      "introducedSlots": [
+        "adjective.ms",
+        "adjective.fs",
+        "adjective.mp",
+        "adjective.fp"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "adjective.ms",
+        "adjective.fs",
+        "adjective.mp",
+        "adjective.fp"
+      ],
+      "citation": null,
+      "pendingIntegration": [
+        {
+          "field": "lexicalRows",
+          "reason": "Available model identity count verified; actual rendered table rows remain untested."
+        },
+        {
+          "field": "state",
+          "reason": "API has no held-identity enum; author metadata retains the hold while wordState is unapproved."
+        },
+        {
+          "field": "noDuplicateReviewIdentity",
+          "reason": "Review-card persistence is outside the pure resolver."
+        }
+      ]
+    },
+    {
+      "id": "H-000317",
+      "status": "PASS",
+      "assertions": 82,
+      "visibleSlots": [],
+      "wordState": "unapproved",
+      "validationErrors": [],
+      "sourceStates": {
+        "available": [
+          "adjective.ms",
+          "adjective.fs",
+          "adjective.mp",
+          "adjective.fp"
+        ]
+      },
+      "introducedSlots": [
+        "adjective.ms",
+        "adjective.fs",
+        "adjective.mp",
+        "adjective.fp"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "adjective.ms",
+        "adjective.fs",
+        "adjective.mp",
+        "adjective.fp"
+      ],
+      "citation": null,
+      "pendingIntegration": [
+        {
+          "field": "lexicalRows",
+          "reason": "Available model identity count verified; actual rendered table rows remain untested."
+        },
+        {
+          "field": "state",
+          "reason": "API has no held-identity enum; author metadata retains the hold while wordState is unapproved."
+        },
+        {
+          "field": "noDuplicateReviewIdentity",
+          "reason": "Review-card persistence is outside the pure resolver."
+        }
+      ]
+    },
+    {
+      "id": "S01-one-word-no-leak",
+      "status": "PASS",
+      "assertions": 117,
+      "visibleSlots": [
+        "verb.past.he"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.past.he"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.past.he"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "S02-global-with-category-boundary",
+      "status": "PASS",
+      "assertions": 120,
+      "visibleSlots": [
+        "verb.past.he"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.past.he"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.past.he"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "S03-reviewed-class-excludes-same-pattern-outsider",
+      "status": "PASS",
+      "assertions": 120,
+      "visibleSlots": [
+        "verb.past.he"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.past.he"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.past.he"
+      ],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "S04-unknown-class-rejected",
+      "status": "PASS",
+      "assertions": 75,
+      "visibleSlots": [],
+      "wordState": "invalid",
+      "validationErrors": [
+        {
+          "path": "unlocks[0].scope",
+          "code": "invalid-class-scope"
+        }
+      ],
+      "sourceStates": {},
+      "introducedSlots": [],
+      "inheritedSlots": [],
+      "addedHereSlots": [],
+      "citation": null,
+      "pendingIntegration": []
+    },
+    {
+      "id": "S05-cross-category-scope-rejected",
+      "status": "PASS",
+      "assertions": 75,
+      "visibleSlots": [],
+      "wordState": "invalid",
+      "validationErrors": [
+        {
+          "path": "unlocks[0].scope",
+          "code": "cross-category-slot"
+        }
+      ],
+      "sourceStates": {},
+      "introducedSlots": [],
+      "inheritedSlots": [],
+      "addedHereSlots": [],
+      "citation": null,
+      "pendingIntegration": []
+    },
+    {
+      "id": "S06-global-does-not-introduce-word",
+      "status": "PASS",
+      "assertions": 104,
+      "visibleSlots": [],
+      "wordState": "not-introduced",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.infinitive",
+        "verb.gerund",
+        "verb.past.I",
+        "verb.past.אתה",
+        "verb.past.את",
+        "verb.past.he",
+        "verb.past.she",
+        "verb.past.אנחנו",
+        "verb.past.אתם",
+        "verb.past.אתן",
+        "verb.past.they",
+        "verb.present.Singular M",
+        "verb.present.Singular F",
+        "verb.present.Plural M",
+        "verb.present.Plural F",
+        "verb.future.I",
+        "verb.future.אתה",
+        "verb.future.את",
+        "verb.future.he",
+        "verb.future.she",
+        "verb.future.אנחנו",
+        "verb.future.אתם",
+        "verb.future.אתן",
+        "verb.future.they",
+        "verb.imperative.אתה",
+        "verb.imperative.את",
+        "verb.imperative.אתם",
+        "verb.imperative.אתן"
+      ],
+      "citation": null,
+      "pendingIntegration": []
+    },
+    {
+      "id": "S07-unreviewed-setting-not-effective",
+      "status": "PASS",
+      "assertions": 112,
+      "visibleSlots": [],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [],
+      "inheritedSlots": [],
+      "addedHereSlots": [],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "T01-additive-reuse-no-revocation",
+      "status": "PASS",
+      "assertions": 119,
+      "visibleSlots": [
+        "verb.past.he"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.past.he"
+      ],
+      "inheritedSlots": [
+        "verb.past.he"
+      ],
+      "addedHereSlots": [],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": [
+        {
+          "field": "lexicalRows",
+          "reason": "Available model identity count verified; actual rendered table rows remain untested."
+        },
+        {
+          "field": "reviewIdentities",
+          "reason": "Review-card persistence is outside the pure resolver."
+        }
+      ]
+    },
+    {
+      "id": "T02-reuse-is-not-introduction",
+      "status": "PASS",
+      "assertions": 104,
+      "visibleSlots": [],
+      "wordState": "not-introduced",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.past.he"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.past.he"
+      ],
+      "citation": null,
+      "pendingIntegration": []
+    },
+    {
+      "id": "T03-later-setting-no-earlier-leak",
+      "status": "PASS",
+      "assertions": 112,
+      "visibleSlots": [],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [],
+      "inheritedSlots": [],
+      "addedHereSlots": [],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "T04-other-course-no-leak",
+      "status": "PASS",
+      "assertions": 112,
+      "visibleSlots": [],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [],
+      "inheritedSlots": [],
+      "addedHereSlots": [],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "T05-reorder-recomputes-prefix",
+      "status": "PASS",
+      "assertions": 112,
+      "visibleSlots": [],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [],
+      "inheritedSlots": [],
+      "addedHereSlots": [],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    },
+    {
+      "id": "T06-legacy-links-never-imply-introduction",
+      "status": "PASS",
+      "assertions": 104,
+      "visibleSlots": [],
+      "wordState": "not-introduced",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.past.he"
+      ],
+      "inheritedSlots": [],
+      "addedHereSlots": [
+        "verb.past.he"
+      ],
+      "citation": null,
+      "pendingIntegration": []
+    },
+    {
+      "id": "T07-unknown-course-context-fails-explicitly",
+      "status": "PASS",
+      "assertions": 76,
+      "visibleSlots": [],
+      "wordState": "invalid",
+      "validationErrors": [
+        {
+          "path": "context",
+          "code": "unknown-course-or-lesson"
+        }
+      ],
+      "sourceStates": {},
+      "introducedSlots": [],
+      "inheritedSlots": [],
+      "addedHereSlots": [],
+      "citation": null,
+      "pendingIntegration": []
+    },
+    {
+      "id": "T08-earlier-global-addition-later-word-introduction",
+      "status": "PASS",
+      "assertions": 117,
+      "visibleSlots": [
+        "verb.past.he"
+      ],
+      "wordState": "available",
+      "validationErrors": [],
+      "sourceStates": {
+        "unapproved": [
+          "verb.infinitive",
+          "verb.gerund",
+          "verb.past.אתה",
+          "verb.past.את",
+          "verb.past.אנחנו",
+          "verb.past.אתם",
+          "verb.past.אתן",
+          "verb.present.Plural M",
+          "verb.present.Plural F",
+          "verb.future.I",
+          "verb.future.אתה",
+          "verb.future.את",
+          "verb.future.he",
+          "verb.future.she",
+          "verb.future.אנחנו",
+          "verb.future.אתם",
+          "verb.future.they",
+          "verb.imperative.אתה",
+          "verb.imperative.את",
+          "verb.imperative.אתם"
+        ],
+        "available": [
+          "verb.past.I",
+          "verb.past.he",
+          "verb.past.she",
+          "verb.past.they",
+          "verb.present.Singular M",
+          "verb.present.Singular F"
+        ],
+        "missing": [
+          "verb.future.אתן",
+          "verb.imperative.אתן"
+        ]
+      },
+      "introducedSlots": [
+        "verb.past.he"
+      ],
+      "inheritedSlots": [
+        "verb.past.he"
+      ],
+      "addedHereSlots": [],
+      "citation": [
+        {
+          "slotId": "verb.past.he",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00110"
+          ]
+        },
+        {
+          "slotId": "verb.present.Singular M",
+          "sourceState": "available",
+          "variantIds": [
+            "binding-00114"
+          ]
+        }
+      ],
+      "pendingIntegration": []
+    }
+  ],
+  "nativeRenderingTested": false,
+  "studioPersistenceTested": false,
+  "publishingTested": false,
+  "migrationApplyTested": false,
+  "answerKeyIntegrationTested": false,
+  "linguisticApproval": false,
+  "overlaysPublishable": false,
+  "limitations": [
+    "Original canonical lesson feed remains unconnected.",
+    "Resolver state/fixture label differences and presentation expectations are listed per case.",
+    "No production code copied or edited; no learner database or workbook written."
+  ]
+}
