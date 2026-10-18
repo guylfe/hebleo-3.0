@@ -1,4 +1,5 @@
 import {richCell, cellCSS} from './rich.js';
+import {audioControls,button as actionButton} from './learner-view.js';
 
 /**
  * Lexical vocabulary display projection v1 (NOT a workbook/import contract).
@@ -63,7 +64,7 @@ function statusOf(form) {
 }
 function formValue(form) {
   const status = statusOf(form);
-  return '<span class="lexical-form" data-slot-id="'+escape(form?.slotId || '')+'" data-status="'+status+'">'+(status === 'eligible' ? rich(form.value)+(form.base ? '<small class="lexical-base">base</small>' : '') : '<span class="lexical-unavailable">'+statusLabels[status]+'</span>')+'</span>';
+  return '<span class="lexical-form" data-slot-id="'+escape(form?.slotId || '')+'" data-status="'+status+'">'+(status === 'eligible' ? (form.values||[form.value]).map(v=>rich(v)).join(' / ')+(form.base ? '<small class="lexical-base">base</small>' : '') : '<span class="lexical-unavailable">'+statusLabels[status]+'</span>')+'</span>';
 }
 function pair(item) {
   return '<div class="lexical-pair" dir="ltr">'+rich(item.english, 'en')+rich(item.hebrew)+(textOf(item.notes) ? '<div class="lexical-pair-note">'+rich(item.notes, 'auto')+'</div>' : '')+'</div>';
@@ -75,7 +76,7 @@ function meaning(word) {
 function citation(word) {
   return ['past', 'present'].map(tense => {
     const form = word.citation?.[tense];
-    return '<span class="lexical-citation-part" aria-label="'+(tense === 'past' ? 'Past he' : 'Present masculine singular')+' citation">'+(statusOf(form) === 'eligible' ? rich(form.value) : '<span class="lexical-unavailable" data-status="'+statusOf(form)+'" title="'+statusLabels[statusOf(form)]+'">—</span>')+'</span>';
+    return '<span class="lexical-citation-part" aria-label="'+(tense === 'past' ? 'Past he' : 'Present masculine singular')+' citation">'+(statusOf(form) === 'eligible' ? (form.values||[form.value]).map(v=>rich(v)).join(' / ') : '<span class="lexical-unavailable" data-status="'+statusOf(form)+'" title="'+statusLabels[statusOf(form)]+'">—</span>')+'</span>';
   }).join('<span class="lexical-citation-separator" aria-hidden="true"> - </span>');
 }
 function button(label, kind, id, extra = '') {
@@ -163,7 +164,7 @@ function renderWord(word, prefix) {
   const specific = word.category === 'Nouns' ? '<td>'+rich(word.gender, 'en')+'</td><td>'+rich(word.plural)+'</td>' :
     word.category === 'Adjectives' ? '<td>'+adjectiveForms(forms)+'</td>' : word.category === 'Prepositions' ? '<td>'+prepositionForms(forms)+'</td>' : expandable ? '<td>'+button('Show forms', 'forms', id+'-forms')+'</td>' : '';
   const cols = word.category === 'Nouns' ? 6 : word.category === 'Other' ? 4 : 5;
-  return '<tbody data-word-key="'+escape(word.wordKey)+'"><tr class="lexical-word-row"><th scope="row" class="lexical-frozen-he">'+(expandable ? '<span class="lexical-citation" dir="ltr">'+citation(word)+'</span>' : rich(word.hebrew))+'</th><td class="lexical-frozen-en">'+meaning(word)+'</td>'+specific+
+  return '<tbody data-word-key="'+escape(word.wordKey)+'"><tr class="lexical-word-row"><th scope="row" class="lexical-frozen-he">'+(expandable ? '<span class="lexical-citation" dir="ltr">'+citation(word)+'</span>' : rich(word.hebrew))+audioControls(word.audio,textOf(word.english))+(word.runtimeId?'<div class="button-row">'+actionButton('Open entry','lookup','small secondary',word.runtimeId)+actionButton('Add to review','enroll','small secondary',word.runtimeId)+'</div>':'')+'</th><td class="lexical-frozen-en">'+meaning(word)+'</td>'+specific+
     '<td class="lexical-structure" rowspan="'+rows+'">'+rich(word.root)+'</td><td class="lexical-structure lexical-pattern" rowspan="'+rows+'">'+rich(word.pattern)+'</td></tr>'+
     (expandable ? '<tr id="'+id+'-forms" class="lexical-forms-row" hidden><td colspan="'+(cols-2)+'"><div class="lexical-forms-boundary">'+verbForms(forms)+'</div></td></tr>' : '')+
     (notes ? '<tr class="lexical-support-row"><td colspan="'+(cols-2)+'">'+notes+'</td></tr>' : '')+'</tbody>';

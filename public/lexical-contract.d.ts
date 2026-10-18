@@ -75,6 +75,10 @@ export interface LexicalWord {
   revision: string;
   category: Category;
   identityReview: Review;
+  /** Integration gate: identity approval alone cannot approve visible source fields. */
+  displayReview?: Review;
+  approvalDigest?: string;
+  runtimeId?: string;
   fieldConflicts: string[];
   classMemberships: Array<{classId: string; review: Review}>;
   forms: Form[];

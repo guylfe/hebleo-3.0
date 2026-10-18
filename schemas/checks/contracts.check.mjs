@@ -69,6 +69,9 @@ test('pending fields veto the private synthetic compatibility exception', () => 
 function simulatedApprovedPack() {
   const p = structuredClone(seed); p.provenance = { kind: 'verified-source', label: 'SIMULATED TEST ONLY' };
   for (const kind of collections) for (const o of p[kind]) o.provenance = { kind: 'human-authored', label: 'SIMULATED TEST ONLY' };
+  // The evolving seed includes deliberately unpinned nonlinguistic sounds. This
+  // digest-only fixture must not accidentally claim they have media approval.
+  for (const word of p.words) delete word.audio;
   for (const kind of collections) for (const o of p[kind]) o.approval = { version: 1, status: 'approved', reviewedBy: 'synthetic-test', reviewedAt: '2026-10-04T00:00:00Z', contentSha256: objectDigest(o), dependencies: dependenciesFor(kind, o, p).map(d => ({ ...d, sha256: objectDigest(p[d.collection].find(x => x.id === d.id)) })) };
   return p;
 }

@@ -10,6 +10,9 @@ import {demoSignalBlob,demoSignalReference} from './demo-signal.js';
 import { seed, upgradeDemo, upgradeDemoSignal } from './seed.js';
 import {exerciseInLesson, validateCurriculum, validateLessonComposition, resolveComponent, orderedLessons, lessonFlow, keyboardForLesson} from '../public/course.js';
 import {validateFormatting,validateImportSource} from '../public/vocabulary-import.js';
+import {validateLexicalSnapshot,assertLexicalTransition,assertKnownLexicalRestore} from './lexical-trust.js';
+import {projectLexicalRows} from '../public/lexical-runtime.js';
+import {previewProgressMigration} from '../public/lexical-contract.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
 
 // v2: revision-mapped backups; v3: component cursors; v4: shared discussions; v5: authored typing/context; v6: retained source authoring bundles.
@@ -48,6 +51,7 @@ function validatePreferences(p) {
 function validateInteractions(items){if(!Array.isArray(items)||items.length>30)throw new DomainError('Invalid lesson interactions.');for(const item of items){if(!['reveal','choice'].includes(item.type))throw new DomainError('Unsupported lesson interaction.');text(item.prompt,'interaction prompt');if(item.type==='reveal')text(item.answer,'interaction answer',12000);else{if(!Array.isArray(item.choices)||item.choices.length<2||item.choices.length>10||!Number.isInteger(item.correctIndex)||item.correctIndex<0||item.correctIndex>=item.choices.length)throw new DomainError('Invalid inline choices.');item.choices.forEach(v=>text(v,'inline choice'));text(item.feedback,'inline feedback');}}}
 
 export function validateContent(content) {
+  if(content&&Object.hasOwn(content,'lexicalView'))throw new DomainError('lexicalView is a learner projection, not authored content.');
   if (!content || content.schemaVersion !== 1) throw new DomainError('Expected content schemaVersion 1.');
   if (content.provenance?.kind !== 'synthetic-demo' && content.provenance?.kind !== 'verified-source') throw new DomainError('Content needs explicit provenance.');
   // A verified pack may not smuggle in objects still awaiting the owner's approval; candidate packs stay blocked until each object is approved.
@@ -58,6 +62,7 @@ export function validateContent(content) {
     for (const object of content[key]) { if (!object || typeof object !== 'object') throw new DomainError('Invalid content item.'); id(object.id); if (ids.has(object.id)) throw new DomainError('Duplicate ID: ' + object.id); ids.add(object.id); }
   }
   try { validateCurriculum(content); } catch(error) { throw new DomainError(error.message); }
+  validateLexicalSnapshot(content);
   if(content.reviewPolicy && !modes.includes(content.reviewPolicy.defaultNikkud))throw new DomainError('Invalid author flashcard Nikkud.');
   const words = new Set(content.words.map(w => w.id));
   const lessons = new Set(content.lessons.map(l => l.id));
@@ -236,6 +241,8 @@ export class Store {
   }
   publicContent(content, lessonId) {
     const projected={...content,words:content.words.map(word=>this.publicWord(word)),exercises:content.exercises.map(e=>this.publicExercise(e,content,lessonId&&exerciseInLesson(content,lessonId,e.id)?lessonId:e.lessonId))};
+    delete projected.lexical;
+    if(content.lexical)projected.lexicalView=projectLexicalRows(content,lessonId||orderedLessons(content)[0].id);
     projected.lessons=content.lessons.map(lesson=>{if(lesson.compositionVersion!==2)return lesson;return {...lesson,blocks:lesson.blocks.map(block=>Object.fromEntries(Object.entries(block).filter(([key])=>['id','type','title','source','selector','renderer','role','text','video','interactions','options'].includes(key))))};});
     return projected;
   }
@@ -415,6 +422,12 @@ export class Store {
   answerQuestion(userId,input) { this.requireAuthor(userId);const key='question-'+id(input.userId)+'-'+id(input.requestId),q=this.get(key);if(!q)throw new DomainError('Question not found.',404);q.answer=text(input.answer,'author answer',12000);q.status='answered';q.answeredAt=new Date().toISOString();this.set(key,q);return q; }
   resolveReport(userId, input) { this.requireAuthor(userId); const key = 'report-' + id(input.userId) + '-' + id(input.requestId); const r = this.get(key); if (!r) throw new DomainError('Report not found.',404); if (!['pending','reviewed'].includes(input.status)) throw new DomainError('Invalid report status.'); r.status = input.status; this.set(key,r); return r; }
   enroll(userId, wordId) { if (!this.snapshot().words.some(w => w.id === wordId)) throw new DomainError('Word not found.', 404); const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403); if (!state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false }; this.saveLearner(userId, state); return state; }
+  lexicalMigrationPreview(input){
+    const content=this.previewDraft(input.draftToken).content;
+    if(!content.lexical)throw new DomainError('The saved draft has no lexical model.');
+    const progress=this.db.prepare('SELECT id,state FROM learners').all().flatMap(row=>Object.entries(JSON.parse(row.state).cards).map(([wordId,state])=>({learnerId:row.id,wordId,cardId:wordId,...state})));
+    return previewProgressMigration({content:content.lexical,mappings:input.mappings||[],progress});
+  }
   stage(input,sourcePermit) {
     if(this.get('source-state')?.sources && Object.keys(this.get('source-state').sources).length && !this.sourceAuthoring)throw new DomainError('Source authoring engine is required for source-bound edits.',409,'SOURCE_ENGINE_REQUIRED');
     if (!input || !Object.hasOwn(input, 'expectedDraftToken')) throw this.draftConflict('expectedDraftToken is required (null when creating a draft).', 'DRAFT_TOKEN_REQUIRED');
@@ -425,6 +438,7 @@ export class Store {
       if (input.word) { const index = content.words.findIndex(w => w.id === input.word.id); if (index < 0) throw new DomainError('Word not found.', 404); content.words[index] = { ...content.words[index], ...input.word, id: content.words[index].id }; }
       validateContent(content);
       const previous=current?.content || this.snapshot();
+      assertLexicalTransition(previous,content);
       for(const word of content.words){const old=previous.words.find(item=>item.id===word.id);if(canonicalJSON(old?.tags)!==canonicalJSON(word.tags)&&word.tags!==undefined&&(!Array.isArray(word.tags)||new Set(word.tags).size!==word.tags.length||word.tags.some(tag=>typeof tag!=='string'||!tag.trim()||tag.length>200)))throw new DomainError('New vocabulary tags need a unique explicit string array.');}
       for(const word of content.words){const old=previous.words.find(item=>item.id===word.id);if(canonicalJSON(old?.fieldFormatting)!==canonicalJSON(word.fieldFormatting)||canonicalJSON(old?.sourceTheme)!==canonicalJSON(word.sourceTheme)){const checked=validateFormatting(word.fieldFormatting,{word,sourceTheme:word.sourceTheme||[]});if(checked.errors.length)throw new DomainError(checked.errors.join('; '));}}
       const draftToken = draftTokenFor(active, content);
@@ -575,6 +589,7 @@ export class Store {
       if (!carried.has(input.activeRevisionId) || JSON.stringify(carried.get(input.activeRevisionId)) !== JSON.stringify(input.content)) throw new DomainError('Backup active revision does not match its content.');
       if (input.draft != null) { if (typeof input.draft !== 'object' || input.draft.baseRevisionId !== input.activeRevisionId || typeof input.draft.stagedAt !== 'string') throw new DomainError('Invalid backup draft.'); validateContent(input.draft.content); }
     }
+    assertKnownLexicalRestore(this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot)),[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[])]);
     const restoredSource=validateSourceState(input.sourceAuthoring??null,carried,input.draft,input.content);
     if(input.mediaRecovery!==undefined&&!(Number.isInteger(input.storeSchemaVersion)&&input.storeSchemaVersion>=7))throw new DomainError('Media-bearing backups require Store/backup reader 7.',409,'MEDIA_READER_MISMATCH');
     const restoredMedia=this.media.validateBackup(input.mediaRecovery??null,[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[])],{required:input.storeSchemaVersion>=7});

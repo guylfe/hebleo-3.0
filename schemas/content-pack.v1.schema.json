@@ -559,6 +559,9 @@
     },
     "curriculum": {
       "$ref": "course-model.v1.schema.json#/definitions/curriculum"
+    },
+    "lexical": {
+      "$ref": "https://hebleo.local/schemas/lexical-content.v1.schema.json"
     }
   },
   "required": [

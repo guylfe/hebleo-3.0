@@ -4,6 +4,7 @@ const getPlaybackState=()=>referenceMedia.getPlaybackState?.()||{};
 import {stepExercises, audioURL, portionExercises, portionLesson} from '../ux.js';
 import {keyboardForLesson,resolveComponent} from '../course.js';
 import {resolveBlock} from '../content.js';
+import {renderLexicalVocabulary,bindLexicalVocabulary} from '../lexical-vocabulary.js';
 import {bindMatching, matchWord} from '../interactions.js';
 import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls} from '../learner-view.js';
 
@@ -82,6 +83,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const context=lessonId+'|'+(componentId||step);if(context!==mediumKey){medium=null;mediumKey=context;}
       const word = id => content.words.find(w => w.id === id);
       const exercise = exerciseId ? content.exercises.find(x => x.id === exerciseId) : null;
+      let lexicalBinding;
       let draft = draftOf(props.answer), message = '', conceptOpen = false, answerSelection = null;
       const root = doc.createElement('div');
       root.className = 'learner-preview';
@@ -134,6 +136,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         return (video && hasText ? '<div class="mode-bar"><h2>Your explanation</h2><div class="segmented" role="group" aria-label="Lesson format">' + [['watch','Watch'],['read','Read']].map(([v, t]) => '<button type="button" data-preview-medium="' + v + '" aria-pressed="' + (mode === v) + '">' + t + '</button>').join('') + '</div></div>' : '') + learnMedia(presentation, mode, renderLesson) + continueRow();
       }
       function vocabulary() {
+        if(content.lexicalView)return '<h2>Your building blocks</h2>'+renderLexicalVocabulary(content.lexicalView.rows,{idPrefix:'rehearsal-'+lessonId})+continueRow();
         const block = lesson.blocks?.find(b => lesson.compositionVersion===2?b.id===componentId:b.type==='vocabulary'), words = block ? (lesson.compositionVersion===2?resolveComponent(content,lesson,block):resolveBlock(content,lesson,block)).filter(w => !w.noVocab) : [];
         const view = preferences.vocabularyView === 'table' ? 'table' : 'cards', notes = block?.options?.showNotes !== false;
         return '<h2>Your building blocks</h2><div class="mode-bar"><span>' + (view === 'cards' ? 'Fully pointed Hebrew' : 'All source fields') + '</span><div class="segmented" role="group" aria-label="Vocabulary view">' + [['cards','Cards'],['table','Table']].map(([v, t]) => '<button type="button" data-preview-pref="vocabularyView" data-preview-value="' + v + '" aria-pressed="' + (view === v) + '">' + t + '</button>').join('') + '</div></div>' + (view === 'cards' ? '<div class="word-grid">' + words.map(w => wordCard(w, {notes})).join('') + '</div>' : vocabularyTable(words)) + continueRow();
@@ -163,6 +166,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           : step === 'complete' ? '<div class="empty"><h2>Rehearsal finished.</h2><p>Nothing in this rehearsal was saved to a learner profile.</p><div class="button-row centered">' + button('Exit rehearsal', 'exit', 'primary') + '</div></div>'
           : practice();
         root.innerHTML = settings() + (exercise ? '' : note()) + '<section class="card lesson-section">' + body + '</section>' + lookupCard();
+        lexicalBinding=bindLexicalVocabulary(root);
         syncAudioControls(root,Number(preferences.audioSpeed)||1,getPlaybackState());bindResultExplanations(root);
         if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select,textarea').forEach(el => { el.disabled = true; }); }
         if (exercise?.type === 'matching' && !result && !busy) bindMatching(root, (id, meaning) => { if (active()) updateDraft({...draft, matching:matchWord(draft.matching, id, meaning)}); });
@@ -240,6 +244,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       return function dispose() {
         if (!active()) return;
         captureFocus();
+        lexicalBinding?.destroy();
         controller.abort();
         stopMedia?.();
         root.remove();

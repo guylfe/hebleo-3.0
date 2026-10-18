@@ -66,3 +66,7 @@ Current-task verification overrides the historical initial-checkpoint full-audit
 ## UX14 result metadata and pointer transit correction
 
 The evaluator derives optional string alternatives inside the branch using that same explicit authored answers list; recognition/matching do not emit it, and the renderer does not display this inapplicable metadata from historical records. Raw source fields/immutable grades/progress remain untouched. The shared result-explanation binding retains the existing8px geometry and uses180ms cancelable close for hover transit, content entry, focus/blur and Escape/tap; close timers affect only their connected result node. See docs/UX14_RESULT_CORRECTIONS.md for focused evidence and open native limits. No other approved design/data behavior or held choice changes. UX Owner's corrected-SHA bounded recheck remains required before activation.
+
+## Oct18 lexical capability
+
+Category rendering belongs to lexical-vocabulary.js/.css; scoped additions and lexical lesson links belong to Studio lexical-settings.js. Save/reload and exact-token Preview keep unified Studio ownership. Source/data authority remains ADR B03 and docs/architecture/LEXICAL_INTEGRATION_V1.md. Identity approval cannot silently become display approval. Library lexical queries use bounded safe projections and stale-response suppression; existing flat records keep their established path. Workbook catalogue status remains distinct from the app catalogue. Opening, importing, saving or previewing never applies a learner migration.

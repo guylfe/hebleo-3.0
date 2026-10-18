@@ -1,0 +1,20 @@
+✔ saved/reloaded scoped additions drive 3/7/10 prepositions, partial adjectives and tense progression (359.3691ms)
+✔ authoritative reordering changes inheritance; empty later additions do not revoke; no word/course/class leakage (11.3173ms)
+✔ source-only, pending, missing, inapplicable and locked remain distinct; raw draft metadata never reaches learner JSON (11.2338ms)
+✔ exact reviewed payload and source promotion are protected at stage, publish and restore validation (84.0445ms)
+✔ persistent reopen, backup and restore preserve lexical rows, references and exact existing review schedules (108.2764ms)
+✔ dynamic lesson titles follow rename; unknown and unconnected references are explicit (8.71ms)
+✔ display approval remains separate from identity, and shared cells require reviewed explicit metadata (13.7323ms)
+✔ lexical paging and filters operate on safe contextual records; source-only values never match search (346.8527ms)
+✔ actual card migration preview reports many-to-one schedule conflicts without changing IDs or schedules (27.0797ms)
+✔ Studio settings retain letter behavior and sibling edits through Save, reload, inherited preview and CAS rejection (599.1102ms)
+✔ actual rehearsal renderer uses saved projection and keeps forms above notes with accessible RTL markup (59.1138ms)
+✔ HTTP author boundary, exact draft preview, lexical pages, invalid import and public data isolation (158.7126ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3172.6231

@@ -1,3 +1,5 @@
+import {renderLexicalVocabulary,bindLexicalVocabulary} from '../public/lexical-vocabulary.js';
+import {lexicalFixture} from '../scripts/lexical-fixture.mjs';
 import {mountMediaLibrary} from '../public/studio/media-library.js';
 import {mountSourceAuthoring} from '../public/studio/sources-editor.js';
 import {test} from 'node:test';
@@ -24,7 +26,7 @@ import {inspectImport,renderImportReview} from '../public/studio/import-review.j
 import {pathToFileURL} from 'node:url';
 const {mountLessonPreview} = await import(process.env.HEBLEO_PREVIEW_CONTROLLER ? pathToFileURL(process.env.HEBLEO_PREVIEW_CONTROLLER) : '../public/preview/lesson-preview.js');
 import {createLearnerRenderer} from '../public/preview/learner-renderer.js';
-async function settled(predicate){for(let i=0;i<80;i++){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle.');}
+async function settled(predicate){const deadline=Date.now()+5000;while(Date.now()<deadline){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle within 5 seconds.');}
 async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,width=1024,navigationPrefs,markdownDependencies,reduceMotion=false}={}){
   const store=providedStore||new Store();prepare?.(store);const d=new JSDOM('<div id="app"></div><div id="toast"></div>',{url:'http://127.0.0.1/#'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=d.window;
   Object.defineProperty(w,'innerWidth',{value:width,writable:true});let server,origin;
@@ -33,7 +35,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  Object.assign(w,{renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   if(markdownDependencies)w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
@@ -63,6 +65,17 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+
+test('LEXICAL actual app uses context eligibility, category disclosure and server-filtered My Hebrew without source-only search leakage',async t=>{
+ const {doc,w}=await app(t,{page:'lesson/lesson-2/vocabulary',realHTTP:true,prepare(store){const c=store.snapshot();c.lexical=lexicalFixture();store.set('active',store.addRevision(c,'Synthetic lexical UI fixture only'));}});
+ assert.equal(doc.querySelector('[data-preposition-forms]').dataset.count,'7');assert.equal(doc.querySelectorAll('[data-word-key]').length,3);
+ const forms=doc.querySelector('[data-lexical-toggle=forms]');forms.click();assert.equal(forms.getAttribute('aria-expanded'),'true');assert.equal(doc.querySelector('.lexical-forms-row').hidden,false);
+ doc.querySelector('[data-action=page][data-value=library]').click();await settled(()=>doc.querySelector('#library-search'));const search=doc.querySelector('#library-search');search.value='SYNTHETIC verb.future.I';search.dispatchEvent(new w.Event('input',{bubbles:true}));
+ await new Promise(r=>setTimeout(r,350));await settled(()=>doc.querySelector('.lexical-library-status')?.textContent.startsWith('0 lexical'));
+ assert.equal(doc.querySelector('[data-word-key="synthetic-verb"]'),null);
+ click(doc,'library-clear');await settled(()=>doc.querySelector('.lexical-library-status')?.textContent.startsWith('3 lexical'));
+ const lesson=doc.querySelector('#library-lesson');lesson.value='lesson-3';lesson.dispatchEvent(new w.Event('change'));await settled(()=>doc.querySelector('.lexical-library-status')?.textContent.includes('context:')&&!doc.querySelector('.lexical-library-status').textContent.includes('Updating'));
+});
 
 // JSDOM does not lay out viewports. Apply the real loaded stylesheet order with
 // only the width media queries matching this fixture; this checks the cascade,

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "scope": "Fixture integrity and exact source conservation only; no application behavior executed",
+  "checks": 2075,
+  "cases": 34,
+  "words": 7,
+  "exactBindings": 69,
+  "semanticSlots": 42,
+  "linguisticApproval": false,
+  "applicationRuntimeTested": false,
+  "nativeRenderingTested": false,
+  "fixtureSha256": "1601f231797714021a9ee11f812d461b415599c74094a3284050509b57520957"
+}
