@@ -1,0 +1,698 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hebleo.local/schemas/lexical-content.v1.schema.json",
+  "title": "Hebleo lexical author-side envelope v1",
+  "description": "Structure only. Run validateLexicalContent for inventory, references, course context, rich-run and review checks. Never treat source drafts as approvals.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "hebleo-lexical-runtime-v1"
+    },
+    "sourceSchemaVersion": {
+      "const": "hebleo-lexical-consolidation-v3"
+    },
+    "words": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/word"
+      }
+    },
+    "classes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/class"
+      }
+    },
+    "introductions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/introduction"
+      }
+    },
+    "unlocks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/unlock"
+      }
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/alias"
+      }
+    },
+    "usages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/usage"
+      }
+    },
+    "examples": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/example"
+      }
+    }
+  },
+  "required": [
+    "version",
+    "sourceSchemaVersion",
+    "words",
+    "classes",
+    "introductions",
+    "unlocks",
+    "aliases",
+    "usages",
+    "examples"
+  ],
+  "additionalProperties": true,
+  "definitions": {
+    "review": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "approved",
+            "pending",
+            "rejected",
+            "unresolved"
+          ]
+        },
+        "reviewedRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": true
+    },
+    "rich": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "runs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "startIndex": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "format": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "startIndex",
+              "format"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "format": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "additionalProperties": true
+    },
+    "variant": {
+      "type": "object",
+      "properties": {
+        "variantId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review": {
+          "$ref": "#/definitions/review"
+        },
+        "mappingReview": {
+          "$ref": "#/definitions/review"
+        },
+        "origin": {
+          "enum": [
+            "source",
+            "human-authored",
+            "generated"
+          ]
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "representations": {
+          "type": "object",
+          "properties": {
+            "pointed": {
+              "$ref": "#/definitions/rich"
+            },
+            "unpointed": {
+              "$ref": "#/definitions/rich"
+            },
+            "curated": {
+              "$ref": "#/definitions/rich"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "variantId",
+        "revision",
+        "review",
+        "mappingReview",
+        "origin",
+        "sourceRefs",
+        "representations"
+      ],
+      "additionalProperties": true
+    },
+    "form": {
+      "type": "object",
+      "properties": {
+        "slotId": {
+          "enum": [
+            "verb.infinitive",
+            "verb.gerund",
+            "verb.past.I",
+            "verb.past.אתה",
+            "verb.past.את",
+            "verb.past.he",
+            "verb.past.she",
+            "verb.past.אנחנו",
+            "verb.past.אתם",
+            "verb.past.אתן",
+            "verb.past.they",
+            "verb.present.Singular M",
+            "verb.present.Singular F",
+            "verb.present.Plural M",
+            "verb.present.Plural F",
+            "verb.future.I",
+            "verb.future.אתה",
+            "verb.future.את",
+            "verb.future.he",
+            "verb.future.she",
+            "verb.future.אנחנו",
+            "verb.future.אתם",
+            "verb.future.אתן",
+            "verb.future.they",
+            "verb.imperative.אתה",
+            "verb.imperative.את",
+            "verb.imperative.אתם",
+            "verb.imperative.אתן",
+            "adjective.ms",
+            "adjective.fs",
+            "adjective.mp",
+            "adjective.fp",
+            "preposition.I",
+            "preposition.אתה",
+            "preposition.את",
+            "preposition.he",
+            "preposition.she",
+            "preposition.אנחנו",
+            "preposition.אתם",
+            "preposition.אתן",
+            "preposition.הם",
+            "preposition.הן"
+          ]
+        },
+        "status": {
+          "enum": [
+            "supplied",
+            "missing",
+            "inapplicable",
+            "unresolved"
+          ]
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/variant"
+          }
+        }
+      },
+      "required": [
+        "slotId",
+        "status",
+        "variants"
+      ],
+      "additionalProperties": true
+    },
+    "word": {
+      "type": "object",
+      "properties": {
+        "wordKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "enum": [
+            "verb",
+            "adjective",
+            "preposition",
+            "noun",
+            "other"
+          ]
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identityReview": {
+          "$ref": "#/definitions/review"
+        },
+        "fieldConflicts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "forms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/form"
+          }
+        },
+        "classMemberships": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "classId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "review": {
+                "$ref": "#/definitions/review"
+              }
+            },
+            "required": [
+              "classId",
+              "review"
+            ],
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": [
+        "wordKey",
+        "category",
+        "revision",
+        "identityReview",
+        "fieldConflicts",
+        "forms",
+        "classMemberships"
+      ],
+      "additionalProperties": true
+    },
+    "class": {
+      "type": "object",
+      "properties": {
+        "classId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "enum": [
+            "verb",
+            "adjective",
+            "preposition"
+          ]
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review": {
+          "$ref": "#/definitions/review"
+        }
+      },
+      "required": [
+        "classId",
+        "category",
+        "revision",
+        "review"
+      ],
+      "additionalProperties": true
+    },
+    "introduction": {
+      "type": "object",
+      "properties": {
+        "linkId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "wordKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review": {
+          "$ref": "#/definitions/review"
+        },
+        "action": {
+          "enum": [
+            "introduce",
+            "reuse",
+            "legacy"
+          ]
+        },
+        "courseId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lessonId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "legacyReference": {}
+      },
+      "required": [
+        "linkId",
+        "wordKey",
+        "revision",
+        "review",
+        "action"
+      ],
+      "additionalProperties": true
+    },
+    "scope": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "all"
+            },
+            "category": {
+              "enum": [
+                "verb",
+                "adjective",
+                "preposition"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "category"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "word"
+            },
+            "category": {
+              "enum": [
+                "verb",
+                "adjective",
+                "preposition"
+              ]
+            },
+            "wordKey": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "category",
+            "wordKey"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "class"
+            },
+            "category": {
+              "enum": [
+                "verb",
+                "adjective",
+                "preposition"
+              ]
+            },
+            "classId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "category",
+            "classId"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    },
+    "unlock": {
+      "type": "object",
+      "properties": {
+        "unlockId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review": {
+          "$ref": "#/definitions/review"
+        },
+        "courseId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lessonId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "#/definitions/scope"
+        },
+        "slotIds": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "verb.infinitive",
+              "verb.gerund",
+              "verb.past.I",
+              "verb.past.אתה",
+              "verb.past.את",
+              "verb.past.he",
+              "verb.past.she",
+              "verb.past.אנחנו",
+              "verb.past.אתם",
+              "verb.past.אתן",
+              "verb.past.they",
+              "verb.present.Singular M",
+              "verb.present.Singular F",
+              "verb.present.Plural M",
+              "verb.present.Plural F",
+              "verb.future.I",
+              "verb.future.אתה",
+              "verb.future.את",
+              "verb.future.he",
+              "verb.future.she",
+              "verb.future.אנחנו",
+              "verb.future.אתם",
+              "verb.future.אתן",
+              "verb.future.they",
+              "verb.imperative.אתה",
+              "verb.imperative.את",
+              "verb.imperative.אתם",
+              "verb.imperative.אתן",
+              "adjective.ms",
+              "adjective.fs",
+              "adjective.mp",
+              "adjective.fp",
+              "preposition.I",
+              "preposition.אתה",
+              "preposition.את",
+              "preposition.he",
+              "preposition.she",
+              "preposition.אנחנו",
+              "preposition.אתם",
+              "preposition.אתן",
+              "preposition.הם",
+              "preposition.הן"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "unlockId",
+        "revision",
+        "review",
+        "courseId",
+        "lessonId",
+        "scope",
+        "slotIds"
+      ],
+      "additionalProperties": true
+    },
+    "alias": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "source",
+            "word",
+            "form"
+          ]
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliasId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "wordKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review": {
+          "$ref": "#/definitions/review"
+        },
+        "slotId": {
+          "enum": [
+            "verb.infinitive",
+            "verb.gerund",
+            "verb.past.I",
+            "verb.past.אתה",
+            "verb.past.את",
+            "verb.past.he",
+            "verb.past.she",
+            "verb.past.אנחנו",
+            "verb.past.אתם",
+            "verb.past.אתן",
+            "verb.past.they",
+            "verb.present.Singular M",
+            "verb.present.Singular F",
+            "verb.present.Plural M",
+            "verb.present.Plural F",
+            "verb.future.I",
+            "verb.future.אתה",
+            "verb.future.את",
+            "verb.future.he",
+            "verb.future.she",
+            "verb.future.אנחנו",
+            "verb.future.אתם",
+            "verb.future.אתן",
+            "verb.future.they",
+            "verb.imperative.אתה",
+            "verb.imperative.את",
+            "verb.imperative.אתם",
+            "verb.imperative.אתן",
+            "adjective.ms",
+            "adjective.fs",
+            "adjective.mp",
+            "adjective.fp",
+            "preposition.I",
+            "preposition.אתה",
+            "preposition.את",
+            "preposition.he",
+            "preposition.she",
+            "preposition.אנחנו",
+            "preposition.אתם",
+            "preposition.אתן",
+            "preposition.הם",
+            "preposition.הן",
+            null
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "namespace",
+        "aliasId",
+        "wordKey",
+        "revision",
+        "review"
+      ],
+      "additionalProperties": true
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "usageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "wordKey": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "usageId",
+        "wordKey"
+      ],
+      "additionalProperties": true
+    },
+    "example": {
+      "type": "object",
+      "properties": {
+        "exampleId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "wordKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "usageId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "exampleId",
+        "wordKey"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

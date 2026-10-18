@@ -504,3 +504,15 @@ Actual UX Owner reviewed cleanf9c9490c03c346171ae81c610d501587daf17168: authoriz
 | UX14-02 / FB14-14 / E05 |180ms cancelable close across existing8px gap, content/trigger enter/leave, focus/tap/Escape retained; scoped timers and idempotent bind. Supplied hover regression passes plus deterministic lifecycle/detached-context/no-empty cases | Real hover geometry/native/Guy acceptance OPEN |
 
 Expanded scoped11/11 and existing affected10/10PASS; repository/changed-module syntax and diff checks PASS. No repeated manual broad audit/suite, new QA/Release dispatch or protected demo63357/4173/4174/data/source/WordPress/public action. Canonical approval/CAS/media/source code and navy artwork unchanged. Held colors/general labels/vocabulary/broader motion, browser pause and audio-speed-quality/playback-rate/APK deferrals persist. Vocabulary returns to Guy after review/corrections BEFORE phase3/broader walkthrough.
+
+## 2026-10-18 lexical contract checkpoint (Architect)
+
+Branch `architect/oct18-lexical-contract`, based on `d4bcadd`. [Contract/API handoff](architecture/LEXICAL_CONTRACT_V1.md) and [ADR B03](adr/ADR-B03-lexical-identity-and-unlocks.md). This is an isolated contract/module checkpoint, not installed app behavior. Existing owner results remain unchanged and user acceptance remains Pending.
+
+| Existing IDs | Bounded new evidence | Remaining work |
+| --- | --- | --- |
+| S01, S05, S06, S09 | Pure typed lexical envelope, exact 42 source slot IDs, 28/4/10 inventories, approved scoped additive eligibility, independent citation, live title projection and source conflict checks; 22 focused tests and 3 lexical schema checks pass | Adapter conservation, Studio Save/reload, server publication gates, renderer and native browser checks |
+| R01, R04 | Preview-only many-to-one identity mapping detects schedule collisions and retains source state/card references without mutation | No progress migration is applied; Lead owns reversible integration and conflict policy |
+| D03, D04, D05 | Unknown-version rejection, absent-settings no-additions compatibility, revision-bound review metadata and immutable publishing requirements documented | Actual persistence/restore/CAS integration remains pending |
+
+`npm run verify:candidate`: 598/598 pass (the repository's audio exclusions apply). The earlier unrestricted run encountered two deferred audio failures plus two missing-schema-dependency failures; schema dependency was subsequently installed. Complete schema suite: 22/23 pass, with the existing `changed content or dependency invalidates approval digests` check failing in unchanged code; new lexical checks pass 3/3. No full-suite-green claim or manual/Guy acceptance is made.
