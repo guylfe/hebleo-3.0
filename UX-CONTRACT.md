@@ -70,3 +70,9 @@ The evaluator derives optional string alternatives inside the branch using that 
 ## Oct18 lexical capability
 
 Category rendering belongs to lexical-vocabulary.js/.css; scoped additions and lexical lesson links belong to Studio lexical-settings.js. Save/reload and exact-token Preview keep unified Studio ownership. Source/data authority remains ADR B03 and docs/architecture/LEXICAL_INTEGRATION_V1.md. Identity approval cannot silently become display approval. Library lexical queries use bounded safe projections and stale-response suppression; existing flat records keep their established path. Workbook catalogue status remains distinct from the app catalogue. Opening, importing, saving or previewing never applies a learner migration.
+
+### Oct18 owner correction: scoped targets and keyboard continuity
+
+Studio lexical settings validate targets against the selected category and scope: word keys for word scope; current reviewed class IDs for class scope. Each category/scope retains its valid choice and otherwise defaults to its first valid option. No reviewed class presents an explanatory unavailable target and disables Add for that scope. It never silently switches to a word scope.
+
+The existing lexical status region remains mounted during settings-body rerenders. Successful additions/removals/links announce their workspace result and remind the author to Save. Scope/category changes restore focus to the recreated select; Add/Link restore their action; removing a focused row uses the adjacent remaining action, falling back to Add/Link. Link panel openness and chosen word/action survive those rerenders. Source approvals, unified Save/CAS/rehearsal and production boundaries are unchanged. Source/JSDOM checks do not establish native focus, screen-reader announcement or geometry acceptance.

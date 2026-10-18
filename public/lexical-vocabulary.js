@@ -54,9 +54,9 @@ const statusLabels = {locked:'Not introduced', missing:'Source missing', unresol
 const bindings = new WeakMap();
 const safeID = value => Array.from(String(value)).map(c => c.codePointAt(0).toString(16)).join('-');
 
-function rich(value, language = 'he') {
+function rich(value, language = 'he', forceRTL = false) {
   const data = typeof value === 'object' && value ? value : {};
-  return '<bdi lang="'+language+'" dir="'+(language === 'he' ? 'rtl' : language === 'en' ? 'ltr' : 'auto')+'" style="'+cellCSS(data.formatting, data.sourceTheme)+'">'+richCell(textOf(value), data.formatting, data.sourceTheme)+'</bdi>';
+  return '<bdi lang="'+language+'" dir="'+(language === 'he' ? 'rtl' : language === 'en' ? 'ltr' : 'auto')+'" style="'+cellCSS(data.formatting, data.sourceTheme)+(forceRTL ? ';direction:rtl;unicode-bidi:isolate' : '')+'">'+richCell(textOf(value), data.formatting, data.sourceTheme)+'</bdi>';
 }
 function statusOf(form) {
   if (form?.status === 'eligible') return textOf(form.value).trim() ? 'eligible' : 'missing';
@@ -73,10 +73,24 @@ function meaning(word) {
   const usages = word.usages || [];
   return (!usages.some(u => u.coversBareMeaning === true) ? rich(word.english, 'en') : '')+usages.map(pair).join('');
 }
+// Headings have a neutral foreground; retain every authored byte and all other
+// formatting in a detached display projection. Expanded forms use the originals.
+function citationValue(value) {
+  if (!value || typeof value !== 'object' || !value.formatting) return rich(value, 'he', true);
+  const formatting = structuredClone(value.formatting);
+  const neutral = format => {
+    if (!format) return;
+    delete format.foregroundColor; delete format.foregroundColorStyle; delete format.color;
+  };
+  neutral(formatting.effectiveFormat?.textFormat);
+  neutral(formatting.userEnteredFormat?.textFormat);
+  for (const run of formatting.textFormatRuns || []) neutral(run.format);
+  return rich({...value, formatting}, 'he', true);
+}
 function citation(word) {
   return ['past', 'present'].map(tense => {
     const form = word.citation?.[tense];
-    return '<span class="lexical-citation-part" aria-label="'+(tense === 'past' ? 'Past he' : 'Present masculine singular')+' citation">'+(statusOf(form) === 'eligible' ? (form.values||[form.value]).map(v=>rich(v)).join(' / ') : '<span class="lexical-unavailable" data-status="'+statusOf(form)+'" title="'+statusLabels[statusOf(form)]+'">—</span>')+'</span>';
+    return '<span class="lexical-citation-part" aria-label="'+(tense === 'past' ? 'Past he' : 'Present masculine singular')+' citation">'+(statusOf(form) === 'eligible' ? (form.values||[form.value]).map(citationValue).join(' / ') : '<span class="lexical-unavailable" data-status="'+statusOf(form)+'" title="'+statusLabels[statusOf(form)]+'">—</span>')+'</span>';
   }).join('<span class="lexical-citation-separator" aria-hidden="true"> - </span>');
 }
 function button(label, kind, id, extra = '') {
@@ -164,7 +178,7 @@ function renderWord(word, prefix) {
   const specific = word.category === 'Nouns' ? '<td>'+rich(word.gender, 'en')+'</td><td>'+rich(word.plural)+'</td>' :
     word.category === 'Adjectives' ? '<td>'+adjectiveForms(forms)+'</td>' : word.category === 'Prepositions' ? '<td>'+prepositionForms(forms)+'</td>' : expandable ? '<td>'+button('Show forms', 'forms', id+'-forms')+'</td>' : '';
   const cols = word.category === 'Nouns' ? 6 : word.category === 'Other' ? 4 : 5;
-  return '<tbody data-word-key="'+escape(word.wordKey)+'"><tr class="lexical-word-row"><th scope="row" class="lexical-frozen-he">'+(expandable ? '<span class="lexical-citation" dir="ltr">'+citation(word)+'</span>' : rich(word.hebrew))+audioControls(word.audio,textOf(word.english))+(word.runtimeId?'<div class="button-row">'+actionButton('Open entry','lookup','small secondary',word.runtimeId)+actionButton('Add to review','enroll','small secondary',word.runtimeId)+'</div>':'')+'</th><td class="lexical-frozen-en">'+meaning(word)+'</td>'+specific+
+  return '<tbody data-word-key="'+escape(word.wordKey)+'"><tr class="lexical-word-row"><th scope="row" class="lexical-frozen-he" dir="rtl" lang="he">'+(expandable ? '<span class="lexical-citation" dir="rtl" lang="he">'+citation(word)+'</span>' : rich(word.hebrew, 'he', true))+(word.audio?'<div dir="ltr" lang="en">'+audioControls(word.audio,textOf(word.english))+'</div>':'')+(word.runtimeId?'<div class="button-row" dir="ltr" lang="en">'+actionButton('Open entry','lookup','small secondary',word.runtimeId)+actionButton('Add to review','enroll','small secondary',word.runtimeId)+'</div>':'')+'</th><td class="lexical-frozen-en">'+meaning(word)+'</td>'+specific+
     '<td class="lexical-structure" rowspan="'+rows+'">'+rich(word.root)+'</td><td class="lexical-structure lexical-pattern" rowspan="'+rows+'">'+rich(word.pattern)+'</td></tr>'+
     (expandable ? '<tr id="'+id+'-forms" class="lexical-forms-row" hidden><td colspan="'+(cols-2)+'"><div class="lexical-forms-boundary">'+verbForms(forms)+'</div></td></tr>' : '')+
     (notes ? '<tr class="lexical-support-row"><td colspan="'+(cols-2)+'">'+notes+'</td></tr>' : '')+'</tbody>';

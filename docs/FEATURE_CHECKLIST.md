@@ -528,3 +528,14 @@ Private branch lead/oct18-consolidated-vocabulary, based on d4bcadd; exact final
 | D03, D04, D05 | Optional versioned envelope in immutable revision JSON; old snapshots add no forms; malformed versions and changed/untrusted source approvals rejected on stage/restore; private repeatable startup and once-per-build fictional-progress reset. | Approved source portability needs the trusted review bridge; no production topology or deployment change. |
 
 The 34 source-backed resolver cases/3,962 assertions and four negative controls are retained as test-only evidence, not source approval or full application QA. The original 1,251 aliases, 1,172 form references, 437 occurrences, eight usages and 95 examples remain, including held-target evidence; 621 non-paradigm source records are retained. Native browser inspection refused existing-profile consent. Strict Premium audit retains three unchanged delegated-button false positives and is not a clean pass. Audio-speed/playback-quality exclusions in candidate verification remain explicit. No live publication, canonical-source flip or destructive migration occurred.
+
+## Oct18 vocabulary integration owner corrections
+
+| Feature | Bounded implementation status | Evidence | Guy result |
+| --- | --- | --- | --- |
+| VOC-OWNER-RTL | Hebrew word cells and independent combined citations explicitly Hebrew/RTL; English actions isolated; past–present order and hyphen retained. | test/lexical-owner-rework.test.js; emitted DOM evidence only | Pending |
+| VOC-OWNER-CITATION | Heading-only foreground neutralization handles cell defaults, theme/RGB and UTF-16 run colours without source mutation; expanded teaching colours retained. | Formatted-input renderer regression, plus existing locked/missing citation guards | Pending |
+| VOC-OWNER-CLASS | Category/scope-specific reviewed class targets default and persist; no-class state explicit and Add unavailable. | Studio target/focus/error regressions; existing Store/Save/preview integration | Pending |
+| VOC-OWNER-FOCUS | Stable status region and meaningful focus through category/scope/Add/Remove/Link rerenders; open link panel and selections retained. | JSDOM regression assertions; native keyboard/screen-reader acceptance unverified | Pending |
+
+Corrections are bounded rework of 581da4c, not a new source import or approval. Exact revision, executed commands/results, private push and refreshed isolated preview receipt are in the addressed rework task handoff. Independent corrected-revision QA remains separate and is dispatched by UX Owner.
