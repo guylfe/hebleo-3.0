@@ -71,21 +71,27 @@ test('verb forms are above Notes and shared metadata merges genders without infe
   assert.deepEqual([...body.children].map(el => el.className), ['lexical-word-row','lexical-forms-row','lexical-support-row']);
   const bands = [...root.querySelectorAll('.lexical-paradigm > tbody')];
   assert.equal(bands.length, 2);
-  assert.equal(bands[0].querySelector('[data-slot-id="Past · they"]').parentElement.colSpan, 2);
+  assert.equal(bands[0].querySelector('[data-slot-id="Past · they"]').closest('td').colSpan, 2);
+  assert.equal(bands[0].querySelector('[data-slot-id="Past · they"]').closest('td').querySelector('.lexical-pronoun').textContent, 'they');
   assert.equal(bands[1].querySelectorAll('td[colspan="2"]').length, 0);
   assert.equal(root.querySelectorAll('.lexical-nominals dd').length, 1);
-  assert.equal(root.querySelectorAll('.lexical-structure[rowspan="3"]').length, 2);
+  assert.equal(root.querySelector('.lexical-forms-row > td').colSpan, 5);
+  assert.equal(root.querySelectorAll('.lexical-support-row > .lexical-structure').length, 2);
   const partial = mount([{...verb,forms:[form('they',{tense:'past',person:'3',number:'plural',gender:'shared',introducedGenders:['m']})]}]).root;
   assert.equal(partial.querySelectorAll('.lexical-paradigm td[colspan="2"]').length, 0);
   assert.equal(partial.querySelectorAll('.lexical-paradigm [data-slot-id=they]').length, 1);
 });
 
-test('adjective eligible paradigm stays on the same row and uses a non-underlined textual base cue', () => {
+test('adjectives use one entry with gender rows and singular/plural under Hebrew, without a duplicate citation column', () => {
   const word = {...sample,category:'Adjectives',forms:['singular','plural'].flatMap(number => ['m','f'].map(gender => form(number+'-'+gender,{number,gender,base:number === 'singular' && gender === 'm'})))};
   const {root} = mount([word]);
   assert.equal(root.querySelectorAll('[data-word-key]').length, 1);
-  assert.equal(root.querySelectorAll('.lexical-word-row .lexical-adjectives [data-status=eligible]').length, 4);
-  assert.equal(root.querySelector('.lexical-base').textContent, 'base');
+  assert.equal(root.querySelectorAll('.lexical-adjectives .lexical-adjective-row [data-status=eligible]').length, 4);
+  assert.deepEqual([...root.querySelectorAll('.lexical-adjectives thead tr:last-child th')].map(e=>e.textContent),['Gender','Singular','Plural']);
+  assert.equal(root.querySelector('.lexical-adjectives thead th').colSpan,3);
+  assert.equal(root.querySelectorAll('.lexical-adjectives tbody .lexical-frozen-he').length,0);
+  assert.equal(root.querySelector('.lexical-base-form').title,'Citation form');
+  assert.ok(!root.querySelector('.lexical-base-form').textContent.includes('base'));
   assert.equal(root.querySelectorAll('u,.lexical-forms-row').length, 0);
   const partial = mount([{...word,forms:word.forms.map((f,i) => ({...f,status:i ? 'locked' : 'eligible'}))}]).root;
   assert.equal(partial.querySelectorAll('.lexical-adjectives [data-status=eligible]').length, 1);
@@ -186,10 +192,14 @@ test('seven preposition forms always remain horizontal; ten adapt to measured ov
     if (count === 10) {
       assert.match(root.textContent,/הם/); assert.match(root.textContent,/הן/);
       root.querySelector('[data-preposition-mode-button=full]').click();
-      assert.equal(forms.dataset.orientation,'horizontal');
+      assert.equal(root.querySelector('.lexical-preposition-full').dataset.count,'10');
+      assert.equal(root.querySelectorAll('.lexical-preposition-full thead th').length,12);
       assert.equal(root.querySelector('[data-preposition-mode-button=full]').getAttribute('aria-pressed'),'true');
       root.querySelector('[data-preposition-mode-button=compact]').click();
-      assert.equal(forms.dataset.orientation,'vertical');
+      const returned=root.querySelector('[data-preposition-forms]');
+      geometry(returned.parentElement,'clientWidth',200);
+      geometry(returned.querySelector('.lexical-preposition-horizontal'),'scrollWidth',500);
+      api.measure();assert.equal(returned.dataset.orientation,'vertical');
     }
     api.destroy();
   }
@@ -252,7 +262,40 @@ test('stylesheet keeps structures, overflow, semantic focus and minimal adjectiv
   const api = bindLexicalVocabulary(root); root.querySelector('[data-lexical-toggle=forms]').click();
   assert.notEqual(dom.window.getComputedStyle(root.querySelector('.lexical-forms-row')).display,'none');
   assert.match(css,/left:var\(--lexical-he-width\)/);
-  assert.match(css,/\.lexical-table \.lexical-structure \{ background:var\(--action-hover/);
-  assert.match(css,/\.lexical-adjectives \.lexical-gender-divider \{ border:0/);
+  // Root/Pattern must not inherit the dark action-button hover token.
+  assert.doesNotMatch(css,/var\(--action-hover/);
   assert.match(css,/:focus-visible/); api.destroy();
+});
+
+test('an explicitly paired example is displayed once while source note text and UTF-16 formatting stay unchanged',()=>{
+  const raw='Authored introduction.\nExample pair – TEST HEBREW\nAuthored ending.';
+  const notes={text:raw,formatting:{formattedValue:raw,textFormatRuns:[{startIndex:0,format:{bold:true}},{startIndex:raw.indexOf('Authored ending.'),format:{italic:true}}]}};
+  const word={...sample,notes,examples:[{english:'Example pair',hebrew:'TEST HEBREW'}]},before=JSON.stringify(word);
+  const {root}=mount([word]);
+  const body=root.querySelector('.lexical-note-body');
+  assert.equal(body.textContent.trim(),'Authored introduction.\n\nAuthored ending.');
+  assert.ok(!body.textContent.includes('Example pair'));
+  assert.equal(root.querySelectorAll('.lexical-note-content .lexical-pair').length,1);
+  assert.match(body.innerHTML,/font-style:italic/);
+  assert.equal(JSON.stringify(word),before);
+});
+
+test('construction Note link opens its own explanation and restores a reachable disclosure focus',()=>{
+  const words=[{...verb,wordKey:'first',usages:[{english:'pass through',hebrew:'עָבַר בֶּ',noteLink:true}]},{...verb,wordKey:'second'}];
+  const {root,doc}=mount(words),changes=[],api=bindLexicalVocabulary(root,{onDisclosure:x=>changes.push(x)});
+  root.querySelector('[data-lexical-open-note]').click();
+  const first=root.querySelector('[data-word-key=first]'),second=root.querySelector('[data-word-key=second]');
+  assert.equal(first.querySelector('.lexical-note-content').hidden,false);
+  assert.equal(second.querySelector('.lexical-note-content').hidden,true);
+  assert.equal(doc.activeElement,first.querySelector('[data-note-button]'));
+  assert.deepEqual(changes,[{wordKey:'first',kind:'notes',expanded:true}]);
+  api.destroy();
+});
+
+test('verb labels use Hebrew you forms and one shared they label, while present stays gender/number only',()=>{
+  const forms=[form('you',{tense:'past',person:'2',number:'singular',gender:'f'}),form('you-pl',{tense:'future',person:'2',number:'plural',gender:'shared'}),form('present',{tense:'present',number:'singular',gender:'m'})];
+  const {root}=mount([{...verb,forms}]);
+  assert.deepEqual([...root.querySelectorAll('.lexical-pronoun')].map(n=>n.textContent),['את','אתם / אתן']);
+  assert.equal(root.querySelector('[data-slot-id=you]').closest('td').querySelector('.lexical-pronoun').dir,'rtl');
+  assert.equal(root.querySelector('[data-slot-id=present]').closest('td').querySelector('.lexical-pronoun'),null);
 });
