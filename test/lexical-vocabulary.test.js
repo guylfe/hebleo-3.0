@@ -76,7 +76,8 @@ test('verb forms are above Notes and shared metadata merges genders without infe
   assert.equal(bands[1].querySelectorAll('td[colspan="2"]').length, 0);
   assert.equal(root.querySelectorAll('.lexical-nominals dd').length, 1);
   assert.equal(root.querySelector('.lexical-forms-row > td').colSpan, 5);
-  assert.equal(root.querySelectorAll('.lexical-support-row > .lexical-structure').length, 2);
+  assert.equal(root.querySelector('.lexical-support-row > td').colSpan, 5);
+  assert.equal(root.querySelector('.lexical-support-row').children.length, 1);
   const partial = mount([{...verb,forms:[form('they',{tense:'past',person:'3',number:'plural',gender:'shared',introducedGenders:['m']})]}]).root;
   assert.equal(partial.querySelectorAll('.lexical-paradigm td[colspan="2"]').length, 0);
   assert.equal(partial.querySelectorAll('.lexical-paradigm [data-slot-id=they]').length, 1);
@@ -144,6 +145,7 @@ test('binding opens/closes inline forms and Notes without replacing unrelated an
 test('measured one-line Notes stay complete; overflow/multiline force ellipsis; examples-only use the same inline location', () => {
   const {root} = mount([{...sample,notes:'Short note.'},{...sample,wordKey:'examples',notes:'',examples:[{hebrew:'יַיִן',english:'Wine'}]}]);
   const api = bindLexicalVocabulary(root), strip = root.querySelector('[data-note-strip]'), line = strip.querySelector('[data-note-line]');
+  geometry(strip.querySelector('.lexical-note-top'),'clientWidth',100);
   geometry(line,'clientWidth',100); geometry(line,'scrollWidth',80); api.measure();
   assert.equal(strip.querySelector('[data-note-button]').hidden,true);
   assert.equal(strip.querySelector('[data-note-ellipsis]').hidden,true);
@@ -154,6 +156,52 @@ test('measured one-line Notes stay complete; overflow/multiline force ellipsis; 
   assert.equal(strip.querySelector('[data-full-note]').hidden,false);
   assert.equal(root.querySelector('.lexical-examples-only').closest('tr').className,'lexical-support-row');
   assert.equal(root.querySelector('.lexical-examples-only .lexical-note-marker'),null);
+  api.destroy();
+});
+
+test('Note and Examples rows span every category column and adjective structure cells end before the note', () => {
+  const adjective = {...sample,category:'Adjectives',notes:'Note.',forms:['singular','plural'].flatMap(number => ['m','f'].map(gender => form(number+'-'+gender,{number,gender})))};
+  for (const word of [{...sample,notes:'Note.'},verb,adjective,{...adjective,forms:adjective.forms.slice(0,1)}, {...prep(7),notes:'Note.'}, {...sample,category:'Other',examples:[{hebrew:'יַיִן',english:'Wine'}]}]) {
+    const {root}=mount([word]), table=root.querySelector('.lexical-table'),support=table.querySelector('.lexical-support-row');
+    assert.equal(support.children.length,1,word.category);
+    assert.equal(support.firstElementChild.colSpan,table.querySelectorAll(':scope > colgroup > col').length,word.category);
+    for(const cell of table.querySelectorAll('tbody .lexical-structure[rowspan]')) assert.equal(cell.rowSpan,table.querySelectorAll('.lexical-adjective-row').length);
+  }
+});
+
+test('collapsing another note and repeated layout callbacks cannot oscillate an expanded single-line note', () => {
+  const {root,doc,dom}=mount([{...sample,wordKey:'paam',notes:'First line.\nSecond line.'},{...sample,wordKey:'yachol',category:'Adjectives',notes:'Long single-line source note.',forms:[form('sg-m',{number:'singular',gender:'m'})]}]);
+  const style=doc.createElement('style');style.textContent=readFileSync(new URL('../public/lexical-vocabulary.css',import.meta.url),'utf8');doc.head.append(style);
+  const strip=root.querySelector('[data-word-key=yachol] [data-note-strip]'),top=strip.querySelector('.lexical-note-top'),line=strip.querySelector('[data-note-line]'),preview=strip.querySelector('.lexical-note-preview'),button=strip.querySelector('[data-note-button]');
+  let width=600,intrinsic=500;
+  geometry(top,'clientWidth',()=>width);rect(top.querySelector('strong'),{width:76});
+  geometry(line,'clientWidth',()=>dom.window.getComputedStyle(preview).display==='none'?0:width-112-(button.hidden?0:128));
+  geometry(line,'scrollWidth',()=>dom.window.getComputedStyle(preview).display==='none'?0:Math.max(intrinsic,line.clientWidth));
+  const api=bindLexicalVocabulary(root,{encounters:{has:()=>false,mark:()=>{}}});
+  assert.equal(button.getAttribute('aria-expanded'),'true');
+  assert.equal(dom.window.getComputedStyle(preview).visibility,'hidden');
+  const other=root.querySelector('[data-word-key=paam] [data-note-button]');other.click();
+  for(let i=0;i<30;i++) {api.measure();dom.window.dispatchEvent(new dom.window.Event('scroll'));assert.equal(strip.dataset.needsExpand,'true');assert.equal(button.hidden,false);assert.equal(strip.querySelector('[data-full-note]').hidden,false);}
+  assert.equal(other.getAttribute('aria-expanded'),'false');
+  button.click();for(let i=0;i<10;i++)api.measure();
+  assert.equal(button.getAttribute('aria-expanded'),'false');assert.equal(strip.querySelector('[data-note-ellipsis]').hidden,false);
+  // A note fitting without an action gets the full line back, even if Expand
+  // was visible before the resize. It must also recover when narrowing again.
+  intrinsic=450;api.measure();assert.equal(button.hidden,true);assert.equal(strip.dataset.needsExpand,'false');
+  width=500;api.measure();assert.equal(button.hidden,false);assert.equal(strip.dataset.needsExpand,'true');
+  button.click();width=900;api.measure();assert.equal(button.hidden,true);assert.equal(button.getAttribute('aria-expanded'),'false');
+  assert.equal(strip.querySelector('.lexical-note-content').hidden,true);assert.equal(dom.window.getComputedStyle(preview).visibility,'visible');
+  width=0;api.measure();assert.equal(strip.dataset.needsExpand,'false');
+  api.destroy();
+});
+
+test('short notes retain an Examples action, and its width is included without an ellipsis feedback loop', () => {
+  const {root}=mount([{...sample,notes:'Short note.',examples:[{hebrew:'יַיִן',english:'Wine'}]}]);
+  const strip=root.querySelector('[data-note-strip]'),top=strip.querySelector('.lexical-note-top'),line=strip.querySelector('[data-note-line]'),button=strip.querySelector('[data-note-button]');
+  geometry(top,'clientWidth',400);rect(top.querySelector('strong'),{width:60});rect(button,{width:100});geometry(line,'scrollWidth',200);
+  const api=bindLexicalVocabulary(root);assert.equal(button.hidden,false);assert.equal(strip.dataset.needsExpand,'false');
+  button.click();api.measure();assert.equal(strip.querySelector('[data-full-note]').hidden,true);assert.equal(strip.querySelector('.lexical-note-content').hidden,false);
+  geometry(line,'scrollWidth',300);for(let i=0;i<10;i++)api.measure();assert.equal(strip.dataset.needsExpand,'true');assert.equal(strip.querySelector('[data-full-note]').hidden,false);
   api.destroy();
 });
 

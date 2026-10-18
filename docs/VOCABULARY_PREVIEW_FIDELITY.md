@@ -27,3 +27,20 @@ Run the builder with the reference HTML and model paths, then run `scripts/start
 - Mounted built-in browser opened the actual corrected application and produced a rendered adjective screenshot during iteration. That screenshot exposed Gender wrapping, a duplicated note example and Root alignment, which were subsequently corrected. Later opens confirmed the updated content and structure. Final screenshot and interaction calls failed with `os error 10060`. Final visual comparison, native disclosure/switching, geometry and keyboard acceptance remain open. DOM and HTTP checks do not replace these.
 
 Guy's acceptance remains open. Previous bounded import-integrity evidence is preserved; this change does not claim new source approval, learner migration, publication, audio-speed or physical/mobile acceptance.
+
+## Guy's Note-width and flicker follow-up
+
+Guy reported that Note stopped before Root/Pattern and that collapsing פעם made the יכול note flicker. Every category's support row now spans its whole table. Adjective Root/Pattern rowspans end before that support row and center against the form rows.
+
+The shared note measurement previously compared an expanded preview after CSS removed it from layout (`display:none`). Its measured width became zero, which could hide the full note, reveal the preview and reverse the decision on the next resize callback. Showing/hiding Expand could also change the available width used by that same decision. Expanded previews now use `visibility:hidden` to retain geometry; measurement uses the header's capacity before overflow controls, with explicit allowance for an always-present Examples action. Zero-width hidden containers do not reclassify single-line notes. Narrow-width cell padding and collapsed bracketed-aside wrapping were also corrected during the follow-up source review.
+
+Executed follow-up evidence:
+
+- `node --test test/lexical-vocabulary.test.js`: 22 passed. New checks cover support-row spans, partial adjective rowspans, repeated collapse/scroll/layout cycles, width thresholds, hide/reveal, and short notes with examples. Geometry in these checks is simulated; it is not native rendering evidence.
+- `npm run verify:candidate`: 669 passed; zero failures. Existing audio exclusions retained.
+- `node ../verify-served.mjs`: actual HTTP module bytes match, 16 source-backed comparison entries retained, citation invariance and 3/7/10 eligibility progression pass.
+- `py -3 <premium-skill>/scripts/audit_project.py . --mode strict --output ../note-layout-premium-audit.json`: same three pre-existing findings in unchanged Studio delegated-button code. No new static finding; the whole-project audit is not clean.
+- `git diff --check`: passed. No build/formatter exists in this project. No schema or data contract changed; the earlier 23 schema passes are retained evidence rather than a new run. Design Markdown lint remains unavailable in the offline cache from the earlier checkpoint.
+- Restarted only the owner visual-review server on port 63359, with the existing fictional-progress startup rule. Lead's preview and canonical source remain unchanged.
+
+Native follow-up: app navigation returned accessibility content, but screenshot, evaluation and a real Continue click each failed with `os error 10060`. Available-target inspection reports Browser ready, Local VM unavailable (no supported container runtime), and cloud unavailable (no configured provider key). No substitute browser or foreground desktop path was used. The required final visual/interaction pass with no gaps has NOT occurred. Work remains incomplete under Guy's criterion.

@@ -561,3 +561,9 @@ Guy rejected the previously integrated vocabulary UI on 18 October: visual/behav
 | VOC-OWNER-CLASS, VOC-OWNER-FOCUS; S06, S09 | Readable lesson additions, category-correct preview defaults. Existing scope persistence, focus, Save/reload and cumulative eligibility tests retained. | Native author interaction and Guy acceptance open. |
 
 Executed owner evidence: 666 candidate tests and 23 schema checks pass. Actual served module bytes match the working files; HTTP 3/7/10 progression and source-backed citation invariance pass. The strict static audit retains three unchanged findings outside the changed component and is not clean. An intermediate mounted-browser adjective screenshot and later page snapshots are partial native evidence, not final visual acceptance. No canonical workbook approval, learner migration or production publication occurred.
+
+### Oct18 Note-width / flicker follow-up — completion OPEN
+
+VOC-OWNER-RTL / S01 / S05: corrected Note/Examples support rows across the full table width, including beneath Root/Pattern. Adjective structure rowspans end above Note. Overflow measurements retain expanded-preview geometry and do not depend on optional overflow controls. Narrow-width support-cell padding and collapsed-aside wrapping are corrected.
+
+Owner automated evidence: 22 focused renderer checks and 669 candidate checks pass; actual HTTP files and 3/7/10 progression checks pass. Simulated repeated collapse/resize/scroll checks preserve the other note's state. Strict static audit retains the same three findings in unchanged Studio files. See VOCABULARY_PREVIEW_FIDELITY.md for actual commands and limits. Final native visual/interaction pass is blocked by mounted-browser os error 10060. Guy requires a subsequent pass without gaps before completion; that gate and Guy acceptance remain OPEN. No new independent review is claimed.

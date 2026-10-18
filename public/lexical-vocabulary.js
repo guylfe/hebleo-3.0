@@ -199,7 +199,7 @@ function noteStrip(word, id) {
   if (!note && !examples.length) return '';
   const multiline = /[\r\n]/.test(note);
   const token = JSON.stringify([word.wordKey, word.noteRevision || '', note]);
-  return '<div class="lexical-note-strip '+(note ? 'lexical-has-note' : 'lexical-examples-only')+'" data-note-strip data-token="'+escape(token)+'" data-multiline="'+multiline+'" data-needs-expand="'+multiline+'">'+
+  return '<div class="lexical-note-strip '+(note ? 'lexical-has-note' : 'lexical-examples-only')+'" data-note-strip data-token="'+escape(token)+'" data-multiline="'+multiline+'" data-needs-expand="'+multiline+'" data-has-examples="'+Boolean(examples.length)+'">'+
     '<div class="lexical-note-top"><strong>'+(note ? '<span class="lexical-note-marker" aria-hidden="true">!</span> Note' : 'Examples')+'</strong>'+
     (note ? '<span class="lexical-note-preview"><span data-note-line>'+noteText(fragment(noteValue, 0, note.search(/[\r\n]/) < 0 ? note.length : note.search(/[\r\n]/)))+'</span><span class="lexical-ellipsis" data-note-ellipsis'+(!multiline ? ' hidden' : '')+' aria-hidden="true">...</span></span>' : '')+
     button('Expand', 'notes', id, 'data-note-button'+(!multiline && note && !examples.length ? ' hidden' : ''))+'</div>'+
@@ -216,7 +216,7 @@ function renderWord(word, prefix) {
   const structures=other?'':'<td class="lexical-structure">'+rich(word.root)+'</td><td class="lexical-structure lexical-pattern">'+rich(word.pattern)+'</td>';
   return '<tbody data-word-key="'+escape(word.wordKey)+'"><tr class="lexical-word-row"><th scope="row" class="lexical-frozen-he" dir="rtl" lang="he">'+heading+'</th><td class="lexical-frozen-en">'+meaning(word)+'</td>'+specific+structures+(expandable?'<td class="lexical-actions">'+button('Show forms','forms',id+'-forms')+'</td>':'')+'</tr>'+
    (expandable?'<tr id="'+id+'-forms" class="lexical-forms-row" hidden><td colspan="'+cols+'"><div class="lexical-forms-boundary">'+verbForms(forms)+'</div></td></tr>':'')+
-   (notes?'<tr class="lexical-support-row"><td colspan="'+(other?2:cols-2-(expandable?1:0))+'">'+notes+'</td>'+(other?'':'<td class="lexical-structure" aria-hidden="true"></td><td class="lexical-structure lexical-pattern" aria-hidden="true"></td>')+(expandable?'<td class="lexical-actions-continuation" aria-hidden="true"></td>':'')+'</tr>':'')+'</tbody>';
+   (notes?'<tr class="lexical-support-row"><td colspan="'+cols+'">'+notes+'</td></tr>':'')+'</tbody>';
 }
 
 function entryActions(word){
@@ -230,8 +230,8 @@ function adjectiveTable(words,prefix){
  const body=words.map(word=>{
   const forms=(word.forms||[]).filter(f=>statusOf(f)==='eligible'),genders=['m','f'].filter(g=>forms.some(f=>f.gender===g||f.gender==='shared'));
   if(!genders.length)genders.push('m');
-  const notes=noteStrip(word,prefix+'-'+safeID(word.wordKey)+'-notes'),rows=genders.length+Number(Boolean(notes));
-  return '<tbody data-word-key="'+escape(word.wordKey)+'" style="--lexical-agreement-rows:'+genders.length+'">'+genders.map((g,i)=>'<tr class="lexical-word-row lexical-adjective-row"><th scope="row" class="lexical-gender-value"><abbr title="'+(g==='m'?'Masculine':'Feminine')+'">'+g.toUpperCase()+'</abbr></th>'+numbers.map(n=>{const f=forms.find(f=>f.number===n&&(f.gender===g||f.gender==='shared'));return '<td class="lexical-adjective-value" dir="rtl" lang="he">'+(f?formValue(f):'<span class="lexical-unavailable" aria-label="No introduced form">—</span>')+'</td>';}).join('')+(i===0?'<td rowspan="'+genders.length+'" class="lexical-frozen-en">'+meaning(word)+entryActions(word)+'</td><td rowspan="'+rows+'" class="lexical-structure"><div class="lexical-adjective-structure">'+rich(word.root)+'</div></td><td rowspan="'+rows+'" class="lexical-structure lexical-pattern"><div class="lexical-adjective-structure">'+rich(word.pattern)+'</div></td>':'')+'</tr>').join('')+(notes?'<tr class="lexical-support-row"><td colspan="'+(heCols+1)+'">'+notes+'</td></tr>':'')+'</tbody>';
+  const notes=noteStrip(word,prefix+'-'+safeID(word.wordKey)+'-notes'),rows=genders.length;
+  return '<tbody data-word-key="'+escape(word.wordKey)+'">'+genders.map((g,i)=>'<tr class="lexical-word-row lexical-adjective-row"><th scope="row" class="lexical-gender-value"><abbr title="'+(g==='m'?'Masculine':'Feminine')+'">'+g.toUpperCase()+'</abbr></th>'+numbers.map(n=>{const f=forms.find(f=>f.number===n&&(f.gender===g||f.gender==='shared'));return '<td class="lexical-adjective-value" dir="rtl" lang="he">'+(f?formValue(f):'<span class="lexical-unavailable" aria-label="No introduced form">—</span>')+'</td>';}).join('')+(i===0?'<td rowspan="'+genders.length+'" class="lexical-frozen-en">'+meaning(word)+entryActions(word)+'</td><td rowspan="'+rows+'" class="lexical-structure"><div class="lexical-adjective-structure">'+rich(word.root)+'</div></td><td rowspan="'+rows+'" class="lexical-structure lexical-pattern"><div class="lexical-adjective-structure">'+rich(word.pattern)+'</div></td>':'')+'</tr>').join('')+(notes?'<tr class="lexical-support-row"><td colspan="'+(heCols+3)+'">'+notes+'</td></tr>':'')+'</tbody>';
  }).join('');
  return '<table class="lexical-table lexical-adjectives" data-he-columns="'+heCols+'"><caption class="lexical-sr">Adjectives · one entry per word</caption><colgroup><col class="lexical-gender-col">'+numbers.map(()=>'<col class="lexical-adjective-form-col">').join('')+'<col class="lexical-adjective-english-col"><col class="lexical-root-col"><col class="lexical-pattern-col"></colgroup>'+head+body+'</table>';
 }
@@ -323,9 +323,18 @@ export function bindLexicalVocabulary(root, {encounters, onDisclosure} = {}) {
     }
     for (const strip of all('[data-note-strip]')) {
       const line = strip.querySelector('[data-note-line]'), button = strip.querySelector('[data-note-button]');
-      const needs = strip.dataset.multiline === 'true' || Boolean(line && line.scrollWidth > line.clientWidth+1);
+      const hasExamples = strip.dataset.hasExamples === 'true';
+      const top = strip.querySelector('.lexical-note-top'), label = top.querySelector('strong');
+      // Measure against the space available BEFORE adding an overflow action or
+      // ellipsis. Otherwise showing Expand shrinks the line and can make its own
+      // removal impossible. Expanded previews keep their geometry in CSS.
+      if (line && top.clientWidth <= 0 && strip.dataset.multiline !== 'true') continue;
+      const style = win.getComputedStyle(top), gap = parseFloat(style.columnGap) || parseFloat(style.gap) || 0;
+      const contentWidth = top.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0);
+      const available = contentWidth - label.getBoundingClientRect().width - gap - (hasExamples ? button.getBoundingClientRect().width + gap : 0);
+      const needs = strip.dataset.multiline === 'true' || Boolean(line && line.scrollWidth > available+1);
       strip.dataset.needsExpand = String(needs);
-      const hasExamples = Boolean(strip.querySelector('.lexical-note-content .lexical-pair'));
+      if (!needs && !hasExamples && button.getAttribute('aria-expanded') === 'true') disclose(button, false, false);
       button.hidden = !needs && !hasExamples;
       strip.querySelector('[data-full-note]')?.toggleAttribute('hidden', !needs);
       const ellipsis = strip.querySelector('[data-note-ellipsis]');
