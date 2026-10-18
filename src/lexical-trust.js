@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import {isApproved,validateLexicalContent} from '../public/lexical-contract.js';
 import {lexicalCatalogue} from '../public/lexical-runtime.js';
 import {DomainError} from './errors.js';
+import {WORKBOOK_CAPTURE_VERSION,validateConsolidatedCapture} from './lexical-capture.js';
 const canonical=v=>JSON.stringify(v,(_k,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.entries(x).sort(([a],[b])=>a.localeCompare(b))):x);
 const payload=record=>Object.fromEntries(Object.entries(record).filter(([key])=>!['review','identityReview','mappingReview','approvalDigest'].includes(key)));
 const approvedRecord=record=>[record.review,record.identityReview,record.mappingReview,record.displayReview].some(review=>isApproved(review,record.revision));
@@ -12,6 +13,9 @@ export function lexicalReviewedRecords(lexical){
 }
 export function validateLexicalSnapshot(content){
  if(!Object.hasOwn(content,'lexical'))return;
+ // Declared captured evidence must also be valid when supplied directly to Stage/restore.
+ // Synthetic/legacy lexical envelopes without a capture keep their existing contract.
+ if(content.lexical?.captureDigest!==undefined||content.lexical?.archive?.version===WORKBOOK_CAPTURE_VERSION)validateConsolidatedCapture(content.lexical.archive);
  const check=validateLexicalContent(content.lexical,lexicalCatalogue(content));
  if(!check.ok)throw new DomainError('Invalid lexical contract: '+check.errors.slice(0,8).map(e=>e.path+' '+e.code).join('; '));
  const ids=new Set();for(const w of content.lexical.words)if(w.runtimeId!==undefined){if(ids.has(w.runtimeId)||!content.words.some(old=>old.id===w.runtimeId))throw new DomainError('Invalid or duplicate lexical runtime identity.');ids.add(w.runtimeId);}

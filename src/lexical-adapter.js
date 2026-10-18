@@ -1,7 +1,8 @@
 import {createHash} from 'node:crypto';
 import {LEXICAL_VERSION,SOURCE_SCHEMA_VERSION,SLOT_IDS,slotsForCategory,validateLexicalContent,resolveFieldOwnership} from '../public/lexical-contract.js';
 
-export const WORKBOOK_CAPTURE_VERSION='hebleo-consolidated-capture-v1';
+import {validateConsolidatedCapture} from './lexical-capture.js';
+export {WORKBOOK_CAPTURE_VERSION} from './lexical-capture.js';
 const pending=()=>({status:'pending'});
 const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const value=cell=>cell?.userEnteredValue?.stringValue??cell?.userEnteredValue?.numberValue??cell?.userEnteredValue?.boolValue??cell?.stringValue??'';
@@ -32,15 +33,10 @@ function bindingText(binding,styles){
 // Consumes a supplied capture, never reads hidden/legacy tabs as active paradigms.
 // Every source, proposal, flag, audio candidate and native cell survives in archive.
 export function adaptConsolidatedWorkbook(capture){
- if(capture?.version!==WORKBOOK_CAPTURE_VERSION||capture.plan?.version!=='lexical-consolidation-v3'||!Array.isArray(capture.sourceRecords?.records))throw new Error('Unsupported consolidated workbook capture.');
- const {plan,bindings,sourceRecords,styles,related}=capture,namespace=sourceRecords.sourceSpreadsheetId;
- if(!namespace||!Array.isArray(plan.tables)||!Array.isArray(plan.statusAudit))throw new Error('Incomplete consolidated capture.');
+ const {byBinding,sources,headerIndex,sourceTargets,held}=validateConsolidatedCapture(capture);
+ const {plan,sourceRecords,styles,related}=capture,namespace=sourceRecords.sourceSpreadsheetId;
  const lexical={version:LEXICAL_VERSION,sourceSchemaVersion:SOURCE_SCHEMA_VERSION,words:[],classes:[],introductions:[],unlocks:[],aliases:[],usages:[],examples:[],captureDigest:digest(capture),sourceSpreadsheetId:capture.spreadsheetId,catalogueStatus:'unconnected',archive:structuredClone(capture)};
- const allBindings=[...(bindings?.bindings||[]),...(bindings?.documentBindings||[])],byBinding=new Map(allBindings.map(b=>[b.bindingId,b]));
- const sources=new Map(sourceRecords.records.map(r=>[r.values[30],r]));
- const headerIndex=new Map(sourceRecords.headers.map((h,i)=>[h,i]));
- const sourceTargets=new Map(plan.sourceMap.map(s=>[s.sourceId,s.destinationGroupKey]));
- const held=new Set(plan.heldKeys),active=new Set();
+ const active=new Set();
  const names={Verbs:'verb',Adjectives:'adjective',Prepositions:'preposition'};
  for(const table of plan.tables.filter(t=>names[t.name]))for(const row of table.rows){
   const wordKey=value(row[0]),category=names[table.name];if(active.has(wordKey)||held.has(wordKey))throw new Error('Duplicate or held active lexical identity.');active.add(wordKey);
@@ -49,7 +45,7 @@ export function adaptConsolidatedWorkbook(capture){
   const word={wordKey,category,revision,identityReview:pending(),displayReview:pending(),fieldConflicts:[],classMemberships:[],forms:[],sourceIds,display:{hebrew:textCell(row[1]),english:textCell(row[2]),root:textCell(row[5]),pattern:textCell(row[6]),notes:textCell(row[7])},sourceFields:{}};
   word.sharedScopes=(capture.sharedScopes||[]).filter(s=>s.wordKey===wordKey).map(s=>({...structuredClone(s),review:pending()}));
   for(const field of ['Audio','Pl. Audio','Fem. Audio','Pl.Fem. Audio','No_Vocab','No_Card']){
-   const candidates=sourceIds.map(id=>({sourceRef:namespace+':'+id+':'+field,value:sources.get(id)?.values[headerIndex.get(field)]??null}));
+   const candidates=sourceIds.map(id=>({sourceRef:namespace+':'+id+':'+field,value:sources.get(id).values[headerIndex.get(field)]}));
    word.sourceFields[field]=resolveFieldOwnership({candidates});if(word.sourceFields[field].status==='conflict')word.fieldConflicts.push(field);
   }
   const audit=plan.statusAudit.filter(a=>a.groupKey===wordKey);
