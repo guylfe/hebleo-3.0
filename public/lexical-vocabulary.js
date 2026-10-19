@@ -111,14 +111,14 @@ function verbFormValue(form) {
       : (form.gender === 'shared' ? ['אתה', 'את'] : [form.gender === 'f' ? 'את' : 'אתה'])) : [];
   return '<div class="lexical-verb-form">'+(labels.length ? '<span class="lexical-pronoun" dir="'+(form.person === '2' ? 'rtl' : 'ltr')+'" lang="'+(form.person === '2' ? 'he' : 'en')+'">'+labels.map(escape).join(' / ')+'</span>' : '')+formValue(form)+'</div>';
 }
-function genderCells(forms, number) {
+function genderCells(forms, number, sourceBrowse=false) {
   const matching = forms.filter(f => f.number === number);
   const shared = matching.find(f => f.gender === 'shared');
   const coverage = shared?.introducedGenders ?? ['m', 'f'];
   if (shared && coverage.includes('m') && coverage.includes('f')) return '<td colspan="2"'+(number === 'plural' ? ' class="lexical-number-divider"' : '')+'>'+verbFormValue(shared)+'</td>';
   return ['m', 'f'].map(gender => {
     const form = matching.find(f => f.gender === gender) || (shared && coverage.includes(gender) ? shared : null);
-    return '<td'+(number === 'plural' && gender === 'm' ? ' class="lexical-number-divider"' : '')+'>'+(form ? verbFormValue(form) : '<span aria-label="No introduced form">—</span>')+'</td>';
+    return '<td'+(number === 'plural' && gender === 'm' ? ' class="lexical-number-divider"' : '')+'>'+(form ? verbFormValue(form) : '<span aria-label="'+(sourceBrowse?'No source-labelled form':'No introduced form')+'">—</span>')+'</td>';
   }).join('');
 }
 function verbForms(forms, sourceBrowse=false) {
@@ -132,12 +132,12 @@ function verbForms(forms, sourceBrowse=false) {
     return '<tbody>'+persons.map((person,i) => {
       const row = person ? current.filter(f => f.person === person) : current;
       const personLabel=person ? ({1:'1st',2:'2nd',3:'3rd'})[person] : '<span class="lexical-sr">Gender and number forms shared across persons</span>';
-      return '<tr>'+(i===0?'<th class="lexical-tense" rowspan="'+persons.length+'" scope="rowgroup">'+tense[0].toUpperCase()+tense.slice(1)+'</th>':'')+genderCells(row, 'singular')+genderCells(row, 'plural')+'<th class="lexical-person" scope="row">'+personLabel+'</th></tr>';
+      return '<tr>'+(i===0?'<th class="lexical-tense" rowspan="'+persons.length+'" scope="rowgroup">'+tense[0].toUpperCase()+tense.slice(1)+'</th>':'')+genderCells(row, 'singular',sourceBrowse)+genderCells(row, 'plural',sourceBrowse)+'<th class="lexical-person" scope="row">'+personLabel+'</th></tr>';
     }).join('')+'</tbody>';
   }).join('');
   const nominals = eligible.filter(f => ['infinitive', 'verbal-noun'].includes(f.tense));
   return (bands ? '<div class="lexical-paradigm-scroll" role="region" tabindex="0" aria-label="'+(sourceBrowse?'Source verb forms':'Introduced verb forms')+'"><table class="lexical-paradigm"><caption class="lexical-sr">'+(sourceBrowse?'Source-labelled conjugations':'Introduced conjugations')+' by tense, person, number and gender</caption><colgroup><col class="lexical-tense-col"><col span="4"><col class="lexical-person-col"></colgroup><thead><tr><th rowspan="2" scope="col">Tense</th><th colspan="2" scope="colgroup">Singular</th><th colspan="2" scope="colgroup">Plural</th><th rowspan="2" scope="col">Person</th></tr><tr>'+['Masculine','Feminine','Masculine','Feminine'].map(label => '<th scope="col">'+label+'</th>').join('')+'</tr></thead>'+bands+'</table></div>' : '<p>'+(sourceBrowse?'Forms remain available under their original labels in source details.':'No expanded forms introduced.')+'</p>')+
-    (nominals.length ? '<dl class="lexical-nominals">'+nominals.map(f => '<div><dt>'+escape(f.label || (f.tense === 'infinitive' ? 'Infinitive' : 'Verbal noun'))+'</dt><dd>'+formValue(f)+'</dd></div>').join('')+'</dl>' : '')+stateSummary(forms);
+    (nominals.length ? '<dl class="lexical-nominals">'+nominals.map(f => '<div><dt>'+(f.tense === 'infinitive' ? 'Infinitive' : 'Verbal noun')+'</dt><dd>'+formValue(f)+'</dd></div>').join('')+'</dl>' : '')+stateSummary(forms);
 }
 function prepositionForms(forms, sourceBrowse=false) {
   const eligible = forms.filter(f => statusOf(f) === 'eligible');
@@ -235,7 +235,7 @@ function adjectiveTable(words,prefix){
   const forms=(word.forms||[]).filter(f=>statusOf(f)==='eligible'),genders=['m','f'].filter(g=>forms.some(f=>f.gender===g||f.gender==='shared'));
   if(!genders.length)genders.push('m');
   const notes=noteStrip(word,prefix+'-'+safeID(word.wordKey)+'-notes'),rows=genders.length;
-  return '<tbody data-word-key="'+escape(word.wordKey)+'">'+genders.map((g,i)=>'<tr class="lexical-word-row lexical-adjective-row"><th scope="row" class="lexical-gender-value"><abbr title="'+(g==='m'?'Masculine':'Feminine')+'">'+g.toUpperCase()+'</abbr></th>'+numbers.map(n=>{const f=forms.find(f=>f.number===n&&(f.gender===g||f.gender==='shared'));return '<td class="lexical-adjective-value" dir="rtl" lang="he">'+(f?formValue(f):'<span class="lexical-unavailable" aria-label="No introduced form">—</span>')+'</td>';}).join('')+(i===0?'<td rowspan="'+genders.length+'" class="lexical-frozen-en">'+meaning(word)+entryActions(word)+'</td><td rowspan="'+rows+'" class="lexical-structure"><div class="lexical-adjective-structure">'+rich(word.root)+'</div></td><td rowspan="'+rows+'" class="lexical-structure lexical-pattern"><div class="lexical-adjective-structure">'+rich(word.pattern)+'</div></td>':'')+'</tr>').join('')+(notes?'<tr class="lexical-support-row"><td colspan="'+(heCols+3)+'">'+notes+'</td></tr>':'')+sourceDetails(word,(heCols+3))+'</tbody>';
+  return '<tbody data-word-key="'+escape(word.wordKey)+'">'+genders.map((g,i)=>'<tr class="lexical-word-row lexical-adjective-row"><th scope="row" class="lexical-gender-value"><abbr title="'+(g==='m'?'Masculine':'Feminine')+'">'+g.toUpperCase()+'</abbr></th>'+numbers.map(n=>{const f=forms.find(f=>f.number===n&&(f.gender===g||f.gender==='shared'));return '<td class="lexical-adjective-value" dir="rtl" lang="he">'+(f?formValue(f):'<span class="lexical-unavailable" aria-label="'+(word.sourceBrowse?'No source-labelled form':'No introduced form')+'">—</span>')+'</td>';}).join('')+(i===0?'<td rowspan="'+genders.length+'" class="lexical-frozen-en">'+meaning(word)+entryActions(word)+'</td><td rowspan="'+rows+'" class="lexical-structure"><div class="lexical-adjective-structure">'+rich(word.root)+'</div></td><td rowspan="'+rows+'" class="lexical-structure lexical-pattern"><div class="lexical-adjective-structure">'+rich(word.pattern)+'</div></td>':'')+'</tr>').join('')+(notes?'<tr class="lexical-support-row"><td colspan="'+(heCols+3)+'">'+notes+'</td></tr>':'')+sourceDetails(word,(heCols+3))+'</tbody>';
  }).join('');
  return '<table class="lexical-table lexical-adjectives" data-he-columns="'+heCols+'"><caption class="lexical-sr">Adjectives · one entry per word</caption><colgroup><col class="lexical-gender-col">'+numbers.map(()=>'<col class="lexical-adjective-form-col">').join('')+'<col class="lexical-adjective-english-col"><col class="lexical-root-col"><col class="lexical-pattern-col"></colgroup>'+head+body+'</table>';
 }
@@ -310,6 +310,9 @@ export function bindLexicalVocabulary(root, {encounters, onDisclosure} = {}) {
       const heWidth = he?.getBoundingClientRect().width || 0, enWidth = en?.getBoundingClientRect().width || 0;
       scroll.style.setProperty('--lexical-he-width', heWidth+'px');
       scroll.style.setProperty('--lexical-frozen-width', (heWidth+enWidth)+'px');
+      // Support text reads within the viewport while form columns can scroll.
+      // Do not measure a short-looking preview against the entire wide table.
+      if(scroll.clientWidth>0)scroll.style.setProperty('--lexical-reading-width',scroll.clientWidth+'px');
       scroll.dataset.overflow = String(scroll.scrollWidth > scroll.clientWidth+1);
       // At extreme widths two frozen columns would cover the entire viewport.
       // Release them together so every cell and focused control stays reachable.

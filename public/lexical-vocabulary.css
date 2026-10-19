@@ -96,3 +96,9 @@
 .lexical-source-details dd {margin:0;white-space:pre-wrap;overflow-wrap:anywhere;}
 .lexical-source-details dd bdi[lang="he"] {font-size:25px;line-height:1.65;}
 .source-vocabulary-heading {margin-block:16px;}
+/* Notes retain full-table support rows, with a stable visible reading area. */
+.lexical-table-scroll .lexical-note-strip,.lexical-table-scroll .lexical-source-details{position:sticky;left:0;width:var(--lexical-reading-width,100%);max-width:100%;box-sizing:border-box}
+.lexical-support-row>td:has(>.lexical-has-note){background:#eef7f1}
+.lexical-library-status{scroll-margin-block-start:calc(var(--header-height,88px) + 16px)}
+.lexical-library-status:focus-visible{outline:3px solid var(--accent,#0170b9);outline-offset:4px}
+.vocabulary-collection button.button.secondary[aria-pressed=true],.vocabulary-collection button.button.secondary[aria-pressed=true]:is(:hover,:focus-visible,:active):not(:disabled){background:var(--ink,#0a2457);color:var(--paper,#fff);border-color:var(--ink,#0a2457)}

@@ -1,5 +1,7 @@
 # Hebleo application UX contract
 
+Source-browse absence labels describe source mapping, independently of learned introduction labels. Paging moves reading position/focus to the result status below the measured sticky header. The selected source/learned collection has a visible pressed treatment. Wide category tables keep Note and Original source text in a viewport-width sticky reading area while form columns scroll; their support rows still span all columns. These extend the existing lexical renderer/measurement owner without source or learner writes.
+
 Oct20: when exact-source adoption exists, `#library` defaults to Source vocabulary with category/original-Lesson filters and 50-row pages. Learned vocabulary remains a separate collection. Source browsing preserves exact source fields, original Lesson/Part and IDs and grants no learned/review eligibility. Original source is a native disclosure inside existing category tables; notes/examples, shared controls, global scrollbars and natural page height retain their canonical owners. Search/filter state stays tab-local. See docs/AUTHORED_SOURCE_BROWSING.md. This task's installed real-row UX review supersedes the historical pause within its authorized scope; automated checks remain separate from native acceptance.
 
 Visual values and selected layout live in [DESIGN.md](DESIGN.md); public/refinement.css is their runtime owner. This contract consolidates existing behavior and the selected Oct13 integration. It does not change pedagogy, permissions or the publishing model.

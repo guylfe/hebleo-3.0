@@ -347,3 +347,16 @@ test('verb labels use Hebrew you forms and one shared they label, while present 
   assert.equal(root.querySelector('[data-slot-id=you]').closest('td').querySelector('.lexical-pronoun').dir,'rtl');
   assert.equal(root.querySelector('[data-slot-id=present]').closest('td').querySelector('.lexical-pronoun'),null);
 });
+
+test('UX-SOURCE-03: a wide Full preposition table measures Note against its visible reading area',()=>{
+ const note='Exact supplied note that must remain readable across a wide table.',word={...prep(8),notes:note},before=JSON.stringify(word);
+ const {dom,doc,root}=mount([word],{prepositionMode:'full'}),style=doc.createElement('style');style.textContent=readFileSync(new URL('../public/lexical-vocabulary.css',import.meta.url),'utf8');doc.head.append(style);
+ const scroll=root.querySelector('.lexical-table-scroll'),strip=root.querySelector('[data-note-strip]'),top=strip.querySelector('.lexical-note-top'),line=strip.querySelector('[data-note-line]'),button=strip.querySelector('[data-note-button]');
+ geometry(scroll,'clientWidth',600);geometry(scroll,'scrollWidth',1200);
+ geometry(top,'clientWidth',()=>parseFloat(scroll.style.getPropertyValue('--lexical-reading-width'))||1200);rect(top.querySelector('strong'),{width:60});geometry(line,'scrollWidth',800);
+ const binding=bindLexicalVocabulary(root);
+ assert.equal(strip.dataset.needsExpand,'true');assert.equal(button.hidden,false);assert.equal(dom.window.getComputedStyle(strip).position,'sticky');assert.equal(scroll.style.getPropertyValue('--lexical-reading-width'),'600px');
+ button.click();assert.equal(strip.querySelector('[data-full-note]').hidden,false);assert.equal(strip.querySelector('.lexical-note-body').textContent,note);
+ scroll.scrollLeft=300;dom.window.dispatchEvent(new dom.window.Event('scroll'));assert.equal(strip.dataset.needsExpand,'true');assert.equal(strip.querySelector('.lexical-note-body').textContent,note);
+ assert.equal(JSON.stringify(word),before);binding.destroy();dom.window.close();
+});

@@ -923,10 +923,13 @@ test('FB14 item14 confirmed grade bootstrap failure refreshes authoritative prog
 test('Source vocabulary uses the normal library with exact text, filters, paging, focus and separate learned collection',async t=>{
  const a=await app(t,{page:'library',realHTTP:true,prepare:store=>{const c=store.snapshot();c.lexical=lexicalFixture();c.lexical.sourceBrowse=sourceBrowseFixture();store.set('active',store.addRevision(c,'Synthetic source library test'));}});
  const {doc,w,store}=a,before=JSON.stringify(store.learner('learner-demo'));
+ const scrollTargets=[];w.HTMLElement.prototype.scrollIntoView=function(){scrollTargets.push(this);};
  assert.match(doc.querySelector('h1').textContent,/Vocabulary/);assert.equal(doc.querySelectorAll('tbody[data-word-key]').length,50);
  doc.querySelector('[data-action="source-page"][data-value="50"]').click();await settled(()=>doc.querySelectorAll('tbody[data-word-key]').length===11);
+ assert.equal(doc.activeElement,doc.querySelector('.lexical-library-status'));assert.equal(scrollTargets.at(-1),doc.activeElement);
  const category=doc.querySelector('#source-category');category.value='Other';category.dispatchEvent(new w.Event('change'));
  await settled(()=>doc.querySelectorAll('tbody[data-word-key]').length===1);assert.match(doc.body.textContent,/Exact test meaning 60/);
+ assert.match(doc.querySelector('.lexical-library-status').textContent,/1 source word · 1–1/);
  const input=doc.querySelector('#library-search');input.focus();input.value='no matching source';input.dispatchEvent(new w.Event('input',{bubbles:true}));
  await settled(()=>doc.querySelector('.lexical-vocabulary').textContent.includes('No vocabulary'));assert.equal(doc.activeElement.id,'library-search');
  doc.querySelector('[data-action="library-clear"]').click();await settled(()=>doc.querySelectorAll('tbody[data-word-key]').length===1);

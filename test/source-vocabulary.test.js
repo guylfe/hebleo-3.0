@@ -8,6 +8,17 @@ import {projectLexicalRows} from '../public/lexical-runtime.js';
 import {lexicalFixture} from '../scripts/lexical-fixture.mjs';
 import {renderLexicalVocabulary} from '../public/lexical-vocabulary.js';
 import {createServer} from '../src/server.js';
+import {JSDOM} from 'jsdom';
+
+test('source-context absence and nominal labels preserve a separate learned context without changing supplied text',()=>{
+ const base=sourceBrowseFixture().rows[0],forms=[{slotId:'verb.past.he',status:'eligible',value:'TEST PAST',tense:'past',number:'singular',gender:'m',person:'3'},{slotId:'verb.infinitive',label:'verb.infinitive',status:'eligible',value:'TEST INFINITIVE',tense:'infinitive'}];
+ const word={...base,category:'Verbs',forms},before=JSON.stringify(word),dom=new JSDOM(renderLexicalVocabulary([word]));
+ assert.equal(dom.window.document.querySelector('.lexical-nominals dt').textContent,'Infinitive');
+ assert.ok(dom.window.document.querySelector('[aria-label="No source-labelled form"]'));assert.equal(dom.window.document.querySelector('[aria-label="No introduced form"]'),null);
+ assert.equal(JSON.stringify(word),before);dom.window.close();
+ const adjective=new JSDOM(renderLexicalVocabulary([{...base,category:'Adjectives',forms:[]} ]));assert.ok(adjective.window.document.querySelector('[aria-label="No source-labelled form"]'));adjective.window.close();
+ const learned=new JSDOM(renderLexicalVocabulary([{...word,sourceBrowse:false}]));assert.ok(learned.window.document.querySelector('[aria-label="No introduced form"]'));learned.window.close();
+});
 
 function setup(t){const store=new Store();t.after(()=>store.close());const content=store.snapshot();content.lexical=lexicalFixture();content.lexical.sourceBrowse=sourceBrowseFixture();validateContent(content);store.set('active',store.addRevision(content,'Synthetic source browse test'));return {store,content};}
 test('source paging, category, original Lesson, and rich-source search grant no learned eligibility',t=>{
