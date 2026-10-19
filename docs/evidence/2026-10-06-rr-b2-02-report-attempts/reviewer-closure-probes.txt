@@ -1,0 +1,7 @@
+PASS RR-B2-02 exact-revision reference rejection across resumed, no-resume, question and report history
+PASS RR-B2-02 mandatory exercise reference on reported attempt cannot be omitted
+PASS RR-B2-03 v2 supports exactly numeric schema 2; invalid v2 and v1 rejected before writes
+PASS RR-B2-03 v1 absent/1/2 and v2=2 remain supported; null and legacy history preserved without repair or regrading
+PASS RR-B2-01 nested edits/add/removal change hash, startup resets once, docs/data preserve, live sessions do not reset
+{"checks":5,"passed":5,"failed":0}
+EXIT=0

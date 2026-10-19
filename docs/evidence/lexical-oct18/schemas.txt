@@ -1,0 +1,35 @@
+
+> test
+> node --test checks/*.check.mjs
+
+✔ seed and synthetic interchange are valid without mutation; seed is private-demo only (36.4663ms)
+✔ required explicit Hebrew forms cannot be inferred by validation (1.1323ms)
+✔ unknown values, rich formatting, themes and explicit forms survive JSON unchanged (4.6296ms)
+✔ stable IDs and dependency/selector references reject ambiguity (3.3115ms)
+✔ same-snapshot row lookup works; reorder in a new snapshot never auto-assigns identity (0.8495ms)
+✔ duplicate row hashes stay ambiguous; duplicate frozen locators are invalid (0.7222ms)
+✔ source omissions retain work; simultaneous source and Studio edits require resolution (0.3415ms)
+✔ media pins must resolve exact asset, revision and hash; legacy URLs remain unpinned (3.4515ms)
+✔ pending source objects cannot inherit synthetic or verified pack approval (1.5072ms)
+✔ pending fields veto the private synthetic compatibility exception (1.1742ms)
+✔ changed content or dependency invalidates approval digests (14.642ms)
+✔ pending fields, unpinned media and missing approval dependencies stay ineligible (12.9908ms)
+✔ wire fixtures validate by named definitions and missing CAS token is invalid (24.0538ms)
+✔ media approval binds asset identity and revision metadata; no bytes are fetched (2.0313ms)
+✔ preview response schemas reject learner writes and answer-key leakage (14.7383ms)
+✔ additive v2 schemas accept repeated text, optional mixed chapters and keyed preview; malformed typed selectors fail without rewriting legacy (10.132ms)
+✔ RR-F18-01 learner schema forbids author import records and retains other source fields (9.4975ms)
+✔ RR-F18-04 structural and semantic source validation rejects malformed records without changing source (12.6478ms)
+✔ lexical JSON schema compiles strictly and matches exact runtime slot enumeration (8.0738ms)
+✔ author schema retains metadata while refusing malformed structure and unsupported versions (0.7687ms)
+✔ semantic validator adds complete inventories and scoped references after structure (0.6467ms)
+✔ QA-NEW7-01 schema semantics reject empty-effective authored keys without rewriting source (32.5769ms)
+✔ optional v2 text-only course validates author and learner schemas without invented registry objects (19.7642ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 800.6782

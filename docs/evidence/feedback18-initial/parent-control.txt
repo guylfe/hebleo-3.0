@@ -1,0 +1,80 @@
+✖ fresh home says Start, a saved lesson says Continue, and a completed lesson says Revisit (297.3588ms)
+✖ matching verdicts are supplied by the server, retained on resume and individually accessible (9.6588ms)
+✖ correct matching summary follows authored ID order regardless of selection order (0.9193ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1819.0668
+
+✖ failing tests:
+
+test at test\app.test.js:499:1
+✖ fresh home says Start, a saved lesson says Continue, and a completed lesson says Revisit (297.3588ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^Start · Learn/. Input:
+  
+  'Continue · Learn →'
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-parent-control/test/app.test.js:501:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Continue · Learn →',
+    expected: /^Start · Learn/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at test\feedback18-learner.test.js:8:1
+✖ matching verdicts are supplied by the server, retained on resume and individually accessible (9.6588ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   'w-hi': false,
+  -   'w-hu': false,
+  -   'w-mi': true
+  - }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-parent-control/test/feedback18-learner.test.js:12:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { 'w-hu': false, 'w-hi': false, 'w-mi': true },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\feedback18-learner.test.js:27:1
+✖ correct matching summary follows authored ID order regardless of selection order (0.9193ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'he · who · she'
+  - 'he · she · who'
+          ^
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/feedback18-parent-control/test/feedback18-learner.test.js:30:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'he · who · she',
+    expected: 'he · she · who',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+

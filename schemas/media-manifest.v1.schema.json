@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hebleo.invalid/contracts/media-manifest.v1.schema.json",
+  "title": "Metadata only; hash claims do not prove the media bytes exist",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+            "not": {
+              "enum": [
+                "constructor",
+                "prototype",
+                "__proto__"
+              ]
+            }
+          },
+          "kind": {
+            "enum": [
+              "audio",
+              "video",
+              "image",
+              "document"
+            ]
+          },
+          "revisions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "revisionId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                  "not": {
+                    "enum": [
+                      "constructor",
+                      "prototype",
+                      "__proto__"
+                    ]
+                  }
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "byteLength": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "mimeType": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "url": {
+                  "$ref": "common.v1.schema.json#/definitions/url"
+                },
+                "provenance": {
+                  "$ref": "common.v1.schema.json#/definitions/provenance"
+                },
+                "approval": {
+                  "$ref": "common.v1.schema.json#/definitions/approval"
+                }
+              },
+              "required": [
+                "revisionId",
+                "sha256",
+                "byteLength",
+                "mimeType",
+                "url",
+                "provenance",
+                "approval"
+              ],
+              "additionalProperties": true
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "assetId",
+          "kind",
+          "revisions"
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": [
+    "version",
+    "assets"
+  ],
+  "additionalProperties": true
+}

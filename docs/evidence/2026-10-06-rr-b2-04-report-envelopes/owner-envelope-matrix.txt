@@ -1,0 +1,54 @@
+date (local): 2026-10-06 15:44:50 +03:00
+clone: /c/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-lead
+branch: lead/b2-draft-api
+HEAD: e0cbd5cd564c8fd790ff039f2c0e34ce4d7d73c6
+node: v24.19.0  npm: 11.17.0
+tested tree = staged index tree bef9650c12b08d6c880b6fc83a716295df109410 (HEAD + staged src/test fixes)
+  src 3f6967371734f79f5ac25fa55e97f93b08570ccd
+  public 4b6d746a4d9f424601d2a9618107ed1a56ab9459
+  test e10bf8cf9ee6f4f2f187929c23d956c866bbbf70
+  schemas ef10df024164d96179947f429fc43985af329541
+  package.json 32079f75511a8a379db4633545663816dd9b810d
+  package-lock.json 76c0d5c11e87be92125e28f0304646187b87b9b0
+unstaged tracked non-docs diff vs index (empty = tested files are exactly the staged ones):
+untracked outside docs:
+----
+cmd: node ../rr-b2-04-fix/owner-envelope-matrix.mjs
+PASS v2 userId absent: status=400 delta=0 tablesEqual=true
+PASS v2 userId null: status=400 delta=0 tablesEqual=true
+PASS v2 userId empty: status=400 delta=0 tablesEqual=true
+PASS v2 userId unknown: status=400 delta=0 tablesEqual=true
+PASS v2 userId other: status=400 delta=0 tablesEqual=true
+PASS v2 requestId absent: status=400 delta=0 tablesEqual=true
+PASS v2 requestId null: status=400 delta=0 tablesEqual=true
+PASS v2 requestId empty: status=400 delta=0 tablesEqual=true
+PASS v2 requestId other: status=400 delta=0 tablesEqual=true
+PASS v2 unknown userId, matching key: status=400 delta=0 tablesEqual=true
+PASS v2 reserved requestId, matching key: status=400 delta=0 tablesEqual=true
+PASS v2 B identity under A key (collision): status=400 delta=0 tablesEqual=true
+PASS v2 key renamed away from identity: status=400 delta=0 tablesEqual=true
+PASS v2 key absent: status=400 delta=0 tablesEqual=true
+PASS v2 value absent: status=400 delta=0 tablesEqual=true
+PASS v2 A moved onto B key+identity (duplicate key): status=400 delta=0 tablesEqual=true
+PASS v2 same report twice (duplicate key): status=400 delta=0 tablesEqual=true
+PASS v2 valid control: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=200 A=reviewed B=pending
+PASS v1 userId absent: status=400 delta=0 tablesEqual=true
+PASS v1 userId null: status=400 delta=0 tablesEqual=true
+PASS v1 userId empty: status=400 delta=0 tablesEqual=true
+PASS v1 userId unknown: status=400 delta=0 tablesEqual=true
+PASS v1 userId other: status=400 delta=0 tablesEqual=true
+PASS v1 requestId absent: status=400 delta=0 tablesEqual=true
+PASS v1 requestId null: status=400 delta=0 tablesEqual=true
+PASS v1 requestId empty: status=400 delta=0 tablesEqual=true
+PASS v1 requestId other: status=400 delta=0 tablesEqual=true
+PASS v1 unknown userId, matching key: status=400 delta=0 tablesEqual=true
+PASS v1 reserved requestId, matching key: status=400 delta=0 tablesEqual=true
+PASS v1 B identity under A key (collision): status=400 delta=0 tablesEqual=true
+PASS v1 key renamed away from identity: status=400 delta=0 tablesEqual=true
+PASS v1 key absent: status=400 delta=0 tablesEqual=true
+PASS v1 value absent: status=400 delta=0 tablesEqual=true
+PASS v1 A moved onto B key+identity (duplicate key): status=400 delta=0 tablesEqual=true
+PASS v1 same report twice (duplicate key): status=400 delta=0 tablesEqual=true
+PASS v1 valid control: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=200 A=reviewed B=pending
+36/36 passed
+EXIT=0

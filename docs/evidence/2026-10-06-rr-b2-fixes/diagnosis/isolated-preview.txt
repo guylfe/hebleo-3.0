@@ -1,0 +1,17 @@
+✔ disposable rehearsal navigates, retries, looks up and changes settings without modifying three learner states or source (174.1694ms)
+✔ stale draft evaluation freezes rehearsal and never retries with a different token (24.4055ms)
+✔ renderer wire answers for six families are sent separately from the retained response draft (132.0321ms)
+✔ both conflict codes freeze session loading and evaluation; missing preview targets fail closed (90.6874ms)
+✔ INVALID_ANSWER leaves the response draft available for correction and retry (17.8273ms)
+✔ exit drops late loads and evaluations and disposes shared renderer events (33.0034ms)
+✔ rehearsal rejects persistent, mismatched or malformed session responses (74.8401ms)
+✔ media picker preserves supplied revision/hash/source fields, labels legacy references and retains rejection recovery (26.7342ms)
+✔ pinned sha256 media can be selected without a URL; unsafe supplied URLs remain disabled (29.1281ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1957.112

@@ -1,0 +1,26 @@
+date (local): 2026-10-06 22:33:57 +03:00
+clone: /c/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401
+branch: lead/b2-g401
+HEAD: ee9e2f1beb81285a2a4775c0e76ac67584de8bc5
+node: v24.19.0  npm: 11.17.0
+tested tree = staged index tree b77598c27ad1341298d7bdd7fa2eb3a15beca58f (HEAD + staged G4-01 src/test fix)
+  src daf5c9059c74b518338dd47e17cca746de2b5ffd
+  public 4b6d746a4d9f424601d2a9618107ed1a56ab9459
+  test f0dbbf5095c92eec181a146bb621ede734e4d0e7
+  schemas ef10df024164d96179947f429fc43985af329541
+  package.json 32079f75511a8a379db4633545663816dd9b810d
+  package-lock.json 76c0d5c11e87be92125e28f0304646187b87b9b0
+unstaged tracked non-docs diff vs index (empty = tested files are exactly the staged ones):
+untracked outside docs:
+----
+cmd: node schemas/tools/runtime-check.mjs --runtime .
+PASS GET null draft and empty diff match schemas
+PASS no-draft, missing token and stale base errors are coded and write nothing
+PASS stage preserves every field and emits first-stage unchanged false
+PASS full-token scope and key-order-only restage preserve time and database rows
+PASS HTTP preview matches preparation/evaluation schemas and changes no stored profile rows
+PASS non-authors, malformed answers and wrong targets are rejected without writes
+PASS newer draft rejects stale saves, preview, publish and rollback atomically
+PASS publish and rollback return revision envelopes and enforce null/no-draft CAS
+{"runtimeCommit":"ee9e2f1beb81285a2a4775c0e76ac67584de8bc5","passed":8,"database":":memory:","transport":"ephemeral loopback HTTP; closed on exit","limits":"Contract and backend checks only; no app renderer, browser or independent release acceptance."}
+EXIT=0

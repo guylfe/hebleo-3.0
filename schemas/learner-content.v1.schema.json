@@ -1,0 +1,555 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hebleo.invalid/contracts/learner-content.v1.schema.json",
+  "title": "Learner public content, also used by author preview; exercise keys stripped",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "provenance": {
+      "$ref": "common.v1.schema.json#/definitions/provenance"
+    },
+    "contracts": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "sourceMap": {
+          "$ref": "source-map.v1.schema.json"
+        },
+        "mediaManifest": {
+          "$ref": "media-manifest.v1.schema.json"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "additionalProperties": true
+    },
+    "words": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "common.v1.schema.json#/definitions/objectMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                "not": {
+                  "enum": [
+                    "constructor",
+                    "prototype",
+                    "__proto__"
+                  ]
+                }
+              },
+              "pointed": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unpointed": {
+                "type": "string",
+                "minLength": 1
+              },
+              "curated": {
+                "type": "string",
+                "minLength": 1
+              },
+              "english": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {},
+              "formattingVersion": {
+                "const": 1
+              },
+              "taggingVersion": {
+                "const": 1
+              },
+              "fieldFormatting": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "importSource": false
+            },
+            "required": [
+              "id",
+              "pointed",
+              "unpointed",
+              "curated",
+              "english"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "if": {
+              "properties": {
+                "taggingVersion": {
+                  "const": 1
+                }
+              },
+              "required": [
+                "taggingVersion"
+              ]
+            },
+            "then": {
+              "properties": {
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      "minItems": 0,
+      "maxItems": 2000
+    },
+    "lessons": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "common.v1.schema.json#/definitions/objectMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                "not": {
+                  "enum": [
+                    "constructor",
+                    "prototype",
+                    "__proto__"
+                  ]
+                }
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "wordIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                  "not": {
+                    "enum": [
+                      "constructor",
+                      "prototype",
+                      "__proto__"
+                    ]
+                  }
+                }
+              },
+              "exerciseIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                  "not": {
+                    "enum": [
+                      "constructor",
+                      "prototype",
+                      "__proto__"
+                    ]
+                  }
+                },
+                "uniqueItems": true
+              },
+              "checkExerciseIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                  "not": {
+                    "enum": [
+                      "constructor",
+                      "prototype",
+                      "__proto__"
+                    ]
+                  }
+                },
+                "uniqueItems": true
+              },
+              "blocks": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 100,
+                "items": {
+                  "type": "object"
+                }
+              },
+              "compositionVersion": {
+                "const": 2
+              },
+              "introducedLetters": {
+                "type": "string",
+                "pattern": "^[א-ת]*$"
+              },
+              "vocabularySelector": {
+                "allOf": [
+                  {
+                    "$ref": "course-model.v1.schema.json#/definitions/selector"
+                  },
+                  {
+                    "properties": {
+                      "mode": {
+                        "enum": [
+                          "ids",
+                          "tags"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "wordIds",
+              "exerciseIds",
+              "blocks"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "if": {
+              "properties": {
+                "compositionVersion": {
+                  "const": 2
+                }
+              },
+              "required": [
+                "compositionVersion"
+              ]
+            },
+            "then": {
+              "properties": {
+                "blocks": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 100,
+                  "items": {
+                    "$ref": "course-model.v1.schema.json#/definitions/block"
+                  }
+                }
+              },
+              "required": [
+                "introducedLetters"
+              ]
+            },
+            "else": {
+              "properties": {
+                "blocks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "explanation",
+                          "vocabulary",
+                          "exercise-set"
+                        ]
+                      },
+                      "renderer": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "source": {
+                        "enum": [
+                          "words",
+                          "exercises"
+                        ]
+                      },
+                      "selector": {
+                        "type": "object",
+                        "properties": {
+                          "lessonId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 100,
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                            "not": {
+                              "enum": [
+                                "constructor",
+                                "prototype",
+                                "__proto__"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [],
+                        "additionalProperties": true
+                      },
+                      "options": {
+                        "type": "object",
+                        "properties": {},
+                        "required": [],
+                        "additionalProperties": true
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "renderer"
+                    ],
+                    "additionalProperties": true
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              }
+            }
+          }
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 2000
+    },
+    "exercises": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "common.v1.schema.json#/definitions/objectMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                "not": {
+                  "enum": [
+                    "constructor",
+                    "prototype",
+                    "__proto__"
+                  ]
+                }
+              },
+              "lessonId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                "not": {
+                  "enum": [
+                    "constructor",
+                    "prototype",
+                    "__proto__"
+                  ]
+                }
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "enum": [
+                  "recognition",
+                  "typing",
+                  "matching",
+                  "ordering",
+                  "cloze",
+                  "transformation"
+                ]
+              },
+              "wordId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                "not": {
+                  "enum": [
+                    "constructor",
+                    "prototype",
+                    "__proto__"
+                  ]
+                }
+              },
+              "wordIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+                  "not": {
+                    "enum": [
+                      "constructor",
+                      "prototype",
+                      "__proto__"
+                    ]
+                  }
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "tokens": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              },
+              "prefixTokenIndices": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "uniqueItems": true
+              },
+              "requireNikkud": {
+                "type": "boolean"
+              },
+              "nikkudOverride": {
+                "enum": [
+                  "full",
+                  "curated",
+                  "none"
+                ]
+              },
+              "allowLookup": {
+                "type": "boolean"
+              },
+              "choices": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tags": {}
+            },
+            "required": [
+              "id",
+              "lessonId",
+              "prompt",
+              "type"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "answers"
+                  ]
+                },
+                {
+                  "required": [
+                    "distractors"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "recognition"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "wordId",
+                "choices"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "typing"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "wordId"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "matching"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "wordIds"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "ordering"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "tokens",
+                "prefixTokenIndices"
+              ]
+            }
+          }
+        ]
+      },
+      "minItems": 0,
+      "maxItems": 2000
+    },
+    "approval": {
+      "$ref": "common.v1.schema.json#/definitions/approval"
+    },
+    "curriculum": {
+      "$ref": "course-model.v1.schema.json#/definitions/curriculum"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "provenance",
+    "words",
+    "lessons",
+    "exercises"
+  ],
+  "additionalProperties": true
+}

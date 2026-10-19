@@ -1,0 +1,8 @@
+{
+  "base": "95b24b950935c1fc15ee607c5f0c175f8d12b04e",
+  "vocabularyResultButtons": 2000,
+  "lessonSelectors": 2,
+  "repeatableMarkdownEditors": 0,
+  "mappingColumns": 0,
+  "siblingTitleLost": true
+}

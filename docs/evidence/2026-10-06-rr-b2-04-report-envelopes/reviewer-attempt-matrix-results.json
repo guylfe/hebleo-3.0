@@ -1,0 +1,5851 @@
+{
+  "commit": "fixed (staged on e0cbd5c)",
+  "results": [
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "exerciseId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "exerciseId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "exerciseId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "exerciseId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "exerciseId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "exerciseId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "requestId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "requestId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "requestId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "requestId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "requestId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "requestId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "lessonId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "lessonId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "lessonId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "lessonId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "lessonId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "lessonId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "correct/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "correct/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "correct/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "correct/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "correct/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "correct/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "at/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "at/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "at/invalid",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "at/invalid",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "at/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "at/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "attempt/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "attempt/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "attempt/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "attempt/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "attempt/array",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "attempt/array",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "attempt/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "resumed",
+      "case": "attempt/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "exerciseId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "exerciseId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "exerciseId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "exerciseId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "exerciseId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "exerciseId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "requestId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "requestId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "requestId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "requestId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "requestId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "requestId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "lessonId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "lessonId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "lessonId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "lessonId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "lessonId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "lessonId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "correct/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "correct/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "correct/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "correct/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "correct/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "correct/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "at/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "at/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "at/invalid",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "at/invalid",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "at/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "at/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "attempt/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "attempt/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "attempt/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "attempt/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "attempt/array",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "attempt/array",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "attempt/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "no-resume",
+      "case": "attempt/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "exerciseId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "exerciseId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "exerciseId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "exerciseId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "exerciseId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "exerciseId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "requestId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "requestId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "requestId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "requestId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "requestId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "requestId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "lessonId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "lessonId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "lessonId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "lessonId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "lessonId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "lessonId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "correct/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "correct/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "correct/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "correct/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "correct/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "correct/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "at/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "at/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "at/invalid",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "at/invalid",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "at/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "at/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "attempt/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "attempt/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "attempt/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "attempt/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "attempt/array",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "attempt/array",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "attempt/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "kind": "legacy-null",
+      "case": "attempt/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "exerciseId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "exerciseId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "exerciseId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "exerciseId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "exerciseId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "exerciseId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "requestId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "requestId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "requestId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "requestId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "requestId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "requestId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "lessonId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "lessonId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "lessonId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "lessonId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "lessonId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "lessonId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "correct/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "correct/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "correct/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "correct/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "correct/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "correct/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "at/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "at/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "at/invalid",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "at/invalid",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "at/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "at/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "attempt/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "attempt/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "attempt/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "attempt/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "attempt/array",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "attempt/array",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "attempt/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "resumed",
+      "case": "attempt/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "exerciseId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "exerciseId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "exerciseId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "exerciseId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "exerciseId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "exerciseId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "requestId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "requestId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "requestId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "requestId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "requestId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "requestId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "lessonId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "lessonId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "lessonId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "lessonId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "lessonId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "lessonId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "correct/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "correct/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "correct/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "correct/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "correct/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "correct/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "at/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "at/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "at/invalid",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "at/invalid",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "at/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "at/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "attempt/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "attempt/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "attempt/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "attempt/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "attempt/array",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "attempt/array",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "attempt/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "no-resume",
+      "case": "attempt/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "exerciseId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "exerciseId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "exerciseId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "exerciseId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "exerciseId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "exerciseId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "requestId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "requestId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "requestId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "requestId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "requestId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "requestId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "lessonId/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "lessonId/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "lessonId/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "lessonId/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "lessonId/empty",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "lessonId/empty",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "correct/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "correct/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "correct/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "correct/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "correct/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "correct/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "at/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "at/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "at/invalid",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "at/invalid",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "at/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "at/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "attempt/absent",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "attempt/absent",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "attempt/null",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "attempt/null",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "attempt/array",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "attempt/array",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "attempt/string",
+      "transport": "store",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup."
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v1",
+      "kind": "legacy-null",
+      "case": "attempt/string",
+      "transport": "http",
+      "status": 400,
+      "body": {
+        "error": "Invalid learner report in backup.",
+        "code": "BAD_REQUEST"
+      },
+      "totalChangesDelta": 0,
+      "allTablesEqual": true,
+      "sequenceBefore": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "sequenceAfter": [
+        {
+          "name": "revisions",
+          "seq": 2
+        }
+      ],
+      "passed": true
+    },
+    {
+      "format": "v2",
+      "transport": "store",
+      "case": "valid-compatibility-control",
+      "passed": true,
+      "reports": 3,
+      "wholeRecordsPreservedExceptMappedRevision": true
+    },
+    {
+      "format": "v2",
+      "transport": "http",
+      "case": "valid-compatibility-control",
+      "passed": true,
+      "reports": 3,
+      "wholeRecordsPreservedExceptMappedRevision": true
+    },
+    {
+      "format": "v1",
+      "transport": "store",
+      "case": "valid-compatibility-control",
+      "passed": true,
+      "reports": 3,
+      "wholeRecordsPreservedExceptMappedRevision": true
+    },
+    {
+      "format": "v1",
+      "transport": "http",
+      "case": "valid-compatibility-control",
+      "passed": true,
+      "reports": 3,
+      "wholeRecordsPreservedExceptMappedRevision": true
+    }
+  ]
+}

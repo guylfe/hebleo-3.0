@@ -118,6 +118,8 @@
     );
 
     panel = document.createElement('section');
+    panel.id = 'hebleo-keyboard-panel';
+    launcher.setAttribute('aria-controls',panel.id);
     panel.className = 'hebleo-keyboard__panel';
     panel.setAttribute('aria-label', 'Hebleo Hebrew keyboard');
     panel.setAttribute('aria-hidden', 'true');
@@ -138,7 +140,7 @@
 
     header.appendChild(brand);
     header.appendChild(statusNode);
-    pinButton=makeControlButton('pin','Pin','Keep keyboard open between questions');
+    pinButton=makeControlButton('pin','Keep open','Keep keyboard visible between typing questions');
     pinButton.classList.add('hebleo-keyboard__pin');
     header.appendChild(pinButton);
     header.appendChild(closeButton);
@@ -289,9 +291,9 @@
 
   function updatePinState() {
     root.classList.toggle('hebleo-keyboard--pinned', pinned);
-    pinButton.textContent = pinned ? 'Unpin' : 'Pin';
+    pinButton.textContent = 'Keep open';
     pinButton.setAttribute('aria-pressed', String(pinned));
-    pinButton.setAttribute('aria-label', pinned ? 'Unpin keyboard' : 'Pin keyboard to keep it open');
+    pinButton.setAttribute('aria-label', 'Keep keyboard visible between typing questions');
   }
 
   function makeLetterKey(key) {
@@ -358,13 +360,23 @@
         return;
       }
 
+      if (event.target.closest('[data-keyboard-preserve], [data-action="concept"], [data-action="concept-close"]') && isEditable(activeTarget)) return;
       var editable = event.target.closest('input, textarea, [contenteditable=""], [contenteditable="true"]');
       if (isEditable(editable)) {
         setActiveTarget(editable);
       } else {
         clearActiveTarget();
-        if (isOpen && !pinned) closeKeyboard();
       }
+    }, true);
+
+    // Removing the bottom keyboard space can clamp scrollY and move the pressed
+    // button before pointerup. Wait until the browser has resolved its click
+    // target; that same native event then reaches the button's normal handler.
+    document.addEventListener('click', function (event) {
+      if (root.contains(event.target) || !isOpen || pinned) return;
+      if (event.target.closest('[data-keyboard-preserve], [data-action="concept"], [data-action="concept-close"]') && isEditable(activeTarget)) return;
+      var editable = event.target.closest('input, textarea, [contenteditable=""], [contenteditable="true"]');
+      if (!isEditable(editable)) closeKeyboard();
     }, true);
 
     document.addEventListener('selectionchange', function () {
@@ -375,7 +387,7 @@
     });
 
     document.addEventListener('keydown', function (event) {
-      if (!isOpen || !convertPhysicalKeys || !activeTarget || event.defaultPrevented || event.isComposing) {
+      if (!isOpen || !convertPhysicalKeys || !isEditable(activeTarget) || !targetHasFocus(activeTarget) || !(event.target===activeTarget || activeTarget.contains(event.target)) || event.defaultPrevented || event.isComposing) {
         return;
       }
 
@@ -447,6 +459,7 @@
     launcher.setAttribute('aria-expanded', 'true');
     panel.setAttribute('aria-hidden', 'false');
 
+    if (activeTarget && !isEditable(activeTarget)) clearActiveTarget();
     if (!activeTarget && isEditable(document.activeElement)) {
       activeTarget = document.activeElement;
     }
@@ -456,8 +469,13 @@
       positionTarget();
     }
 
+    syncOpenState();
     refreshActiveTargetCue();
     updateStatus();
+  }
+
+  function syncOpenState(){
+    document.querySelectorAll('[data-action="keyboard-open"], [data-preview-owner-keyboard]').forEach(function(button){button.setAttribute('aria-expanded',String(isOpen));button.setAttribute('aria-controls',panel.id);});
   }
 
   function closeKeyboard() {
@@ -467,8 +485,9 @@
     document.body.classList.remove(bodyOpenClass);
     launcher.setAttribute('aria-expanded', 'false');
     panel.setAttribute('aria-hidden', 'true');
-    clearActiveTargetCue();
-    updateStatus();
+    document.body.style.removeProperty('--hebleo-keyboard-height');
+    clearActiveTarget();
+    syncOpenState();
   }
 
   function runAction(action) {
@@ -530,7 +549,7 @@
   }
 
   function insertText(text) {
-    if (!activeTarget || !isEditable(activeTarget)) {
+    if (!isOpen || !isEditable(activeTarget)) {
       updateStatus();
       return;
     }
@@ -584,7 +603,7 @@
   }
 
   function backspace() {
-    if (!activeTarget || !isEditable(activeTarget)) {
+    if (!isOpen || !isEditable(activeTarget)) {
       updateStatus();
       return;
     }
@@ -634,7 +653,7 @@
   }
 
   function moveCursor(direction) {
-    if (!activeTarget || !isEditable(activeTarget)) {
+    if (!isOpen || !isEditable(activeTarget)) {
       return;
     }
 
@@ -676,7 +695,7 @@
   }
 
   function focusTarget(target) {
-    if (!target || typeof target.focus !== 'function') {
+    if (!isEditable(target) || typeof target.focus !== 'function') {
       return;
     }
 
@@ -745,12 +764,12 @@
   }
 
   function positionTarget() {
-    if (!isOpen || !activeTarget || !document.documentElement.contains(activeTarget)) {
+    if (!isOpen || !isEditable(activeTarget)) {
       return;
     }
 
     window.setTimeout(function () {
-      if (!activeTarget || !activeTarget.isConnected || !isOpen) return;
+      if (!isOpen || !isEditable(activeTarget)) return;
       try {
         var keyboardRect=panel.getBoundingClientRect(),fieldRect=activeTarget.getBoundingClientRect();
         document.body.style.setProperty('--hebleo-keyboard-height', keyboardRect.height+'px');
@@ -832,13 +851,22 @@
     });
   }
 
+  function targetHasFocus(element){return document.activeElement===element || isContentEditable(element)&&element.contains(document.activeElement);}
+
   function isEditable(element) {
-    if (!element || element === document.body || element === document.documentElement) {
+    if (!element || !element.isConnected || element.ownerDocument!==document || element === document.body || element === document.documentElement) {
       return false;
     }
 
+    if(element.closest('[hidden],[inert],[aria-hidden="true"],[aria-busy="true"]'))return false;
+    for(var ancestor=element;ancestor;ancestor=ancestor.parentElement){
+      if(ancestor.tagName==='DETAILS'&&!ancestor.open)return false;
+      if(ancestor.tagName==='DIALOG'&&!ancestor.open)return false;
+      var style=window.getComputedStyle(ancestor);if(style.display==='none'||style.visibility==='hidden'||style.visibility==='collapse')return false;
+    }
+    var dialogs=document.querySelectorAll('dialog[open]'),top=dialogs[dialogs.length-1];if(top&&!top.contains(element))return false;
     if (isContentEditable(element)) {
-      return true;
+      return element.getAttribute('aria-readonly')!=='true';
     }
 
     if (element.tagName === 'TEXTAREA') {
@@ -898,19 +926,28 @@
   }
 
   window.HebleoKeyboard={
-    mount:function(parent){if(parent.tagName==='DIALOG' && activeTarget && !parent.contains(activeTarget))clearActiveTarget();if(root && root.parentNode!==parent)parent.appendChild(root);},
+    listen:function(callback,signal){window.addEventListener('hebleo-keyboard-preference',function(event){callback(event.detail);},{signal:signal});},
+    mount:function(parent){if(!root||!parent)return;if(root.parentNode!==parent){closeKeyboard();parent.appendChild(root);}if(activeTarget&&!isEditable(activeTarget))clearActiveTarget();syncOpenState();},
     close:closeKeyboard,
-    open:function(target){if(target && isEditable(target))setActiveTarget(target);openKeyboard();},
+    open:function(target){if(target&&!isEditable(target)){closeKeyboard();return;}if(target)setActiveTarget(target);openKeyboard();},
     sync:function(config,preferences,context){
       if(!root)return;
       pinned=Boolean(preferences.keyboardPinned);
-      if(context!==lessonContext && !pinned)closeKeyboard();lessonContext=context;
-      if(activeTarget && !activeTarget.isConnected)clearActiveTarget();
+      var scope=root.closest('dialog')||document,answer=scope.querySelector('#answer:not([disabled]):not([readonly])');
+      var typing=Boolean(answer&&isEditable(answer)),contextChanged=context!==lessonContext;
+      var courseContext=String(context).split('|').slice(0,-1).join('|'),previousCourseContext=String(lessonContext).split('|').slice(0,-1).join('|');
+      // Keep open crosses valid questions in one typing portion, never routes,
+      // lessons, non-typing portions, feedback or unrelated modal scopes.
+      if(isOpen&&(contextChanged&&(!pinned||!typing||!courseContext||courseContext!==previousCourseContext)||context===lessonContext&&!typing&&activeTarget&&activeTarget.id==='answer'))closeKeyboard();
+      lessonContext=context;
+      if(activeTarget&&!isEditable(activeTarget))clearActiveTarget();
       pinned=Boolean(preferences.keyboardPinned);convertPhysicalKeys=Boolean(preferences.keyboardConvert);showHints=true;
       updateHintState();updateConvertState();updatePinState();
       root.querySelectorAll('[data-insert]').forEach(function(key){var letter=key.dataset.insert;key.classList.toggle('known-key',(config.knownKeys||'').includes(letter));key.classList.toggle('new-key',(config.newKeys||'').includes(letter));});
       var shades=highlightShades(config.newColor);root.style.setProperty('--known-key',shades.known);root.style.setProperty('--new-key',shades.new);
-      if(isOpen && !activeTarget){var dialog=root.closest('dialog'),answer=dialog?dialog.querySelector('textarea,input:not([disabled]):not([readonly])'):document.getElementById('answer');if(answer&&!answer.disabled&&isEditable(answer)){setActiveTarget(answer);focusTarget(answer);}}
+      if(isOpen&&!activeTarget&&typing){setActiveTarget(answer);focusTarget(answer);}
+      if(isOpen&&!typing&&!isEditable(activeTarget))closeKeyboard();
+      syncOpenState();
     }
   };
   if (document.readyState === 'loading') {

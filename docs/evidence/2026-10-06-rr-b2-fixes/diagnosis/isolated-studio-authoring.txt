@@ -1,0 +1,20 @@
+✔ all six exercise forms save/reload without losing authored answers, extensions or absent defaults (373.0864ms)
+✔ typing edits retain explicit word forms, identity, rich data and Nikkud defaults; immutable fields reject (2.5674ms)
+✔ prefix removal remaps stored token indices and never infers or rewrites accepted answers (53.5755ms)
+✔ failed draft validation retains the entered text and the previous saved draft (52.4703ms)
+✔ lesson composition preserves blocks, vocabulary/source fields and reference order through save/reload (53.0094ms)
+✔ untrusted authored text is escaped in forms; disposing prevents queued save handlers (67.417ms)
+✔ import inspection exposes exact forms, formatting, provenance and omissions without mutation (29.4319ms)
+✔ draft editors carry successful CAS tokens forward but retain previous tokens and authored input after rejection (109.943ms)
+✔ a disposed editor never remounts the workspace when its pending stage returns (17.4208ms)
+✔ import review includes pack-level contracts, approval and unknown metadata changes (2.333ms)
+✔ import inspection ignores nested JSON object key order but retains metadata and array changes (2.5335ms)
+✔ import inspection reports collection order without mutating identities or treating additions as reorders (7.2723ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1991.0988

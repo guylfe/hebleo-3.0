@@ -1,10 +1,6 @@
 // Shared manifest selector contract. Stable references resolve canonical content.
-export function resolveBlock(content, lesson, block) {
-  if (block.type === 'explanation') return lesson.explanation;
-  const target = content.lessons.find(l => l.id === block.selector.lessonId);
-  const ids = block.source === 'words' ? target.wordIds : target.exerciseIds;
-  return ids.map(id => content[block.source].find(item => item.id === id));
-}
+export {resolveComponent as resolveBlock} from './course.js';
+export * from './vocabulary-import.js';
 
 // CSV exports preserve the explicit authored forms; no transliteration or vowels are generated.
 export function importVocabularyCSV(csv, content) {

@@ -1,0 +1,24 @@
+✔ seed and synthetic interchange are valid without mutation; seed is private-demo only (36.2256ms)
+✔ required explicit Hebrew forms cannot be inferred by validation (1.0499ms)
+✔ unknown values, rich formatting, themes and explicit forms survive JSON unchanged (6.0625ms)
+✔ stable IDs and dependency/selector references reject ambiguity (2.3984ms)
+✔ same-snapshot row lookup works; reorder in a new snapshot never auto-assigns identity (1.3894ms)
+✔ duplicate row hashes stay ambiguous; duplicate frozen locators are invalid (1.0432ms)
+✔ source omissions retain work; simultaneous source and Studio edits require resolution (0.4166ms)
+✔ media pins must resolve exact asset, revision and hash; legacy URLs remain unpinned (3.9875ms)
+✔ pending source objects cannot inherit synthetic or verified pack approval (2.0113ms)
+✔ pending fields veto the private synthetic compatibility exception (1.6364ms)
+✔ changed content or dependency invalidates approval digests (15.117ms)
+✔ pending fields, unpinned media and missing approval dependencies stay ineligible (11.5214ms)
+✔ wire fixtures validate by named definitions and missing CAS token is invalid (24.5784ms)
+✔ media approval binds asset identity and revision metadata; no bytes are fetched (2.5075ms)
+✔ preview response schemas reject learner writes and answer-key leakage (12.3195ms)
+✔ additive v2 schemas accept repeated text, optional mixed chapters and keyed preview; malformed typed selectors fail without rewriting legacy (9.1286ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 762.5814

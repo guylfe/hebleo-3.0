@@ -1,0 +1,24 @@
+✔ lesson destinations use stable IDs and finish at course end; text-only lessons have no fake Watch option (2.7018ms)
+✔ sentence trays include substantial distractors drawn from current/recent taught vocabulary, without future words (4.9459ms)
+✔ ordering publication requires enough taught distractors and never treats an unpointed answer as a distractor (2.6583ms)
+✔ rich CSV fields survive publication and backup with original unknown column labels (15.8712ms)
+✔ saved positions preserve matching answers and feedback against their pinned revision (7.6825ms)
+✔ invalid saved feedback, fabricated completion and out-of-range sentence tokens cannot alter grading records (2.4846ms)
+✔ undo restores the exact preceding schedule, is single-use, and replayed rating receipts do not reschedule (3.8766ms)
+✔ reports retain submitted answer and revision; author review never changes accepted answers (3.0703ms)
+✔ targeted extra practice selects unresolved authored mistakes, then falls back to lesson exercises (2.2605ms)
+✔ backup restores reports, undo, and pinned session positions; feedback stays linked to the remapped attempt (6.1359ms)
+✔ fixture enrichment preserves edited fields and does not touch verified source content (0.7836ms)
+✔ media schemas reject executable or insecure sources and preserve native HTTPS links (0.6468ms)
+✔ authored help works offline; optional AI sends only source context, uses store:false, and requires membership (4.0377ms)
+✔ HTTP author routes and backup exports reject learner profiles while help and progress remain available (174.8154ms)
+✔ native local media supports seeking and rejects invalid ranges and nonmedia files (78.5061ms)
+✔ Question progress counts each correct question once in its own lesson revision and removes corrected misses (0.5006ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 500.9212

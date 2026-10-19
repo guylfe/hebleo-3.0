@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-08",
+  "surface": "built-in Browser tab of the Computer panel",
+  "fixture": "fictional synthetic :memory: on unused loopback port 53432; stopped",
+  "nativeActions": [
+    "Practice more",
+    "fill existing synthetic typing answer",
+    "Check answer",
+    "Control+r"
+  ],
+  "beforeReload": {
+    "contentImportSourceAbsent": true,
+    "dueCount": 1,
+    "dueImportSourceAbsent": true,
+    "fixture": {
+      "authorSourceRetained": true,
+      "practice": {
+        "componentId": "legacy-check",
+        "correct": true,
+        "ids": [
+          "ex-1-type"
+        ],
+        "kind": "check",
+        "receiptExerciseId": "ex-1-type"
+      },
+      "synthetic": true,
+      "tables": {
+        "events": {
+          "count": 0,
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "kv": {
+          "count": 3,
+          "hash": "15cf7864d34fd4301746b7ef812353bd6d0cc89f656c36ed3557fc606f376565"
+        },
+        "learners": {
+          "count": 3,
+          "hash": "f9fc8782fa80e8bc777c82d25f7ab0fc50fae51b2e8ae6d5d4ccf31326ddb5dd"
+        },
+        "revisions": {
+          "count": 2,
+          "hash": "fdb42089c2b5d9e4956cc5ea53e171dd5c1bc46297f6d31575fd64ca09acb0ab"
+        },
+        "sqlite_sequence": {
+          "count": 1,
+          "hash": "4107b3c261ffbfb383e467980dc582c978fef3059379d8636c5cae6eee4c8d50"
+        }
+      }
+    },
+    "synthetic": true,
+    "url": "http://127.0.0.1:53432/#lesson/lesson-1/legacy-check"
+  },
+  "afterReload": {
+    "feedbackCorrect": true,
+    "fixture": {
+      "authorSourceRetained": true,
+      "practice": {
+        "componentId": "legacy-check",
+        "correct": true,
+        "ids": [
+          "ex-1-type"
+        ],
+        "kind": "check",
+        "receiptExerciseId": "ex-1-type"
+      },
+      "synthetic": true,
+      "tables": {
+        "events": {
+          "count": 0,
+          "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "kv": {
+          "count": 3,
+          "hash": "15cf7864d34fd4301746b7ef812353bd6d0cc89f656c36ed3557fc606f376565"
+        },
+        "learners": {
+          "count": 3,
+          "hash": "f9fc8782fa80e8bc777c82d25f7ab0fc50fae51b2e8ae6d5d4ccf31326ddb5dd"
+        },
+        "revisions": {
+          "count": 2,
+          "hash": "fdb42089c2b5d9e4956cc5ea53e171dd5c1bc46297f6d31575fd64ca09acb0ab"
+        },
+        "sqlite_sequence": {
+          "count": 1,
+          "hash": "4107b3c261ffbfb383e467980dc582c978fef3059379d8636c5cae6eee4c8d50"
+        }
+      }
+    },
+    "synthetic": true,
+    "url": "http://127.0.0.1:53432/#lesson/lesson-1/legacy-check"
+  },
+  "reloadHashesUnchanged": true,
+  "nativePointerDrag": "unverified; not attempted for this data-boundary correction"
+}

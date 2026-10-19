@@ -28,10 +28,12 @@ test('all six exercise families grade submitted answers; lessons complete and en
   assert.equal(s.learner(learner).cards['w-babayit'],undefined,'Prefixed forms belong to the base entry, not separate review words.');
   assert.equal(answer(s, 'ex-3-transform', 'היא כותב').correct, false);
 });
-test('nikkud-required typing rejects the unpointed alternative', t => {
+test('legacy vowel flags remain stored but future typing accepts authored pointed and unpointed forms', t => {
   const s = setup(t); const content = copy(seed); content.exercises[1].requireNikkud = true;
-  s.stage({ baseRevisionId: 1, content }); s.publish(1);
-  assert.equal(answer(s, 'ex-1-type', 'אני').correct, false);
+  s.stage({ baseRevisionId: 1, expectedDraftToken: null, content }); s.publish(1, s.currentDraft().draftToken);
+  assert.equal(answer(s, 'ex-1-type', 'אני').correct, true);
+  assert.equal(s.snapshot().exercises[1].requireNikkud,true);
+  assert.equal(answer(s, 'ex-1-type', 'את').correct, false);
   assert.equal(answer(s, 'ex-1-type', 'אֲנִי').correct, true);
 });
 test('duplicate attempts are idempotent and conflicting payloads fail', t => {
@@ -45,24 +47,24 @@ test('draft publication and rollback propagate vocabulary while retaining progre
   const s = setup(t); answer(s, 'ex-1-type', 'אני'); s.enroll(learner, 'w-mi');
   s.updateLearner(learner, { bookmark: 'w-mi', note: { wordId: 'w-mi', text: 'My connection' } });
   const before = s.learner(learner);
-  const preview = s.stage({ baseRevisionId: 1, word: { id: 'w-mi', english: 'who (updated demo)' } });
+  const preview = s.stage({ baseRevisionId: 1, expectedDraftToken: null, word: { id: 'w-mi', english: 'who (updated demo)' } });
   assert.deepEqual(preview.affectedLessons, ['lesson-1']);
   assert.equal(s.snapshot().words[1].english, 'who');
-  s.publish(1);
+  s.publish(1, preview.draftToken);
   assert.equal(s.bootstrap(learner).due[0].word.english, 'who (updated demo)');
   assert.equal(s.bootstrap(learner).content.exercises[0].choices.includes('who (updated demo)'), true);
   assert.equal(answer(s, 'ex-1-recognize', 'who', 1).correct, true);
   assert.equal(answer(s, 'ex-1-recognize', 'who', 2).correct, false);
   assert.equal(answer(s, 'ex-1-recognize', 'who (updated demo)', 2).correct, true);
-  s.rollback(1, 2);
+  s.rollback(1, 2, null);
   assert.equal(s.get('active'), 3);
   assert.equal(s.snapshot().words[1].english, 'who');
   assert.deepEqual(s.learner(learner).cards, before.cards);
   assert.deepEqual(s.learner(learner).notes, before.notes);
   assert.deepEqual(s.learner(learner).bookmarks, before.bookmarks);
   assert.equal(s.learner(learner).attempts.length, 4);
-  fails(() => s.publish(1));
-  fails(() => s.stage({ baseRevisionId: 1, content: seed }), 409);
+  fails(() => s.publish(1, preview.draftToken), 409);
+  fails(() => s.stage({ baseRevisionId: 1, expectedDraftToken: null, content: seed }), 409);
 });
 test('manifest selectors use canonical source objects and permit changing component order', () => {
   const content = copy(seed); const l = content.lessons[0];
@@ -73,9 +75,9 @@ test('manifest selectors use canonical source objects and permit changing compon
   assert.equal(resolveBlock(content, l, l.blocks[0]).length, 6);
 });
 test('invalid imports fail without changing the active revision or existing draft', t => {
-  const s = setup(t); s.stage({ baseRevisionId: 1, word: { id: 'w-mi', notes: 'Staged note' } }); const before = s.active();
+  const s = setup(t); s.stage({ baseRevisionId: 1, expectedDraftToken: null, word: { id: 'w-mi', notes: 'Staged note' } }); const before = s.active();
   const cases = [c => c.words.push(copy(c.words[0])), c => c.words[0].id = 'bad"id', c => c.lessons[0].wordIds.push('missing'), c => c.lessons[0].blocks[1].source = 'unknown', c => c.lessons[0].blocks[1].selector.lessonId = 'missing', c => c.lessons[0].blocks[0].renderer = 'html', c => c.exercises[0].type = 'unknown', c => c.words[0] = null];
-  for (const mutate of cases) { const content = copy(seed); mutate(content); fails(() => s.stage({ baseRevisionId: 1, content })); assert.deepEqual(s.active(), before); }
+  for (const mutate of cases) { const content = copy(seed); mutate(content); fails(() => s.stage({ baseRevisionId: 1, expectedDraftToken: before.draft.draftToken, content })); assert.deepEqual(s.active(), before); }
 });
 test('membership cancellation preserves course and core review; refunds gate practice but retain data', t => {
   const s = setup(t); s.enroll(learner, 'w-mi'); answer(s, 'ex-1-type', 'אני');

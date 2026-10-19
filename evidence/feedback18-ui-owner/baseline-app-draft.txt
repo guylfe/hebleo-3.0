@@ -1,0 +1,70 @@
+✔ Lesson 1 can advance past optional practice with an unresolved Check answer, preserving actual completion and graded history (363.8974ms)
+✔ Extra practice can be skipped before submission and after grading, clearing its resume without erasing attempts (191.263ms)
+✔ The final lesson offers a course exit when incomplete, and core exercises do not show the extra-practice skip (87.0959ms)
+✔ Wrong-answer retry keeps the particular question, only correct answers fill progress, and saved progress survives reload (217.9267ms)
+✔ Finish-screen retry opens only the chosen missed question, then removes the corrected miss without changing other answers (131.8358ms)
+✔ Starting updated lesson through the actual app does not flush the old resume back over the reset (105.4638ms)
+✔ App sentence tiles submit attached prefixes, and source-rich cards/table open without field rendering errors (190.5436ms)
+✔ Studio edits author card policy and lesson highlights through the app draft/publication workflow (370.3704ms)
+✔ Actual app launcher focuses the native answer field and saves pinning through the learner preference API (188.8758ms)
+✔ Lesson help exposes an actual question form and saves it to the author inbox (86.3854ms)
+✔ Learner keyboard shortcuts never activate or handle controls inside a rehearsal root (70.1126ms)
+✔ G5-01 actual app over HTTP: a second author window saves while rehearsal retains its typed answer frozen; Escape restores focus (507.1802ms)
+✔ G5 automated HTTP overlap: learner autosave response is pending when Studio navigation starts, flush completes before rehearsal and preview writes nothing (1158.4454ms)
+✔ G5 automated HTTP owner-event: the real keyboard Pin handler emits its preference event during rehearsal and app persistence is suppressed until Exit (273.4625ms)
+✔ Studio guided exercise and lesson forms save private drafts, reload discards unsaved edits, a stale token keeps entered values, and publishing stays separate (439.6433ms)
+✔ Studio import review writes nothing until the reviewed candidate is staged, discard writes nothing, and a stale review cannot be staged (366.5933ms)
+✔ Studio draft rehearsal uses the shared renderer and grader, isolates app.js handlers, and leaves every table, learner record and the published pack unchanged (251.575ms)
+✔ Rehearsal keeps keyboard focus inside the modal across re-renders, so a digit then Enter grade, Retry resets, and a new result is scrolled into view (178.9332ms)
+✔ A rehearsal stops on a changed draft or a newer publication revision, writes nothing itself, and closes when the author navigates away (222.8123ms)
+✔ Switching exercises while a guided lesson save is still reloading keeps re-mounted editors and Publish on the token that save returned (418.667ms)
+✔ Publishing behind a pending guided save still rejects a newer draft from another tab and publishes nothing (171.5555ms)
+✔ QA-EE9-G4-02: matching autosave keeps an authored pair word from outside the lesson list, and the match resumes after reload (222.1459ms)
+✔ fresh home says Start, a saved lesson says Continue, and a completed lesson says Revisit (177.876ms)
+✔ draft token is canonical and covers unknown fields, provenance, approval, formatting and media refs (9.6237ms)
+✔ stage requires the expected token, creates with null, is a no-op on equal content and conflicts otherwise (28.545ms)
+✔ publish and rollback compare base and token in one transaction; a stale publish cannot clear a newer draft (24.8011ms)
+✖ preview session returns the learner public shape of the exact draft and writes nothing for any profile (12.9823ms)
+✔ preview is stale after re-stage, publish or rollback and has no no-draft mode (15.5792ms)
+✔ a restored draft is re-based onto the new revision, so its old token is stale (16.6243ms)
+✔ unapproved source candidates stay blocked at stage, including when relabelled as verified (6.42ms)
+✔ HTTP draft and preview routes are author-only, no-store and return the coded error envelope (235.6239ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 30
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8810.4763
+
+✖ failing tests:
+
+test at test\draft-api.test.js:77:1
+✖ preview session returns the learner public shape of the exact draft and writes nothing for any profile (12.9823ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+      'answer',
+      'correct',
+      'exerciseId',
+      'expected',
+      'lessonId',
+  +   'pairResults'
+    ]
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/2b35801f-cca1-4beb-9e70-fd39eb282fa0/feedback18-ui/tmp/feedback18-baseline-control/test/draft-api.test.js:92:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'answer', 'correct', 'exerciseId', 'expected', 'lessonId', 'pairResults' ],
+    expected: [ 'answer', 'correct', 'exerciseId', 'expected', 'lessonId' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

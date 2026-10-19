@@ -1,0 +1,52 @@
+{
+  "syntheticEvidenceOnly": true,
+  "stagedFiles": [
+    "docs/FEATURE_CHECKLIST.md",
+    "docs/FEEDBACK18_UNIFIED_HANDOFF.md",
+    "docs/evidence/feedback18-unified/browser-fixture.mjs",
+    "docs/evidence/feedback18-unified/browser-recovery-captures.json",
+    "docs/evidence/feedback18-unified/browser-recovery-observations.json",
+    "docs/evidence/feedback18-unified/browser-recovery-source.csv",
+    "docs/evidence/feedback18-unified/browser-state.json",
+    "docs/evidence/feedback18-unified/browser-visible.png",
+    "docs/evidence/feedback18-unified/browser-workspace.png",
+    "docs/evidence/feedback18-unified/focused-final-pre.txt",
+    "docs/evidence/feedback18-unified/parent-controls.mjs",
+    "docs/evidence/feedback18-unified/parent-controls.txt",
+    "docs/evidence/feedback18-unified/source-checkpoint.json",
+    "docs/evidence/feedback18-unified/verify.txt",
+    "public/app.js",
+    "public/studio/curriculum-editor.js",
+    "public/studio/editor-fields.js",
+    "public/studio/exercise-editor.js",
+    "public/studio/import-review.js",
+    "public/studio/import-workflow.js",
+    "public/studio/selector-editor.js",
+    "public/studio/studio.css",
+    "public/studio/unified-studio.js",
+    "public/studio/vocabulary-browser.js",
+    "src/server.js",
+    "test/app.test.js",
+    "test/feedback18-unified-studio.test.js",
+    "test/recognition-distractors.test.js"
+  ],
+  "unexpectedFiles": [],
+  "forbiddenFiles": [],
+  "secretSignals": [],
+  "stagedImplementationMatchesWorkingText": true,
+  "rawTablesAbsentFromSummaries": true,
+  "savedFullVerify": {
+    "tests": 231,
+    "passed": 231,
+    "failed": 0,
+    "skipped": 0
+  },
+  "recoveryAppSourceChanges": false,
+  "ownedFixture": {
+    "pid": 17824,
+    "exitCode": 0
+  },
+  "actualPointerDragVerified": false,
+  "pointerLimit": "Mounted core profile lacks mouse/drag tools; no substitute automation used.",
+  "textComparison": "Git-normalized LF compared with working text after CRLF -> LF conversion; no substantive differences. source-checkpoint retains original on-disk byte hashes."
+}

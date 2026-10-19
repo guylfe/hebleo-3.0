@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "captureDigest": "dfff66ce6bd16b1df911773e656c2d9e701f83d42400941cf8f74b294cc8da2f",
+  "counts": {
+    "words": 792,
+    "categories": {
+      "verb": 93,
+      "adjective": 59,
+      "preposition": 19,
+      "noun": 418,
+      "other": 203
+    },
+    "aliases": 1251,
+    "activeAliases": 1937,
+    "formReferences": 1172,
+    "legacyOccurrences": 437,
+    "activeLegacyOccurrences": 435,
+    "usages": 8,
+    "examples": 95,
+    "held": 2,
+    "unapprovedDrafts": 1770
+  },
+  "migration": {
+    "mode": "preview-only",
+    "canApply": false
+  },
+  "sourceStatus": "captured-draft; live native freshness unverified",
+  "sourceStateCounts": {
+    "missing": 212,
+    "inapplicable": 22
+  },
+  "checks": [
+    "one row each for אמר/ראה/היה",
+    "exact archive retention",
+    "all original references and held identities retained",
+    "stage and exact reload",
+    "pending source excluded from learner response",
+    "no learner or card writes",
+    "preview-only migration"
+  ],
+  "draftToken": "dt1-419f3a1b1585b04d283d5fbf864338f7aef206d657cf4e4bbc0eff92ccb8fa0c"
+}

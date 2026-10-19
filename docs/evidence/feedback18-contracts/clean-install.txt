@@ -1,0 +1,2 @@
+COMMAND: npm.cmd ci --ignore-scripts --no-audit --no-fund --fetch-retries=0 --fetch-timeout=20000
+Default sandbox attempt failed EACCES. Normal exec require_escalated succeeded with exit 0: added 49 packages in 5s.

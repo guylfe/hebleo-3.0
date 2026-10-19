@@ -1,0 +1,44 @@
+date (local): 2026-10-06 07:37:04 +03:00
+clone: /c/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-lead
+branch: lead/b2-draft-api
+HEAD: 76c2889bbc33c1bb317129e6ba4060fd1d90595a
+node: v24.19.0  npm: 11.17.0
+tested tree = staged index tree 39d46741375f7024bf2770dc7a3aa6eec668f872 (HEAD + staged src/test fixes)
+  src dcab6b5e0b45ba080e42ff035110074e40dd9b14
+  public 4b6d746a4d9f424601d2a9618107ed1a56ab9459
+  test 7e858ab77d38ead36fc8fe49870cd227889e597a
+  schemas ef10df024164d96179947f429fc43985af329541
+  package.json 32079f75511a8a379db4633545663816dd9b810d
+  package-lock.json 76c0d5c11e87be92125e28f0304646187b87b9b0
+unstaged tracked non-docs diff vs index (empty = tested files are exactly the staged ones):
+untracked outside docs:
+----
+cmd: bash -c cd schemas && npm.cmd test
+
+> test
+> node --test checks/*.check.mjs
+
+✔ seed and synthetic interchange are valid without mutation; seed is private-demo only (37.1473ms)
+✔ required explicit Hebrew forms cannot be inferred by validation (0.9867ms)
+✔ unknown values, rich formatting, themes and explicit forms survive JSON unchanged (4.7236ms)
+✔ stable IDs and dependency/selector references reject ambiguity (1.438ms)
+✔ same-snapshot row lookup works; reorder in a new snapshot never auto-assigns identity (0.7494ms)
+✔ duplicate row hashes stay ambiguous; duplicate frozen locators are invalid (0.7845ms)
+✔ source omissions retain work; simultaneous source and Studio edits require resolution (0.4498ms)
+✔ media pins must resolve exact asset, revision and hash; legacy URLs remain unpinned (4.1202ms)
+✔ pending source objects cannot inherit synthetic or verified pack approval (1.2753ms)
+✔ pending fields veto the private synthetic compatibility exception (1.008ms)
+✔ changed content or dependency invalidates approval digests (14.2957ms)
+✔ pending fields, unpinned media and missing approval dependencies stay ineligible (11.8649ms)
+✔ wire fixtures validate by named definitions and missing CAS token is invalid (23.9593ms)
+✔ media approval binds asset identity and revision metadata; no bytes are fetched (1.9111ms)
+✔ preview response schemas reject learner writes and answer-key leakage (11.9903ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1345.7225
+EXIT=0

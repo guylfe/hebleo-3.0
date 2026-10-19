@@ -1,0 +1,19 @@
+/* Scoped beside existing Studio; no learner or keyboard redesign. */
+.source-authoring{display:grid;gap:1rem;color:var(--ink,#123f50)}
+.source-authoring section,.source-authoring details{min-width:0}
+.source-authoring>section,.source-authoring>details{border:1px solid #c8d8dd;border-radius:.6rem;padding:1rem}
+.source-authoring label{display:block;margin:.65rem 0;line-height:1.5}
+.source-authoring input:not([type=checkbox]),.source-authoring select,.source-authoring textarea{display:block;width:100%;box-sizing:border-box;max-width:100%;font:inherit;border:1px solid #aebfc7;border-radius:.35rem;padding:.5rem}
+.source-authoring textarea{min-height:5rem;resize:vertical}.source-authoring select[multiple]{min-height:7rem}
+.source-authoring [data-registration]{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.source-authoring [data-registration]>p,.source-authoring [data-registration]>button{grid-column:1/-1}
+.source-authoring button{min-height:2.75rem;font:inherit;padding:.5rem .8rem;margin:.3rem;border:1px solid #aebfc7;border-radius:.35rem;cursor:pointer;background:#f5fafb;color:#123f50}
+.source-authoring button:disabled{opacity:.55;cursor:default}.source-authoring [data-stage]{background:#07577b;color:white}
+.source-authoring button:focus-visible,.source-authoring input:focus-visible,.source-authoring select:focus-visible,.source-authoring textarea:focus-visible,.source-authoring a:focus-visible{outline:3px solid #087fa8;outline-offset:2px}
+.source-authoring [data-status]{white-space:pre-wrap;border-inline-start:3px solid #087fa8;padding:.75rem;background:#edf6f8}
+.source-authoring .source-scroll{max-width:100%;overflow:auto;max-height:34rem}.source-authoring table{border-collapse:collapse;width:100%}
+.source-authoring th,.source-authoring td{border:1px solid #c8d8dd;padding:.6rem;text-align:start;vertical-align:top;min-width:10rem;white-space:pre-wrap}
+.source-authoring pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:35rem}.source-authoring nav{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin:.5rem 0}
+.source-authoring summary{font-weight:600;cursor:pointer}.source-authoring fieldset{margin:1rem 0;min-width:0;border:1px solid #c8d8dd}
+.source-authoring [data-publish-blocker]{border-inline-start:3px solid #8a5721;padding:.7rem;background:#fff8e9}
+@media(max-width:35rem){.source-authoring [data-registration]{grid-template-columns:1fr}}

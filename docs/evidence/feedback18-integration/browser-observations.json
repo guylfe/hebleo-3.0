@@ -1,0 +1,13 @@
+{
+  "syntheticFixture": true,
+  "port": 57418,
+  "profile": "core",
+  "observations": [
+    "Native second-text click and reload retain synthetic-owner-text-two; rendered Learn 2 Step 2 of 6 with distinct copied synthetic seed text. Initial fixture lost when runner timed out; restarted fixture used for subsequent checks.",
+    "My Hebrew displayed 50 of 1999 visible words from 2000 total (one source word excludes vocabulary); combining first tag, lesson-1 and new learning state displayed one word.",
+    "Native explicit Add 3 synthetic demo words action changed an empty deck to 3 cards due; no automatic seed enrollment.",
+    "Native saved-draft rehearsal navigated second text and legacy-check; selection who graded by server showed That’s right; every table hash matched immediately before and after rehearsal Exit.",
+    "Mounted core profile has no callable lower-level mouse/drag tools; actual pointer drag unverified. Existing automated pointer dispatch is owner-only evidence."
+  ],
+  "limits": "Owner Browser checks, not independent QA. No phone/touch; no production or demo4173 change. Saved hashes/counts only."
+}

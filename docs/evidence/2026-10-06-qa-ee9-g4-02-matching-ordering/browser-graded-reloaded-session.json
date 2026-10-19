@@ -1,0 +1,37 @@
+{
+  "revisionId": 2,
+  "progress": {
+    "lessonId": "lesson-1",
+    "revisionId": 2,
+    "step": "apply",
+    "question": 1,
+    "answer": "",
+    "selectedTokens": [],
+    "matching": {
+      "w-sham": "there",
+      "w-ani": "I",
+      "w-mi": "who"
+    },
+    "resultRequestId": "8e117a69-fe56-4c9a-8cf1-4308392139b9",
+    "practiceIds": [],
+    "updatedAt": "2026-10-06T20:16:25.312Z"
+  },
+  "result": {
+    "requestId": "8e117a69-fe56-4c9a-8cf1-4308392139b9",
+    "exerciseId": "ex-1-match",
+    "lessonId": "lesson-1",
+    "revisionId": 2,
+    "answer": {
+      "w-sham": "there",
+      "w-ani": "I",
+      "w-mi": "who"
+    },
+    "correct": true,
+    "expected": {
+      "w-ani": "I",
+      "w-mi": "who",
+      "w-sham": "there"
+    },
+    "at": "2026-10-06T20:16:04.001Z"
+  }
+}

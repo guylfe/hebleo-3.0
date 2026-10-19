@@ -1,0 +1,15 @@
+{
+  "prefixes": [
+    true,
+    false,
+    false,
+    false
+  ],
+  "prompt": "G4-02 owner ordering check (fixture-only)",
+  "tokens": [
+    "ב",
+    "בית",
+    "אני",
+    " ‏שם "
+  ]
+}

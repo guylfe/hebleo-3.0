@@ -1,0 +1,714 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hebleo.invalid/contracts/studio-wire.v1.schema.json",
+  "title": "Lead frozen Batch 2 wire decisions, 2026-10-04; validate by named definition",
+  "definitions": {
+    "stageRequest": {
+      "type": "object",
+      "properties": {
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "expectedDraftToken": {
+          "anyOf": [
+            {
+              "$ref": "common.v1.schema.json#/definitions/token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content": {
+          "$ref": "content-pack.v1.schema.json"
+        },
+        "word": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "common.v1.schema.json#/definitions/id"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": true
+        },
+        "reviewedDraftToken": {
+          "$ref": "common.v1.schema.json#/definitions/token"
+        }
+      },
+      "required": [
+        "baseRevisionId",
+        "expectedDraftToken"
+      ],
+      "additionalProperties": false
+    },
+    "draft": {
+      "type": "object",
+      "properties": {
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "content": {
+          "$ref": "content-pack.v1.schema.json"
+        },
+        "stagedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "draftToken": {
+          "$ref": "common.v1.schema.json#/definitions/token"
+        }
+      },
+      "required": [
+        "baseRevisionId",
+        "content",
+        "stagedAt",
+        "draftToken"
+      ],
+      "additionalProperties": false
+    },
+    "change": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "words",
+            "lessons",
+            "exercises",
+            "policy",
+            "metadata"
+          ]
+        },
+        "id": {
+          "$ref": "common.v1.schema.json#/definitions/id"
+        },
+        "action": {
+          "enum": [
+            "added",
+            "removed",
+            "changed"
+          ]
+        },
+        "impact": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "action",
+        "impact"
+      ],
+      "additionalProperties": true
+    },
+    "diff": {
+      "type": "object",
+      "properties": {
+        "draft": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/draft"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/change"
+          }
+        },
+        "affectedLessons": {
+          "type": "array",
+          "items": {
+            "$ref": "common.v1.schema.json#/definitions/id"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "draft",
+        "changes",
+        "affectedLessons"
+      ],
+      "additionalProperties": false
+    },
+    "noDraftResponse": {
+      "type": "object",
+      "properties": {
+        "draft": {
+          "type": "null"
+        },
+        "changes": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "affectedLessons": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "required": [
+        "draft",
+        "changes",
+        "affectedLessons"
+      ],
+      "additionalProperties": false
+    },
+    "stageResponse": {
+      "type": "object",
+      "properties": {
+        "draft": {
+          "$ref": "#/definitions/draft"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/change"
+          }
+        },
+        "affectedLessons": {
+          "type": "array",
+          "items": {
+            "$ref": "common.v1.schema.json#/definitions/id"
+          },
+          "uniqueItems": true
+        },
+        "draftToken": {
+          "$ref": "common.v1.schema.json#/definitions/token"
+        },
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "unchanged": {
+          "type": "boolean"
+        },
+        "mediaWarnings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "draft",
+        "changes",
+        "affectedLessons",
+        "draftToken",
+        "baseRevisionId",
+        "unchanged"
+      ],
+      "additionalProperties": false
+    },
+    "studioResponse": {
+      "type": "object",
+      "properties": {
+        "revisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "content": {
+          "$ref": "content-pack.v1.schema.json"
+        },
+        "draft": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/draft"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "common.v1.schema.json#/definitions/revisionId"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "createdAt": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "createdAt",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "preview": {
+          "$ref": "#/definitions/diff"
+        }
+      },
+      "required": [
+        "revisionId",
+        "content",
+        "draft",
+        "history",
+        "preview"
+      ],
+      "additionalProperties": false
+    },
+    "previewSessionRequest": {
+      "type": "object",
+      "properties": {
+        "lessonId": {
+          "$ref": "common.v1.schema.json#/definitions/id"
+        },
+        "draftToken": {
+          "$ref": "common.v1.schema.json#/definitions/token"
+        }
+      },
+      "required": [
+        "lessonId",
+        "draftToken"
+      ],
+      "additionalProperties": false
+    },
+    "previewSessionResponse": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "const": "draft-preview"
+        },
+        "persistent": {
+          "const": false
+        },
+        "draftToken": {
+          "$ref": "common.v1.schema.json#/definitions/token"
+        },
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "lessonId": {
+          "$ref": "common.v1.schema.json#/definitions/id"
+        },
+        "content": {
+          "$ref": "learner-content.v1.schema.json"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "minItems": 2,
+          "maxItems": 101,
+          "uniqueItems": true
+        },
+        "flow": {
+          "$ref": "course-model.v1.schema.json#/definitions/flow"
+        },
+        "keyboard": {
+          "$ref": "course-model.v1.schema.json#/definitions/keyboard"
+        }
+      },
+      "required": [
+        "mode",
+        "persistent",
+        "draftToken",
+        "baseRevisionId",
+        "lessonId",
+        "content",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "previewEvaluateRequest": {
+      "type": "object",
+      "properties": {
+        "lessonId": {
+          "$ref": "common.v1.schema.json#/definitions/id"
+        },
+        "exerciseId": {
+          "$ref": "common.v1.schema.json#/definitions/id"
+        },
+        "draftToken": {
+          "$ref": "common.v1.schema.json#/definitions/token"
+        },
+        "answer": {
+          "oneOf": [
+            {
+              "type": "string",
+              "maxLength": 2000
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "maxLength": 2000
+              },
+              "maxProperties": 100
+            }
+          ]
+        }
+      },
+      "required": [
+        "lessonId",
+        "exerciseId",
+        "draftToken",
+        "answer"
+      ],
+      "additionalProperties": false
+    },
+    "previewEvaluateResponse": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "const": "draft-preview"
+        },
+        "persistent": {
+          "const": false
+        },
+        "draftToken": {
+          "$ref": "common.v1.schema.json#/definitions/token"
+        },
+        "exerciseId": {
+          "$ref": "common.v1.schema.json#/definitions/id"
+        },
+        "result": {
+          "type": "object",
+          "properties": {
+            "exerciseId": {
+              "$ref": "common.v1.schema.json#/definitions/id"
+            },
+            "lessonId": {
+              "$ref": "common.v1.schema.json#/definitions/id"
+            },
+            "answer": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string",
+                    "maxLength": 2000
+                  },
+                  "maxProperties": 100
+                }
+              ]
+            },
+            "correct": {
+              "type": "boolean"
+            },
+            "expected": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string",
+                    "maxLength": 2000
+                  },
+                  "maxProperties": 100
+                }
+              ]
+            },
+            "pairResults": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "boolean"
+              }
+            },
+            "evaluationPolicy": {
+              "const": "ignore-nikkud-v1"
+            },
+            "acceptedAnswers": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 100,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            }
+          },
+          "required": [
+            "exerciseId",
+            "lessonId",
+            "answer",
+            "correct",
+            "expected"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "mode",
+        "persistent",
+        "draftToken",
+        "exerciseId",
+        "result"
+      ],
+      "additionalProperties": false
+    },
+    "publishRequest": {
+      "type": "object",
+      "properties": {
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "draftToken": {
+          "$ref": "common.v1.schema.json#/definitions/token"
+        }
+      },
+      "required": [
+        "baseRevisionId",
+        "draftToken"
+      ],
+      "additionalProperties": false
+    },
+    "rollbackRequest": {
+      "type": "object",
+      "properties": {
+        "revisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "expectedDraftToken": {
+          "anyOf": [
+            {
+              "$ref": "common.v1.schema.json#/definitions/token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "revisionId",
+        "baseRevisionId",
+        "expectedDraftToken"
+      ],
+      "additionalProperties": false
+    },
+    "publishResponse": {
+      "type": "object",
+      "properties": {
+        "revisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        }
+      },
+      "required": [
+        "revisionId"
+      ],
+      "additionalProperties": false
+    },
+    "rollbackResponse": {
+      "$ref": "#/definitions/publishResponse"
+    },
+    "errorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "enum": [
+            "DRAFT_TOKEN_REQUIRED",
+            "STALE_BASE",
+            "DRAFT_CONFLICT",
+            "PREVIEW_TARGET_NOT_FOUND",
+            "INVALID_ANSWER",
+            "BAD_REQUEST",
+            "FORBIDDEN",
+            "NOT_FOUND",
+            "CONFLICT",
+            "PAYLOAD_TOO_LARGE",
+            "UNSUPPORTED_MEDIA_TYPE",
+            "SERVER_ERROR",
+            "METHOD_NOT_ALLOWED"
+          ]
+        },
+        "current": {
+          "type": "object",
+          "properties": {
+            "draftToken": {
+              "anyOf": [
+                {
+                  "$ref": "common.v1.schema.json#/definitions/token"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "activeRevisionId": {
+              "$ref": "common.v1.schema.json#/definitions/revisionId"
+            }
+          },
+          "required": [
+            "draftToken",
+            "activeRevisionId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "error",
+        "code"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "enum": [
+                  "DRAFT_CONFLICT",
+                  "STALE_BASE"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "current"
+            ]
+          }
+        }
+      ]
+    },
+    "workspaceImpactRequest": {
+      "type": "object",
+      "required": [
+        "baseRevisionId",
+        "expectedDraftToken",
+        "content"
+      ],
+      "properties": {
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "expectedDraftToken": {
+          "anyOf": [
+            {
+              "$ref": "common.v1.schema.json#/definitions/token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content": {
+          "$ref": "content-pack.v1.schema.json"
+        }
+      },
+      "additionalProperties": false
+    },
+    "exerciseDependenciesRequest": {
+      "type": "object",
+      "required": [
+        "baseRevisionId",
+        "expectedDraftToken",
+        "exerciseId"
+      ],
+      "properties": {
+        "baseRevisionId": {
+          "$ref": "common.v1.schema.json#/definitions/revisionId"
+        },
+        "expectedDraftToken": {
+          "anyOf": [
+            {
+              "$ref": "common.v1.schema.json#/definitions/token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exerciseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/definitions/stageRequest"
+    },
+    {
+      "$ref": "#/definitions/noDraftResponse"
+    },
+    {
+      "$ref": "#/definitions/stageResponse"
+    },
+    {
+      "$ref": "#/definitions/studioResponse"
+    },
+    {
+      "$ref": "#/definitions/previewSessionRequest"
+    },
+    {
+      "$ref": "#/definitions/previewSessionResponse"
+    },
+    {
+      "$ref": "#/definitions/previewEvaluateRequest"
+    },
+    {
+      "$ref": "#/definitions/previewEvaluateResponse"
+    },
+    {
+      "$ref": "#/definitions/publishRequest"
+    },
+    {
+      "$ref": "#/definitions/rollbackRequest"
+    },
+    {
+      "$ref": "#/definitions/publishResponse"
+    },
+    {
+      "$ref": "#/definitions/rollbackResponse"
+    },
+    {
+      "$ref": "#/definitions/errorResponse"
+    }
+  ]
+}

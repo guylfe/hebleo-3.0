@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "endpoints": [
+    "author import preview",
+    "18 MB draft stage",
+    "exact draft learner rehearsal",
+    "read-only migration preview"
+  ],
+  "draftBytes": 18624512,
+  "counts": {
+    "words": 792,
+    "categories": {
+      "verb": 93,
+      "adjective": 59,
+      "preposition": 19,
+      "noun": 418,
+      "other": 203
+    },
+    "aliases": 1251,
+    "activeAliases": 1937,
+    "formReferences": 1172,
+    "legacyOccurrences": 437,
+    "activeLegacyOccurrences": 435,
+    "usages": 8,
+    "examples": 95,
+    "held": 2,
+    "unapprovedDrafts": 1770
+  },
+  "learnerRowsUnchanged": true,
+  "activeRevisionUnchanged": true,
+  "rawSourceExcluded": true,
+  "draftToken": "dt1-419f3a1b1585b04d283d5fbf864338f7aef206d657cf4e4bbc0eff92ccb8fa0c"
+}

@@ -1,0 +1,55 @@
+date (local): 2026-10-06 15:43:48 +03:00
+clone: /c/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-lead
+branch: lead/b2-draft-api
+HEAD: e0cbd5cd564c8fd790ff039f2c0e34ce4d7d73c6
+node: v24.19.0  npm: 11.17.0
+tested tree = staged index tree 2b7c45d1d4e92d8f868f4e378097744087133ec4 (HEAD + staged src/test fixes)
+  src 2fa0ee1e17d0712a5d6b259cdc8600a5f2abb925
+  public 4b6d746a4d9f424601d2a9618107ed1a56ab9459
+  test a2a7262ae8fede978d1dde3c64a8e13803d1c0d6
+  schemas ef10df024164d96179947f429fc43985af329541
+  package.json 32079f75511a8a379db4633545663816dd9b810d
+  package-lock.json 76c0d5c11e87be92125e28f0304646187b87b9b0
+unstaged tracked non-docs diff vs index (empty = tested files are exactly the staged ones):
+  test/restore-integrity.test.js
+untracked outside docs:
+----
+cmd: node ../rr-b2-04-fix/owner-envelope-matrix.mjs
+FAIL v2 userId absent: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v2 userId null: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v2 userId empty: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v2 userId unknown: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=404 A=pending B=pending
+FAIL v2 userId other: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=404 A=pending B=pending
+FAIL v2 requestId absent: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v2 requestId null: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v2 requestId empty: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v2 requestId other: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=404 A=pending B=pending
+PASS v2 unknown userId, matching key: status=400 delta=0 tablesEqual=true
+FAIL v2 reserved requestId, matching key: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=null B=pending
+FAIL v2 B identity under A key (collision): status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=200 A=pending B=reviewed
+FAIL v2 key renamed away from identity: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=404 A=null B=pending
+PASS v2 key absent: status=400 delta=0 tablesEqual=true
+PASS v2 value absent: status=400 delta=0 tablesEqual=true
+FAIL v2 A moved onto B key+identity (duplicate key): status=200 delta=8 tablesEqual=false reportsAfter=1/2
+FAIL v2 same report twice (duplicate key): status=200 delta=9 tablesEqual=false reportsAfter=2/3 resolveA=200 A=reviewed B=pending
+PASS v2 valid control: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=200 A=reviewed B=pending
+FAIL v1 userId absent: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v1 userId null: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v1 userId empty: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v1 userId unknown: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=404 A=pending B=pending
+FAIL v1 userId other: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=404 A=pending B=pending
+FAIL v1 requestId absent: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v1 requestId null: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v1 requestId empty: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=pending B=pending
+FAIL v1 requestId other: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=404 A=pending B=pending
+PASS v1 unknown userId, matching key: status=400 delta=0 tablesEqual=true
+FAIL v1 reserved requestId, matching key: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=400 A=null B=pending
+FAIL v1 B identity under A key (collision): status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=200 A=pending B=reviewed
+FAIL v1 key renamed away from identity: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=404 A=null B=pending
+PASS v1 key absent: status=400 delta=0 tablesEqual=true
+PASS v1 value absent: status=400 delta=0 tablesEqual=true
+FAIL v1 A moved onto B key+identity (duplicate key): status=200 delta=8 tablesEqual=false reportsAfter=1/2
+FAIL v1 same report twice (duplicate key): status=200 delta=9 tablesEqual=false reportsAfter=2/3 resolveA=200 A=reviewed B=pending
+PASS v1 valid control: status=200 delta=8 tablesEqual=false reportsAfter=2/2 resolveA=200 A=reviewed B=pending
+8/36 passed
+EXIT=1

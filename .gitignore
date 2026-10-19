@@ -25,3 +25,6 @@ tmp/
 .DS_Store
 Thumbs.db
 
+
+# Application-owned encrypted credentials; never content or backup data.
+.private/

@@ -1,0 +1,20 @@
+✔ Markdown renders headings, tables, images, formatting and authored disclosure while removing executable markup (227.4712ms)
+✔ Hebrew lesson phrases remain in source order inside a single directional isolate (42.1517ms)
+✔ Sheets cell fills, exact RGB colors, and rich runs retain UTF-16 vowel offsets, including explicit bold=false (39.86ms)
+✔ Source formatting metadata survives publication, JSON export and backup without canonical text changes (19.8068ms)
+✔ Prefixes are separate tray choices but compose and grade as attached forms, without guessed vowel changes (3.6684ms)
+✔ Known and newly taught keyboard keys are independently authored and validated (8.7532ms)
+✔ Owner keyboard floats, shows English equivalents, distinguishes key groups, edits the active field and stays pinned across questions (85.0711ms)
+✔ Matching supports pointer dragging and accessible select-then-place, with one word per meaning (21.5893ms)
+✔ Flashcard front Nikkud follows an author default or a persisted learner override (8.899ms)
+✔ Real lesson questions are isolated per learner, idempotent, author-answerable and included in atomic backups (5.5811ms)
+✔ Starting an updated lesson is explicit and preserves graded attempts and review records (9.1441ms)
+✔ New rich assets, image media and question endpoints work over HTTP with author boundaries (152.6018ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1854.4043

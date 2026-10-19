@@ -1,0 +1,74 @@
+diff --git a/src/store.js b/src/store.js
+index b5b351c..50cfdf1 100644
+--- a/src/store.js
++++ b/src/store.js
+@@ -19,6 +19,9 @@ const canonicalJSON = value => Array.isArray(value) ? '[' + value.map(canonicalJ
+ export const draftTokenFor = (baseRevisionId, content) => 'dt1-' + createHash('sha256').update(canonicalJSON({ v: 1, baseRevisionId, content })).digest('hex');
+ const text = (value, label, max = 4000) => { if (typeof value !== 'string' || !value.trim() || value.length > max) throw new DomainError('Invalid ' + label); return value; };
+ const id = value => { text(value, 'ID', 100); if (!/^[A-Za-z0-9][A-Za-z0-9_-]*$/.test(value) || ['constructor', 'prototype', '__proto__'].includes(value)) throw new DomainError('IDs must use letters, numbers, hyphens, or underscores, without reserved names.'); return value; };
++// Index of the first authored list entry with nothing visible (empty, spaces, controls, direction or zero-width marks), or -1.
++// Learners see each entry as a choice or tile, so such entries are refused, never trimmed, dropped or replaced.
++const blankEntry = list => list.findIndex(x => !x.replace(/[\s\p{Cc}\p{Default_Ignorable_Code_Point}]/gu, ''));
+ const modes = ['curated', 'full', 'none'];
+ const preferenceDefaults = { nikkud: 'curated', vocabularyView: 'cards', immediateAnswers: false, sounds: false, animations: true, keyboardHints: true, keyboardConvert: false, keyboardVisible: false, keyboardPinned: false, reviewNikkud: 'default', audioSpeed: 1, reviewLimit: 10, reviewType: 'recognition' };
+ function richData(value, depth = 0) {
+@@ -80,12 +83,13 @@ export function validateContent(content) {
+       if (!Array.isArray(e.answers) || !e.answers.length) throw new DomainError('Exercise needs accepted answers.');
+       e.answers.forEach(a => text(a, 'accepted answer', 1000));
+       if (e.type === 'ordering' && (!Array.isArray(e.tokens) || !e.tokens.length || e.tokens.some(t => typeof t !== 'string'))) throw new DomainError('Ordering exercise needs tokens.');
++      const blank = e.type === 'ordering' ? blankEntry(e.tokens) : -1;
++      if (blank >= 0) throw new DomainError('Authored token ' + (blank + 1) + ' of ' + e.id + ' is blank. Enter a token or remove that item.');
+     } else throw new DomainError('Unsupported exercise type: ' + e.type);
+     if(e.prefixTokenIndices && (e.type!=='ordering'||!Array.isArray(e.prefixTokenIndices)||new Set(e.prefixTokenIndices).size!==e.prefixTokenIndices.length||e.prefixTokenIndices.some(i=>!Number.isInteger(i)||i<0||i>=e.tokens.length)))throw new DomainError('Invalid prefix tiles.');
+     if (e.type === 'recognition') {
+       if (!Array.isArray(e.distractors) || !e.distractors.length || e.distractors.some(x => typeof x !== 'string')) throw new DomainError('Recognition needs choices.');
+-      // Each distractor is shown to learners as a choice; one with nothing visible is refused, never trimmed or dropped.
+-      const blank = e.distractors.findIndex(x => !x.replace(/[\s\p{Cc}\p{Default_Ignorable_Code_Point}]/gu, ''));
++      const blank = blankEntry(e.distractors);
+       if (blank >= 0) throw new DomainError('Authored distractor meaning ' + (blank + 1) + ' of ' + e.id + ' is blank. Enter a meaning or remove that item.');
+     }
+   }
+@@ -257,9 +261,10 @@ export class Store {
+     if (!Number.isInteger(p?.revisionId)) throw new DomainError('Invalid saved lesson revision.');
+     const content = backupContent || this.snapshot(p.revisionId); const l = content.lessons.find(l => l.id === p.lessonId);
+     if (!l || !lessonSteps(l).includes(p.step) || !Number.isInteger(p.question) || p.question < 0 || p.question > l.exerciseIds.length || typeof p.answer !== 'string' || p.answer.length > 2000 || !Array.isArray(p.selectedTokens) || p.selectedTokens.length > 100 || new Set(p.selectedTokens).size !== p.selectedTokens.length || p.selectedTokens.some(i => !Number.isInteger(i) || i < 0 || i > 100)) throw new DomainError('Invalid saved lesson position.');
+-    if (!p.matching || typeof p.matching !== 'object' || Array.isArray(p.matching) || Object.entries(p.matching).some(([k,v]) => !l.wordIds.includes(k) || typeof v !== 'string' || v.length > 1000)) throw new DomainError('Invalid saved matching answer.');
+     if (p.practiceIds && (!Array.isArray(p.practiceIds) || p.practiceIds.some(id => !l.exerciseIds.includes(id)))) throw new DomainError('Invalid practice set.');
+     const exercise=content.exercises.find(e=>e.id===stepExercises(l,p.step,p.practiceIds)[p.question]);
++    // Saved matches belong to the matching question at this exact revision, step and position. Its authored pairs may use any pack word, not only the lesson's list.
++    if (!p.matching || typeof p.matching !== 'object' || Array.isArray(p.matching) || Object.entries(p.matching).some(([k,v]) => exercise?.type !== 'matching' || !exercise.wordIds.includes(k) || typeof v !== 'string' || v.length > 1000)) throw new DomainError('Invalid saved matching answer.');
+     if(p.selectedTokens.length && (!exercise || exercise.type!=='ordering' || p.selectedTokens.some(i=>i>=orderingTokens(exercise,content).length)))throw new DomainError('Invalid saved sentence tokens.');
+     if (p.resultRequestId && !state.attempts.some(a => a.requestId === p.resultRequestId && a.revisionId === p.revisionId && a.lessonId === p.lessonId && a.exerciseId === stepExercises(l,p.step,p.practiceIds)[p.question])) throw new DomainError('Saved feedback does not match the exercise.');
+   }
+diff --git a/test/app.test.js b/test/app.test.js
+index c3a80b8..1d3f1ed 100644
+--- a/test/app.test.js
++++ b/test/app.test.js
+@@ -387,3 +387,27 @@ test('Publishing behind a pending guided save still rejects a newer draft from a
+   assert.equal(store.get('active'),revision);assert.deepEqual(store.snapshot(),published);assert.equal(store.currentDraft().draftToken,other);
+   assert.deepEqual(learnerRecords(store),learners);
+ });
++
++test('QA-EE9-G4-02: matching autosave keeps an authored pair word from outside the lesson list, and the match resumes after reload',async t=>{
++  const pairs=['w-ani','w-mi','w-sham'];
++  const {store,w,doc}=await app(t,{page:'lesson/lesson-1/apply',prepare(s){
++    const c=structuredClone(s.snapshot());c.exercises.find(e=>e.id==='ex-1-match').wordIds=pairs;s.publish(1,s.stage({baseRevisionId:1,expectedDraftToken:null,content:c}).draftToken);
++  }});
++  assert.ok(!store.snapshot().lessons.find(l=>l.id==='lesson-1').wordIds.includes('w-sham'));
++  const input=doc.querySelector('#answer');input.value='אני';input.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback:not(.wrong)'));
++  click(doc,'next-question');await settled(()=>doc.querySelector('.matching-game'));
++  const place=(d,id,meaning)=>{d.querySelector('[data-match-word="'+id+'"]').click();d.querySelector('[data-match-target="'+meaning+'"]').click();};
++  const resume=()=>store.learner('learner-demo').resumes['lesson-1'];
++  place(doc,'w-sham','there');
++  await settled(()=>resume()?.matching?.['w-sham']==='there');
++  assert.deepEqual(resume().matching,{'w-sham':'there'});assert.equal(resume().revisionId,2);assert.equal(resume().question,1);
++  const resumed=await app(t,{page:'lesson/lesson-1/apply',store});
++  await settled(()=>resumed.doc.querySelector('.matching-game'));
++  assert.match(resumed.doc.querySelector('[data-match-word="w-sham"] small').textContent,/Placed: there/);
++  assert.ok(resumed.doc.querySelector('[data-match-target="there"]').classList.contains('filled'));
++  place(resumed.doc,'w-ani','I');await settled(()=>resume().matching['w-ani']==='I');
++  place(resumed.doc,'w-mi','who');await settled(()=>resume().matching['w-mi']==='who');
++  click(resumed.doc,'check');await settled(()=>resumed.doc.querySelector('.feedback:not(.wrong)'));
++  const graded=store.learner('learner-demo').attempts.at(-1);
++  assert.deepEqual([graded.exerciseId,graded.revisionId,graded.correct,graded.answer],['ex-1-match',2,true,{'w-sham':'there','w-ani':'I','w-mi':'who'}]);
++});

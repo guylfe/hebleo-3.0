@@ -1,0 +1,27 @@
+date (local): 2026-10-06 15:41:10 +03:00
+clone: /c/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-lead
+branch: lead/b2-draft-api
+HEAD: e0cbd5cd564c8fd790ff039f2c0e34ce4d7d73c6
+node: v24.19.0  npm: 11.17.0
+tested tree = staged index tree 2b7c45d1d4e92d8f868f4e378097744087133ec4 (HEAD + staged src/test fixes)
+  src 2fa0ee1e17d0712a5d6b259cdc8600a5f2abb925
+  public 4b6d746a4d9f424601d2a9618107ed1a56ab9459
+  test a2a7262ae8fede978d1dde3c64a8e13803d1c0d6
+  schemas ef10df024164d96179947f429fc43985af329541
+  package.json 32079f75511a8a379db4633545663816dd9b810d
+  package-lock.json 76c0d5c11e87be92125e28f0304646187b87b9b0
+unstaged tracked non-docs diff vs index (empty = tested files are exactly the staged ones):
+untracked outside docs:
+----
+cmd: node ../rr-b2-04-fix/reviewer-report-envelope.mjs
+FAIL userAbsent restore=200 writes=8 resolve=400 wrongReportModified=false
+FAIL userNull restore=200 writes=8 resolve=400 wrongReportModified=false
+FAIL userUnknown restore=200 writes=8 resolve=404 wrongReportModified=false
+FAIL userOther restore=200 writes=8 resolve=404 wrongReportModified=false
+FAIL requestAbsent restore=200 writes=8 resolve=400 wrongReportModified=false
+FAIL requestNull restore=200 writes=8 resolve=400 wrongReportModified=false
+FAIL requestEmpty restore=200 writes=8 resolve=400 wrongReportModified=false
+FAIL requestOther restore=200 writes=8 resolve=404 wrongReportModified=false
+FAIL collision restore=200 writes=8 resolve=200 wrongReportModified=true
+PASS valid restore=200 writes=8 resolve=200 wrongReportModified=false
+EXIT=1

@@ -1,0 +1,7 @@
+body { margin:0; background:#f8faf9; font:16px/1.6 Arial,sans-serif; color:#173c34; }
+main { max-width:1080px; margin:auto; padding:32px; }
+button,select,input,textarea { font:inherit; }
+button { border:1px solid #9baea7; border-radius:6px; background:#fff; padding:8px 12px; cursor:pointer; }
+input,select,textarea { padding:8px; border:1px solid #9baea7; border-radius:6px; }
+h2 { margin-block-start:36px; }
+output { white-space:pre-wrap; }

@@ -1,0 +1,448 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hebleo.invalid/contracts/course-model.v1.schema.json",
+  "title": "Additive stable course instances; legacy content remains valid",
+  "definitions": {
+    "selector": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "ids",
+            "tags",
+            "lesson"
+          ]
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.v1.schema.json#/definitions/id"
+          },
+          "uniqueItems": true
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "match": {
+          "enum": [
+            "any",
+            "all"
+          ]
+        },
+        "includeIds": {
+          "type": "array",
+          "items": {
+            "$ref": "common.v1.schema.json#/definitions/id"
+          },
+          "uniqueItems": true
+        },
+        "excludeIds": {
+          "type": "array",
+          "items": {
+            "$ref": "common.v1.schema.json#/definitions/id"
+          },
+          "uniqueItems": true
+        },
+        "lessonId": {
+          "$ref": "common.v1.schema.json#/definitions/id"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "ids"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "ids"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "tags"
+                  ]
+                },
+                {
+                  "required": [
+                    "lessonId"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "tags"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "tags",
+              "match"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ids"
+                  ]
+                },
+                {
+                  "required": [
+                    "lessonId"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "lesson"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "lessonId"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "ids"
+                  ]
+                },
+                {
+                  "required": [
+                    "tags"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "block": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "common.v1.schema.json#/definitions/id"
+        },
+        "type": {
+          "enum": [
+            "explanation",
+            "vocabulary",
+            "exercise-set"
+          ]
+        },
+        "source": {
+          "enum": [
+            "inline",
+            "words",
+            "exercises"
+          ]
+        },
+        "renderer": {
+          "enum": [
+            "text",
+            "vocabulary-table",
+            "practice"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 12000
+        },
+        "selector": {
+          "$ref": "#/definitions/selector"
+        },
+        "role": {
+          "enum": [
+            "check",
+            "apply"
+          ]
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "textDirection": {
+              "enum": [
+                "auto",
+                "rtl",
+                "ltr"
+              ]
+            },
+            "showNotes": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "source",
+        "renderer"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "explanation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source": {
+                "const": "inline"
+              },
+              "renderer": {
+                "const": "text"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "vocabulary"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source": {
+                "const": "words"
+              },
+              "renderer": {
+                "const": "vocabulary-table"
+              }
+            },
+            "required": [
+              "selector"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "exercise-set"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source": {
+                "const": "exercises"
+              },
+              "renderer": {
+                "const": "practice"
+              },
+              "selector": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/selector"
+                  },
+                  {
+                    "properties": {
+                      "mode": {
+                        "enum": [
+                          "ids",
+                          "tags"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": [
+              "selector",
+              "role"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "curriculum": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "chapters": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "common.v1.schema.json#/definitions/id"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "lessonIds": {
+                "type": "array",
+                "items": {
+                  "$ref": "common.v1.schema.json#/definitions/id"
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "lessonIds"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "order": {
+          "type": "array",
+          "maxItems": 4000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "chapterId": {
+                "$ref": "common.v1.schema.json#/definitions/id"
+              },
+              "lessonId": {
+                "$ref": "common.v1.schema.json#/definitions/id"
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "chapterId"
+                ],
+                "not": {
+                  "required": [
+                    "lessonId"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "lessonId"
+                ],
+                "not": {
+                  "required": [
+                    "chapterId"
+                  ]
+                }
+              }
+            ],
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": [
+        "version",
+        "chapters",
+        "order"
+      ],
+      "additionalProperties": true
+    },
+    "flow": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 101,
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "blockId": {
+            "anyOf": [
+              {
+                "$ref": "common.v1.schema.json#/definitions/id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "kind": {
+            "enum": [
+              "learn",
+              "check",
+              "vocabulary",
+              "apply",
+              "complete"
+            ]
+          },
+          "exerciseIds": {
+            "type": "array",
+            "items": {
+              "$ref": "common.v1.schema.json#/definitions/id"
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "key",
+          "blockId",
+          "kind",
+          "exerciseIds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "keyboard": {
+      "type": "object",
+      "properties": {
+        "knownKeys": {
+          "type": "string"
+        },
+        "newKeys": {
+          "type": "string"
+        },
+        "availableKeys": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "knownKeys",
+        "newKeys"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

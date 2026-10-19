@@ -41,7 +41,7 @@ test('ordering publication requires enough taught distractors and never treats a
 
 test('rich CSV fields survive publication and backup with original unknown column labels',t=>{
   const s=setup(t),csv='id,pointed,unpointed,curated,english,root,pattern,Plural Feminine,אתם\nw-mi,מִי,מי,מִי,who,רוט,pattern,form,authored conjugation';
-  const content=importVocabularyCSV(csv,seed);s.stage({baseRevisionId:1,content});s.publish(1);
+  const content=importVocabularyCSV(csv,seed);s.stage({baseRevisionId:1,expectedDraftToken:null,content});s.publish(1,s.currentDraft().draftToken);
   const w=s.snapshot().words.find(w=>w.id==='w-mi');
   assert.equal(w.root,'רוט');assert.equal(w.sourceFields['אתם'],'authored conjugation');
   assert.ok(wordFields(w).some(([key])=>key==='Plural Feminine'));
@@ -53,7 +53,7 @@ test('rich CSV fields survive publication and backup with original unknown colum
 test('saved positions preserve matching answers and feedback against their pinned revision',t=>{
   const s=setup(t);const result=attempt(s,'ex-1-match',{'w-hu':'he','w-hi':'she','w-mi':'who'});
   s.saveProgress(user,position(s,{question:1,answer:'',matching:result.answer,resultRequestId:result.requestId}));
-  s.stage({baseRevisionId:1,word:{id:'w-mi',english:'changed'}});s.publish(1);
+  s.stage({baseRevisionId:1,expectedDraftToken:null,word:{id:'w-mi',english:'changed'}});s.publish(1,s.currentDraft().draftToken);
   const session=s.session(user,'lesson-1');assert.equal(session.revisionId,1);
   assert.deepEqual(session.progress.matching,result.answer);assert.equal(session.result.requestId,result.requestId);
   assert.equal(session.content.words.find(w=>w.id==='w-mi').english,'who');
@@ -94,13 +94,13 @@ test('targeted extra practice selects unresolved authored mistakes, then falls b
   attempt(s,'ex-1-type','אני');assert.deepEqual(s.practice(user,{revisionId:1,lessonId:'lesson-1'}).exerciseIds,seed.lessons[0].exerciseIds);
 });
 
-test('backup restores reports, undo, and pinned session positions; feedback is rechecked after revision remapping',t=>{
+test('backup restores reports, undo, and pinned session positions; feedback stays linked to the remapped attempt',t=>{
   const s=setup(t);const result=attempt(s,'ex-1-type','אני');
   s.saveProgress(user,position(s,{resultRequestId:result.requestId}));
   s.report(user,{requestId:randomUUID(),attemptId:result.requestId,reason:'unclear',note:''});
   const backup=s.backup();s.restore(backup);
   const session=s.session(user,'lesson-1');assert.equal(session.progress.answer,'אני');
-  assert.equal(session.progress.resultRequestId,null);assert.equal(s.reports('author-demo').length,1);
+  assert.equal(session.progress.resultRequestId,result.requestId);assert.equal(session.result.revisionId,session.revisionId);assert.equal(s.reports('author-demo').length,1);
   assert.equal(session.content.words[0].pointed,'אֲנִי');s.saveProgress(user,session.progress);
   const invalid=structuredClone(backup);invalid.learners[0].state.resumes['lesson-1'].selectedTokens=[99];
   const before=s.get('active');assert.throws(()=>s.restore(invalid));assert.equal(s.get('active'),before);

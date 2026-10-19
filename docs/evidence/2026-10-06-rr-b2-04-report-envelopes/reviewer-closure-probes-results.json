@@ -1,0 +1,559 @@
+{
+  "commit": "fixed (staged on e0cbd5c)",
+  "node": "v24.19.0",
+  "results": [
+    {
+      "name": "RR-B2-02 exact-revision reference rejection across resumed, no-resume, question and report history",
+      "status": "PASS",
+      "details": {
+        "rejections": 28,
+        "outcomes": [
+          {
+            "label": "resumed/missingLesson",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "bc6a7957cb8caea7562895f18921f506473e4cd537bb60e593b19a2de02d8707",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "resumed/otherExistingLesson",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "fbd613f4a72ca99af6033a4bbecb789d47838e93656f88f742dbe0f6cde5564e",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "resumed/missingExercise",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "fcc0d30d94f4e937d938f2df19f2348636d30954582503c103159f566a740dac",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "resumed/otherLessonExercise",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "82b866a8ab190bcae874687cde880d66cc9d279ead323d7ced303c8b89e37ac6",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "resumed/missingWord",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "76a3cee6363b88280f435a42c4ae9623ab78ec479cd088a043becd40de590619",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "resumed/wordOnlyInLaterRevision",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "a6ae6f1e906ba0f75d4d92f029910cb0588c9750c603bdd3786416935fdc6648",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "resumed/uncarriedRevision",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "416ac3894730d69e979ae1c47bda15a1a2ab7d8703c67e97ea4d053d9b99ca78",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "history/missingLesson",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "b32a0196b31f4ad0e13138a94e13b588dc573ffc05d38ca701e9e2a3c5db8a14",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "history/otherExistingLesson",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "b9e3c9731b25021a837cc0688f4d4aaba8f892402481a4a23e591a1c98e6392c",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "history/missingExercise",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "6f787961e4b9fc383744e57f5338ed322b99643c8f7968c7f0587c35c42e09b4",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "history/otherLessonExercise",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "a69f75229f6d30cfc9680efd0fef585589b96250b65ff5441bc3ffcaced1ef6b",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "history/missingWord",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "030698dc40a57a972d634ef9f76e7e02f6f80a43c32d311851223ee913cfb575",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "history/wordOnlyInLaterRevision",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "4ef08f2dfee7b4411971b395c0860982004f0a6f5a0539c38b848a4c5a70cdcf",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "history/uncarriedRevision",
+            "error": "Invalid saved attempt.",
+            "status": 400,
+            "tableHash": "72ffa7dc6a7d112a884c6e74923cd8d6fa74d5de1a658096de2aea3a9d48e46e",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "question/missingLesson",
+            "error": "Invalid learner question in backup.",
+            "status": 400,
+            "tableHash": "293b9f776d674a5810ecf3d374dbc65703991836ccbe766db8bad54029a847ab",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "question/otherExistingLesson",
+            "error": "Invalid learner question in backup.",
+            "status": 400,
+            "tableHash": "e1dc7d2c5a7f02d39ba63169b34f514099a6129e9a299fc2220e8d89d24ac6e8",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "question/missingExercise",
+            "error": "Invalid learner question in backup.",
+            "status": 400,
+            "tableHash": "9c4fd3e7c2f5eddcbd8ecffa33f0f569012b4a3942255ec11d0e5e4b99753164",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "question/otherLessonExercise",
+            "error": "Invalid learner question in backup.",
+            "status": 400,
+            "tableHash": "8ce0dd5f13b99ddba2363e8b5dae42db711ddbc0d62085acf6040625523ee1df",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "question/missingWord",
+            "error": "Invalid learner question in backup.",
+            "status": 400,
+            "tableHash": "17cd4cdc2cbd45e08832ac9f7a69487e0bf7a7e76661db13ca41fc3f7c720d38",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "question/wordOnlyInLaterRevision",
+            "error": "Invalid learner question in backup.",
+            "status": 400,
+            "tableHash": "e16c0177cc523f0a078c2f25e41d281c53a8c5f8a34484dcf17e2e35563b5ec8",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "question/uncarriedRevision",
+            "error": "Invalid learner question in backup.",
+            "status": 400,
+            "tableHash": "2c6b1fbfb42acd4c91146228d3a7376fd0815b05fe5d659c491af276d212521e",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "reported/missingLesson",
+            "error": "Invalid learner report in backup.",
+            "status": 400,
+            "tableHash": "d5f24502691353e301621ef490d3565105cdb873d689ceeadffcf033e540b737",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "reported/otherExistingLesson",
+            "error": "Invalid learner report in backup.",
+            "status": 400,
+            "tableHash": "394d24d160fac2b30b54412aef8780d1af2bd744d93649d5fff8134a9bbaf40d",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "reported/missingExercise",
+            "error": "Invalid learner report in backup.",
+            "status": 400,
+            "tableHash": "23a8f8a91a20a44c8a4761bd523bd4449e0c0a2f7b1b24829b52727824bc8db4",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "reported/otherLessonExercise",
+            "error": "Invalid learner report in backup.",
+            "status": 400,
+            "tableHash": "6296bda87c1fd465f44325e1978ed1dc5d0510f4b46dd6a0812308826135e713",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "reported/missingWord",
+            "error": "Invalid learner report in backup.",
+            "status": 400,
+            "tableHash": "43b651aa6900328c05a2ada3159d5fde97fe0c8f451b9ed8f1a578c3089c008b",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "reported/wordOnlyInLaterRevision",
+            "error": "Invalid learner report in backup.",
+            "status": 400,
+            "tableHash": "7094ca6a2d427acb2e0218deb4a542775c5ef30994cf826acb2851290dfc1a5d",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "reported/uncarriedRevision",
+            "error": "Invalid learner report in backup.",
+            "status": 400,
+            "tableHash": "075b520bf51594f5eec73010d89dfbe03c3480c460cb229e0a5c7c60b672656f",
+            "totalChangesDelta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "RR-B2-02 mandatory exercise reference on reported attempt cannot be omitted",
+      "status": "PASS",
+      "details": [
+        {
+          "label": "reported exercise undefined",
+          "error": "Invalid learner report in backup.",
+          "status": 400,
+          "tableHash": "a07c78bd359e9d3436165f9a49aa32ccfca0eb1bfae5742767201e42c2ebcc49",
+          "totalChangesDelta": 0
+        },
+        {
+          "label": "reported exercise null",
+          "error": "Invalid learner report in backup.",
+          "status": 400,
+          "tableHash": "2699f50acd34491befc3977265a5cd4aef9a1f6d9f80d8083b4cd28bcd2db120",
+          "totalChangesDelta": 0
+        },
+        {
+          "label": "reported exercise ",
+          "error": "Invalid learner report in backup.",
+          "status": 400,
+          "tableHash": "4cb66c1fdb03239b744af4d1a34cee885509b9aaeb6179a642fea0ccd2f2d6bf",
+          "totalChangesDelta": 0
+        }
+      ]
+    },
+    {
+      "name": "RR-B2-03 v2 supports exactly numeric schema 2; invalid v2 and v1 rejected before writes",
+      "status": "PASS",
+      "details": {
+        "rejections": 22,
+        "outcomes": [
+          {
+            "label": "v2/undefined",
+            "error": "This backup declares store schema null; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "11c4658cf3b7b450bcb650490a43452ad86e8bed71e0aabddf89767ef03414c7",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/1",
+            "error": "This backup declares store schema 1; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "7c8a9b0c54487e0973fd5add3ebb480c9d4cf09a23ce4d4474c9099a1330ba3b",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/0",
+            "error": "This backup declares store schema 0; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "0508997f0f2ca45d97fb2b2e26d450371b46f3190d67fcdf457b46849be79abb",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/-1",
+            "error": "This backup declares store schema -1; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "840c62d36daedbdc78859e068c31663b1f8b8c2bcbf7e5647c5e78d33391bb8a",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/2.5",
+            "error": "This backup declares store schema 2.5; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "1bb2288a746dcd4a4270a596e7c7aae3fd3c674facff2a0a29e46e6c18b71b43",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/3",
+            "error": "This backup declares store schema 3; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "13e9162a634bb4810eb3389b6844a63ff7e048e0a10875b54d98cf744dbbcbfa",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/999",
+            "error": "This backup declares store schema 999; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "4dfe12629013e90b5ed09ee6288865c35a0b10c22a3be1baf38cb5bacb244888",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/\"2\"",
+            "error": "This backup declares store schema \"2\"; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "6ed2831a9b8b15340800c41f21b99a1178735d22c373ab17c0c71e241674f5e4",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/null",
+            "error": "This backup declares store schema null; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "5d205443caf856b6f599e87b9884f2cb4739939beb08b5239f7088ea429a8e6b",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/true",
+            "error": "This backup declares store schema true; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "dcc68c842230e68e37cd202de472a8c8b52f68f7c5c5f37eec7bbbfa2cbecc2d",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/{}",
+            "error": "This backup declares store schema {}; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "cd7705cf0da8c95d2f6f6dbf534aeb1273928b646acde0a32bcabba783b15f53",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v2/[]",
+            "error": "This backup declares store schema []; this build restores hebleo-demo-backup-v2 with schema 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "a17dcf7deb1da9f9686011aceafa9f6682eb343ba2587539e0c670014c86598d",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/0",
+            "error": "This backup declares store schema 0; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "25cb9d52bc029be9fd6b61baea02dc9caf7a19bd5880c3d60f1213f807bdeab7",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/-1",
+            "error": "This backup declares store schema -1; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "e50869600cc33b63b09fd5465d12c10053a0ca78410c9729a515fd987ea15163",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/2.5",
+            "error": "This backup declares store schema 2.5; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "f16d559ead281393d2df70f4588bae2dc3530f60f8108ffb4fc8747dadf93721",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/3",
+            "error": "This backup declares store schema 3; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "b51e30fa532a4ee1df1c72bb90ce898022debbc08fe0054fc334ff72052849cf",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/999",
+            "error": "This backup declares store schema 999; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "8e73b67a54aea544523f35c72f6600c3beb43f1352665b5e851f8b2c710b3cda",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/\"2\"",
+            "error": "This backup declares store schema \"2\"; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "0e1974193eef593bfc93090e9fa360207e26aa3c8cd725093244dd3268018935",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/null",
+            "error": "This backup declares store schema null; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "c9bb302e012303a2f5e7de1cd25e3ae413809b0e5df86ba473e417940b33a261",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/true",
+            "error": "This backup declares store schema true; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "d5a2772dd36c4282c24b76fb1e338d2eb0a4bd5ba0176c73a0a7d265946678c5",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/{}",
+            "error": "This backup declares store schema {}; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "a3db5bcb1bd28618a8b3ee86c32a60d20f3dca1a237f733842d768415f5e19a4",
+            "totalChangesDelta": 0
+          },
+          {
+            "label": "v1/[]",
+            "error": "This backup declares store schema []; this build restores hebleo-demo-backup-v1 with schema 1 or 2. Use a newer build.",
+            "status": 409,
+            "tableHash": "8ae5015d544367d787b17c1c028689300fd05e10580afb06695fae18a90aa134",
+            "totalChangesDelta": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "RR-B2-03 v1 absent/1/2 and v2=2 remain supported; null and legacy history preserved without repair or regrading",
+      "status": "PASS",
+      "details": [
+        {
+          "v1Schema": "absent",
+          "mappedResumedRevision": 4,
+          "legacyRecords": 4,
+          "reexportV2RoundTrip": true
+        },
+        {
+          "v1Schema": 1,
+          "mappedResumedRevision": 4,
+          "legacyRecords": 4,
+          "reexportV2RoundTrip": true
+        },
+        {
+          "v1Schema": 2,
+          "mappedResumedRevision": 4,
+          "legacyRecords": 4,
+          "reexportV2RoundTrip": true
+        },
+        {
+          "label": "v1 invalid resumed feedback",
+          "error": "Saved feedback does not match the exercise.",
+          "status": 400,
+          "tableHash": "5164e2e6f15ea226ca7a1c7a3d9280b053bc4267cbc7923d80a48882e60824be",
+          "totalChangesDelta": 0
+        },
+        {
+          "label": "null revision without legacy ID",
+          "error": "Invalid saved attempt.",
+          "status": 400,
+          "tableHash": "34acc4ad2efa21b2300b9959ab25c888ccafce947d2b6fa5341171634deba926",
+          "totalChangesDelta": 0
+        },
+        {
+          "label": "null revision without legacy ID",
+          "error": "Invalid learner question in backup.",
+          "status": 400,
+          "tableHash": "bd3115b6250bb0564f082bc7a64b29adc463403a8fef31164b09b4b1949826bc",
+          "totalChangesDelta": 0
+        },
+        {
+          "label": "null revision without legacy ID",
+          "error": "Invalid learner report in backup.",
+          "status": 400,
+          "tableHash": "bb473c199dee010c2b53dbf1efe96caf054a2c7c9431c4031f5f7b2fe23d61eb",
+          "totalChangesDelta": 0
+        }
+      ]
+    },
+    {
+      "name": "RR-B2-01 nested edits/add/removal change hash, startup resets once, docs/data preserve, live sessions do not reset",
+      "status": "PASS",
+      "details": {
+        "fixture": "C:\\Users\\Trans\\.openmausbot\\workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\rr-b2-04-fix\\fingerprint-fixture-0d52aa68-10fd-4afc-9886-f6fc628e5f3d",
+        "transitions": 15,
+        "outcomes": [
+          {
+            "name": "public/preview/learner-renderer.js edit",
+            "beforeHash": "de61ac5dc50f61c928ab55e3b24290a6603ac5b601ee55de7d5384bbb088b96e",
+            "afterHash": "c70dba234dd3404364966753ea29db245b47dead845841a19a7cba5d47aaddca",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/preview/lesson-preview.js edit",
+            "beforeHash": "c70dba234dd3404364966753ea29db245b47dead845841a19a7cba5d47aaddca",
+            "afterHash": "9d93fef1b359f1e23cd0735683de9b7e1dacece9521a4191bdbed7ae1dc2e6ac",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/studio/exercise-editor.js edit",
+            "beforeHash": "9d93fef1b359f1e23cd0735683de9b7e1dacece9521a4191bdbed7ae1dc2e6ac",
+            "afterHash": "fa59b8ed3e45f27c27b5911465e1d66aa899521f94ce0b2a8232ff678683123d",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/studio/lesson-editor.js edit",
+            "beforeHash": "fa59b8ed3e45f27c27b5911465e1d66aa899521f94ce0b2a8232ff678683123d",
+            "afterHash": "ddbc3dab67f011217a6afdc3d59da6f27a558c908f6bf90cd0f434533b5e56af",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/studio/import-review.js edit",
+            "beforeHash": "ddbc3dab67f011217a6afdc3d59da6f27a558c908f6bf90cd0f434533b5e56af",
+            "afterHash": "de3cab87af020673b1706a5a55be681dbe46e85ce8ba74c11aec67955a1707e5",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/studio/editor-fields.js edit",
+            "beforeHash": "de3cab87af020673b1706a5a55be681dbe46e85ce8ba74c11aec67955a1707e5",
+            "afterHash": "53182b37889b8296bd507d4b0b8e82daeade50843ba498f501334e77ab5ecaf7",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/studio/studio.css edit",
+            "beforeHash": "53182b37889b8296bd507d4b0b8e82daeade50843ba498f501334e77ab5ecaf7",
+            "afterHash": "481fc8a262b1dbcd0e49cebcf2450f59a15823d3ffca0f55395828a16a4c7457",
+            "restartPreserved": true
+          },
+          {
+            "name": "src/deep/nested/probe.js add",
+            "beforeHash": "481fc8a262b1dbcd0e49cebcf2450f59a15823d3ffca0f55395828a16a4c7457",
+            "afterHash": "845d6ad8dfcc03af6432a321de2992afc9b130dcd0081a2c0ccf1839584075e6",
+            "restartPreserved": true
+          },
+          {
+            "name": "src/deep/nested/probe.js remove",
+            "beforeHash": "845d6ad8dfcc03af6432a321de2992afc9b130dcd0081a2c0ccf1839584075e6",
+            "afterHash": "481fc8a262b1dbcd0e49cebcf2450f59a15823d3ffca0f55395828a16a4c7457",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/studio/deep/probe.css add",
+            "beforeHash": "481fc8a262b1dbcd0e49cebcf2450f59a15823d3ffca0f55395828a16a4c7457",
+            "afterHash": "078a499868afb971b3d8441a01595468362ecb85e40d3219094150b31184300c",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/studio/deep/probe.css remove",
+            "beforeHash": "078a499868afb971b3d8441a01595468362ecb85e40d3219094150b31184300c",
+            "afterHash": "481fc8a262b1dbcd0e49cebcf2450f59a15823d3ffca0f55395828a16a4c7457",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/preview/deep/probe.html add",
+            "beforeHash": "481fc8a262b1dbcd0e49cebcf2450f59a15823d3ffca0f55395828a16a4c7457",
+            "afterHash": "b099aebbaf995a0b965c3acd4d067301f2557bb7622dadffc3a70a2f3b0713c9",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/preview/deep/probe.html remove",
+            "beforeHash": "b099aebbaf995a0b965c3acd4d067301f2557bb7622dadffc3a70a2f3b0713c9",
+            "afterHash": "481fc8a262b1dbcd0e49cebcf2450f59a15823d3ffca0f55395828a16a4c7457",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/studio/deep/probe.svg add",
+            "beforeHash": "481fc8a262b1dbcd0e49cebcf2450f59a15823d3ffca0f55395828a16a4c7457",
+            "afterHash": "b6e30a75ae0e0cbd2ba5a3212f452d2302a650a920e8a239f784977862ac9040",
+            "restartPreserved": true
+          },
+          {
+            "name": "public/studio/deep/probe.svg remove",
+            "beforeHash": "b6e30a75ae0e0cbd2ba5a3212f452d2302a650a920e8a239f784977862ac9040",
+            "afterHash": "481fc8a262b1dbcd0e49cebcf2450f59a15823d3ffca0f55395828a16a4c7457",
+            "restartPreserved": true
+          }
+        ],
+        "ignoredChanges": 5,
+        "lineEndingsNormalized": true,
+        "liveHttpPreserved": true,
+        "disabledPreserved": true,
+        "allProfiles": 3,
+        "db": "C:\\Users\\Trans\\.openmausbot\\workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\rr-b2-04-fix\\fingerprint-fixture-0d52aa68-10fd-4afc-9886-f6fc628e5f3d\\synthetic.sqlite"
+      }
+    }
+  ]
+}

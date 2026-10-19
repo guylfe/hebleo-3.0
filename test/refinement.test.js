@@ -44,7 +44,7 @@ test('Sheets cell fills, exact RGB colors, and rich runs retain UTF-16 vowel off
 });
 test('Source formatting metadata survives publication, JSON export and backup without canonical text changes',t=>{
   const s=store(t),c=structuredClone(seed),w=c.words[1];w.fieldFormatting={pointed:{formattedValue:w.pointed,effectiveFormat:{backgroundColor:{blue:1},textFormat:{foregroundColor:{red:1}}},textFormatRuns:[{startIndex:0,format:{bold:true}},{startIndex:2,format:{bold:false}}]}};
-  s.stage({baseRevisionId:1,content:c});s.publish(1);const original=s.snapshot().words[1];s.restore(s.backup());assert.deepEqual(s.snapshot().words[1],original);
+  s.stage({baseRevisionId:1,expectedDraftToken:null,content:c});s.publish(1,s.currentDraft().draftToken);const original=s.snapshot().words[1];s.restore(s.backup());assert.deepEqual(s.snapshot().words[1],original);
   c.words[1].fieldFormatting.pointed.textFormatRuns='malformed';assert.throws(()=>validateContent(c),/text-format runs/);
 });
 test('Prefixes are separate tray choices but compose and grade as attached forms, without guessed vowel changes',t=>{
@@ -56,7 +56,7 @@ test('Prefixes are separate tray choices but compose and grade as attached forms
   assert.throws(()=>validateContent({...c,exercises:c.exercises.map(x=>x.id===e.id?{...x,prefixTokenIndices:[999]}:x)}),/prefix/);
 });
 test('Known and newly taught keyboard keys are independently authored and validated',t=>{
-  const s=store(t),c=structuredClone(seed);c.lessons[1].keyboard={knownKeys:'א',newKeys:'ב',knownColor:'#112233',newColor:'#445566'};s.stage({baseRevisionId:1,content:c});s.publish(1);assert.deepEqual(s.snapshot().lessons[1].keyboard,c.lessons[1].keyboard);
+  const s=store(t),c=structuredClone(seed);c.lessons[1].keyboard={knownKeys:'א',newKeys:'ב',knownColor:'#112233',newColor:'#445566'};s.stage({baseRevisionId:1,expectedDraftToken:null,content:c});s.publish(1,s.currentDraft().draftToken);assert.deepEqual(s.snapshot().lessons[1].keyboard,c.lessons[1].keyboard);
   c.lessons[1].keyboard.newKeys='א';assert.throws(()=>validateContent(c),/distinct/);
 });
 test('Owner keyboard floats, shows English equivalents, distinguishes key groups, edits the active field and stays pinned across questions',async t=>{
@@ -79,7 +79,7 @@ test('Matching supports pointer dragging and accessible select-then-place, with 
   const drop=new d.window.Event('drop',{bubbles:true});Object.defineProperty(drop,'dataTransfer',{value:transfer});target.dispatchEvent(drop);assert.deepEqual(matches,{'w-hu':'he'});
 });
 test('Flashcard front Nikkud follows an author default or a persisted learner override',t=>{
-  const s=store(t),c=structuredClone(seed);c.reviewPolicy.defaultNikkud='curated';s.stage({baseRevisionId:1,content:c});assert.ok(s.preview().changes.some(x=>x.id==='review-defaults'));s.publish(1);
+  const s=store(t),c=structuredClone(seed);c.reviewPolicy.defaultNikkud='curated';s.stage({baseRevisionId:1,expectedDraftToken:null,content:c});assert.ok(s.preview().changes.some(x=>x.id==='review-defaults'));s.publish(1,s.currentDraft().draftToken);
   assert.equal(reviewNikkud(s.snapshot(),'default'),'curated');assert.equal(reviewNikkud(s.snapshot(),'full'),'full');s.updateLearner(user,{reviewNikkud:'none',keyboardPinned:true});s.restore(s.backup());assert.equal(s.learner(user).preferences.reviewNikkud,'none');assert.equal(s.learner(user).preferences.keyboardPinned,true);assert.throws(()=>s.updateLearner(user,{reviewNikkud:'guess'}));
 });
 test('Real lesson questions are isolated per learner, idempotent, author-answerable and included in atomic backups',t=>{
@@ -88,7 +88,7 @@ test('Real lesson questions are isolated per learner, idempotent, author-answera
   const before=s.backup(),bad=structuredClone(before);bad.questions[0].key='question-learner-core-'+q.requestId;assert.throws(()=>s.restore(bad));assert.equal(s.questions(user).length,1);
 });
 test('Starting an updated lesson is explicit and preserves graded attempts and review records',t=>{
-  const s=store(t),result=s.attempt(user,{requestId:randomUUID(),revisionId:1,exerciseId:'ex-1-type',answer:'אני'});s.saveProgress(user,{lessonId:'lesson-1',revisionId:1,step:'apply',question:0,answer:'אני',selectedTokens:[],matching:{},practiceIds:[],resultRequestId:result.requestId});s.stage({baseRevisionId:1,word:{id:'w-mi',notes:'Updated note'}});s.publish(1);assert.equal(s.session(user,'lesson-1').revisionId,1);
+  const s=store(t),result=s.attempt(user,{requestId:randomUUID(),revisionId:1,exerciseId:'ex-1-type',answer:'אני'});s.saveProgress(user,{lessonId:'lesson-1',revisionId:1,step:'apply',question:0,answer:'אני',selectedTokens:[],matching:{},practiceIds:[],resultRequestId:result.requestId});s.stage({baseRevisionId:1,expectedDraftToken:null,word:{id:'w-mi',notes:'Updated note'}});s.publish(1,s.currentDraft().draftToken);assert.equal(s.session(user,'lesson-1').revisionId,1);
   assert.equal(s.startLatestLesson(user,'lesson-1').revisionId,2);assert.equal(s.learner(user).attempts[0].requestId,result.requestId);assert.equal(s.session(user,'lesson-1').progress,undefined);
 });
 test('New rich assets, image media and question endpoints work over HTTP with author boundaries',async t=>{

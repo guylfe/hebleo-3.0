@@ -1,0 +1,30 @@
+{
+  "profile": "product-admin",
+  "sourceRoots": [
+    "public"
+  ],
+  "locale": "en",
+  "canonicalMap": "UX-CONTRACT.md",
+  "requiredCapabilities": [
+    "Select/Listbox",
+    "Form",
+    "Scrollbar",
+    "Toast",
+    "CRUD"
+  ],
+  "ownership": {
+    "Select/Listbox": "native"
+  },
+  "requiredCommands": [
+    "syntax",
+    "candidate"
+  ],
+  "commands": {
+    "syntax": "npm run check",
+    "candidate": "npm run test:candidate"
+  },
+  "evidence": {
+    "crudFullFlow": "test/app.test.js",
+    "failurePaths": "test/source-corrections.test.js"
+  }
+}

@@ -1,0 +1,1 @@
+Stopped only owned scratch PID 70256, verified by its startup identity, start time and listener. CIM command-line inspection was unavailable (Access denied).

@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"controls\": [\n    {\n      \"disabled\": true,\n      \"exit\": false,\n      \"text\": \"Learn\"\n    },\n    {\n      \"disabled\": true,\n      \"exit\": false,\n      \"text\": \"Check\"\n    },\n    {\n      \"disabled\": true,\n      \"exit\": false,\n      \"text\": \"Vocabulary\"\n    },\n    {\n      \"disabled\": true,\n      \"exit\": false,\n      \"text\": \"Apply\"\n    },\n    {\n      \"disabled\": true,\n      \"exit\": false,\n      \"text\": \"Finish\"\n    },\n    {\n      \"disabled\": true,\n      \"exit\": false,\n      \"text\": \"Lesson-authored NikkudWith NikkudWithout Nikkud\"\n    },\n    {\n      \"disabled\": true,\n      \"exit\": false,\n      \"text\": \"\"\n    },\n    {\n      \"disabled\": true,\n      \"exit\": false,\n      \"text\": \"Open Hebrew keyboard\"\n    },\n    {\n      \"disabled\": true,\n      \"exit\": false,\n      \"text\": \"Check answer\"\n    },\n    {\n      \"disabled\": false,\n      \"exit\": true,\n      \"text\": \"Exit rehearsal\"\n    }\n  ],\n  \"disabled\": true,\n  \"feedback\": null,\n  \"focus\": \"<button type=\\\"button\\\" data-preview-exit=\\\"\\\">Exit rehearsal</button>\",\n  \"frozen\": true,\n  \"input\": \"אני\",\n  \"prompt\": \"Synthetic G5-01 initial draft prompt.\",\n  \"readonly\": true,\n  \"status\": \"This draft changed. Exit and reopen rehearsal. The displayed answer is read-only and has not been checked against the changed draft.\",\n  \"url\": \"http://127.0.0.1:61916/#studio\"\n}"
+    }
+  ],
+  "isError": false
+}

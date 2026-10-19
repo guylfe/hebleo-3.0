@@ -1,0 +1,12 @@
+✔ valid v2 backup restores consistent links with unchanged grades, resumed feedback, legacy records and replay (30.5415ms)
+✔ v2 restore rejects nonexistent or existing-but-wrong historical lesson, exercise and word links before any write (95.8781ms)
+✔ restore refuses missing, malformed or unsupported store schema declarations atomically (83.9238ms)
+✔ v1 exports without a schema field still restore; links that disagree with a carried revision become explicit legacy links, never repaired (23.6638ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 394.5349

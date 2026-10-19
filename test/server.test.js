@@ -1,3 +1,5 @@
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { Store } from '../src/store.js';
@@ -25,4 +27,11 @@ test('HTTP demo serves assets, grades answers and rejects cross-origin/malformed
   const result = await post('/api/attempt', { requestId: 'http-attempt', exerciseId: 'ex-1-type', revisionId: 1, answer: 'אני' });
   assert.equal(result.status, 200); assert.equal((await result.json()).correct, true);
   assert.equal(store.learner('learner-demo').attempts.length, 1);
+});
+
+
+test('NAVY13 original logo delivery preserves exact PNG bytes and only exposes the approved asset',async t=>{
+ const store=new Store(),server=createServer(store);await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));t.after(async()=>{await new Promise(resolve=>server.close(resolve));store.close();});const base='http://127.0.0.1:'+server.address().port;
+ const response=await fetch(base+'/assets/hebleo-wide-navy.png'),bytes=Buffer.from(await response.arrayBuffer()),original=readFileSync(new URL('../public/assets/hebleo-wide-navy.png',import.meta.url));assert.equal(response.status,200);assert.equal(response.headers.get('content-type'),'image/png');assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.equal(bytes.equals(original),true);assert.equal(bytes.length,137630);assert.equal(createHash('sha256').update(bytes).digest('hex'),'d744d37a3a10f315d58372b3a8f557b2913c04f6d6065c4f15ae26fc10789971');assert.equal(bytes.readUInt32BE(16),3693);assert.equal(bytes.readUInt32BE(20),1198);assert.equal((await fetch(base+'/assets/not-approved.png')).status,404);
+ const setup=await(await fetch(base+'/google-setup')).text();assert.match(setup,/aria-label="Hebleo home"/);assert.match(setup,/<img src="\/assets\/hebleo-wide-navy.png" alt="" width="3693" height="1198">/);assert.equal(setup.includes('Wide logo pending'),false);
 });

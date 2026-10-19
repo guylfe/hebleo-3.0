@@ -1,0 +1,30 @@
+store.js = HEAD e0cbd5c (fix stashed); test/restore-integrity.test.js = new tests
+src blob: 9f78829f7fe5d5cff27a9e290b399684e453d154  HEAD src/store.js: 9f78829f7fe5d5cff27a9e290b399684e453d154
+✔ valid v2 backup restores consistent links with unchanged grades, resumed feedback, legacy records and replay (34.7107ms)
+✔ v2 restore rejects nonexistent or existing-but-wrong historical lesson, exercise and word links before any write (99.2025ms)
+✔ restore refuses missing, malformed or unsupported store schema declarations atomically (81.9149ms)
+✔ v1 exports without a schema field still restore; links that disagree with a carried revision become explicit legacy links, never repaired (22.9958ms)
+✔ restore refuses reported attempts with absent, null or empty identities or grades before any write, in v2 and v1 (236.8613ms)
+✔ valid reports on resumed, no-resume and legacy history restore with unchanged grades; lesson-level questions keep optional targets (29.7941ms)
+✔ HTTP restore refuses reported attempts without an exercise, lesson or request ID and writes nothing; a valid report restores (367.2052ms)
+✖ restore refuses report envelopes that disagree with their key and duplicate report keys before any write, in v2 and v1 (16.5024ms)
+✔ valid reports restore under their own identities and resolving one changes only that report, in v2 and v1 (20.2397ms)
+✖ HTTP restore refuses mismatched or duplicate report identities and writes nothing; after a valid restore, resolving the listed report A changes only A (31.8031ms)
+ℹ tests 10
+ℹ pass 8
+ℹ fail 2
+✖ failing tests:
+✖ restore refuses report envelopes that disagree with their key and duplicate report keys before any write, in v2 and v1 (16.5024ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: v2 userId absent
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Invalid (learner report|backup reports)/,
+    operator: 'throws',
+    diff: 'simple'
+✖ HTTP restore refuses mismatched or duplicate report identities and writes nothing; after a valid restore, resolving the listed report A changes only A (31.8031ms)
+  AssertionError [ERR_ASSERTION]: userId absent
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'

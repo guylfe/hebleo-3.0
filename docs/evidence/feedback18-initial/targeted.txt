@@ -1,0 +1,53 @@
+✔ Lesson 1 can advance past optional practice with an unresolved Check answer, preserving actual completion and graded history (363.97ms)
+✔ Extra practice can be skipped before submission and after grading, clearing its resume without erasing attempts (222.4923ms)
+✔ The final lesson offers a course exit when incomplete, and core exercises do not show the extra-practice skip (90.6039ms)
+✔ Wrong-answer retry keeps the particular question, only correct answers fill progress, and saved progress survives reload (169.9322ms)
+✔ Finish-screen retry opens only the chosen missed question, then removes the corrected miss without changing other answers (105.1984ms)
+✔ Starting updated lesson through the actual app does not flush the old resume back over the reset (75.5317ms)
+✔ App sentence tiles submit attached prefixes, and source-rich cards/table open without field rendering errors (143.3921ms)
+✔ Studio edits author card policy and lesson highlights through the app draft/publication workflow (279.6032ms)
+✔ Actual app launcher focuses the native answer field and saves pinning through the learner preference API (199.5534ms)
+✔ Lesson help exposes an actual question form and saves it to the author inbox (77.6538ms)
+✔ Learner keyboard shortcuts never activate or handle controls inside a rehearsal root (72.6295ms)
+✔ G5-01 actual app over HTTP: a second author window saves while rehearsal retains its typed answer frozen; Escape restores focus (453.7863ms)
+✔ G5 automated HTTP overlap: learner autosave response is pending when Studio navigation starts, flush completes before rehearsal and preview writes nothing (1194.7511ms)
+✔ G5 automated HTTP owner-event: the real keyboard Pin handler emits its preference event during rehearsal and app persistence is suppressed until Exit (281.1875ms)
+✔ Studio guided exercise and lesson forms save private drafts, reload discards unsaved edits, a stale token keeps entered values, and publishing stays separate (391.8742ms)
+✔ Studio import review writes nothing until the reviewed candidate is staged, discard writes nothing, and a stale review cannot be staged (406.5694ms)
+✔ Studio draft rehearsal uses the shared renderer and grader, isolates app.js handlers, and leaves every table, learner record and the published pack unchanged (272.5988ms)
+✔ Rehearsal keeps keyboard focus inside the modal across re-renders, so a digit then Enter grade, Retry resets, and a new result is scrolled into view (192.6442ms)
+✔ A rehearsal stops on a changed draft or a newer publication revision, writes nothing itself, and closes when the author navigates away (214.3953ms)
+✔ Switching exercises while a guided lesson save is still reloading keeps re-mounted editors and Publish on the token that save returned (423.7122ms)
+✔ Publishing behind a pending guided save still rejects a newer draft from another tab and publishes nothing (185.3941ms)
+✔ QA-EE9-G4-02: matching autosave keeps an authored pair word from outside the lesson list, and the match resumes after reload (219.3691ms)
+✔ fresh home says Start, a saved lesson says Continue, and a completed lesson says Revisit (174.3736ms)
+✔ matching verdicts are supplied by the server, retained on resume and individually accessible (196.0409ms)
+✔ correct matching summary follows authored ID order regardless of selection order (0.6766ms)
+✔ every seed exercise kind submits the learner wire answer through the real controller, is graded correct by the actual draft evaluator, and leaves every row of three profiles unchanged (1318.6638ms)
+✔ wrong answers keep the local draft through re-renders, show the learner feedback, and retry clears only the rehearsal answer (84.8987ms)
+✔ settings, keyboard, vocabulary and lookup controls call rehearsal actions and render a read-only entry (212.2403ms)
+✔ dispose removes the root and every listener, stops media, and is idempotent (39.8134ms)
+✔ busy rehearsal disables every control and ignores clicks and shortcuts; a pending check evaluates exactly once (92.0921ms)
+✔ a partial match on an authored pair word outside the lesson list saves, resumes, and the full set grades and completes the lesson (29.9605ms)
+✔ saved matches are refused unless every key belongs to the matching question at that exact revision, step and position; nothing is written (25.5107ms)
+✔ Check, Core and repeat practice use their own matching question; empty matches preserve transitions and legacy v1 restores (43.1884ms)
+✔ backup restore keeps cross-lesson and older-revision matches and refuses a resume whose keys its pinned matching question does not own (24.7392ms)
+✔ HTTP: progress with a cross-lesson pair word saves (200) and resumes; a key the question does not own returns 400 and writes nothing (140.114ms)
+✔ disposable rehearsal navigates, retries, looks up and changes settings without modifying three learner states or source (222.5951ms)
+✔ stale draft evaluation freezes rehearsal and never retries with a different token (45.4769ms)
+✔ renderer wire answers for six families are sent separately from the retained response draft (252.8525ms)
+✔ both conflict codes freeze session loading and evaluation; missing preview targets fail closed (119.5188ms)
+✔ INVALID_ANSWER leaves the response draft available for correction and retry (20.552ms)
+✔ exit drops late loads and evaluations and disposes shared renderer events (32.9581ms)
+✔ rehearsal rejects persistent, mismatched or malformed session responses (108.224ms)
+✔ media picker preserves supplied revision/hash/source fields, labels legacy references and retains rejection recovery (37.6121ms)
+✔ pinned sha256 media can be selected without a URL; unsafe supplied URLs remain disabled (28.3603ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7893.3907
+

@@ -1,0 +1,133 @@
+baseline = git archive 76c2889 + new test files + probe-only exports (demoBuildFiles old top-level list; RESTORABLE_SCHEMA_VERSIONS unenforced)
+✔ Demo reset clears only progress for all three profiles once per build and survives process restart (88.8642ms)
+✔ Demo fingerprint detects app edits, ignores documentation edits and normalizes Windows line endings (19.3145ms)
+✖ Demo fingerprint covers nested executable assets at any depth and ignores docs, data and uploads (17.0901ms)
+✖ Startup reset follows nested-only deployments once per build and keeps settings, content and drafts (47.8441ms)
+✖ The checkout fingerprint includes every nested public module and no docs or mutable data (10.8999ms)
+✔ valid v2 backup restores consistent links with unchanged grades, resumed feedback, legacy records and replay (29.9064ms)
+✖ v2 restore rejects nonexistent or existing-but-wrong historical lesson, exercise and word links before any write (15.8978ms)
+✖ restore refuses missing, malformed or unsupported store schema declarations atomically (19.9368ms)
+✖ v1 exports without a schema field still restore; links that disagree with a carried revision become explicit legacy links, never repaired (21.588ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 3
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 470.6529
+
+✖ failing tests:
+
+test at test\demo-build.test.js:52:1
+✖ Demo fingerprint covers nested executable assets at any depth and ignores docs, data and uploads (17.0901ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'package-lock.json',
+      'public/app.js',
+  -   'public/preview/lesson-preview.js',
+  -   'public/studio/exercise-editor.js',
+  -   'public/studio/studio.css',
+      'src/store.js'
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/rr-b2-diag/baseline-76c2889/test/demo-build.test.js:54:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'package-lock.json', 'public/app.js', 'src/store.js' ],
+    expected: [ 'package-lock.json', 'public/app.js', 'public/preview/lesson-preview.js', 'public/studio/exercise-editor.js', 'public/studio/studio.css', 'src/store.js' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\demo-build.test.js:69:1
+✖ Startup reset follows nested-only deployments once per build and keeps settings, content and drafts (47.8441ms)
+  AssertionError [ERR_ASSERTION]: nested-only edit resets
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/rr-b2-diag/baseline-76c2889/test/demo-build.test.js:81:21)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\demo-build.test.js:88:1
+✖ The checkout fingerprint includes every nested public module and no docs or mutable data (10.8999ms)
+  AssertionError [ERR_ASSERTION]: public/preview/learner-renderer.js is part of the build
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/rr-b2-diag/baseline-76c2889/test/demo-build.test.js:92:35)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\restore-integrity.test.js:50:1
+✖ v2 restore rejects nonexistent or existing-but-wrong historical lesson, exercise and word links before any write (15.8978ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: resumed correct attempt, nonexistent lesson
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/rr-b2-diag/baseline-76c2889/test/restore-integrity.test.js:70:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Invalid (saved attempt|learner question|learner report)/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\restore-integrity.test.js:75:1
+✖ restore refuses missing, malformed or unsupported store schema declarations atomically (19.9368ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: v2 future
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/rr-b2-diag/baseline-76c2889/test/restore-integrity.test.js:82:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\restore-integrity.test.js:87:1
+✖ v1 exports without a schema field still restore; links that disagree with a carried revision become explicit legacy links, never repaired (21.588ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3 !== null
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/rr-b2-diag/baseline-76c2889/test/restore-integrity.test.js:93:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+EXIT=1

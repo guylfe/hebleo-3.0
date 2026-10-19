@@ -1,0 +1,10 @@
+FAIL absent HTTP=200 totalChangesDelta=7 allTablesEqual=false
+FAIL null HTTP=200 totalChangesDelta=7 allTablesEqual=false
+FAIL empty HTTP=200 totalChangesDelta=7 allTablesEqual=false
+PASS missing-target-control HTTP=400 totalChangesDelta=0 allTablesEqual=true
+PASS cross-lesson-control HTTP=400 totalChangesDelta=0 allTablesEqual=true
+PASS valid-control HTTP=200 totalChangesDelta=7 allTablesEqual=false
+AssertionError [ERR_ASSERTION]: Every malformed reported attempt must be rejected before writes; see saved per-case evidence
+    at file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/rr-b2-02-fix/report-http-probe.mjs:29:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+EXIT=1

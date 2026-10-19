@@ -1,0 +1,566 @@
+date (local): 2026-10-06 22:39:25 +03:00
+working src/store.js = ee9e2f1 blob 8ce83dc2b19e1ded689de9b664300479e1260cc0 (fix removed from working tree only; index keeps the fix)
+test/recognition-distractors.test.js = 7e72fe1d5d66873b5e163fecba7b6409e6f9904f (staged blob 7e72fe1d5d66873b5e163fecba7b6409e6f9904f)
+cmd: node --test test/recognition-distractors.test.js
+----
+✖ stage (Studio save and import staging) refuses empty, whitespace-only and invisible-only distractors before any write (28.1038ms)
+✖ publish, rollback and restore refuse blank distractors written by an earlier build, leaving every table unchanged (18.2276ms)
+✔ valid authored distractors keep exact text, order and neighbouring fields through stage, preview, publish, session and grading (23.8909ms)
+✖ HTTP: blank distractor saves and legacy publishes return 400 with the field message and write nothing; a filled row saves (93.2274ms)
+✖ Studio editor shows the field error, keeps every typed value and re-enables controls; filling or removing the row then saves (202.402ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1942.1027
+
+✖ failing tests:
+
+test at test\recognition-distractors.test.js:35:1
+✖ stage (Studio save and import staging) refuses empty, whitespace-only and invisible-only distractors before any write (28.1038ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: {"exerciseId":"ex-1-recognize","value":"","at":0}
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/recognition-distractors.test.js:40:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\recognition-distractors.test.js:49:1
+✖ publish, rollback and restore refuse blank distractors written by an earlier build, leaving every table unchanged (18.2276ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/recognition-distractors.test.js:56:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { message: 'Authored distractor meaning 4 of ex-1-recognize is blank. Enter a meaning or remove that item.' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\recognition-distractors.test.js:94:1
+✖ HTTP: blank distractor saves and legacy publishes return 400 with the field message and write nothing; a filled row saves (93.2274ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      body: {
+  +     affectedLessons: [
+  +       'lesson-1'
+  +     ],
+  +     baseRevisionId: 2,
+  +     changes: [
+  +       {
+  +         action: 'changed',
+  +         id: 'ex-1-recognize',
+  +         impact: {
+  +           lessons: [
+  +             'lesson-1'
+  +           ]
+  +         },
+  +         kind: 'exercises'
+  +       },
+  +       {
+  +         action: 'changed',
+  +         id: 'ex-1-type',
+  +         impact: {
+  +           lessons: [
+  +             'lesson-1'
+  +           ]
+  +         },
+  +         kind: 'exercises'
+  +       }
+  +     ],
+  +     draft: {
+  +       baseRevisionId: 2,
+  +       content: {
+  +         exercises: [
+  +           {
+  +             concept: 'Pronouns and question words',
+  +             distractors: [
+  +               'I',
+  +               'he',
+  +               'she',
+  +               ''
+  +             ],
+  +             extension: {
+  +               unknown: [
+  +                 'retain',
+  +                 {
+  +                   nested: true
+  +                 }
+  +               ]
+  +             },
+  +             feedback: 'מִי asks “who”. The pronouns refer to the speaker or another person.',
+  +             id: 'ex-1-recognize',
+  +             lessonId: 'lesson-1',
+  +             prompt: 'Choose the meaning of this word.',
+  +             sourceRef: {
+  +               row: 2,
+  +               sheet: 'fixture-only'
+  +             },
+  +             type: 'recognition',
+  +             wordId: 'w-mi'
+  +           },
+  +           {
+  +             concept: 'Pronouns',
+  +             feedback: 'אֲנִי means “I”.',
+  +             id: 'ex-1-type',
+  +             lessonId: 'lesson-1',
+  +             prompt: 'Fixture-only pending draft prompt',
+  +             type: 'typing',
+  +             wordId: 'w-ani'
+  +           },
+  +           {
+  +             concept: 'Pronouns and question words',
+  +             feedback: 'הוּא means “he”, הִיא means “she”, and מִי means “who”.',
+  +             id: 'ex-1-match',
+  +             lessonId: 'lesson-1',
+  +             prompt: 'Match each word to its meaning.',
+  +             type: 'matching',
+  +             wordIds: [
+  +               'w-hu',
+  +               'w-hi',
+  +               'w-mi'
+  +             ]
+  +           },
+  +           {
+  +             answers: [
+  +               'אני בבית'
+  +             ],
+  +             concept: 'Location sentences',
+  +             feedback: 'אני בבית means “I am at home”. These present-tense examples have no separate word for “am”.',
+  +             id: 'ex-2-order',
+  +             lessonId: 'lesson-2',
+  +             prefixTokenIndices: [
+  +               0
+  +             ],
+  +             prompt: 'Build: “I am at home.”',
+  +             tokens: [
+  +               'ב',
+  +               'בית',
+  +               'אני'
+  +             ],
+  +             type: 'ordering'
+  +           },
+  +           {
+  +             answers: [
+  +               'היא'
+  +             ],
+  +             concept: 'Pronouns in context',
+  +             feedback: 'היא is the feminine singular pronoun “she”. Enter the missing pronoun, rather than the full sentence.',
+  +             id: 'ex-2-cloze',
+  +             lessonId: 'lesson-2',
+  +             nikkudOverride: 'none',
+  +             prompt: 'Type the missing word: ___ בבית — She is at home.',
+  +             type: 'cloze'
+  +           },
+  +           {
+  +             answers: [
+  +               'היא בבית'
+  +             ],
+  +             concept: 'Pronouns in context',
+  +             context: 'הוא בבית',
+  +             feedback: 'Replace הוא with היא. The location expression בבית stays the same.',
+  +             id: 'ex-2-transform',
+  +             lessonId: 'lesson-2',
+  +             prompt: 'Change “He is at home” to “She is at home”.',
+  +             type: 'transformation'
+  +           },
+  +           {
+  +             concept: 'Feminine verb forms',
+  +             distractors: [
+  +               'he',
+  +               'at home',
+  +               'writes (masculine singular)'
+  +             ],
+  +             feedback: 'כותבת is the feminine singular present form.',
+  +             id: 'ex-3-recognize',
+  +             lessonId: 'lesson-3',
+  +             prompt: 'Choose the meaning of this form.',
+  +             type: 'recognition',
+  +             wordId: 'w-kotevet'
+  +           },
+  +           {
+  +             answers: [
+  +               'היא כותבת'
+  +             ],
+  +             concept: 'Subject and verb agreement',
+  +             context: 'הוא כותב',
+  +             feedback: 'Use היא with כותבת so both subject and verb are feminine singular.',
+  +             id: 'ex-3-transform',
+  +             lessonId: 'lesson-3',
+  +             prompt: 'Change the subject and verb to feminine.',
+  +             type: 'transformation'
+  +           },
+  +           {
+  +             answers: [
+  +               'היא כותבת פה'
+  +             ],
+  +             concept: 'Subject and verb agreement',
+  +             feedback: 'היא כותבת פה means “She is writing here”. The subject and verb agree.',
+  +             id: 'ex-3-order',
+  +             lessonId: 'lesson-3',
+  +             prompt: 'Build: “She is writing here.”',
+  +             tokens: [
+  +               'פה',
+  +               'כותבת',
+  +               'היא'
+  +             ],
+  +             type: 'ordering'
+  +           }
+  +         ],
+  +         lessons: [
+  +           {
+  +             blocks: [
+  +               {
+  +                 renderer: 'text',
+  +                 type: 'explanation'
+  +               },
+  +               {
+  +                 options: {
+  +                   showNotes: true
+  +                 },
+  +                 renderer: 'vocabulary-table',
+  +                 selector: {
+  +                   lessonId: 'lesson-1'
+  +                 },
+  +                 source: 'words',
+  +                 type: 'vocabulary'
+  +               },
+  +               {
+  +                 renderer: 'practice',
+  +                 selector: {
+  +                   lessonId: 'lesson-1'
+  +                 },
+  +                 source: 'exercises',
+  +                 type: 'exercise-set'
+  +               }
+  +             ],
+  +             chapter: '01 · Getting started',
+  +             checkExerciseIds: [
+  +               'ex-1-recognize'
+  +             ],
+  +             exerciseIds: [
+  +               'ex-1-recognize',
+  +               'ex-1-type',
+  +               'ex-1-match'
+  +             ],
+  +             explanation: 'Begin with a few short words. Notice the same letters returning in different combinations. This demonstration shows how a brief explanation, a small vocabulary set, and a bounded check can fit together.',
+  +             id: 'lesson-1',
+  +             keyboard: {
+  +               knownColor: '#164b81',
+  +               knownKeys: '',
+  +               newColor: '#007b89',
+  +               newKeys: 'אהוימנ'
+  +             },
+  +             letters: 'אהוימנ',
+  +             minutes: 4,
+  +             title: 'Small words, first connections',
+  +             wordIds: [
+  +               'w-ani',
+  +               'w-mi',
+  +               'w-hu',
+  +               'w-hi'
+  +             ]
+  +           },
+  +           {
+  +             blocks: [
+  +               {
+  +                 renderer: 'text',
+  +                 type: 'explanation'
+  +               },
+  +               {
+  +                 options: {
+  +                   showNotes: true
+  +                 },
+  +                 renderer: 'vocabulary-table',
+  +                 selector: {
+  +                   lessonId: 'lesson-2'
+  +                 },
+  +                 source: 'words',
+  +                 type: 'vocabulary'
+  +               },
+  +               {
+  +                 renderer: 'practice',
+  +                 selector: {
+  +                   lessonId: 'lesson-2'
+  +                 },
+  +                 source: 'exercises',
+  +                 type: 'exercise-set'
+  +               }
+  +             ],
+  +             chapter: '02 · Build a sentence',
+  +             exerciseIds: [
+  +               'ex-2-order',
+  +               'ex-2-cloze',
+  +               'ex-2-transform'
+  +             ],
+  +             explanation: 'Use the pronouns from the previous lesson to say where someone is. In these simple present-tense examples, Hebrew does not add a separate word for “am” or “is”: אני בבית — I am at home. Earlier words now become the foundation for a new sentence.',
+  +             id: 'lesson-2',
+  +             keyboard: {
+  +               knownColor: '#164b81',
+  +               knownKeys: 'אהוימנ',
+  +               newColor: '#007b89',
+  +               newKeys: 'בתפש'
+  +             },
+  +             letters: 'אהויבתפשמ',
+  +             minutes: 5,
+  +             title: 'Say where someone is',
+  +             wordIds: [
+  +               'w-ani',
+  +               'w-hu',
+  +               'w-hi',
+  +               'w-bayit',
+  +               'w-po',
+  +               'w-sham'
+  +             ]
+  +           },
+  +           {
+  +             blocks: [
+  +               {
+  +                 renderer: 'text',
+  +                 type: 'explanation'
+  +               },
+  +               {
+  +                 options: {
+  +                   showNotes: true
+  +                 },
+  +                 renderer: 'vocabulary-table',
+  +                 selector: {
+  +                   lessonId: 'lesson-3'
+  +                 },
+  +                 source: 'words',
+  +                 type: 'vocabulary'
+  +               },
+  +               {
+  +                 renderer: 'practice',
+  +                 selector: {
+  +                   lessonId: 'lesson-3'
+  +                 },
+  +                 source: 'exercises',
+  +                 type: 'exercise-set'
+  +               }
+  +             ],
+  +             chapter: '03 · Connect and apply',
+  +             exerciseIds: [
+  +               'ex-3-recognize',
+  +               'ex-3-transform',
+  +               'ex-3-order'
+  +             ],
+  +             explanation: 'Return to familiar pronouns and sentence structure while introducing a verb. Compare הוא כותב and היא כותבת. The form of the verb changes with the subject. This is an illustrative spiral: new information connects to a sentence pattern you have already used.',
+  +             id: 'lesson-3',
+  +             keyboard: {
+  +               knownColor: '#164b81',
+  +               knownKeys: 'אהוימנבתפש',
+  +               newColor: '#007b89',
+  +               newKeys: 'כ'
+  +             },
+  +             letters: 'אהויכבתפשםנ',
+  +             minutes: 5,
+  +             title: 'Make the sentence agree',
+  +             wordIds: [
+  +               'w-hu',
+  +               'w-hi',
+  +               'w-kotev',
+  +               'w-kotevet',
+  +               'w-po',
+  +               'w-sham'
+  +             ]
+  +           }
+  +         ],
+  +         provenance: {
+  +           kind: 'synthetic-demo',
+  +           label: 'Illustrative demo content; not approved replacement curriculum.'
+  +         },
+  +         reviewPolicy: {
+  +           defaultNikkud: 'full'
+  +         },
+  +         schemaVersion: 1,
+  +         uxVersion: 2,
+  +         words: [
+  +           {
+  +             curated: 'אֲנִי',
+  +             english: 'I',
+  +             examples: [
+  +               {
+  +                 english: 'I am at home.',
+  +                 hebrew: 'אני בבית'
+  +               }
+  +             ],
+  +             format: {},
+  +             id: 'w-ani',
+  +             notes: 'The speaker refers to themself.',
+  +             partOfSpeech: 'Pronoun',
+  +             pointed: 'אֲנִי',
+  +             unpointed: 'אני'
+  +           },
+  +           {
+  +             curated: 'מִי',
+  +             english: 'who',
+  +             id: 'w-mi',
+  +             notes: 'A question word.',
+  +             pointed: 'מִי',
+  +             unpointed: 'מי'
+  +           },
+  +           {
+  +             curated: 'הוּא',
+  +             english: 'he',
+  +             gender: 'Masculine singular',
+  +             id: 'w-hu',
+  +             notes: 'Third-person masculine singular.',
+  +             partOfSpeech: 'Pronoun',
+  +             pointed: 'הוּא',
+  +             unpointed: 'הוא'
+  +           },
+  +           {
+  +             curated: 'הִיא',
+  +             english: 'she',
+  +             gender: 'Feminine singular',
+  +             id: 'w-hi',
+  +             notes: 'Third-person feminine singular.',
+  +             partOfSpeech: 'Pronoun',
+  +             pointed: 'הִיא',
+  +             unpointed: 'היא'
+  +           },
+  +           {
+  +             curated: 'בַּיִת',
+  +             english: 'house',
+  +             id: 'w-bayit',
+  +             notes: 'The base form. In the expression בבית, the prefix and pronunciation also change.',
+  +             pointed: 'בַּיִת',
+  +             prefixedForms: [
+  +               {
+  +                 english: 'at home',
+  +                 hebrew: 'בַּבַּיִת',
+  +                 notes: 'In this expression: at home / in the house.',
+  +                 prefix: 'ב'
+  +               }
+  +             ],
+  +             unpointed: 'בית'
+  +           },
+  +           {
+  +             baseWordId: 'w-bayit',
+  +             curated: 'בבית',
+  +             english: 'at home',
+  +             id: 'w-babayit',
+  +             noCard: true,
+  +             noVocab: true,
+  +             notes: 'In this expression: at home / in the house.',
+  +             pointed: 'בַּבַּיִת',
+  +             prefix: 'ב',
+  +             unpointed: 'בבית'
+  +           },
+  +           {
+  +             curated: 'פה',
+  +             english: 'here',
+  +             id: 'w-po',
+  +             notes: 'A location word.',
+  +             pointed: 'פֹּה',
+  +             unpointed: 'פה'
+  +           },
+  +           {
+  +             curated: 'שם',
+  +             english: 'there',
+  +             id: 'w-sham',
+  +             notes: 'A location word.',
+  +             pointed: 'שָׁם',
+  +             unpointed: 'שם'
+  +           },
+  +           {
+  +             curated: 'כּוֹתֵב',
+  +             english: 'writes (masculine singular)',
+  +             examples: [
+  +               {
+  +                 english: 'He is writing here.',
+  +                 hebrew: 'הוא כותב פה'
+  +               }
+  +             ],
+  +             feminine: 'כּוֹתֶבֶת',
+  +             gender: 'Masculine singular',
+  +             id: 'w-kotev',
+  +             infinitive: 'לִכְתּוֹב',
+  +             notes: 'Present-tense masculine singular form; also can mean is writing.',
+  +             partOfSpeech: 'Verb',
+  +             pattern: 'קוֹטֵל',
+  +             pointed: 'כּוֹתֵב',
+  +             root: 'כ־ת־ב',
+  +             unpointed: 'כותב'
+  +           },
+  +           {
+  +             curated: 'כּוֹתֶבֶת',
+  +             english: 'writes (feminine singular)',
+  +             examples: [
+  +               {
+  +                 english: 'She is writing here.',
+  +                 hebrew: 'היא כותבת פה'
+  +               }
+  +             ],
+  +             gender: 'Feminine singular',
+  +             id: 'w-kotevet',
+  +             notes: 'Present-tense feminine singular form; also can mean is writing.',
+  +             partOfSpeech: 'Verb',
+  +             pattern: 'קוֹטֶלֶת',
+  +             pointed: 'כּוֹתֶבֶת',
+  +             root: 'כ־ת־ב',
+  +             unpointed: 'כותבת'
+  +           }
+  +         ]
+  +       },
+  +       draftToken: 'dt1-76719399f5be8f1b7423f2bf5231033f4e1ff0f99dc86ba1913388ef2c596936',
+  +       stagedAt: '2026-10-06T19:39:28.368Z'
+  +     },
+  +     draftToken: 'dt1-76719399f5be8f1b7423f2bf5231033f4e1ff0f99dc86ba1913388ef2c596936',
+  +     unchanged: false
+  -     code: 'BAD_REQUEST',
+  -     error: 'Authored distractor meaning 4 of ex-1-recognize is blank. Enter a meaning or remove that item.'
+      },
+  +   status: 200
+  -   status: 400
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/recognition-distractors.test.js:101:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { status: 200, body: { draft: [Object], changes: [Array], affectedLessons: [Array], draftToken: 'dt1-76719399f5be8f1b7423f2bf5231033f4e1ff0f99dc86ba1913388ef2c596936', baseRevisionId: 2, unchanged: false } },
+    expected: { status: 400, body: { error: 'Authored distractor meaning 4 of ex-1-recognize is blank. Enter a meaning or remove that item.', code: 'BAD_REQUEST' } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\recognition-distractors.test.js:112:1
+✖ Studio editor shows the field error, keeps every typed value and re-enables controls; filling or removing the row then saves (202.402ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Draft saved. Reloading author workspace…'
+  - 'Authored distractor meaning 4 of ex-1-recognize is blank. Enter a meaning or remove that item.'
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/hebleo-g401/test/recognition-distractors.test.js:127:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Draft saved. Reloading author workspace…',
+    expected: 'Authored distractor meaning 4 of ex-1-recognize is blank. Enter a meaning or remove that item.',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+EXIT=1

@@ -1,0 +1,14 @@
+✔ stage (Studio save and import staging) refuses empty, whitespace-only and invisible-only distractors before any write (143.6479ms)
+✔ publish, rollback and restore refuse blank distractors written by an earlier build, leaving every table unchanged (23.3923ms)
+✔ valid authored distractors keep exact text, order and neighbouring fields through stage, preview, publish, session and grading (19.1339ms)
+✔ HTTP: blank distractor saves and legacy publishes return 400 with the field message and write nothing; a filled row saves (120.7401ms)
+✔ Studio editor shows the field error, keeps every typed value and re-enables controls; filling or removing the row then saves (290.9752ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2119.103
+EXIT=0

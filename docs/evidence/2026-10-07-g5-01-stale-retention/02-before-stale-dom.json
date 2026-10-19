@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"disabled\": false,\n  \"focus\": \"<input id=\\\"answer\\\" class=\\\"answer-input\\\" dir=\\\"rtl\\\" autocomplete=\\\"off\\\" spellcheck=\\\"false\\\" inputmode=\\\"text\\\" value=\\\"\\\">\",\n  \"input\": \"אני\",\n  \"prompt\": \"Synthetic G5-01 initial draft prompt.\",\n  \"readonly\": false,\n  \"status\": \"Draft rehearsal. Nothing here is saved to your learner profile.\",\n  \"url\": \"http://127.0.0.1:61916/#studio\"\n}"
+    }
+  ],
+  "isError": false
+}

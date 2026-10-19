@@ -1,0 +1,20 @@
+{
+  "input": "synthetic seed",
+  "structuralErrors": [],
+  "semanticErrors": [],
+  "canonicalPublication": {
+    "eligible": false,
+    "reasonCount": 45
+  },
+  "privateDemoPublication": {
+    "eligible": true,
+    "reasonCount": 0
+  },
+  "pendingObjects": 0,
+  "derivedForms": 0,
+  "runtime": {
+    "accepted": true,
+    "operation": "stage"
+  },
+  "inputUnchanged": true
+}

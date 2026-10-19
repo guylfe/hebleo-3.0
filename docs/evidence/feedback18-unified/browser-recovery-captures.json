@@ -1,0 +1,346 @@
+{
+  "syntheticFixture": true,
+  "fixture": "Fictional-only in-memory seed and synthetic 2000-word Browser fixture",
+  "captures": [
+    {
+      "label": "fixture-start",
+      "capturedUTC": "2026-10-07T23:56:16.688Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "7962f100854f15fa75147325268e6dad424d1277af4577c638850b7b8755ffef"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": null,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    },
+    {
+      "label": "before-browser-recovery",
+      "capturedUTC": "2026-10-07T23:56:24.489Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "7962f100854f15fa75147325268e6dad424d1277af4577c638850b7b8755ffef"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": true,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    },
+    {
+      "label": "after-accessible-save-reload",
+      "capturedUTC": "2026-10-07T23:57:48.828Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "5ad41890563691dd67e8ba727143615cac43b210753d30be929a13fa0661a419"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": false,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    },
+    {
+      "label": "before-mapped-review",
+      "capturedUTC": "2026-10-07T23:59:56.546Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "8d0544462ba278ced72e4817529531c80d863f262ba142d60093cd6cd88157cd"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": false,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    },
+    {
+      "label": "after-mapped-review-zero-writes",
+      "capturedUTC": "2026-10-08T00:00:22.161Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "8d0544462ba278ced72e4817529531c80d863f262ba142d60093cd6cd88157cd"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": true,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    },
+    {
+      "label": "after-mapped-stage",
+      "capturedUTC": "2026-10-08T00:00:43.242Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "692e971492ab16f21b604a7e5170754e5192ebd42790009afc1f4c9f143178ae"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": false,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    },
+    {
+      "label": "before-stale-stage-acknowledged-conflict",
+      "capturedUTC": "2026-10-08T00:01:20.730Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "dfcec6e856e69c9bce09b5f79e493ff62c51e7ac7b9cd241d35667e92a75f945"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": false,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    },
+    {
+      "label": "after-stale-stage-zero-writes",
+      "capturedUTC": "2026-10-08T00:01:28.959Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "dfcec6e856e69c9bce09b5f79e493ff62c51e7ac7b9cd241d35667e92a75f945"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": true,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    },
+    {
+      "label": "after-discard-zero-writes",
+      "capturedUTC": "2026-10-08T00:01:34.529Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "dfcec6e856e69c9bce09b5f79e493ff62c51e7ac7b9cd241d35667e92a75f945"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": true,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    },
+    {
+      "label": "final-recovery",
+      "capturedUTC": "2026-10-08T00:02:14.699Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "dfcec6e856e69c9bce09b5f79e493ff62c51e7ac7b9cd241d35667e92a75f945"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 1,
+          "sha256": "9903b9fb81e9e04fe556f20bf909e3e920afc76ad9a69664172cadd25fccbfc8"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "b69d723656e1235fad00b099085fb63f31f29a2a1f898895d30edfa7d1295b4c"
+        }
+      ],
+      "zeroWritesSincePreviousCapture": true,
+      "learnersUnchanged": true,
+      "publishedUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+✔ custom header suggestions never infer Hebrew forms or IDs (2.2771ms)
+✔ typed formatting, tags and raw unknown source strings survive mapping without changing the base (4.9145ms)
+✔ each supported scalar style and combined styles uses exact source Hebrew (4.5711ms)
+✔ UTF-16 marks are retained; surrogate splits, unsorted and out-of-bounds runs fail (0.8097ms)
+✔ unsafe colors, malformed supported styles and cyclic themes fail; unknown styles remain inert warnings (0.534ms)
+✔ bad mapping/metadata fail atomically and missing rows preserve stable source objects (2.2417ms)
+✔ formatting cannot silently disagree with a newly mapped text or conflict with scalar mapping (1.8302ms)
+✔ CSV shape, quotes, rows and typed metadata are bounded with no truncation (5.5169ms)
+✔ RR-F18-01 every HTTP learner word surface excludes import records while author/backup retain source bytes (103.1249ms)
+✔ RR-F18-02 check practice subset/reorder validates actual receipts across HTTP/reload/pinned revision/restore: check-only (102.8317ms)
+✔ RR-F18-02 check practice subset/reorder validates actual receipts across HTTP/reload/pinned revision/restore: mixed-role (87.2457ms)
+✔ RR-F18-03 check practice rejects foreign receipts and malformed sets atomically in HTTP and restore (39.8256ms)
+✔ RR-F18-02 check practice matching input and ordering tokens resolve the practice list (21.5565ms)
+✔ RR-F18-04 malformed declared source records reject Stage/Publish/restore with every table unchanged (27.5412ms)
+✔ RR-F18-04 mapped source survives same-token Stage, later authored edits, publish and restore without repair (21.5821ms)
+✔ RR-F18-02 legacy check practice uses its validated subset for receipts and terminal position (7.447ms)
+✔ RR-F18-02 legacy apply practice uses its validated subset for receipts and terminal position (7.3514ms)
+✔ v2 Stage/review/preview/publish preserves two text IDs; preview and reads write zero rows (26.2998ms)
+✔ cursor in second text stays pinned after publishing reorder; forged component/feedback fails atomically (19.6958ms)
+✔ second exercise instance retains exact feedback on reload/restore; one repeated exercise earns one slot (21.3843ms)
+✔ new submissions ignore old requireNikkud while duplicate historical verdicts remain exact (12.7102ms)
+✔ invalid curriculum, stale indices and newly changed unsafe styles fail Stage with no writes (8.0411ms)
+✔ schema-2 backup remains supported; schema-3 refuses future versions and leaves legacy reads unchanged (5.874ms)
+✔ HTTP serves local editor assets with CSS MIME; learner projection hides new import author records (126.6379ms)
+✔ a partial match on an authored pair word outside the lesson list saves, resumes, and the full set grades and completes the lesson (27.8029ms)
+✔ saved matches are refused unless every key belongs to the matching question at that exact revision, step and position; nothing is written (23.9284ms)
+✔ Check, Core and repeat practice use their own matching question; empty matches preserve transitions and legacy v1 restores (39.4376ms)
+✔ backup restore keeps cross-lesson and older-revision matches and refuses a resume whose keys its pinned matching question does not own (22.942ms)
+✔ HTTP: progress with a cross-lesson pair word saves (200) and resumes; a key the question does not own returns 400 and writes nothing (145.596ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 654.5328

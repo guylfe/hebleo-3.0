@@ -1,0 +1,3 @@
+# Preserve the exact upstream distribution bytes across Windows checkouts.
+easymde.min.js -text
+easymde.min.css -text

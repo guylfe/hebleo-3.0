@@ -1,0 +1,101 @@
+{
+  "syntheticFixture": true,
+  "captures": [
+    {
+      "label": "before-browser-restarted",
+      "capturedUTC": "2026-10-08T00:18:46.221Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "9fb7a413000565c438f9de72934ea01b4ae64f48de36835ea294fe50140f3d0f"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "e4863f9cddcbb1746223500a402580849f480e72614eb8c275360fa19fa8b7db"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 2,
+          "sha256": "c7679faf2b267e2f922a34d8f2016ce88325d14ea9e2bfef23861adbb5fbd047"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "4107b3c261ffbfb383e467980dc582c978fef3059379d8636c5cae6eee4c8d50"
+        }
+      ],
+      "publishedUnchanged": true
+    },
+    {
+      "label": "before-rehearsal",
+      "capturedUTC": "2026-10-08T00:19:26.723Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "9fb7a413000565c438f9de72934ea01b4ae64f48de36835ea294fe50140f3d0f"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "83b8972eaeac852d420d61488a6d494f332e40bbe4c23cfc57ad3e5699e166c7"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 2,
+          "sha256": "c7679faf2b267e2f922a34d8f2016ce88325d14ea9e2bfef23861adbb5fbd047"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "4107b3c261ffbfb383e467980dc582c978fef3059379d8636c5cae6eee4c8d50"
+        }
+      ],
+      "publishedUnchanged": true
+    },
+    {
+      "label": "after-rehearsal-exit",
+      "capturedUTC": "2026-10-08T00:19:58.657Z",
+      "tables": [
+        {
+          "name": "events",
+          "rowCount": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "kv",
+          "rowCount": 3,
+          "sha256": "9fb7a413000565c438f9de72934ea01b4ae64f48de36835ea294fe50140f3d0f"
+        },
+        {
+          "name": "learners",
+          "rowCount": 3,
+          "sha256": "83b8972eaeac852d420d61488a6d494f332e40bbe4c23cfc57ad3e5699e166c7"
+        },
+        {
+          "name": "revisions",
+          "rowCount": 2,
+          "sha256": "c7679faf2b267e2f922a34d8f2016ce88325d14ea9e2bfef23861adbb5fbd047"
+        },
+        {
+          "name": "sqlite_sequence",
+          "rowCount": 1,
+          "sha256": "4107b3c261ffbfb383e467980dc582c978fef3059379d8636c5cae6eee4c8d50"
+        }
+      ],
+      "publishedUnchanged": true
+    }
+  ]
+}

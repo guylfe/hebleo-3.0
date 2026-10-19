@@ -1,0 +1,32 @@
+✔ G5-01 actual app over HTTP: a second author window saves while rehearsal retains its typed answer frozen; Escape restores focus (735.2879ms)
+✔ G5 automated HTTP overlap: learner autosave response is pending when Studio navigation starts, flush completes before rehearsal and preview writes nothing (1208.2665ms)
+✔ G5 automated HTTP owner-event: the real keyboard Pin handler emits its preference event during rehearsal and app persistence is suppressed until Exit (271.3548ms)
+▶ G5-01 actual renderer/controller and HTTP keep six answer families frozen across conflict and missing-target errors with zero writes
+  ✔ draft / recognition (377.1068ms)
+  ✔ draft / typing (99.5206ms)
+  ✔ draft / cloze (88.8026ms)
+  ✔ draft / transformation (92.3535ms)
+  ✔ draft / matching (123.4099ms)
+  ✔ draft / ordering (133.4739ms)
+  ✔ publication / recognition (76.3654ms)
+  ✔ publication / typing (66.3338ms)
+  ✔ publication / cloze (81.3208ms)
+  ✔ publication / transformation (87.7383ms)
+  ✔ publication / matching (109.1238ms)
+  ✔ publication / ordering (79.0673ms)
+  ✔ missing-target / recognition (90.3042ms)
+  ✔ missing-target / typing (59.7742ms)
+  ✔ missing-target / cloze (48.0258ms)
+  ✔ missing-target / transformation (58.7201ms)
+  ✔ missing-target / matching (74.8951ms)
+  ✔ missing-target / ordering (67.1979ms)
+✔ G5-01 actual renderer/controller and HTTP keep six answer families frozen across conflict and missing-target errors with zero writes (1819.713ms)
+✔ G5-01 freezes the existing displayed feedback and live field values before the renderer disposer removes them (32.9445ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3637.9183
