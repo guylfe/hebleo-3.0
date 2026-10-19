@@ -1,3 +1,4 @@
+import {validateSourceBrowse} from './source-vocabulary.js';
 import {createHash} from 'node:crypto';
 import {isApproved,validateLexicalContent} from '../public/lexical-contract.js';
 import {lexicalCatalogue} from '../public/lexical-runtime.js';
@@ -13,6 +14,7 @@ export function lexicalReviewedRecords(lexical){
 }
 export function validateLexicalSnapshot(content){
  if(!Object.hasOwn(content,'lexical'))return;
+ if(content.lexical?.sourceBrowse)validateSourceBrowse(content.lexical.sourceBrowse);
  // Declared captured evidence must also be valid when supplied directly to Stage/restore.
  // Synthetic/legacy lexical envelopes without a capture keep their existing contract.
  if(content.lexical?.captureDigest!==undefined||content.lexical?.archive?.version===WORKBOOK_CAPTURE_VERSION)validateConsolidatedCapture(content.lexical.archive);
@@ -24,6 +26,7 @@ export function validateLexicalSnapshot(content){
  }
 }
 export function assertLexicalTransition(previous,next){
+ if(JSON.stringify(previous.lexical?.sourceBrowse)!==JSON.stringify(next.lexical?.sourceBrowse))throw new DomainError('Source browsing adoption must come through trusted exact-source review.');
  if(previous.lexical&&!next.lexical)throw new DomainError('Removing the lexical envelope requires a reversible migration.');
  const approved=new Set(lexicalReviewedRecords(previous.lexical).filter(approvedRecord).map(canonical));
  for(const record of lexicalReviewedRecords(next.lexical))if(approvedRecord(record)&&!approved.has(canonical(record)))throw new DomainError('Source and identity approvals must come through a trusted content review; local settings cannot approve source material.');
@@ -33,6 +36,8 @@ export function assertLexicalTransition(previous,next){
  }
 }
 export function assertKnownLexicalRestore(knownContents,incomingContents){
+ const knownBrowse=new Set(knownContents.map(c=>c.lexical?.sourceBrowse?.digest).filter(Boolean));
+ for(const c of incomingContents)if(c.lexical?.sourceBrowse&&!knownBrowse.has(c.lexical.sourceBrowse.digest))throw new DomainError('Unknown source browsing approval in restore.',409,'LEXICAL_APPROVAL_REQUIRED');
  const known=new Set(knownContents.flatMap(c=>lexicalReviewedRecords(c.lexical)).filter(approvedRecord).map(canonical));
  for(const c of incomingContents)for(const record of lexicalReviewedRecords(c?.lexical))if(approvedRecord(record)&&!known.has(canonical(record)))throw new DomainError('This backup contains lexical source approvals not previously trusted by this installation. Import pending material or use an explicit trusted source review.',409,'LEXICAL_APPROVAL_REQUIRED');
 }

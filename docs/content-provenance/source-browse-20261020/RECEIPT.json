@@ -1,0 +1,184 @@
+{
+  "digest": "5be459536124d79296d444f94b049b3bef421ac422f2d3b556efe42e1a003281",
+  "counts": {
+    "rows": 791,
+    "categories": {
+      "Verbs": 93,
+      "Adjectives": 59,
+      "Prepositions": 19,
+      "Nouns": 418,
+      "Other": 202
+    },
+    "visibleSourceRecords": 1055,
+    "originalSourceRecords": 1058,
+    "heldIdentityRecords": 2,
+    "emptyRecords": 1,
+    "generatedDraftsHeld": 1770,
+    "proposedSlotsHeld": 397,
+    "secondaryDocumentBindingsHeld": 50
+  },
+  "catalogue": {
+    "lessons": 49,
+    "topics": 64
+  },
+  "mapping": {
+    "linked": 1048,
+    "unresolved": 9,
+    "groups": 53
+  },
+  "categories": {
+    "Verbs": [
+      {
+        "wordKey": "provisional:lexeme:verb:000028",
+        "hebrew": "נָתַן",
+        "english": "(he) gave",
+        "sourceIds": [
+          "mf-000028",
+          "mf-000050",
+          "mf-000051",
+          "mf-000052",
+          "mf-000108",
+          "mf-000109",
+          "mf-000110",
+          "mf-000111",
+          "mf-000959"
+        ]
+      },
+      {
+        "wordKey": "provisional:lexeme:verb:000029",
+        "hebrew": "הָיָה",
+        "english": "(he) was",
+        "sourceIds": [
+          "mf-000029",
+          "mf-000049",
+          "mf-000970"
+        ]
+      }
+    ],
+    "Adjectives": [
+      {
+        "wordKey": "provisional:lexeme:adjective:000080",
+        "hebrew": "גָדוֹל",
+        "english": "big",
+        "sourceIds": [
+          "mf-000080",
+          "mf-000129"
+        ]
+      },
+      {
+        "wordKey": "provisional:lexeme:adjective:000088",
+        "hebrew": "אַנְגְלִי",
+        "english": "English (person, quality)",
+        "sourceIds": [
+          "mf-000088"
+        ]
+      }
+    ],
+    "Prepositions": [
+      {
+        "wordKey": "provisional:lexeme:preposition:000022",
+        "hebrew": "מִ",
+        "english": "From",
+        "sourceIds": [
+          "mf-000022",
+          "mf-000301",
+          "mf-000991"
+        ]
+      },
+      {
+        "wordKey": "provisional:lexeme:preposition:000121",
+        "hebrew": "לֶ",
+        "english": "To, for",
+        "sourceIds": [
+          "mf-000121",
+          "mf-000299",
+          "mf-000989"
+        ]
+      }
+    ],
+    "Nouns": [
+      {
+        "wordKey": "mf-000001",
+        "hebrew": "יָם",
+        "english": "Sea",
+        "sourceIds": [
+          "mf-000001"
+        ]
+      },
+      {
+        "wordKey": "mf-000002",
+        "hebrew": "יַיִן",
+        "english": "Wine",
+        "sourceIds": [
+          "mf-000002"
+        ]
+      }
+    ],
+    "Other": [
+      {
+        "wordKey": "mf-000013",
+        "hebrew": "אֲנִי",
+        "english": "I",
+        "sourceIds": [
+          "mf-000013"
+        ]
+      },
+      {
+        "wordKey": "mf-000014",
+        "hebrew": "אַתְ",
+        "english": "You (singular female)",
+        "sourceIds": [
+          "mf-000014"
+        ]
+      }
+    ]
+  },
+  "remainingSourceAssociations": [
+    {
+      "sourceId": "mf-000477",
+      "lesson": "4.1.5",
+      "part": "Part 3"
+    },
+    {
+      "sourceId": "mf-000479",
+      "lesson": "4.1.5",
+      "part": "Part 3"
+    },
+    {
+      "sourceId": "mf-000480",
+      "lesson": "4.1.5",
+      "part": "Part 3"
+    },
+    {
+      "sourceId": "mf-000481",
+      "lesson": "4.1.5",
+      "part": "Part 3"
+    },
+    {
+      "sourceId": "mf-000482",
+      "lesson": "4.1.5",
+      "part": "Part 3"
+    },
+    {
+      "sourceId": "mf-000483",
+      "lesson": "4.1.5",
+      "part": "Part 3"
+    },
+    {
+      "sourceId": "mf-000484",
+      "lesson": "4.1.5",
+      "part": "Part 3"
+    },
+    {
+      "sourceId": "mf-000485",
+      "lesson": "4.1.5",
+      "part": "Part 3"
+    },
+    {
+      "sourceId": "mf-000486",
+      "lesson": "4.1.5",
+      "part": "Part 3"
+    }
+  ],
+  "status": "Implementation and private rehearsal verified; installed UX review pending"
+}

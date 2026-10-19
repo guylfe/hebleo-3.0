@@ -1,4 +1,5 @@
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../public/lexical-vocabulary.js';
+import {sourceBrowseFixture} from '../scripts/source-browse-fixture.mjs';
 import {lexicalFixture} from '../scripts/lexical-fixture.mjs';
 import {mountMediaLibrary} from '../public/studio/media-library.js';
 import {mountSourceAuthoring} from '../public/studio/sources-editor.js';
@@ -917,4 +918,19 @@ test('FB14 actual reference module drives all same-source app controls through p
 
 test('FB14 item14 confirmed grade bootstrap failure refreshes authoritative progress on persistence-only recovery',async t=>{
  const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});edit(w,doc.querySelector('#answer'),'אני');await new Promise(resolve=>setTimeout(resolve,450));const fetch=w.fetch;let failBootstrap=true;w.fetch=(url,options)=>url==='/api/bootstrap'&&failBootstrap?Promise.resolve({ok:false,status:503,json:async()=>({error:'SYNTHETIC progress refresh unavailable'})}):fetch(url,options);const answer=doc.querySelector('#answer'),check=doc.querySelector('[data-action=check]');check.click();await settled(()=>doc.querySelector('[data-position-recovery]'));assert.equal(store.learner('learner-demo').attempts.length,1);assert.equal(doc.querySelector('[role=status].compact-result').getAttribute('aria-label'),'Correct');assert.equal(doc.querySelector('[data-action=next-question]').disabled,true);failBootstrap=false;click(doc,'save-answer-position');await settled(()=>!doc.querySelector('[data-position-recovery]'));assert.equal(doc.querySelector('#answer'),answer);assert.equal(doc.querySelector('[data-action=check]'),check);assert.equal(doc.querySelector('.lesson-progress progress').value,1);assert.equal(doc.querySelector('[data-action=next-question]').disabled,false);assert.equal(store.learner('learner-demo').resumes['lesson-1'].resultRequestId,store.learner('learner-demo').attempts[0].requestId);assert.equal(calls.filter(url=>url==='/api/attempt').length,1);
+});
+
+test('Source vocabulary uses the normal library with exact text, filters, paging, focus and separate learned collection',async t=>{
+ const a=await app(t,{page:'library',realHTTP:true,prepare:store=>{const c=store.snapshot();c.lexical=lexicalFixture();c.lexical.sourceBrowse=sourceBrowseFixture();store.set('active',store.addRevision(c,'Synthetic source library test'));}});
+ const {doc,w,store}=a,before=JSON.stringify(store.learner('learner-demo'));
+ assert.match(doc.querySelector('h1').textContent,/Vocabulary/);assert.equal(doc.querySelectorAll('tbody[data-word-key]').length,50);
+ doc.querySelector('[data-action="source-page"][data-value="50"]').click();await settled(()=>doc.querySelectorAll('tbody[data-word-key]').length===11);
+ const category=doc.querySelector('#source-category');category.value='Other';category.dispatchEvent(new w.Event('change'));
+ await settled(()=>doc.querySelectorAll('tbody[data-word-key]').length===1);assert.match(doc.body.textContent,/Exact test meaning 60/);
+ const input=doc.querySelector('#library-search');input.focus();input.value='no matching source';input.dispatchEvent(new w.Event('input',{bubbles:true}));
+ await settled(()=>doc.querySelector('.lexical-vocabulary').textContent.includes('No vocabulary'));assert.equal(doc.activeElement.id,'library-search');
+ doc.querySelector('[data-action="library-clear"]').click();await settled(()=>doc.querySelectorAll('tbody[data-word-key]').length===1);
+ assert.equal(doc.activeElement.id,'library-search');
+ doc.querySelector('[data-action="library-mode"][data-value="learned"]').click();await settled(()=>doc.querySelector('#library-state'));
+ assert.equal(doc.querySelectorAll('.lexical-source-details').length,0);assert.equal(JSON.stringify(store.learner('learner-demo')),before);
 });

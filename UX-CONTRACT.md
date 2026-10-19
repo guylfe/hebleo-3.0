@@ -1,5 +1,7 @@
 # Hebleo application UX contract
 
+Oct20: when exact-source adoption exists, `#library` defaults to Source vocabulary with category/original-Lesson filters and 50-row pages. Learned vocabulary remains a separate collection. Source browsing preserves exact source fields, original Lesson/Part and IDs and grants no learned/review eligibility. Original source is a native disclosure inside existing category tables; notes/examples, shared controls, global scrollbars and natural page height retain their canonical owners. Search/filter state stays tab-local. See docs/AUTHORED_SOURCE_BROWSING.md. This task's installed real-row UX review supersedes the historical pause within its authorized scope; automated checks remain separate from native acceptance.
+
 Visual values and selected layout live in [DESIGN.md](DESIGN.md); public/refinement.css is their runtime owner. This contract consolidates existing behavior and the selected Oct13 integration. It does not change pedagogy, permissions or the publishing model.
 
 English UI with exact authored Hebrew/RTL content. Core references: docs/MASTER_SPEC.md, docs/INITIAL_BUILD_BRIEF.md, docs/UX_UPDATE.md, docs/architecture/CONTENT_CONTRACTS.md, docs/architecture/FB18_ADDITIVE_CONTRACT.md and docs/FEATURE_CHECKLIST.md. Human-authored content remains canonical; fictional local profiles/events and synthetic fixtures remain labelled.

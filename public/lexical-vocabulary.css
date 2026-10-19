@@ -86,3 +86,13 @@
 .lexical-vocabulary[data-form-borders=full] .lexical-paradigm th,.lexical-vocabulary[data-form-borders=full] .lexical-paradigm td{border:1px solid #c2ccd9}.lexical-vocabulary[data-form-borders=full] .lexical-adjective-row>.lexical-gender-value,.lexical-vocabulary[data-form-borders=full] .lexical-adjective-row>.lexical-adjective-value{border:1px solid #c2ccd9}
 @media(max-width:600px){.lexical-vocabulary th,.lexical-vocabulary td{padding-inline:8px}.lexical-note-top{gap:8px;padding-inline:10px}.lexical-note-preview{min-width:0}.lexical-note-top>strong{font-size:14px}.lexical-vocabulary button.lexical-toggle{min-width:5rem}}
 @media(forced-colors:active){.lexical-has-note,.lexical-structure{border:1px solid CanvasText}.lexical-note-marker{color:CanvasText}.lexical-base-form{background:Canvas;border:1px solid CanvasText}}
+
+.lexical-source-details {padding:10px 14px;text-align:start;font-size:.9rem;}
+.lexical-source-details summary {cursor:pointer;color:var(--ink,#0a2457);line-height:1.5;overflow-wrap:anywhere;}
+.lexical-source-details summary:hover {text-decoration:underline;}
+.lexical-source-details dl {margin:12px 0;display:grid;gap:10px;}
+.lexical-source-details dl>div {display:grid;grid-template-columns:minmax(100px,1fr) minmax(0,4fr);gap:12px;}
+.lexical-source-details dt {font-weight:600;}
+.lexical-source-details dd {margin:0;white-space:pre-wrap;overflow-wrap:anywhere;}
+.lexical-source-details dd bdi[lang="he"] {font-size:25px;line-height:1.65;}
+.source-vocabulary-heading {margin-block:16px;}

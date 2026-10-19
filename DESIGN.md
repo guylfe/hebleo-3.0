@@ -47,6 +47,8 @@ components:
 ---
 # Hebleo selected application design
 
+Oct20 source browsing extends the existing lexical category tables, typography, rich renderer and Note/Examples treatment. Original provenance uses a native full-width disclosure with every exact authored field available. Collection buttons distinguish source from learned vocabulary. Palette, fonts, token ownership, contained horizontal scrolling and natural document height remain as specified below.
+
 ## Overview
 
 The course is the spine. Quiet, seamless teaching prose and a clearly bounded current question carry attention. The blue palette, horizontal main navigation, separate course outline and wide authentic logo follow the selected Oct13 prototype and its application handoff; they supersede the prior Oct12 two-rail shell. This is a product surface for Hebrew learners and authors, using the existing application, source content and permissions.
