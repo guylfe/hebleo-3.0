@@ -448,7 +448,25 @@
                   "type": "string"
                 }
               },
-              "tags": {}
+              "tags": {},
+              "vocabularyBindings": {
+                "allOf": [
+                  {
+                    "$ref": "exercise-bindings.v1.schema.json"
+                  },
+                  {
+                    "items": {
+                      "properties": {
+                        "field": {
+                          "not": {
+                            "const": "answers"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
             },
             "required": [
               "id",

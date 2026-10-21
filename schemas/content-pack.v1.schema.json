@@ -462,7 +462,10 @@
               "allowLookup": {
                 "type": "boolean"
               },
-              "tags": {}
+              "tags": {},
+              "vocabularyBindings": {
+                "$ref": "exercise-bindings.v1.schema.json"
+              }
             },
             "required": [
               "id",

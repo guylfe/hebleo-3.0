@@ -1,5 +1,6 @@
 import {projectSourceVocabulary} from '../public/source-vocabulary.js';
 import {projectExerciseVocabulary} from './exercise-vocabulary.js';
+import {validateExerciseVocabularyBindings, exerciseVocabularyReferenceIds, projectExerciseVocabularyBindings, withAnswerVocabularyBindings} from '../public/exercise-bindings.js';
 import {MediaStore} from './media-store.js';
 import {validateSourceState} from './source-state.js';
 import { DatabaseSync } from 'node:sqlite';
@@ -88,6 +89,7 @@ export function validateContent(content) {
     if (w.format && (typeof w.format !== 'object' || (w.format.color && !/^#[0-9a-f]{6}$/i.test(w.format.color)) || (w.format.bold !== undefined && typeof w.format.bold !== 'boolean'))) throw new DomainError('Invalid word formatting.');
   }
   for (const e of content.exercises) {
+    try { validateExerciseVocabularyBindings(e, content.words); } catch (error) { throw new DomainError(error.message); }
     text(e.prompt, 'exercise prompt');
     if (!lessons.has(e.lessonId)) throw new DomainError('Exercise references a missing lesson: ' + e.id);
     if (e.nikkudOverride && !modes.includes(e.nikkudOverride)) throw new DomainError('Invalid vowel override.');
@@ -228,7 +230,7 @@ export class Store {
   expectBase(baseRevisionId, message = 'Published content changed. Refresh before editing.') { if (baseRevisionId !== this.get('active')) throw this.draftConflict(message, 'STALE_BASE'); }
   active() { return { revisionId: this.get('active'), content: this.snapshot(), draft: this.currentDraft(), history: this.db.prepare('SELECT id,created_at AS createdAt,reason FROM revisions ORDER BY id DESC').all() }; }
   dependencies(wordId, content = this.snapshot()) {
-    const exercises=content.exercises.filter(e=>e.wordId===wordId||e.wordIds?.includes(wordId)).map(e=>e.id);
+    const exercises=content.exercises.filter(e=>e.wordId===wordId||e.wordIds?.includes(wordId)||exerciseVocabularyReferenceIds(e).includes(wordId)).map(e=>e.id);
     const lessons=content.lessons.filter((l,i)=>l.wordIds.includes(wordId)||l.blocks.some(b=>b.source==='words'&&resolveComponent(content,l,b).some(w=>w.id===wordId))||exercises.some(id=>exerciseInLesson(content,l.id,id))).map(l=>l.id);
     return {lessons,exercises,review:'All enrolled cards for this word resolve the latest published vocabulary.'};
   }
@@ -254,6 +256,11 @@ export class Store {
     const e = clone(exercise); delete e.answers;
     if (e.type === 'recognition') { const meaning = content.words.find(w => w.id === e.wordId).english; e.choices = [...new Set([meaning, ...e.distractors])].sort(); delete e.distractors; }
     if (e.type === 'ordering') {e.tokens=orderingTokens(exercise,content,lessonId);e.prefixTokenIndices=orderingPrefixes(exercise,e.tokens);}
+    if (Object.hasOwn(exercise,'vocabularyBindings')) {
+      // orderingTokens interleaves each extra before its authored token, then appends leftovers.
+      const tokenIndexMap = e.type === 'ordering' ? exercise.tokens.map((_,i)=>i+Math.min(i+1,e.tokens.length-exercise.tokens.length)) : undefined;
+      e.vocabularyBindings=projectExerciseVocabularyBindings(exercise,{tokenIndexMap});
+    }
     return e;
   }
   updateLearner(userId, patch) {
@@ -271,7 +278,7 @@ export class Store {
     const content = this.snapshot(input.revisionId), exercise=content.exercises.find(e=>e.id===input.exerciseId);
     const lessonId=input.lessonId ?? exercise?.lessonId;
     const duplicate = state.attempts.find(a => a.requestId === requestId);
-    if (duplicate) { if (duplicate.lessonId !== lessonId || duplicate.exerciseId !== input.exerciseId || duplicate.revisionId !== input.revisionId || JSON.stringify(duplicate.answer) !== JSON.stringify(input.answer)) throw new DomainError('Conflicting attempt request ID.', 409); return { ...duplicate, duplicate: true }; }
+    if (duplicate) { if (duplicate.lessonId !== lessonId || duplicate.exerciseId !== input.exerciseId || duplicate.revisionId !== input.revisionId || JSON.stringify(duplicate.answer) !== JSON.stringify(input.answer)) throw new DomainError('Conflicting attempt request ID.', 409); return withAnswerVocabularyBindings(exercise, { ...duplicate, duplicate: true }); }
     if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     if (!Number.isInteger(input.revisionId)) throw new DomainError('An exact content revision is required.');
     if(!exerciseInLesson(content,lessonId,input.exerciseId))throw new DomainError('Exercise not found in this lesson.',404);
@@ -285,7 +292,7 @@ export class Store {
       if (!state.completed.includes(lesson.id)) state.completed.push(lesson.id);
       for (const wordId of lesson.wordIds) if (!content.words.find(w=>w.id===wordId)?.noCard && !state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false };
     }
-    this.saveLearner(userId, state); return result;
+    this.saveLearner(userId, state); return withAnswerVocabularyBindings(exercise, result);
   }
   review(userId, input) {
     if (![1, 2, 3, 4].includes(input.rating)) throw new DomainError('Invalid review rating.');
@@ -319,7 +326,7 @@ export class Store {
     const resultExercise = savedResult && content.exercises.find(e=>e.id===savedResult.exerciseId);
     const result = savedResult && resultExercise?.type==='matching' && !savedResult.pairResults ? {...savedResult, pairResults:matchingPairResults(resultExercise,savedResult)} : savedResult;
     const lesson=content.lessons.find(l=>l.id===lessonId);
-    return { revisionId: progress?.revisionId || this.get('active'), content: this.publicContent(content,lessonId), flow:lessonFlow(content,lesson), keyboard:keyboardForLesson(content,lessonId), progress, result };
+    return { revisionId: progress?.revisionId || this.get('active'), content: this.publicContent(content,lessonId), flow:lessonFlow(content,lesson), keyboard:keyboardForLesson(content,lessonId), progress, result:withAnswerVocabularyBindings(resultExercise,result) };
   }
   startLatestLesson(userId,lessonId) {
     const state=this.learner(userId);if(!state.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
@@ -511,8 +518,8 @@ export class Store {
     for (const field of uniq([...Object.keys(current), ...Object.keys(next)]).filter(k => !collections.has(k)).sort()) if (!same(current[field], next[field])) changes.push({ kind: 'metadata', id: /^[A-Za-z0-9][A-Za-z0-9_-]*$/.test(field) ? field : 'pack', field, action: action(current[field], next[field]), impact: { lessons: allLessons } });
     const view = (c, id) => {
       const ordered=orderedLessons(c), i = ordered.findIndex(l => l.id === id); if (i < 0) return null;
-      const lesson = ordered[i], exercises = c.exercises.filter(e => e.lessonId === id || lesson.exerciseIds.includes(e.id) || lesson.checkExerciseIds?.includes(e.id));
-      const wordIds = new Set([...lesson.wordIds, ...lesson.blocks.flatMap(x => x.source === 'words' ? resolveComponent(c,lesson,x).map(word=>word.id) : []), ...exercises.flatMap(e => [e.wordId, ...(e.wordIds || [])])]);
+      const lesson = ordered[i], exercises = c.exercises.filter(e => e.lessonId === id || exerciseInLesson(c,id,e.id));
+      const wordIds = new Set([...lesson.wordIds, ...lesson.blocks.flatMap(x => x.source === 'words' ? resolveComponent(c,lesson,x).map(word=>word.id) : []), ...exercises.flatMap(e => [e.wordId, ...(e.wordIds || []), ...exerciseVocabularyReferenceIds(e)])]);
       return canonicalJSON({ lesson, index: i, previous: ordered[i - 1]?.id ?? null, following: ordered[i + 1]?.id ?? null, keyboard:keyboardForLesson(c,lesson.id), flow:lessonFlow(c,lesson), exercises: exercises.map(e => [e, this.publicExercise(e, c, id)]), words: c.words.filter(w => wordIds.has(w.id)) });
     };
     const affected = new Set([...changes.flatMap(c => c.impact?.lessons || []), ...allLessons.filter(id => view(current, id) !== view(next, id))]);
@@ -555,7 +562,7 @@ export class Store {
     const draft = this.previewDraft(input.draftToken), content = draft.content, exercise = content.exercises.find(e => e.id === input.exerciseId);
     if (!content.lessons.some(l => l.id === input.lessonId) || !exercise || !exerciseInLesson(content,input.lessonId,exercise.id)) throw new DomainError('Exercise not found in this draft lesson.', 404, 'PREVIEW_TARGET_NOT_FOUND');
     const grade = evaluateAnswer(exercise, content, input.answer);
-    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, exerciseId: exercise.id, result: { exerciseId: exercise.id, lessonId: input.lessonId, answer: input.answer, ...grade } };
+    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, exerciseId: exercise.id, result: withAnswerVocabularyBindings(exercise, { exerciseId: exercise.id, lessonId: input.lessonId, answer: input.answer, ...grade }) };
   }
   entitlement(userId, input) {
     const eventId = id(input.eventId);

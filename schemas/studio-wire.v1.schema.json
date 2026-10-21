@@ -461,6 +461,22 @@
                 "minLength": 1,
                 "maxLength": 1000
               }
+            },
+            "vocabularyBindings": {
+              "allOf": [
+                {
+                  "$ref": "exercise-bindings.v1.schema.json"
+                },
+                {
+                  "items": {
+                    "properties": {
+                      "field": {
+                        "const": "answers"
+                      }
+                    }
+                  }
+                }
+              ]
             }
           },
           "required": [
