@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-21T21:50:46.585Z",
+  "beforeSha256": "e72ca110485b8d3d67a70477e790c4c7bbcb4902c4bec6890eceaa2e2d16b460",
+  "afterSha256": "e72ca110485b8d3d67a70477e790c4c7bbcb4902c4bec6890eceaa2e2d16b460",
+  "liveSha256": "e72ca110485b8d3d67a70477e790c4c7bbcb4902c4bec6890eceaa2e2d16b460",
+  "backupSha256": "e72ca110485b8d3d67a70477e790c4c7bbcb4902c4bec6890eceaa2e2d16b460",
+  "sourceDigest": "5be459536124d79296d444f94b049b3bef421ac422f2d3b556efe42e1a003281",
+  "allTablesAndSchemaEqual": true,
+  "backupReadOnly": true,
+  "liveReadOnly": true
+}
