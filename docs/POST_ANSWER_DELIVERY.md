@@ -1,3 +1,5 @@
+> Historical three-family E10 delivery. The current all-six-family extension, corrected review evidence and remaining native limits are recorded in [E10_ALL_FAMILIES.md](E10_ALL_FAMILIES.md) and the [current user guide](POST_ANSWER_VOCABULARY.md). Preserve the historical receipts below.
+
 # E10 delivery and evidence
 
 Guy requested vocabulary cards on words after exercise answers. The implemented direct-ID coverage is recognition question words, matching words and submitted placements, and typing target words, for correct and incorrect outcomes. Check/Apply and saved-draft rehearsal share the implementation. Hover/focus previews; activation pins; disclosures and audio use the current renderers. The first Escape closes an open inner disclosure; a subsequent Escape closes the card and returns the exact trigger. Existing grades, answer text and question position stay intact.

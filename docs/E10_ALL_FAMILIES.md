@@ -25,12 +25,12 @@ routes and real HTTP integration. No seed, canonical source, Masterfile or owner
 ## Executed candidate checks
 
 - `npm ci --ignore-scripts` and corresponding schemas install: pass.
-- `npm run verify:candidate`: syntax and 759/759 tests pass. Existing audio filename
+- `npm run verify:candidate`: syntax and 760/760 tests pass. Existing audio filename
   and audio/speed/playback-name exclusions remain explicit in the runner.
 - `npm test --prefix schemas`: 27/27; contracts.check.mjs: 18/18;
   `node schemas/tools/validate.mjs --seed --runtime .`: accepted, input unchanged;
   `node schemas/tools/runtime-check.mjs --runtime .`: nine scenarios pass.
-- `test/answered-bindings.test.js`: nine tests, including all-six-family correct/incorrect
+- `test/answered-bindings.test.js`: ten tests, including all-six-family correct/incorrect
   decoration, exact Unicode/CRLF, denied and stale references, repeated token and
   authored-answer identities, plus six real saved-draft controller scenarios with no writes.
 - `test/app.test.js` E10 bound cases: six real HTTP app scenarios for correct/incorrect
