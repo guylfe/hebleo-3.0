@@ -19,14 +19,15 @@ function projectedForm(slot){
   tense:meta?.group==='gerund'?'verbal-noun':meta?.group,number:meta?.number,gender:({masculine:'m',feminine:'f',shared:'shared'})[meta?.gender],
   person:['I','אנחנו'].includes(token)?'1':['אתה','את','אתם','אתן'].includes(token)?'2':'3',base:meta?.citation===true||slot.slotId==='adjective.ms'};
 }
-export function projectLexicalRows(content,lessonId,{offset=0,limit=50,representation='pointed',search='',tag='',usedLessonId='',learningState='',learner}={}){
+export function projectLexicalRows(content,lessonId,{offset=0,limit=50,representation='pointed',search='',tag='',usedLessonId='',learningState='',learner,runtimeIds=null}={}){
  if(!content.lexical)return null;
  const lexical=content.lexical,catalogue=lexicalCatalogue(content),courseId=catalogue.courses[0].id;
  const check=validateLexicalContent(lexical,catalogue);if(!check.ok)throw new Error('Invalid lexical content: '+JSON.stringify(check.errors.slice(0,4)));
  const contextIndex=catalogue.courses[0].lessonIds.indexOf(lessonId);
  if(contextIndex<0)return {version:1,courseId,lessonId,status:'unknown-lesson',rows:[],total:0};
  const available=lexical.words.filter(w=>isApproved(w.identityReview,w.revision)&&isApproved(w.displayReview,w.revision)&&!w.fieldConflicts.length&&lexical.introductions.some(i=>i.wordKey===w.wordKey&&i.action==='introduce'&&i.courseId===courseId&&catalogue.courses[0].lessonIds.indexOf(i.lessonId)>=0&&catalogue.courses[0].lessonIds.indexOf(i.lessonId)<=contextIndex&&isApproved(i.review,i.revision)));
- let rows=available.map(word=>{
+ // Internal ID selection shares the exact eligibility policy; it is independent of library paging.
+ let rows=available.filter(word=>runtimeIds===null||runtimeIds.has(word.runtimeId)).map(word=>{
   const result=computeEligibility(lexical,catalogue,{courseId,lessonId,wordKey:word.wordKey,representation});
   const display=word.display||{};
   const ownedAudio=word.sourceFields?.Audio;
@@ -39,7 +40,7 @@ export function projectLexicalRows(content,lessonId,{offset=0,limit=50,represent
  const managedRuntimeIds=rows.map(w=>w.runtimeId).filter(Boolean),query=search.trim().toLocaleLowerCase();
  rows=rows.filter(w=>(!query||JSON.stringify(w).toLocaleLowerCase().includes(query))&&(!tag||w.tags.includes(tag))&&(!usedLessonId||w.lessonIds.includes(usedLessonId))&&(!learningState||learningState==='new'&&!learner?.cards?.[w.runtimeId]||learningState==='review'&&learner?.cards?.[w.runtimeId]||learningState==='saved'&&learner?.bookmarks?.includes(w.runtimeId)||learningState==='due'&&learner?.cards?.[w.runtimeId]&&Date.parse(learner.cards[w.runtimeId].due)<=Date.now()));
  const total=rows.length,pageSize=Math.min(50,Math.max(1,limit));offset=Math.min(Math.max(0,offset),Math.max(0,Math.ceil(total/pageSize)-1)*pageSize);
- return {version:1,courseId,lessonId,status:'connected',offset,limit:pageSize,total,managedRuntimeIds,rows:rows.slice(offset,offset+pageSize)};
+ return {version:1,courseId,lessonId,status:'connected',offset,limit:pageSize,total,managedRuntimeIds,rows:runtimeIds===null?rows.slice(offset,offset+pageSize):rows};
 }
 export function lessonLexicalDiagnostics(content,lessonId,wordKey){
  const lexical=content.lexical||emptyLexical(),catalogue=lexicalCatalogue(content);

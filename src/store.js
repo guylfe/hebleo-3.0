@@ -1,4 +1,5 @@
 import {projectSourceVocabulary} from '../public/source-vocabulary.js';
+import {projectExerciseVocabulary} from './exercise-vocabulary.js';
 import {MediaStore} from './media-store.js';
 import {validateSourceState} from './source-state.js';
 import { DatabaseSync } from 'node:sqlite';
@@ -52,7 +53,7 @@ function validatePreferences(p) {
 function validateInteractions(items){if(!Array.isArray(items)||items.length>30)throw new DomainError('Invalid lesson interactions.');for(const item of items){if(!['reveal','choice'].includes(item.type))throw new DomainError('Unsupported lesson interaction.');text(item.prompt,'interaction prompt');if(item.type==='reveal')text(item.answer,'interaction answer',12000);else{if(!Array.isArray(item.choices)||item.choices.length<2||item.choices.length>10||!Number.isInteger(item.correctIndex)||item.correctIndex<0||item.correctIndex>=item.choices.length)throw new DomainError('Invalid inline choices.');item.choices.forEach(v=>text(v,'inline choice'));text(item.feedback,'inline feedback');}}}
 
 export function validateContent(content) {
-  if(content&&(Object.hasOwn(content,'lexicalView')||Object.hasOwn(content,'sourceView')))throw new DomainError('lexicalView is a learner projection, not authored content.');
+  if(content&&['lexicalView','sourceView','exerciseVocabulary'].some(key=>Object.hasOwn(content,key)))throw new DomainError('lexicalView/sourceView/exerciseVocabulary is a learner projection, not authored content.');
   if (!content || content.schemaVersion !== 1) throw new DomainError('Expected content schemaVersion 1.');
   if (content.provenance?.kind !== 'synthetic-demo' && content.provenance?.kind !== 'verified-source') throw new DomainError('Content needs explicit provenance.');
   // A verified pack may not smuggle in objects still awaiting the owner's approval; candidate packs stay blocked until each object is approved.
@@ -245,6 +246,7 @@ export class Store {
     delete projected.lexical;
     if(content.lexical?.sourceBrowse)projected.sourceView=projectSourceVocabulary(content);
     if(content.lexical)projected.lexicalView=projectLexicalRows(content,lessonId||orderedLessons(content)[0].id);
+    if(lessonId)projected.exerciseVocabulary=projectExerciseVocabulary(content,lessonId,word=>this.publicWord(word));
     projected.lessons=content.lessons.map(lesson=>{if(lesson.compositionVersion!==2)return lesson;return {...lesson,blocks:lesson.blocks.map(block=>Object.fromEntries(Object.entries(block).filter(([key])=>['id','type','title','source','selector','renderer','role','text','video','interactions','options'].includes(key))))};});
     return projected;
   }

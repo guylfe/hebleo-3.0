@@ -5,6 +5,7 @@ import {stepExercises, audioURL, portionExercises, portionLesson} from '../ux.js
 import {keyboardForLesson,resolveComponent} from '../course.js';
 import {resolveBlock} from '../content.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../lexical-vocabulary.js';
+import {mountAnsweredVocabulary} from '../post-answer-vocabulary.js';
 import {bindMatching, matchWord} from '../interactions.js';
 import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls} from '../learner-view.js';
 
@@ -83,7 +84,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const context=lessonId+'|'+(componentId||step);if(context!==mediumKey){medium=null;mediumKey=context;}
       const word = id => content.words.find(w => w.id === id);
       const exercise = exerciseId ? content.exercises.find(x => x.id === exerciseId) : null;
-      let lexicalBinding;
+      let lexicalBinding,reminderBinding;
       let draft = draftOf(props.answer), message = '', conceptOpen = false, answerSelection = null;
       const root = doc.createElement('div');
       root.className = 'learner-preview';
@@ -147,7 +148,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         const mode = exercise.nikkudOverride || preferences.nikkud || 'full', allowed = exercise.allowLookup || Boolean(result);
         const lessonWords = content.words.filter(w => lesson.wordIds?.includes(w.id));
         return '<div class="mode-bar"><span class="tag">Question ' + (question + 1) + ' of ' + count + '</span>' + (exercise.nikkudOverride ? '<span class="tag">Nikkud: ' + esc({full:'With Nikkud', none:'Without Nikkud', curated:'Lesson-authored Nikkud'}[exercise.nikkudOverride]) + '</span>' : '') + '</div><p class="exercise-prompt">' + esc(exercise.prompt) + '</p>'
-          + exerciseInput(exercise, {mode, word, draft, result, keyboard:keypad()})
+          + '<div data-exercise-input>'+exerciseInput(exercise, {mode, word, draft, result, keyboard:keypad()})+'</div>'
           + note()
           + '<div class="answer-result">'+exerciseFeedback(exercise, result)
           + '<div class="answer-commit">'+button('Check answer','check','primary','',Boolean(result)).replace('<button','<button data-keyboard-preserve')+'</div>'
@@ -158,6 +159,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       let mounted = false;
       function render() {
         if (!active()) return;
+        reminderBinding?.destroy();lexicalBinding?.destroy();
         if (mounted) captureFocus();
         mounted = true;
         const body = !lesson ? '<p>This lesson is not in the draft.</p>'
@@ -168,6 +170,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         root.innerHTML = settings() + (exercise ? '' : note()) + '<section class="card lesson-section">' + body + '</section>' + lookupCard();
         lexicalBinding=bindLexicalVocabulary(root);
         syncAudioControls(root,Number(preferences.audioSpeed)||1,getPlaybackState());bindResultExplanations(root);
+        if(exercise&&result&&!busy)reminderBinding=mountAnsweredVocabulary(root,{content,exercise,result,mode:exercise.nikkudOverride||preferences.nikkud||'full',isCurrent:()=>active(),playAudio,stopMedia,getPlaybackState});
         if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select,textarea').forEach(el => { el.disabled = true; }); }
         if (exercise?.type === 'matching' && !result && !busy) bindMatching(root, (id, meaning) => { if (active()) updateDraft({...draft, matching:matchWord(draft.matching, id, meaning)}); });
         restoreFocus(); reveal();
@@ -245,6 +248,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         if (!active()) return;
         captureFocus();
         lexicalBinding?.destroy();
+        reminderBinding?.destroy();
         controller.abort();
         stopMedia?.();
         root.remove();

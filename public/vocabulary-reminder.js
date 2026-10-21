@@ -183,7 +183,7 @@ export function bindVocabularyReminders(scope, {renderCard, bindCard, stopCardMe
   }
   function isolateKeys(event) {
     event.stopPropagation();
-    if (event.type === 'keydown' && event.key === 'Escape' && current) { event.preventDefault(); close(); }
+    if (!event.defaultPrevented && event.type === 'keydown' && event.key === 'Escape' && current) { event.preventDefault(); close(); }
   }
   function registerTriggers() {
     for (const [anchor, saved] of triggers) {

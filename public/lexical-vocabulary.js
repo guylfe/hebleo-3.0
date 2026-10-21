@@ -251,7 +251,7 @@ function prepositionTable(words,prefix,mode){
  }).join('')+'</table>';
 }
 
-export function renderLexicalVocabulary(words, {idPrefix = 'lexical', prepositionMode = 'compact'} = {}) {
+export function renderLexicalVocabulary(words, {idPrefix = 'lexical', prepositionMode = 'compact',readOnly=false} = {}) {
   if (!Array.isArray(words)) throw new TypeError('Vocabulary display records must be an array');
   const unique = new Map();
   for (const word of words) {
@@ -263,7 +263,8 @@ export function renderLexicalVocabulary(words, {idPrefix = 'lexical', prepositio
   const prefix = 'lexical-'+safeID(idPrefix);
   if (!unique.size) return '<div class="lexical-vocabulary"><p role="status">No vocabulary available in this context.</p></div>';
   return '<div class="lexical-vocabulary" data-display-version="1">'+categories.map(category => {
-    const selected = [...unique.values()].filter(w => w.category === category);
+    // Read-only references retain disclosures/audio but cannot bypass safe rows via flat lookup.
+    const selected = [...unique.values()].filter(w => w.category === category).map(w=>readOnly?{...w,runtimeId:undefined}:w);
     if (!selected.length) return '';
     const headers = category==='Nouns'?['Hebrew','English','Plural','Gender','Root','Pattern']:category==='Other'?['Hebrew','English']:['Hebrew','English','Root','Pattern','Forms'];
     const mode=prepositionMode==='full'?'full':'compact';

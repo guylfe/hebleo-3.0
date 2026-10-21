@@ -1,4 +1,5 @@
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../public/lexical-vocabulary.js';
+import {mountAnsweredVocabulary} from '../public/post-answer-vocabulary.js';
 import {sourceBrowseFixture} from '../scripts/source-browse-fixture.mjs';
 import {lexicalFixture} from '../scripts/lexical-fixture.mjs';
 import {mountMediaLibrary} from '../public/studio/media-library.js';
@@ -36,7 +37,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,{renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  Object.assign(w,{mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   if(markdownDependencies)w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
@@ -66,6 +67,34 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+
+test('POST-VOC delayed choice save cannot replace the grading scope or drop returned feedback',async t=>{
+ const {w,doc,store}=await app(t,{page:'lesson/lesson-1/check',realHTTP:true}),original=w.fetch;let release;
+ w.fetch=async(path,options)=>{const response=await original(path,options);if(path==='/api/progress'&&!release){await new Promise(resolve=>{release=resolve;});}return response;};
+ const expected=store.snapshot().words.find(w=>w.id==='w-mi').english,choice=[...doc.querySelectorAll('[data-action=choice]')].find(el=>el.dataset.value===expected),scope=doc.querySelector('#practice');choice.click();await settled(()=>release);
+ click(doc,'check');await settled(()=>store.learner('learner-demo').attempts.length===1);release();await settled(()=>doc.querySelector('[data-vocabulary-word]'));
+ assert.equal(doc.querySelector('#practice'),scope);assert.ok(doc.querySelector('.feedback:not(.wrong)'));assert.equal(store.learner('learner-demo').attempts.length,1);
+});
+for(const correct of [true,false])test('POST-VOC actual HTTP app gates correct/incorrect cards, preserves grade/state, reloads feedback and clears on retry/next/profile '+correct,async t=>{
+ const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-1/check',realHTTP:true});
+ assert.equal(doc.querySelector('[data-vocabulary-word]'),null);
+ const expected=store.snapshot().words.find(w=>w.id==='w-mi').english;
+ const choice=[...doc.querySelectorAll('[data-action=choice]')].find(el=>correct?el.dataset.value===expected:el.dataset.value!==expected);assert.ok(choice);choice.click();await settled(()=>doc.querySelector('[data-action=choice].selected'));
+ const prompt=doc.querySelector('.exercise-prompt'),input=doc.querySelector('[data-exercise-input]');click(doc,'check');
+ await settled(()=>doc.querySelector('[data-vocabulary-word]')&&store.learner('learner-demo').resumes['lesson-1']?.resultRequestId);
+ assert.equal(doc.querySelector('.exercise-prompt'),prompt);assert.equal(doc.querySelector('[data-exercise-input]'),input);assert.ok([...doc.querySelectorAll('[data-action=choice]')].every(el=>el.disabled));
+ assert.equal(store.learner('learner-demo').attempts.length,1);assert.equal(store.learner('learner-demo').attempts[0].correct,correct);
+ const before=JSON.stringify(store.learner('learner-demo')),writes=calls.filter(p=>['/api/attempt','/api/progress','/api/preferences'].includes(p)).length;
+ // Stub geometry to permit DOM interaction; this does not certify native layout.
+ w.HTMLElement.prototype.getBoundingClientRect=function(){return {x:20,y:40,left:20,top:40,right:180,bottom:80,width:160,height:40};};w.HTMLElement.prototype.getClientRects=function(){return [this.getBoundingClientRect()];};
+ const trigger=doc.querySelector('[data-vocabulary-word]');trigger.click();assert.ok(doc.querySelector('.vocabulary-reminder'));assert.equal(doc.querySelector('.vocabulary-reminder [data-action=enroll]'),null);
+ doc.querySelector('.vocabulary-reminder').dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));assert.equal(store.learner('learner-demo').attempts.length,1);
+ doc.querySelector('[data-vocabulary-close]').click();assert.equal(doc.activeElement,trigger);assert.equal(JSON.stringify(store.learner('learner-demo')),before);assert.equal(calls.filter(p=>['/api/attempt','/api/progress','/api/preferences'].includes(p)).length,writes);
+ const restored=await app(t,{page:'lesson/lesson-1/check',store,realHTTP:true});assert.ok(restored.doc.querySelector('[data-vocabulary-word]'));assert.equal(store.learner('learner-demo').attempts.length,1);
+ trigger.click();click(doc,correct?'next-question':'retry-question');await settled(()=>!doc.querySelector('.vocabulary-reminder')&&!doc.querySelector('[data-vocabulary-word]'));
+ assert.equal(store.learner('learner-demo').attempts.length,1);
+ const profile=restored.doc.querySelector('#demo-user');profile.value='learner-core';profile.dispatchEvent(new restored.w.Event('change',{bubbles:true}));await settled(()=>restored.doc.querySelector('.page-home'));assert.equal(restored.doc.querySelector('.vocabulary-reminder'),null);
+});
 
 test('LEXICAL actual app uses context eligibility, category disclosure and server-filtered My Hebrew without source-only search leakage',async t=>{
  const {doc,w}=await app(t,{page:'lesson/lesson-2/vocabulary',realHTTP:true,prepare(store){const c=store.snapshot();c.lexical=lexicalFixture();store.set('active',store.addRevision(c,'Synthetic lexical UI fixture only'));}});

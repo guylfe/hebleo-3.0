@@ -51,6 +51,17 @@ function previewHarness(t, store, token, lessonId, evaluateHook = input => store
   return {...env, preview, evaluations, root:() => env.container.querySelector('[data-preview-root]')};
 }
 function input(h, value) {const el = h.root().querySelector('#answer'); el.value = value; el.dispatchEvent(new h.w.Event('input', {bubbles:true}));}
+test('POST-VOC saved-draft rehearsal shares correct/incorrect Check/Apply cards and never invokes answer, preference or learner writes',t=>{
+ const {store,token}=fixture(t),session=store.previewSession({lessonId:'lesson-1',draftToken:token}),before=dump(store);
+ for(const [step,exerciseId] of [['check','ex-1-recognize'],['apply','ex-1-type']])for(const correct of [true,false]){
+  const h=direct(t,session,{step,exerciseId,result:{correct,answer:'SYNTHETIC wrong learner text'},answer:'SYNTHETIC wrong learner text'});
+  h.w.HTMLElement.prototype.getBoundingClientRect=function(){return {left:20,top:40,right:180,bottom:80,width:160,height:40};};h.w.HTMLElement.prototype.getClientRects=function(){return [this.getBoundingClientRect()];};
+  const trigger=h.root().querySelector('[data-vocabulary-word]');assert.ok(trigger);trigger.click();assert.ok(h.root().querySelector('.vocabulary-reminder'));assert.equal(h.root().querySelector('.vocabulary-reminder [data-action=lookup],[data-action=enroll]'),null);
+  const beforeKeys=h.calls.length;h.root().querySelector('.vocabulary-reminder').dispatchEvent(new h.w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));assert.equal(h.calls.length,beforeKeys);
+  h.dispose();assert.equal(h.doc.querySelector('.vocabulary-reminder'),null);assert.deepEqual(h.forbidden,[]);
+ }
+ assert.equal(dump(store),before);
+});
 function orderingSelection(tokens, prefixes, target) {
   const search = picked => {
     if (picked.length && composeSentence(tokens, picked, prefixes) === target) return picked;

@@ -17,13 +17,14 @@ import {inspectImport,renderImportReview} from './studio/import-review.js';
 import {mountLessonPreview} from './preview/lesson-preview.js';
 import {createLearnerRenderer} from './preview/learner-renderer.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from './lexical-vocabulary.js';
+import {mountAnsweredVocabulary} from './post-answer-vocabulary.js';
 
 const root = document.querySelector('#app');
 const state = { page:'home', user:localStorage.getItem('hebleo-demo-user') || 'learner-demo', data:null, lessonId:'lesson-1', step:'learn', question:0, answer:'', matching:{}, selectedTokens:[], result:null, practiceIds:[], medium:'watch', wordId:'w-ani', search:'', libraryTag:'', libraryLesson:'', libraryState:'', libraryPage:0, libraryMode:'source', sourceCategory:'', sourceLesson:'', studioTask:'lesson', outlineOpen:null, discussionPage:0, commentDrafts:{}, commentPending:{}, commentErrors:{}, noteDrafts:{}, replyDrafts:{}, replyOpen:{}, replyPending:{}, replyErrors:{}, navigation:{}, navDrawer:null, navLast:null, studio:null, reports:[], questions:[], authorLessonId:'lesson-1', authorExerciseId:null, importCandidate:null, studioImport:{}, panel:null, reviewSession:null, revealReview:false, recording:'empty' };
 const uid = () => crypto.randomUUID();
 const pref = () => state.data.learner.preferences;
 let navigationHideTimer;const navigationMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
-let lexicalBinding,lexicalSearchTimer,lexicalRequest=0,lexicalLoading=false,lexicalError='';
+let reminderBinding,lexicalBinding,lexicalSearchTimer,lexicalRequest=0,lexicalLoading=false,lexicalError='';
 let saveTimer, saveChain=Promise.resolve(), submitting=false, routeGeneration=0, panelGeneration=0, lastFocus=null;
 // The author workspace owns its mounts across status renders; deliberate departures dispose it.
 let studioMounts=[], studioWorkspace=null, studioDeparturePending=false, rehearsal=null, sourceWorkspaceState=null,mediaWorkspaceState=null;
@@ -134,6 +135,7 @@ function pageStudioLists(){
 function refreshComments(){rememberComposers();for(const area of document.querySelectorAll('[data-comment-feed]')){const panel=area.closest('#context-panel');area.innerHTML=questionList(panel?false:state.data.canAuthor,panel?state.panel?.context?.lessonId:state.page==='studio'?state.authorLessonId:state.lessonId);bind(area);}}
 function render() {
   if(!state.data)return;
+  reminderBinding?.destroy();reminderBinding=null;
   rememberComposers();rememberNote();if(studioWorkspace&&state.page==='studio'&&studioWorkspace.owner===state.user){for(const node of studioWorkspace.nodes)node.remove();}else disposeStudioMounts();if(rehearsal&&state.page!=='studio')endRehearsal();
   returnKeyboard();document.querySelector('#context-panel')?.remove();
   const pages={home,course,lesson,review,library,studio,settings};const u=state.data.users.find(u=>u.id===state.user);
@@ -368,13 +370,20 @@ async function authoredHelp(wordId) {
 }
 function showAnswerResult(scope,e,dockHeight=0){
  if(!scope?.isConnected||!state.result)return;scope.dataset.checked='true';if(dockHeight>0)scope.style.setProperty('--answer-dock-reserve',dockHeight+'px');
- scope.querySelectorAll('[data-exercise-input] button,[data-exercise-input] textarea,[data-exercise-input] input').forEach(el=>el.disabled=true);scope.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===state.answer));
+ scope.querySelectorAll('[data-exercise-input] button:not([data-vocabulary-word]),[data-exercise-input] textarea,[data-exercise-input] input').forEach(el=>el.disabled=true);scope.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===state.answer));
  if(e.type==='matching'&&state.result.pairResults){for(const tile of scope.querySelectorAll('[data-match-word]')){const ok=state.result.pairResults[tile.dataset.matchWord];tile.classList.add(ok?'pair-correct':'pair-incorrect');let status=tile.querySelector('.pair-status');if(!status){status=document.createElement('small');status.className='pair-status';tile.append(status);}status.textContent=ok?'✓ Correct':'✕ Incorrect';}for(const tile of scope.querySelectorAll('[data-match-target]')){const id=e.wordIds.find(id=>state.result.answer[id]===tile.dataset.matchTarget);if(id)tile.classList.add(state.result.pairResults[id]?'pair-correct':'pair-incorrect');}}
  const status=scope.querySelector('[data-answer-status]');status.innerHTML=exerciseFeedback(e,state.result);bindResultExplanations(status);scope.querySelector('[data-action="check"]').disabled=true;const keyboard=scope.querySelector('[data-action="keyboard-open"]');if(keyboard)keyboard.disabled=true;
  const toolbar=scope.querySelector(':scope > .toolbar');toolbar.innerHTML=(!state.result.correct?button('Try this question again','retry-question','small secondary',e.id):'')+button('Vocabulary help','exercise-lookup','small outline')+button('Report a problem','report-open','small outline');bind(toolbar);
  const footer=scope.querySelector('.exercise-footer'),ids=portionExercises(content(),lessonObject(),state.step,state.practiceIds),back=portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)-1];footer.innerHTML=button('← Back','step','outline',back||'',!back)+button(state.question+1===ids.length?'Continue →':'Next question →','next-question','secondary')+(state.practiceIds.length?button('Skip extra practice','step','small outline','complete'):'');bind(footer);
  const bar=root.querySelector('.lesson-progress'),n=questionProgress(lessonObject()).correctIds.length,total=lessonObject().exerciseIds.length;if(bar){bar.querySelector('label').textContent=n+' of '+total+' questions answered correctly';const progress=bar.querySelector('progress');progress.value=n;progress.setAttribute('aria-valuenow',String(n));progress.setAttribute('aria-valuetext',n+' of '+total);}
- syncKeyboard();refreshComments();scope.querySelector('[data-answer-commit]').focus({preventScroll:true});
+ mountExerciseReminders(scope,e);syncKeyboard();refreshComments();scope.querySelector('[data-answer-commit]').focus({preventScroll:true});
+}
+function mountExerciseReminders(scope,e=currentExercise()){
+ reminderBinding?.destroy();reminderBinding=null;
+ if(!scope||!e||!state.result||state.page!=='lesson')return;
+ const session=state.session,owner=state.user,result=state.result,step=state.step,question=state.question,route=location.hash;
+ reminderBinding=mountAnsweredVocabulary(scope,{content:content(),exercise:e,result,mode:e.nikkudOverride||pref().nikkud,playAudio,stopMedia,getPlaybackState,
+  isCurrent:()=>state.user===owner&&state.session===session&&state.result===result&&state.step===step&&state.question===question&&location.hash===route&&!state.panel});
 }
 async function submitAnswer() {
  if(submitting||state.result||!learnerControlsActive())return;const e=currentExercise();if(!e)return;const wire=wireAnswer(e,answerDraft());if(wire.error){toast(wire.error);return;}
@@ -438,7 +447,7 @@ async function act(action,value,source) {
     try{await api('preferences',{note:{wordId:value,text:saved}},owner);rememberNote();if(state.noteDrafts[key]?.text===saved)delete state.noteDrafts[key];if(state.user!==owner)return;await load();if(state.user===owner&&state.panel===panel){closePanel();delete state.noteDrafts[key];render();toast('Your private note is saved beside this word.');}}
     finally{if(field.isConnected)field.readOnly=false;}return;
   }
-  if(action==='choice'){if(state.result||submitting)return;state.answer=value;if(pref().immediateAnswers)await submitAnswer();else{await queueSave();render();}return;}
+  if(action==='choice'){if(state.result||submitting)return;state.answer=value;root.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===value));root.querySelector('[data-answer-commit]')?.focus({preventScroll:true});if(pref().immediateAnswers)await submitAnswer();else await queueSave();return;}
   if(action==='check'){await submitAnswer();return;}
   if(action==='save-answer-position'){if(!state.result||submitting)return;const scope=root.querySelector('#practice'),owner=state.user;await load();if(owner!==state.user||root.querySelector('#practice')!==scope)return;await queueSave();if(owner===state.user&&root.querySelector('#practice')===scope){showAnswerResult(scope,currentExercise());scope.querySelector('[data-position-recovery]')?.remove();}return;}
   if(action==='token'){if(state.result)return;state.selectedTokens.push(Number(value));await queueSave();render();return;}
@@ -483,6 +492,7 @@ function askConfirmation(message,action){
 }
 function download(name,value){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function bind(scope=root) {
+  if(scope===root)mountExerciseReminders(scope.querySelector('#practice'));
   if(scope===root){lexicalBinding?.destroy();lexicalBinding=scope.querySelector('.lexical-vocabulary')?bindLexicalVocabulary(scope,{encounters:{has:token=>{try{return localStorage.getItem('hebleo-note-seen:'+state.user+':'+token)==='1';}catch{return false;}},mark:token=>{try{localStorage.setItem('hebleo-note-seen:'+state.user+':'+token,'1');}catch{}}}}):null;}
   scope.querySelector('[data-studio-departure]')?.addEventListener('click',async event=>{event.preventDefault();const href=event.currentTarget.href;if(await guardStudioDeparture('Open Google connection setup'))location.assign(href);});
   scope.querySelector('.studio-task-menu')?.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;const tabs=[...event.currentTarget.querySelectorAll('[role="tab"]')],index=tabs.indexOf(document.activeElement);if(index<0)return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;tabs[next].focus();tabs[next].click();});
