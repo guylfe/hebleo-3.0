@@ -135,13 +135,13 @@ test('Studio editor shows the token error, keeps typed tokens, prefix ticks and 
   const answers=()=>[...form.querySelectorAll('[data-list="answers"] [name="answers"]')].map(x=>x.value);
   type(form.elements.prompt,'Fixture-only edited prompt');
   form.querySelector('[data-list-add="tokens"]').click();
-  const was=state(s);
+  const was=state(s), disabledBefore=new Map([...form.querySelectorAll('input,select,textarea,button')].map(el=>[el,el.disabled]));
   const refusedAt=async(row,expectedTokens,expectedTicks)=>{
     await submit();
     assert.equal(status.textContent,message('ex-2-order',row));
     assert.deepEqual(tokens(),expectedTokens);assert.deepEqual(ticks(),expectedTicks);assert.deepEqual(answers(),original.answers);
     assert.equal(form.elements.prompt.value,'Fixture-only edited prompt');
-    assert.ok([...form.querySelectorAll('input,select,textarea,button')].every(el=>!el.disabled));
+    assert.ok([...form.querySelectorAll('input,select,textarea,button')].every(el=>el.disabled===(disabledBefore.get(el)??false)));
     unchanged(s,was);
   };
   for(const value of ['','    ','‏']){type(rows()[3].querySelector('[name="tokens"]'),value);await refusedAt(4,[...original.tokens,value],[true,false,false,false]);}

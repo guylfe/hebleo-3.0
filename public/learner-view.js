@@ -5,6 +5,8 @@ import {composeSentence} from './interactions.js';
 // Pure learner lesson/exercise HTML and answer serialization, shared by the learner app
 // and the disposable draft-rehearsal renderer. No state, DOM, fetch or storage access here.
 export const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Mark exact authored surfaces; decoration happens only after the current answer is graded.
+export const exerciseSurface = (text, field, index) => '<span data-vocabulary-surface="'+field+'"'+(index===undefined?'':' data-vocabulary-index="'+index+'"')+'>'+esc(text).replace(/\r/g,'&#13;')+'</span>';
 export const button = (label, action, cls='', value='', disabled=false) => '<button type="button" class="button '+cls+'" data-action="'+action+'" data-value="'+esc(value)+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
 export function sourceCell(w,key){return w.fieldFormatting?.[key];}
 export function wordText(w,mode='full') {
@@ -70,17 +72,21 @@ export function sentenceTiles(e,selectedTokens,result) {
     if(groups.length && prefixes.has(selectedTokens[position-1]))groups.at(-1).push({position,index});
     else groups.push([{position,index}]);
   }
-  return groups.map(group=>'<span class="sentence-tile-group">'+group.map(({position,index},member)=>'<button class="token target '+(member>0?'joined-previous ':'')+(member<group.length-1?'joined-next':'')+'" data-action="remove-token" data-value="'+position+'" '+(result?'disabled':'')+'>'+esc(e.tokens[index])+'</button>').join('')+'</span>').join('');
+  return groups.map(group=>'<span class="sentence-tile-group">'+group.map(({position,index},member)=>'<button class="token target '+(member>0?'joined-previous ':'')+(member<group.length-1?'joined-next':'')+'" data-action="remove-token" data-value="'+position+'" '+(result?'disabled':'')+'>'+exerciseSurface(e.tokens[index],'tokens',index)+'</button>').join('')+'</span>').join('');
 }
 export function exerciseInput(e,{mode,word,draft,result,keyboard=''}) {
+  const context=e.context?'<div class="hebrew large">'+exerciseSurface(e.context,'context')+'</div>':'';
+  return context+exerciseAnswerInput(e,{mode,word,draft,result,keyboard});
+}
+function exerciseAnswerInput(e,{mode,word,draft,result,keyboard}) {
   if(e.type==='recognition')return '<div class="hebrew large">'+wordText(word(e.wordId),mode)+'</div><div class="choices">'+e.choices.map((c,i)=>'<button class="choice '+(draft.text===c?'selected':'')+'" data-action="choice" data-value="'+esc(c)+'" '+(result?'disabled':'')+'><span class="shortcut">'+(i+1)+'</span>'+esc(c)+'</button>').join('')+'</div>';
   if(e.type==='matching')return matchingGame(e,mode,word,draft.matching,result);
-  if(e.type==='ordering')return '<label>Your sentence</label><p class="assembled-sentence hebrew" dir="rtl">'+esc(composeSentence(e.tokens,draft.selectedTokens,e.prefixTokenIndices))+'</p><div class="token-row sentence-answer" aria-label="Your sentence">'+sentenceTiles(e,draft.selectedTokens,result)+'</div><label>Choose words</label><div class="token-row" aria-label="Available words">'+e.tokens.map((t,i)=>'<button class="token" data-action="token" data-value="'+i+'" '+(draft.selectedTokens.includes(i)||result?'disabled':'')+'>'+esc(t)+'</button>').join('')+'</div>';
-  return (e.context?'<div class="hebrew large">'+esc(e.context)+'</div>':'')+(e.type==='cloze'?'<label for="answer">Type the missing word</label>':'<label for="answer">Your Hebrew answer</label>')+'<textarea id="answer" class="answer-input" dir="rtl" rows="2" autocomplete="off" spellcheck="false" inputmode="text" '+(result?'disabled':'')+'>'+esc(draft.text)+'</textarea>'+(result?'':keyboard);
+  if(e.type==='ordering')return '<label>Your sentence</label><p class="assembled-sentence hebrew" dir="rtl">'+esc(composeSentence(e.tokens,draft.selectedTokens,e.prefixTokenIndices))+'</p><div class="token-row sentence-answer" aria-label="Your sentence">'+sentenceTiles(e,draft.selectedTokens,result)+'</div><label>Choose words</label><div class="token-row" aria-label="Available words">'+e.tokens.map((t,i)=>'<button class="token" data-action="token" data-value="'+i+'" '+(draft.selectedTokens.includes(i)||result?'disabled':'')+'>'+exerciseSurface(t,'tokens',i)+'</button>').join('')+'</div>';
+  return (e.type==='cloze'?'<label for="answer">Type the missing word</label>':'<label for="answer">Your Hebrew answer</label>')+'<textarea id="answer" class="answer-input" dir="rtl" rows="2" autocomplete="off" spellcheck="false" inputmode="text" '+(result?'disabled':'')+'>'+esc(draft.text)+'</textarea>'+(result?'':keyboard);
 }
 export function exerciseFeedback(e,result) {
  if(!result)return '';const status=result.correct?'Correct':'Incorrect',explanation=[e.feedback,e.feedbackDetails].filter(value=>typeof value==='string'&&value.trim()),alternatives=!['recognition','matching'].includes(e.type)&&Array.isArray(result.acceptedAnswers)?[...new Set(result.acceptedAnswers)].filter(value=>typeof value==='string'&&value.trim()):[],meaningful=explanation.length||alternatives.length>1;
- const icon='<span aria-hidden="true">'+(result.correct?'✓':'✕')+'</span><span class="sr-only">'+status+'</span>',body=explanation.map(value=>'<p dir="auto">'+esc(value)+'</p>').join('')+(alternatives.length>1?'<p>Authored alternatives</p><ul>'+alternatives.map(value=>'<li><bdi dir="auto">'+esc(value)+'</bdi></li>').join('')+'</ul>':'');
+ const icon='<span aria-hidden="true">'+(result.correct?'✓':'✕')+'</span><span class="sr-only">'+status+'</span>',body=['feedback','feedbackDetails'].filter(field=>typeof e[field]==='string'&&e[field].trim()).map(field=>'<p dir="auto">'+exerciseSurface(e[field],field)+'</p>').join('')+(alternatives.length>1?'<p>Authored alternatives</p><ul>'+alternatives.map(value=>'<li><bdi dir="auto">'+esc(value)+'</bdi></li>').join('')+'</ul>':'');
  return '<div class="feedback compact-result '+(result.correct?'':'wrong')+'" role="status" aria-label="'+status+'">'+(meaningful?'<span class="result-explanation"><button type="button" class="result-icon" data-result-explanation aria-label="'+status+'. Show explanation" aria-expanded="false">'+icon+'</button><span class="result-popover" data-result-popover role="note" hidden>'+body+'</span></span>':'<span class="result-icon" aria-label="'+status+'">'+icon+'</span>')+'</div>';
 }
 const boundResultExplanations=new WeakSet();

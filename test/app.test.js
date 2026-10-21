@@ -12,6 +12,7 @@ import {JSDOM} from 'jsdom';
 import {marked} from 'marked';
 import createPurifier from 'dompurify';
 import {Store} from '../src/store.js';
+import {syntheticOccurrencePack} from '../scripts/exercise-bindings-fixture.mjs';
 import {createServer} from '../src/server.js';
 import {resolveBlock,importVocabularyCSV} from '../public/content.js';
 import * as ux from '../public/ux.js';
@@ -965,4 +966,33 @@ test('Source vocabulary uses the normal library with exact text, filters, paging
  assert.equal(doc.activeElement.id,'library-search');
  doc.querySelector('[data-action="library-mode"][data-value="learned"]').click();await settled(()=>doc.querySelector('#library-state'));
  assert.equal(doc.querySelectorAll('.lexical-source-details').length,0);assert.equal(JSON.stringify(store.learner('learner-demo')),before);
+});
+
+for(const type of ['ordering','cloze','transformation'])for(const correct of [true,false])test('E10 bound '+type+' actual HTTP correct/incorrect, in-place and restored cards '+correct,async t=>{
+ let authored;
+ const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-2/apply',realHTTP:true,prepare(s){
+  const c=syntheticOccurrencePack(s);authored=c.exercises.find(e=>e.type===type);
+  const staged=s.stage({baseRevisionId:s.get('active'),expectedDraftToken:null,content:c}),revisionId=s.publish(s.get('active'),staged.draftToken).revisionId;
+  const lesson=c.lessons.find(l=>l.id===authored.lessonId);
+  s.saveProgress('learner-demo',{lessonId:authored.lessonId,revisionId,step:'apply',question:lesson.exerciseIds.indexOf(authored.id),answer:'',selectedTokens:[],matching:{},practiceIds:[],resultRequestId:null});
+ }});
+ assert.equal(doc.querySelector('[data-vocabulary-binding]'),null);
+ const pub=store.session('learner-demo',authored.lessonId).content.exercises.find(e=>e.id===authored.id);
+ let raw;
+ if(type==='ordering'){
+  const targetIndices=pub.vocabularyBindings.filter(b=>b.field==='tokens').map(b=>b.index);
+  const arrange=picked=>{if(picked.length===targetIndices.length)return composeSentence(pub.tokens,picked,pub.prefixTokenIndices)===authored.answers[0]?picked:null;for(const i of targetIndices)if(!picked.includes(i)){const found=arrange([...picked,i]);if(found)return found;}return null;};
+  const indices=correct?arrange([]):[pub.tokens.findIndex((_t,i)=>!targetIndices.includes(i))];assert.ok(indices);
+  for(const [position,i] of indices.entries()){doc.querySelector('[data-action=token][data-value="'+i+'"]').click();await settled(()=>doc.querySelectorAll('[data-action=remove-token]').length===position+1);}
+  raw=doc.querySelector('.assembled-sentence').textContent;
+ }else{raw=correct?authored.answers[0]:'SYNTHETIC WRONG';const input=doc.querySelector('#answer');input.value=raw;input.dispatchEvent(new w.Event('input',{bubbles:true}));}
+ const scope=doc.querySelector('#practice');click(doc,'check');await settled(()=>doc.querySelector('[data-authored-vocabulary-answers] [data-vocabulary-binding]')&&store.learner('learner-demo').resumes[authored.lessonId]?.resultRequestId);
+ assert.equal(doc.querySelector('#practice'),scope);assert.equal(store.learner('learner-demo').attempts.at(-1).correct,correct);assert.equal(store.learner('learner-demo').attempts.at(-1).answer,raw);
+ if(type!=='ordering')assert.equal(doc.querySelector('#answer').value,raw);
+ assert.equal(doc.querySelector('button button'),null);
+ const before=JSON.stringify(store.learner('learner-demo')),writes=calls.filter(p=>['/api/attempt','/api/progress','/api/preferences'].includes(p)).length;
+ w.HTMLElement.prototype.getBoundingClientRect=()=>({left:10,top:10,right:160,bottom:60,width:150,height:50});w.HTMLElement.prototype.getClientRects=function(){return [this.getBoundingClientRect()];};
+ const trigger=doc.querySelector('[data-authored-vocabulary-answers] [data-vocabulary-binding]');trigger.click();assert.ok(doc.querySelector('.vocabulary-reminder'));doc.querySelector('[data-vocabulary-close]').click();assert.equal(doc.activeElement,trigger);
+ assert.equal(JSON.stringify(store.learner('learner-demo')),before);assert.equal(calls.filter(p=>['/api/attempt','/api/progress','/api/preferences'].includes(p)).length,writes);
+ const restored=await app(t,{page:'lesson/lesson-2/apply',store,realHTTP:true});assert.ok(restored.doc.querySelector('[data-authored-vocabulary-answers] [data-vocabulary-binding]'));assert.equal(store.learner('learner-demo').attempts.length,1);
 });

@@ -121,13 +121,13 @@ test('Studio editor shows the field error, keeps every typed value and re-enable
   const rows=()=>[...form.querySelectorAll('[data-list="distractors"] [name="distractors"]')];
   type(form.elements.prompt,'Fixture-only edited prompt');
   form.querySelector('[data-list-add="distractors"]').click();
-  const was=state(s);
+  const was=state(s), disabledBefore=new Map([...form.querySelectorAll('input,select,textarea,button')].map(el=>[el,el.disabled]));
   for(const value of ['','    ','‏']){
     type(rows()[3],value);await submit();
     assert.equal(status.textContent,message('ex-1-recognize',4));
     assert.deepEqual(rows().map(x=>x.value),[...original.distractors,value]);
     assert.equal(form.elements.prompt.value,'Fixture-only edited prompt');
-    assert.ok([...form.querySelectorAll('input,select,textarea,button:not([data-vocab-page])')].every(el=>!el.disabled));
+    assert.ok([...form.querySelectorAll('input,select,textarea,button')].every(el=>el.disabled===(disabledBefore.get(el)??false)));
     assert.equal(form.querySelector('[data-vocab-page="-1"]').disabled,true,'first-page navigation stays correctly bounded');
     unchanged(s,was);
   }

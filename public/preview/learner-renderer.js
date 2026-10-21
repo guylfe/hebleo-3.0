@@ -7,7 +7,7 @@ import {resolveBlock} from '../content.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../post-answer-vocabulary.js';
 import {bindMatching, matchWord} from '../interactions.js';
-import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls} from '../learner-view.js';
+import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseSurface, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls} from '../learner-view.js';
 
 const KEY_ROWS=[
     [
@@ -147,7 +147,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         if (!exercise) return '<h2>That portion is finished.</h2>' + continueRow();
         const mode = exercise.nikkudOverride || preferences.nikkud || 'full', allowed = exercise.allowLookup || Boolean(result);
         const lessonWords = content.words.filter(w => lesson.wordIds?.includes(w.id));
-        return '<div class="mode-bar"><span class="tag">Question ' + (question + 1) + ' of ' + count + '</span>' + (exercise.nikkudOverride ? '<span class="tag">Nikkud: ' + esc({full:'With Nikkud', none:'Without Nikkud', curated:'Lesson-authored Nikkud'}[exercise.nikkudOverride]) + '</span>' : '') + '</div><p class="exercise-prompt">' + esc(exercise.prompt) + '</p>'
+        return '<div class="mode-bar"><span class="tag">Question ' + (question + 1) + ' of ' + count + '</span>' + (exercise.nikkudOverride ? '<span class="tag">Nikkud: ' + esc({full:'With Nikkud', none:'Without Nikkud', curated:'Lesson-authored Nikkud'}[exercise.nikkudOverride]) + '</span>' : '') + '</div><p class="exercise-prompt">' + exerciseSurface(exercise.prompt,'prompt') + '</p>'
           + '<div data-exercise-input>'+exerciseInput(exercise, {mode, word, draft, result, keyboard:keypad()})+'</div>'
           + note()
           + '<div class="answer-result">'+exerciseFeedback(exercise, result)

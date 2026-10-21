@@ -7,7 +7,7 @@ import {composeSentence,bindMatching,matchWord} from './interactions.js';
 import {reviewNikkud} from './ux.js';
 import {scheduleReview,reviewIntervalLabel} from './review-schedule.js';
 import { playAudio, setPlaybackSpeed, stopMedia, recordVoice, stopRecording, replayVoice, clearRecording, feedbackSound, getPlaybackState } from './media.js';
-import {esc,button,wordText,fieldText,cellAttribute,audioControls,syncAudioControls,richFields,wordCard,vocabularyTable,learnMedia,exerciseInput,exerciseFeedback,wireAnswer,syncReferenceControls,bindResultExplanations} from './learner-view.js';
+import {esc,button,wordText,fieldText,cellAttribute,audioControls,syncAudioControls,richFields,wordCard,vocabularyTable,learnMedia,exerciseInput,exerciseSurface,exerciseFeedback,wireAnswer,syncReferenceControls,bindResultExplanations} from './learner-view.js';
 import {mountMediaLibrary} from './studio/media-library.js';
 import {mountSourceAuthoring} from './studio/sources-editor.js';
 import {mountUnifiedStudio} from './studio/unified-studio.js';
@@ -204,7 +204,7 @@ function exercisePanel(l) {
   const allowed=e.allowLookup || Boolean(state.result);
   const feedback=exerciseFeedback(e,state.result);
   const back=portionKeys(l)[portionKeys(l).indexOf(state.step)-1];
-  return '<div class="mode-bar"><span class="tag">Question '+(state.question+1)+' of '+ids.length+'</span>'+(e.nikkudOverride?'<span class="tag">Nikkud: '+esc({full:'With Nikkud',none:'Without Nikkud',curated:'Lesson-authored Nikkud'}[e.nikkudOverride])+'</span>':'')+'</div><p class="exercise-prompt">'+esc(e.prompt)+'</p>'+'<div data-exercise-input>'+input+'</div>'
+  return '<div class="mode-bar"><span class="tag">Question '+(state.question+1)+' of '+ids.length+'</span>'+(e.nikkudOverride?'<span class="tag">Nikkud: '+esc({full:'With Nikkud',none:'Without Nikkud',curated:'Lesson-authored Nikkud'}[e.nikkudOverride])+'</span>':'')+'</div><p class="exercise-prompt">'+exerciseSurface(e.prompt,'prompt')+'</p>'+'<div data-exercise-input>'+input+'</div>'
    +(!state.result&&['typing','cloze','transformation'].includes(e.type)?keyboard():'<div class="keyboard-tools">'+button('Review this concept','concept','small outline')+'</div>')
    +'<div class="answer-commit" data-answer-commit tabindex="-1" aria-label="Answer action and status">'+button('Check answer','check','primary','',Boolean(state.result)).replace('<button','<button data-keyboard-preserve')+'<span data-answer-status>'+feedback+'</span></div>'
    +'<div class="toolbar">'+(state.result&&!state.result.correct?button('Try this question again','retry-question','small secondary',e.id):'')+(allowed?button('Vocabulary help','exercise-lookup','small outline'):'')+(state.result?button('Report a problem','report-open','small outline'):'')+'</div>'
@@ -382,7 +382,7 @@ function mountExerciseReminders(scope,e=currentExercise()){
  reminderBinding?.destroy();reminderBinding=null;
  if(!scope||!e||!state.result||state.page!=='lesson')return;
  const session=state.session,owner=state.user,result=state.result,step=state.step,question=state.question,route=location.hash;
- reminderBinding=mountAnsweredVocabulary(scope,{content:content(),exercise:e,result,mode:e.nikkudOverride||pref().nikkud,playAudio,stopMedia,getPlaybackState,
+ reminderBinding=mountAnsweredVocabulary(scope,{content:content(),exercise:e,result,revisionId:session.revisionId,mode:e.nikkudOverride||pref().nikkud,playAudio,stopMedia,getPlaybackState,
   isCurrent:()=>state.user===owner&&state.session===session&&state.result===result&&state.step===step&&state.question===question&&location.hash===route&&!state.panel});
 }
 async function submitAnswer() {
