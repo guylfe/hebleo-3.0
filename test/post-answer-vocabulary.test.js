@@ -86,3 +86,15 @@ test('managed card reuses lexical disclosures once, omits mutation actions and k
  const card=scope.querySelector('.vocabulary-reminder');assert.ok(card.querySelector('.lexical-vocabulary'));assert.equal(card.querySelector('[data-action=lookup],[data-action=enroll]'),null);assert.ok(!card.textContent.includes('SYNTHETIC preposition.את'));
  const forms=card.querySelector('[data-lexical-toggle=forms]');forms.click();assert.equal(forms.getAttribute('aria-expanded'),'true');forms.click();assert.equal(forms.getAttribute('aria-expanded'),'false');
 });
+test('UX-E10-01 first Escape closes legacy disclosure; second closes card with exact focus and keeps owning Preview dialog',t=>{
+ const s=store(t),content=s.session('learner-demo','lesson-1').content,e=content.exercises.find(e=>e.type==='recognition'),before=tables(s);
+ for(const correct of [true,false])for(const focusBody of [true,false]){
+  const result={correct,answer:'SYNTHETIC retained answer'},f=dom(t,content,e,result),doc=f.w.document,dialog=doc.createElement('dialog');dialog.open=true;f.scope.before(dialog);dialog.append(f.scope);
+  const trigger=f.scope.querySelector('[data-vocabulary-word]');trigger.click();const card=f.scope.querySelector('.vocabulary-reminder'),details=card.querySelector('details'),summary=details.querySelector('summary');details.open=true;
+  const inside=doc.createElement('span');inside.tabIndex=0;inside.textContent='SYNTHETIC focus within entry';details.append(inside);(focusBody?inside:summary).focus();
+  const escape=()=>doc.activeElement.dispatchEvent(new f.w.KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));escape();
+  assert.equal(details.open,false);assert.equal(f.binding.isOpen(),true);assert.equal(doc.activeElement,summary);assert.equal(dialog.open,true);assert.deepEqual(result,{correct,answer:'SYNTHETIC retained answer'});
+  escape();assert.equal(f.binding.isOpen(),false);assert.equal(doc.activeElement,trigger);assert.equal(dialog.open,true);
+ }
+ assert.equal(tables(s),before);
+});

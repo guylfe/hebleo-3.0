@@ -58,8 +58,9 @@ export function mountAnsweredVocabulary(scope,{content,exercise,result,mode,isCu
    const binding=panel.querySelector('.lexical-vocabulary')?bindLexicalVocabulary(panel):null;
    const sync=()=>syncReferenceControls(panel,getPlaybackState());
    const audio=event=>{event.stopPropagation();const button=event.target.closest('[data-action="audio"]');if(!button)return;event.preventDefault();mediaOwner={panel,url:button.dataset.value};Promise.resolve(playAudio?.(button.dataset.value)).catch(()=>{}).finally(()=>{if(panel.isConnected)sync();});};
-   panel.addEventListener('click',audio);panel.ownerDocument.defaultView.addEventListener('hebleo-reference-state',sync);sync();
-   return ()=>{binding?.destroy();panel.removeEventListener('click',audio);panel.ownerDocument.defaultView.removeEventListener('hebleo-reference-state',sync);};
+   const disclosureEscape=event=>{if(event.defaultPrevented||event.key!=='Escape')return;const details=event.target.closest?.('details[open]');if(!details||!panel.contains(details))return;event.preventDefault();event.stopPropagation();details.open=false;details.querySelector(':scope > summary')?.focus({preventScroll:true});};
+   panel.addEventListener('keydown',disclosureEscape);panel.addEventListener('click',audio);panel.ownerDocument.defaultView.addEventListener('hebleo-reference-state',sync);sync();
+   return ()=>{binding?.destroy();panel.removeEventListener('keydown',disclosureEscape);panel.removeEventListener('click',audio);panel.ownerDocument.defaultView.removeEventListener('hebleo-reference-state',sync);};
   },
   stopCardMedia(panel){if(mediaOwner?.panel===panel){if(getPlaybackState().url===mediaOwner.url)stopMedia?.();mediaOwner=null;}}
  });

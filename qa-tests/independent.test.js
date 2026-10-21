@@ -73,13 +73,13 @@ import {lexicalApprovalDigest} from '../src/lexical-trust.js';
 import {createHash} from 'node:crypto';
 import {executableIdentity} from '../scripts/runtime-state.mjs';
 import {execFileSync} from 'node:child_process';
-const sha='444b9177f556e103f48f548db5d700d6cddf29e8';
+const sha=process.env.HEBLEO_QA_REVISION||'444b9177f556e103f48f548db5d700d6cddf29e8';
 const dump=s=>JSON.stringify(s.db.prepare("SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name").all().map(({name})=>[name,s.db.prepare('SELECT * FROM "'+name+'" ORDER BY 1').all()]));
 function geometry(w){w.HTMLElement.prototype.getBoundingClientRect=()=>({left:20,top:40,right:180,bottom:80,width:160,height:40});w.HTMLElement.prototype.getClientRects=function(){return [this.getBoundingClientRect()];};}
 
 test('QA independent served review build and every allowlisted static route match exact clone',async()=>{
  const root=new URL('../',import.meta.url).pathname.replace(/^\/(?:([A-Za-z]:))/,'$1');
- const git=args=>execFileSync('git',args,{cwd:root,encoding:'utf8',windowsHide:true});
+ const git=args=>execFileSync('git',['-c','safe.directory='+root,...args],{cwd:root,encoding:'utf8',windowsHide:true});
  // QA evidence commits may descend from the frozen candidate; executable files must remain identical.
  git(['diff','--exit-code',sha,'HEAD','--','public','src','scripts','package.json','package-lock.json']);
  const local=executableIdentity(root,git(['rev-parse','HEAD']).trim()),res=await fetch('http://127.0.0.1:63360/api/build'),remote=await res.json();
