@@ -5,6 +5,7 @@ import {validateCurriculum,validateLessonComposition,resolveComponent,orderedLes
 import {validateFormatting,validateImportSource} from '../../public/vocabulary-import.js';
 import { audioURL } from '../../public/ux.js';
 import {hasGradingContent} from '../../public/answer-policy.js';
+import {validateExerciseVocabularyBindings, exerciseVocabularyReferenceIds} from '../../public/exercise-bindings.js';
 
 // Validation never coerces, strips fields, adds defaults or normalizes Hebrew.
 const directory = new URL('../', import.meta.url);
@@ -35,6 +36,7 @@ export function dependenciesFor(collection, object, pack) {
   if (collection === 'exercises') {
     add('words', object.wordId);
     for (const id of object.wordIds || []) add('words', id);
+    for (const id of exerciseVocabularyReferenceIds(object)) add('words', id);
     // Ordering prepares distractors from the current and previous two lessons.
     if (object.type === 'ordering') {
       const index = orderedLessons(pack).findIndex(l => l.id === object.lessonId);
@@ -71,6 +73,7 @@ export function semanticErrors(pack) {
     seen.add(`${kind}/${object.id}`);
     for (const dependency of dependenciesFor(kind, object, pack)) if (!has(dependency.collection, dependency.id)) errors.push(`missing dependency ${object.id} -> ${dependency.id}`);
     if (kind === 'exercises') {
+      try { validateExerciseVocabularyBindings(object, pack.words); } catch (error) { errors.push(error.message); }
       if (!has('lessons', object.lessonId)) errors.push(`missing lesson ${object.id}`);
       if (['typing','ordering','cloze','transformation'].includes(object.type)) {
         const word = pack.words.find(w => w.id === object.wordId);

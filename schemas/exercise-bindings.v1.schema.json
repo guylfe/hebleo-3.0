@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hebleo.invalid/contracts/exercise-bindings.v1.schema.json",
+  "title": "Explicit authored vocabulary occurrences; exact surfaces and grapheme boundaries require semantic validation",
+  "type": "array",
+  "maxItems": 500,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "$ref": "common.v1.schema.json#/definitions/id"
+      },
+      "wordId": {
+        "$ref": "common.v1.schema.json#/definitions/id"
+      },
+      "field": {
+        "enum": [
+          "prompt",
+          "context",
+          "tokens",
+          "answers",
+          "feedback",
+          "feedbackDetails"
+        ]
+      },
+      "index": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "start": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "end": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 12000
+      },
+      "sourceText": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 12000
+      }
+    },
+    "required": [
+      "id",
+      "wordId",
+      "field",
+      "start",
+      "end",
+      "text",
+      "sourceText"
+    ],
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "field": {
+              "enum": [
+                "tokens",
+                "answers"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "index"
+          ]
+        },
+        "else": {
+          "not": {
+            "required": [
+              "index"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
