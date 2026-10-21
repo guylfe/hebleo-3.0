@@ -93,7 +93,8 @@ export function bindVocabularyReminders(scope, {renderCard, bindCard, stopCardMe
       finally { old.dispose?.(); }
     } finally {
       old.panel.remove();
-      if (restore) old.anchor.focus({preventScroll: true});
+      try { if (restore) old.anchor.focus({preventScroll: true}); }
+      finally { old.panel.dispatchEvent(new win.CustomEvent('hebleo-vocabulary-close')); }
     }
   }
   function position() {
@@ -177,6 +178,11 @@ export function bindVocabularyReminders(scope, {renderCard, bindCard, stopCardMe
       for (const type of ['keydown', 'keyup', 'keypress']) opened.events.push(on(panel, type, isolateKeys));
       position();
       if (!current) return;
+      // An enclosing disclosure can keep its anchor visible while this separate
+      // nonmodal layer is in use. Close is delivered on the panel even if the
+      // anchor/owner was removed, so an owner never retains a stale layer lease.
+      anchor.dispatchEvent(new win.CustomEvent('hebleo-vocabulary-open', {bubbles:true,detail:{panel}}));
+      if (current !== opened) return;
       if (pin) panel.querySelector('[data-vocabulary-close]').focus({preventScroll: true});
       if (win.requestAnimationFrame) frame = win.requestAnimationFrame(monitor);
     } catch (error) { close(); throw error; }

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {JSDOM} from 'jsdom';
 import {Store} from '../src/store.js';
 import {syntheticOccurrencePack} from '../scripts/exercise-bindings-fixture.mjs';
-import {exerciseInput,exerciseSurface,exerciseFeedback} from '../public/learner-view.js';
+import {exerciseInput,exerciseSurface,exerciseFeedback,bindResultExplanations} from '../public/learner-view.js';
 import {mountAnsweredVocabulary} from '../public/post-answer-vocabulary.js';
 import {createLearnerRenderer} from '../public/preview/learner-renderer.js';
 import {mountLessonPreview} from '../public/preview/lesson-preview.js';
@@ -17,6 +17,7 @@ function mount(t,content,e,result,draft={text:'SYNTHETIC WRONG',matching:{},sele
  d.window.HTMLElement.prototype.getBoundingClientRect=()=>({left:10,top:10,right:120,bottom:50,width:110,height:40});
  d.window.HTMLElement.prototype.getClientRects=function(){return [this.getBoundingClientRect()];};
  const binding=mountAnsweredVocabulary(scope,{content,exercise:e,result,mode:'full',isCurrent:()=>true});t.after(()=>binding?.destroy());
+ bindResultExplanations(scope);
  return {scope,w:d.window};
 }
 function answer(e,c){return e.type==='matching'?Object.fromEntries(e.wordIds.map(id=>[id,c.words.find(w=>w.id===id).english])):e.type==='recognition'?c.words.find(w=>w.id===e.wordId).english:e.answers[0];}
@@ -43,6 +44,17 @@ test('all six families decorate exact authored question/context/feedback and ans
    assert.equal(result.answer,raw);
   }
  }
+});
+
+test('feedback child layer keeps its owner available through disclosure/card Escape and releases on real focus departure',async t=>{
+ const {store,content,token}=fixture(t),original=content.exercises.find(e=>e.type==='cloze'),session=store.previewSession({lessonId:original.lessonId,draftToken:token}),e=session.content.exercises.find(x=>x.id===original.id),result=store.previewEvaluate({lessonId:e.lessonId,draftToken:token,exerciseId:e.id,answer:'WRONG'}).result;
+ const before=dump(store),{scope,w}=mount(t,session.content,e,result),popover=scope.querySelector('[data-result-popover]'),box=popover.parentElement;
+ box.dispatchEvent(new w.MouseEvent('pointerenter'));const trigger=popover.querySelector('[data-vocabulary-binding]');trigger.click();const card=scope.querySelector('.vocabulary-reminder');
+ box.dispatchEvent(new w.MouseEvent('pointerleave',{relatedTarget:card}));await new Promise(r=>setTimeout(r,220));assert.equal(popover.hidden,false);assert.equal(scope.querySelector('.vocabulary-reminder'),card);
+ const details=card.querySelector('details');details.open=true;details.querySelector('summary').focus();
+ details.querySelector('summary').dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));assert.equal(details.open,false);assert.ok(card.isConnected);
+ card.querySelector('summary').dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));assert.equal(card.isConnected,false);assert.equal(scope.ownerDocument.activeElement,trigger);assert.equal(popover.hidden,false);
+ const outside=w.document.createElement('button');outside.textContent='Outside';scope.append(outside);outside.focus();await new Promise(r=>setTimeout(r,220));assert.equal(popover.hidden,true);assert.equal(dump(store),before);
 });
 
 test('answer links require current exercise/lesson and valid nonconflicting authored spans; stale public text stays plain',t=>{

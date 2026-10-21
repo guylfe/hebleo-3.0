@@ -95,12 +95,21 @@ export function bindResultExplanations(scope){
   if(boundResultExplanations.has(trigger))continue;boundResultExplanations.add(trigger);
   const box=trigger.parentElement,popover=box.querySelector('[data-result-popover]'),view=box.ownerDocument.defaultView||globalThis;
   let dismissed=false,pointerWasOpen=null,hovered=false,leaveTimer=null;
+  const layers=new Set(),hasLayer=()=>{for(const panel of layers)if(!panel.isConnected)layers.delete(panel);return layers.size>0;};
   const clearLeave=()=>{view.clearTimeout(leaveTimer);leaveTimer=null;},focused=()=>box.contains(box.ownerDocument.activeElement),inside=target=>Boolean(target?.nodeType&&box.contains(target));
   const show=()=>{clearLeave();if(dismissed||!box.isConnected)return;popover.hidden=false;trigger.setAttribute('aria-expanded','true');};
   const hide=()=>{clearLeave();popover.hidden=true;trigger.setAttribute('aria-expanded','false');};
-  const leave=event=>{if(inside(event.relatedTarget))return;hovered=false;clearLeave();if(focused())return;leaveTimer=view.setTimeout(()=>{leaveTimer=null;if(box.isConnected&&!hovered&&!focused())hide();},180);};
+  const scheduleHide=()=>{clearLeave();if(focused()||hasLayer())return;leaveTimer=view.setTimeout(()=>{leaveTimer=null;if(box.isConnected&&!hovered&&!focused()&&!hasLayer())hide();},180);};
+  const leave=event=>{if(inside(event.relatedTarget))return;hovered=false;scheduleHide();};
+  box.addEventListener('hebleo-vocabulary-open',event=>{
+   const panel=event.detail?.panel;if(!inside(event.target)||!panel?.isConnected||panel.ownerDocument!==box.ownerDocument||layers.has(panel))return;
+   clearLeave();layers.add(panel);
+   panel.addEventListener('hebleo-vocabulary-close',()=>{layers.delete(panel);if(!hovered&&!focused())scheduleHide();},{once:true});
+  });
   box.addEventListener('pointerenter',event=>{if(event.pointerType==='touch')return;hovered=true;dismissed=false;show();});
   box.addEventListener('pointerleave',leave);
+  box.addEventListener('focusin',clearLeave);
+  box.addEventListener('focusout',event=>{if(!hovered&&!inside(event.relatedTarget))scheduleHide();});
   popover.addEventListener('pointerenter',event=>{if(event.pointerType==='touch'||popover.hidden||dismissed)return;hovered=true;show();});
   popover.addEventListener('pointerleave',leave);
   trigger.addEventListener('pointerdown',()=>{clearLeave();pointerWasOpen=!popover.hidden;});
