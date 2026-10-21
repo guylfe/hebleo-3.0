@@ -1,0 +1,69 @@
+/* Shared read-only reminders. refinement.css remains the palette/token owner. */
+button[data-vocabulary-word] {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  vertical-align: baseline;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+  cursor: pointer;
+}
+button[data-vocabulary-word]:hover,
+button[data-vocabulary-word][aria-expanded="true"] { background: var(--selection); }
+button[data-vocabulary-word]:focus-visible,
+.vocabulary-reminder :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.vocabulary-reminder {
+  position: fixed;
+  z-index: 70; /* Below course drawer/backdrop (90/80); inside Preview's top layer. */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: min(360px, calc(100vw - 24px));
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: start;
+  white-space: normal;
+}
+.vocabulary-reminder__header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+.vocabulary-reminder__body {
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  overflow-wrap: anywhere;
+  padding: 12px;
+}
+.vocabulary-reminder__body > .word-card { margin: 0; min-width: 0; border: 0; padding: 0; }
+.vocabulary-reminder__body .word-details { min-width: 0; }
+.vocabulary-reminder__body .word-details > * { min-width: 0; }
+.vocabulary-reminder__body .authored-examples { min-inline-size: 0; }
+.vocabulary-reminder__body :is(audio, video, img) { max-width: 100%; }
+.vocabulary-reminder__bridge { position: fixed; background: transparent; }
