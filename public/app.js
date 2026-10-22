@@ -7,7 +7,7 @@ import {composeSentence,bindMatching,matchWord} from './interactions.js';
 import {reviewNikkud} from './ux.js';
 import {scheduleReview,reviewIntervalLabel} from './review-schedule.js';
 import { playAudio, setPlaybackSpeed, stopMedia, recordVoice, stopRecording, replayVoice, clearRecording, feedbackSound, getPlaybackState } from './media.js';
-import {esc,button,wordText,fieldText,cellAttribute,audioControls,syncAudioControls,richFields,wordCard,vocabularyTable,learnMedia,exerciseInput,exerciseSurface,exerciseFeedback,wireAnswer,syncReferenceControls,bindResultExplanations} from './learner-view.js';
+import {esc,button,wordText,fieldText,cellAttribute,audioControls,syncAudioControls,richFields,wordCard,vocabularyTable,learnMedia,exerciseInput,exerciseSurface,exerciseFeedback,wireAnswer,syncReferenceControls,bindResultExplanations,exerciseActionDock,mountExerciseDock} from './learner-view.js';
 import {mountMediaLibrary} from './studio/media-library.js';
 import {mountSourceAuthoring} from './studio/sources-editor.js';
 import {mountUnifiedStudio} from './studio/unified-studio.js';
@@ -24,6 +24,7 @@ const state = { page:'home', user:localStorage.getItem('hebleo-demo-user') || 'l
 const uid = () => crypto.randomUUID();
 const pref = () => state.data.learner.preferences;
 let navigationHideTimer;const navigationMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
+let exerciseDockBinding, pendingAttempt=null, answerPhase="ready", continueTarget=null;
 let reminderBinding,lexicalBinding,lexicalSearchTimer,lexicalRequest=0,lexicalLoading=false,lexicalError='';
 let saveTimer, saveChain=Promise.resolve(), submitting=false, routeGeneration=0, panelGeneration=0, lastFocus=null;
 // The author workspace owns its mounts across status renders; deliberate departures dispose it.
@@ -60,7 +61,7 @@ function returnKeyboard(){window.HebleoKeyboard?.mount(document.body);}
 const chapterName=(c,id)=>courseOutline(c).find(g=>g.kind==='chapter'&&g.lessons.some(l=>l.id===id))?.title||'';
 function nextLesson() { return orderedLessons(state.data.content).find(l=>!state.data.learner.completed.includes(l.id)) || null; }
 function continueLesson() { const l=state.data.content.lessons.find(l=>l.id===state.data.learner.lastLessonId && !state.data.learner.completed.includes(l.id));return l || nextLesson(); }
-function clearQuestionAnswer() { state.answer='';state.matching={};state.selectedTokens=[];state.result=null; }
+function clearQuestionAnswer() { pendingAttempt=null;answerPhase='ready';continueTarget=null;state.answer='';state.matching={};state.selectedTokens=[];state.result=null; }
 function answerDraft() { return {text:state.answer,matching:state.matching,selectedTokens:state.selectedTokens}; }
 function resetQuestion() { state.question=0;clearQuestionAnswer(); }
 function questionProgress(l) { return lessonQuestionProgress(l,state.data.learner.attempts,state.session.revisionId); }
@@ -135,6 +136,7 @@ function pageStudioLists(){
 function refreshComments(){rememberComposers();for(const area of document.querySelectorAll('[data-comment-feed]')){const panel=area.closest('#context-panel');area.innerHTML=questionList(panel?false:state.data.canAuthor,panel?state.panel?.context?.lessonId:state.page==='studio'?state.authorLessonId:state.lessonId);bind(area);}}
 function render() {
   if(!state.data)return;
+  exerciseDockBinding?.destroy();exerciseDockBinding=null;
   reminderBinding?.destroy();reminderBinding=null;
   rememberComposers();rememberNote();if(studioWorkspace&&state.page==='studio'&&studioWorkspace.owner===state.user){for(const node of studioWorkspace.nodes)node.remove();}else disposeStudioMounts();if(rehearsal&&state.page!=='studio')endRehearsal();
   returnKeyboard();document.querySelector('#context-panel')?.remove();
@@ -144,7 +146,7 @@ function render() {
   const hasCourse=['lesson','course'].includes(state.page),courseLesson=hasCourse?(content().lessons.find(l=>l.id===state.lessonId)||orderedLessons(content())[0]):null;
   root.innerHTML='<a class="skip-link" href="#main-content" data-action="skip-content">Skip to content</a><header class="app-header" aria-label="Hebleo navigation">'+(hasCourse?navigationToggle():'')+'<a class="brand" href="#home" data-action="page" data-value="home" aria-label="Hebleo home"><span class="brand-logo-slot" aria-hidden="true"><img src="/assets/hebleo-wide-navy.png" alt="" width="3693" height="1198"></span></a><nav id="main-menu" class="nav main-navigation" aria-label="Main navigation">'+nav()+'</nav><div class="profile"><span class="demo-pill">DEMO CONTENT</span><label class="profile-control"><span>Demo profile</span><select id="demo-user" aria-label="Demo profile">'+state.data.users.map(x=>'<option value="'+x.id+'" '+(x.id===state.user?'selected':'')+'>'+esc(x.name)+' · '+esc(x.role)+'</option>').join('')+'</select></label></div></header><div class="shell nav-shell page-'+state.page+' '+(hasCourse?'has-course ':'')+(!pref().animations?'reduce-motion':'')+'">'+(hasCourse?courseNavigation(courseLesson):'')+'<main class="main" id="main-content" tabindex="-1"><div class="topbar"><div class="breadcrumb">Your Hebrew / '+esc({home:'Your path',course:'Foundations',lesson:label(state.step),review:'Review',library:'My Hebrew',studio:'Author workspace',settings:'Settings'}[state.page])+'</div></div><div class="content">'+pages[state.page]()+'</div></main><button type="button" class="nav-backdrop" data-action="navigation-close" aria-label="Close course outline" hidden></button></div>';
 
-  applyNavigation();bind();if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio')pageStudioLists();syncKeyboard();if(state.panel)showPanel();
+  applyNavigation();bind();exerciseDockBinding=mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio')pageStudioLists();syncKeyboard();if(state.panel)showPanel();
 }
 function lessonStarted(id) { const l=state.data.learner; return Boolean(l.resumes[id] || l.attempts.some(a=>a.lessonId===id)); }
 function lessonCards() {
@@ -196,19 +198,27 @@ function completion(l) {
   const onward=next?button('Next lesson →','lesson','primary',next.id):button(completed?'Course complete →':'Return to course →','page','primary','course');
   return '<div class="empty '+(completed&&pref().animations?'celebrate':'')+'"><div class="empty-symbol" aria-hidden="true">'+(completed?'✓':'↻')+'</div><h2>'+(completed?'Lesson complete.':'You finished this set.')+'</h2><p>'+(completed?'A new connection made.':'Some core questions still need a correct answer. Extra practice is optional; you can continue and return later.')+'</p><div class="button-row centered completion-navigation">'+onward+(l.exerciseIds.length?button('Practice more','target-practice','secondary'):'')+'</div>'+(missed.length?'<div class="missed-questions"><h3>Retry a missed question</h3><div class="retry-list">'+missed.map(id=>button('Question '+(l.exerciseIds.indexOf(id)+1)+': '+esc(content().exercises.find(e=>e.id===id).prompt),'retry-question','small outline',id)).join('')+'</div></div>':'')+'<p>Your answers are saved. This session is not a mastery assessment.</p></div>';
 }
-function keyboard(){return '<div class="keyboard-tools">'+button('Open Hebrew keyboard','keyboard-open','small secondary')+button('Review this concept','concept','small outline').replace('<button','<button data-keyboard-preserve')+'</div>';}
+function keyboard(){return '<div class="keyboard-tools">'+button('Open Hebrew keyboard','keyboard-open','small secondary')+'</div>';}
+function questionPrimary(l=lessonObject()){
+ const ids=portionExercises(content(),l,state.step,state.practiceIds);
+ const phase=answerPhase;
+ if(phase==='checking'||phase==='saving'||phase==='advancing')return button(phase==='checking'?'Checking…':phase==='saving'?'Saving position…':'Continuing…','pending-answer','primary','',true);
+ if(phase==='save-error')return button('Retry saving position','save-answer-position','primary');
+ if(phase==='advance-error')return button('Retry continuing','retry-continuing','primary');
+ if(phase==='uncertain')return button('Retry checking answer','recover-attempt','primary');
+ return state.result?button(state.question+1===ids.length?'Continue →':'Next question →','next-question','primary'):button('Check answer','check','primary').replace('<button','<button data-keyboard-preserve');
+}
+function updateQuestionPrimary(){const host=root.querySelector('#practice [data-primary-action]');if(host){host.innerHTML=questionPrimary();bind(host);}exerciseDockBinding?.refresh?.();}
+function questionSupport(e,allowed){return (state.result&&!state.result.correct?button('Try this question again','retry-question','exercise-quiet',e.id):'')+(allowed?button('Vocabulary help','exercise-lookup','exercise-quiet'):'')+(state.result?button('Report a problem','report-open','exercise-quiet'):'');}
 function exercisePanel(l) {
-  const ids=portionExercises(content(),l,state.step,state.practiceIds),e=currentExercise();
-  if(!e)return '<h2>That portion is finished.</h2>'+button('Continue →','step','primary',portionKeys(l)[portionKeys(l).indexOf(state.step)+1]);
-  const mode=e.nikkudOverride||pref().nikkud,input=exerciseInput(e,{mode,word,draft:answerDraft(),result:state.result,keyboard:''});
-  const allowed=e.allowLookup || Boolean(state.result);
-  const feedback=exerciseFeedback(e,state.result);
-  const back=portionKeys(l)[portionKeys(l).indexOf(state.step)-1];
-  return '<div class="mode-bar"><span class="tag">Question '+(state.question+1)+' of '+ids.length+'</span>'+(e.nikkudOverride?'<span class="tag">Nikkud: '+esc({full:'With Nikkud',none:'Without Nikkud',curated:'Lesson-authored Nikkud'}[e.nikkudOverride])+'</span>':'')+'</div><p class="exercise-prompt">'+exerciseSurface(e.prompt,'prompt')+'</p>'+'<div data-exercise-input>'+input+'</div>'
-   +(!state.result&&['typing','cloze','transformation'].includes(e.type)?keyboard():'<div class="keyboard-tools">'+button('Review this concept','concept','small outline')+'</div>')
-   +'<div class="answer-commit" data-answer-commit tabindex="-1" aria-label="Answer action and status">'+button('Check answer','check','primary','',Boolean(state.result)).replace('<button','<button data-keyboard-preserve')+'<span data-answer-status>'+feedback+'</span></div>'
-   +'<div class="toolbar">'+(state.result&&!state.result.correct?button('Try this question again','retry-question','small secondary',e.id):'')+(allowed?button('Vocabulary help','exercise-lookup','small outline'):'')+(state.result?button('Report a problem','report-open','small outline'):'')+'</div>'
-   +'<nav class="exercise-footer lesson-footer" aria-label="Lesson navigation">'+button('← Back','step','outline',back||'',!back)+(state.result?button(state.question+1===ids.length?'Continue →':'Next question →','next-question','secondary'):'<span>Check your answer to continue.</span>')+(state.practiceIds.length?button('Skip extra practice','step','small outline','complete'):'')+'</nav>';
+ const ids=portionExercises(content(),l,state.step,state.practiceIds),e=currentExercise();
+ if(!e)return '<h2>That portion is finished.</h2>'+button('Continue →','step','primary',portionKeys(l)[portionKeys(l).indexOf(state.step)+1]);
+ const mode=e.nikkudOverride||pref().nikkud,input=exerciseInput(e,{mode,word,draft:answerDraft(),result:state.result,keyboard:''}),back=portionKeys(l)[portionKeys(l).indexOf(state.step)-1];
+ return '<div class="exercise-question-header"><div class="mode-bar"><span class="tag">Question '+(state.question+1)+' of '+ids.length+'</span>'+(e.nikkudOverride?'<span class="tag">Nikkud: '+esc({full:'With Nikkud',none:'Without Nikkud',curated:'Lesson-authored Nikkud'}[e.nikkudOverride])+'</span>':'')+'</div>'+button('Review this concept','concept','exercise-quiet').replace('<button','<button data-keyboard-preserve aria-expanded="false" aria-controls="inline-concept"')+'</div><p class="exercise-prompt">'+exerciseSurface(e.prompt,'prompt')+'</p><div data-concept-slot></div><div data-exercise-input>'+input+'</div>'
+ +(!state.result&&['typing','cloze','transformation'].includes(e.type)?keyboard():'')
+ +'<div class="answer-commit" data-answer-commit tabindex="-1" aria-label="Answer result"><span data-answer-status>'+exerciseFeedback(e,state.result)+'</span></div><div data-answer-recovery></div>'
+ +'<div class="exercise-support">'+questionSupport(e,e.allowLookup||Boolean(state.result))+'</div>'
+ +exerciseActionDock(questionPrimary(l),button('← Back','step','exercise-quiet',back||'',!back),state.practiceIds.length?button('Skip extra practice','step','exercise-quiet','complete'):'');
 }
 function reviewWord() { return state.reviewSession ? state.data.content.words.find(w=>w.id===state.reviewSession.ids[state.reviewSession.index]) : null; }
 function voiceControls(w) {return '<details class="voice-comparison pronunciation-practice" data-pronunciation-word="'+esc(w.id)+'" '+(state.recording!=='empty'?'open':'')+'><summary>Pronunciation practice · Record yourself and compare</summary><div class="pronunciation-word">'+wordText(w)+' · '+esc(w.english)+'</div><p>'+ (audioURL(w.audio)?w.audio?.kind==='synthetic-demo'?'The linked demo sound is nonlinguistic, not a pronunciation model.':'Use the linked Play control to compare with the source recording.':'No reference recording is linked for comparison.')+'</p><p>Your recording stays in this tab and is cleared when you leave this item. Maximum 60 seconds. Recording is optional and ungraded; microphone permission is requested only when you choose Record.</p><div class="toolbar">'+button(state.recording==='recording'?'Recording…':'Record yourself','record','small secondary',w.id,state.recording==='recording')+button('Stop recording','record-stop','small outline',w.id,state.recording!=='recording')+button('Play my recording','voice-replay','small outline',w.id,state.recording!=='ready')+'</div><p data-recording-status role="status">'+esc(state.recording==='recording'?'Recording locally…':state.recording==='ready'?'Your local recording is ready.':'')+'</p></details>';}
@@ -335,8 +345,9 @@ function reportList() {
 function inlineConceptBody(){return learnBody(lessonObject(),currentExercise()?.explanationTime).replace(/<button/g,'<button data-keyboard-preserve');}
 function inlineConcept(open=true){
  const field=root.querySelector('#practice #answer'),selection=field?{start:field.selectionStart,end:field.selectionEnd,direction:field.selectionDirection}:null;let panel=root.querySelector('#inline-concept');
- if(open&&!panel){panel=document.createElement('section');panel.id='inline-concept';panel.className='inline-concept';panel.setAttribute('aria-labelledby','inline-concept-title');panel.innerHTML='<div class="panel-header"><h3 id="inline-concept-title">Review this concept</h3>'+button('Close concept','inline-concept-close','small outline').replace('<button','<button data-keyboard-preserve')+'</div><div data-inline-concept-body>'+inlineConceptBody()+'</div>';root.querySelector('#practice .keyboard-tools')?.after(panel);bind(panel);}
- if(!open)panel?.remove();if(field&&!field.disabled){field.focus({preventScroll:true});if(selection)field.setSelectionRange(selection.start,selection.end,selection.direction);}else if(!open)root.querySelector('#practice [data-action="concept"]')?.focus();
+ if(open&&!panel){panel=document.createElement('section');panel.id='inline-concept';panel.className='inline-concept';panel.setAttribute('aria-labelledby','inline-concept-title');panel.innerHTML='<div class="panel-header"><h3 id="inline-concept-title">Review this concept</h3>'+button('Close concept','inline-concept-close','small outline').replace('<button','<button data-keyboard-preserve')+'</div><div data-inline-concept-body>'+inlineConceptBody()+'</div>';root.querySelector('#practice [data-concept-slot]')?.append(panel);bind(panel);}
+ root.querySelector('#practice [data-action=concept]')?.setAttribute('aria-expanded',String(open));
+ if(!open){panel?.remove();root.querySelector('#practice [data-action=concept]')?.focus({preventScroll:true});return;}if(field&&!field.disabled){field.focus({preventScroll:true});if(selection)field.setSelectionRange(selection.start,selection.end,selection.direction);}else if(!open)root.querySelector('#practice [data-action="concept"]')?.focus();
 }
 function changeConceptMedium(value){
  const body=root.querySelector('#inline-concept [data-inline-concept-body]');if(!body)return;const field=root.querySelector('#practice #answer'),selection=field?{start:field.selectionStart,end:field.selectionEnd,direction:field.selectionDirection}:null;
@@ -350,7 +361,7 @@ function showPanel() {
   lastFocus ||= document.activeElement?.dataset.action;
   window.HebleoKeyboard?.close();const p=state.panel;let body,title;if(p.type==='word')p.owner??=state.user;
   if(p.type==='word'){const w=word(p.id);title=w.english;body='<div class="hebrew">'+wordText(w)+'</div><p>'+esc(w.notes)+'</p>'+audioControls(w.audio,w.english)+richFields(w)+voiceControls(w)+'<div class="toolbar">'+button(state.data.learner.bookmarks.includes(w.id)?'Unbookmark':'Bookmark','bookmark','small secondary',w.id)+button('Add to review','enroll','small secondary',w.id)+button('Comment in lesson discussion about this word','help-word','small outline',w.id)+'</div>'+personalNote(w,false)+'<label for="personal-note">Edit your private note</label><textarea id="personal-note" dir="auto" data-note-owner="'+esc(p.owner)+'" data-note-word="'+esc(w.id)+'">'+esc(state.noteDrafts[noteKey(p.owner,w.id)]?.text??state.data.learner.notes[w.id]??'')+'</textarea>'+button('Save note','save-panel-note','small secondary',w.id);}
-  else if(p.type==='lookup'){title='Vocabulary help';body=content().words.filter(w=>lessonObject().wordIds.includes(w.id)).map(w=>button(esc(w.pointed)+' · '+esc(w.english),'lookup','small secondary',w.id)).join('');}
+  else if(p.type==='lookup'){title='Vocabulary help';body='<p>Hover or select an underlined word to see its vocabulary card.</p>'+ content().words.filter(w=>lessonObject().wordIds.includes(w.id)).map(w=>button(esc(w.pointed)+' · '+esc(w.english),'lookup','small secondary',w.id)).join('');}
   else if(p.type==='concept'){title='Review this concept';body=learnBody(lessonObject(),currentExercise()?.explanationTime);}
   else if(p.type==='report'){title='Report a problem';body='<form id="report-form"><label for="report-reason">What needs review?</label><select id="report-reason" name="reason"><option value="answer">My answer should be accepted</option><option value="unclear">The question is unclear</option><option value="media">Text or audio error</option></select><label for="report-note">Details (optional)</label><textarea id="report-note" name="note" maxlength="2000"></textarea><p>Your submitted answer, exercise, and content version will be attached.</p><button class="button primary">Send for review</button></form>';}
   else {title='Lesson help & comments';body=(p.context?.wordId?'<p class="word-comment-destination">This posts about '+esc(word(p.context.wordId)?.english||'this word')+' in the lesson discussion. It is separate from Your private note.</p>':'')+'<p class="tag">'+esc(p.source==='ai-generated'?'OPTIONAL AI ASSISTANCE':p.source==='demo-authored'?'DEMO-AUTHORED EXPLANATION':'AUTHORED EXPLANATION')+'</p><div class="help-text rich-lesson">'+renderLesson(p.text||'Opening the explanation…')+'</div>'+(state.data.aiConnected&&state.data.learner.membership?'<form id="help-form"><label for="help-question">Your question</label><textarea id="help-question" name="question" maxlength="1500" required>'+esc(p.question||'')+'</textarea><button class="button secondary">Ask AI for clarification</button></form>':'<p>AI clarification is '+(!state.data.learner.membership?'a membership feature':'not connected')+'.</p>')+(p.context?.wordId?button('Open lesson discussion','word-discussion','small outline',p.context.lessonId):'')+commentComposer(p.context,'author-question-form')+'<div data-comment-feed>'+questionList(false,p.context?.lessonId)+'</div><div class="toolbar">'+(state.page==='lesson'&&lessonObject().exerciseIds.length?button('Repeat lesson questions','target-practice','small secondary'):'')+'</div><p>Extra practice repeats authored questions you last answered incorrectly in this lesson; if none are incorrect, it repeats the lesson set.</p>';}
@@ -368,16 +379,17 @@ async function authoredHelp(wordId) {
   try{const response=await api('help',context,request.owner);if(isCurrent())replacePanel({type:'help',...response,context});}
   catch(error){if(isCurrent())throw error;}
 }
-function showAnswerResult(scope,e,dockHeight=0){
- if(!scope?.isConnected||!state.result)return;scope.dataset.checked='true';if(dockHeight>0)scope.style.setProperty('--answer-dock-reserve',dockHeight+'px');
+function showAnswerResult(scope,e){
+ if(!scope?.isConnected||!state.result)return;scope.dataset.checked='true';
  scope.querySelectorAll('[data-exercise-input] button:not([data-vocabulary-word]),[data-exercise-input] textarea,[data-exercise-input] input').forEach(el=>el.disabled=true);scope.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===state.answer));
  if(e.type==='matching'&&state.result.pairResults){for(const tile of scope.querySelectorAll('[data-match-word]')){const ok=state.result.pairResults[tile.dataset.matchWord];tile.classList.add(ok?'pair-correct':'pair-incorrect');let status=tile.querySelector('.pair-status');if(!status){status=document.createElement('small');status.className='pair-status';tile.append(status);}status.textContent=ok?'✓ Correct':'✕ Incorrect';}for(const tile of scope.querySelectorAll('[data-match-target]')){const id=e.wordIds.find(id=>state.result.answer[id]===tile.dataset.matchTarget);if(id)tile.classList.add(state.result.pairResults[id]?'pair-correct':'pair-incorrect');}}
- const status=scope.querySelector('[data-answer-status]');status.innerHTML=exerciseFeedback(e,state.result);bindResultExplanations(status);scope.querySelector('[data-action="check"]').disabled=true;const keyboard=scope.querySelector('[data-action="keyboard-open"]');if(keyboard)keyboard.disabled=true;
- const toolbar=scope.querySelector(':scope > .toolbar');toolbar.innerHTML=(!state.result.correct?button('Try this question again','retry-question','small secondary',e.id):'')+button('Vocabulary help','exercise-lookup','small outline')+button('Report a problem','report-open','small outline');bind(toolbar);
- const footer=scope.querySelector('.exercise-footer'),ids=portionExercises(content(),lessonObject(),state.step,state.practiceIds),back=portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)-1];footer.innerHTML=button('← Back','step','outline',back||'',!back)+button(state.question+1===ids.length?'Continue →':'Next question →','next-question','secondary')+(state.practiceIds.length?button('Skip extra practice','step','small outline','complete'):'');bind(footer);
- const bar=root.querySelector('.lesson-progress'),n=questionProgress(lessonObject()).correctIds.length,total=lessonObject().exerciseIds.length;if(bar){bar.querySelector('label').textContent=n+' of '+total+' questions answered correctly';const progress=bar.querySelector('progress');progress.value=n;progress.setAttribute('aria-valuenow',String(n));progress.setAttribute('aria-valuetext',n+' of '+total);}
+ const status=scope.querySelector('[data-answer-status]');status.innerHTML=exerciseFeedback(e,state.result);bindResultExplanations(status);const keyboard=scope.querySelector('[data-action="keyboard-open"]');if(keyboard)keyboard.remove();
+ const support=scope.querySelector('.exercise-support');support.innerHTML=questionSupport(e,true);bind(support);updateQuestionPrimary();
+ refreshQuestionProgress();
  mountExerciseReminders(scope,e);syncKeyboard();refreshComments();scope.querySelector('[data-answer-commit]').focus({preventScroll:true});
 }
+function refreshQuestionProgress(){const bar=root.querySelector('.lesson-progress'),n=questionProgress(lessonObject()).correctIds.length,total=lessonObject().exerciseIds.length;if(bar){bar.querySelector('label').textContent=n+' of '+total+' questions answered correctly';const progress=bar.querySelector('progress');progress.value=n;progress.setAttribute('aria-valuenow',String(n));progress.setAttribute('aria-valuetext',n+' of '+total);}}
+function answerRecovery(message,kind){const region=root.querySelector('#practice [data-answer-recovery]');region.innerHTML=message?'<p role="alert" data-'+kind+'>'+esc(message)+'</p>':'';}
 function mountExerciseReminders(scope,e=currentExercise()){
  reminderBinding?.destroy();reminderBinding=null;
  if(!scope||!e||!state.result||state.page!=='lesson')return;
@@ -385,13 +397,36 @@ function mountExerciseReminders(scope,e=currentExercise()){
  reminderBinding=mountAnsweredVocabulary(scope,{content:content(),exercise:e,result,revisionId:session.revisionId,mode:e.nikkudOverride||pref().nikkud,playAudio,stopMedia,getPlaybackState,
   isCurrent:()=>state.user===owner&&state.session===session&&state.result===result&&state.step===step&&state.question===question&&location.hash===route&&!state.panel});
 }
-async function submitAnswer() {
- if(submitting||state.result||!learnerControlsActive())return;const e=currentExercise();if(!e)return;const wire=wireAnswer(e,answerDraft());if(wire.error){toast(wire.error);return;}
- const context={owner:state.user,session:state.session,step:state.step,question:state.question},scope=root.querySelector('#practice'),field=scope.querySelector('#answer'),dockHeight=parseFloat(document.documentElement.style.getPropertyValue('--hebleo-keyboard-height'))||parseFloat(document.body.style.paddingBottom)||0,isCurrent=()=>state.user===context.owner&&state.session===context.session&&state.step===context.step&&state.question===context.question&&root.querySelector('#practice')===scope;
- const controls=[...scope.querySelectorAll('[data-action="check"],[data-exercise-input] button,[data-exercise-input] textarea,[data-exercise-input] input')],disabled=controls.map(el=>el.disabled);submitting=true;controls.forEach(el=>el.disabled=true);
- try{const result=await api('attempt',{requestId:uid(),revisionId:context.session.revisionId,lessonId:state.lessonId,exerciseId:e.id,answer:wire.answer},context.owner);if(!isCurrent())return;state.result=result;feedbackSound(pref().sounds,result.correct);await load();if(!isCurrent())return;await queueSave();if(isCurrent())showAnswerResult(scope,e,dockHeight);}
- catch(error){if(isCurrent()&&state.result){showAnswerResult(scope,e,dockHeight);scope.querySelector('[data-action="next-question"]').disabled=true;const recovery=document.createElement('div');recovery.dataset.positionRecovery='';recovery.innerHTML='<p role="alert">Your answer was graded. This position was not saved.</p>'+button('Retry saving position','save-answer-position','small secondary');scope.querySelector('[data-answer-commit]').after(recovery);bind(recovery);}throw error;}
- finally{submitting=false;if(isCurrent()&&!state.result){controls.forEach((el,i)=>el.disabled=disabled[i]);field?.focus({preventScroll:true});}}
+async function submitAnswer(recover=false) {
+ if(submitting||state.result||!learnerControlsActive()||pendingAttempt&&!recover)return;const e=currentExercise();if(!e)return;const wire=wireAnswer(e,answerDraft());if(wire.error){toast(wire.error);return;}
+ const context={owner:state.user,session:state.session,step:state.step,question:state.question},scope=root.querySelector('#practice'),field=scope.querySelector('#answer'),selection=field?{start:field.selectionStart,end:field.selectionEnd,direction:field.selectionDirection}:null,isCurrent=()=>state.user===context.owner&&state.session===context.session&&state.step===context.step&&state.question===context.question&&root.querySelector('#practice')===scope;
+ pendingAttempt??={requestId:uid(),revisionId:context.session.revisionId,lessonId:state.lessonId,exerciseId:e.id,answer:structuredClone(wire.answer)};
+ const controls=[...scope.querySelectorAll('[data-exercise-input] button,[data-exercise-input] textarea,[data-exercise-input] input')],disabled=controls.map(el=>el.disabled);
+ clearTimeout(saveTimer);submitting=true;answerPhase='checking';controls.forEach(el=>el.disabled=true);updateQuestionPrimary();answerRecovery('','');
+ try{
+  // Same request ID retrieves the immutable receipt if the response was lost.
+  // This uses Store.attempt's existing idempotency contract; it never regrades a known result.
+  const result=await api('attempt',pendingAttempt,context.owner);if(!isCurrent())return;
+  state.result=result;pendingAttempt=null;answerPhase='saving';feedbackSound(pref().sounds,result.correct);showAnswerResult(scope,e);
+  await load();if(!isCurrent())return;refreshQuestionProgress();await queueSave();if(!isCurrent())return;answerPhase='ready';updateQuestionPrimary();
+ }catch(error){if(isCurrent()){
+  if(state.result){answerPhase='save-error';answerRecovery('Your answer was graded. This position was not saved.','position-recovery');updateQuestionPrimary();}
+  else if(error.status&&error.status<500){pendingAttempt=null;answerPhase='ready';controls.forEach((el,i)=>el.disabled=disabled[i]);updateQuestionPrimary();answerRecovery('Checking failed. Your answer is unchanged; try checking again.','grade-recovery');field?.focus({preventScroll:true});if(selection)field.setSelectionRange(selection.start,selection.end,selection.direction);}
+  else{answerPhase='uncertain';answerRecovery('The checking response was interrupted. Retry checking to recover this answer’s result.','grade-recovery');updateQuestionPrimary();}
+ }throw error;}finally{submitting=false;}
+}
+async function saveAnswerPosition(){
+ if(!state.result||submitting)return;const scope=root.querySelector('#practice'),owner=state.user;submitting=true;answerPhase='saving';updateQuestionPrimary();
+ try{await load();if(owner!==state.user||root.querySelector('#practice')!==scope)return;await queueSave();if(root.querySelector('#practice')!==scope)return;answerPhase='ready';answerRecovery('','');refreshQuestionProgress();updateQuestionPrimary();scope.querySelector('[data-answer-commit]')?.focus({preventScroll:true});}
+ catch(error){answerPhase='save-error';updateQuestionPrimary();throw error;}finally{submitting=false;}
+}
+async function continueQuestion(){
+ if(!state.result||submitting||!['ready','advance-error'].includes(answerPhase))return;
+ const scope=root.querySelector('#practice'),owner=state.user;
+ if(!continueTarget){const ids=portionExercises(content(),lessonObject(),state.step,state.practiceIds),last=state.question+1>=ids.length;continueTarget={...progressPayload(),step:last?portionKind(lessonObject(),portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1]):currentKind(),question:last?0:state.question+1,answer:'',matching:{},selectedTokens:[],resultRequestId:null,practiceIds:last?[]:state.practiceIds};if(lessonObject().compositionVersion===2)continueTarget.componentId=last?(portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1]??null):state.step;}
+ submitting=true;answerPhase='advancing';updateQuestionPrimary();
+ try{await saveChain.catch(()=>{});const saved=await api('progress',continueTarget,owner);if(owner!==state.user||root.querySelector('#practice')!==scope)return;state.data.learner.resumes[state.lessonId]=saved;state.data.learner.lastLessonId=state.lessonId;const target=continueTarget;state.step=lessonObject().compositionVersion===2?(target.componentId??'complete'):target.step;state.question=target.question;state.practiceIds=target.practiceIds;clearQuestionAnswer();setRoute();render();focusHeading();}
+ catch(error){if(owner===state.user&&root.querySelector('#practice')===scope){answerPhase='advance-error';answerRecovery('Your next position was not saved. Retry continuing.','continue-recovery');updateQuestionPrimary();}throw error;}finally{submitting=false;}
 }
 
 function insertKey(value,backspace=false) {
@@ -400,9 +435,10 @@ function insertKey(value,backspace=false) {
   input.value=input.value.slice(0,start)+(backspace?'':value)+input.value.slice(end);input.focus();input.setSelectionRange(start+(backspace?0:value.length),start+(backspace?0:value.length));state.answer=input.value;scheduleSave();
 }
 async function updatePreference(key,value) { await api('preferences',{[key]:value});await load(); }
-const learnerActions=new Set(['choice','check','token','remove-token','next-question','retry-question','inline-choice','review-reveal','review-rate','save-answer-position','key','backspace','cursor']);
+const learnerActions=new Set(['choice','check','token','remove-token','next-question','retry-question','inline-choice','review-reveal','review-rate','save-answer-position','recover-attempt','retry-continuing','key','backspace','cursor']);
 function learnerControlsActive(){return !state.panel&&!rehearsal&&!document.querySelector('dialog[open]')&&root.querySelector('.nav-shell')?.dataset.courseOverlay!=='true'&&!root.querySelector('#main-content')?.hasAttribute('inert');}
 async function act(action,value,source) {
+  if((submitting||pendingAttempt)&&['page','lesson','outline','step','latest-lesson','lesson-practice','retry-question','target-practice','mode','token','remove-token','choice','concept','inline-concept-close'].includes(action))return;
   if(learnerActions.has(action)&&(!learnerControlsActive()||source&&!activeLearnerDestination(source,true)))return;
   if(action==='skip-content'){root.querySelector('#main-content')?.focus({preventScroll:true});return;}
   if(action==='navigation-toggle'){toggleNavigation(value);return;}
@@ -449,10 +485,12 @@ async function act(action,value,source) {
   }
   if(action==='choice'){if(state.result||submitting)return;state.answer=value;root.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===value));root.querySelector('[data-answer-commit]')?.focus({preventScroll:true});if(pref().immediateAnswers)await submitAnswer();else await queueSave();return;}
   if(action==='check'){await submitAnswer();return;}
-  if(action==='save-answer-position'){if(!state.result||submitting)return;const scope=root.querySelector('#practice'),owner=state.user;await load();if(owner!==state.user||root.querySelector('#practice')!==scope)return;await queueSave();if(owner===state.user&&root.querySelector('#practice')===scope){showAnswerResult(scope,currentExercise());scope.querySelector('[data-position-recovery]')?.remove();}return;}
+  if(action==='recover-attempt'){await submitAnswer(true);return;}
+  if(action==='save-answer-position'){await saveAnswerPosition();return;}
+  if(action==='retry-continuing'){await continueQuestion();return;}
   if(action==='token'){if(state.result||submitting)return;state.selectedTokens.push(Number(value));render();scheduleSave();return;}
   if(action==='remove-token'){if(state.result||submitting)return;state.selectedTokens.splice(Number(value),1);render();scheduleSave();return;}
-  if(action==='next-question'){if(!state.result)return;const ids=portionExercises(content(),lessonObject(),state.step,state.practiceIds);if(state.question+1>=ids.length){state.step=portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1];state.practiceIds=[];resetQuestion();}else{state.question++;clearQuestionAnswer();}setRoute();await queueSave();render();focusHeading();return;}
+  if(action==='next-question'){await continueQuestion();return;}
   if(action==='retry-question'){
     if(submitting || !questionProgress(lessonObject()).missedIds.includes(value))return;
     await flushSave();closePanel();
@@ -509,7 +547,7 @@ function bind(scope=root) {
   scope.querySelectorAll('[data-action="key"],[data-action="backspace"],[data-action="cursor"]').forEach(el=>el.addEventListener('pointerdown',event=>event.preventDefault()));
   scope.querySelector('#answer')?.addEventListener('input',event=>{state.answer=event.target.value;scheduleSave();});
   scope.querySelectorAll('[data-match]').forEach(el=>el.addEventListener('change',()=>{state.matching[el.dataset.match]=el.value;scheduleSave();}));
-  scope.querySelector('#demo-user')?.addEventListener('change',async event=>{const next=event.target.value;event.target.value=state.user;try{if(next===state.user||!await guardStudioDeparture('Change demo profile'))return;rememberComposers();rememberNote();await flushSave();closePanel();clearRecording();state.user=next;localStorage.setItem('hebleo-demo-user',state.user);state.page='home';state.session=null;state.reviewSession=null;resetQuestion();await load();setRoute();render();}catch(error){toast(error.message);}});
+  scope.querySelector('#demo-user')?.addEventListener('change',async event=>{const next=event.target.value;event.target.value=state.user;if(submitting||pendingAttempt)return;try{if(next===state.user||!await guardStudioDeparture('Change demo profile'))return;rememberComposers();rememberNote();await flushSave();closePanel();clearRecording();state.user=next;localStorage.setItem('hebleo-demo-user',state.user);state.page='home';state.session=null;state.reviewSession=null;resetQuestion();await load();setRoute();render();}catch(error){toast(error.message);}});
   scope.querySelector('#library-search')?.addEventListener('input',event=>{const position=event.target.selectionStart;state.search=event.target.value;state.libraryPage=0;render();if(!event.isComposing)scheduleLexicalLibrary();const el=document.querySelector('#library-search');el.focus();el.setSelectionRange(position,position);});
   for(const [id,key] of [['source-category','sourceCategory'],['source-lesson','sourceLesson'],['library-tag','libraryTag'],['library-lesson','libraryLesson'],['library-state','libraryState']])scope.querySelector('#'+id)?.addEventListener('change',event=>{state[key]=event.target.value;state.libraryPage=0;render();scheduleLexicalLibrary(0);});
   scope.querySelectorAll('[data-preference]').forEach(el=>el.addEventListener('change',async()=>{try{await updatePreference(el.dataset.preference,el.checked);render();}catch(error){toast(error.message);}}));
@@ -527,7 +565,7 @@ function activeLearnerDestination(el,allowDisabled=false){
 }
 const learnerElements=selector=>Array.from(root.querySelectorAll(selector)).filter(el=>activeLearnerDestination(el));
 window.addEventListener('resize',()=>applyNavigation());navigationMotion?.addEventListener?.('change',()=>applyNavigation());
-document.addEventListener('keydown',event=>{
+document.addEventListener('keydown',event=>{exerciseDockBinding?.refresh?.();
   const navigationShell=root.querySelector('.nav-shell'),navigationOverlays=navigationShell?.dataset.courseOverlay==='true'?[root.querySelector('.app-header'),root.querySelector('#course-navigation')]:[];
   if(navigationOverlays.length&&!document.querySelector('dialog[open]')&&event.key==='Tab'){const controls=navigationOverlays.flatMap(el=>[...el.querySelectorAll('button:not(:disabled),a[href],summary,select:not(:disabled)')]).filter(navigationControlVisible);const first=controls[0],last=controls.at(-1);if(event.shiftKey&&(document.activeElement===first||!controls.includes(document.activeElement))){event.preventDefault();last?.focus();return;}if(!event.shiftKey&&(document.activeElement===last||!controls.includes(document.activeElement))){event.preventDefault();first?.focus();return;}}
   if(event.key==='Escape'&&!document.querySelector('dialog[open]')){const shell=root.querySelector('.nav-shell');if(shell?.dataset.mainOverlay==='true'||shell?.dataset.courseOverlay==='true'){event.preventDefault();act('navigation-close');return;}}
@@ -548,6 +586,7 @@ document.addEventListener('keydown',event=>{
   if(event.key.toLowerCase()==='r'){const el=learnerElements('[data-action="audio-replay"]:not(:disabled)')[0];if(el){event.preventDefault();el.click();}}
 });
 async function routeFromURL() {
+  if(submitting||pendingAttempt){setRoute(true);return;}
   const generation=++routeGeneration,parts=location.hash.slice(1).split('/');
   if(state.page==='studio'&&parts[0]!=='studio'&&!await guardStudioDeparture('Leave Studio through browser history')){setRoute(true);return;}
   rememberComposers();

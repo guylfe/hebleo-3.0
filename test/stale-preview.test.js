@@ -98,7 +98,7 @@ async function setup(t, type, conflict) {
     const event = new dom.window.KeyboardEvent('keydown',{key,bubbles:true,cancelable:true});target.dispatchEvent(event);
     assert.equal(event.defaultPrevented,false,'renderer key handlers were disposed');
   }
-  oldCheck.click();root().querySelector('[data-action="check"]').click();
+  oldCheck.click();assert.equal(root().querySelector('[data-action="check"]'),null);assert.ok(host.querySelector('[data-exercise-dock] [data-preview-exit]'));
   await tick();
   assert.deepEqual(selected(),selectionBefore);assert.equal(requests.length,seen+1);
   assert.equal(changes(store),initialChanges);assert.deepEqual(tables(store),baseline);

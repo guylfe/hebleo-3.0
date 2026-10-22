@@ -234,7 +234,7 @@ test('busy rehearsal disables every control and ignores clicks and shortcuts; a 
   const h = direct(t, session, {busy:true, answer:{text:LABEL}});
   assert.equal(h.root().getAttribute('aria-busy'), 'true');
   assert.deepEqual(Array.from(h.root().querySelectorAll('button,input,select')).filter(el => !el.disabled), []);
-  h.root().querySelector('[data-action="check"]').dispatchEvent(new h.w.MouseEvent('click', {bubbles:true}));
+  h.root().querySelector('[data-action="pending-answer"]').dispatchEvent(new h.w.MouseEvent('click', {bubbles:true}));
   h.root().dispatchEvent(new h.w.KeyboardEvent('keydown', {key:'Enter', bubbles:true}));
   h.root().dispatchEvent(new h.w.KeyboardEvent('keydown', {key:'2', bubbles:true}));
   assert.deepEqual(h.calls, []);
@@ -246,7 +246,7 @@ test('busy rehearsal disables every control and ignores clicks and shortcuts; a 
   p.root().querySelectorAll('[data-action="choice"]')[0].click();
   p.root().querySelector('[data-action="check"]').click();
   assert.equal(p.root().getAttribute('aria-busy'), 'true');
-  p.root().querySelector('[data-action="check"]').click();
+  p.root().querySelector('[data-action="pending-answer"]').click();
   p.root().dispatchEvent(new p.w.KeyboardEvent('keydown', {key:'Enter', bubbles:true, cancelable:true}));
   p.root().dispatchEvent(new p.w.KeyboardEvent('keydown', {key:'2', bubbles:true, cancelable:true}));
   assert.equal(p.evaluations.length, 1);

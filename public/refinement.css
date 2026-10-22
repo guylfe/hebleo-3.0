@@ -12,7 +12,7 @@
 .hebleo-keyboard__vowel-picker[hidden],.hebleo-keyboard__vowel-variants[hidden]{display:none}
 .hebleo-keyboard__pin[aria-pressed="true"]{background:var(--hebleo-keyboard-blue);color:white;border-color:var(--hebleo-keyboard-blue)}
 body.hebleo-keyboard-is-open .content{padding-bottom:calc(90px + var(--hebleo-keyboard-height,300px))}
-.exercise-footer{position:static!important}
+.exercise-footer:not(.exercise-dock){position:static!important}
 #context-panel:has(.hebleo-keyboard--open){padding-bottom:360px}
 :root{--ink:#172f45;--muted:#536b7b;--line:#dae4ea;--accent:#096f82;--paper:#fff;--canvas:#f5f7fa}
 body{background:var(--canvas);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;line-height:1.65}
@@ -124,3 +124,29 @@ dialog.confirmation-dialog{width:min(560px,calc(100vw - 32px));padding:24px;bord
 @media(prefers-reduced-motion:reduce){.nav-shell,.course-navigation{transition:none}}
 
 .authored-example bdi{unicode-bidi:isolate}
+/* Guy-approved exercise actions, 22 Oct 2026. Shared learner / saved-draft rehearsal. */
+.exercise-question-header{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.exercise-question-header .mode-bar{margin:0;flex-wrap:wrap}
+.button.exercise-quiet,.exercise-quiet{border:0;background:transparent;color:var(--accent);box-shadow:none;min-height:44px;padding:8px 10px;font:inherit;font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.button.exercise-quiet:hover:not(:disabled),.exercise-quiet:hover:not(:disabled){background:var(--selection);color:var(--accent)}
+.exercise-quiet:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.exercise-support{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-block:8px 16px}
+.exercise-support details{margin:0;padding:0;border:0}.exercise-support summary{min-height:44px;align-content:center;color:var(--accent);font-size:14px;cursor:pointer}
+.feedback.compact-result{gap:8px;justify-content:flex-start;flex-wrap:wrap;line-height:1.5}
+.feedback.compact-result .result-icon{width:26px;height:26px;font-size:18px}
+.answer-commit:empty{min-height:0}.answer-commit:not(:has(.compact-result)){min-height:0;padding:0}
+[data-authored-vocabulary-answers]{margin-block:12px;overflow-wrap:anywhere}
+[data-authored-vocabulary-answers] p{margin-block:4px}
+[data-authored-vocabulary-answers] .accepted-answer-label{font-size:13px;line-height:1.5;color:var(--muted)}
+[data-authored-vocabulary-answers] .hebrew{font-size:var(--hebrew-font-size,28px);line-height:1.65}
+[data-exercise-dock-host],#practice[data-exercise-dock-host][data-checked=true]{padding-block-end:var(--exercise-dock-reserve,88px);scroll-padding-block-end:var(--exercise-dock-reserve,88px)}
+body:has(#practice[data-exercise-dock-host]).hebleo-keyboard-is-open .nav-shell .content{padding-bottom:48px}
+.exercise-dock{position:fixed;z-index:65;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);background:var(--paper);padding:8px 0;isolation:isolate}
+.exercise-dock[hidden]{display:none}
+.exercise-dock-secondary{display:flex;flex-wrap:wrap;gap:4px;align-items:center;flex:1 1 auto}
+.exercise-dock [data-primary-action]{margin-inline-start:auto;flex:0 1 auto;max-width:100%}
+.exercise-dock .button{min-height:44px;white-space:normal}
+.exercise-dock [data-primary-action] .button{min-inline-size:140px;max-inline-size:100%}
+.learner-preview [data-answer-commit]{justify-content:flex-start}
+dialog.rehearsal-dialog{scroll-padding-block-end:var(--exercise-dock-reserve,100px)}
+@media(max-width:400px){.exercise-dock-secondary{flex-basis:100%}.exercise-dock .button{font-size:14px}.exercise-dock{padding:6px 0;gap:2px}}

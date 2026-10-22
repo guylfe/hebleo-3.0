@@ -102,7 +102,7 @@ test('actual HTTP stale-token conflict freezes controller without discarding ans
   const first=await api('/api/studio/draft',{baseRevisionId:1,expectedDraftToken:null,content:fixture()});
   const preview=mountLessonPreview(container,{lessonId:'lesson-1',draftToken:first.draftToken,loadSession:x=>api('/api/studio/preview/session',x),evaluate:x=>api('/api/studio/preview/evaluate',x),renderer:{mount(body,view){views.push(view);return ()=>body.replaceChildren();}}});t.after(()=>preview.dispose());await preview.ready;preview.go('apply');preview.setAnswer({text:'who',matching:{},selectedTokens:[]});
   await api('/api/studio/draft',{baseRevisionId:1,expectedDraftToken:first.draftToken,word:{id:'w-mi',notes:'Synthetic intervening edit'}});
-  const baseline=dump(store);await preview.submit('who');assert.match(container.textContent,/draft changed/);assert.throws(()=>preview.retry(),/unavailable/);assert.equal(container.querySelector('[data-preview-content]').childElementCount,0);preview.exit();assert.equal(dump(store),baseline);
+  const baseline=dump(store);await preview.submit('who');assert.match(container.textContent,/draft changed/);assert.throws(()=>preview.retry(),/unavailable/);assert.equal(container.querySelector('[data-preview-content]').childElementCount,1);preview.exit();assert.equal(dump(store),baseline);
 });
 
 async function settled(predicate){for(let i=0;i<100;i++){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('UI/HTTP did not settle');}
@@ -114,7 +114,7 @@ async function rendererHarness(t,options={}){
     store.saveProgress(user,{lessonId:'lesson-2',revisionId:1,step:'apply',question:1,answer:'Saved synthetic response '+user,selectedTokens:[],matching:{}});
   }
   const baseline=dump(store),preferences={nikkud:'curated',keyboardVisible:false},views=[];
-  const actual=createLearnerRenderer(),renderer={mount(body,props){views.push(props);return actual.mount(body,props);}};
+  const actual=createLearnerRenderer(),renderer={mount(body,props){views.push(props);const dispose=actual.mount(body,props),update=dispose.update;dispose.update=next=>{const reused=update(next);if(reused)views.push(next);return reused;};return dispose;}};
   Object.defineProperty(dom.window,'localStorage',{get(){throw new Error('Forbidden rehearsal storage');}});
   dom.window.fetch=()=>{throw new Error('Renderer must use injected author APIs');};
   const preview=mountLessonPreview(container,{lessonId:options.lessonId||'lesson-1',draftToken:staged.draftToken,preferences,renderer,
@@ -176,7 +176,7 @@ test('keyboard events, remounts and retained detached controls produce one HTTP 
   const answer=input(h,'אני'),oldRoot=h.root(),oldCheck=oldRoot.querySelector('[data-action="check"]');
   const event=new h.dom.window.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true});answer.dispatchEvent(event);
   assert.equal(event.defaultPrevented,true);assert.equal(learnerEvents,0);assert.equal(h.requests.length,1);assert.equal(h.root().getAttribute('aria-busy'),'true');
-  oldCheck.click();oldRoot.dispatchEvent(new h.dom.window.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));choose(h,'[data-action="check"]');assert.equal(h.requests.length,1);
+  oldCheck.click();oldRoot.dispatchEvent(new h.dom.window.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));choose(h,'[data-action="pending-answer"]');assert.equal(h.requests.length,1);
   h.preview.exit();release();await tick();await tick();assert.equal(h.container.childElementCount,0);assert.equal(dump(h.store),h.baseline);
   const newer=mountLessonPreview(h.container,{lessonId:'lesson-1',draftToken:h.staged.draftToken,renderer:createLearnerRenderer(),loadSession:x=>h.api('/api/studio/preview/session',x),evaluate:x=>h.api('/api/studio/preview/evaluate',x)});
   await newer.ready;assert.equal(h.container.querySelectorAll('[data-preview-root]').length,1);oldCheck.click();assert.equal(h.requests.length,1);newer.dispose();

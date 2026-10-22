@@ -251,7 +251,7 @@ test('FB8 outside first-click lifecycle: Check and concept survive typing/cloze,
       const content=s.snapshot();content.lessons.find(l=>l.id===lessonId).title+=' SYNTHETIC next release';const draft=s.stage({content,baseRevisionId:1,expectedDraftToken:null});s.publish(1,draft.draftToken);
     }});
     assert.ok(doc.querySelector('.hint').textContent.includes('earlier lesson'));assert.equal(doc.querySelector('#answer').value,text);
-    const support=doc.querySelector('#practice .keyboard-tools');assert.equal(support.querySelector('[data-action=concept]').dataset.action,'concept');assert.ok(doc.querySelector('#practice .answer-commit [data-action=check]'));assert.equal(doc.querySelector('#answer').tagName,'TEXTAREA');
+    const support=doc.querySelector('#practice .exercise-question-header');assert.equal(support.querySelector('[data-action=concept]').dataset.action,'concept');assert.ok(doc.querySelector('#practice [data-exercise-dock] [data-action=check]'));assert.equal(doc.querySelector('#answer').tagName,'TEXTAREA');
     if(mode!=='closed')click(doc,'keyboard-open');
     const answerBefore=doc.querySelector('#answer');answerBefore.setSelectionRange(1,2);const el=doc.querySelector('#practice [data-action="'+action+'"]'),seen=calls.length;
     el.dispatchEvent(new w.MouseEvent('pointerdown',{bubbles:true,cancelable:true}));
@@ -260,10 +260,10 @@ test('FB8 outside first-click lifecycle: Check and concept survive typing/cloze,
     el.dispatchEvent(new w.MouseEvent('pointerup',{bubbles:true,cancelable:true}));el.click();
     if(action==='concept'){
       await settled(()=>doc.querySelector('#inline-concept'));assert.equal(doc.querySelector('#answer'),answerBefore);assert.equal(store.learner('learner-demo').attempts.length,0);assert.equal(calls.slice(seen).filter(p=>p==='/api/attempt').length,0);
-      assert.equal(doc.querySelector('#answer').value,text);click(doc,'inline-concept-close');assert.equal(doc.querySelector('#answer').value,text);assert.equal(doc.activeElement,doc.querySelector('#answer'));assert.equal(doc.querySelector('#answer').selectionStart,1);assert.equal(doc.querySelector('#answer').selectionEnd,2);
+      assert.equal(doc.querySelector('#answer').value,text);click(doc,'inline-concept-close');assert.equal(doc.querySelector('#answer').value,text);assert.equal(doc.activeElement,doc.querySelector('[data-action=concept]'));assert.equal(doc.querySelector('#answer').selectionStart,1);assert.equal(doc.querySelector('#answer').selectionEnd,2);
       const answer=doc.querySelector('#answer');answer.focus();answer.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
     }
-    await settled(()=>doc.querySelector('#practice .feedback'));
+    await settled(()=>doc.querySelector('#practice .feedback'));await settled(()=>doc.querySelector('[data-action=next-question]'));
     const attempts=store.learner('learner-demo').attempts;assert.equal(attempts.length,1);assert.equal(attempts[0].correct,true);assert.equal(attempts[0].exerciseId,exerciseId);assert.equal(attempts[0].revisionId,1);
     assert.equal(store.learner('learner-demo').resumes[lessonId].resultRequestId,attempts[0].requestId);
     assert.equal(Boolean(doc.querySelector('.hebleo-keyboard--open')),false,'graded/non-typing state closes dock even when Keep open is enabled');
@@ -277,11 +277,11 @@ test('FB8 saved-draft Preview swaps controls, preserves typed answer through con
   inside('[data-preview-step="apply"]').click();await settled(()=>inside('#answer'));
   let answer=inside('#answer');answer.value='אני';answer.dispatchEvent(new w.Event('input',{bubbles:true}));
   inside('[data-preview-owner-keyboard]').click();await settled(()=>doc.querySelector('.hebleo-keyboard--open'));assert.equal(doc.querySelectorAll('.hebleo-keyboard [data-insert]').length>=33,true);
-  assert.ok(inside('.keyboard-tools [data-action=concept]'));assert.ok(inside('.answer-commit [data-action=check]'));answer.setSelectionRange(1,2);
+  assert.ok(inside('.exercise-question-header [data-action=concept]'));assert.ok(inside('[data-exercise-dock] [data-action=check]'));answer.setSelectionRange(1,2);
   const concept=inside('[data-action="concept"]');concept.dispatchEvent(new w.MouseEvent('pointerdown',{bubbles:true}));concept.dispatchEvent(new w.MouseEvent('pointerup',{bubbles:true}));concept.click();
   assert.ok(inside('.preview-concept'));assert.equal(inside('#answer').value,'אני');assert.equal(doc.activeElement,inside('#answer'));assert.equal(inside('#answer').selectionStart,1);assert.equal(inside('#answer').selectionEnd,2);assert.deepEqual(tables(store),before);
   inside('[data-action="concept-close"]').click();const check=inside('[data-action="check"]');check.dispatchEvent(new w.MouseEvent('pointerdown',{bubbles:true}));check.dispatchEvent(new w.MouseEvent('pointerup',{bubbles:true}));check.click();await settled(()=>inside('.feedback'));
-  assert.equal(inside('.feedback').getAttribute('aria-label'),'Correct');assert.deepEqual(tables(store),before);
+  assert.equal(inside('.feedback').getAttribute('aria-label'),'Correct');assert.equal(inside('#answer'),answer,'Preview retains the answer node through Concept and grading');assert.equal(inside('[data-action=check]'),null);assert.deepEqual(tables(store),before);
 });
 
 test('FB8 actual lesson comments post anonymously, render to another learner without identity and disappear after Author Remove',async t=>{
@@ -331,7 +331,7 @@ test('Extra practice can be skipped before submission and after grading, clearin
   assert.deepEqual(store.learner('learner-demo').resumes['lesson-1'].practiceIds,[]);assert.equal(store.learner('learner-demo').attempts.length,0);
   click(doc,'target-practice');await settled(()=>doc.querySelector('#practice .choices'));
   doc.querySelector('#practice [data-action="choice"]').click();await settled(()=>doc.querySelector('#practice [data-action="check"]'));
-  click(doc,'check');await settled(()=>doc.querySelector('#practice .feedback'));
+  click(doc,'check');await settled(()=>doc.querySelector('#practice .feedback'));await settled(()=>doc.querySelector('[data-action=next-question]'));
   const attempts=store.learner('learner-demo').attempts;assert.equal(attempts.length,1);
   skip().click();await settled(()=>w.location.hash==='#lesson/lesson-1/complete'&&doc.querySelector('#practice [data-action="target-practice"]')&&store.learner('learner-demo').resumes['lesson-1'].practiceIds.length===0);
   assert.deepEqual(store.learner('learner-demo').attempts,attempts);assert.deepEqual(store.learner('learner-demo').resumes['lesson-1'].practiceIds,[]);
@@ -349,10 +349,10 @@ test('The final lesson offers a course exit when incomplete, and core exercises 
 test('Wrong-answer retry keeps the particular question, only correct answers fill progress, and saved progress survives reload',async t=>{
   const {store,w,doc}=await app(t,{page:'lesson/lesson-1/apply',prepare(s){s.attempt('learner-demo',{requestId:randomUUID(),revisionId:1,exerciseId:'ex-1-recognize',answer:'who'});}});
   const bar=()=>doc.querySelector('#lesson-question-progress');assert.equal(bar().value,1);assert.equal(bar().max,3);
-  const input=doc.querySelector('#answer');input.value='היא';input.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback.wrong'));
+  const input=doc.querySelector('#answer');input.value='היא';input.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback.wrong'));await settled(()=>doc.querySelector('[data-action=next-question]'));
   assert.equal(bar().value,1);click(doc,'retry-question');await settled(()=>doc.querySelector('#answer')&&!doc.querySelector('.feedback'));
   assert.equal(store.learner('learner-demo').resumes['lesson-1'].question,0);assert.deepEqual(store.learner('learner-demo').resumes['lesson-1'].practiceIds,[]);
-  const answer=doc.querySelector('#answer');assert.equal(answer.disabled,false);answer.value='אני';answer.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback:not(.wrong)'));
+  const answer=doc.querySelector('#answer');assert.equal(answer.disabled,false);answer.value='אני';answer.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback:not(.wrong)'));await settled(()=>doc.querySelector('[data-action=next-question]'));
   assert.equal(bar().value,2);assert.equal(store.learner('learner-demo').attempts.length,3);assert.equal(doc.querySelector('[data-action="retry-question"]'),null);
   click(doc,'next-question');await settled(()=>doc.querySelector('.matching-game'));assert.equal(bar().value,2);
   const resumed=await app(t,{page:'lesson/lesson-1/apply',store});assert.equal(resumed.doc.querySelector('#lesson-question-progress').value,2);assert.ok(resumed.doc.querySelector('.matching-game'));
@@ -366,7 +366,7 @@ test('Finish-screen retry opens only the chosen missed question, then removes th
   const history=store.learner('learner-demo').attempts;assert.equal(doc.querySelectorAll('.retry-list button').length,2);assert.equal(doc.querySelector('#lesson-question-progress').value,1);
   doc.querySelector('[data-action="retry-question"][data-value="ex-1-type"]').click();await settled(()=>doc.querySelector('#answer'));
   assert.deepEqual(store.learner('learner-demo').resumes['lesson-1'].practiceIds,['ex-1-type']);assert.equal(doc.querySelector('.mode-bar .tag').textContent,'Question 1 of 1');
-  const input=doc.querySelector('#answer');input.value='אני';input.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback:not(.wrong)'));
+  const input=doc.querySelector('#answer');input.value='אני';input.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback:not(.wrong)'));await settled(()=>doc.querySelector('[data-action=next-question]'));
   assert.equal(doc.querySelector('#lesson-question-progress').value,2);click(doc,'next-question');await settled(()=>doc.querySelector('.retry-list'));
   assert.equal(doc.querySelector('[data-action="retry-question"][data-value="ex-1-type"]'),null);assert.equal(doc.querySelectorAll('.retry-list button').length,1);
   assert.deepEqual(store.learner('learner-demo').attempts.slice(0,history.length),history);assert.equal(store.learner('learner-demo').completed.includes('lesson-1'),false);
@@ -380,7 +380,7 @@ test('Starting updated lesson through the actual app does not flush the old resu
 test('App sentence tiles submit attached prefixes, and source-rich cards/table open without field rendering errors',async t=>{
   const {store,doc}=await app(t,{page:'lesson/lesson-2/apply'});
   for(const text of ['אני','ב','בית']){const el=Array.from(doc.querySelectorAll('[data-action="token"]')).find(el=>el.childNodes[0].textContent===text);assert.ok(el);el.click();await settled(()=>!el.isConnected);}
-  assert.equal(doc.querySelector('.assembled-sentence').textContent,'אני בבית');assert.equal(doc.querySelector('.prefix-token'),null);assert.equal(doc.querySelector('[data-action="token"] small'),null);const groups=[...doc.querySelectorAll('.sentence-tile-group')];assert.deepEqual(groups.map(g=>g.textContent),['אני','בבית']);assert.equal(groups[1].querySelectorAll('button').length,2);click(doc,'check');await settled(()=>doc.querySelector('.feedback'));assert.equal(store.learner('learner-demo').attempts[0].correct,true);
+  assert.equal(doc.querySelector('.assembled-sentence').textContent,'אני בבית');assert.equal(doc.querySelector('.prefix-token'),null);assert.equal(doc.querySelector('[data-action="token"] small'),null);const groups=[...doc.querySelectorAll('.sentence-tile-group')];assert.deepEqual(groups.map(g=>g.textContent),['אני','בבית']);assert.equal(groups[1].querySelectorAll('button').length,2);click(doc,'check');await settled(()=>doc.querySelector('.feedback'));await settled(()=>doc.querySelector('[data-action=next-question]'));assert.equal(store.learner('learner-demo').attempts[0].correct,true);
   doc.querySelector('[data-action="step"][data-value="vocabulary"]').click();await settled(()=>doc.querySelector('.word-grid'));assert.equal(doc.querySelectorAll('.word-card').length,6);assert.ok(doc.querySelector('.word-details dd'));
 });
 test('Studio edits author card policy and cumulative introductions while retaining legacy keyboard metadata',async t=>{
@@ -616,7 +616,7 @@ test('Rehearsal keeps keyboard focus inside the modal across re-renders, so a di
   scrolled.length=0;assert.ok(key('Enter'));await settled(()=>inside('[data-action="retry-question"]'));
   assert.ok(focusInside(),'focus survives grading');
   assert.equal(scrolled.length,0,'grading does not auto-scroll the result');
-  assert.ok(inside('.answer-result').contains(inside('[data-action="retry-question"]')),'Retry remains in the result action region');
+  assert.ok(inside('.exercise-support').contains(inside('[data-action="retry-question"]')),'Retry remains a secondary action');
   press(inside('[data-action="retry-question"]'));await settled(()=>inside('[data-action="check"]'));
   assert.equal(inside('[data-action="retry-question"]'),null);assert.doesNotMatch(inside('.lesson-section').textContent,/Accepted answer/,'Retry clears the feedback');
   assert.deepEqual(choices().filter(b=>b.classList.contains('selected')),[],'Retry clears the selection');
@@ -646,7 +646,7 @@ test('A rehearsal stops on a changed draft or a newer publication revision, writ
   stageDraft(store,c=>{c.lessons[0].title='Synthetic title from another tab';});
   let after=tables(store),seen=calls.length;
   inside('[data-action="check"]').click();await settled(()=>/This draft changed/.test(inside('[data-preview-status]').textContent));
-  assert.ok([...dialog().querySelectorAll('[data-preview-step]')].every(b=>b.disabled));assert.ok(inside('[data-preview-frozen]'));assert.equal(inside('[data-action="check"]').disabled,true);
+  assert.ok([...dialog().querySelectorAll('[data-preview-step]')].every(b=>b.disabled));assert.ok(inside('[data-preview-frozen]'));assert.equal(inside('[data-action="check"]'),null);assert.ok(inside('[data-exercise-dock] [data-preview-exit]'));
   assert.deepEqual(tables(store),after);assert.deepEqual(calls.slice(seen),['/api/studio/preview/evaluate']);
   inside('[data-preview-exit]').click();await settled(()=>!dialog());
   click(doc,'studio-reload');await settled(()=>/another tab/.test(doc.querySelector('[data-lesson-metadata]')?.elements.title.value||''));
@@ -702,7 +702,7 @@ test('QA-EE9-G4-02: matching autosave keeps an authored pair word from outside t
     const c=structuredClone(s.snapshot());c.exercises.find(e=>e.id==='ex-1-match').wordIds=pairs;s.publish(1,s.stage({baseRevisionId:1,expectedDraftToken:null,content:c}).draftToken);
   }});
   assert.ok(!store.snapshot().lessons.find(l=>l.id==='lesson-1').wordIds.includes('w-sham'));
-  const input=doc.querySelector('#answer');input.value='אני';input.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback:not(.wrong)'));
+  const input=doc.querySelector('#answer');input.value='אני';input.dispatchEvent(new w.Event('input',{bubbles:true}));click(doc,'check');await settled(()=>doc.querySelector('.feedback:not(.wrong)'));await settled(()=>doc.querySelector('[data-action=next-question]'));
   click(doc,'next-question');await settled(()=>doc.querySelector('.matching-game'));
   const place=(d,id,meaning)=>{d.querySelector('[data-match-word="'+id+'"]').click();d.querySelector('[data-match-target="'+meaning+'"]').click();};
   const resume=()=>store.learner('learner-demo').resumes['lesson-1'];
@@ -802,7 +802,7 @@ test('v2 extra practice works when all authored exercise components are checks; 
  const p=store.learner('learner-demo').resumes['lesson-1'];assert.equal(p.step,'check');assert.equal(p.componentId,'legacy-check');assert.equal(p.practiceIds.length,3);
  const correct=store.snapshot().words.find(w=>w.id===store.snapshot().exercises.find(e=>e.id===p.practiceIds[0]).wordId).english;
  doc.querySelector('#practice [data-action="choice"][data-value="'+correct+'"]').click();await settled(()=>store.learner('learner-demo').resumes['lesson-1'].answer===correct);
- doc.querySelector('#practice [data-action="check"]').click();await settled(()=>doc.querySelector('#practice .feedback'));
+ doc.querySelector('#practice [data-action="check"]').click();await settled(()=>doc.querySelector('#practice .feedback'));await settled(()=>doc.querySelector('[data-action=next-question]'));
  const before=JSON.stringify(store.learner('learner-demo').attempts);doc.querySelector('#practice [data-action="step"][data-value="complete"]').click();await settled(()=>store.learner('learner-demo').resumes['lesson-1'].componentId===null);
  assert.equal(store.learner('learner-demo').resumes['lesson-1'].practiceIds.length,0);assert.equal(JSON.stringify(store.learner('learner-demo').attempts),before);
 });
@@ -963,13 +963,31 @@ test('FB14 items10 11 zero singular and filtered-page counts hide pager; failed 
 test('FB14 item9 Studio chapter and lesson controls retain associated labels and state across task switches',async t=>{
  const {w,doc,store}=await app(t,{page:'studio',author:true});loadViewportStyles(doc,480);const group=doc.querySelector('.studio-lesson-context'),select=group.querySelector('[data-current-lesson]'),label=select.closest('label');assert.ok(label.textContent.includes('Selected lesson'));assert.equal(w.getComputedStyle(label).gap,'8px');assert.equal(w.getComputedStyle(group).gap,'20px');select.value='lesson-2';select.dispatchEvent(new w.Event('change',{bubbles:true}));doc.querySelector('[data-action=studio-task][data-value=comments]').click();doc.querySelector('[data-action=studio-task][data-value=lesson]').click();assert.equal(select.value,'lesson-2');assert.equal(store.currentDraft(),null);
 });
-test('FB14 item14 Check preserves question and check nodes scroll position lock/error recovery and conditional result explanation',async t=>{
- const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-1/apply',ownerKeyboard:true,realHTTP:true});const answer=doc.querySelector('#answer'),check=doc.querySelector('[data-action=check]'),portion=doc.querySelector('#practice');edit(w,answer,'SYNTHETIC wrong');answer.focus();answer.setSelectionRange(3,7);click(doc,'keyboard-open');assert.equal(check.hasAttribute('data-keyboard-preserve'),true);check.dispatchEvent(new w.Event('pointerdown',{bubbles:true,cancelable:true}));assert.ok(doc.querySelector('.hebleo-keyboard--open'));Object.defineProperty(w,'scrollY',{value:500,writable:true});let scrollCalls=0;w.scrollTo=()=>scrollCalls++;const focusOptions=[],focus=w.HTMLElement.prototype.focus;w.HTMLElement.prototype.focus=function(options){focusOptions.push(options);return focus.call(this,options);};const fetch=w.fetch;let release,requests=0;w.fetch=(url,options)=>url==='/api/attempt'?new Promise(resolve=>{requests++;release=()=>resolve({ok:false,status:503,json:async()=>({error:'SYNTHETIC check unavailable'})});}):fetch(url,options);
- check.click();check.click();await settled(()=>release);assert.equal(requests,1);assert.equal(answer.disabled,true);assert.equal(doc.querySelector('[data-action=check]'),check);release();await settled(()=>!check.disabled);assert.equal(doc.querySelector('#answer'),answer);assert.equal(answer.value,'SYNTHETIC wrong');assert.equal(store.learner('learner-demo').attempts.length,0);assert.equal(w.scrollY,500);w.fetch=fetch;check.click();await settled(()=>doc.querySelector('.compact-result'));assert.equal(doc.querySelector('#practice'),portion);assert.equal(doc.querySelector('#answer'),answer);assert.equal(doc.querySelector('[data-action=check]'),check);assert.equal(answer.disabled,true);assert.equal(check.disabled,true);assert.equal(store.learner('learner-demo').attempts.length,1);assert.equal(store.learner('learner-demo').resumes['lesson-1'].resultRequestId,store.learner('learner-demo').attempts[0].requestId);assert.ok(!portion.textContent.includes('Your answer:'));assert.ok(!portion.textContent.includes('Accepted answer:'));assert.equal(w.scrollY,500);assert.equal(scrollCalls,0);assert.equal(focusOptions.at(-1)?.preventScroll,true);assert.ok(doc.querySelector('[data-result-explanation]'));const before=calls.filter(url=>url==='/api/attempt').length;check.click();assert.equal(calls.filter(url=>url==='/api/attempt').length,before);assert.ok(doc.querySelector('[data-action=retry-question]'));assert.ok(doc.querySelector('[data-action=next-question]'));
+test('Actions: lost attempt response recovers the exact immutable receipt and removes Check without remounting the answer',async t=>{
+ const {w,doc,store}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});const answer=doc.querySelector('#answer'),scope=doc.querySelector('#practice');edit(w,answer,'SYNTHETIC wrong');answer.focus();answer.setSelectionRange(3,7);
+ const fetch=w.fetch,requests=[];let lose=true;w.fetch=async(url,options)=>{if(url==='/api/attempt'){requests.push(JSON.parse(options.body));const response=await fetch(url,options);if(lose){lose=false;throw new Error('SYNTHETIC lost receipt');}return response;}return fetch(url,options);};
+ click(doc,'check');await settled(()=>doc.querySelector('[data-action=recover-attempt]'));
+ assert.equal(store.learner('learner-demo').attempts.length,1);assert.equal(doc.querySelector('.feedback'),null);assert.equal(doc.querySelector('[data-action=check]'),null);assert.equal(doc.querySelector('#answer'),answer);assert.equal(answer.value,'SYNTHETIC wrong');assert.equal(answer.disabled,true);
+ click(doc,'recover-attempt');await settled(()=>doc.querySelector('[data-action=next-question]'));
+ assert.equal(store.learner('learner-demo').attempts.length,1);assert.deepEqual(requests[0],requests[1]);assert.equal(doc.querySelector('#practice'),scope);assert.equal(doc.querySelector('#answer'),answer);assert.equal(doc.querySelector('[data-action=check]'),null);assert.match(doc.querySelector('[data-answer-status]').textContent,/Incorrect.*Explanation/);assert.equal(doc.activeElement,doc.querySelector('[data-answer-commit]'));
 });
 
-test('FB14 item14 graded position failure retains authoritative result and offers persistence retry without another attempt',async t=>{
- const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});edit(w,doc.querySelector('#answer'),'אני');await new Promise(resolve=>setTimeout(resolve,450));const fetch=w.fetch;let fail=true;w.fetch=(url,options)=>url==='/api/progress'&&fail?Promise.resolve({ok:false,status:503,json:async()=>({error:'SYNTHETIC position unavailable'})}):fetch(url,options);click(doc,'check');await settled(()=>doc.querySelector('[data-position-recovery]'));assert.equal(store.learner('learner-demo').attempts.length,1);assert.equal(doc.querySelector('[role=status].compact-result').getAttribute('aria-label'),'Correct');assert.equal(doc.querySelector('[data-action=check]').disabled,true);assert.equal(doc.querySelector('[data-action=next-question]').disabled,true);fail=false;click(doc,'save-answer-position');await settled(()=>!doc.querySelector('[data-position-recovery]'));assert.equal(doc.querySelector('[data-action=next-question]').disabled,false);assert.equal(store.learner('learner-demo').resumes['lesson-1'].resultRequestId,store.learner('learner-demo').attempts[0].requestId);assert.equal(calls.filter(url=>url==='/api/attempt').length,1);
+test('Actions: a rejected grade preserves answer/caret and restores Check; uncertain responses never unlock a second answer',async t=>{
+ const {w,doc,store}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});const answer=doc.querySelector('#answer');edit(w,answer,'SYNTHETIC retained');answer.focus();answer.setSelectionRange(2,5);const fetch=w.fetch;w.fetch=(url,options)=>url==='/api/attempt'?Promise.resolve({ok:false,status:400,json:async()=>({error:'SYNTHETIC rejected'})}):fetch(url,options);
+ click(doc,'check');await settled(()=>doc.querySelector('[data-grade-recovery]'));assert.equal(doc.querySelector('#answer'),answer);assert.equal(answer.value,'SYNTHETIC retained');assert.equal(answer.disabled,false);assert.equal(answer.selectionStart,2);assert.equal(answer.selectionEnd,5);assert.equal(store.learner('learner-demo').attempts.length,0);assert.equal(doc.querySelector('.feedback'),null);assert.ok(doc.querySelector('[data-action=check]'));
+});
+
+test('Actions: known grade save failure repeatedly retries only persistence with one primary recovery action',async t=>{
+ const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});edit(w,doc.querySelector('#answer'),'אני');await new Promise(r=>setTimeout(r,450));const fetch=w.fetch;let fail=true;w.fetch=(url,options)=>url==='/api/progress'&&fail?Promise.resolve({ok:false,status:503,json:async()=>({error:'SYNTHETIC position unavailable'})}):fetch(url,options);
+ click(doc,'check');await settled(()=>doc.querySelector('[data-position-recovery]'));assert.equal(store.learner('learner-demo').attempts.length,1);assert.equal(doc.querySelector('[data-action=check]'),null);assert.equal(doc.querySelector('[data-action=next-question]'),null);assert.equal(doc.querySelector('[data-primary-action]').children.length,1);assert.match(doc.querySelector('.compact-result').textContent,/Correct/);
+ click(doc,'save-answer-position');await settled(()=>doc.querySelector('[data-action=save-answer-position]'));fail=false;click(doc,'save-answer-position');await settled(()=>doc.querySelector('[data-action=next-question]'));assert.equal(doc.querySelector('[data-position-recovery]'),null);assert.equal(calls.filter(url=>url==='/api/attempt').length,1);assert.equal(store.learner('learner-demo').resumes['lesson-1'].resultRequestId,store.learner('learner-demo').attempts[0].requestId);
+});
+
+test('Actions: failed continuing retains the graded answer until the same destination saves, including a lost save response',async t=>{
+ const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});edit(w,doc.querySelector('#answer'),'אני');click(doc,'check');await settled(()=>doc.querySelector('[data-action=next-question]'));const answer=doc.querySelector('#answer'),scope=doc.querySelector('#practice'),fetch=w.fetch,targets=[];let lose=true;
+ w.fetch=async(url,options)=>{const response=await fetch(url,options);if(url==='/api/progress'){targets.push(JSON.parse(options.body));if(lose){lose=false;throw new Error('SYNTHETIC lost save response');}}return response;};
+ click(doc,'next-question');await settled(()=>doc.querySelector('[data-action=retry-continuing]'));assert.equal(doc.querySelector('#practice'),scope);assert.equal(doc.querySelector('#answer'),answer);assert.equal(answer.value,'אני');assert.ok(doc.querySelector('.compact-result'));assert.equal(doc.querySelector('[data-action=check]'),null);
+ click(doc,'retry-continuing');await settled(()=>doc.querySelector('.matching-game'));assert.deepEqual(targets[0],targets[1]);assert.equal(calls.filter(url=>url==='/api/attempt').length,1);assert.equal(store.learner('learner-demo').resumes['lesson-1'].question,1);
 });
 
 test('FB14 item3 surface preference ownership and late completion preserve current owner control state without rate quality assertions',async t=>{
@@ -990,7 +1008,7 @@ test('FB14 actual reference module drives all same-source app controls through p
 });
 
 test('FB14 item14 confirmed grade bootstrap failure refreshes authoritative progress on persistence-only recovery',async t=>{
- const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});edit(w,doc.querySelector('#answer'),'אני');await new Promise(resolve=>setTimeout(resolve,450));const fetch=w.fetch;let failBootstrap=true;w.fetch=(url,options)=>url==='/api/bootstrap'&&failBootstrap?Promise.resolve({ok:false,status:503,json:async()=>({error:'SYNTHETIC progress refresh unavailable'})}):fetch(url,options);const answer=doc.querySelector('#answer'),check=doc.querySelector('[data-action=check]');check.click();await settled(()=>doc.querySelector('[data-position-recovery]'));assert.equal(store.learner('learner-demo').attempts.length,1);assert.equal(doc.querySelector('[role=status].compact-result').getAttribute('aria-label'),'Correct');assert.equal(doc.querySelector('[data-action=next-question]').disabled,true);failBootstrap=false;click(doc,'save-answer-position');await settled(()=>!doc.querySelector('[data-position-recovery]'));assert.equal(doc.querySelector('#answer'),answer);assert.equal(doc.querySelector('[data-action=check]'),check);assert.equal(doc.querySelector('.lesson-progress progress').value,1);assert.equal(doc.querySelector('[data-action=next-question]').disabled,false);assert.equal(store.learner('learner-demo').resumes['lesson-1'].resultRequestId,store.learner('learner-demo').attempts[0].requestId);assert.equal(calls.filter(url=>url==='/api/attempt').length,1);
+ const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});edit(w,doc.querySelector('#answer'),'אני');await new Promise(resolve=>setTimeout(resolve,450));const fetch=w.fetch;let failBootstrap=true;w.fetch=(url,options)=>url==='/api/bootstrap'&&failBootstrap?Promise.resolve({ok:false,status:503,json:async()=>({error:'SYNTHETIC progress refresh unavailable'})}):fetch(url,options);const answer=doc.querySelector('#answer'),check=doc.querySelector('[data-action=check]');check.click();await settled(()=>doc.querySelector('[data-position-recovery]'));assert.equal(store.learner('learner-demo').attempts.length,1);assert.equal(doc.querySelector('[role=status].compact-result').getAttribute('aria-label'),'Correct');assert.equal(doc.querySelector('[data-action=next-question]'),null);failBootstrap=false;click(doc,'save-answer-position');await settled(()=>!doc.querySelector('[data-position-recovery]'));assert.equal(doc.querySelector('#answer'),answer);assert.equal(doc.querySelector('[data-action=check]'),null);assert.equal(doc.querySelector('.lesson-progress progress').value,1);assert.equal(doc.querySelector('[data-action=next-question]').disabled,false);assert.equal(store.learner('learner-demo').resumes['lesson-1'].resultRequestId,store.learner('learner-demo').attempts[0].requestId);assert.equal(calls.filter(url=>url==='/api/attempt').length,1);
 });
 
 test('Source vocabulary uses the normal library with exact text, filters, paging, focus and separate learned collection',async t=>{

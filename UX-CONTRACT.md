@@ -103,3 +103,14 @@ Guy requires another review after corrections and a pass with no remaining gaps 
 ## E10 authored exercise occurrences
 
 ADR B04 owns exact occurrence identity, Unicode spans and pinned projection. Studio exercise-bindings-editor extends the canonical exercise editor and paged vocabulary browser with native surface selection, read-only text selection, Link/Rebind/Remove and existing workspace Save/CAS/recovery. It creates no inferred mappings. Post-answer-vocabulary decorates exact shared learner-view surfaces only after grading; prepared ordering indices retain token identity, and response-only authored answer rows are separate from raw learner submissions. Existing card lifecycle, read-only gates, media controls and focus ownership remain shared. No design tokens change. Native profile consent and rendered/physical/Guy acceptance remain pending.
+
+
+## Oct22 exercise action lifecycle
+
+The approved question header contains Concept with expanded/controls semantics. Existing authored teaching opens immediately below the prompt without replacing the answer or changing its caret. Close returns focus to Concept. Check becomes Checking, then Saving position, then Next/Continue in one shared dock. Known grades render immediately, before position saving completes; submitted input stays mounted and read-only. The stable result region receives preventScroll focus on explicit grading, never automatic Next focus. Restored grades have no Check. Incorrect answers keep the existing deliberate retry as a quiet secondary action.
+
+A lost attempt response freezes the submitted draft and offers Retry checking answer using the identical request body/ID. Store.attempt already returns the immutable receipt for this ID; no backend grading policy changes. Explicit client rejection restores editable input/caret and Check. A known grade with load/save failure offers only Retry saving position; repeating it never calls attempt. Advancing holds the old graded question until its intended destination saves. Lost/failed advance responses retry the same progress destination. Pending attempts block controlled question/profile/route departure; this is tab-local request recovery, not a new offline queue.
+
+Shared exercise-actions.js measures dock/keyboard reserve once per host, suspends background dock controls behind dialogs/drawers and disposes observers/listeners on departure. Vocabulary cards clamp above the dock while preserving trigger transit, nested Escape and exact focus return. Preview keeps mounted answers through pending/results, uses no learner writes, freezes stale answers and replaces its dock with Exit rehearsal. Save/Publish remain separate. No source data, bindings, curriculum, scoring, schema, approvals or canonical content changes.
+
+Owner evidence and open native limits are in docs/EXERCISE_ACTIONS.md. Guy acceptance remains Pending.

@@ -7,7 +7,7 @@ import {resolveBlock} from '../content.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../post-answer-vocabulary.js';
 import {bindMatching, matchWord} from '../interactions.js';
-import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseSurface, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls} from '../learner-view.js';
+import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseSurface, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls,exerciseActionDock,mountExerciseDock} from '../learner-view.js';
 
 const KEY_ROWS=[
     [
@@ -76,7 +76,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
   return {
     mount(container, props) {
       const doc = container.ownerDocument, controller = new doc.defaultView.AbortController(), signal = controller.signal;
-      const {content, lessonId, step, componentId, question, exerciseId, result, lookupId, busy, actions} = props;
+      let {content, lessonId, step, componentId, question, exerciseId, result, lookupId, busy, actions} = props;
       const preferences = props.preferences || {};
       const lesson = content.lessons.find(l => l.id === lessonId);
       const presentation=portionLesson(lesson,componentId);
@@ -84,7 +84,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const context=lessonId+'|'+(componentId||step);if(context!==mediumKey){medium=null;mediumKey=context;}
       const word = id => content.words.find(w => w.id === id);
       const exercise = exerciseId ? content.exercises.find(x => x.id === exerciseId) : null;
-      let lexicalBinding,reminderBinding;
+      let lexicalBinding,reminderBinding,dockBinding;
       let draft = draftOf(props.answer), message = '', conceptOpen = false, answerSelection = null;
       const root = doc.createElement('div');
       root.className = 'learner-preview';
@@ -122,10 +122,10 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const settings = () => '<div class="mode-bar preview-settings" role="group" aria-label="Rehearsal settings (not saved)"><label for="preview-nikkud">Exercise Nikkud</label><select id="preview-nikkud" data-preview-pref="nikkud">' + [['curated','Lesson-authored Nikkud'],['full','With Nikkud'],['none','Without Nikkud']].map(([v, t]) => '<option value="' + v + '"' + ((preferences.nikkud || 'full') === v ? ' selected' : '') + '>' + t + '</option>').join('') + '</select><small>Rehearsal settings are temporary.</small></div>';
       const ownerKeyboard=keyboardAdapter;
       const keypad=()=>ownerKeyboard
-       ? '<div class="keyboard-tools"><button type="button" class="button small secondary" data-preview-owner-keyboard>Open Hebrew keyboard</button>'+button('Review this concept','concept','small outline')+'</div>'
+       ? '<div class="keyboard-tools"><button type="button" class="button small secondary" data-preview-owner-keyboard>Open Hebrew keyboard</button>'+'</div>'
        : preferences.keyboardVisible
-        ? '<div class="preview-keypad" role="group" aria-label="Full Hebrew teaching keyboard">'+KEY_ROWS.map((row,i)=>'<div class="keyboard-row">'+row.map(k=>'<button type="button" class="key '+(keyboard.newKeys.includes(k.he)?'new-key':keyboard.knownKeys.includes(k.he)?'known-key':'')+'" data-preview-key="'+esc(k.he)+'"><bdi>'+esc(k.he)+'</bdi><small>'+esc(k.en)+'</small></button>').join('')+(i===0?'<button type="button" data-preview-key="" aria-label="Backspace">⌫</button>':'')+'</div>').join('')+'<div class="keyboard-tools"><button data-preview-command="left">←</button><button data-preview-key=" ">Space</button><button data-preview-command="right">→</button><button data-preview-command="enter">↵</button><button data-preview-pref="keyboardPinned" data-preview-value="'+(!preferences.keyboardPinned)+'">'+(preferences.keyboardPinned?'Unpin':'Pin')+'</button><button data-preview-pref="keyboardConvert" data-preview-value="'+(!preferences.keyboardConvert)+'">A→א</button><button data-preview-keyboard="hide">Close keyboard</button></div><details><summary>Nikkud</summary>'+VOWELS.map(g=>[[g.mark,g.name],...g.variants].map(([mark,name])=>'<button data-preview-key="'+esc(mark)+'" aria-label="Insert '+esc(name)+'">'+esc(name)+' · '+esc(mark)+'</button>').join('')).join('')+[['ְ','Sheva'],['ּ','Dagesh'],['ׁ','Right Shin dot']].map(([mark,name])=>'<button data-preview-key="'+esc(mark)+'" aria-label="Insert '+name+'">'+name+'</button>').join('')+'</details></div>'+button('Review this concept','concept','small outline')
-        : '<div class="keyboard-tools"><button type="button" class="button small secondary" data-preview-keyboard="show">Open Hebrew keyboard</button>'+button('Review this concept','concept','small outline')+'</div>';
+        ? '<div class="preview-keypad" role="group" aria-label="Full Hebrew teaching keyboard">'+KEY_ROWS.map((row,i)=>'<div class="keyboard-row">'+row.map(k=>'<button type="button" class="key '+(keyboard.newKeys.includes(k.he)?'new-key':keyboard.knownKeys.includes(k.he)?'known-key':'')+'" data-preview-key="'+esc(k.he)+'"><bdi>'+esc(k.he)+'</bdi><small>'+esc(k.en)+'</small></button>').join('')+(i===0?'<button type="button" data-preview-key="" aria-label="Backspace">⌫</button>':'')+'</div>').join('')+'<div class="keyboard-tools"><button data-preview-command="left">←</button><button data-preview-key=" ">Space</button><button data-preview-command="right">→</button><button data-preview-command="enter">↵</button><button data-preview-pref="keyboardPinned" data-preview-value="'+(!preferences.keyboardPinned)+'">'+(preferences.keyboardPinned?'Unpin':'Pin')+'</button><button data-preview-pref="keyboardConvert" data-preview-value="'+(!preferences.keyboardConvert)+'">A→א</button><button data-preview-keyboard="hide">Close keyboard</button></div><details><summary>Nikkud</summary>'+VOWELS.map(g=>[[g.mark,g.name],...g.variants].map(([mark,name])=>'<button data-preview-key="'+esc(mark)+'" aria-label="Insert '+esc(name)+'">'+esc(name)+' · '+esc(mark)+'</button>').join('')).join('')+[['ְ','Sheva'],['ּ','Dagesh'],['ׁ','Right Shin dot']].map(([mark,name])=>'<button data-preview-key="'+esc(mark)+'" aria-label="Insert '+name+'">'+name+'</button>').join('')+'</details></div>'
+        : '<div class="keyboard-tools"><button type="button" class="button small secondary" data-preview-keyboard="show">Open Hebrew keyboard</button>'+'</div>';
       const lookupCard = () => {
         const w = lookupId && word(lookupId);
         return w ? '<aside class="card preview-lookup" aria-label="Vocabulary entry"><div class="panel-header"><h3>' + esc(w.english) + '</h3><button type="button" class="button small outline" data-preview-lookup-close>Close</button></div><div class="hebrew">' + wordText(w) + '</div><div class="meaning">' + fieldText(w, 'english', w.english) + '</div>' + audioControls(w.audio, w.english) + (w.notes ? '<p class="note"' + cellAttribute(w, 'notes') + '>' + fieldText(w, 'notes', w.notes) + '</p>' : '') + richFields(w) + '</aside>' : '';
@@ -147,19 +147,17 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         if (!exercise) return '<h2>That portion is finished.</h2>' + continueRow();
         const mode = exercise.nikkudOverride || preferences.nikkud || 'full', allowed = exercise.allowLookup || Boolean(result);
         const lessonWords = content.words.filter(w => lesson.wordIds?.includes(w.id));
-        return '<div class="mode-bar"><span class="tag">Question ' + (question + 1) + ' of ' + count + '</span>' + (exercise.nikkudOverride ? '<span class="tag">Nikkud: ' + esc({full:'With Nikkud', none:'Without Nikkud', curated:'Lesson-authored Nikkud'}[exercise.nikkudOverride]) + '</span>' : '') + '</div><p class="exercise-prompt">' + exerciseSurface(exercise.prompt,'prompt') + '</p>'
-          + '<div data-exercise-input>'+exerciseInput(exercise, {mode, word, draft, result, keyboard:keypad()})+'</div>'
-          + note()
-          + '<div class="answer-result">'+exerciseFeedback(exercise, result)
-          + '<div class="answer-commit">'+button('Check answer','check','primary','',Boolean(result)).replace('<button','<button data-keyboard-preserve')+'</div>'
-          + '<div class="toolbar">'+(result&&!result.correct?button('Try this question again','retry-question','small secondary',exercise.id):'')+(allowed?'<details class="preview-vocabulary-help"><summary>Vocabulary help</summary>'+lessonWords.map(w=>button(esc(w.pointed)+' · '+esc(w.english),'lookup','small secondary',w.id)).join('')+'</details>':'')+'</div></div>'
-          + '<nav class="exercise-footer lesson-footer" aria-label="Lesson navigation">'+(result?button(question+1===count?'Continue →':'Next question →','next-question','secondary'):'<span>Check your answer to continue.</span>')+'</nav>'
-          + (conceptOpen ? '<section class="preview-concept"><h3>Review this concept</h3>' + learnMedia(presentation, audioURL(presentation.video)?'watch':'read',renderLesson,exercise.explanationTime) + button('Close concept','concept-close','small outline') + '</section>' : '');
+        return '<div class="exercise-question-header"><div class="mode-bar"><span class="tag">Question '+(question+1)+' of '+count+'</span>'+(exercise.nikkudOverride?'<span class="tag">Nikkud: '+esc({full:'With Nikkud',none:'Without Nikkud',curated:'Lesson-authored Nikkud'}[exercise.nikkudOverride])+'</span>':'')+'</div>'+button('Review this concept','concept','exercise-quiet').replace('<button','<button data-keyboard-preserve aria-expanded="false" aria-controls="preview-concept"')+'</div><p class="exercise-prompt">'+exerciseSurface(exercise.prompt,'prompt')+'</p><div data-concept-slot></div>'
+        +'<div data-exercise-input>'+exerciseInput(exercise,{mode,word,draft,result,keyboard:keypad()})+'</div>'+note()
+        +'<div class="answer-result answer-commit" data-answer-commit tabindex="-1" aria-label="Answer result">'+exerciseFeedback(exercise,result)+'</div>'
+        +'<div class="exercise-support">'+(result&&!result.correct?button('Try this question again','retry-question','exercise-quiet',exercise.id):'')+(allowed?'<details class="preview-vocabulary-help"><summary>Vocabulary help</summary><p>Hover or select an underlined word to see its vocabulary card.</p>'+lessonWords.map(w=>button(esc(w.pointed)+' · '+esc(w.english),'lookup','small secondary',w.id)).join('')+'</details>':'')+'</div>'
+        +exerciseActionDock(busy?button('Checking…','pending-answer','primary','',true):result?button(question+1===count?'Continue →':'Next question →','next-question','primary'):button('Check answer','check','primary').replace('<button','<button data-keyboard-preserve'));
+
       }
       let mounted = false;
       function render() {
         if (!active()) return;
-        reminderBinding?.destroy();lexicalBinding?.destroy();
+        dockBinding?.destroy();reminderBinding?.destroy();lexicalBinding?.destroy();
         if (mounted) captureFocus();
         mounted = true;
         const body = !lesson ? '<p>This lesson is not in the draft.</p>'
@@ -173,7 +171,9 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         if(exercise&&result&&!busy)reminderBinding=mountAnsweredVocabulary(root,{content,exercise,result,mode:exercise.nikkudOverride||preferences.nikkud||'full',isCurrent:()=>active(),playAudio,stopMedia,getPlaybackState});
         if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select,textarea').forEach(el => { el.disabled = true; }); }
         if (exercise?.type === 'matching' && !result && !busy) bindMatching(root, (id, meaning) => { if (active()) updateDraft({...draft, matching:matchWord(draft.matching, id, meaning)}); });
+        dockBinding=mountExerciseDock(root);
         restoreFocus(); reveal();
+
         if(ownerKeyboard){ownerKeyboard.mount(container.closest('dialog')||container);ownerKeyboard.sync(keyboard,preferences,'preview|'+lessonId+'|'+(componentId||step)+'|'+question);}
       }
       function submit() {
@@ -214,7 +214,15 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         else if (action === 'token') { if (!result) { updateDraft({...draft, selectedTokens:[...draft.selectedTokens, Number(value)]}); keepKeys(); } }
         else if (action === 'remove-token') { if (!result) { updateDraft({...draft, selectedTokens:draft.selectedTokens.filter((_, i) => i !== Number(value))}); keepKeys(); } }
         else if (action === 'check') submit();
-        else if (action === 'concept' || action === 'concept-close') {const input=root.querySelector('#answer');if(input)answerSelection={start:input.selectionStart,end:input.selectionEnd};conceptOpen=action==='concept';render();const next=root.querySelector('#answer');if(next&&!next.disabled){next.focus({preventScroll:true});if(answerSelection)next.setSelectionRange(answerSelection.start,answerSelection.end);}}
+        else if (action === 'concept' || action === 'concept-close') {
+          const input=root.querySelector('#answer'),slot=root.querySelector('[data-concept-slot]'),trigger=root.querySelector('[data-action="concept"]');
+          if(action==='concept'){
+            if(input)answerSelection={start:input.selectionStart,end:input.selectionEnd};
+            if(!conceptOpen)slot.innerHTML='<section class="preview-concept" id="preview-concept"><h3>Review this concept</h3>'+learnMedia(presentation,audioURL(presentation.video)?'watch':'read',renderLesson,exercise.explanationTime)+button('Close concept','concept-close','exercise-quiet')+'</section>';
+            conceptOpen=true;trigger.setAttribute('aria-expanded','true');
+            if(input&&!input.disabled){input.focus({preventScroll:true});if(answerSelection)input.setSelectionRange(answerSelection.start,answerSelection.end);}
+          }else{slot.replaceChildren();conceptOpen=false;trigger.setAttribute('aria-expanded','false');trigger.focus({preventScroll:true});}
+        }
         else if (action === 'retry-question') call('retry');
         else if (action === 'next-question' || action === 'next-step') call('next');
         else if (action === 'lookup') call('lookup', value);
@@ -229,7 +237,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       root.addEventListener('change', event => { if(event.target.matches('[data-audio-speed]')&&!busy){const speed=Number(event.target.value);preferences.audioSpeed=speed;call('setPreference','audioSpeed',speed);setPlaybackSpeed(speed);syncAudioControls(root,speed,getPlaybackState());return;} if (event.target.dataset.previewPref && event.target.tagName === 'SELECT') call('setPreference', event.target.dataset.previewPref, event.target.value); }, {signal});
       // Rehearsal keyboard shortcuts stay inside the preview host; defaultPrevented keeps the learner's global handler out.
       (keyScope || root).addEventListener('keydown', event => {
-        if (event.defaultPrevented || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || busy) return;
+        if (event.target.closest?.('[data-vocabulary-card]') || event.defaultPrevented || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || busy) return;
         const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName) || event.target.isContentEditable;
         if (typing) { if (event.target.id === 'answer' && event.key === 'Enter' && !event.shiftKey && !result) { event.preventDefault(); submit(); } return; }
         if ((event.key === 'Enter' || event.key === ' ') && ['BUTTON','A','SUMMARY'].includes(event.target.tagName)) return;
@@ -244,15 +252,39 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       ownerKeyboard?.listen?.(detail=>{for(const [key,value] of Object.entries(detail))if(preferences[key]!==value){call('setPreference',key,value);break;}},signal);
       doc.defaultView.addEventListener('hebleo-reference-state',event=>syncReferenceControls(root,event.detail),{signal});
       render();
-      return function dispose() {
+      function dispose() {
         if (!active()) return;
         captureFocus();
+        dockBinding?.destroy();
         lexicalBinding?.destroy();
         reminderBinding?.destroy();
         controller.abort();
         stopMedia?.();
         root.remove();
+      }
+      dispose.update = next => {
+        if(!exercise||next.exerciseId!==exerciseId||next.lessonId!==lessonId||next.componentId!==componentId||next.step!==step||next.question!==question||next.lookupId!==lookupId||JSON.stringify(next.preferences)!==JSON.stringify(props.preferences)||result&&!next.result)return false;
+        const hadResult=Boolean(result);result=next.result;busy=next.busy;draft=draftOf(next.answer);props=next;
+        if(busy)root.setAttribute('aria-busy','true');else root.removeAttribute('aria-busy');
+        for(const el of root.querySelectorAll('button,input,select,textarea')){
+          if(busy){if(!el.hasAttribute('data-before-pending'))el.dataset.beforePending=String(el.disabled);el.disabled=true;}
+          else if(el.hasAttribute('data-before-pending')){el.disabled=el.dataset.beforePending==='true';delete el.dataset.beforePending;}
+        }
+        root.querySelector('[data-primary-action]').innerHTML=busy?button('Checking…','pending-answer','primary','',true):result?button(question+1===portionExercises(content,lesson,componentId||step).length?'Continue →':'Next question →','next-question','primary'):button('Check answer','check','primary').replace('<button','<button data-keyboard-preserve');
+        if(result&&!hadResult){
+          root.querySelector('[data-answer-commit]').innerHTML=exerciseFeedback(exercise,result);bindResultExplanations(root);
+          for(const el of root.querySelectorAll('[data-exercise-input] button,[data-exercise-input] textarea,[data-exercise-input] input'))el.disabled=true;
+          for(const el of root.querySelectorAll('[draggable]'))el.draggable=false;
+          root.querySelectorAll('.keyboard-tools,.preview-keypad').forEach(el=>el.remove());
+          const support=root.querySelector('.exercise-support');support.innerHTML=(!result.correct?button('Try this question again','retry-question','exercise-quiet',exercise.id):'')+'<details class="preview-vocabulary-help"><summary>Vocabulary help</summary><p>Hover or select an underlined word to see its vocabulary card.</p>'+content.words.filter(w=>lesson.wordIds?.includes(w.id)).map(w=>button(esc(w.pointed)+' · '+esc(w.english),'lookup','small secondary',w.id)).join('')+'</details>';
+          reminderBinding=mountAnsweredVocabulary(root,{content,exercise,result,mode:exercise.nikkudOverride||preferences.nikkud||'full',isCurrent:()=>active(),playAudio,stopMedia,getPlaybackState});
+          root.querySelector('[data-answer-commit]').focus({preventScroll:true});
+          ownerKeyboard?.sync(keyboard,preferences,'preview|'+lessonId+'|'+(componentId||step)+'|'+question);
+        }
+        if(!busy&&!result){const input=root.querySelector('#answer');input?.focus({preventScroll:true});}
+        dockBinding?.refresh?.();return true;
       };
+      return dispose;
     }
   };
 }

@@ -79,7 +79,7 @@ Radius8px for controls, Cards and dialogs. At least42px header controls. Small c
 
 ## Components
 
-The actual learner renderer, vocabularyTable/wordCard, unified Studio, EasyMDE and owner keyboard remain canonical. Studio shows one title editor at its display location, editable content at its location, explicit Add/Edit/Reuse and shared-reference impact. Check stays inside the current question; lower Continue appears after feedback. Concept help is inline and does not remount the answer. Native select popup behavior is intentionally retained; there is no authored popup geometry claim.
+The actual learner renderer, vocabularyTable/wordCard, unified Studio, EasyMDE and owner keyboard remain canonical. Studio shows one title editor at its display location, editable content at its location, explicit Add/Edit/Reuse and shared-reference impact. The current exercise has one measured visible action dock: Check, pending, then primary Next/Continue. Concept sits beside the question header; verdict and optional Explanation precede compact Accepted answer(s). Concept help is inline and does not remount the answer. Native select popup behavior is intentionally retained; there is no authored popup geometry claim.
 
 Global scrollbars inherit thumb/track/hover/active tokens with forced-colors fallback. Accessible labels/current/expanded state, native tab semantics, focus indicators and reduced-motion rules are preserved. All profile, note, anonymity, source/session/revision and publishing contracts remain in UX-CONTRACT.md and the existing architecture documents.
 
@@ -117,3 +117,10 @@ The separate actual-app comparison uses source-backed prototype examples in a di
 Guy requires the Note portion to span the entire vocabulary table, including beneath Root and Pattern. Every category now uses one full-width support cell; adjective structure cells span only their gender/form rows and remain vertically centered there. Green notes and grey examples-only strips keep zero cell padding at narrower widths.
 
 Expanded note previews retain their layout width while visually hidden. Overflow is measured against the header space before an optional Expand action or ellipsis is added; an Examples action reserves its own space. This prevents disclosure/resize measurements from alternately hiding and showing the full note. Bracketed asides stay inline in collapsed previews and retain their separate treatment when expanded. A final native pass without gaps is required by Guy before completion; automated passes do not close that gate.
+
+
+## Oct22 approved exercise actions
+
+Guy approved the exercise-actions proposal including Leo’s Accepted answer(s) wording. Shared exercise-actions.js owns the fixed action slot and measured reading reserve in learner and saved-draft rehearsal. The dock aligns to the current question’s real width, follows rail/viewport changes and sits above the Hebrew/visual-viewport keyboard boundary; Preview constrains it to its dialog. Existing refinement.css tokens, 760px reading measure and Hebrew rich rendering remain canonical. Support uses quiet 44px targets. This explicitly supersedes the earlier static exercise-footer arrangement only for questions.
+
+The result displays Correct/Incorrect and a conditional existing Explanation trigger. Answer controls remain mounted and read-only after grading. Check is removed; save/recovery/continuation occupies the same primary slot. Vocabulary occurrence identity and pointer/Escape/media ownership stay shared. Native geometry, 200% zoom and Guy acceptance remain Pending: mounted Edge inspection returned browser_consent_required. No headless or simulated geometry is native evidence.

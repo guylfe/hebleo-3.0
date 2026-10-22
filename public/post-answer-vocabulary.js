@@ -60,18 +60,19 @@ export function decorateAnsweredVocabulary(scope,{content,exercise:e,result,mode
  if(e.type==='typing'&&eligible(e.wordId)&&!scope.querySelector('[data-target-vocabulary]')){
   const w=content.words.find(w=>w.id===e.wordId);if(!w)return;
   const target=doc.createElement('p');target.dataset.targetVocabulary='';target.className='target-vocabulary';
-  target.innerHTML='Target word: '+wordText(w,mode);scope.querySelector('[data-exercise-input]')?.append(target);link(target.querySelector('.hebrew'),e.wordId);
+  target.innerHTML='Target word: '+wordText(w,mode);const verdict=scope.querySelector('[data-answer-commit],.answer-result');if(verdict)verdict.after(target);else scope.querySelector('[data-exercise-input]')?.append(target);link(target.querySelector('.hebrew'),e.wordId);
  }
  let bindings=[];try{bindings=validateExerciseVocabularyBindings(e);}catch{/* malformed public occurrences stay plain */}
  if(answers.some(b=>eligible(b.wordId))&&!scope.querySelector('[data-authored-vocabulary-answers]')){
   const section=doc.createElement('section');section.dataset.authoredVocabularyAnswers='';
-  const label=doc.createElement('p');label.textContent='Authored answers · vocabulary reminders';section.append(label);
+  const label=doc.createElement('p');label.className='accepted-answer-label';label.textContent=new Set(answers.map(b=>b.index)).size>1?'Accepted answers':'Accepted answer';section.append(label);
   const seen=new Set();
   for(const b of answers){if(seen.has(b.index))continue;seen.add(b.index);
    const p=doc.createElement('p'),text=doc.createElement('bdi');p.className='hebrew';text.dir='auto';
    text.dataset.vocabularySurface='answers';text.dataset.vocabularyIndex=String(b.index);text.textContent=b.sourceText;p.append(text);section.append(p);
   }
-  scope.querySelector('[data-exercise-input]')?.append(section);
+  const result=scope.querySelector('[data-answer-commit],.answer-result');
+  if(result)result.after(section);else scope.querySelector('[data-exercise-input]')?.append(section);
  }
  // Every displayed surface is exact authored text. Never inspect result.answer or a
  // learner input to infer identity; ordering markers carry prepared token indices.
@@ -85,10 +86,6 @@ export function decorateAnsweredVocabulary(scope,{content,exercise:e,result,mode
   const text=surface.textContent,fragment=doc.createDocumentFragment();let offset=0;
   for(const b of selected){fragment.append(doc.createTextNode(text.slice(offset,b.start)));const trigger=doc.createElement('button');trigger.type='button';trigger.dataset.vocabularyWord=b.wordId;trigger.dataset.vocabularyBinding=b.id;trigger.setAttribute('aria-label','Vocabulary card for '+b.text);trigger.textContent=b.text;fragment.append(trigger);offset=b.end;}
   fragment.append(doc.createTextNode(text.slice(offset)));surface.replaceChildren(fragment);surface.dataset.vocabularyDecorated='true';
- }
- if(scope.querySelector('[data-vocabulary-word]')&&!scope.querySelector('[data-vocabulary-hint]')){
-  const hint=doc.createElement('p');hint.dataset.vocabularyHint='';hint.className='interaction-hint';hint.textContent='Hover or select an underlined word to see its vocabulary card.';
-  scope.querySelector('[data-exercise-input]')?.append(hint);
  }
 }
 

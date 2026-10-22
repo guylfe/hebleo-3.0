@@ -42,10 +42,14 @@ export function bindVocabularyReminders(scope, {renderCard, bindCard, stopCardMe
     return off;
   };
   const listen = (...args) => cleanups.push(on(...args));
-  const viewport = () => {
+  const viewport = (avoidDock=false) => {
     const v = win.visualViewport;
-    return {left: v?.offsetLeft || 0, top: v?.offsetTop || 0,
-      width: v?.width ?? win.innerWidth, height: v?.height ?? win.innerHeight};
+    const top=v?.offsetTop||0, host=scope.closest('dialog')?.getBoundingClientRect();
+    const dock=avoidDock?scope.querySelector('[data-exercise-dock]:not([hidden])')?.getBoundingClientRect():null;
+    const bottom=Math.min(top+(v?.height??win.innerHeight),host?.bottom??Infinity,dock?.height?dock.top:Infinity);
+    const start=Math.max(top,host?.top??top);
+    return {left: v?.offsetLeft || 0, top:start,
+      width: v?.width ?? win.innerWidth, height:Math.max(0,bottom-start)};
   };
   function displayed(el) {
     if (el.closest('[hidden],[inert],[aria-hidden="true"]')) return false;
@@ -101,7 +105,7 @@ export function bindVocabularyReminders(scope, {renderCard, bindCard, stopCardMe
     if (!current) return;
     const {anchor, panel, bridge} = current;
     if (!available(anchor) || !panel.isConnected || current.id !== anchor.dataset.vocabularyWord) { close(); return; }
-    const r = anchor.getBoundingClientRect(), v = viewport();
+    const r = anchor.getBoundingClientRect(), v = viewport(true);
     const width = Math.max(0, Math.min(360, v.width - EDGE * 2));
     const below = v.top + v.height - EDGE - r.bottom - GAP;
     const above = r.top - v.top - EDGE - GAP;

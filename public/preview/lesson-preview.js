@@ -1,3 +1,4 @@
+import {exerciseActionDock,mountExerciseDock} from '../learner-view.js';
 import {lessonSteps, stepLabels, stepExercises, lessonPortions, portionKind, portionExercises, portionLabel} from '../ux.js';
 import {escapeHTML as e} from '../studio/editor-fields.js';
 
@@ -7,7 +8,7 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
   if (typeof renderer?.mount !== 'function') throw new Error('A shared learner renderer adapter is required.');
   if (!draftToken || typeof loadSession !== 'function' || typeof evaluate !== 'function') throw new Error('Draft preview adapters and token are required.');
   const controller = new container.ownerDocument.defaultView.AbortController();
-  let session, lesson, step, question = 0, lookupId = null, busy = false, stale = false, generation = 0, unmount;
+  let session, lesson, step, question = 0, lookupId = null, busy = false, stale = false, generation = 0, unmount, frozenDock;
   let localPreferences = structuredClone(preferences);
   const answers = new Map();
   container.innerHTML = '<section class="lesson-preview"><h2>Draft rehearsal</h2><p>Changes here are temporary.</p><nav aria-label="Rehearsal steps" data-preview-nav></nav><p data-preview-status role="status">Loading draft…</p><div data-preview-content></div><button type="button" data-preview-exit>Exit rehearsal</button></section>';
@@ -23,17 +24,19 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
     // Retain the actual displayed draft before disposing its renderer. Cloning drops
     // listeners; the disposer still removes scoped keys/matching handlers and media.
     const frozen = stale ? frozenPresentation(body) : null;
-    unmount?.(); unmount = undefined;
+    if(stale){frozenDock?.destroy();frozenDock=undefined;unmount?.();unmount=undefined;}
     nav.innerHTML = session.steps.map(name => `<button type="button" data-preview-step="${e(name)}"${step === name ? ' aria-current="step"' : ''}${busy || stale ? ' disabled' : ''}>${e(portionLabel(lesson,name))}</button>`).join('');
-    if (stale) {body.replaceChildren(...frozen.childNodes); keepFocus(hadFocus, focusedStep); return;}
+    if (stale) {body.replaceChildren(...frozen.childNodes);body.querySelector('[data-exercise-dock]')?.remove();body.insertAdjacentHTML('beforeend',exerciseActionDock('<button type="button" class="button primary" data-preview-exit>Exit rehearsal</button>'));frozenDock=mountExerciseDock(body);container.querySelector('.lesson-preview > [data-preview-exit]').hidden=true;if(hadFocus)body.querySelector('[data-preview-exit]')?.focus({preventScroll:true});return;}
     const state = currentAnswer();
-    unmount = renderer.mount(body, {
+    const rendererProps = {
       mode:'draft-preview', persistent:false, content:structuredClone(session.content),
       lessonId, step:portionKind(lesson,step), componentId:lesson.compositionVersion===2?(step==='complete'?null:step):undefined, question, exerciseId:exercise()?.id ?? null,
       answer:structuredClone(state.answer), result:structuredClone(state.result),
       preferences:structuredClone(localPreferences), lookupId, busy,
       actions: {go, next, setAnswer, submit, retry, lookup, setPreference, exit}
-    });
+    };
+    if(unmount?.update?.(rendererProps)){keepFocus(hadFocus,focusedStep);return;}
+    unmount?.();unmount=renderer.mount(body,rendererProps);
     if (unmount !== undefined && typeof unmount !== 'function') throw new Error('Shared renderer mount must return a disposer or undefined.');
     keepFocus(hadFocus, focusedStep);
   }
@@ -111,7 +114,7 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
   }
   function dispose() {
     if (!active()) return;
-    controller.abort(); generation++; unmount?.(); unmount = undefined;
+    controller.abort(); generation++; frozenDock?.destroy();unmount?.(); unmount = undefined;
     answers.clear(); localPreferences = {}; session = undefined; lesson = undefined;
     container.replaceChildren();
   }
