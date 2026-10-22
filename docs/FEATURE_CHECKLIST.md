@@ -613,3 +613,6 @@ Implementation: learner and Studio Preview share one measured action dock; Conce
 
 
 ACTIONS-01 corrected owner checkpoint: independent review of 5032899 requested four corrections (UX-ACT-04/06/07 and QA-ACTIONS-01). Lead integrated them, retained reviewer regressions, and verified 788 candidate passes, 21 focused reviewer/correction probes, 27 schema checks and nine runtime scenarios. Corrected-candidate independent recheck and preservation installation remain Pending; native/Guy acceptance unchanged. See EXERCISE_ACTIONS.md.
+
+
+ACTIONS-01 delivery checkpoint: independent UX and QA close UX-ACT-04/06/07 and QA-ACTIONS-01 on ba3ad389a6af9807f8eb90e7c34b8723cb1ffc80. That exact code is installed and HTTP destination-verified at63358; all52 served asset hashes, all database tables, saved draft, content revision4, configuration/uploads and49 unrelated listeners are conserved. See EXERCISE_ACTIONS.md and docs/evidence/exercise-actions-20261022/INSTALL_RECEIPT.json. Native/Guy acceptance remain Pending; browser_consent_required is the remaining external gate.

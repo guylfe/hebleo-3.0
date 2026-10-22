@@ -1,0 +1,45 @@
+{
+  "reviewedAndInstalledRevision": "ba3ad389a6af9807f8eb90e7c34b8723cb1ffc80",
+  "runtimeSha256": "72326559688bfd64c7ade423ce917d192ec4f829f7dcc5c1ba85fe4fb1f2efcf",
+  "backendSha256": "0c34d030991a9d18eca9e740081489794a860c6826700341ca03c37ae5dcda73",
+  "executableFiles": 103,
+  "servedAssetsVerified": 52,
+  "port": 63358,
+  "pid": 46656,
+  "preservationMode": true,
+  "allTablesConserved": true,
+  "stateSha256": "addf2e5c601c330fbc9b8937cd70cea782a22a69789c9f328d6e8595b81e81bf",
+  "configurationAndUploadsConserved": true,
+  "contentRevision": 4,
+  "draftPreserved": true,
+  "backupAndRestoreRehearsalPassed": true,
+  "integrity": "ok",
+  "unrelatedListenersPreserved": 49,
+  "ownerVerification": {
+    "candidatePasses": 788,
+    "schemaPasses": 27,
+    "runtimeScenarios": 9,
+    "focusedReviewerAndCorrectionProbes": 21
+  },
+  "independentReviews": {
+    "ux": {
+      "assignment": "fd8cb4cf-df04-4c2d-8f59-64bd01382902",
+      "closed": [
+        "UX-ACT-04",
+        "UX-ACT-06",
+        "UX-ACT-07"
+      ]
+    },
+    "qa": {
+      "assignment": "ad79de77-4022-4933-9063-b707dc831005",
+      "closed": [
+        "QA-ACTIONS-01"
+      ],
+      "focusedPasses": 41,
+      "recoveryPasses": 5
+    }
+  },
+  "nativeAcceptance": "Pending: browser_consent_required",
+  "guyAcceptance": "Pending",
+  "noContentPublication": true
+}

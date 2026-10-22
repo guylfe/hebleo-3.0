@@ -19,3 +19,12 @@ The combined 21 reviewer/correction probes pass, including correct/mixed/incorre
 
 
 Corrected owner checkpoint: npm run verify:candidate passes 788/788 under the existing audio exclusions. The 21 imported reviewer and correction probes also pass separately; schema checks pass 27/27 and runtime contract scenarios pass 9/9. Syntax is included in the candidate command. Before/after live-state receipts still match all tables at addf2e5c601c330fbc9b8937cd70cea782a22a69789c9f328d6e8595b81e81bf, including revision4 and the existing saved draft; configuration/uploads also match. These are owner checks; corrected-SHA independent recheck and installation remain separate and Pending.
+
+
+## Reviewed and installed checkpoint
+
+Independent UX and QA rechecks close all four findings on exact code ba3ad389a6af9807f8eb90e7c34b8723cb1ffc80, runtime SHA-256 72326559688bfd64c7ade423ce917d192ec4f829f7dcc5c1ba85fe4fb1f2efcf. UX reran the21 probes, added four announcement/learner parity checks and21 affected card guards; QA verified103 hashes/52 HTTP assets, the original immediate-choice failure,41 focused checks and five recovery checks. Those counts overlap and are not summed. No remaining concrete defect was found within their bounded code/DOM/HTTP scope.
+
+The preservation launcher installed that exact code on port63358, PID46656. A fresh SQLite backup and restore rehearsal passed; all tables, revision4, the saved draft, configuration and uploads are unchanged at state digest addf2e5c601c330fbc9b8937cd70cea782a22a69789c9f328d6e8595b81e81bf. All52 served assets match the installed manifest; the listener command names the exact checkout/revision/database, and all49 unrelated listeners are unchanged. The sanitized installation receipt is in docs/evidence/exercise-actions-20261022/INSTALL_RECEIPT.json. Local full receipts, backup and restore rehearsal are in C:\Users\Trans\.openmausbot\task-workspaces\8c900356-50f6-4d41-bbb9-50c8abe09233\739ab40b-82dd-45cb-8825-6e570b3642d7\preservation-install-20261022-043252. Rollback means restart the untouched90521ee checkout with the same preservation launcher and existing database; restore the backup only after reviewing any subsequent learner activity.
+
+This documentation checkpoint does not change executable files. Native layout/rail/keyboard/zoom/physical/screen-reader acceptance and Guy acceptance remain Pending under browser_consent_required. No content was published and no learner state was reset.
