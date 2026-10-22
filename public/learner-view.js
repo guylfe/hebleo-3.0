@@ -66,6 +66,20 @@ export function matchingGame(e,mode,word,matching,result) {
   const means = e.wordIds.map(id=>word(id).english).sort();
   return '<p class="interaction-hint">Drag a word onto its meaning, or select a word and then its meaning.</p><div class="matching-game"><div class="match-bank">'+e.wordIds.map(id=>'<button class="match-tile'+verdict(id)+'" data-match-word="'+esc(id)+'" aria-pressed="false" '+(result?'disabled':'')+'>'+wordText(word(id),mode)+'<small>'+(placed[id]?'Placed: '+esc(placed[id]):'Drag or select')+'</small>'+status(id)+'</button>').join('')+'</div><div class="match-targets">'+means.map(meaning=>{const id=e.wordIds.find(id=>placed[id]===meaning);return '<button class="match-target '+(id?'filled':'')+verdict(id)+'" data-match-target="'+esc(meaning)+'" '+(result?'disabled':'')+'><strong>'+esc(meaning)+'</strong><span>'+(id?wordText(word(id),mode):'Drop word here')+'</span>'+status(id)+'</button>';}).join('')+'</div></div>';
 }
+// Preserve the mounted answer while applying the same bank/target verdicts as matchingGame.
+export function applyMatchingResult(scope,e,result) {
+ if(e.type!=='matching'||!result?.pairResults)return;
+ for(const tile of scope.querySelectorAll('[data-match-word],[data-match-target]')){
+  const id=tile.dataset.matchWord||e.wordIds.find(id=>result.answer?.[id]===tile.dataset.matchTarget);
+  const correct=Boolean(result.pairResults[id]);
+  tile.classList.toggle('pair-correct',correct);tile.classList.toggle('pair-incorrect',!correct);
+  if(tile.tagName==='BUTTON')tile.disabled=true;
+  if(tile.hasAttribute('aria-pressed'))tile.setAttribute('aria-pressed','false');
+  let status=tile.querySelector('.pair-status');
+  if(!status){status=scope.ownerDocument.createElement('small');status.className='pair-status';tile.append(status);}
+  status.textContent=correct?'✓ Correct':'✕ Incorrect';
+ }
+}
 export function sentenceTiles(e,selectedTokens,result) {
   const prefixes=new Set(e.prefixTokenIndices||[]),groups=[];
   for(const [position,index] of selectedTokens.entries()){

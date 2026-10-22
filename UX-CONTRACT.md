@@ -114,3 +114,6 @@ A lost attempt response freezes the submitted draft and offers Retry checking an
 Shared exercise-actions.js measures dock/keyboard reserve once per host, suspends background dock controls behind dialogs/drawers and disposes observers/listeners on departure. Vocabulary cards clamp above the dock while preserving trigger transit, nested Escape and exact focus return. Preview keeps mounted answers through pending/results, uses no learner writes, freezes stale answers and replaces its dock with Exit rehearsal. Save/Publish remain separate. No source data, bindings, curriculum, scoring, schema, approvals or canonical content changes.
 
 Owner evidence and open native limits are in docs/EXERCISE_ACTIONS.md. Guy acceptance remains Pending.
+
+
+Oct22 review corrections retain matching-family feedback through a shared in-place updater across learner and Preview, including each bank and target status. Primary-slot replacement preserves keyboard focus in the stable result container, including repeated failures. A single pending status announces Checking / Saving position / Continuing; the answer input is busy only while its grade is unresolved. Generic control cleanup honors the frozen pending attempt so immediate-choice answers stay read-only until recovery. Reviewer probes and matching parity remain part of the candidate suite.

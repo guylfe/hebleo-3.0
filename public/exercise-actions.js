@@ -9,6 +9,7 @@ export function mountExerciseDock(scope) {
   if(!dock)return {destroy(){}};
   const doc=scope.ownerDocument, win=doc.defaultView, dialog=scope.closest('dialog');
   const controller=new win.AbortController(), {signal}=controller;
+  const requestFrame=win.requestAnimationFrame?.bind(win)||(fn=>win.setTimeout(fn,0)),cancelFrame=win.cancelAnimationFrame?.bind(win)||win.clearTimeout.bind(win);
   let frame=null, destroyed=false, reserve=0;
   const set=(el,key,value)=>{if(el.style.getPropertyValue(key)!==value)el.style.setProperty(key,value);};
   function measure(){
@@ -32,7 +33,7 @@ export function mountExerciseDock(scope) {
     set(scope,'--exercise-dock-reserve',reserve+'px');
     scope.dataset.exerciseDockHost='';
   }
-  const schedule=()=>{if(!destroyed&&frame===null)frame=win.requestAnimationFrame(measure);};
+  const schedule=()=>{if(!destroyed&&frame===null)frame=requestFrame(measure);};
   for(const type of ['resize','scroll'])win.addEventListener(type,schedule,{signal,passive:true,capture:true});
   for(const type of ['resize','scroll'])win.visualViewport?.addEventListener(type,schedule,{signal,passive:true});
   const resize=win.ResizeObserver?new win.ResizeObserver(schedule):null;
@@ -45,5 +46,5 @@ export function mountExerciseDock(scope) {
     if(r.bottom>d.top&&r.top<d.bottom)el.scrollIntoView?.({block:'center',behavior:'instant'});
   },{signal});
   measure();
-  return {refresh:measure,destroy(){if(destroyed)return;destroyed=true;controller.abort();resize?.disconnect();mutation.disconnect();if(frame!==null)win.cancelAnimationFrame(frame);scope.style.removeProperty('--exercise-dock-reserve');delete scope.dataset.exerciseDockHost;}};
+  return {refresh:measure,destroy(){if(destroyed)return;destroyed=true;controller.abort();resize?.disconnect();mutation.disconnect();if(frame!==null)cancelFrame(frame);scope.style.removeProperty('--exercise-dock-reserve');delete scope.dataset.exerciseDockHost;}};
 }

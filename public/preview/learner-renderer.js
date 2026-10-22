@@ -7,7 +7,7 @@ import {resolveBlock} from '../content.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../post-answer-vocabulary.js';
 import {bindMatching, matchWord} from '../interactions.js';
-import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseSurface, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls,exerciseActionDock,mountExerciseDock} from '../learner-view.js';
+import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseSurface, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls,applyMatchingResult,exerciseActionDock,mountExerciseDock} from '../learner-view.js';
 
 const KEY_ROWS=[
     [
@@ -274,6 +274,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         if(result&&!hadResult){
           root.querySelector('[data-answer-commit]').innerHTML=exerciseFeedback(exercise,result);bindResultExplanations(root);
           for(const el of root.querySelectorAll('[data-exercise-input] button,[data-exercise-input] textarea,[data-exercise-input] input'))el.disabled=true;
+          applyMatchingResult(root,exercise,result);
           for(const el of root.querySelectorAll('[draggable]'))el.draggable=false;
           root.querySelectorAll('.keyboard-tools,.preview-keypad').forEach(el=>el.remove());
           const support=root.querySelector('.exercise-support');support.innerHTML=(!result.correct?button('Try this question again','retry-question','exercise-quiet',exercise.id):'')+'<details class="preview-vocabulary-help"><summary>Vocabulary help</summary><p>Hover or select an underlined word to see its vocabulary card.</p>'+content.words.filter(w=>lesson.wordIds?.includes(w.id)).map(w=>button(esc(w.pointed)+' · '+esc(w.english),'lookup','small secondary',w.id)).join('')+'</details>';

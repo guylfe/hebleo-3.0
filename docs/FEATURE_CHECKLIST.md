@@ -610,3 +610,6 @@ Executed changed-risk command: `node --test test/lexical-main-controls.test.js t
 ### ACTIONS-01 — approved exercise action layout (22 Oct 2026)
 
 Implementation: learner and Studio Preview share one measured action dock; Concept at header; explicit verdict and conditional Explanation; compact Accepted answer(s), direct word cards and quiet support. Known-result save and uncertain-response recovery remain distinct; continuing commits its destination before replacing the current question. See [scope and evidence](EXERCISE_ACTIONS.md). Independent UX/QA review and preservation installation are Pending at this implementation checkpoint. Native viewport/zoom/keyboard checks are blocked by browser_consent_required; Guy acceptance Pending. Existing learner data, drafts, source settings and content revision must remain unchanged during installation.
+
+
+ACTIONS-01 corrected owner checkpoint: independent review of 5032899 requested four corrections (UX-ACT-04/06/07 and QA-ACTIONS-01). Lead integrated them, retained reviewer regressions, and verified 788 candidate passes, 21 focused reviewer/correction probes, 27 schema checks and nine runtime scenarios. Corrected-candidate independent recheck and preservation installation remain Pending; native/Guy acceptance unchanged. See EXERCISE_ACTIONS.md.

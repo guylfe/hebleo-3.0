@@ -7,7 +7,7 @@ import {composeSentence,bindMatching,matchWord} from './interactions.js';
 import {reviewNikkud} from './ux.js';
 import {scheduleReview,reviewIntervalLabel} from './review-schedule.js';
 import { playAudio, setPlaybackSpeed, stopMedia, recordVoice, stopRecording, replayVoice, clearRecording, feedbackSound, getPlaybackState } from './media.js';
-import {esc,button,wordText,fieldText,cellAttribute,audioControls,syncAudioControls,richFields,wordCard,vocabularyTable,learnMedia,exerciseInput,exerciseSurface,exerciseFeedback,wireAnswer,syncReferenceControls,bindResultExplanations,exerciseActionDock,mountExerciseDock} from './learner-view.js';
+import {esc,button,wordText,fieldText,cellAttribute,audioControls,syncAudioControls,richFields,wordCard,vocabularyTable,learnMedia,exerciseInput,exerciseSurface,exerciseFeedback,wireAnswer,syncReferenceControls,bindResultExplanations,applyMatchingResult,exerciseActionDock,mountExerciseDock} from './learner-view.js';
 import {mountMediaLibrary} from './studio/media-library.js';
 import {mountSourceAuthoring} from './studio/sources-editor.js';
 import {mountUnifiedStudio} from './studio/unified-studio.js';
@@ -208,7 +208,17 @@ function questionPrimary(l=lessonObject()){
  if(phase==='uncertain')return button('Retry checking answer','recover-attempt','primary');
  return state.result?button(state.question+1===ids.length?'Continue →':'Next question →','next-question','primary'):button('Check answer','check','primary').replace('<button','<button data-keyboard-preserve');
 }
-function updateQuestionPrimary(){const host=root.querySelector('#practice [data-primary-action]');if(host){host.innerHTML=questionPrimary();bind(host);}exerciseDockBinding?.refresh?.();}
+function updateQuestionPrimary(){
+ const scope=root.querySelector('#practice'),host=scope?.querySelector('[data-primary-action]');
+ if(host){
+  const focused=host.contains(document.activeElement);host.innerHTML=questionPrimary();bind(host);
+  const pending=scope.querySelector('[data-answer-pending]'),message={checking:'Checking…',saving:'Saving position…',advancing:'Continuing…'}[answerPhase]||'';
+  if(pending&&pending.textContent!==message)pending.textContent=message;
+  const input=scope.querySelector('[data-exercise-input]');if(answerPhase==='checking')input?.setAttribute('aria-busy','true');else input?.removeAttribute('aria-busy');
+  if(focused||['uncertain','save-error','advance-error'].includes(answerPhase)&&document.activeElement===document.body)scope.querySelector('[data-answer-commit]')?.focus({preventScroll:true});
+ }
+ exerciseDockBinding?.refresh?.();
+}
 function questionSupport(e,allowed){return (state.result&&!state.result.correct?button('Try this question again','retry-question','exercise-quiet',e.id):'')+(allowed?button('Vocabulary help','exercise-lookup','exercise-quiet'):'')+(state.result?button('Report a problem','report-open','exercise-quiet'):'');}
 function exercisePanel(l) {
  const ids=portionExercises(content(),l,state.step,state.practiceIds),e=currentExercise();
@@ -216,7 +226,7 @@ function exercisePanel(l) {
  const mode=e.nikkudOverride||pref().nikkud,input=exerciseInput(e,{mode,word,draft:answerDraft(),result:state.result,keyboard:''}),back=portionKeys(l)[portionKeys(l).indexOf(state.step)-1];
  return '<div class="exercise-question-header"><div class="mode-bar"><span class="tag">Question '+(state.question+1)+' of '+ids.length+'</span>'+(e.nikkudOverride?'<span class="tag">Nikkud: '+esc({full:'With Nikkud',none:'Without Nikkud',curated:'Lesson-authored Nikkud'}[e.nikkudOverride])+'</span>':'')+'</div>'+button('Review this concept','concept','exercise-quiet').replace('<button','<button data-keyboard-preserve aria-expanded="false" aria-controls="inline-concept"')+'</div><p class="exercise-prompt">'+exerciseSurface(e.prompt,'prompt')+'</p><div data-concept-slot></div><div data-exercise-input>'+input+'</div>'
  +(!state.result&&['typing','cloze','transformation'].includes(e.type)?keyboard():'')
- +'<div class="answer-commit" data-answer-commit tabindex="-1" aria-label="Answer result"><span data-answer-status>'+exerciseFeedback(e,state.result)+'</span></div><div data-answer-recovery></div>'
+ +'<p class="sr-only" data-answer-pending role="status" aria-live="polite" aria-atomic="true"></p><div class="answer-commit" data-answer-commit tabindex="-1" aria-label="Answer result"><span data-answer-status>'+exerciseFeedback(e,state.result)+'</span></div><div data-answer-recovery></div>'
  +'<div class="exercise-support">'+questionSupport(e,e.allowLookup||Boolean(state.result))+'</div>'
  +exerciseActionDock(questionPrimary(l),button('← Back','step','exercise-quiet',back||'',!back),state.practiceIds.length?button('Skip extra practice','step','exercise-quiet','complete'):'');
 }
@@ -382,7 +392,7 @@ async function authoredHelp(wordId) {
 function showAnswerResult(scope,e){
  if(!scope?.isConnected||!state.result)return;scope.dataset.checked='true';
  scope.querySelectorAll('[data-exercise-input] button:not([data-vocabulary-word]),[data-exercise-input] textarea,[data-exercise-input] input').forEach(el=>el.disabled=true);scope.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===state.answer));
- if(e.type==='matching'&&state.result.pairResults){for(const tile of scope.querySelectorAll('[data-match-word]')){const ok=state.result.pairResults[tile.dataset.matchWord];tile.classList.add(ok?'pair-correct':'pair-incorrect');let status=tile.querySelector('.pair-status');if(!status){status=document.createElement('small');status.className='pair-status';tile.append(status);}status.textContent=ok?'✓ Correct':'✕ Incorrect';}for(const tile of scope.querySelectorAll('[data-match-target]')){const id=e.wordIds.find(id=>state.result.answer[id]===tile.dataset.matchTarget);if(id)tile.classList.add(state.result.pairResults[id]?'pair-correct':'pair-incorrect');}}
+ applyMatchingResult(scope,e,state.result);
  const status=scope.querySelector('[data-answer-status]');status.innerHTML=exerciseFeedback(e,state.result);bindResultExplanations(status);const keyboard=scope.querySelector('[data-action="keyboard-open"]');if(keyboard)keyboard.remove();
  const support=scope.querySelector('.exercise-support');support.innerHTML=questionSupport(e,true);bind(support);updateQuestionPrimary();
  refreshQuestionProgress();
@@ -543,7 +553,7 @@ function bind(scope=root) {
   scope.querySelector('#review-nikkud')?.addEventListener('change',async event=>{try{await updatePreference('reviewNikkud',event.target.value);}catch(error){toast(error.message);}});
 
   scope.querySelectorAll('[data-question-answer]').forEach(form=>form.addEventListener('submit',async event=>{event.preventDefault();const key=form.dataset.questionAnswer;if(state.replyPending[key])return;const text=form.querySelector('[name=answer]'),save=form.querySelector('button');state.replyPending[key]=true;state.replyErrors[key]='';text.readOnly=true;save.disabled=true;try{const [userId,requestId]=key.split('|');await api('questions/answer',{userId,requestId,answer:text.value});delete state.replyDrafts[key];form.closest('details').open=false;state.replyOpen[key]=false;state.replyPending[key]=false;await load();text.value=state.questions.find(q=>q.userId+'|'+q.requestId===key)?.answer||'';refreshComments();toast('Author reply saved.');}catch(error){state.replyErrors[key]=error.message;const live=[...root.querySelectorAll('[data-question-answer]')].find(f=>f.dataset.questionAnswer===key);if(live)live.querySelector('[data-reply-status]').textContent=error.message;}finally{state.replyPending[key]=false;const live=[...root.querySelectorAll('[data-question-answer]')].find(f=>f.dataset.questionAnswer===key);if(live){live.querySelector('[name=answer]').readOnly=false;live.querySelector('button').disabled=false;}}}));
-  Array.from(scope.querySelectorAll('[data-action]')).filter(el=>!el.closest('#hebleo-keyboard-root')).forEach(el=>el.addEventListener('click',async event=>{event.preventDefault();if(el.disabled||learnerActions.has(el.dataset.action)&&!activeLearnerDestination(el))return;const transient=el.dataset.action!=='audio';if(transient)el.disabled=true;try{await act(el.dataset.action,el.dataset.value,el);}catch(error){toast(error.message);}finally{if(el.isConnected&&transient)el.disabled=el.dataset.action==='record'?state.recording==='recording':el.dataset.action==='record-stop'?state.recording!=='recording':['check','choice','token','remove-token'].includes(el.dataset.action)&&Boolean(state.result);}}));
+  Array.from(scope.querySelectorAll('[data-action]')).filter(el=>!el.closest('#hebleo-keyboard-root')).forEach(el=>el.addEventListener('click',async event=>{event.preventDefault();if(el.disabled||learnerActions.has(el.dataset.action)&&!activeLearnerDestination(el))return;const transient=el.dataset.action!=='audio';if(transient)el.disabled=true;try{await act(el.dataset.action,el.dataset.value,el);}catch(error){toast(error.message);}finally{if(el.isConnected&&transient)el.disabled=el.dataset.action==='record'?state.recording==='recording':el.dataset.action==='record-stop'?state.recording!=='recording':['check','choice','token','remove-token'].includes(el.dataset.action)&&Boolean(state.result||submitting||pendingAttempt);}}));
   scope.querySelectorAll('[data-action="key"],[data-action="backspace"],[data-action="cursor"]').forEach(el=>el.addEventListener('pointerdown',event=>event.preventDefault()));
   scope.querySelector('#answer')?.addEventListener('input',event=>{state.answer=event.target.value;scheduleSave();});
   scope.querySelectorAll('[data-match]').forEach(el=>el.addEventListener('change',()=>{state.matching[el.dataset.match]=el.value;scheduleSave();}));
