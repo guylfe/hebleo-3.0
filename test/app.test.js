@@ -1,6 +1,7 @@
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../public/lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../public/post-answer-vocabulary.js';
 import {sourceBrowseFixture} from '../scripts/source-browse-fixture.mjs';
+import {publishIllustrativeLinks} from '../scripts/link-illustrative-exercises.mjs';
 import {lexicalFixture} from '../scripts/lexical-fixture.mjs';
 import {mountMediaLibrary} from '../public/studio/media-library.js';
 import {mountSourceAuthoring} from '../public/studio/sources-editor.js';
@@ -68,6 +69,48 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+
+test('Ordering word selection and removal stay immediate during a slow save and persist the latest sentence',async t=>{
+ const {w,doc,store}=await app(t,{page:'lesson/lesson-2/apply',realHTTP:true}),fetch=w.fetch;
+ let release,held=true;
+ w.fetch=async(path,options)=>{
+  if(path==='/api/progress'&&held){held=false;await new Promise(resolve=>{release=resolve;});}
+  return fetch(path,options);
+ };
+ t.after(()=>release?.());
+ const choose=index=>doc.querySelector('[data-action=token][data-value="'+index+'"]').click();
+ choose(0);
+ await settled(()=>release);
+ assert.equal(doc.querySelectorAll('[data-action=remove-token]').length,1,'first word is visible without a save response');
+ choose(1);
+ assert.equal(doc.querySelectorAll('[data-action=remove-token]').length,2,'a pending save does not block another word');
+ doc.querySelector('[data-action=remove-token][data-value="0"]').click();
+ assert.equal(doc.querySelectorAll('[data-action=remove-token]').length,1,'removal is visible while the save remains pending');
+ assert.equal(doc.querySelector('[data-action=token][data-value="0"]').disabled,false);
+ assert.equal(doc.querySelector('[data-action=token][data-value="1"]').disabled,true);
+ release();
+ await settled(()=>JSON.stringify(store.learner('learner-demo').resumes['lesson-2']?.selectedTokens)==='[1]');
+ const restored=await app(t,{page:'lesson/lesson-2/apply',store,realHTTP:true});
+ assert.equal(restored.doc.querySelectorAll('[data-action=remove-token]').length,1);
+ assert.equal(restored.doc.querySelector('[data-action=token][data-value="1"]').disabled,true);
+});
+
+for(const correct of [true,false])test('Published illustrative Build lesson exposes word cards in the actual learner app '+correct,async t=>{
+ const {w,doc,store}=await app(t,{page:'lesson/lesson-2/apply',realHTTP:true,prepare:publishIllustrativeLinks});
+ assert.equal(doc.querySelector('[data-vocabulary-word]'),null);
+ for(const text of correct?['אני','ב','בית']:['בית']){
+  const token=[...doc.querySelectorAll('[data-action=token]')].find(el=>el.textContent===text);assert.ok(token,text);token.click();
+ }
+ click(doc,'check');await settled(()=>doc.querySelector('[data-vocabulary-word]'));
+ assert.equal(store.learner('learner-demo').attempts.at(-1).correct,correct);
+ assert.equal(doc.querySelector('button button'),null);
+ const trigger=doc.querySelector('[data-vocabulary-word="w-ani"]');assert.ok(trigger,'a word itself opens its linked entry');
+ w.HTMLElement.prototype.getBoundingClientRect=function(){return {left:20,top:40,right:180,bottom:80,width:160,height:40};};
+ w.HTMLElement.prototype.getClientRects=function(){return [this.getBoundingClientRect()];};
+ trigger.click();assert.ok(doc.querySelector('.vocabulary-reminder'));
+ const before=JSON.stringify(store.learner('learner-demo'));doc.querySelector('[data-vocabulary-close]').click();
+ assert.equal(JSON.stringify(store.learner('learner-demo')),before);
+});
 
 test('POST-VOC delayed choice save cannot replace the grading scope or drop returned feedback',async t=>{
  const {w,doc,store}=await app(t,{page:'lesson/lesson-1/check',realHTTP:true}),original=w.fetch;let release;
