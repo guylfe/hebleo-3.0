@@ -1,0 +1,55 @@
+{
+  "status": "read-only owner preflight; not installed",
+  "originalDatabaseUnchanged": true,
+  "databaseDigest": "ef76d8feadd88612a98476a6f52900fa6a4c96378c903c17cfa24901c3e9945f",
+  "protectedTables": {
+    "events": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "kv": {
+      "rows": 6,
+      "sha256": "27db5a92ac3395592af3145e5a1b672b9cc30d6fbca4b12940f1ced4f65097be"
+    },
+    "learners": {
+      "rows": 3,
+      "sha256": "068f078a05561b442dc0f4123fbe1e0c383fd1282be9c9ce0fe5b89c5c752bc8"
+    },
+    "media_aliases": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "media_blobs": {
+      "rows": 1,
+      "sha256": "9342c954c2f006cd734a41a4c434d95562c9ab8baf981951a855d72404ce077d"
+    },
+    "revisions": {
+      "rows": 4,
+      "sha256": "6088e682b3031a07267658db0c88a9fdfbef9fddcaa4f54bb2080caf72324ae5"
+    },
+    "sqlite_sequence": {
+      "rows": 1,
+      "sha256": "0f509631177ffa29be06ad43580a0570a91d1eb6ddf6f54ad724a10835b5f6ab"
+    }
+  },
+  "allProtectedTablesPreserved": true,
+  "activeRevisionId": 4,
+  "previousDraftPreserved": true,
+  "restoreRehearsal": true,
+  "sourceApprovals": "retained from the existing approved database; blank-store trust gate was not bypassed",
+  "configurationAndMediaFingerprints": 4,
+  "configurationAndMediaUnchanged": true,
+  "counts": {
+    "lessons": 20,
+    "pages": 154,
+    "targets": 127,
+    "unresolvedTargets": 127
+  },
+  "nativeBrowser": {
+    "status": "refused",
+    "code": "browser_consent_required"
+  },
+  "installed": false,
+  "published": false,
+  "privateArtifact": ".private/first20-preflight-final/receipt.json"
+}

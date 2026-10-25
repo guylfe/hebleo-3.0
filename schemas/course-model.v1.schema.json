@@ -200,6 +200,9 @@
             }
           },
           "additionalProperties": true
+        },
+        "textPages": {
+          "$ref": "text-pages.v1.schema.json"
         }
       },
       "required": [

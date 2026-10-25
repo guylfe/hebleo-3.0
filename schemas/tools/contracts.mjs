@@ -6,6 +6,7 @@ import {validateFormatting,validateImportSource} from '../../public/vocabulary-i
 import { audioURL } from '../../public/ux.js';
 import {hasGradingContent} from '../../public/answer-policy.js';
 import {validateExerciseVocabularyBindings, exerciseVocabularyReferenceIds} from '../../public/exercise-bindings.js';
+import {validateContentIdentities} from '../../public/content-identity.js';
 
 // Validation never coerces, strips fields, adds defaults or normalizes Hebrew.
 const directory = new URL('../', import.meta.url);
@@ -50,6 +51,8 @@ export function dependenciesFor(collection, object, pack) {
     for (const id of object.wordIds) add('words', id);
     for (const id of object.exerciseIds) add('exercises', id);
     for (const block of object.blocks) {
+      for(const id of object.prerequisiteIds||[])add('lessons',id);
+      for(const page of block.textPages?.pages||[])for(const id of page.wordIds||[])add('words',id);
       if(object.compositionVersion===2&&block.source!=='inline'){try{for(const selected of resolveComponent(pack,object,block))add(block.source,selected.id);}catch{/* Semantic validation reports invalid selectors separately. */}}
       const selected = pack.lessons.find(l => l.id === block.selector?.lessonId);
       if (selected && selected.id !== object.id) {
@@ -63,6 +66,7 @@ export function dependenciesFor(collection, object, pack) {
 
 export function semanticErrors(pack) {
   const errors = [], seen = new Set();
+  try{validateContentIdentities(pack);}catch(error){errors.push(error.message);}
   try{validateCurriculum(pack);}catch(error){errors.push(error.message);}
   for(const lesson of pack.lessons)try{validateLessonComposition(pack,lesson);}catch(error){errors.push(error.message);}
   for(const word of pack.words)if(word.formattingVersion===1)errors.push(...validateFormatting(word.fieldFormatting,{word,sourceTheme:word.sourceTheme}).errors);

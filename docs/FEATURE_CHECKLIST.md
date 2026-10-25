@@ -1,5 +1,7 @@
 # Hebleo implementation and acceptance checklist
 
+25 Oct first20 native candidate: shared paginated/timed text reader and Studio authoring, additive alias-safe unpublished import, validated page responses and reader-8 recovery are implemented. This is pending independent review and preservation installation. Owner evidence: 814 candidate tests plus 2 later import-workflow tests, 27 schema checks, 9 runtime scenarios, and a read-only owner-database preservation rehearsal. All 20 lessons / 154 pages / 127 targets are retained in the draft candidate; all 127 canonical mappings remain explicit review gaps, and adapted teaching cannot publish. Existing demo63358 still serves ba3ad389. Native Edge inspection is blocked by browser_consent_required. See [native delivery evidence](FIRST20_NATIVE_DELIVERY.md). P02/P10 and all Guy-result cells retain their previous acceptance status.
+
 Oct20 real-row UX follow-up: UX Owner acquired 21 native screenshots and exercised all five source categories on `17a3592c`. Five concrete findings are corrected in [source UX corrections](SOURCE_UX_CORRECTIONS.md), pending installed-build native recheck. Previous source/learner-state conservation remains intact; user-result cells and Guy acceptance remain unchanged. Background keyboard traversal, further viewport sizes and other unexercised checks remain explicit limits.
 
 Oct20 authored-source checkpoint: **VOC-SOURCE-01 implemented, installed UX review pending**. Normal My Hebrew source browsing delivers 791 category rows / 1,055 exact original Masterfile records separately from learned eligibility. Generated/proposed/held material remains excluded; prior learner state and draft/history are preserved through a narrow CAS adoption. 677 candidate tests and 104 final affected app/source tests pass; real-data conservation/disclosure rehearsal passes 11,987 assertions. See [source browsing boundary](AUTHORED_SOURCE_BROWSING.md) and [bounded source receipt](content-provenance/source-browse-20261020/RECEIPT.json). User result is unchanged; no Guy acceptance or native UX pass is inferred.
@@ -616,3 +618,12 @@ ACTIONS-01 corrected owner checkpoint: independent review of 5032899 requested f
 
 
 ACTIONS-01 delivery checkpoint: independent UX and QA close UX-ACT-04/06/07 and QA-ACTIONS-01 on ba3ad389a6af9807f8eb90e7c34b8723cb1ffc80. That exact code is installed and HTTP destination-verified at63358; all52 served asset hashes, all database tables, saved draft, content revision4, configuration/uploads and49 unrelated listeners are conserved. See EXERCISE_ACTIONS.md and docs/evidence/exercise-actions-20261022/INSTALL_RECEIPT.json. Native/Guy acceptance remain Pending; browser_consent_required is the remaining external gate.
+
+
+## Native interactive text and readable identity candidate (25 October 2026)
+
+| ID | Feature | Bounded state and evidence | Guy test |
+|---|---|---|---|
+| TXT-01 | Stable text pages and timed practice inside Learn | Implemented, automated tested; one learner/Preview renderer, Studio editing/order/gates/media, exact 10000ms source string and cancellation. Native/installed verification pending. | Pending |
+| TXT-02 | Unpublished first20 import and canonical mapping review | Implemented, automated tested: 20 lessons/154 pages/127 retained targets; explicit alias/mapping conflicts refuse without data loss. All 127 default canonical mappings unresolved; no lexemes fabricated, no publishing. Owner backup rehearsal passed. | Pending |
+| TXT-03 | Order-independent aliases and page responses | Implemented, automated tested: preserved primary IDs/source locators; namespaced alias resolution; reader-8 response export/restore with reordering and CAS import. Production/Sheets unchanged. | Pending |

@@ -25,6 +25,7 @@ import {richCell,cellCSS,createLessonRenderer} from '../public/rich.js';
 import * as learnerView from '../public/learner-view.js';
 import {mountUnifiedStudio} from '../public/studio/unified-studio.js';
 import {mountImportWorkflow} from '../public/studio/import-workflow.js';
+import {mountTextImport} from '../public/studio/text-import.js';
 import {mountLessonEditor} from '../public/studio/lesson-editor.js';
 import {mountExerciseEditor} from '../public/studio/exercise-editor.js';
 import {inspectImport,renderImportReview} from '../public/studio/import-review.js';
@@ -40,7 +41,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,{hasTextPages,mountTextReader,mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  Object.assign(w,{hasTextPages,mountTextReader,mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountTextImport,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   if(markdownDependencies)w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
@@ -1065,7 +1066,7 @@ test('first20 actual learner UI consumes injected text projection/progress contr
  const records=[],savedResponses={};
  const {doc,w,store,calls}=await app(t,{page:'lesson/lesson-1/learn',width:360,prepare(store){
   const c=store.snapshot();c.lessons[0]=courseHelpers.projectLesson(c,c.lessons[0]);
-  const block=c.lessons[0].blocks.find(b=>b.type==='explanation');block.textPages={version:1,pages:[{id:'stable.recall',type:'recall',title:'Native text page',answer:'Illustrative fixture answer',gate:'reveal'},{id:'stable.memory',type:'timedRecall',title:'Timed native page',value:'0704177609112001',durationMs:10000,answer:'model',accessibleAlternative:true}],order:['stable.recall','stable.memory']};
+  const block=c.lessons[0].blocks.find(b=>b.type==='explanation');block.textPages={version:1,pages:[{id:'stable.recall',type:'recall',title:'Native text page',answer:'Illustrative fixture answer',grading:'self-check',gate:'reveal'},{id:'stable.memory',type:'timedRecall',title:'Timed native page',value:'0704177609112001',durationMs:10000,answer:'model',accessibleAlternative:true}],order:['stable.recall','stable.memory']};
   // Frozen base strips textPages. Inject the agreed projection seam; Lead owns its integration.
   const project=store.publicContent.bind(store);store.publicContent=(content,lessonId)=>{const value=project(content,lessonId);for(const lesson of value.lessons)for(const block of lesson.blocks||[]){const original=content.lessons.find(l=>l.id===lesson.id)?.blocks.find(b=>b.id===block.id);if(original?.textPages)block.textPages=structuredClone(original.textPages);}return value;};
   store.set('active',store.addRevision(c,'Synthetic text UI fixture only'));store.startLatestLesson('learner-demo','lesson-1');
@@ -1076,4 +1077,13 @@ test('first20 actual learner UI consumes injected text projection/progress contr
  await settled(()=>records.some(r=>r.response.revealed));assert.ok(records.every(r=>r.lessonId==='lesson-1'&&r.componentId==='legacy-explanation'&&r.revisionId===2));assert.equal(records.at(-1).response.text,'תּוֹדָה');assert.deepEqual(store.learner('learner-demo').completed,before.completed);assert.deepEqual(store.learner('learner-demo').attempts,before.attempts);
  doc.querySelector('[data-reader-action=next]').click();doc.querySelector('[data-reader-action=play]').click();assert.equal(doc.querySelector('.text-reader-value').textContent,'0704177609112001');const old=doc.querySelector('[data-text-reader]');
  doc.querySelector('[data-action=page][data-value=course]').click();await settled(()=>!doc.querySelector('[data-text-reader]'));assert.equal(old.textContent,'');assert.ok(calls.includes('/api/text-progress'));assert.ok(records.every(r=>!JSON.stringify(r).includes('0704177609112001')));
+});
+
+test('first20 integrated learner uses real HTTP text projection and persistence across reload without completion writes',async t=>{
+ const s=new Store();t.after(()=>s.close());const c=s.snapshot();c.lessons[0]=courseHelpers.projectLesson(c,c.lessons[0]);const b=c.lessons[0].blocks.find(b=>b.type==='explanation');
+ b.textPages={version:1,pages:[{id:'http.recall',type:'recall',title:'Synthetic native-contract HTTP fixture',prompt:'Try before reveal',answer:'Illustrative answer',grading:'self-check',gate:'reveal'}],order:['http.recall']};const draft=s.stage({baseRevisionId:1,expectedDraftToken:null,content:c});s.publish(1,draft.draftToken);
+ const {doc,w,calls}=await app(t,{page:'lesson/lesson-1/learn',store:s,realHTTP:true,width:360});doc.querySelector('[data-action=medium][data-value=read]')?.click();await settled(()=>doc.querySelector('[data-reader-attempt]'));
+ const before=s.learner('learner-demo'),attempt=doc.querySelector('[data-reader-attempt]');assert.equal(doc.querySelector('.text-reader-model'),null);attempt.value='תּוֹדָה';attempt.dispatchEvent(new w.Event('input',{bubbles:true}));doc.querySelector('[data-reader-action=reveal]').click();await settled(()=>s.learner('learner-demo').textPages?.[0]?.responses['http.recall']?.revealed);
+ assert.deepEqual(s.learner('learner-demo').completed,before.completed);assert.deepEqual(s.learner('learner-demo').attempts,before.attempts);assert.ok(calls.includes('/api/text-progress'));
+ const reload=await app(t,{page:'lesson/lesson-1/learn',store:s,realHTTP:true,width:360});reload.doc.querySelector('[data-action=medium][data-value=read]')?.click();await settled(()=>reload.doc.querySelector('.text-reader-model'));assert.equal(reload.doc.querySelector('[data-reader-attempt]').value,'תּוֹדָה');
 });

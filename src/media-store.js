@@ -60,7 +60,7 @@ export function mediaReferences(content){
  const local=new Set(),remote=new Set();
  const mediaKeys=new Set(['audio','video','image','document','poster','mediaRefs']);
  const visit=(value,key='',mediaZone=false)=>{const applies=mediaZone||mediaKeys.has(key);if(typeof value==='string'){
-  const markdown=['text','explanation','notes','conceptText','feedback'].includes(key);
+    const markdown=['text','html','answer','explanation','notes','conceptText','feedback'].includes(key);
   if(applies||markdown)for(const match of value.matchAll(/\/media\/[A-Za-z0-9_./-]+/g))if(mediaPath(match[0]))local.add(match[0]);
   if(applies&&value.startsWith('https://')){const url=new URL(value);if(url.username||url.password)fail('MEDIA_URL','Credentials are not allowed in media URLs.');remote.add(value);}
  }else if(value&&typeof value==='object')for(const [k,v]of Object.entries(value))visit(v,k,applies);};visit(content);

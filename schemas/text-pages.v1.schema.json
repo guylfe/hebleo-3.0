@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hebleo.invalid/contracts/text-pages.v1.schema.json",
+  "title": "Stable pages inside an authored explanation",
+  "type": "object",
+  "required": [
+    "version",
+    "pages",
+    "order"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "order": {
+      "type": "array",
+      "maxItems": 200,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 120,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+      }
+    },
+    "pages": {
+      "type": "array",
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "title"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "type": {
+            "enum": [
+              "reading",
+              "choice",
+              "recall",
+              "timedRecall",
+              "vocabulary",
+              "complete"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "html": {
+            "type": "string",
+            "maxLength": 100000
+          },
+          "prompt": {
+            "type": "string",
+            "maxLength": 100000
+          },
+          "gate": {
+            "enum": [
+              "none",
+              "commit",
+              "reveal"
+            ]
+          },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 20,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            }
+          },
+          "answer": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "maxLength": 12000
+              }
+            ]
+          },
+          "explanation": {
+            "type": "string",
+            "maxLength": 100000
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "durationMs": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 120000
+          },
+          "accessibleAlternative": {
+            "const": true
+          },
+          "grading": {
+            "const": "self-check"
+          },
+          "wordIds": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "common.v1.schema.json#/definitions/id"
+            }
+          },
+          "unresolvedTargetIds": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "choice"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "options",
+                "answer"
+              ],
+              "properties": {
+                "answer": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "recall"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "answer",
+                "grading"
+              ],
+              "properties": {
+                "answer": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "timedRecall"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "value",
+                "durationMs",
+                "accessibleAlternative"
+              ]
+            }
+          }
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

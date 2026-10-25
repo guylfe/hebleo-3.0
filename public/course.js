@@ -1,3 +1,4 @@
+import {validateTextPages} from './text-contract.js';
 // Pure snapshot-based course contracts shared by Studio, learner and Store.
 // Projections return new objects. They never rewrite historical releases.
 const copy = value => structuredClone(value);
@@ -149,7 +150,8 @@ export function validateLessonComposition(content,lesson) {
     if(!block||!validID(block.id)||ids.has(block.id)||block.id==='complete')fail('Component IDs must be unique and stable.');
     ids.add(block.id);
     if(block.type==='explanation') {
-      if(block.source!=='inline'||block.renderer!=='text'||typeof block.text!=='string'||block.text.length>100000||(!block.text.trim()&&!block.video))fail('Text components need inline authored text or video.');
+      if(block.source!=='inline'||block.renderer!=='text'||typeof block.text!=='string'||block.text.length>100000||(!block.text.trim()&&!block.video&&!block.textPages?.pages?.length))fail('Text components need inline authored text, pages or video.');
+      if(block.textPages!==undefined)validateTextPages(block.textPages,{wordIds:content.words.map(w=>w.id),targetIds:(lesson.draftTargets||[]).map(t=>t.id)});
       if(block.options?.textDirection&&!['auto','ltr','rtl'].includes(block.options.textDirection))fail('Invalid component text direction.');
     } else if(['vocabulary','exercise-set'].includes(block.type)) {
       if(block.source!==(block.type==='vocabulary'?'words':'exercises')||block.renderer!==(block.type==='vocabulary'?'vocabulary-table':'practice'))fail('Invalid component source or renderer.');
