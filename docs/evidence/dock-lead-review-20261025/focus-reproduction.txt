@@ -1,0 +1,42 @@
+QA-KBD-08 simulated geometry {"preview":false,"viewportHeight":800,"keyboardTop":350,"dock":{"left":20,"top":282,"width":440,"height":68,"right":460,"bottom":350},"answer":{"left":30,"top":280,"width":400,"height":60,"right":430,"bottom":340},"scrolls":0}
+✖ QA-KBD-08 learner reflow recovery must leave focused answer above keyboard/action boundary (196.0555ms)
+QA-KBD-08 simulated geometry {"preview":true,"viewportHeight":800,"keyboardTop":350,"dock":{"left":20,"top":282,"width":440,"height":68,"right":460,"bottom":350},"answer":{"left":30,"top":280,"width":400,"height":60,"right":430,"bottom":340},"scrolls":0}
+✖ QA-KBD-08 Preview reflow recovery must leave focused answer above keyboard/action boundary (37.206ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1810.9547
+
+✖ failing tests:
+
+test at test\lead-dock-focus-review.test.js:81:35
+✖ QA-KBD-08 learner reflow recovery must leave focused answer above keyboard/action boundary (196.0555ms)
+  AssertionError [ERR_ASSERTION]: reflow invokes focus recovery
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/5308955e-b6c5-4326-be9d-f29dedb237ef/hebleo-dock-review/test/lead-dock-focus-review.test.js:85:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\lead-dock-focus-review.test.js:81:35
+✖ QA-KBD-08 Preview reflow recovery must leave focused answer above keyboard/action boundary (37.206ms)
+  AssertionError [ERR_ASSERTION]: reflow invokes focus recovery
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/5308955e-b6c5-4326-be9d-f29dedb237ef/hebleo-dock-review/test/lead-dock-focus-review.test.js:85:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
