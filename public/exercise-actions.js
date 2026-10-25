@@ -11,20 +11,41 @@ export function mountExerciseDock(scope) {
   const controller=new win.AbortController(), {signal}=controller;
   const requestFrame=win.requestAnimationFrame?.bind(win)||(fn=>win.setTimeout(fn,0)),cancelFrame=win.cancelAnimationFrame?.bind(win)||win.clearTimeout.bind(win);
   let frame=null, destroyed=false, reserve=0;
-  const keyboardNodes=new Set(), transitions=new Map();
+  const keyboardNodes=new Set(), transitions=new Map(), constrainedAnswers=new Map();
   const keyboardSelector='.hebleo-keyboard__panel, .hebleo-keyboard__launcher';
   const set=(el,key,value)=>{if(el.style.getPropertyValue(key)!==value)el.style.setProperty(key,value);};
+  function restoreAnswer(el){
+    const saved=constrainedAnswers.get(el);if(!saved)return;
+    for(const [key,value]of Object.entries(saved.styles))value?el.style.setProperty(key,value):el.style.removeProperty(key);
+    constrainedAnswers.delete(el);
+  }
   function revealFocusedAnswer(el){
+    for(const target of constrainedAnswers.keys())if(target!==el)restoreAnswer(target);
     if(!el||!scope.contains(el)||dock.contains(el)||el.closest('.vocabulary-reminder')||dock.hidden)return;
     const vv=win.visualViewport,bounds=dialog?.getBoundingClientRect(),gap=Number.parseFloat(win.getComputedStyle(dock).gap)||8;
     let scroller=dialog||win,clip=bounds;
     for(let parent=el.parentElement;parent&&parent!==dialog&&parent!==doc.body;parent=parent.parentElement){
       if(/auto|scroll|overlay/.test(win.getComputedStyle(parent).overflowY)&&parent.scrollHeight>parent.clientHeight){scroller=parent;clip=parent.getBoundingClientRect();break;}
     }
-    const top=Math.max(vv?.offsetTop||0,bounds?.top??0,clip?.top??0)+gap;
+    let top=Math.max(vv?.offsetTop||0,bounds?.top??0,clip?.top??0)+gap;
+    // The learner's sticky navigation still covers the document after scrolling.
+    // It is behind a modal Preview and must not reduce that dialog's interval.
+    if(!dialog)for(const header of doc.querySelectorAll('.app-header')){
+      const style=win.getComputedStyle(header),h=header.getBoundingClientRect(),r=el.getBoundingClientRect();
+      if(['sticky','fixed'].includes(style.position)&&style.display!=='none'&&style.visibility!=='hidden'&&h.left<r.right&&h.right>r.left&&h.top<=top&&h.bottom>top)top=h.bottom+gap;
+    }
     const bottom=Math.min(dock.getBoundingClientRect().top-gap,clip?.bottom??Infinity);
-    const r=el.getBoundingClientRect();
-    if(bottom<=top||r.top>=top&&r.bottom<=bottom)return;
+    if(bottom<=top)return;
+    const available=bottom-top,saved=constrainedAnswers.get(el);
+    if(saved&&available>=saved.height)restoreAnswer(el);
+    let r=el.getBoundingClientRect();
+    // Keep a focused multiline answer operable in a short viewport. Restore its
+    // authored size when space returns; content/value/caret remain on the same node.
+    if(el.tagName==='TEXTAREA'&&r.height>available){
+      if(!constrainedAnswers.has(el))constrainedAnswers.set(el,{height:r.height,styles:Object.fromEntries(['min-height','max-height','overflow-y'].map(key=>[key,el.style.getPropertyValue(key)]))});
+      set(el,'min-height','0px');set(el,'max-height',available+'px');set(el,'overflow-y','auto');r=el.getBoundingClientRect();
+    }
+    if(r.top>=top&&r.bottom<=bottom)return;
     // Center within the usable interval, not the full document/dialog viewport.
     // A field taller than the interval aligns its start rather than oscillating.
     const targetTop=top+Math.max(0,(bottom-top-r.height)/2),delta=r.top-targetTop;
@@ -87,5 +108,5 @@ export function mountExerciseDock(scope) {
     revealFocusedAnswer(el);
   },{signal});
   measure();
-  return {refresh:measure,destroy(){if(destroyed)return;destroyed=true;controller.abort();resize?.disconnect();mutation.disconnect();transitions.clear();keyboardNodes.clear();if(frame!==null)cancelFrame(frame);scope.style.removeProperty('--exercise-dock-reserve');delete scope.dataset.exerciseDockHost;}};
+  return {refresh:measure,destroy(){if(destroyed)return;destroyed=true;controller.abort();resize?.disconnect();mutation.disconnect();transitions.clear();keyboardNodes.clear();for(const el of constrainedAnswers.keys())restoreAnswer(el);if(frame!==null)cancelFrame(frame);scope.style.removeProperty('--exercise-dock-reserve');delete scope.dataset.exerciseDockHost;}};
 }
