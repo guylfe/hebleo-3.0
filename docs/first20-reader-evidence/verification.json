@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-25",
+  "base": "fa5b63955f93a84321760e3caa2236e3c591521b",
+  "branch": "feat/native-text-reader-20261025",
+  "command": "npm run verify:candidate",
+  "exitCode": 0,
+  "condition": "Separate docs/first20-reader-evidence/static-assets.patch temporarily applied; src/server.js restored before feature commit",
+  "summary": [
+    "ℹ tests 804",
+    "ℹ suites 0",
+    "ℹ pass 804",
+    "ℹ fail 0",
+    "ℹ cancelled 0",
+    "ℹ skipped 0",
+    "ℹ todo 0",
+    "ℹ duration_ms 69021.6212"
+  ],
+  "staticAssetsPatchSHA256": "e4a02384daab109e473b8bd08e98c72952673d25b54216631a4096e3b5818ef6",
+  "focusedCommand": "node --test test/text-reader.test.js test/text-pages-editor.test.js",
+  "focusedTests": 15,
+  "focusedPass": 15,
+  "allSuppliedPagesTraversed": 154,
+  "nativeBrowser": {
+    "tool": "mcp__computer__get_browser_state",
+    "result": "refused",
+    "code": "browser_consent_required"
+  },
+  "strictUIAudit": {
+    "errors": 3,
+    "changedFileFindings": 0,
+    "status": "existing findings remain"
+  },
+  "designLint": {
+    "command": "npx --offline -p @google/design.md designmd lint DESIGN.md",
+    "result": "ENOTCACHED"
+  },
+  "installed": false,
+  "backendPersistenceVerified": false,
+  "publicProjectionVerified": false,
+  "humanAcceptance": "Pending"
+}

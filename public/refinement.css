@@ -150,3 +150,24 @@ body:has(#practice[data-exercise-dock-host]).hebleo-keyboard-is-open .nav-shell 
 .learner-preview [data-answer-commit]{justify-content:flex-start}
 dialog.rehearsal-dialog{scroll-padding-block-end:var(--exercise-dock-reserve,100px)}
 @media(max-width:400px){.exercise-dock-secondary{flex-basis:100%}.exercise-dock .button{font-size:14px}.exercise-dock{padding:6px 0;gap:2px}}
+
+/* Shared interactive text explanation; canonical palette and reading measure. */
+.text-reader{max-inline-size:760px;margin-inline:auto;min-inline-size:0}
+.text-reader [hidden]{display:none!important}
+.text-reader h3{font-size:1.5rem;line-height:1.4;overflow-wrap:anywhere}
+.text-reader-body{overflow-wrap:anywhere;min-inline-size:0}
+.text-reader-body p{line-height:1.7}
+.text-reader-choices{border:0;margin:0;padding:0;min-inline-size:0}
+.text-reader-choices legend{font-weight:600;margin-block-end:12px}
+.text-reader-choices label{display:flex;align-items:center;gap:12px;min-block-size:44px;padding:8px;border:1px solid var(--line);border-radius:8px;margin-block:8px;cursor:pointer}
+.text-reader-choices input{inline-size:20px;block-size:20px;flex:none}
+.text-reader label:has(textarea){display:grid;gap:8px}
+.text-reader textarea{inline-size:100%;box-sizing:border-box;min-block-size:100px;resize:none;field-sizing:content}
+.text-reader-value{font-variant-numeric:tabular-nums;font-size:clamp(1.2rem,5vw,2.2rem);line-height:1.8;overflow-wrap:anywhere;text-align:center;padding-block:16px;color:var(--ink)}
+.text-reader-demo{min-block-size:190px}
+.text-reader-model{margin-block:20px;padding-inline-start:16px;border-inline-start:3px solid var(--accent)}
+.text-reader-actions{min-block-size:52px;margin-block-start:16px}
+.text-reader-pagination{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-block-start:1px solid var(--line);padding-block-start:24px;margin-block-start:32px}
+.text-reader .button{min-block-size:44px;white-space:normal;max-inline-size:100%}
+.text-reader :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:420px){.text-reader-pagination{gap:8px}.text-reader-pagination .button{flex:1}.text-reader-pagination>span{flex-basis:100%;text-align:center;order:3}.text-reader .word-grid{grid-template-columns:minmax(0,1fr)}}

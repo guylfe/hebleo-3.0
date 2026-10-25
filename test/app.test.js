@@ -1,3 +1,4 @@
+import {hasTextPages,mountTextReader} from '../public/text-reader.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../public/lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../public/post-answer-vocabulary.js';
 import {sourceBrowseFixture} from '../scripts/source-browse-fixture.mjs';
@@ -31,7 +32,7 @@ import {pathToFileURL} from 'node:url';
 const {mountLessonPreview} = await import(process.env.HEBLEO_PREVIEW_CONTROLLER ? pathToFileURL(process.env.HEBLEO_PREVIEW_CONTROLLER) : '../public/preview/lesson-preview.js');
 import {createLearnerRenderer} from '../public/preview/learner-renderer.js';
 async function settled(predicate){const deadline=Date.now()+5000;while(Date.now()<deadline){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle within 5 seconds.');}
-async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,width=1024,navigationPrefs,markdownDependencies,reduceMotion=false}={}){
+async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,width=1024,navigationPrefs,markdownDependencies,reduceMotion=false,textProgressTransport}={}){
   const store=providedStore||new Store();prepare?.(store);const d=new JSDOM('<div id="app"></div><div id="toast"></div>',{url:'http://127.0.0.1/#'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=d.window;
   Object.defineProperty(w,'innerWidth',{value:width,writable:true});let server,origin;
   if(realHTTP){server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
@@ -39,12 +40,13 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,{mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  Object.assign(w,{hasTextPages,mountTextReader,mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   if(markdownDependencies)w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
     if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
     if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
+    else if(url.pathname==='/api/text-progress'&&textProgressTransport)value=await textProgressTransport({user,input,query:url.searchParams});
     else if(url.pathname==='/api/questions')value=input?store.askQuestion(user,input):store.questions(user);
     else if(url.pathname==='/api/session')value=store.session(user,url.searchParams.get('lessonId'));
     else if(url.pathname==='/api/session/latest')value=store.startLatestLesson(user,input.lessonId);
@@ -1056,4 +1058,22 @@ for(const type of ['ordering','cloze','transformation'])for(const correct of [tr
  const trigger=doc.querySelector('[data-authored-vocabulary-answers] [data-vocabulary-binding]');trigger.click();assert.ok(doc.querySelector('.vocabulary-reminder'));doc.querySelector('[data-vocabulary-close]').click();assert.equal(doc.activeElement,trigger);
  assert.equal(JSON.stringify(store.learner('learner-demo')),before);assert.equal(calls.filter(p=>['/api/attempt','/api/progress','/api/preferences'].includes(p)).length,writes);
  const restored=await app(t,{page:'lesson/lesson-2/apply',store,realHTTP:true});assert.ok(restored.doc.querySelector('[data-authored-vocabulary-answers] [data-vocabulary-binding]'));assert.equal(store.learner('learner-demo').attempts.length,1);
+});
+
+
+test('first20 actual learner UI consumes injected text projection/progress contracts and cancels on departure',async t=>{
+ const records=[],savedResponses={};
+ const {doc,w,store,calls}=await app(t,{page:'lesson/lesson-1/learn',width:360,prepare(store){
+  const c=store.snapshot();c.lessons[0]=courseHelpers.projectLesson(c,c.lessons[0]);
+  const block=c.lessons[0].blocks.find(b=>b.type==='explanation');block.textPages={version:1,pages:[{id:'stable.recall',type:'recall',title:'Native text page',answer:'Illustrative fixture answer',gate:'reveal'},{id:'stable.memory',type:'timedRecall',title:'Timed native page',value:'0704177609112001',durationMs:10000,answer:'model',accessibleAlternative:true}],order:['stable.recall','stable.memory']};
+  // Frozen base strips textPages. Inject the agreed projection seam; Lead owns its integration.
+  const project=store.publicContent.bind(store);store.publicContent=(content,lessonId)=>{const value=project(content,lessonId);for(const lesson of value.lessons)for(const block of lesson.blocks||[]){const original=content.lessons.find(l=>l.id===lesson.id)?.blocks.find(b=>b.id===block.id);if(original?.textPages)block.textPages=structuredClone(original.textPages);}return value;};
+  store.set('active',store.addRevision(c,'Synthetic text UI fixture only'));store.startLatestLesson('learner-demo','lesson-1');
+ },textProgressTransport:async({input})=>{if(!input)return {responses:savedResponses};records.push(input);savedResponses[input.pageId]=input.response;return {saved:true};}});
+ doc.querySelector('[data-action=medium][data-value=read]')?.click();await settled(()=>doc.querySelector('[data-reader-heading]')).catch(error=>{throw new Error(error.message+' '+doc.body.textContent.slice(-2400));});
+ const before=store.learner('learner-demo');assert.equal(doc.querySelector('[data-reader-heading]').textContent,'Native text page');
+ const attempt=doc.querySelector('[data-reader-attempt]');attempt.value='תּוֹדָה';attempt.dispatchEvent(new w.Event('input',{bubbles:true}));doc.querySelector('[data-reader-action=reveal]').click();
+ await settled(()=>records.some(r=>r.response.revealed));assert.ok(records.every(r=>r.lessonId==='lesson-1'&&r.componentId==='legacy-explanation'&&r.revisionId===2));assert.equal(records.at(-1).response.text,'תּוֹדָה');assert.deepEqual(store.learner('learner-demo').completed,before.completed);assert.deepEqual(store.learner('learner-demo').attempts,before.attempts);
+ doc.querySelector('[data-reader-action=next]').click();doc.querySelector('[data-reader-action=play]').click();assert.equal(doc.querySelector('.text-reader-value').textContent,'0704177609112001');const old=doc.querySelector('[data-text-reader]');
+ doc.querySelector('[data-action=page][data-value=course]').click();await settled(()=>!doc.querySelector('[data-text-reader]'));assert.equal(old.textContent,'');assert.ok(calls.includes('/api/text-progress'));assert.ok(records.every(r=>!JSON.stringify(r).includes('0704177609112001')));
 });

@@ -1,6 +1,8 @@
 import {richCell,cellCSS} from './rich.js';
 import {audioURL,wordFields,fieldLabel} from './ux.js';
 import {composeSentence} from './interactions.js';
+import {hasTextPages,textReaderSlot} from './text-reader.js';
+export {hasTextPages,mountTextReader} from './text-reader.js';
 
 // Pure learner lesson/exercise HTML and answer serialization, shared by the learner app
 // and the disposable draft-rehearsal renderer. No state, DOM, fetch or storage access here.
@@ -56,8 +58,9 @@ export function vocabularyTable(words) {
 }
 export function lessonInteractions(l,renderLesson){return (l.interactions||[]).map((item,i)=>item.type==='reveal'?'<details class="lesson-interaction"><summary>'+esc(item.prompt)+'</summary>'+renderLesson(item.answer)+'</details>':'<section class="lesson-interaction"><h3>'+esc(item.prompt)+'</h3><div class="choices">'+item.choices.map((choice,j)=>button(esc(choice),'inline-choice','secondary',i+'|'+j)).join('')+'</div><p class="inline-feedback" role="status" id="inline-feedback-'+i+'"></p></section>').join('');}
 export function learnMedia(l,mode,renderLesson,conceptTime) {
-  return mode==='watch'?'<video class="lesson-video" controls preload="metadata" src="'+esc(audioURL(l.video))+'" '+(conceptTime!==undefined?'data-start="'+Number(conceptTime)+'"':'')+' aria-label="'+esc(l.title)+' explanation"></video>':'<div class="explanation rich-lesson" dir="'+(l.textDirection||'auto')+'">'+renderLesson(l.explanation)+lessonInteractions(l,renderLesson)+'</div>';
+  return mode==='watch'?'<video class="lesson-video" controls preload="metadata" src="'+esc(audioURL(l.video))+'" '+(conceptTime!==undefined?'data-start="'+Number(conceptTime)+'"':'')+' aria-label="'+esc(l.title)+' explanation"></video>':'<div class="explanation rich-lesson" dir="'+(l.textDirection||'auto')+'">'+(hasTextPages(l)?textReaderSlot():renderLesson(l.explanation)+lessonInteractions(l,renderLesson))+'</div>';
 }
+export function textPageMedia(media){if(!media)return '';const video=audioURL(media.video);return audioControls(media.audio,'Page')+(video?'<video class="lesson-video" controls preload="metadata" src="'+esc(video)+'" aria-label="Page recording"></video>':'');}
 // draft = {text, matching:{wordId: meaning}, selectedTokens:int[]}; word(id) resolves content words.
 export function matchingGame(e,mode,word,matching,result) {
   const placed = result?.answer && typeof result.answer==='object' ? result.answer : matching;

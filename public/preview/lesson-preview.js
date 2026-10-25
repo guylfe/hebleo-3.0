@@ -42,6 +42,8 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
   }
   function frozenPresentation(source) {
     const copy = source.cloneNode(true);
+    // A frozen rehearsal must never retain a cancelled timed demonstration.
+    copy.querySelectorAll('.text-reader-value').forEach(el=>el.remove());
     const originals = source.querySelectorAll('input,textarea,select');
     copy.querySelectorAll('input,textarea,select').forEach((el, index) => {
       const original = originals[index];
