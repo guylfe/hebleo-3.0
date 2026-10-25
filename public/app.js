@@ -3,6 +3,8 @@ import { lessonSteps, stepLabels, stepExercises, followingLesson, lessonQuestion
 import {orderedLessons,courseOutline,keyboardForLesson,resolveComponent} from './course.js';
 import {richCell,cellCSS} from './rich.js';
 import {renderLesson} from './rich-browser.js';
+import {hasTextPages,mountTextReader} from './text-reader.js';
+import {textPageMedia} from './learner-view.js';
 import {composeSentence,bindMatching,matchWord} from './interactions.js';
 import {reviewNikkud} from './ux.js';
 import {scheduleReview,reviewIntervalLabel} from './review-schedule.js';
@@ -25,6 +27,29 @@ const uid = () => crypto.randomUUID();
 const pref = () => state.data.learner.preferences;
 let navigationHideTimer;const navigationMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
 let exerciseDockBinding, pendingAttempt=null, answerPhase="ready", continueTarget=null;
+let textReaderBindings=[];
+const textReaderStates=new Map();
+const textSaveQueues=new Map();
+function disposeTextReaders(){textReaderBindings.splice(0).forEach(binding=>binding.destroy());}
+function mountLessonTextReaders(scope=root){
+ if(state.page!=='lesson'||!state.session)return;
+ const lesson=portionLesson(lessonObject(),state.step);if(!hasTextPages(lesson))return;
+ const owner=state.user,revisionId=state.session.revisionId,lessonId=lesson.id,componentId=lesson.textComponentId||state.step;
+ const key=JSON.stringify([owner,revisionId,lessonId,componentId]);
+ for(const host of scope.querySelectorAll('[data-text-reader]')){
+  const current=()=>state.user===owner&&state.page==='lesson'&&state.session?.revisionId===revisionId&&state.lessonId===lessonId&&portionLesson(lessonObject(),state.step).textComponentId===lesson.textComponentId;
+  const binding=mountTextReader(host,{textPages:lesson.textPages,renderLesson,word,renderWord:w=>wordCard(w),renderMedia:textPageMedia,dock:currentKind()==='learn',
+   initialState:textReaderStates.get(key),isCurrent:current,onState:saved=>textReaderStates.set(key,saved),
+   loadProgress:textReaderStates.has(key)?undefined:()=>api('text-progress?'+new URLSearchParams({lessonId,revisionId,componentId}),undefined,owner),
+   saveProgress:record=>{
+    const pending=(textSaveQueues.get(key)||Promise.resolve()).catch(()=>{}).then(()=>{
+     const latest=textReaderStates.get(key);
+     return api('text-progress',{lessonId,revisionId,componentId,...record,response:latest?.responses[record.pageId]||record.response,cursorPageId:latest?.cursorPageId||record.cursorPageId},owner);
+    });textSaveQueues.set(key,pending);return pending;
+   }});
+  textReaderBindings.push(binding);
+ }
+}
 let reminderBinding,lexicalBinding,lexicalSearchTimer,lexicalRequest=0,lexicalLoading=false,lexicalError='';
 let saveTimer, saveChain=Promise.resolve(), submitting=false, routeGeneration=0, panelGeneration=0, lastFocus=null;
 // The author workspace owns its mounts across status renders; deliberate departures dispose it.
@@ -78,6 +103,7 @@ async function flushSave() { clearTimeout(saveTimer);if(state.page==='lesson')aw
 function setRoute(replace=false) { const hash=state.page==='lesson'?'#lesson/'+state.lessonId+'/'+state.step:'#'+state.page;history[replace || location.hash===hash?'replaceState':'pushState']({},'',hash); }
 async function openLesson(id, step, replace=false) {
   if(!await guardStudioDeparture('Open this lesson'))return;
+  disposeTextReaders();
   rememberComposers();closeNavigation();
   await flushSave();clearRecording();state.recording='empty';stopMedia();
   const session=await api('session?lessonId='+encodeURIComponent(id));
@@ -136,6 +162,7 @@ function pageStudioLists(){
 function refreshComments(){rememberComposers();for(const area of document.querySelectorAll('[data-comment-feed]')){const panel=area.closest('#context-panel');area.innerHTML=questionList(panel?false:state.data.canAuthor,panel?state.panel?.context?.lessonId:state.page==='studio'?state.authorLessonId:state.lessonId);bind(area);}}
 function render() {
   if(!state.data)return;
+  disposeTextReaders();
   exerciseDockBinding?.destroy();exerciseDockBinding=null;
   reminderBinding?.destroy();reminderBinding=null;
   rememberComposers();rememberNote();if(studioWorkspace&&state.page==='studio'&&studioWorkspace.owner===state.user){for(const node of studioWorkspace.nodes)node.remove();}else disposeStudioMounts();if(rehearsal&&state.page!=='studio')endRehearsal();
@@ -146,7 +173,7 @@ function render() {
   const hasCourse=['lesson','course'].includes(state.page),courseLesson=hasCourse?(content().lessons.find(l=>l.id===state.lessonId)||orderedLessons(content())[0]):null;
   root.innerHTML='<a class="skip-link" href="#main-content" data-action="skip-content">Skip to content</a><header class="app-header" aria-label="Hebleo navigation">'+(hasCourse?navigationToggle():'')+'<a class="brand" href="#home" data-action="page" data-value="home" aria-label="Hebleo home"><span class="brand-logo-slot" aria-hidden="true"><img src="/assets/hebleo-wide-navy.png" alt="" width="3693" height="1198"></span></a><nav id="main-menu" class="nav main-navigation" aria-label="Main navigation">'+nav()+'</nav><div class="profile"><span class="demo-pill">DEMO CONTENT</span><label class="profile-control"><span>Demo profile</span><select id="demo-user" aria-label="Demo profile">'+state.data.users.map(x=>'<option value="'+x.id+'" '+(x.id===state.user?'selected':'')+'>'+esc(x.name)+' · '+esc(x.role)+'</option>').join('')+'</select></label></div></header><div class="shell nav-shell page-'+state.page+' '+(hasCourse?'has-course ':'')+(!pref().animations?'reduce-motion':'')+'">'+(hasCourse?courseNavigation(courseLesson):'')+'<main class="main" id="main-content" tabindex="-1"><div class="topbar"><div class="breadcrumb">Your Hebrew / '+esc({home:'Your path',course:'Foundations',lesson:label(state.step),review:'Review',library:'My Hebrew',studio:'Author workspace',settings:'Settings'}[state.page])+'</div></div><div class="content">'+pages[state.page]()+'</div></main><button type="button" class="nav-backdrop" data-action="navigation-close" aria-label="Close course outline" hidden></button></div>';
 
-  applyNavigation();bind();exerciseDockBinding=mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio')pageStudioLists();syncKeyboard();if(state.panel)showPanel();
+  applyNavigation();bind();mountLessonTextReaders();exerciseDockBinding=state.page==='lesson'&&currentKind()==='learn'&&root.querySelector('[data-text-reader]')?null:mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio')pageStudioLists();syncKeyboard();if(state.panel)showPanel();
 }
 function lessonStarted(id) { const l=state.data.learner; return Boolean(l.resumes[id] || l.attempts.some(a=>a.lessonId===id)); }
 function lessonCards() {
@@ -175,7 +202,7 @@ function vocabularyView(words,notes=true) {
 }
 function learnBody(l,conceptTime) {
   l=portionLesson(l,state.step);
-  const hasText=Boolean(l.explanation?.trim()),video=audioURL(l.video),mode=video&&hasText?state.medium:video?'watch':'read';
+  const hasText=Boolean(l.explanation?.trim())||hasTextPages(l),video=audioURL(l.video),mode=video&&hasText?state.medium:video?'watch':'read';
   return (video&&hasText?'<div class="mode-bar"><h2>Your explanation</h2>'+segmented([['watch','Watch'],['read','Read']],mode,'medium','Lesson format')+'</div>':'')+learnMedia(l,mode,renderLesson,conceptTime)+'<div class="button-row">'+button('Lesson help & comments','help','outline small',l.id)+'</div>';
 }
 function courseNavigation(l) {
@@ -355,13 +382,13 @@ function reportList() {
 function inlineConceptBody(){return learnBody(lessonObject(),currentExercise()?.explanationTime).replace(/<button/g,'<button data-keyboard-preserve');}
 function inlineConcept(open=true){
  const field=root.querySelector('#practice #answer'),selection=field?{start:field.selectionStart,end:field.selectionEnd,direction:field.selectionDirection}:null;let panel=root.querySelector('#inline-concept');
- if(open&&!panel){panel=document.createElement('section');panel.id='inline-concept';panel.className='inline-concept';panel.setAttribute('aria-labelledby','inline-concept-title');panel.innerHTML='<div class="panel-header"><h3 id="inline-concept-title">Review this concept</h3>'+button('Close concept','inline-concept-close','small outline').replace('<button','<button data-keyboard-preserve')+'</div><div data-inline-concept-body>'+inlineConceptBody()+'</div>';root.querySelector('#practice [data-concept-slot]')?.append(panel);bind(panel);}
+ if(open&&!panel){panel=document.createElement('section');panel.id='inline-concept';panel.className='inline-concept';panel.setAttribute('aria-labelledby','inline-concept-title');panel.innerHTML='<div class="panel-header"><h3 id="inline-concept-title">Review this concept</h3>'+button('Close concept','inline-concept-close','small outline').replace('<button','<button data-keyboard-preserve')+'</div><div data-inline-concept-body>'+inlineConceptBody()+'</div>';root.querySelector('#practice [data-concept-slot]')?.append(panel);bind(panel);mountLessonTextReaders(panel);}
  root.querySelector('#practice [data-action=concept]')?.setAttribute('aria-expanded',String(open));
  if(!open){panel?.remove();root.querySelector('#practice [data-action=concept]')?.focus({preventScroll:true});return;}if(field&&!field.disabled){field.focus({preventScroll:true});if(selection)field.setSelectionRange(selection.start,selection.end,selection.direction);}else if(!open)root.querySelector('#practice [data-action="concept"]')?.focus();
 }
 function changeConceptMedium(value){
  const body=root.querySelector('#inline-concept [data-inline-concept-body]');if(!body)return;const field=root.querySelector('#practice #answer'),selection=field?{start:field.selectionStart,end:field.selectionEnd,direction:field.selectionDirection}:null;
- state.medium=value;body.innerHTML=inlineConceptBody();bind(body);if(field&&!field.disabled){field.focus({preventScroll:true});if(selection)field.setSelectionRange(selection.start,selection.end,selection.direction);}
+ state.medium=value;body.innerHTML=inlineConceptBody();bind(body);mountLessonTextReaders(body);if(field&&!field.disabled){field.focus({preventScroll:true});if(selection)field.setSelectionRange(selection.start,selection.end,selection.direction);}
 }
 const noteKey=(owner,id)=>JSON.stringify([owner,id]);
 function rememberNote(){const field=document.querySelector('#personal-note');if(!field)return;state.noteDrafts[noteKey(field.dataset.noteOwner,field.dataset.noteWord)]={text:field.value,start:field.selectionStart,end:field.selectionEnd,direction:field.selectionDirection};}
@@ -460,10 +487,10 @@ async function act(action,value,source) {
   if(action==='comment-page'){state.discussionPage=Math.max(0,Number(value));refreshComments();return;}
   if(action==='lesson-practice'){await openLesson(value);await act('target-practice');return;}
   if(action==='latest-lesson'){await flushSave();await api('session/latest',{lessonId:state.lessonId});state.session=null;await openLesson(state.lessonId);return;}
-  if(action==='page'){if(value!==state.page&&!await guardStudioDeparture('Leave Studio'))return;rememberComposers();closeNavigation();await flushSave();closePanel();stopMedia();state.page=value;state.reviewSession=null;state.revealReview=false;state.search='';await load();setRoute();render();focusHeading();return;}
+  if(action==='page'){if(value!==state.page&&!await guardStudioDeparture('Leave Studio'))return;disposeTextReaders();rememberComposers();closeNavigation();await flushSave();closePanel();stopMedia();state.page=value;state.reviewSession=null;state.revealReview=false;state.search='';await load();setRoute();render();focusHeading();return;}
   if(action==='lesson'){await openLesson(value);return;}
   if(action==='outline'){closeNavigation();const [id,step]=value.split('|');if(id!==state.lessonId){await openLesson(id,step);return;}action='step';value=step;}
-  if(action==='step'){if(value===state.step || !portionKeys(lessonObject()).includes(value))return;closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(portionLesson(lessonObject(),state.step));stopMedia();setRoute();await queueSave();render();focusHeading();return;}
+  if(action==='step'){if(value===state.step || !portionKeys(lessonObject()).includes(value))return;disposeTextReaders();closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(portionLesson(lessonObject(),state.step));stopMedia();setRoute();await queueSave();render();focusHeading();return;}
   if(action==='mode'||action==='vocab-view'){await updatePreference(action==='mode'?'nikkud':'vocabularyView',value);render();return;}
   if(action==='keyboard-open'){window.HebleoKeyboard?.open(document.querySelector('#answer'));return;}
   if(action==='inline-choice'){const [i,j]=value.split('|').map(Number),item=portionLesson(lessonObject(),state.step).interactions[i];document.querySelector('#inline-feedback-'+i).textContent=(item.correctIndex===j?'Correct. ':'Try again. ')+item.feedback;return;}
@@ -557,7 +584,7 @@ function bind(scope=root) {
   scope.querySelectorAll('[data-action="key"],[data-action="backspace"],[data-action="cursor"]').forEach(el=>el.addEventListener('pointerdown',event=>event.preventDefault()));
   scope.querySelector('#answer')?.addEventListener('input',event=>{state.answer=event.target.value;scheduleSave();});
   scope.querySelectorAll('[data-match]').forEach(el=>el.addEventListener('change',()=>{state.matching[el.dataset.match]=el.value;scheduleSave();}));
-  scope.querySelector('#demo-user')?.addEventListener('change',async event=>{const next=event.target.value;event.target.value=state.user;if(submitting||pendingAttempt)return;try{if(next===state.user||!await guardStudioDeparture('Change demo profile'))return;rememberComposers();rememberNote();await flushSave();closePanel();clearRecording();state.user=next;localStorage.setItem('hebleo-demo-user',state.user);state.page='home';state.session=null;state.reviewSession=null;resetQuestion();await load();setRoute();render();}catch(error){toast(error.message);}});
+  scope.querySelector('#demo-user')?.addEventListener('change',async event=>{const next=event.target.value;event.target.value=state.user;if(submitting||pendingAttempt)return;try{if(next===state.user||!await guardStudioDeparture('Change demo profile'))return;disposeTextReaders();rememberComposers();rememberNote();await flushSave();closePanel();clearRecording();state.user=next;localStorage.setItem('hebleo-demo-user',state.user);state.page='home';state.session=null;state.reviewSession=null;resetQuestion();await load();setRoute();render();}catch(error){toast(error.message);}});
   scope.querySelector('#library-search')?.addEventListener('input',event=>{const position=event.target.selectionStart;state.search=event.target.value;state.libraryPage=0;render();if(!event.isComposing)scheduleLexicalLibrary();const el=document.querySelector('#library-search');el.focus();el.setSelectionRange(position,position);});
   for(const [id,key] of [['source-category','sourceCategory'],['source-lesson','sourceLesson'],['library-tag','libraryTag'],['library-lesson','libraryLesson'],['library-state','libraryState']])scope.querySelector('#'+id)?.addEventListener('change',event=>{state[key]=event.target.value;state.libraryPage=0;render();scheduleLexicalLibrary(0);});
   scope.querySelectorAll('[data-preference]').forEach(el=>el.addEventListener('change',async()=>{try{await updatePreference(el.dataset.preference,el.checked);render();}catch(error){toast(error.message);}}));
@@ -580,7 +607,7 @@ document.addEventListener('keydown',event=>{exerciseDockBinding?.refresh?.();
   if(navigationOverlays.length&&!document.querySelector('dialog[open]')&&event.key==='Tab'){const controls=navigationOverlays.flatMap(el=>[...el.querySelectorAll('button:not(:disabled),a[href],summary,select:not(:disabled)')]).filter(navigationControlVisible);const first=controls[0],last=controls.at(-1);if(event.shiftKey&&(document.activeElement===first||!controls.includes(document.activeElement))){event.preventDefault();last?.focus();return;}if(!event.shiftKey&&(document.activeElement===last||!controls.includes(document.activeElement))){event.preventDefault();first?.focus();return;}}
   if(event.key==='Escape'&&!document.querySelector('dialog[open]')){const shell=root.querySelector('.nav-shell');if(shell?.dataset.mainOverlay==='true'||shell?.dataset.courseOverlay==='true'){event.preventDefault();act('navigation-close');return;}}
 
-  if(!learnerControlsActive()||event.target.closest?.('.app-header,#course-navigation,[hidden],[inert],[aria-hidden="true"]')||rehearsal||event.defaultPrevented||event.target.closest?.('[data-preview-root]')||event.isComposing||event.ctrlKey||event.altKey||event.metaKey)return;
+  if(!learnerControlsActive()||event.target.closest?.('.app-header,#course-navigation,[hidden],[inert],[aria-hidden="true"]')||rehearsal||event.defaultPrevented||event.target.closest?.('[data-preview-root],[data-text-reader]')||event.isComposing||event.ctrlKey||event.altKey||event.metaKey)return;
   const typing=/^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName)||event.target.isContentEditable;
   if(typing){
     if(event.target.id==='answer'&&!state.result&&activeLearnerDestination(event.target)){
@@ -597,7 +624,7 @@ document.addEventListener('keydown',event=>{exerciseDockBinding?.refresh?.();
 });
 async function routeFromURL() {
   if(submitting||pendingAttempt){setRoute(true);return;}
-  const generation=++routeGeneration,parts=location.hash.slice(1).split('/');
+  disposeTextReaders();const generation=++routeGeneration,parts=location.hash.slice(1).split('/');
   if(state.page==='studio'&&parts[0]!=='studio'&&!await guardStudioDeparture('Leave Studio through browser history')){setRoute(true);return;}
   rememberComposers();
   try{if(parts[0]==='lesson'&&parts[1]){await openLesson(parts[1],parts[2],true);return;}await flushSave();if(generation!==routeGeneration)return;closePanel();state.page=['home','course','review','library','studio','settings'].includes(parts[0])?parts[0]:'home';state.reviewSession=null;await load();render();}catch(error){toast(error.message);}
@@ -606,5 +633,5 @@ async function routeFromURL() {
 window.addEventListener('hebleo-keyboard-preference',async event=>{if(rehearsal)return;try{await api('preferences',event.detail);await load();}catch(error){toast(error.message);}});
 window.addEventListener('popstate',()=>routeFromURL());
 window.addEventListener('beforeunload',event=>{if(studioDirty()){event.preventDefault();event.returnValue='';}});
-window.addEventListener('pagehide',()=>{if(state.page==='lesson'&&state.session){fetch('/api/progress',{method:'POST',headers:{'content-type':'application/json','x-demo-user':state.user},body:JSON.stringify(progressPayload()),keepalive:true}).catch(()=>{});}});
+window.addEventListener('pagehide',()=>{disposeTextReaders();if(state.page==='lesson'&&state.session){fetch('/api/progress',{method:'POST',headers:{'content-type':'application/json','x-demo-user':state.user},body:JSON.stringify(progressPayload()),keepalive:true}).catch(()=>{});}});
 load().then(routeFromURL).catch(error=>{root.innerHTML='<div class="card empty"><h1>Could not open the demo.</h1><p>'+esc(error.message)+'</p></div>';});

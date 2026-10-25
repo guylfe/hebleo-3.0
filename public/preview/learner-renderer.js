@@ -6,6 +6,8 @@ import {keyboardForLesson,resolveComponent} from '../course.js';
 import {resolveBlock} from '../content.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../post-answer-vocabulary.js';
+import {hasTextPages,mountTextReader} from '../text-reader.js';
+import {textPageMedia} from '../learner-view.js';
 import {bindMatching, matchWord} from '../interactions.js';
 import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseSurface, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls,applyMatchingResult,exerciseActionDock,mountExerciseDock} from '../learner-view.js';
 
@@ -73,6 +75,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
   // Kept across mounts: every controller re-render replaces the root, so the focused control and the
   // last revealed result/entry are carried over instead of dropping focus to the page body.
   let medium = null, mediumKey = null, focusKey = null, shownKey = null;
+  const textStates=new Map();
   return {
     mount(container, props) {
       const doc = container.ownerDocument, controller = new doc.defaultView.AbortController(), signal = controller.signal;
@@ -84,7 +87,12 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const context=lessonId+'|'+(componentId||step);if(context!==mediumKey){medium=null;mediumKey=context;}
       const word = id => content.words.find(w => w.id === id);
       const exercise = exerciseId ? content.exercises.find(x => x.id === exerciseId) : null;
-      let lexicalBinding,reminderBinding,dockBinding;
+      let lexicalBinding,reminderBinding,dockBinding,textBinding;
+      const mountText=()=>{
+        const host=root.querySelector('[data-text-reader]');if(!host||!hasTextPages(presentation))return;
+        textBinding?.destroy();
+        textBinding=mountTextReader(host,{textPages:presentation.textPages,renderLesson,word,renderWord:w=>wordCard(w),renderMedia:textPageMedia,dock:step==='learn',initialState:textStates.get(context),onState:saved=>textStates.set(context,saved),isCurrent:active});
+      };
       let draft = draftOf(props.answer), message = '', conceptOpen = false, answerSelection = null;
       const root = doc.createElement('div');
       root.className = 'learner-preview';
@@ -133,7 +141,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const note = () => message ? '<p class="hint" role="alert" data-preview-message>' + esc(message) + '</p>' : '';
       const continueRow = () => '<div class="lesson-footer">' + button('Continue →', 'next-step', 'primary') + '</div>';
       function learn() {
-        const hasText = Boolean(presentation.explanation?.trim()), video = Boolean(audioURL(presentation.video)), mode = video && hasText ? (medium || 'watch') : video ? 'watch' : 'read';
+        const hasText = Boolean(presentation.explanation?.trim())||hasTextPages(presentation), video = Boolean(audioURL(presentation.video)), mode = video && hasText ? (medium || 'watch') : video ? 'watch' : 'read';
         return (video && hasText ? '<div class="mode-bar"><h2>Your explanation</h2><div class="segmented" role="group" aria-label="Lesson format">' + [['watch','Watch'],['read','Read']].map(([v, t]) => '<button type="button" data-preview-medium="' + v + '" aria-pressed="' + (mode === v) + '">' + t + '</button>').join('') + '</div></div>' : '') + learnMedia(presentation, mode, renderLesson) + continueRow();
       }
       function vocabulary() {
@@ -157,7 +165,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       let mounted = false;
       function render() {
         if (!active()) return;
-        dockBinding?.destroy();reminderBinding?.destroy();lexicalBinding?.destroy();
+        dockBinding?.destroy();reminderBinding?.destroy();lexicalBinding?.destroy();textBinding?.destroy();
         if (mounted) captureFocus();
         mounted = true;
         const body = !lesson ? '<p>This lesson is not in the draft.</p>'
@@ -166,12 +174,12 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           : step === 'complete' ? '<div class="empty"><h2>Rehearsal finished.</h2><p>Nothing in this rehearsal was saved to a learner profile.</p><div class="button-row centered">' + button('Exit rehearsal', 'exit', 'primary') + '</div></div>'
           : practice();
         root.innerHTML = settings() + (exercise ? '' : note()) + '<section class="card lesson-section">' + body + '</section>' + lookupCard();
-        lexicalBinding=bindLexicalVocabulary(root);
+        mountText();lexicalBinding=bindLexicalVocabulary(root);
         syncAudioControls(root,Number(preferences.audioSpeed)||1,getPlaybackState());bindResultExplanations(root);
         if(exercise&&result&&!busy)reminderBinding=mountAnsweredVocabulary(root,{content,exercise,result,mode:exercise.nikkudOverride||preferences.nikkud||'full',isCurrent:()=>active(),playAudio,stopMedia,getPlaybackState});
         if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select,textarea').forEach(el => { el.disabled = true; }); }
         if (exercise?.type === 'matching' && !result && !busy) bindMatching(root, (id, meaning) => { if (active()) updateDraft({...draft, matching:matchWord(draft.matching, id, meaning)}); });
-        dockBinding=mountExerciseDock(root);
+        dockBinding=step==='learn'&&textBinding?null:mountExerciseDock(root);
         restoreFocus(); reveal();
 
         if(ownerKeyboard){ownerKeyboard.mount(container.closest('dialog')||container);ownerKeyboard.sync(keyboard,preferences,'preview|'+lessonId+'|'+(componentId||step)+'|'+question);}
@@ -219,9 +227,9 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           if(action==='concept'){
             if(input)answerSelection={start:input.selectionStart,end:input.selectionEnd};
             if(!conceptOpen)slot.innerHTML='<section class="preview-concept" id="preview-concept"><h3>Review this concept</h3>'+learnMedia(presentation,audioURL(presentation.video)?'watch':'read',renderLesson,exercise.explanationTime)+button('Close concept','concept-close','exercise-quiet')+'</section>';
-            conceptOpen=true;trigger.setAttribute('aria-expanded','true');
+            mountText();conceptOpen=true;trigger.setAttribute('aria-expanded','true');
             if(input&&!input.disabled){input.focus({preventScroll:true});if(answerSelection)input.setSelectionRange(answerSelection.start,answerSelection.end);}
-          }else{slot.replaceChildren();conceptOpen=false;trigger.setAttribute('aria-expanded','false');trigger.focus({preventScroll:true});}
+          }else{textBinding?.destroy();slot.replaceChildren();conceptOpen=false;trigger.setAttribute('aria-expanded','false');trigger.focus({preventScroll:true});}
         }
         else if (action === 'retry-question') call('retry');
         else if (action === 'next-question' || action === 'next-step') call('next');
@@ -237,7 +245,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       root.addEventListener('change', event => { if(event.target.matches('[data-audio-speed]')&&!busy){const speed=Number(event.target.value);preferences.audioSpeed=speed;call('setPreference','audioSpeed',speed);setPlaybackSpeed(speed);syncAudioControls(root,speed,getPlaybackState());return;} if (event.target.dataset.previewPref && event.target.tagName === 'SELECT') call('setPreference', event.target.dataset.previewPref, event.target.value); }, {signal});
       // Rehearsal keyboard shortcuts stay inside the preview host; defaultPrevented keeps the learner's global handler out.
       (keyScope || root).addEventListener('keydown', event => {
-        if (event.target.closest?.('[data-vocabulary-card]') || event.defaultPrevented || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || busy) return;
+        if (event.target.closest?.('[data-text-reader],[data-vocabulary-card]') || event.defaultPrevented || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || busy) return;
         const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName) || event.target.isContentEditable;
         if (typing) { if (event.target.id === 'answer' && event.key === 'Enter' && !event.shiftKey && !result) { event.preventDefault(); submit(); } return; }
         if ((event.key === 'Enter' || event.key === ' ') && ['BUTTON','A','SUMMARY'].includes(event.target.tagName)) return;
@@ -258,6 +266,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         dockBinding?.destroy();
         lexicalBinding?.destroy();
         reminderBinding?.destroy();
+        textBinding?.destroy();
         controller.abort();
         stopMedia?.();
         root.remove();

@@ -61,3 +61,12 @@
 .studio-view-layout [data-layout-text], .studio-view-layout [data-layout-prompt] { display:block; }
 .studio-view-layout [data-component-markdown], .studio-view-layout [data-text-source], .studio-view-layout [data-component-selector], .studio-view-layout [data-owned-exercise], .studio-view-layout [data-role-control], .studio-view-layout .studio-exercise-actions, .studio-view-layout .studio-component-add, .studio-view-layout .studio-lesson-vocabulary, .studio-view-layout [data-lesson-metadata]>.studio-field { display:none; }
 @media (max-width:35rem) { .studio-exercise-actions { align-items:stretch; } .studio-inline-title textarea { font-size:1.4rem; } }
+
+.text-pages-editor{margin-block:24px;padding:16px;border:1px solid var(--line);border-radius:8px;min-inline-size:0}
+.text-page-fields{display:grid;gap:16px}
+.text-pages-editor label{display:grid;gap:8px;margin-block:12px}
+.text-pages-editor input,.text-pages-editor select,.text-pages-editor textarea{inline-size:100%;box-sizing:border-box;min-block-size:44px}
+.text-pages-editor textarea{resize:none;min-block-size:112px;field-sizing:content}
+.text-pages-editor pre,.text-page-id{white-space:pre-wrap;overflow-wrap:anywhere}
+.text-pages-editor [aria-invalid=true]{border:2px solid var(--danger,#b91c1c)}
+.text-pages-editor summary{cursor:pointer;min-block-size:32px;font-weight:600}

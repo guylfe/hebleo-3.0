@@ -6,6 +6,7 @@ import {mountLexicalSettings} from './lexical-settings.js';
 import {mountSelectorEditor} from './selector-editor.js';
 import {mountExerciseEditor,applyExerciseEdits,exerciseTypes,blankExercise,validateExerciseDraft} from './exercise-editor.js';
 import {mountCurriculumEditor} from './curriculum-editor.js';
+import {mountTextPagesEditor} from './text-pages-editor.js';
 
 export function prepareStudioContent(content){
  const next=structuredClone(content);
@@ -31,10 +32,11 @@ export function mountComponentDrag(host,{onMove,onStart=()=>{}}){
 export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expectedDraftToken=null,saveDraft,onSaved=()=>{},onLessonSelect=()=>{},onChanged=()=>{},getExerciseDependencies,getWorkspaceImpact,importWorkbook,newId=prefix=>prefix+'-'+crypto.randomUUID(),markdownDependencies}){
  let workspace=structuredClone(content),selected=lessonId||workspace.lessons[0]?.id,disposed=false,saving=false,dirty=false,children=[],exerciseMounts=[],wordId=workspace.words[0]?.id,wordOriginal=null,layout=false;
  const dependencyRequests=new WeakMap(),saveWaiters=[];
+ let textPageMounts=[];
  const ctl=new host.ownerDocument.defaultView.AbortController(),doc=host.ownerDocument;
  const status=message=>{const el=host.querySelector('[data-unified-status]');if(el)el.textContent=message;};
  const touch=()=>{dirty=true;onChanged();host.querySelector('[data-unsaved-status]').textContent='Unsaved workspace edits. Save includes lesson, component, exercise and vocabulary edits.';};
- const clearChildren=()=>{children.splice(0).forEach(x=>typeof x==='function'?x():x.dispose());exerciseMounts=[];};
+ const clearChildren=()=>{children.splice(0).forEach(x=>typeof x==='function'?x():x.dispose());exerciseMounts=[];textPageMounts=[];};
  function lesson(){return workspace.lessons.find(l=>l.id===selected);}
  function collect(){
   // Metadata is in a separate form; authored exercise forms are never nested.
@@ -93,6 +95,9 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
   const renderedExercises=new Set();
   for(const b of l.blocks){const row=area.querySelector('[data-component-id="'+b.id+'"]');
    if(b.type==='explanation'){
+    const pagesHost=doc.createElement('div');row.querySelector('[data-component-markdown]').after(pagesHost);
+    const pagesEditor=mountTextPagesEditor(pagesHost,{value:b.textPages,wordIds:workspace.words.map(w=>w.id),targetIds:(l.draftTargets||[]).map(t=>t.id),newId:()=>newId('page'),onChange:value=>{if(value.pages.length)b.textPages=value;else delete b.textPages;touch();}});
+    children.push(pagesEditor);textPageMounts.push({block:b,editor:pagesEditor});
     const markdown=mountMarkdownEditor(row.querySelector('[data-component-markdown]'),{value:b.text,direction:b.options?.textDirection||'auto',label:'Authored text · '+b.id,name:'text-'+b.id,dependencies:markdownDependencies,onChange:value=>{b.text=value;touch();},onDirectionChange:direction=>{b.options={...b.options,textDirection:direction};touch();}});children.push(markdown);markdown.ready.then(editor=>{const preview=row.querySelector('[data-layout-text]');if(editor&&preview.isConnected)preview.innerHTML=editor.options.previewRender(markdown.getValue());});
     row.querySelectorAll('[name="video"],[name="interactions"]').forEach(el=>el.addEventListener('input',()=>{el.dataset.dirty='true';touch();},{signal:ctl.signal}));
    }else{
@@ -104,6 +109,7 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
   area.querySelectorAll('[data-exercise-actions]').forEach(showReuseScope);keyboard();
  }
  function collectAll(){
+  for(const {block,editor} of textPageMounts){const value=editor.getValue();if(value)block.textPages=value;else delete block.textPages;}
   collect();for(const row of host.querySelectorAll('[data-component-id]')){const b=lesson().blocks.find(x=>x.id===row.dataset.componentId);if(b?.type!=='explanation')continue;
    for(const name of ['video','interactions']){const el=row.querySelector('[name="'+name+'"]');if(el?.dataset.dirty){const value=JSON.parse(el.value);if(name==='video'&&value===null)delete b.video;else b[name]=value;}}
   }return structuredClone(workspace);
