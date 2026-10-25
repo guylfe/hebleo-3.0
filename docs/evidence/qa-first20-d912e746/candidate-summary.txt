@@ -1,0 +1,9 @@
+✔ retained old card nodes cannot close the new card or alter its transit timer (65.4589ms)
+ℹ tests 816
+ℹ suites 0
+ℹ pass 816
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 78043.127

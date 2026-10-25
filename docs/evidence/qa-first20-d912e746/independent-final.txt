@@ -1,0 +1,106 @@
+✔ QA positive: actual HTTP response/revision/profile/entitlement isolation and atomic malformed writes (199.5691ms)
+✔ QA positive: real first20 import, aliases, sources, two lesson/page reorders and two backup/restores preserve synthetic state (1379.5487ms)
+✔ QA positive: unknown/ambiguous mapping, CAS, collision and malformed packs leave every table unchanged (1084.0408ms)
+✔ QA positive: actual learner delayed GET/POST remain with initiating profile across switching and reload (719.3239ms)
+✔ QA positive: integrated pack pages all traverse with production adapter, exact timing, commitment and hidden-tab cancellation (2366.4958ms)
+✖ QA-TXT-01 learner outer Continue must not complete an unattempted gated text-only lesson (137.4963ms)
+✖ QA-TXT-01 Preview outer Continue must respect the same mandatory page gate (44.0823ms)
+✖ QA-TXT-02 fresh-build demo reset must clear separately persisted text-page responses (13.2424ms)
+✖ QA-TXT-03 new prerequisite references must reject cycles before staging an import (239.7053ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 5
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7871.6865
+
+✖ failing tests:
+
+test at test\qa-first20-independent.test.js:124:1
+✖ QA-TXT-01 learner outer Continue must not complete an unattempted gated text-only lesson (137.4963ms)
+  AssertionError [ERR_ASSERTION]: Outer Continue bypassed all mandatory choice/recall gates and marked the lesson complete
+
+  true !== false
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/71c71389-5334-4e0c-9ca8-d80dd28223d1/653fb433-7485-48b1-9f7c-cb22711bda02/hebleo-3/qa-native-first20-d912e746/test/qa-first20-independent.test.js:128:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\qa-first20-independent.test.js:131:1
+✖ QA-TXT-01 Preview outer Continue must respect the same mandatory page gate (44.0823ms)
+  AssertionError [ERR_ASSERTION]: Preview outer Continue bypasses the required page answer
+
+  1 !== 0
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/71c71389-5334-4e0c-9ca8-d80dd28223d1/653fb433-7485-48b1-9f7c-cb22711bda02/hebleo-3/qa-native-first20-d912e746/test/qa-first20-independent.test.js:134:188)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\qa-first20-independent.test.js:137:1
+✖ QA-TXT-02 fresh-build demo reset must clear separately persisted text-page responses (13.2424ms)
+  AssertionError [ERR_ASSERTION]: Fresh progress retains prior text answers and revealed models
+  + actual - expected
+
+  + {
+  +   'qa.recall': {
+  +     revealed: true,
+  +     text: 'SYNTHETIC previous build'
+  +   }
+  + }
+  - {}
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/71c71389-5334-4e0c-9ca8-d80dd28223d1/653fb433-7485-48b1-9f7c-cb22711bda02/hebleo-3/qa-native-first20-d912e746/test/qa-first20-independent.test.js:139:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { 'qa.recall': { text: 'SYNTHETIC previous build', revealed: true } },
+    expected: {},
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\qa-first20-independent.test.js:142:1
+✖ QA-TXT-03 new prerequisite references must reject cycles before staging an import (239.7053ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: A mutual MEMORY/MNT prerequisite cycle was accepted
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/71c71389-5334-4e0c-9ca8-d80dd28223d1/653fb433-7485-48b1-9f7c-cb22711bda02/hebleo-3/qa-native-first20-d912e746/test/qa-first20-independent.test.js:144:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /cycl|prerequisite/i,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-25",
+  "candidate": "d912e746d43efc399c1972ce2c7da043e2fc8da0",
+  "qaBranch": "qa/native-first20-d912e746",
+  "applicationFilesChanged": false,
+  "verdict": "hold for QA-TXT-01 correction or documented gate-scope disposition",
+  "runs": [
+    {"command":"npm ci --offline --ignore-scripts", "exit":0},
+    {"command":"npm ci --offline --ignore-scripts --prefix schemas", "exit":0},
+    {"command":"npm run verify:candidate", "exit":0, "passed":816, "failed":0, "scope":"Before QA additions; existing audio filename and audio/speed/playback name exclusions retained"},
+    {"command":"npm test --prefix schemas", "exit":0, "passed":27, "failed":0},
+    {"command":"npm run runtime --prefix schemas -- --runtime ..", "exit":0, "passed":9, "failed":0},
+    {"command":"node --test test/qa-first20-independent.test.js", "exit":1, "passed":5, "failed":4, "scope":"Actual executed desired-behavior regressions; four failures comprise three documented findings"},
+    {"command":"node --test --test-name-pattern='QA positive' test/qa-first20-independent.test.js", "exit":0, "passed":5, "failed":0, "scope":"Overlapping positive controls"},
+    {"command":"node --test --test-name-pattern='delayed GET' test/qa-first20-independent.test.js", "exit":0, "passed":1, "failed":0, "scope":"Overlapping actual-app profile switch control"},
+    {"command":"git -c core.longpaths=true diff --check", "exit":0}
+  ],
+  "findings": [
+    {"id":"QA-TXT-01", "severity":"P2", "blocking":true, "summary":"Outer Continue bypasses mandatory text page gates in actual learner and Preview; real text-only completion writes without responses"},
+    {"id":"QA-TXT-02", "severity":"P2", "blocking":false, "summary":"Normal fresh-build reset retains text-page answers/reveals; preservation installation must still avoid reset"},
+    {"id":"QA-TXT-03", "severity":"P2", "blocking":false, "summary":"Multi-lesson prerequisite cycles stage successfully as unpublished drafts"}
+  ],
+  "pack": {"lessons":20,"pages":154,"targets":127,"unresolvedTargets":127,"published":false,"canonicalLexemesCreated":0},
+  "native": {"pid":14752,"windowId":918606,"status":"refused","code":"browser_consent_required","bypass":false,"guyAcceptance":"pending"},
+  "destination": {"url":"http://127.0.0.1:63358/","readOnlyBuildRequestOnly":true,"revision":"ba3ad389a6af9807f8eb90e7c34b8723cb1ffc80","candidateInstalled":false},
+  "dataBoundary": "QA clone and ephemeral synthetic Stores only. Owner preservation receipt read, not independently rerun on owner data. No live reset/import/publication/source write. No owner records in evidence."
+}
