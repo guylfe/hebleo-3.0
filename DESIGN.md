@@ -121,6 +121,8 @@ Expanded note previews retain their layout width while visually hidden. Overflow
 
 ## Oct22 approved exercise actions
 
+Oct25 TXT-NATIVE-01 correction keeps the same action dock, tokens and keyboard. Its measured bottom boundary includes the collapsed keyboard launcher when their horizontal spans intersect, as well as the open panel. Clearance uses the dock's existing gap. Keyboard resize/reflow and transform transitions refresh that boundary; missing/hidden/nonintersecting keyboard surfaces reserve no obstacle. Learner and Studio Preview share this owner and retain reading reserve on collapse.
+
 Guy approved the exercise-actions proposal including Leo’s Accepted answer(s) wording. Shared exercise-actions.js owns the fixed action slot and measured reading reserve in learner and saved-draft rehearsal. The dock aligns to the current question’s real width, follows rail/viewport changes and sits above the Hebrew/visual-viewport keyboard boundary; Preview constrains it to its dialog. Existing refinement.css tokens, 760px reading measure and Hebrew rich rendering remain canonical. Support uses quiet 44px targets. This explicitly supersedes the earlier static exercise-footer arrangement only for questions.
 
 The result displays Correct/Incorrect and a conditional existing Explanation trigger. Answer controls remain mounted and read-only after grading. Check is removed; save/recovery/continuation occupies the same primary slot. Vocabulary occurrence identity and pointer/Escape/media ownership stay shared. Native geometry, 200% zoom and Guy acceptance remain Pending: mounted Edge inspection returned browser_consent_required. No headless or simulated geometry is native evidence.
