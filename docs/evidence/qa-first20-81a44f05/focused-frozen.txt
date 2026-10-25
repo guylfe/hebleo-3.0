@@ -1,0 +1,23 @@
+✔ QA positive: actual HTTP response/revision/profile/entitlement isolation and atomic malformed writes (272.0876ms)
+✔ QA positive: real first20 import, aliases, sources, two lesson/page reorders and two backup/restores preserve synthetic state (2112.9418ms)
+✔ QA positive: unknown/ambiguous mapping, CAS, collision and malformed packs leave every table unchanged (1211.82ms)
+✔ QA positive: actual learner delayed GET/POST remain with initiating profile across switching and reload (1255.2917ms)
+✔ QA positive: integrated pack pages all traverse with production adapter, exact timing, commitment and hidden-tab cancellation (3360.1172ms)
+✔ QA-TXT-01 learner outer Continue must not complete an unattempted gated text-only lesson (299.753ms)
+✔ QA-TXT-01 Preview outer Continue must respect the same mandatory page gate (91.8858ms)
+✔ QA-TXT-02 fresh-build demo reset must clear separately persisted text-page responses (15.3401ms)
+✔ QA-TXT-03 new prerequisite references must reject cycles before staging an import (303.8539ms)
+✔ QA-TXT-01 outer Finish waits for a delayed committed page save before navigating (229.4896ms)
+✔ RR-TXT-01 actual author HTTP restore cannot strip two flags and release pending teaching (839.7993ms)
+✔ RR-TXT-01 active and historical restores check pending review semantics independently of removable markers (455.0274ms)
+✔ RR-TXT-01 valid unpublished recovery retains source identity and tolerates JSON key-order changes (425.8286ms)
+✔ RR-TXT-01 pending adapted provenance and review/target records cannot be laundered as ordinary synthetic text (364.1018ms)
+✔ required text gates refuse forged Finish atomically; grades and page responses still require deliberate completion (32.1591ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12195.3918

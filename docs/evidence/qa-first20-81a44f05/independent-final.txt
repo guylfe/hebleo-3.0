@@ -1,0 +1,47 @@
+✔ QA positive: actual HTTP response/revision/profile/entitlement isolation and atomic malformed writes (224.371ms)
+✔ QA positive: real first20 import, aliases, sources, two lesson/page reorders and two backup/restores preserve synthetic state (1866.0491ms)
+✔ QA positive: unknown/ambiguous mapping, CAS, collision and malformed packs leave every table unchanged (972.805ms)
+✔ QA positive: actual learner delayed GET/POST remain with initiating profile across switching and reload (734.3086ms)
+✔ QA positive: integrated pack pages all traverse with production adapter, exact timing, commitment and hidden-tab cancellation (2879.2167ms)
+✔ QA-TXT-01 learner outer Continue must not complete an unattempted gated text-only lesson (254.8442ms)
+✔ QA-TXT-01 Preview outer Continue must respect the same mandatory page gate (73.7077ms)
+✔ QA-TXT-02 fresh-build demo reset must clear separately persisted text-page responses (13.8569ms)
+✔ QA-TXT-03 new prerequisite references must reject cycles before staging an import (233.8476ms)
+✔ QA-TXT-01 outer Finish waits for a delayed committed page save before navigating (226.3305ms)
+✔ QA corrected: HTTP Finish checks every text block before writing and unlocks after all commitments (95.4707ms)
+✔ QA corrected: same-build startup retains all profiles text responses; next build clears responses while preserving draft and settings (37.9214ms)
+✔ QA corrected: three-node prerequisite cycle refuses atomically with concrete review conflict; acyclic chain imports (1202.6052ms)
+✖ QA-TXT-04 delayed outer Finish must not complete a different profile and lesson after navigation (466.3611ms)
+ℹ {"terminalWrites":[{"user":"learner-core","lessonId":"qa-other","revisionId":3,"step":"complete","componentId":null,"question":0,"answer":"","selectedTokens":[],"matching":{},"resultRequestId":null,"practiceIds":[]}],"samCompleted":["qa-other"],"route":"#lesson/qa-other/complete"}
+✔ RR-TXT-01 actual author HTTP restore cannot strip two flags and release pending teaching (800.6256ms)
+✔ RR-TXT-01 active and historical restores check pending review semantics independently of removable markers (400.3741ms)
+✔ RR-TXT-01 valid unpublished recovery retains source identity and tolerates JSON key-order changes (403.055ms)
+✔ RR-TXT-01 pending adapted provenance and review/target records cannot be laundered as ordinary synthetic text (341.918ms)
+✔ required text gates refuse forged Finish atomically; grades and page responses still require deliberate completion (31.318ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 18
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11331.4402
+
+✖ failing tests:
+
+test at test\qa-first20-independent.test.js:187:1
+✖ QA-TXT-04 delayed outer Finish must not complete a different profile and lesson after navigation (466.3611ms)
+  AssertionError [ERR_ASSERTION]: Alex pending Finish completed Sam other lesson
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/71c71389-5334-4e0c-9ca8-d80dd28223d1/653fb433-7485-48b1-9f7c-cb22711bda02/hebleo-3/qa-native-first20-81a44f05/test/qa-first20-independent.test.js:198:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
