@@ -1,0 +1,5930 @@
+{
+  "date": "2026-10-25",
+  "route": "Mounted cua-driver, background isolated Chrome, synthetic DOM clicks followed by independent state readback.",
+  "viewport": "Desktop 871 CSS pixels wide and narrow approximately 484 CSS pixels. Requested 500px native window clamped to 627px; readback confirmed actual geometry.",
+  "findings": [
+    "Timer was absent before Play, visible while running, and absent when recall was shown.",
+    "Hebrew text and English explanations were readable at the inspected widths.",
+    "Selecting an answer enabled Check; feedback appeared only after Check.",
+    "Vocabulary mother was hidden initially and revealed after selecting אמא."
+  ],
+  "limits": "Representative native browser inspection; all 154 pages separately exercised in jsdom. No trusted physical pointer test, screen-reader test, source audio check or Guy linguistic acceptance.",
+  "receipts": [
+    {
+      "label": "timer-live",
+      "evidence": {
+        "content_refs": [
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Ten seconds to remember",
+            "ref": "p4:0",
+            "role": "heading",
+            "states": {
+              "focusable": true,
+              "focused": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Hebleo — First 20 lessons",
+            "ref": "p4:2",
+            "role": "rootwebarea",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:3",
+            "role": "main",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:4",
+            "role": "article",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:5",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "LEARN",
+            "ref": "p4:6",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:7",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:8",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Press Play to show the number for ten seconds. It will hide automatically. Leaving this page cancels the attempt.",
+            "ref": "p4:9",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Number to remember",
+            "ref": "p4:10",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "0704177609112001",
+            "ref": "p4:11",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:12",
+            "role": "status",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "The number is visible for ten seconds.",
+            "ref": "p4:13",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Play · 10 seconds",
+            "ref": "p4:14",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Study without a timer",
+            "ref": "p4:15",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:24",
+            "role": "banner",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:25",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "HEBLEO · READ & TRY",
+            "ref": "p4:26",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Adapted draft · for Guy’s review",
+            "ref": "p4:27",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:28",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:29",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson 1 of 20",
+            "ref": "p4:30",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:31",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "MEMORY",
+            "ref": "p4:32",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Give new information a familiar home",
+            "ref": "p4:33",
+            "role": "heading",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:34",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Page 2 of 6",
+            "ref": "p4:35",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:36",
+            "role": "labeltext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Jump to a page",
+            "ref": "p4:37",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Pages completed",
+            "ref": "p4:38",
+            "role": "progressbar",
+            "states": {},
+            "value": "1",
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson pages",
+            "ref": "p4:39",
+            "role": "navigation",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Continue",
+            "ref": "p4:40",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:41",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:42",
+            "role": "sectionfooter",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:43",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Progress is saved only in this browser.",
+            "ref": "p4:44",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:51",
+            "role": "menulistpopup",
+            "states": {},
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "mode": "snapshot",
+        "oopif": {
+          "frames": 0,
+          "status": "attached"
+        },
+        "outline": "- banner\n  - generic\n    - statictext \"HEBLEO · READ & TRY\"\n- statictext \"Adapted draft · for Guy’s review\"\n- main\n  - group\n- disclosuretriangle \"Choose a lesson 0 / 20 lessons complete\" [expanded=false,focusable=true]\n  - statictext \"Choose a lesson\"\n  - generic\n    - statictext \"0 / 20 lessons complete\"\n    - menulistpopup\n- generic\n  - statictext \"Lesson 1 of 20\"\n- generic\n  - statictext \"MEMORY\"\n  - heading \"Give new information a familiar home\"\n- generic\n  - statictext \"Page 2 of 6\"\n- labeltext\n  - statictext \"Jump to a page\"\n  - combobox \"Choose a page\": 2. Learn — Ten seconds to remember [expanded=false,focusable=true]\n- option \"1. Learn — A small experiment ✓\" [focusable=true,selected=false]\n- option \"2. Learn — Ten seconds to remember\" [focusable=true,selected=true]\n- option \"3. Learn — Give the digits meaning\" [focusable=true,selected=false]\n- option \"4. Check — What made a useful connection?\" [focusable=true,selected=false]\n- option \"5. Learn — Use the idea with letters\" [focusable=true,selected=false]\n- option \"6. Continue — Keep the connection\" [focusable=true,selected=false]\n  - progressbar \"Pages completed\": 1\n  - article\n    - generic\n      - statictext \"LEARN\"\n    - heading \"Ten seconds to remember\" [focusable=true,focused=true]\n    - generic\n      - paragraph\n        - statictext \"Press Play to show the number for ten seconds. It will hide automatically. Leaving this page cancels the attempt.\"\n      - generic \"Number to remember\"\n        - statictext \"0704177609112001\"\n      - status\n        - statictext \"The number is visible for ten seconds.\"\n- button \"Play · 10 seconds\" [disabled=true]\n- button \"Study without a timer\" [disabled=true]\n- button \"Reset\" [focusable=true]\n    - navigation \"Lesson pages\"\n      - button \"Back\" [focusable=true]\n      - button \"Continue\" [disabled=true]\n  - group\n- disclosuretriangle \"Source and adaptation notes\" [expanded=false,focusable=true]\n  - sectionfooter\n    - generic\n      - statictext \"Progress is saved only in this browser.\"\n    - button \"Export preview progress\" [focusable=true]",
+        "page": {
+          "title": "about:blank",
+          "url": "http://127.0.0.1:56183/first20.html#MEMORY/MEMORY.learn.2"
+        },
+        "refs": [
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reset",
+            "ref": "p4:1",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson 0 / 20 lessons complete",
+            "ref": "p4:16",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson",
+            "ref": "p4:17",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": null,
+            "ref": "p4:18",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "0 / 20 lessons complete",
+            "ref": "p4:19",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a page",
+            "ref": "p4:20",
+            "role": "combobox",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": "2. Learn — Ten seconds to remember",
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Back",
+            "ref": "p4:21",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Source and adaptation notes",
+            "ref": "p4:22",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Export preview progress",
+            "ref": "p4:23",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "1. Learn — A small experiment ✓",
+            "ref": "p4:45",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "2. Learn — Ten seconds to remember",
+            "ref": "p4:46",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": true
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "3. Learn — Give the digits meaning",
+            "ref": "p4:47",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "4. Check — What made a useful connection?",
+            "ref": "p4:48",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "5. Learn — Use the idea with letters",
+            "ref": "p4:49",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "6. Continue — Keep the connection",
+            "ref": "p4:50",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "screenshot": {
+          "coordinate_space": "viewport_css_px",
+          "height": 683,
+          "mime_type": "image/png",
+          "pixel_to_css_scale_x": 0.8000000112093951,
+          "pixel_to_css_scale_y": 0.8000000357453331,
+          "scope": "viewport",
+          "source": "cdp_tab",
+          "tab_activation": "not_requested",
+          "viewport_css_height": 546.4000244140625,
+          "viewport_css_width": 871.2000122070312,
+          "width": 1089,
+          "window_foregrounding": "not_requested"
+        },
+        "screenshot_height": 683,
+        "screenshot_mime_type": "image/png",
+        "screenshot_width": 1089,
+        "snapshot": {
+          "complete": true,
+          "continuation": null,
+          "format": "semantic_v2",
+          "id": "p4",
+          "node_budget": 300,
+          "omitted": {
+            "budget": 0,
+            "css_hidden": 0,
+            "no_layout": 0,
+            "offscreen": 0,
+            "page_occluded": 0,
+            "unknown": 7,
+            "unprovable_frame": 0
+          },
+          "scope": "viewport",
+          "selected_nodes": 52,
+          "total_nodes": 52
+        },
+        "status": "ok",
+        "tab_id": "tab-74f06704-c08f-41f9-9eda-2871cd940afb",
+        "target_id": "bt-7fd3e9df-3855-4532-923e-c6eac7e49c2e"
+      }
+    },
+    {
+      "label": "timer-expired",
+      "evidence": {
+        "content_refs": [
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Ten seconds to remember",
+            "ref": "p5:0",
+            "role": "heading",
+            "states": {
+              "focusable": true,
+              "focused": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Hebleo — First 20 lessons",
+            "ref": "p5:5",
+            "role": "rootwebarea",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:6",
+            "role": "main",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:7",
+            "role": "article",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:8",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "LEARN",
+            "ref": "p5:9",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:10",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:11",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Press Play to show the number for ten seconds. It will hide automatically. Leaving this page cancels the attempt.",
+            "ref": "p5:12",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:13",
+            "role": "status",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Ten seconds finished. What do you remember?",
+            "ref": "p5:14",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:15",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "When the number disappears, type what you remember. Leading zeroes matter.",
+            "ref": "p5:16",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:17",
+            "role": "labeltext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Your attempt",
+            "ref": "p5:18",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:27",
+            "role": "banner",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:28",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "HEBLEO · READ & TRY",
+            "ref": "p5:29",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Adapted draft · for Guy’s review",
+            "ref": "p5:30",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:31",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:32",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson 1 of 20",
+            "ref": "p5:33",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:34",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "MEMORY",
+            "ref": "p5:35",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Give new information a familiar home",
+            "ref": "p5:36",
+            "role": "heading",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:37",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Page 2 of 6",
+            "ref": "p5:38",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:39",
+            "role": "labeltext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Jump to a page",
+            "ref": "p5:40",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Pages completed",
+            "ref": "p5:41",
+            "role": "progressbar",
+            "states": {},
+            "value": "1",
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Commit and reveal a model",
+            "ref": "p5:42",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson pages",
+            "ref": "p5:43",
+            "role": "navigation",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Continue",
+            "ref": "p5:44",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:45",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:46",
+            "role": "sectionfooter",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:47",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Progress is saved only in this browser.",
+            "ref": "p5:48",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:56",
+            "role": "menulistpopup",
+            "states": {},
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "mode": "snapshot",
+        "oopif": {
+          "frames": 0,
+          "status": "attached"
+        },
+        "outline": "- banner\n  - generic\n    - statictext \"HEBLEO · READ & TRY\"\n- statictext \"Adapted draft · for Guy’s review\"\n- main\n  - group\n- disclosuretriangle \"Choose a lesson 0 / 20 lessons complete\" [expanded=false,focusable=true]\n  - statictext \"Choose a lesson\"\n  - generic\n    - statictext \"0 / 20 lessons complete\"\n    - menulistpopup\n- generic\n    - generic [editable=\"plaintext\"]\n  - statictext \"Lesson 1 of 20\"\n- generic\n  - statictext \"MEMORY\"\n  - heading \"Give new information a familiar home\"\n- generic\n  - statictext \"Page 2 of 6\"\n- labeltext\n  - statictext \"Jump to a page\"\n  - combobox \"Choose a page\": 2. Learn — Ten seconds to remember [expanded=false,focusable=true]\n- option \"1. Learn — A small experiment ✓\" [focusable=true,selected=false]\n- option \"2. Learn — Ten seconds to remember\" [focusable=true,selected=true]\n- option \"3. Learn — Give the digits meaning\" [focusable=true,selected=false]\n- option \"4. Check — What made a useful connection?\" [focusable=true,selected=false]\n- option \"5. Learn — Use the idea with letters\" [focusable=true,selected=false]\n- option \"6. Continue — Keep the connection\" [focusable=true,selected=false]\n  - progressbar \"Pages completed\": 1\n  - article\n    - generic\n      - statictext \"LEARN\"\n    - heading \"Ten seconds to remember\" [focusable=true,focused=true]\n    - generic\n      - paragraph\n        - statictext \"Press Play to show the number for ten seconds. It will hide automatically. Leaving this page cancels the attempt.\"\n      - status\n        - statictext \"Ten seconds finished. What do you remember?\"\n- button \"Play · 10 seconds\" [focusable=true]\n- button \"Study without a timer\" [focusable=true]\n- button \"Reset\" [focusable=true]\n- paragraph\n  - statictext \"When the number disappears, type what you remember. Leading zeroes matter.\"\n- labeltext\n  - statictext \"Your attempt\"\n  - textbox \"Your attempt\" [editable=\"plaintext\",focusable=true,required=false]\n- button \"Commit and reveal a model\" [disabled=true]\n    - navigation \"Lesson pages\"\n      - button \"Back\" [focusable=true]\n      - button \"Continue\" [disabled=true]\n  - group\n- disclosuretriangle \"Source and adaptation notes\" [expanded=false,focusable=true]\n  - sectionfooter\n    - generic\n      - statictext \"Progress is saved only in this browser.\"\n    - button \"Export preview progress\" [focusable=true]",
+        "page": {
+          "title": "about:blank",
+          "url": "http://127.0.0.1:56183/first20.html#MEMORY/MEMORY.learn.2"
+        },
+        "refs": [
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Play · 10 seconds",
+            "ref": "p5:1",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Study without a timer",
+            "ref": "p5:2",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reset",
+            "ref": "p5:3",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "type",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Your attempt",
+            "ref": "p5:4",
+            "role": "textbox",
+            "states": {
+              "editable": "plaintext",
+              "focusable": true,
+              "required": false
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson 0 / 20 lessons complete",
+            "ref": "p5:19",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson",
+            "ref": "p5:20",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:21",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "0 / 20 lessons complete",
+            "ref": "p5:22",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a page",
+            "ref": "p5:23",
+            "role": "combobox",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": "2. Learn — Ten seconds to remember",
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Back",
+            "ref": "p5:24",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Source and adaptation notes",
+            "ref": "p5:25",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Export preview progress",
+            "ref": "p5:26",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "type"
+            ],
+            "frame": "main",
+            "name": null,
+            "ref": "p5:49",
+            "role": "generic",
+            "states": {
+              "editable": "plaintext"
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "1. Learn — A small experiment ✓",
+            "ref": "p5:50",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "2. Learn — Ten seconds to remember",
+            "ref": "p5:51",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": true
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "3. Learn — Give the digits meaning",
+            "ref": "p5:52",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "4. Check — What made a useful connection?",
+            "ref": "p5:53",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "5. Learn — Use the idea with letters",
+            "ref": "p5:54",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "6. Continue — Keep the connection",
+            "ref": "p5:55",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "screenshot": {
+          "coordinate_space": "viewport_css_px",
+          "height": 683,
+          "mime_type": "image/png",
+          "pixel_to_css_scale_x": 0.8000000112093951,
+          "pixel_to_css_scale_y": 0.8000000357453331,
+          "scope": "viewport",
+          "source": "cdp_tab",
+          "tab_activation": "not_requested",
+          "viewport_css_height": 546.4000244140625,
+          "viewport_css_width": 871.2000122070312,
+          "width": 1089,
+          "window_foregrounding": "not_requested"
+        },
+        "screenshot_height": 683,
+        "screenshot_mime_type": "image/png",
+        "screenshot_width": 1089,
+        "snapshot": {
+          "complete": true,
+          "continuation": null,
+          "format": "semantic_v2",
+          "id": "p5",
+          "node_budget": 300,
+          "omitted": {
+            "budget": 0,
+            "css_hidden": 1,
+            "no_layout": 0,
+            "offscreen": 0,
+            "page_occluded": 0,
+            "unknown": 8,
+            "unprovable_frame": 0
+          },
+          "scope": "viewport",
+          "selected_nodes": 57,
+          "total_nodes": 57
+        },
+        "status": "ok",
+        "tab_id": "tab-74f06704-c08f-41f9-9eda-2871cd940afb",
+        "target_id": "bt-7fd3e9df-3855-4532-923e-c6eac7e49c2e"
+      }
+    },
+    {
+      "label": "native-hebrew",
+      "evidence": {
+        "content_refs": [
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Four ways to address you",
+            "ref": "p6:0",
+            "role": "heading",
+            "states": {
+              "focusable": true,
+              "focused": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Hebleo — First 20 lessons",
+            "ref": "p6:2",
+            "role": "rootwebarea",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:3",
+            "role": "main",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:4",
+            "role": "labeltext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Jump to a page",
+            "ref": "p6:5",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Pages completed",
+            "ref": "p6:6",
+            "role": "progressbar",
+            "states": {},
+            "value": "0",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:7",
+            "role": "article",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:8",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "LEARN",
+            "ref": "p6:9",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:10",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "אתה",
+            "ref": "p6:11",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "you — one man or boy",
+            "ref": "p6:12",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "את",
+            "ref": "p6:13",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "you — one woman or girl",
+            "ref": "p6:14",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "אתם",
+            "ref": "p6:15",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "you — a male or mixed group",
+            "ref": "p6:16",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:25",
+            "role": "banner",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:26",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "HEBLEO · READ & TRY",
+            "ref": "p6:27",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Adapted draft · for Guy’s review",
+            "ref": "p6:28",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:29",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:30",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson 6 of 20",
+            "ref": "p6:31",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:32",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "PRONOUNS",
+            "ref": "p6:33",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Point to the people in a conversation",
+            "ref": "p6:34",
+            "role": "heading",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:35",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Page 2 of 9",
+            "ref": "p6:36",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "אתן",
+            "ref": "p6:37",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "you — an all-female group",
+            "ref": "p6:38",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:39",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "The shared opening",
+            "ref": "p6:40",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "את",
+            "ref": "p6:41",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "helps connect the four forms. Choose by who is being addressed.",
+            "ref": "p6:42",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson pages",
+            "ref": "p6:43",
+            "role": "navigation",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:44",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:45",
+            "role": "sectionfooter",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:46",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Progress is saved only in this browser.",
+            "ref": "p6:47",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:57",
+            "role": "menulistpopup",
+            "states": {},
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "mode": "snapshot",
+        "oopif": {
+          "frames": 0,
+          "status": "attached"
+        },
+        "outline": "- banner\n  - generic\n    - statictext \"HEBLEO · READ & TRY\"\n- statictext \"Adapted draft · for Guy’s review\"\n- main\n  - group\n- disclosuretriangle \"Choose a lesson 0 / 20 lessons complete\" [expanded=false,focusable=true]\n  - statictext \"Choose a lesson\"\n  - generic\n    - statictext \"0 / 20 lessons complete\"\n    - menulistpopup\n- generic\n  - statictext \"Lesson 6 of 20\"\n- generic\n  - statictext \"PRONOUNS\"\n  - heading \"Point to the people in a conversation\"\n- generic\n  - statictext \"Page 2 of 9\"\n- labeltext\n  - statictext \"Jump to a page\"\n  - combobox \"Choose a page\": 2. Learn — Four ways to address you [expanded=false,focusable=true]\n- option \"1. Learn — Speaker, listener, someone else\" [focusable=true,selected=false]\n- option \"2. Learn — Four ways to address you\" [focusable=true,selected=true]\n- option \"3. Learn — Talk about someone\" [focusable=true,selected=false]\n- option \"4. Check — Address the listener\" [focusable=true,selected=false]\n- option \"5. Check — Talk about the group\" [focusable=true,selected=false]\n- option \"6. Vocabulary — Meet the words, then try to recall them\" [focusable=true,selected=false]\n- option \"7. Apply — Try before revealing\" [focusable=true,selected=false]\n- option \"8. Apply — Try before revealing\" [focusable=true,selected=false]\n- option \"9. Continue — Keep the connection\" [focusable=true,selected=false]\n  - progressbar \"Pages completed\": 0\n  - article\n    - generic\n      - statictext \"LEARN\"\n    - heading \"Four ways to address you\" [focusable=true,focused=true]\n    - generic\n- statictext \"אתה\"\n- statictext \"you — one man or boy\"\n- statictext \"את\"\n- statictext \"you — one woman or girl\"\n- statictext \"אתם\"\n- statictext \"you — a male or mixed group\"\n- statictext \"אתן\"\n- statictext \"you — an all-female group\"\n      - paragraph\n        - statictext \"The shared opening\"\n- statictext \"את\"\n        - statictext \"helps connect the four forms. Choose by who is being addressed.\"\n    - navigation \"Lesson pages\"\n      - button \"Back\" [focusable=true]\n      - button \"Continue\" [focusable=true]\n  - group\n- disclosuretriangle \"Source and adaptation notes\" [expanded=false,focusable=true]\n  - sectionfooter\n    - generic\n      - statictext \"Progress is saved only in this browser.\"\n    - button \"Export preview progress\" [focusable=true]",
+        "page": {
+          "title": "about:blank",
+          "url": "http://127.0.0.1:56183/first20.html#PRONOUNS/PRONOUNS.learn.2"
+        },
+        "refs": [
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a page",
+            "ref": "p6:1",
+            "role": "combobox",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": "2. Learn — Four ways to address you",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson 0 / 20 lessons complete",
+            "ref": "p6:17",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson",
+            "ref": "p6:18",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": null,
+            "ref": "p6:19",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "0 / 20 lessons complete",
+            "ref": "p6:20",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Back",
+            "ref": "p6:21",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Continue",
+            "ref": "p6:22",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Source and adaptation notes",
+            "ref": "p6:23",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Export preview progress",
+            "ref": "p6:24",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "1. Learn — Speaker, listener, someone else",
+            "ref": "p6:48",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "2. Learn — Four ways to address you",
+            "ref": "p6:49",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": true
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "3. Learn — Talk about someone",
+            "ref": "p6:50",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "4. Check — Address the listener",
+            "ref": "p6:51",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "5. Check — Talk about the group",
+            "ref": "p6:52",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "6. Vocabulary — Meet the words, then try to recall them",
+            "ref": "p6:53",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "7. Apply — Try before revealing",
+            "ref": "p6:54",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "8. Apply — Try before revealing",
+            "ref": "p6:55",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "9. Continue — Keep the connection",
+            "ref": "p6:56",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "screenshot": {
+          "coordinate_space": "viewport_css_px",
+          "height": 791,
+          "mime_type": "image/png",
+          "pixel_to_css_scale_x": 0.8013223443149535,
+          "pixel_to_css_scale_y": 0.8010114242997393,
+          "scope": "viewport",
+          "source": "cdp_tab",
+          "tab_activation": "not_requested",
+          "viewport_css_height": 633.6000366210938,
+          "viewport_css_width": 484.8000183105469,
+          "width": 605,
+          "window_foregrounding": "not_requested"
+        },
+        "screenshot_height": 791,
+        "screenshot_mime_type": "image/png",
+        "screenshot_width": 605,
+        "snapshot": {
+          "complete": true,
+          "continuation": null,
+          "format": "semantic_v2",
+          "id": "p6",
+          "node_budget": 300,
+          "omitted": {
+            "budget": 0,
+            "css_hidden": 0,
+            "no_layout": 0,
+            "offscreen": 0,
+            "page_occluded": 0,
+            "unknown": 10,
+            "unprovable_frame": 0
+          },
+          "scope": "viewport",
+          "selected_nodes": 58,
+          "total_nodes": 58
+        },
+        "status": "ok",
+        "tab_id": "tab-74f06704-c08f-41f9-9eda-2871cd940afb",
+        "target_id": "bt-7fd3e9df-3855-4532-923e-c6eac7e49c2e"
+      }
+    },
+    {
+      "label": "native-check-before",
+      "evidence": {
+        "content_refs": [
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Recognise the printed letter",
+            "ref": "p7:0",
+            "role": "heading",
+            "states": {
+              "focusable": true,
+              "focused": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Hebleo — First 20 lessons",
+            "ref": "p7:5",
+            "role": "rootwebarea",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:6",
+            "role": "main",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:7",
+            "role": "labeltext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Jump to a page",
+            "ref": "p7:8",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Pages completed",
+            "ref": "p7:9",
+            "role": "progressbar",
+            "states": {},
+            "value": "0",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:10",
+            "role": "article",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:11",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "CHECK",
+            "ref": "p7:12",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:13",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:14",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Which letter represents /t/?",
+            "ref": "p7:15",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Which letter represents /t/?",
+            "ref": "p7:16",
+            "role": "radiogroup",
+            "states": {
+              "required": false
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Check answer",
+            "ref": "p7:17",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:25",
+            "role": "banner",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:26",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "HEBLEO · READ & TRY",
+            "ref": "p7:27",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Adapted draft · for Guy’s review",
+            "ref": "p7:28",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:29",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:30",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson 2 of 20",
+            "ref": "p7:31",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:32",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "MNT",
+            "ref": "p7:33",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Your first letters: מ נ ת",
+            "ref": "p7:34",
+            "role": "heading",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:35",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Page 4 of 6",
+            "ref": "p7:36",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson pages",
+            "ref": "p7:37",
+            "role": "navigation",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Continue",
+            "ref": "p7:38",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:39",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:40",
+            "role": "sectionfooter",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:41",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Progress is saved only in this browser.",
+            "ref": "p7:42",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:49",
+            "role": "menulistpopup",
+            "states": {},
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "mode": "snapshot",
+        "oopif": {
+          "frames": 0,
+          "status": "attached"
+        },
+        "outline": "- banner\n  - generic\n    - statictext \"HEBLEO · READ & TRY\"\n- statictext \"Adapted draft · for Guy’s review\"\n- main\n  - group\n- disclosuretriangle \"Choose a lesson 0 / 20 lessons complete\" [expanded=false,focusable=true]\n  - statictext \"Choose a lesson\"\n  - generic\n    - statictext \"0 / 20 lessons complete\"\n    - menulistpopup\n- generic\n  - statictext \"Lesson 2 of 20\"\n- generic\n  - statictext \"MNT\"\n  - heading \"Your first letters: מ נ ת\"\n- generic\n  - statictext \"Page 4 of 6\"\n- labeltext\n  - statictext \"Jump to a page\"\n  - combobox \"Choose a page\": 4. Check — Recognise the printed letter [expanded=false,focusable=true]\n- option \"1. Learn — Three shapes, three sounds\" [focusable=true,selected=false]\n- option \"2. Learn — Attach each shape to an image\" [focusable=true,selected=false]\n- option \"3. Learn — Two letters have an end form\" [focusable=true,selected=false]\n- option \"4. Check — Recognise the printed letter\" [focusable=true,selected=true]\n- option \"5. Check — Recognise a final form\" [focusable=true,selected=false]\n- option \"6. Continue — Keep the connection\" [focusable=true,selected=false]\n  - progressbar \"Pages completed\": 0\n  - article\n    - generic\n      - statictext \"CHECK\"\n    - heading \"Recognise the printed letter\" [focusable=true,focused=true]\n    - generic\n      - paragraph\n        - statictext \"Which letter represents /t/?\"\n      - radiogroup \"Which letter represents /t/?\" [required=false]\n        - radio \"נ\" [checked=\"false\",focusable=true]\n        - radio \"ת\" [checked=\"false\",focusable=true]\n        - radio \"מ\" [checked=\"false\",focusable=true]\n      - button \"Check answer\" [disabled=true]\n    - navigation \"Lesson pages\"\n      - button \"Back\" [focusable=true]\n      - button \"Continue\" [disabled=true]\n  - group\n- disclosuretriangle \"Source and adaptation notes\" [expanded=false,focusable=true]\n  - sectionfooter\n    - generic\n      - statictext \"Progress is saved only in this browser.\"\n    - button \"Export preview progress\" [focusable=true]",
+        "page": {
+          "title": "about:blank",
+          "url": "http://127.0.0.1:56183/first20.html#MNT/MNT.check.4"
+        },
+        "refs": [
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a page",
+            "ref": "p7:1",
+            "role": "combobox",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": "4. Check — Recognise the printed letter",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "נ",
+            "ref": "p7:2",
+            "role": "radio",
+            "states": {
+              "checked": "false",
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "ת",
+            "ref": "p7:3",
+            "role": "radio",
+            "states": {
+              "checked": "false",
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מ",
+            "ref": "p7:4",
+            "role": "radio",
+            "states": {
+              "checked": "false",
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson 0 / 20 lessons complete",
+            "ref": "p7:18",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson",
+            "ref": "p7:19",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": null,
+            "ref": "p7:20",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "0 / 20 lessons complete",
+            "ref": "p7:21",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Back",
+            "ref": "p7:22",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Source and adaptation notes",
+            "ref": "p7:23",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Export preview progress",
+            "ref": "p7:24",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "1. Learn — Three shapes, three sounds",
+            "ref": "p7:43",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "2. Learn — Attach each shape to an image",
+            "ref": "p7:44",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "3. Learn — Two letters have an end form",
+            "ref": "p7:45",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "4. Check — Recognise the printed letter",
+            "ref": "p7:46",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": true
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "5. Check — Recognise a final form",
+            "ref": "p7:47",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "6. Continue — Keep the connection",
+            "ref": "p7:48",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "screenshot": {
+          "coordinate_space": "viewport_css_px",
+          "height": 791,
+          "mime_type": "image/png",
+          "pixel_to_css_scale_x": 0.8013223443149535,
+          "pixel_to_css_scale_y": 0.8010114242997393,
+          "scope": "viewport",
+          "source": "cdp_tab",
+          "tab_activation": "not_requested",
+          "viewport_css_height": 633.6000366210938,
+          "viewport_css_width": 484.8000183105469,
+          "width": 605,
+          "window_foregrounding": "not_requested"
+        },
+        "screenshot_height": 791,
+        "screenshot_mime_type": "image/png",
+        "screenshot_width": 605,
+        "snapshot": {
+          "complete": true,
+          "continuation": null,
+          "format": "semantic_v2",
+          "id": "p7",
+          "node_budget": 300,
+          "omitted": {
+            "budget": 0,
+            "css_hidden": 0,
+            "no_layout": 0,
+            "offscreen": 0,
+            "page_occluded": 0,
+            "unknown": 7,
+            "unprovable_frame": 0
+          },
+          "scope": "viewport",
+          "selected_nodes": 50,
+          "total_nodes": 50
+        },
+        "status": "ok",
+        "tab_id": "tab-74f06704-c08f-41f9-9eda-2871cd940afb",
+        "target_id": "bt-7fd3e9df-3855-4532-923e-c6eac7e49c2e"
+      }
+    },
+    {
+      "label": "native-check-selected",
+      "evidence": {
+        "content_refs": [
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Recognise the printed letter",
+            "ref": "p8:0",
+            "role": "heading",
+            "states": {
+              "focusable": true,
+              "focused": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Hebleo — First 20 lessons",
+            "ref": "p8:6",
+            "role": "rootwebarea",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:7",
+            "role": "main",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:8",
+            "role": "labeltext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Jump to a page",
+            "ref": "p8:9",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Pages completed",
+            "ref": "p8:10",
+            "role": "progressbar",
+            "states": {},
+            "value": "0",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:11",
+            "role": "article",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:12",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "CHECK",
+            "ref": "p8:13",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:14",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:15",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Which letter represents /t/?",
+            "ref": "p8:16",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Which letter represents /t/?",
+            "ref": "p8:17",
+            "role": "radiogroup",
+            "states": {
+              "required": false
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:25",
+            "role": "banner",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:26",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "HEBLEO · READ & TRY",
+            "ref": "p8:27",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Adapted draft · for Guy’s review",
+            "ref": "p8:28",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:29",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:30",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson 2 of 20",
+            "ref": "p8:31",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:32",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "MNT",
+            "ref": "p8:33",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Your first letters: מ נ ת",
+            "ref": "p8:34",
+            "role": "heading",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:35",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Page 4 of 6",
+            "ref": "p8:36",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson pages",
+            "ref": "p8:37",
+            "role": "navigation",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Continue",
+            "ref": "p8:38",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:39",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:40",
+            "role": "sectionfooter",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:41",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Progress is saved only in this browser.",
+            "ref": "p8:42",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:49",
+            "role": "menulistpopup",
+            "states": {},
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "mode": "snapshot",
+        "oopif": {
+          "frames": 0,
+          "status": "attached"
+        },
+        "outline": "- banner\n  - generic\n    - statictext \"HEBLEO · READ & TRY\"\n- statictext \"Adapted draft · for Guy’s review\"\n- main\n  - group\n- disclosuretriangle \"Choose a lesson 0 / 20 lessons complete\" [expanded=false,focusable=true]\n  - statictext \"Choose a lesson\"\n  - generic\n    - statictext \"0 / 20 lessons complete\"\n    - menulistpopup\n- generic\n  - statictext \"Lesson 2 of 20\"\n- generic\n  - statictext \"MNT\"\n  - heading \"Your first letters: מ נ ת\"\n- generic\n  - statictext \"Page 4 of 6\"\n- labeltext\n  - statictext \"Jump to a page\"\n  - combobox \"Choose a page\": 4. Check — Recognise the printed letter [expanded=false,focusable=true]\n- option \"1. Learn — Three shapes, three sounds\" [focusable=true,selected=false]\n- option \"2. Learn — Attach each shape to an image\" [focusable=true,selected=false]\n- option \"3. Learn — Two letters have an end form\" [focusable=true,selected=false]\n- option \"4. Check — Recognise the printed letter\" [focusable=true,selected=true]\n- option \"5. Check — Recognise a final form\" [focusable=true,selected=false]\n- option \"6. Continue — Keep the connection\" [focusable=true,selected=false]\n  - progressbar \"Pages completed\": 0\n  - article\n    - generic\n      - statictext \"CHECK\"\n    - heading \"Recognise the printed letter\" [focusable=true,focused=true]\n    - generic\n      - paragraph\n        - statictext \"Which letter represents /t/?\"\n      - radiogroup \"Which letter represents /t/?\" [required=false]\n        - radio \"נ\" [checked=\"false\",focusable=true]\n        - radio \"ת\" [checked=\"true\",focusable=true]\n        - radio \"מ\" [checked=\"false\",focusable=true]\n      - button \"Check answer\" [focusable=true]\n    - navigation \"Lesson pages\"\n      - button \"Back\" [focusable=true]\n      - button \"Continue\" [disabled=true]\n  - group\n- disclosuretriangle \"Source and adaptation notes\" [expanded=false,focusable=true]\n  - sectionfooter\n    - generic\n      - statictext \"Progress is saved only in this browser.\"\n    - button \"Export preview progress\" [focusable=true]",
+        "page": {
+          "title": "about:blank",
+          "url": "http://127.0.0.1:56183/first20.html#MNT/MNT.check.4"
+        },
+        "refs": [
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a page",
+            "ref": "p8:1",
+            "role": "combobox",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": "4. Check — Recognise the printed letter",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "נ",
+            "ref": "p8:2",
+            "role": "radio",
+            "states": {
+              "checked": "false",
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "ת",
+            "ref": "p8:3",
+            "role": "radio",
+            "states": {
+              "checked": "true",
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מ",
+            "ref": "p8:4",
+            "role": "radio",
+            "states": {
+              "checked": "false",
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Check answer",
+            "ref": "p8:5",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson 0 / 20 lessons complete",
+            "ref": "p8:18",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson",
+            "ref": "p8:19",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": null,
+            "ref": "p8:20",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "0 / 20 lessons complete",
+            "ref": "p8:21",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Back",
+            "ref": "p8:22",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Source and adaptation notes",
+            "ref": "p8:23",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Export preview progress",
+            "ref": "p8:24",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "1. Learn — Three shapes, three sounds",
+            "ref": "p8:43",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "2. Learn — Attach each shape to an image",
+            "ref": "p8:44",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "3. Learn — Two letters have an end form",
+            "ref": "p8:45",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "4. Check — Recognise the printed letter",
+            "ref": "p8:46",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": true
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "5. Check — Recognise a final form",
+            "ref": "p8:47",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "6. Continue — Keep the connection",
+            "ref": "p8:48",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "snapshot": {
+          "complete": true,
+          "continuation": null,
+          "format": "semantic_v2",
+          "id": "p8",
+          "node_budget": 300,
+          "omitted": {
+            "budget": 0,
+            "css_hidden": 0,
+            "no_layout": 0,
+            "offscreen": 0,
+            "page_occluded": 0,
+            "unknown": 7,
+            "unprovable_frame": 0
+          },
+          "scope": "viewport",
+          "selected_nodes": 50,
+          "total_nodes": 50
+        },
+        "status": "ok",
+        "tab_id": "tab-74f06704-c08f-41f9-9eda-2871cd940afb",
+        "target_id": "bt-7fd3e9df-3855-4532-923e-c6eac7e49c2e"
+      }
+    },
+    {
+      "label": "native-check-after",
+      "evidence": {
+        "content_refs": [
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Recognise the printed letter",
+            "ref": "p9:0",
+            "role": "heading",
+            "states": {
+              "focusable": true,
+              "focused": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Hebleo — First 20 lessons",
+            "ref": "p9:2",
+            "role": "rootwebarea",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:3",
+            "role": "main",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:4",
+            "role": "labeltext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Jump to a page",
+            "ref": "p9:5",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Pages completed",
+            "ref": "p9:6",
+            "role": "progressbar",
+            "states": {},
+            "value": "0",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:7",
+            "role": "article",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:8",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "CHECK",
+            "ref": "p9:9",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:10",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:11",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Which letter represents /t/?",
+            "ref": "p9:12",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Which letter represents /t/?",
+            "ref": "p9:13",
+            "role": "radiogroup",
+            "states": {
+              "required": false
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "נ",
+            "ref": "p9:14",
+            "role": "radio",
+            "states": {
+              "checked": "false",
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "ת",
+            "ref": "p9:15",
+            "role": "radio",
+            "states": {
+              "checked": "true",
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "מ",
+            "ref": "p9:16",
+            "role": "radio",
+            "states": {
+              "checked": "false",
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Check answer",
+            "ref": "p9:17",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:27",
+            "role": "banner",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:28",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "HEBLEO · READ & TRY",
+            "ref": "p9:29",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Adapted draft · for Guy’s review",
+            "ref": "p9:30",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:31",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:32",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson 2 of 20",
+            "ref": "p9:33",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:34",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "MNT",
+            "ref": "p9:35",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Your first letters: מ נ ת",
+            "ref": "p9:36",
+            "role": "heading",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:37",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Page 4 of 6",
+            "ref": "p9:38",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:39",
+            "role": "status",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Correct. ת is Tav. Its source mnemonic is tripping.",
+            "ref": "p9:40",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:41",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Model answer: ת",
+            "ref": "p9:42",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson pages",
+            "ref": "p9:43",
+            "role": "navigation",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:44",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:45",
+            "role": "sectionfooter",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:46",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Progress is saved only in this browser.",
+            "ref": "p9:47",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:54",
+            "role": "menulistpopup",
+            "states": {},
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "mode": "snapshot",
+        "oopif": {
+          "frames": 0,
+          "status": "attached"
+        },
+        "outline": "- banner\n  - generic\n    - statictext \"HEBLEO · READ & TRY\"\n- statictext \"Adapted draft · for Guy’s review\"\n- main\n  - group\n- disclosuretriangle \"Choose a lesson 0 / 20 lessons complete\" [expanded=false,focusable=true]\n  - statictext \"Choose a lesson\"\n  - generic\n    - statictext \"0 / 20 lessons complete\"\n    - menulistpopup\n- generic\n  - statictext \"Lesson 2 of 20\"\n- generic\n  - statictext \"MNT\"\n  - heading \"Your first letters: מ נ ת\"\n- generic\n  - statictext \"Page 4 of 6\"\n- labeltext\n  - statictext \"Jump to a page\"\n  - combobox \"Choose a page\": 4. Check — Recognise the printed letter [expanded=false,focusable=true]\n- option \"1. Learn — Three shapes, three sounds\" [focusable=true,selected=false]\n- option \"2. Learn — Attach each shape to an image\" [focusable=true,selected=false]\n- option \"3. Learn — Two letters have an end form\" [focusable=true,selected=false]\n- option \"4. Check — Recognise the printed letter\" [focusable=true,selected=true]\n- option \"5. Check — Recognise a final form\" [focusable=true,selected=false]\n- option \"6. Continue — Keep the connection\" [focusable=true,selected=false]\n  - progressbar \"Pages completed\": 0\n  - article\n    - generic\n      - statictext \"CHECK\"\n    - heading \"Recognise the printed letter\" [focusable=true,focused=true]\n    - generic\n      - paragraph\n        - statictext \"Which letter represents /t/?\"\n      - radiogroup \"Which letter represents /t/?\" [required=false]\n        - radio \"נ\" [checked=\"false\",disabled=true]\n        - radio \"ת\" [checked=\"true\",disabled=true]\n        - radio \"מ\" [checked=\"false\",disabled=true]\n      - button \"Check answer\" [disabled=true]\n- status\n  - statictext \"Correct. ת is Tav. Its source mnemonic is tripping.\"\n- paragraph\n  - statictext \"Model answer: ת\"\n- button \"Try again\" [focusable=true]\n    - navigation \"Lesson pages\"\n      - button \"Back\" [focusable=true]\n      - button \"Continue\" [focusable=true]\n  - group\n- disclosuretriangle \"Source and adaptation notes\" [expanded=false,focusable=true]\n  - sectionfooter\n    - generic\n      - statictext \"Progress is saved only in this browser.\"\n    - button \"Export preview progress\" [focusable=true]",
+        "page": {
+          "title": "about:blank",
+          "url": "http://127.0.0.1:56183/first20.html#MNT/MNT.check.4"
+        },
+        "refs": [
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a page",
+            "ref": "p9:1",
+            "role": "combobox",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": "4. Check — Recognise the printed letter",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson 0 / 20 lessons complete",
+            "ref": "p9:18",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson",
+            "ref": "p9:19",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": null,
+            "ref": "p9:20",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "0 / 20 lessons complete",
+            "ref": "p9:21",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Try again",
+            "ref": "p9:22",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Back",
+            "ref": "p9:23",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Continue",
+            "ref": "p9:24",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Source and adaptation notes",
+            "ref": "p9:25",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Export preview progress",
+            "ref": "p9:26",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "1. Learn — Three shapes, three sounds",
+            "ref": "p9:48",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "2. Learn — Attach each shape to an image",
+            "ref": "p9:49",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "3. Learn — Two letters have an end form",
+            "ref": "p9:50",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "4. Check — Recognise the printed letter",
+            "ref": "p9:51",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": true
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "5. Check — Recognise a final form",
+            "ref": "p9:52",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "6. Continue — Keep the connection",
+            "ref": "p9:53",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "screenshot": {
+          "coordinate_space": "viewport_css_px",
+          "height": 791,
+          "mime_type": "image/png",
+          "pixel_to_css_scale_x": 0.8013223443149535,
+          "pixel_to_css_scale_y": 0.8010114242997393,
+          "scope": "viewport",
+          "source": "cdp_tab",
+          "tab_activation": "not_requested",
+          "viewport_css_height": 633.6000366210938,
+          "viewport_css_width": 484.8000183105469,
+          "width": 605,
+          "window_foregrounding": "not_requested"
+        },
+        "screenshot_height": 791,
+        "screenshot_mime_type": "image/png",
+        "screenshot_width": 605,
+        "snapshot": {
+          "complete": true,
+          "continuation": null,
+          "format": "semantic_v2",
+          "id": "p9",
+          "node_budget": 300,
+          "omitted": {
+            "budget": 0,
+            "css_hidden": 0,
+            "no_layout": 0,
+            "offscreen": 0,
+            "page_occluded": 0,
+            "unknown": 7,
+            "unprovable_frame": 0
+          },
+          "scope": "viewport",
+          "selected_nodes": 55,
+          "total_nodes": 55
+        },
+        "status": "ok",
+        "tab_id": "tab-74f06704-c08f-41f9-9eda-2871cd940afb",
+        "target_id": "bt-7fd3e9df-3855-4532-923e-c6eac7e49c2e"
+      }
+    },
+    {
+      "label": "native-vocab-before",
+      "evidence": {
+        "content_refs": [
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Meet the words, then try to recall them",
+            "ref": "p10:0",
+            "role": "heading",
+            "states": {
+              "focusable": true,
+              "focused": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Hebleo — First 20 lessons",
+            "ref": "p10:12",
+            "role": "rootwebarea",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:13",
+            "role": "main",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:14",
+            "role": "labeltext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Jump to a page",
+            "ref": "p10:15",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Pages completed",
+            "ref": "p10:16",
+            "role": "progressbar",
+            "states": {},
+            "value": "0",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:17",
+            "role": "article",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:18",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "VOCABULARY",
+            "ref": "p10:19",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:20",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:21",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Say or recall a meaning, then select the word to reveal it.",
+            "ref": "p10:22",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:39",
+            "role": "banner",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:40",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "HEBLEO · READ & TRY",
+            "ref": "p10:41",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Adapted draft · for Guy’s review",
+            "ref": "p10:42",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:43",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:44",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson 5 of 20",
+            "ref": "p10:45",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:46",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "AHY",
+            "ref": "p10:47",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Letters א ה י",
+            "ref": "p10:48",
+            "role": "heading",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:49",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Page 5 of 8",
+            "ref": "p10:50",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:51",
+            "role": "status",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "0 of 6 meanings reviewed",
+            "ref": "p10:52",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson pages",
+            "ref": "p10:53",
+            "role": "navigation",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Continue",
+            "ref": "p10:54",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:55",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:56",
+            "role": "sectionfooter",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:57",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Progress is saved only in this browser.",
+            "ref": "p10:58",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:67",
+            "role": "menulistpopup",
+            "states": {},
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "mode": "snapshot",
+        "oopif": {
+          "frames": 0,
+          "status": "attached"
+        },
+        "outline": "- banner\n  - generic\n    - statictext \"HEBLEO · READ & TRY\"\n- statictext \"Adapted draft · for Guy’s review\"\n- main\n  - group\n- disclosuretriangle \"Choose a lesson 0 / 20 lessons complete\" [expanded=false,focusable=true]\n  - statictext \"Choose a lesson\"\n  - generic\n    - statictext \"0 / 20 lessons complete\"\n    - menulistpopup\n- generic\n  - statictext \"Lesson 5 of 20\"\n- generic\n  - statictext \"AHY\"\n  - heading \"Letters א ה י\"\n- generic\n  - statictext \"Page 5 of 8\"\n- labeltext\n  - statictext \"Jump to a page\"\n  - combobox \"Choose a page\": 5. Vocabulary — Meet the words, then try to recall them [expanded=false,focusable=true]\n- option \"1. Learn — Three more letter shapes\" [focusable=true,selected=false]\n- option \"2. Learn — Letters can have different roles\" [focusable=true,selected=false]\n- option \"3. Learn — Keep the whole word together\" [focusable=true,selected=false]\n- option \"4. Check — Connect meaning to print\" [focusable=true,selected=false]\n- option \"5. Vocabulary — Meet the words, then try to recall them\" [focusable=true,selected=true]\n- option \"6. Apply — Try before revealing\" [focusable=true,selected=false]\n- option \"7. Apply — Try before revealing\" [focusable=true,selected=false]\n- option \"8. Continue — Keep the connection\" [focusable=true,selected=false]\n  - progressbar \"Pages completed\": 0\n  - article\n    - generic\n      - statictext \"VOCABULARY\"\n    - heading \"Meet the words, then try to recall them\" [focusable=true,focused=true]\n    - generic\n      - paragraph\n        - statictext \"Say or recall a meaning, then select the word to reveal it.\"\n- button \"אמא Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"אמא\"\n- statictext \"Reveal meaning\"\n- button \"ים Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"ים\"\n- statictext \"Reveal meaning\"\n- button \"מים Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"מים\"\n- statictext \"Reveal meaning\"\n- button \"מתנה Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"מתנה\"\n- statictext \"Reveal meaning\"\n- button \"יין Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"יין\"\n- statictext \"Reveal meaning\"\n- button \"מנה Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"מנה\"\n- statictext \"Reveal meaning\"\n      - status\n        - statictext \"0 of 6 meanings reviewed\"\n      - button \"Hide all meanings for another recall round\" [focusable=true]\n    - navigation \"Lesson pages\"\n      - button \"Back\" [focusable=true]\n      - button \"Continue\" [disabled=true]\n  - group\n- disclosuretriangle \"Source and adaptation notes\" [expanded=false,focusable=true]\n  - sectionfooter\n    - generic\n      - statictext \"Progress is saved only in this browser.\"\n    - button \"Export preview progress\" [focusable=true]",
+        "page": {
+          "title": "about:blank",
+          "url": "http://127.0.0.1:56183/first20.html#AHY/AHY.vocabulary"
+        },
+        "refs": [
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a page",
+            "ref": "p10:1",
+            "role": "combobox",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": "5. Vocabulary — Meet the words, then try to recall them",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "אמא Reveal meaning",
+            "ref": "p10:2",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "אמא",
+            "ref": "p10:3",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p10:4",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "ים Reveal meaning",
+            "ref": "p10:5",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "ים",
+            "ref": "p10:6",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p10:7",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מים Reveal meaning",
+            "ref": "p10:8",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מים",
+            "ref": "p10:9",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מתנה Reveal meaning",
+            "ref": "p10:10",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מתנה",
+            "ref": "p10:11",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson 0 / 20 lessons complete",
+            "ref": "p10:23",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson",
+            "ref": "p10:24",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": null,
+            "ref": "p10:25",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "0 / 20 lessons complete",
+            "ref": "p10:26",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p10:27",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p10:28",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "יין Reveal meaning",
+            "ref": "p10:29",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "יין",
+            "ref": "p10:30",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p10:31",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מנה Reveal meaning",
+            "ref": "p10:32",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מנה",
+            "ref": "p10:33",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p10:34",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Hide all meanings for another recall round",
+            "ref": "p10:35",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Back",
+            "ref": "p10:36",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Source and adaptation notes",
+            "ref": "p10:37",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Export preview progress",
+            "ref": "p10:38",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "1. Learn — Three more letter shapes",
+            "ref": "p10:59",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "2. Learn — Letters can have different roles",
+            "ref": "p10:60",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "3. Learn — Keep the whole word together",
+            "ref": "p10:61",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "4. Check — Connect meaning to print",
+            "ref": "p10:62",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "5. Vocabulary — Meet the words, then try to recall them",
+            "ref": "p10:63",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": true
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "6. Apply — Try before revealing",
+            "ref": "p10:64",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "7. Apply — Try before revealing",
+            "ref": "p10:65",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "8. Continue — Keep the connection",
+            "ref": "p10:66",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "screenshot": {
+          "coordinate_space": "viewport_css_px",
+          "height": 791,
+          "mime_type": "image/png",
+          "pixel_to_css_scale_x": 0.8013223443149535,
+          "pixel_to_css_scale_y": 0.8010114242997393,
+          "scope": "viewport",
+          "source": "cdp_tab",
+          "tab_activation": "not_requested",
+          "viewport_css_height": 633.6000366210938,
+          "viewport_css_width": 484.8000183105469,
+          "width": 605,
+          "window_foregrounding": "not_requested"
+        },
+        "screenshot_height": 791,
+        "screenshot_mime_type": "image/png",
+        "screenshot_width": 605,
+        "snapshot": {
+          "complete": true,
+          "continuation": null,
+          "format": "semantic_v2",
+          "id": "p10",
+          "node_budget": 300,
+          "omitted": {
+            "budget": 0,
+            "css_hidden": 0,
+            "no_layout": 0,
+            "offscreen": 0,
+            "page_occluded": 0,
+            "unknown": 9,
+            "unprovable_frame": 0
+          },
+          "scope": "viewport",
+          "selected_nodes": 68,
+          "total_nodes": 68
+        },
+        "status": "ok",
+        "tab_id": "tab-74f06704-c08f-41f9-9eda-2871cd940afb",
+        "target_id": "bt-7fd3e9df-3855-4532-923e-c6eac7e49c2e"
+      }
+    },
+    {
+      "label": "native-vocab-after",
+      "evidence": {
+        "content_refs": [
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Meet the words, then try to recall them",
+            "ref": "p11:0",
+            "role": "heading",
+            "states": {
+              "focusable": true,
+              "focused": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Hebleo — First 20 lessons",
+            "ref": "p11:12",
+            "role": "rootwebarea",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:13",
+            "role": "main",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:14",
+            "role": "labeltext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Jump to a page",
+            "ref": "p11:15",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Pages completed",
+            "ref": "p11:16",
+            "role": "progressbar",
+            "states": {},
+            "value": "0",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:17",
+            "role": "article",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:18",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "VOCABULARY",
+            "ref": "p11:19",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:20",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:21",
+            "role": "paragraph",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Say or recall a meaning, then select the word to reveal it.",
+            "ref": "p11:22",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:39",
+            "role": "banner",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:40",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "HEBLEO · READ & TRY",
+            "ref": "p11:41",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Adapted draft · for Guy’s review",
+            "ref": "p11:42",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:43",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:44",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson 5 of 20",
+            "ref": "p11:45",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:46",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "AHY",
+            "ref": "p11:47",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Letters א ה י",
+            "ref": "p11:48",
+            "role": "heading",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:49",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Page 5 of 8",
+            "ref": "p11:50",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:51",
+            "role": "status",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "1 of 6 meanings reviewed",
+            "ref": "p11:52",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Lesson pages",
+            "ref": "p11:53",
+            "role": "navigation",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Continue",
+            "ref": "p11:54",
+            "role": "button",
+            "states": {
+              "disabled": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:55",
+            "role": "group",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:56",
+            "role": "sectionfooter",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:57",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Progress is saved only in this browser.",
+            "ref": "p11:58",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:67",
+            "role": "menulistpopup",
+            "states": {},
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "mode": "snapshot",
+        "oopif": {
+          "frames": 0,
+          "status": "attached"
+        },
+        "outline": "- banner\n  - generic\n    - statictext \"HEBLEO · READ & TRY\"\n- statictext \"Adapted draft · for Guy’s review\"\n- main\n  - group\n- disclosuretriangle \"Choose a lesson 0 / 20 lessons complete\" [expanded=false,focusable=true]\n  - statictext \"Choose a lesson\"\n  - generic\n    - statictext \"0 / 20 lessons complete\"\n    - menulistpopup\n- generic\n  - statictext \"Lesson 5 of 20\"\n- generic\n  - statictext \"AHY\"\n  - heading \"Letters א ה י\"\n- generic\n  - statictext \"Page 5 of 8\"\n- labeltext\n  - statictext \"Jump to a page\"\n  - combobox \"Choose a page\": 5. Vocabulary — Meet the words, then try to recall them [expanded=false,focusable=true]\n- option \"1. Learn — Three more letter shapes\" [focusable=true,selected=false]\n- option \"2. Learn — Letters can have different roles\" [focusable=true,selected=false]\n- option \"3. Learn — Keep the whole word together\" [focusable=true,selected=false]\n- option \"4. Check — Connect meaning to print\" [focusable=true,selected=false]\n- option \"5. Vocabulary — Meet the words, then try to recall them\" [focusable=true,selected=true]\n- option \"6. Apply — Try before revealing\" [focusable=true,selected=false]\n- option \"7. Apply — Try before revealing\" [focusable=true,selected=false]\n- option \"8. Continue — Keep the connection\" [focusable=true,selected=false]\n  - progressbar \"Pages completed\": 0\n  - article\n    - generic\n      - statictext \"VOCABULARY\"\n    - heading \"Meet the words, then try to recall them\" [focusable=true,focused=true]\n    - generic\n      - paragraph\n        - statictext \"Say or recall a meaning, then select the word to reveal it.\"\n- button \"אמא mother\" [expanded=true,focusable=true]\n- statictext \"אמא\"\n- statictext \"mother\"\n- button \"ים Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"ים\"\n- statictext \"Reveal meaning\"\n- button \"מים Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"מים\"\n- statictext \"Reveal meaning\"\n- button \"מתנה Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"מתנה\"\n- statictext \"Reveal meaning\"\n- button \"יין Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"יין\"\n- statictext \"Reveal meaning\"\n- button \"מנה Reveal meaning\" [expanded=false,focusable=true]\n- statictext \"מנה\"\n- statictext \"Reveal meaning\"\n      - status\n        - statictext \"1 of 6 meanings reviewed\"\n      - button \"Hide all meanings for another recall round\" [focusable=true]\n    - navigation \"Lesson pages\"\n      - button \"Back\" [focusable=true]\n      - button \"Continue\" [disabled=true]\n  - group\n- disclosuretriangle \"Source and adaptation notes\" [expanded=false,focusable=true]\n  - sectionfooter\n    - generic\n      - statictext \"Progress is saved only in this browser.\"\n    - button \"Export preview progress\" [focusable=true]",
+        "page": {
+          "title": "about:blank",
+          "url": "http://127.0.0.1:56183/first20.html#AHY/AHY.vocabulary"
+        },
+        "refs": [
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a page",
+            "ref": "p11:1",
+            "role": "combobox",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": "5. Vocabulary — Meet the words, then try to recall them",
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "אמא mother",
+            "ref": "p11:2",
+            "role": "button",
+            "states": {
+              "expanded": true,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "אמא",
+            "ref": "p11:3",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "mother",
+            "ref": "p11:4",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "ים Reveal meaning",
+            "ref": "p11:5",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "ים",
+            "ref": "p11:6",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p11:7",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מים Reveal meaning",
+            "ref": "p11:8",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מים",
+            "ref": "p11:9",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מתנה Reveal meaning",
+            "ref": "p11:10",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מתנה",
+            "ref": "p11:11",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson 0 / 20 lessons complete",
+            "ref": "p11:23",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Choose a lesson",
+            "ref": "p11:24",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": null,
+            "ref": "p11:25",
+            "role": "generic",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "0 / 20 lessons complete",
+            "ref": "p11:26",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p11:27",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p11:28",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "יין Reveal meaning",
+            "ref": "p11:29",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "יין",
+            "ref": "p11:30",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p11:31",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מנה Reveal meaning",
+            "ref": "p11:32",
+            "role": "button",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "מנה",
+            "ref": "p11:33",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Reveal meaning",
+            "ref": "p11:34",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Hide all meanings for another recall round",
+            "ref": "p11:35",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Back",
+            "ref": "p11:36",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Source and adaptation notes",
+            "ref": "p11:37",
+            "role": "disclosuretriangle",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Export preview progress",
+            "ref": "p11:38",
+            "role": "button",
+            "states": {
+              "focusable": true
+            },
+            "value": null,
+            "visibility": "near_viewport"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "1. Learn — Three more letter shapes",
+            "ref": "p11:59",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "2. Learn — Letters can have different roles",
+            "ref": "p11:60",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "3. Learn — Keep the whole word together",
+            "ref": "p11:61",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "4. Check — Connect meaning to print",
+            "ref": "p11:62",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "5. Vocabulary — Meet the words, then try to recall them",
+            "ref": "p11:63",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": true
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "6. Apply — Try before revealing",
+            "ref": "p11:64",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "7. Apply — Try before revealing",
+            "ref": "p11:65",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          },
+          {
+            "actions": [
+              "click"
+            ],
+            "frame": "main",
+            "name": "8. Continue — Keep the connection",
+            "ref": "p11:66",
+            "role": "option",
+            "states": {
+              "focusable": true,
+              "selected": false
+            },
+            "value": null,
+            "visibility": "unknown"
+          }
+        ],
+        "screenshot": {
+          "coordinate_space": "viewport_css_px",
+          "height": 791,
+          "mime_type": "image/png",
+          "pixel_to_css_scale_x": 0.8013223443149535,
+          "pixel_to_css_scale_y": 0.8010114242997393,
+          "scope": "viewport",
+          "source": "cdp_tab",
+          "tab_activation": "not_requested",
+          "viewport_css_height": 633.6000366210938,
+          "viewport_css_width": 484.8000183105469,
+          "width": 605,
+          "window_foregrounding": "not_requested"
+        },
+        "screenshot_height": 791,
+        "screenshot_mime_type": "image/png",
+        "screenshot_width": 605,
+        "snapshot": {
+          "complete": true,
+          "continuation": null,
+          "format": "semantic_v2",
+          "id": "p11",
+          "node_budget": 300,
+          "omitted": {
+            "budget": 0,
+            "css_hidden": 0,
+            "no_layout": 0,
+            "offscreen": 0,
+            "page_occluded": 0,
+            "unknown": 9,
+            "unprovable_frame": 0
+          },
+          "scope": "viewport",
+          "selected_nodes": 68,
+          "total_nodes": 68
+        },
+        "status": "ok",
+        "tab_id": "tab-74f06704-c08f-41f9-9eda-2871cd940afb",
+        "target_id": "bt-7fd3e9df-3855-4532-923e-c6eac7e49c2e"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "checks": 179,
+  "lessons": 20,
+  "pages": 154,
+  "errors": [],
+  "timer": {
+    "sourceNumber": "0704177609112001",
+    "visibleAtMs": 9999,
+    "hiddenAtMs": 10000,
+    "autoplay": false,
+    "background": "cancel-and-restart",
+    "untimedAlternative": true
+  },
+  "limits": "jsdom functional tests; not browser visual verification, audio verification, native/Guy acceptance, or an installed Hebleo feature."
+}

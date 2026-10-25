@@ -1,0 +1,3644 @@
+{
+  "schemaVersion": 1,
+  "aliases": {
+    "A001": "MEMORY",
+    "A002": "MNT",
+    "A003": "WRITING-BASICS",
+    "A004": "VOWELS-AEI",
+    "A005": "AHY",
+    "A006": "PRONOUNS",
+    "A007": "NOMINAL",
+    "A008": "VAV",
+    "A009": "PREFIXES-MHV",
+    "A010": "VAV-YOD-SPELLING",
+    "A013": "LSHZ",
+    "A011": "VOWELS-OU",
+    "A014": "DEMONSTRATIVES-SG",
+    "A018": "BGD",
+    "A012": "NOUN-GENDER",
+    "A019": "PREFIXES-BL-SHEL",
+    "A022": "KPTZ",
+    "A015": "QUESTIONS-BASIC",
+    "A017": "EXISTENCE-POSSESSION",
+    "A024": "NOUN-PLURALS",
+    "A026": "HET-AYIN-RESH",
+    "A026a": "PRONUNCIATION-KH-R",
+    "A020": "ADJECTIVE-PREDICATES",
+    "A024b": "PRESENT-BA-SAM-OLE-ROTZE",
+    "A021": "PREP-SUFFIXES-ME-HIM-HER",
+    "A030": "QST",
+    "A024a": "COMMANDS-GIVE-SIT-GO",
+    "A027": "PREP-SUFFIXES-US-THEM",
+    "A038": "ROOTS",
+    "A025": "NOUN-ADJECTIVE",
+    "A033": "BEGED-KEFET",
+    "A023": "PREP-SUFFIXES-YOU-SG",
+    "A039": "PATTERNS",
+    "A029": "DEMONSTRATIVE-PHRASES",
+    "A036": "COUNTING-ONE-TEN",
+    "A041": "PAAL",
+    "A023b": "PREP-SUFFIXES-YOU-PL",
+    "A035": "GERESH-LETTERS",
+    "A037": "COUNTING-ONE-SHOPPING",
+    "A040": "TOOL-PATTERNS",
+    "A043": "DIRECT-OBJECT-ET",
+    "A043a": "INFINITIVE-WANT",
+    "A034": "ALPHABET-ORDER",
+    "A028": "ETZEL-DIRECTIONS",
+    "A042": "COUNTING-FEMININE",
+    "A044": "PAST-HE-SHE-THEY",
+    "A028a": "IM-WITH",
+    "A045": "PLACE-PATTERNS",
+    "A047": "PAST-I",
+    "A032": "FEELING-HOT-COLD",
+    "A048": "DUAL",
+    "A050": "PRESENT-FOUR-FORMS",
+    "A031": "HOME-VISIT",
+    "A046": "OBJECT-AND-RECIPIENT",
+    "A049": "PAST-I-WE-YOU",
+    "A052": "CONSTRUCT-CHAINS",
+    "A051": "MISSING-BOOK",
+    "A050a": "MODALS-CAN-NEED-MUST",
+    "A054": "SEGOLATE-NOUNS",
+    "A055": "COUNTING-ELEVEN-NINETEEN",
+    "A053": "PIEL",
+    "A057": "ADJECTIVES-YOD",
+    "A056": "CLASSROOM-PROBLEM",
+    "A059": "FOUR-ROOT-CONSONANTS",
+    "A060": "COUNTING-TENS",
+    "A053a": "CLASSROOM-PREPARATION",
+    "A058": "NIFAL",
+    "A061": "QATOL-ADJECTIVES",
+    "A062": "GUTTURAL-VERBS",
+    "A063": "FINAL-HE-VERBS",
+    "A064": "PROFESSIONS-PATTERNS",
+    "A063a": "FINDING-SOMEONE",
+    "A065": "SAME-DIFFERENT",
+    "A066": "HITPAEL",
+    "A067": "COUNTING-MASCULINE",
+    "A070": "PREPOSITIONS-PLURAL-SUFFIXES",
+    "A069": "HOLLOW-VERBS",
+    "A068": "QATIL-ADJECTIVES",
+    "A072": "COUNTING-MASCULINE-CONSTRUCT",
+    "A071": "HIFIL",
+    "A073": "CONSTRUCT-CHAINS-RETURN",
+    "A074": "ASSIMILATION-NUN-MEM",
+    "A075": "PERMISSION-IMMINENCE",
+    "A075a": "WEEK-PLANS",
+    "A076": "STATES-HEALTH",
+    "A093a": "PAST-HABIT",
+    "A077": "COUNTING-MASCULINE-TEENS",
+    "A078": "ACTION-NOUNS-PIEL",
+    "A080": "FUTURE-I-WE-HE",
+    "A081": "COUNTING-HUNDREDS",
+    "A084": "EMBEDDED-CLAUSES",
+    "A083": "FUTURE-YOU-COMMANDS",
+    "A082": "ACTION-NOUNS-HIFIL",
+    "A090": "RELATIVE-CLAUSES",
+    "A086": "FUTURE-SHE-THEY",
+    "A085": "ACTION-NOUNS-PAAL",
+    "A095": "COUNTERFACTUAL",
+    "A089": "GENERIC-THEY-PASSIVE",
+    "A087": "ACTION-NOUN-FAMILIES",
+    "A096": "PURPOSE-CLAUSES",
+    "A091": "INITIAL-ALEPH-FUTURE",
+    "A088": "COUNTING-THOUSANDS",
+    "A096a": "RELATIVE-PREPOSITIONS",
+    "A093": "PASSIVE-NIFAL",
+    "A098": "COUNTING-MILLIONS",
+    "A099": "REDUCED-NIKKUD",
+    "A093b": "PASSIVE-PUAL",
+    "A101": "QUANTITIES-IN-CONTEXT",
+    "A101a": "SPOKEN-REGISTER",
+    "A093c": "PASSIVE-HUFAL",
+    "A102": "GEMATRIA",
+    "A101b": "FORMAL-REGISTER",
+    "A097": "SPECIAL-VERB-PRACTICE",
+    "A100": "CHANGED-APPOINTMENT",
+    "B001": "MEMORY-B",
+    "B002": "MNT-B",
+    "B003": "WRITING-BASICS-B",
+    "B004": "VOWELS-AEI-B",
+    "B005": "AHY-B",
+    "B006": "PRONOUNS-B",
+    "B007": "NOMINAL-B",
+    "B008": "VAV-B",
+    "B009": "PREFIXES-MHV-B",
+    "B010": "VAV-YOD-SPELLING-B",
+    "B011": "VOWELS-OU-B",
+    "B012": "NOUN-GENDER-B",
+    "B013": "LSHZ-B",
+    "B014": "DEMONSTRATIVES-SG-B",
+    "B015": "QUESTIONS-BASIC-B",
+    "B017": "EXISTENCE-POSSESSION-B",
+    "B018": "BGD-B",
+    "B019": "ROOTS-B",
+    "B020": "PREFIXES-BL-SHEL-B",
+    "B021": "PATTERNS-B",
+    "B022": "ADJECTIVE-PREDICATES-B",
+    "B023": "PAAL-B",
+    "B024": "PREP-SUFFIXES-ME-HIM-HER-B",
+    "B025": "PAST-HE-SHE-THEY-B",
+    "B026": "KPTZ-B",
+    "B027": "PREP-SUFFIXES-YOU-B",
+    "B028": "PAST-I-B",
+    "B029": "NOUN-PLURALS-B",
+    "B030": "NOUN-ADJECTIVE-B",
+    "B031": "HET-AYIN-RESH-B",
+    "B032": "PREP-SUFFIXES-US-THEM-B",
+    "B033": "PAST-I-WE-YOU-B",
+    "B034": "ETZEL-DIRECTIONS-B",
+    "B035": "DEMONSTRATIVE-PHRASES-B",
+    "B036": "QST-B",
+    "B037": "PRESENT-FOUR-FORMS-B",
+    "B038": "PRONOUN-REPERTOIRE-B",
+    "B039": "DIRECT-OBJECT-ET-B",
+    "B040": "NOMINAL-VERBAL-DESCRIPTIONS-B",
+    "B041": "OBJECT-AND-RECIPIENT-B",
+    "B042": "COUNTING-ONE-TEN-B",
+    "B043": "TOOL-PATTERNS-B",
+    "B044": "PIEL-B",
+    "B045": "COUNTING-ONE-SHOPPING-B",
+    "B046": "PLACE-PATTERNS-B",
+    "B047": "COUNTING-FEMININE-B",
+    "B048": "ROOT-PATTERN-RETURN-B",
+    "B049": "NIFAL-B",
+    "B050": "FEELING-HOT-COLD-B",
+    "B051": "BEGED-KEFET-B",
+    "B052": "CONSTRUCT-CHAINS-B",
+    "B053": "SEGOLATE-NOUNS-B",
+    "B054": "FOUR-ROOT-CONSONANTS-B",
+    "B055": "COUNTING-ELEVEN-NINETEEN-B",
+    "B056": "HITPAEL-B",
+    "B057": "DUAL-B",
+    "B058": "QATOL-ADJECTIVES-B",
+    "B059": "SAME-DIFFERENT-B",
+    "B060": "COUNTING-TENS-B",
+    "B061": "HIFIL-B",
+    "B062": "COUNTING-MASCULINE-B",
+    "B063": "QATIL-ADJECTIVES-B",
+    "B064": "GUTTURAL-VERBS-B",
+    "B065": "INFINITIVE-MODALS-B",
+    "B066": "PREPOSITIONS-PLURAL-SUFFIXES-B",
+    "B067": "COUNTING-MASCULINE-CONSTRUCT-B",
+    "B068": "CONSTRUCT-CHAINS-RETURN-B",
+    "B069": "FUTURE-BASIC-B",
+    "B070": "PROFESSIONS-PATTERNS-B",
+    "B071": "ADJECTIVES-YOD-B",
+    "B072": "FINAL-HE-VERBS-B",
+    "B073": "STATES-HEALTH-B",
+    "B074": "EMBEDDED-CLAUSES-B",
+    "B075": "FUTURE-YOU-COMMANDS-B",
+    "B076": "COUNTING-MASCULINE-TEENS-B",
+    "B077": "HOLLOW-VERBS-B",
+    "B078": "COUNTING-HUNDREDS-B",
+    "B079": "ACTION-NOUNS-PIEL-B",
+    "B080": "FUTURE-SHE-THEY-B",
+    "B082": "ACTION-NOUNS-HIFIL-B",
+    "B083": "GENERIC-THEY-PASSIVE-B",
+    "B083a": "PAST-HABIT-B",
+    "B085": "COUNTING-THOUSANDS-B",
+    "B086": "ACTION-NOUNS-PAAL-B",
+    "B087": "ACTION-NOUN-FAMILIES-B",
+    "B088": "RELATIVE-CLAUSES-B",
+    "B089": "INITIAL-ALEPH-FUTURE-B",
+    "B091": "COUNTERFACTUAL-B",
+    "B092": "PURPOSE-CLAUSES-B",
+    "B092a": "RELATIVE-PREPOSITIONS-B",
+    "B093": "PASSIVE-MORPHOLOGY-B",
+    "B094": "ASSIMILATION-NUN-MEM-B",
+    "B095": "SPECIAL-VERB-PRACTICE-B",
+    "B096": "COUNTING-MILLIONS-B",
+    "B097": "ALPHABET-ORDER-B",
+    "B098": "GERESH-LETTERS-B",
+    "B099": "REDUCED-NIKKUD-B",
+    "B100": "GEMATRIA-B",
+    "B101": "TENSE-PERSON-RETURN-B",
+    "B102": "QUANTITIES-IN-CONTEXT-B",
+    "C001": "MEMORY-C",
+    "C002": "MNT-C",
+    "C003": "WRITING-BASICS-C",
+    "C004": "VOWELS-AEI-C",
+    "C005": "AHY-C",
+    "C006": "PRONOUNS-C",
+    "C007": "NOMINAL-C",
+    "C008": "VAV-C",
+    "C009": "PREFIXES-MHV-C",
+    "C010": "VAV-YOD-SPELLING-C",
+    "C011": "VOWELS-OU-C",
+    "C012": "NOUN-GENDER-C",
+    "C013": "LSHZ-C",
+    "C014": "DEMONSTRATIVES-SG-C",
+    "C015": "QUESTIONS-BASIC-C",
+    "C017": "EXISTENCE-POSSESSION-C",
+    "C018": "BGD-C",
+    "C019": "PREFIXES-BL-SHEL-C",
+    "C020": "ADJECTIVE-PREDICATES-C",
+    "C021": "ROOTS-C",
+    "C022": "PREP-SUFFIXES-ME-HIM-HER-C",
+    "C023": "PATTERNS-C",
+    "C024": "KPTZ-C",
+    "C025": "PREP-SUFFIXES-YOU-C",
+    "C026": "TOOL-PATTERNS-C",
+    "C027": "NOUN-PLURALS-C",
+    "C028": "NOUN-ADJECTIVE-C",
+    "C029": "PAAL-C",
+    "C030": "HET-AYIN-RESH-C",
+    "C031": "PREP-SUFFIXES-US-THEM-C",
+    "C032": "PRESENT-FOUR-FORMS-C",
+    "C033": "ETZEL-DIRECTIONS-C",
+    "C034": "DEMONSTRATIVE-PHRASES-C",
+    "C035": "QST-C",
+    "C036": "PRONOUN-REPERTOIRE-C",
+    "C037": "NOMINAL-VERBAL-DESCRIPTIONS-C",
+    "C038": "PLACE-PATTERNS-C",
+    "C039": "COUNTING-ONE-TEN-C",
+    "C040": "DIRECT-OBJECT-ET-C",
+    "C041": "PAST-HE-SHE-THEY-C",
+    "C042": "COUNTING-ONE-SHOPPING-C",
+    "C043": "SEGOLATE-NOUNS-C",
+    "C044": "COUNTING-FEMININE-C",
+    "C045": "PAST-I-C",
+    "C046": "CONSTRUCT-CHAINS-C",
+    "C047": "PAST-I-WE-YOU-C",
+    "C048": "OBJECT-AND-RECIPIENT-C",
+    "C049": "COUNTING-ELEVEN-NINETEEN-C",
+    "C050": "PIEL-C",
+    "C051": "ADJECTIVES-YOD-C",
+    "C052": "ROOT-PATTERN-RETURN-C",
+    "C053": "QATOL-ADJECTIVES-C",
+    "C054": "FEELING-HOT-COLD-C",
+    "C055": "COUNTING-TENS-C",
+    "C056": "NIFAL-C",
+    "C057": "DUAL-C",
+    "C058": "QATIL-ADJECTIVES-C",
+    "C059": "FOUR-ROOT-CONSONANTS-C",
+    "C060": "COUNTING-MASCULINE-C",
+    "C061": "SAME-DIFFERENT-C",
+    "C062": "HITPAEL-C",
+    "C063": "GUTTURAL-VERBS-C",
+    "C064": "COUNTING-MASCULINE-CONSTRUCT-C",
+    "C065": "CONSTRUCT-CHAINS-RETURN-C",
+    "C066": "STATES-HEALTH-C",
+    "C067": "FINAL-HE-VERBS-C",
+    "C068": "COUNTING-MASCULINE-TEENS-C",
+    "C069": "HIFIL-C",
+    "C070": "PROFESSIONS-PATTERNS-C",
+    "C071": "PREPOSITIONS-PLURAL-SUFFIXES-C",
+    "C072": "HOLLOW-VERBS-C",
+    "C073": "COUNTING-HUNDREDS-C",
+    "C074": "INFINITIVE-MODALS-C",
+    "C075": "ACTION-NOUNS-PIEL-C",
+    "C077": "FUTURE-BASIC-C",
+    "C078": "ACTION-NOUNS-HIFIL-C",
+    "C079": "EMBEDDED-CLAUSES-C",
+    "C080": "FUTURE-YOU-COMMANDS-C",
+    "C081": "COUNTING-THOUSANDS-C",
+    "C082": "ACTION-NOUNS-PAAL-C",
+    "C083": "FUTURE-SHE-THEY-C",
+    "C085": "ACTION-NOUN-FAMILIES-C",
+    "C086": "RELATIVE-CLAUSES-C",
+    "C087": "GENERIC-THEY-PASSIVE-C",
+    "C087a": "PAST-HABIT-C",
+    "C088": "INITIAL-ALEPH-FUTURE-C",
+    "C090": "PURPOSE-CLAUSES-C",
+    "C091": "COUNTERFACTUAL-C",
+    "C092": "PASSIVE-MORPHOLOGY-C",
+    "C092a": "RELATIVE-PREPOSITIONS-C",
+    "C093": "SPECIAL-VERB-PRACTICE-C",
+    "C094": "ASSIMILATION-NUN-MEM-C",
+    "C095": "COUNTING-MILLIONS-C",
+    "C096": "BEGED-KEFET-C",
+    "C097": "ALPHABET-ORDER-C",
+    "C098": "GERESH-LETTERS-C",
+    "C099": "REDUCED-NIKKUD-C",
+    "C100": "GEMATRIA-C",
+    "C101": "QUANTITIES-IN-CONTEXT-C",
+    "C102": "TENSE-PERSON-RETURN-C",
+    "ltr-mem-nun-tav": "MNT-CONS",
+    "ltr-block-script": "WRITING-BASICS-CONS",
+    "nik-a-e-i": "VOWELS-AEI-CONS",
+    "ltr-aleph-he-yod": "AHY-CONS",
+    "pronouns": "PRONOUNS-CONS",
+    "the-and-from": "THE-AND-FROM-CONS",
+    "questions-1": "QUESTIONS-1-CONS",
+    "ltr-gimel-dalet-lamed": "LTR-GIMEL-DALET-LAMED-CONS",
+    "roots-patterns-intro": "ROOTS-PATTERNS-INTRO-CONS",
+    "verb-structures-intro": "VERB-STRUCTURES-INTRO-CONS",
+    "ltr-vav": "VAV-CONS",
+    "binyan-kal": "BINYAN-KAL-CONS",
+    "nik-o-u-shva": "NIK-O-U-SHVA-CONS",
+    "past-she-they": "PAST-SHE-THEY-CONS",
+    "past-i": "PAST-I-CONS",
+    "verb-subgroups": "VERB-SUBGROUPS-CONS",
+    "and-to": "AND-TO-CONS",
+    "gender": "NOUN-GENDER-CONS",
+    "ltr-bet-kaf-pe": "LTR-BET-KAF-PE-CONS",
+    "dagesh-emphasis": "DAGESH-EMPHASIS-CONS",
+    "vx-food-family": "VX-FOOD-FAMILY-CONS",
+    "function-words-1": "FUNCTION-WORDS-1-CONS",
+    "structure-meanings": "STRUCTURE-MEANINGS-CONS",
+    "ltr-shin-zayin-tsadi-resh": "LTR-SHIN-ZAYIN-TSADI-RESH-CONS",
+    "vx-fruit-veg": "VX-FRUIT-VEG-CONS",
+    "time-sequence-words": "TIME-SEQUENCE-WORDS-CONS",
+    "adjectives": "ADJECTIVES-CONS",
+    "nominal-sentences": "NOMINAL-CONS",
+    "demonstratives": "DEMONSTRATIVES-CONS",
+    "prep-be": "PREP-BE-CONS",
+    "relative-she": "RELATIVE-SHE-CONS",
+    "belonging-shel": "BELONGING-SHEL-CONS",
+    "vx-transport-table": "VX-TRANSPORT-TABLE-CONS",
+    "vx-said-saw-some": "VX-SAID-SAW-SOME-CONS",
+    "smikhut-intro": "SMIKHUT-INTRO-CONS",
+    "object-pronouns-1": "OBJECT-PRONOUNS-1-CONS",
+    "yesh-ein": "EXISTENCE-POSSESSION-CONS",
+    "vx-communication": "VX-COMMUNICATION-CONS",
+    "opinion-phrases": "OPINION-PHRASES-CONS",
+    "ltr-het-tet-samekh-ayin-qof": "LTR-HET-TET-SAMEKH-AYIN-QOF-CONS",
+    "vx-meals-times": "VX-MEALS-TIMES-CONS",
+    "vx-everyday-1": "VX-EVERYDAY-1-CONS",
+    "numbers-1-10": "NUMBERS-1-10-CONS",
+    "telling-time": "TELLING-TIME-CONS",
+    "vx-shopping-money": "VX-SHOPPING-MONEY-CONS",
+    "binyan-nifal": "BINYAN-NIFAL-CONS",
+    "time-clauses": "TIME-CLAUSES-CONS",
+    "object-pronouns-you": "OBJECT-PRONOUNS-YOU-CONS",
+    "vx-city": "VX-CITY-CONS",
+    "age-and-because": "AGE-AND-BECAUSE-CONS",
+    "binyan-hitpael": "BINYAN-HITPAEL-CONS",
+    "vx-time-and-change": "VX-TIME-AND-CHANGE-CONS",
+    "plural-nouns": "NOUN-PLURALS-CONS",
+    "present-tense": "PRESENT-TENSE-CONS",
+    "expressions-1": "EXPRESSIONS-1-CONS",
+    "numbers-11-20": "NUMBERS-11-20-CONS",
+    "numbers-big": "NUMBERS-BIG-CONS",
+    "frequency-math": "FREQUENCY-MATH-CONS",
+    "direct-object-et": "DIRECT-OBJECT-ET-CONS",
+    "location-words": "LOCATION-WORDS-CONS",
+    "vx-home": "VX-HOME-CONS",
+    "vx-school-problems": "VX-SCHOOL-PROBLEMS-CONS",
+    "binyan-hifil": "BINYAN-HIFIL-CONS",
+    "roots-deep-dive": "ROOTS-DEEP-DIVE-CONS",
+    "vx-root-families-1": "VX-ROOT-FAMILIES-1-CONS",
+    "vx-root-families-2": "VX-ROOT-FAMILIES-2-CONS",
+    "verbs-summary": "VERBS-SUMMARY-CONS",
+    "noun-pattern-miktal-1": "NOUN-PATTERN-MIKTAL-1-CONS",
+    "noun-pattern-miktal-2": "NOUN-PATTERN-MIKTAL-2-CONS",
+    "noun-pattern-maktel": "NOUN-PATTERN-MAKTEL-CONS",
+    "noun-pattern-kattal": "NOUN-PATTERN-KATTAL-CONS",
+    "noun-pattern-segolate-1": "NOUN-PATTERN-SEGOLATE-1-CONS",
+    "noun-pattern-segolate-2": "NOUN-PATTERN-SEGOLATE-2-CONS",
+    "guttural-roots": "GUTTURAL-ROOTS-CONS",
+    "vx-work-business": "VX-WORK-BUSINESS-CONS",
+    "vx-abstract": "VX-ABSTRACT-CONS",
+    "vx-adjectives-2": "VX-ADJECTIVES-2-CONS",
+    "infinitive": "INFINITIVE-CONS",
+    "going-to-future": "GOING-TO-FUTURE-CONS",
+    "future-derived": "FUTURE-DERIVED-CONS",
+    "object-pronouns-us-them": "OBJECT-PRONOUNS-US-THEM-CONS",
+    "inflected-prepositions-2": "INFLECTED-PREPOSITIONS-2-CONS",
+    "inflected-prepositions-3": "INFLECTED-PREPOSITIONS-3-CONS",
+    "possessive-suffixes": "POSSESSIVE-SUFFIXES-CONS",
+    "smikhut-in-depth": "SMIKHUT-IN-DEPTH-CONS",
+    "vx-clothing": "VX-CLOTHING-CONS",
+    "vx-body": "VX-BODY-CONS",
+    "vx-places-institutions": "VX-PLACES-INSTITUTIONS-CONS",
+    "vx-colors": "VX-COLORS-CONS",
+    "time-expressions-2": "TIME-EXPRESSIONS-2-CONS"
+  },
+  "lessons": [
+    {
+      "route": "Conservative New",
+      "legacyId": "ltr-mem-nun-tav",
+      "id": "MNT-CONS",
+      "title": "Letters מ, נ, ת",
+      "position": 10,
+      "sourceReference": "1.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "ltr-block-script",
+      "id": "WRITING-BASICS-CONS",
+      "title": "Print and handwriting",
+      "position": 20,
+      "sourceReference": "1.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "nik-a-e-i",
+      "id": "VOWELS-AEI-CONS",
+      "title": "Vowel marks: a, e, i",
+      "position": 30,
+      "sourceReference": "1.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "ltr-aleph-he-yod",
+      "id": "AHY-CONS",
+      "title": "Letters א, ה, י",
+      "position": 40,
+      "sourceReference": "1.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "pronouns",
+      "id": "PRONOUNS-CONS",
+      "title": "Pronouns",
+      "position": 50,
+      "sourceReference": "1.35"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "the-and-from",
+      "id": "THE-AND-FROM-CONS",
+      "title": "\"The\" and \"from\"",
+      "position": 60,
+      "sourceReference": "1.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "questions-1",
+      "id": "QUESTIONS-1-CONS",
+      "title": "First questions",
+      "position": 70,
+      "sourceReference": "1.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "ltr-gimel-dalet-lamed",
+      "id": "LTR-GIMEL-DALET-LAMED-CONS",
+      "title": "Letters ג, ד, ל",
+      "position": 80,
+      "sourceReference": "2.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "roots-patterns-intro",
+      "id": "ROOTS-PATTERNS-INTRO-CONS",
+      "title": "Roots and patterns",
+      "position": 90,
+      "sourceReference": "2.125"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "verb-structures-intro",
+      "id": "VERB-STRUCTURES-INTRO-CONS",
+      "title": "How verbs are built",
+      "position": 100,
+      "sourceReference": "2.15"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "ltr-vav",
+      "id": "VAV-CONS",
+      "title": "The letter ו",
+      "position": 110,
+      "sourceReference": "2.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "binyan-kal",
+      "id": "BINYAN-KAL-CONS",
+      "title": "Binyan קל",
+      "position": 120,
+      "sourceReference": "2.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "nik-o-u-shva",
+      "id": "NIK-O-U-SHVA-CONS",
+      "title": "Vowel marks: o, u, shva",
+      "position": 130,
+      "sourceReference": "2.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "past-she-they",
+      "id": "PAST-SHE-THEY-CONS",
+      "title": "Past tense: she and they",
+      "position": 140,
+      "sourceReference": "2.325"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "past-i",
+      "id": "PAST-I-CONS",
+      "title": "Past tense: I",
+      "position": 150,
+      "sourceReference": "2.35"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "verb-subgroups",
+      "id": "VERB-SUBGROUPS-CONS",
+      "title": "Verb subgroups (גזרות)",
+      "position": 160,
+      "sourceReference": "2.35"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "and-to",
+      "id": "AND-TO-CONS",
+      "title": "\"And\" and \"to\"",
+      "position": 170,
+      "sourceReference": "2.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "gender",
+      "id": "NOUN-GENDER-CONS",
+      "title": "Masculine and feminine",
+      "position": 180,
+      "sourceReference": "2.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "ltr-bet-kaf-pe",
+      "id": "LTR-BET-KAF-PE-CONS",
+      "title": "Letters ב, כ, פ",
+      "position": 190,
+      "sourceReference": "3.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "dagesh-emphasis",
+      "id": "DAGESH-EMPHASIS-CONS",
+      "title": "Dagesh and emphasis",
+      "position": 200,
+      "sourceReference": "3.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-food-family",
+      "id": "VX-FOOD-FAMILY-CONS",
+      "title": "Food, home and family",
+      "position": 210,
+      "sourceReference": "3.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "function-words-1",
+      "id": "FUNCTION-WORDS-1-CONS",
+      "title": "Where, how, every, but",
+      "position": 220,
+      "sourceReference": "3.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "structure-meanings",
+      "id": "STRUCTURE-MEANINGS-CONS",
+      "title": "What each verb structure means",
+      "position": 230,
+      "sourceReference": "3.15"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "ltr-shin-zayin-tsadi-resh",
+      "id": "LTR-SHIN-ZAYIN-TSADI-RESH-CONS",
+      "title": "Letters ש, ז, צ, ר",
+      "position": 240,
+      "sourceReference": "3.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-fruit-veg",
+      "id": "VX-FRUIT-VEG-CONS",
+      "title": "Fruit, vegetables, kitchen",
+      "position": 250,
+      "sourceReference": "3.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "time-sequence-words",
+      "id": "TIME-SEQUENCE-WORDS-CONS",
+      "title": "Already, then, since, more",
+      "position": 260,
+      "sourceReference": "3.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "adjectives",
+      "id": "ADJECTIVES-CONS",
+      "title": "Adjectives",
+      "position": 270,
+      "sourceReference": "3.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "nominal-sentences",
+      "id": "NOMINAL-CONS",
+      "title": "Sentences without \"is\"",
+      "position": 280,
+      "sourceReference": "3.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "demonstratives",
+      "id": "DEMONSTRATIVES-CONS",
+      "title": "This, that, which",
+      "position": 290,
+      "sourceReference": "3.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "prep-be",
+      "id": "PREP-BE-CONS",
+      "title": "\"In\": ב־",
+      "position": 300,
+      "sourceReference": "3.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "relative-she",
+      "id": "RELATIVE-SHE-CONS",
+      "title": "\"That / which / who\": ש־",
+      "position": 310,
+      "sourceReference": "3.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "belonging-shel",
+      "id": "BELONGING-SHEL-CONS",
+      "title": "Belonging: של",
+      "position": 320,
+      "sourceReference": "3.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-transport-table",
+      "id": "VX-TRANSPORT-TABLE-CONS",
+      "title": "Getting around; at the table",
+      "position": 330,
+      "sourceReference": "3.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-said-saw-some",
+      "id": "VX-SAID-SAW-SOME-CONS",
+      "title": "Said, saw, lived; some-words",
+      "position": 340,
+      "sourceReference": "3.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "smikhut-intro",
+      "id": "SMIKHUT-INTRO-CONS",
+      "title": "Noun + noun (smikhut)",
+      "position": 350,
+      "sourceReference": "3.35"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "object-pronouns-1",
+      "id": "OBJECT-PRONOUNS-1-CONS",
+      "title": "Him, her, me",
+      "position": 360,
+      "sourceReference": "3.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "yesh-ein",
+      "id": "EXISTENCE-POSSESSION-CONS",
+      "title": "There is / I have: יש, אין",
+      "position": 370,
+      "sourceReference": "3.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-communication",
+      "id": "VX-COMMUNICATION-CONS",
+      "title": "Name, song, letter, email",
+      "position": 380,
+      "sourceReference": "3.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "opinion-phrases",
+      "id": "OPINION-PHRASES-CONS",
+      "title": "I think, it seems, I care",
+      "position": 390,
+      "sourceReference": "3.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "ltr-het-tet-samekh-ayin-qof",
+      "id": "LTR-HET-TET-SAMEKH-AYIN-QOF-CONS",
+      "title": "Letters ח, ט, ס, ע, ק",
+      "position": 400,
+      "sourceReference": "4.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-meals-times",
+      "id": "VX-MEALS-TIMES-CONS",
+      "title": "Meals and times of day",
+      "position": 410,
+      "sourceReference": "4.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-everyday-1",
+      "id": "VX-EVERYDAY-1-CONS",
+      "title": "Book, school, family, tableware",
+      "position": 420,
+      "sourceReference": "4.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "numbers-1-10",
+      "id": "NUMBERS-1-10-CONS",
+      "title": "Numbers 1–10",
+      "position": 430,
+      "sourceReference": "4.15"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "telling-time",
+      "id": "TELLING-TIME-CONS",
+      "title": "Telling the time",
+      "position": 440,
+      "sourceReference": "4.15"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-shopping-money",
+      "id": "VX-SHOPPING-MONEY-CONS",
+      "title": "Shopping and money",
+      "position": 450,
+      "sourceReference": "4.15"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "binyan-nifal",
+      "id": "BINYAN-NIFAL-CONS",
+      "title": "Binyan נפעל",
+      "position": 460,
+      "sourceReference": "4.15"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "time-clauses",
+      "id": "TIME-CLAUSES-CONS",
+      "title": "Before, after, when, although",
+      "position": 470,
+      "sourceReference": "4.15"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "object-pronouns-you",
+      "id": "OBJECT-PRONOUNS-YOU-CONS",
+      "title": "Four ways to say \"you\"",
+      "position": 480,
+      "sourceReference": "4.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-city",
+      "id": "VX-CITY-CONS",
+      "title": "City and transport",
+      "position": 490,
+      "sourceReference": "4.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "age-and-because",
+      "id": "AGE-AND-BECAUSE-CONS",
+      "title": "Age, because, until",
+      "position": 500,
+      "sourceReference": "4.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "binyan-hitpael",
+      "id": "BINYAN-HITPAEL-CONS",
+      "title": "Binyan התפעל",
+      "position": 510,
+      "sourceReference": "4.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-time-and-change",
+      "id": "VX-TIME-AND-CHANGE-CONS",
+      "title": "Past, present, future; new and old",
+      "position": 520,
+      "sourceReference": "4.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "plural-nouns",
+      "id": "NOUN-PLURALS-CONS",
+      "title": "Plurals",
+      "position": 530,
+      "sourceReference": "4.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "present-tense",
+      "id": "PRESENT-TENSE-CONS",
+      "title": "Present tense",
+      "position": 540,
+      "sourceReference": "4.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "expressions-1",
+      "id": "EXPRESSIONS-1-CONS",
+      "title": "What's up, no way, almost",
+      "position": 550,
+      "sourceReference": "4.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "numbers-11-20",
+      "id": "NUMBERS-11-20-CONS",
+      "title": "Numbers 11–20",
+      "position": 560,
+      "sourceReference": "4.35"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "numbers-big",
+      "id": "NUMBERS-BIG-CONS",
+      "title": "Tens, hundreds, thousands",
+      "position": 570,
+      "sourceReference": "4.35"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "frequency-math",
+      "id": "FREQUENCY-MATH-CONS",
+      "title": "Never, sometimes, plus, minus",
+      "position": 580,
+      "sourceReference": "4.35"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "direct-object-et",
+      "id": "DIRECT-OBJECT-ET-CONS",
+      "title": "Direct object: את",
+      "position": 590,
+      "sourceReference": "4.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "location-words",
+      "id": "LOCATION-WORDS-CONS",
+      "title": "Inside, outside, between, into",
+      "position": 600,
+      "sourceReference": "4.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-home",
+      "id": "VX-HOME-CONS",
+      "title": "Home and furniture",
+      "position": 610,
+      "sourceReference": "4.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-school-problems",
+      "id": "VX-SCHOOL-PROBLEMS-CONS",
+      "title": "Words, questions, problems",
+      "position": 620,
+      "sourceReference": "4.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "binyan-hifil",
+      "id": "BINYAN-HIFIL-CONS",
+      "title": "Binyan הפעיל",
+      "position": 630,
+      "sourceReference": "4.45"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "roots-deep-dive",
+      "id": "ROOTS-DEEP-DIVE-CONS",
+      "title": "Roots and patterns, in depth",
+      "position": 640,
+      "sourceReference": "5.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-root-families-1",
+      "id": "VX-ROOT-FAMILIES-1-CONS",
+      "title": "Word families 1",
+      "position": 650,
+      "sourceReference": "5.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-root-families-2",
+      "id": "VX-ROOT-FAMILIES-2-CONS",
+      "title": "Word families 2",
+      "position": 660,
+      "sourceReference": "5.1"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "verbs-summary",
+      "id": "VERBS-SUMMARY-CONS",
+      "title": "Verbs: putting it together",
+      "position": 670,
+      "sourceReference": "5.15"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "noun-pattern-miktal-1",
+      "id": "NOUN-PATTERN-MIKTAL-1-CONS",
+      "title": "Noun patterns: מִקְטָל",
+      "position": 680,
+      "sourceReference": "5.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "noun-pattern-miktal-2",
+      "id": "NOUN-PATTERN-MIKTAL-2-CONS",
+      "title": "מִקְטָל (continued)",
+      "position": 690,
+      "sourceReference": "5.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "noun-pattern-maktel",
+      "id": "NOUN-PATTERN-MAKTEL-CONS",
+      "title": "Tools: מַקְטֵל",
+      "position": 700,
+      "sourceReference": "5.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "noun-pattern-kattal",
+      "id": "NOUN-PATTERN-KATTAL-CONS",
+      "title": "Professions: קַטָּל",
+      "position": 710,
+      "sourceReference": "5.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "noun-pattern-segolate-1",
+      "id": "NOUN-PATTERN-SEGOLATE-1-CONS",
+      "title": "קֶטֶל nouns",
+      "position": 720,
+      "sourceReference": "5.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "noun-pattern-segolate-2",
+      "id": "NOUN-PATTERN-SEGOLATE-2-CONS",
+      "title": "קֶטֶל nouns (continued)",
+      "position": 730,
+      "sourceReference": "5.2"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "guttural-roots",
+      "id": "GUTTURAL-ROOTS-CONS",
+      "title": "Roots with guttural letters",
+      "position": 740,
+      "sourceReference": "5.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-work-business",
+      "id": "VX-WORK-BUSINESS-CONS",
+      "title": "Work and business",
+      "position": 750,
+      "sourceReference": "5.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-abstract",
+      "id": "VX-ABSTRACT-CONS",
+      "title": "Safety, process, world",
+      "position": 760,
+      "sourceReference": "5.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-adjectives-2",
+      "id": "VX-ADJECTIVES-2-CONS",
+      "title": "Wide, busy, important",
+      "position": 770,
+      "sourceReference": "5.25"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "infinitive",
+      "id": "INFINITIVE-CONS",
+      "title": "The infinitive",
+      "position": 780,
+      "sourceReference": "5.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "going-to-future",
+      "id": "GOING-TO-FUTURE-CONS",
+      "title": "\"Going to\"; want, need, can",
+      "position": 790,
+      "sourceReference": "5.3"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "future-derived",
+      "id": "FUTURE-DERIVED-CONS",
+      "title": "Future of פיעל, הפעיל, התפעל",
+      "position": 800,
+      "sourceReference": "5.35"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "object-pronouns-us-them",
+      "id": "OBJECT-PRONOUNS-US-THEM-CONS",
+      "title": "Us and them",
+      "position": 810,
+      "sourceReference": "5.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "inflected-prepositions-2",
+      "id": "INFLECTED-PREPOSITIONS-2-CONS",
+      "title": "With, because of, for, instead of",
+      "position": 820,
+      "sourceReference": "5.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "inflected-prepositions-3",
+      "id": "INFLECTED-PREPOSITIONS-3-CONS",
+      "title": "On, towards, before, after, without",
+      "position": 830,
+      "sourceReference": "5.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "possessive-suffixes",
+      "id": "POSSESSIVE-SUFFIXES-CONS",
+      "title": "My brother, myself, my opinion",
+      "position": 840,
+      "sourceReference": "5.4"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "smikhut-in-depth",
+      "id": "SMIKHUT-IN-DEPTH-CONS",
+      "title": "Smikhut in depth",
+      "position": 850,
+      "sourceReference": "5.45"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-clothing",
+      "id": "VX-CLOTHING-CONS",
+      "title": "Clothing",
+      "position": 860,
+      "sourceReference": "(5.5)"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-body",
+      "id": "VX-BODY-CONS",
+      "title": "The body",
+      "position": 870,
+      "sourceReference": "(5.5)"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-places-institutions",
+      "id": "VX-PLACES-INSTITUTIONS-CONS",
+      "title": "Country, government, hospital",
+      "position": 880,
+      "sourceReference": "(5.5)"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "vx-colors",
+      "id": "VX-COLORS-CONS",
+      "title": "Colors",
+      "position": 890,
+      "sourceReference": "(5.5)"
+    },
+    {
+      "route": "Conservative New",
+      "legacyId": "time-expressions-2",
+      "id": "TIME-EXPRESSIONS-2-CONS",
+      "title": "Ago, in two days, during, while",
+      "position": 900,
+      "sourceReference": "(5.5)"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A001",
+      "id": "MEMORY",
+      "title": "How memory works",
+      "position": 1,
+      "sourceReference": "Source: experiments!A2/B2"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A002",
+      "id": "MNT",
+      "title": "מנת",
+      "position": 2,
+      "sourceReference": "Source: Components!A2"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A003",
+      "id": "WRITING-BASICS",
+      "title": "Writing: RTL, block/script, final-form logic",
+      "position": 3,
+      "sourceReference": "Source: experiments!A4/B4"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A004",
+      "id": "VOWELS-AEI",
+      "title": "a,e,i, shva Nakh",
+      "position": 4,
+      "sourceReference": "Source: original Components literacy sequence."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A005",
+      "id": "AHY",
+      "title": "אהי",
+      "position": 5,
+      "sourceReference": "Source: Components!A4"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A006",
+      "id": "PRONOUNS",
+      "title": "pronouns",
+      "position": 6,
+      "sourceReference": "Source: Components!F2"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A007",
+      "id": "NOMINAL",
+      "title": "nominal sentence",
+      "position": 7,
+      "sourceReference": "Source: Components!F3"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A008",
+      "id": "VAV",
+      "title": "ו",
+      "position": 8,
+      "sourceReference": "Source: Components!A5"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A009",
+      "id": "PREFIXES-MHV",
+      "title": "מ,ה,ו",
+      "position": 9,
+      "sourceReference": "Source: Components!B2"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A010",
+      "id": "VAV-YOD-SPELLING",
+      "title": "ו+י: early spelling and doubled letters",
+      "position": 10,
+      "sourceReference": "Source: Components!A6"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A013",
+      "id": "LSHZ",
+      "title": "לשז",
+      "position": 11,
+      "sourceReference": "Source: Components!A8"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A011",
+      "id": "VOWELS-OU",
+      "title": "o,u vowels+lack of usage",
+      "position": 12,
+      "sourceReference": "Source: Components!A7"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A014",
+      "id": "DEMONSTRATIVES-SG",
+      "title": "demonstratives",
+      "position": 13,
+      "sourceReference": "Source: Components!F7"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A018",
+      "id": "BGD",
+      "title": "בגד",
+      "position": 14,
+      "sourceReference": "Source: Components!A9"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A012",
+      "id": "NOUN-GENDER",
+      "title": "feminine",
+      "position": 15,
+      "sourceReference": "Source: Components!F5"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A019",
+      "id": "PREFIXES-BL-SHEL",
+      "title": "ב,ל,של",
+      "position": 16,
+      "sourceReference": "Source: Components!B3"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A022",
+      "id": "KPTZ",
+      "title": "כפצ",
+      "position": 17,
+      "sourceReference": "Source: Components!A10"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A015",
+      "id": "QUESTIONS-BASIC",
+      "title": "questions",
+      "position": 18,
+      "sourceReference": "Source: Components!F4"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A017",
+      "id": "EXISTENCE-POSSESSION",
+      "title": "יש ואין",
+      "position": 19,
+      "sourceReference": "Source: Components!F15"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A024",
+      "id": "NOUN-PLURALS",
+      "title": "plural",
+      "position": 20,
+      "sourceReference": "Source: Components!F6"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A026",
+      "id": "HET-AYIN-RESH",
+      "title": "חער",
+      "position": 21,
+      "sourceReference": "Source: Components!A11"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A026a",
+      "id": "PRONUNCIATION-KH-R",
+      "title": "Pronunciation: כ/ח and ר",
+      "position": 22,
+      "sourceReference": "Source: Guy requested restoration of the original bonus, 24 October 2026. Original topic: https://hebleo.com/courses/hebleo-hebrew-learning-platform/lessons/lesson-3-2-the-letters-%d7%a9-%d7%96-%d7%a6-%d7%a8-17-of-22/topics/pronunciation-tip-for-%d7%9b-and-%d7%a8/"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A020",
+      "id": "ADJECTIVE-PREDICATES",
+      "title": "adjective 1: Nominal sentence",
+      "position": 23,
+      "sourceReference": "Source: Components!F8"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A024b",
+      "id": "PRESENT-BA-SAM-OLE-ROTZE",
+      "title": "Early present: two form groups and agreement",
+      "position": 24,
+      "sourceReference": "Source: Guy’s explicit selection, 24 October 2026; Components!C27."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A021",
+      "id": "PREP-SUFFIXES-ME-HIM-HER",
+      "title": "Preposition suffixes 1: me, him, her",
+      "position": 25,
+      "sourceReference": "Source: Components!B4"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A030",
+      "id": "QST",
+      "title": "קסט",
+      "position": 26,
+      "sourceReference": "Source: Components!A12"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A024a",
+      "id": "COMMANDS-GIVE-SIT-GO",
+      "title": "Early imperatives: three address forms",
+      "position": 27,
+      "sourceReference": "Source: Guy requested early imperatives, 21 October 2026; early lexical scope from Components!C17."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A027",
+      "id": "PREP-SUFFIXES-US-THEM",
+      "title": "Preposition suffixes 2: us, them",
+      "position": 28,
+      "sourceReference": "Source: Components!B6"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A038",
+      "id": "ROOTS",
+      "title": "Roots & Patterns part 1: Roots",
+      "position": 29,
+      "sourceReference": "Source: Components!C2; Components!D2"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A025",
+      "id": "NOUN-ADJECTIVE",
+      "title": "adjective 2: Noun+adjective",
+      "position": 30,
+      "sourceReference": "Source: Components!F9"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A033",
+      "id": "BEGED-KEFET",
+      "title": "חוקי בג\"ד כפ\"ת",
+      "position": 31,
+      "sourceReference": "Source: Components!A18"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A023",
+      "id": "PREP-SUFFIXES-YOU-SG",
+      "title": "Preposition suffixes 3: you, singular",
+      "position": 32,
+      "sourceReference": "Source: Components!B5"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A039",
+      "id": "PATTERNS",
+      "title": "Roots & Patterns part 2: Patterns",
+      "position": 33,
+      "sourceReference": "Source: Components!C3; Components!D3"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A029",
+      "id": "DEMONSTRATIVE-PHRASES",
+      "title": "adjective 3: demonstratives",
+      "position": 34,
+      "sourceReference": "Source: Components!F10"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A036",
+      "id": "COUNTING-ONE-TEN",
+      "title": "Numbers: generic counting (feminine) 1-10",
+      "position": 35,
+      "sourceReference": "Source: Components!F13"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A041",
+      "id": "PAAL",
+      "title": "Binyanim: Pa’al through familiar present actions",
+      "position": 36,
+      "sourceReference": "Source: Components!C4"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A023b",
+      "id": "PREP-SUFFIXES-YOU-PL",
+      "title": "Preposition suffixes: you, plural",
+      "position": 37,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A035",
+      "id": "GERESH-LETTERS",
+      "title": "אותיות עם גרש",
+      "position": 38,
+      "sourceReference": "Source: Components!A16"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A037",
+      "id": "COUNTING-ONE-SHOPPING",
+      "title": "Numbers: counting 1",
+      "position": 39,
+      "sourceReference": "Source: Components!F18"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A040",
+      "id": "TOOL-PATTERNS",
+      "title": "מַקְטֵל+מַקְטֵלָה",
+      "position": 40,
+      "sourceReference": "Source: Components!D4"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A043",
+      "id": "DIRECT-OBJECT-ET",
+      "title": "את",
+      "position": 41,
+      "sourceReference": "Source: Components!B8"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A043a",
+      "id": "INFINITIVE-WANT",
+      "title": "Infinitives 1: רוצה + an action",
+      "position": 42,
+      "sourceReference": "Source: Guy-approved coherence revision, 25 October 2026; stable ID added without renumbering existing lessons."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A034",
+      "id": "ALPHABET-ORDER",
+      "title": "סדר הא\"ב",
+      "position": 43,
+      "sourceReference": "Source: Components!A17"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A028",
+      "id": "ETZEL-DIRECTIONS",
+      "title": "אצל",
+      "position": 44,
+      "sourceReference": "Source: Components!B7"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A050a",
+      "id": "MODALS-CAN-NEED-MUST",
+      "title": "Infinitives 2: can, need and must",
+      "position": 45,
+      "sourceReference": "Source: Guy-approved coherence revision, 25 October 2026; stable ID added without renumbering existing lessons."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A042",
+      "id": "COUNTING-FEMININE",
+      "title": "Numbers: counting 2-10 feminine",
+      "position": 46,
+      "sourceReference": "Source: Components!F18"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A028a",
+      "id": "IM-WITH",
+      "title": "עם: with people and familiar prepositions",
+      "position": 47,
+      "sourceReference": "Source: Guy-approved coherence revision, 25 October 2026; stable ID added without renumbering existing lessons."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A044",
+      "id": "PAST-HE-SHE-THEY",
+      "title": "Past tense: He, she, they + Green rule",
+      "position": 48,
+      "sourceReference": "Source: Components!C5"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A045",
+      "id": "PLACE-PATTERNS",
+      "title": "מִקְטָל+מִקְטַלָה",
+      "position": 49,
+      "sourceReference": "Source: Components!D5"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A032",
+      "id": "FEELING-HOT-COLD",
+      "title": "חם לי, קר לי, נעים לי...",
+      "position": 50,
+      "sourceReference": "Source: Components!F16"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A047",
+      "id": "PAST-I",
+      "title": "Past tense: I",
+      "position": 51,
+      "sourceReference": "Source: Components!C6"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A048",
+      "id": "DUAL",
+      "title": "dual form",
+      "position": 52,
+      "sourceReference": "Source: Components!F17"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A031",
+      "id": "HOME-VISIT",
+      "title": "Integration: welcome home",
+      "position": 53,
+      "sourceReference": "Source: Assistant-proposed scope"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A050",
+      "id": "PRESENT-FOUR-FORMS",
+      "title": "Present tense: 4 forms",
+      "position": 54,
+      "sourceReference": "Source: Components!C8"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A046",
+      "id": "OBJECT-AND-RECIPIENT",
+      "title": "Direct-object pronouns versus recipients",
+      "position": 55,
+      "sourceReference": "Source: Assistant-proposed scope"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A052",
+      "id": "CONSTRUCT-CHAINS",
+      "title": "סמיכות",
+      "position": 56,
+      "sourceReference": "Source: Components!F12"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A049",
+      "id": "PAST-I-WE-YOU",
+      "title": "Past tense: 1st+2nd",
+      "position": 57,
+      "sourceReference": "Source: Components!C7"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A051",
+      "id": "MISSING-BOOK",
+      "title": "Integration: the missing book",
+      "position": 58,
+      "sourceReference": "Source: Assistant-proposed scope"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A054",
+      "id": "SEGOLATE-NOUNS",
+      "title": "קֶטֶל+קְטָלִים",
+      "position": 59,
+      "sourceReference": "Source: Components!D6"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A075a",
+      "id": "WEEK-PLANS",
+      "title": "Integration: plans for the week",
+      "position": 60,
+      "sourceReference": "Source: Guy-approved coherence revision, 25 October 2026; stable ID added without renumbering existing lessons."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A055",
+      "id": "COUNTING-ELEVEN-NINETEEN",
+      "title": "Numbers: counting 11-19",
+      "position": 61,
+      "sourceReference": "Source: Components!F19"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A053",
+      "id": "PIEL",
+      "title": "Binyanim: Pi’el",
+      "position": 62,
+      "sourceReference": "Source: Components!C9"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A057",
+      "id": "ADJECTIVES-YOD",
+      "title": "Adjective with י",
+      "position": 63,
+      "sourceReference": "Source: Components!F11"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A056",
+      "id": "CLASSROOM-PROBLEM",
+      "title": "Integration: a classroom problem",
+      "position": 64,
+      "sourceReference": "Source: Assistant-proposed scope"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A059",
+      "id": "FOUR-ROOT-CONSONANTS",
+      "title": "שורש מרובע",
+      "position": 65,
+      "sourceReference": "Source: Components!C26; Components!D14"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A060",
+      "id": "COUNTING-TENS",
+      "title": "Numbers: counting 20-99",
+      "position": 66,
+      "sourceReference": "Source: Components!F20"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A053a",
+      "id": "CLASSROOM-PREPARATION",
+      "title": "Integration: preparing the classroom",
+      "position": 67,
+      "sourceReference": "Source: Guy-approved coherence revision, 25 October 2026; stable ID added without renumbering existing lessons."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A058",
+      "id": "NIFAL",
+      "title": "Binyanim: Nif’al",
+      "position": 68,
+      "sourceReference": "Source: Components!C10"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A061",
+      "id": "QATOL-ADJECTIVES",
+      "title": "קָטוֹל+קְטוּלִים",
+      "position": 69,
+      "sourceReference": "Source: Components!D8"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A062",
+      "id": "GUTTURAL-VERBS",
+      "title": "גרוניות",
+      "position": 70,
+      "sourceReference": "Source: Components!A13"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A063",
+      "id": "FINAL-HE-VERBS",
+      "title": "לו\"י",
+      "position": 71,
+      "sourceReference": "Source: Components!C13"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A064",
+      "id": "PROFESSIONS-PATTERNS",
+      "title": "קָטָּל+קָטֵּלֵת+קָטָּלִים+קָטָּלוֹת",
+      "position": 72,
+      "sourceReference": "Source: Components!D7"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A065",
+      "id": "SAME-DIFFERENT",
+      "title": "אותו (same)",
+      "position": 73,
+      "sourceReference": "Source: Components!B9"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A066",
+      "id": "HITPAEL",
+      "title": "Binyanim: Hitpa’el",
+      "position": 74,
+      "sourceReference": "Source: Components!C11"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A067",
+      "id": "COUNTING-MASCULINE",
+      "title": "Numbers: masculine independent (1-10)",
+      "position": 75,
+      "sourceReference": "Source: Components!F22"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A070",
+      "id": "PREPOSITIONS-PLURAL-SUFFIXES",
+      "title": "Plural-style prepositions",
+      "position": 76,
+      "sourceReference": "Source: Components!B10"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A069",
+      "id": "HOLLOW-VERBS",
+      "title": "עו\"י",
+      "position": 77,
+      "sourceReference": "Source: Components!C14"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A068",
+      "id": "QATIL-ADJECTIVES",
+      "title": "קָטִיל+קְטִילים",
+      "position": 78,
+      "sourceReference": "Source: Components!D9"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A072",
+      "id": "COUNTING-MASCULINE-CONSTRUCT",
+      "title": "Numbers: masculine construct (1-10)",
+      "position": 79,
+      "sourceReference": "Source: Components!F23"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A071",
+      "id": "HIFIL",
+      "title": "Binyanim: Hif’il",
+      "position": 80,
+      "sourceReference": "Source: Components!C12"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A073",
+      "id": "CONSTRUCT-CHAINS-RETURN",
+      "title": "Return: construct chains, plurals and definiteness",
+      "position": 81,
+      "sourceReference": "Source: Assistant-proposed scope"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A074",
+      "id": "ASSIMILATION-NUN-MEM",
+      "title": "היבלעות נ+מ",
+      "position": 82,
+      "sourceReference": "Source: Components!A14"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A075",
+      "id": "PERMISSION-IMMINENCE",
+      "title": "Infinitives 3: permission, prohibition and imminence",
+      "position": 83,
+      "sourceReference": "Source: Components!C15"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A063a",
+      "id": "FINDING-SOMEONE",
+      "title": "Integration: finding someone and something",
+      "position": 84,
+      "sourceReference": "Source: Guy-approved coherence revision, 25 October 2026; stable ID added without renumbering existing lessons."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A076",
+      "id": "STATES-HEALTH",
+      "title": "קָטֵל+קְטֵלִים",
+      "position": 85,
+      "sourceReference": "Source: Components!D10"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A093a",
+      "id": "PAST-HABIT",
+      "title": "Past habit: היה + present form (G05.06)",
+      "position": 86,
+      "sourceReference": "Source: Components!I7:Q7 — G05.06; inclusion approved by Guy"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A077",
+      "id": "COUNTING-MASCULINE-TEENS",
+      "title": "Numbers: masculine 11-19",
+      "position": 87,
+      "sourceReference": "Source: Components!F24"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A078",
+      "id": "ACTION-NOUNS-PIEL",
+      "title": "שמות פעולה: פִּיעוּל",
+      "position": 88,
+      "sourceReference": "Source: Components!D11"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A080",
+      "id": "FUTURE-I-WE-HE",
+      "title": "Future 1: I, we and he",
+      "position": 89,
+      "sourceReference": "Source: Components!C16"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A081",
+      "id": "COUNTING-HUNDREDS",
+      "title": "Numbers: counting 100-999",
+      "position": 90,
+      "sourceReference": "Source: Components!F21"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A084",
+      "id": "EMBEDDED-CLAUSES",
+      "title": "Linking and embedding clauses",
+      "position": 91,
+      "sourceReference": "Source: Components!I6:Q6 — G02.04; inclusion approved by Guy"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A083",
+      "id": "FUTURE-YOU-COMMANDS",
+      "title": "עתיד 2: גוף שני, ציווי ואיסור (להפריד?)",
+      "position": 92,
+      "sourceReference": "Source: Components!C17"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A082",
+      "id": "ACTION-NOUNS-HIFIL",
+      "title": "Action nouns from Hif’il: הסבר / הזמנה",
+      "position": 93,
+      "sourceReference": "Source: Components!D12"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A090",
+      "id": "RELATIVE-CLAUSES",
+      "title": "Relative clauses",
+      "position": 94,
+      "sourceReference": "Source: Components!I4:Q4 — G02.01; inclusion approved by Guy"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A086",
+      "id": "FUTURE-SHE-THEY",
+      "title": "עתיד 3: היא והם",
+      "position": 95,
+      "sourceReference": "Source: Components!C18"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A085",
+      "id": "ACTION-NOUNS-PAAL",
+      "title": "שמות פעולה: קְטִילָה",
+      "position": 96,
+      "sourceReference": "Source: Components!D13"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A095",
+      "id": "COUNTERFACTUAL",
+      "title": "תנאי בטל",
+      "position": 97,
+      "sourceReference": "Source: Components!C22"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A089",
+      "id": "GENERIC-THEY-PASSIVE",
+      "title": "סביל טבעי (\"אמרו לי\")",
+      "position": 98,
+      "sourceReference": "Source: Components!C20"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A087",
+      "id": "ACTION-NOUN-FAMILIES",
+      "title": "Integration: known action-noun families",
+      "position": 99,
+      "sourceReference": "Source: Components!C19"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A096",
+      "id": "PURPOSE-CLAUSES",
+      "title": "כדי ל/כדי ש",
+      "position": 100,
+      "sourceReference": "Source: Components!C23"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A091",
+      "id": "INITIAL-ALEPH-FUTURE",
+      "title": "א' שורש ראשונה עתיד גוף פעל-פועל",
+      "position": 101,
+      "sourceReference": "Source: Components!C24"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A088",
+      "id": "COUNTING-THOUSANDS",
+      "title": "Numbers: 1000-999,999",
+      "position": 102,
+      "sourceReference": "Source: Components!F25"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A096a",
+      "id": "RELATIVE-PREPOSITIONS",
+      "title": "Relative clauses with prepositions (G02.03)",
+      "position": 103,
+      "sourceReference": "Source: Components!I5:Q5 — G02.03; inclusion approved by Guy"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A093",
+      "id": "PASSIVE-NIFAL",
+      "title": "Passive 1: Nif’al with familiar active verbs",
+      "position": 104,
+      "sourceReference": "Source: Components!C21"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A098",
+      "id": "COUNTING-MILLIONS",
+      "title": "Numbers: million+",
+      "position": 105,
+      "sourceReference": "Source: Components!F26"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A099",
+      "id": "REDUCED-NIKKUD",
+      "title": "Return: reading with reduced Nikkud",
+      "position": 106,
+      "sourceReference": "Source: Assistant-proposed scope"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A093b",
+      "id": "PASSIVE-PUAL",
+      "title": "Passive 2: Pu’al from familiar Pi’el",
+      "position": 107,
+      "sourceReference": "Source: Guy-approved coherence revision, 25 October 2026; stable ID added without renumbering existing lessons."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A101",
+      "id": "QUANTITIES-IN-CONTEXT",
+      "title": "Return: quantities in connected sentences",
+      "position": 108,
+      "sourceReference": "Source: Assistant-proposed scope"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A101a",
+      "id": "SPOKEN-REGISTER",
+      "title": "Slang: meaning, tone and context",
+      "position": 109,
+      "sourceReference": "Source: Guy requested a late slang lesson on 2026-10-21; wording and exact placement proposed."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A093c",
+      "id": "PASSIVE-HUFAL",
+      "title": "Passive 3: Huf’al from familiar Hif’il",
+      "position": 110,
+      "sourceReference": "Source: Guy-approved coherence revision, 25 October 2026; stable ID added without renumbering existing lessons."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A102",
+      "id": "GEMATRIA",
+      "title": "גימטריה",
+      "position": 111,
+      "sourceReference": "Source: Components!A15"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A101b",
+      "id": "FORMAL-REGISTER",
+      "title": "Formal Hebrew: notices and correspondence",
+      "position": 112,
+      "sourceReference": "Source: Guy requested a late formal Hebrew lesson on 2026-10-21; wording and exact placement proposed."
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A097",
+      "id": "SPECIAL-VERB-PRACTICE",
+      "title": "Special verb forms and useful verb practice",
+      "position": 113,
+      "sourceReference": "Source: Components!C25"
+    },
+    {
+      "route": "Spiral A - letters first",
+      "legacyId": "A100",
+      "id": "CHANGED-APPOINTMENT",
+      "title": "Integration: changing the meeting time",
+      "position": 114,
+      "sourceReference": "Source: Assistant-proposed scope"
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B001",
+      "id": "MEMORY-B",
+      "title": "How memory works",
+      "position": 1,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B002",
+      "id": "MNT-B",
+      "title": "מנת",
+      "position": 2,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B003",
+      "id": "WRITING-BASICS-B",
+      "title": "Writing: RTL, block/script, final-form logic",
+      "position": 3,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B004",
+      "id": "VOWELS-AEI-B",
+      "title": "a,e,i, shva Nakh",
+      "position": 4,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B005",
+      "id": "AHY-B",
+      "title": "אהי",
+      "position": 5,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B006",
+      "id": "PRONOUNS-B",
+      "title": "pronouns",
+      "position": 6,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B007",
+      "id": "NOMINAL-B",
+      "title": "nominal sentence",
+      "position": 7,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B008",
+      "id": "VAV-B",
+      "title": "ו",
+      "position": 8,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B009",
+      "id": "PREFIXES-MHV-B",
+      "title": "מ,ה,ו",
+      "position": 9,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B010",
+      "id": "VAV-YOD-SPELLING-B",
+      "title": "ו+י",
+      "position": 10,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B011",
+      "id": "VOWELS-OU-B",
+      "title": "o,u vowels+lack of usage",
+      "position": 11,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B012",
+      "id": "NOUN-GENDER-B",
+      "title": "feminine",
+      "position": 12,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B013",
+      "id": "LSHZ-B",
+      "title": "לשז",
+      "position": 13,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B014",
+      "id": "DEMONSTRATIVES-SG-B",
+      "title": "demonstratives",
+      "position": 14,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B015",
+      "id": "QUESTIONS-BASIC-B",
+      "title": "questions",
+      "position": 15,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B017",
+      "id": "EXISTENCE-POSSESSION-B",
+      "title": "יש ואין",
+      "position": 16,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B018",
+      "id": "BGD-B",
+      "title": "בגד",
+      "position": 17,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B019",
+      "id": "ROOTS-B",
+      "title": "Roots & Patterns part 1: Roots",
+      "position": 18,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B020",
+      "id": "PREFIXES-BL-SHEL-B",
+      "title": "ב,ל,של",
+      "position": 19,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B021",
+      "id": "PATTERNS-B",
+      "title": "Roots & Patterns part 2: Patterns",
+      "position": 20,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B022",
+      "id": "ADJECTIVE-PREDICATES-B",
+      "title": "adjective 1: Nominal sentence",
+      "position": 21,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B023",
+      "id": "PAAL-B",
+      "title": "Roots & Patterns part 3: Binyanim (1st Binyan in present tense)",
+      "position": 22,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B024",
+      "id": "PREP-SUFFIXES-ME-HIM-HER-B",
+      "title": "Object Pronouns 1 - me, him, her",
+      "position": 23,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B025",
+      "id": "PAST-HE-SHE-THEY-B",
+      "title": "Past tense: He, she, they + Green rule",
+      "position": 24,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B026",
+      "id": "KPTZ-B",
+      "title": "כפצ",
+      "position": 25,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B027",
+      "id": "PREP-SUFFIXES-YOU-B",
+      "title": "Object Pronouns 2 - You",
+      "position": 26,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B028",
+      "id": "PAST-I-B",
+      "title": "Past tense: I (+Blue rule?)",
+      "position": 27,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B029",
+      "id": "NOUN-PLURALS-B",
+      "title": "plural",
+      "position": 28,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B030",
+      "id": "NOUN-ADJECTIVE-B",
+      "title": "adjective 2: Noun+adjective",
+      "position": 29,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B031",
+      "id": "HET-AYIN-RESH-B",
+      "title": "חער",
+      "position": 30,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B032",
+      "id": "PREP-SUFFIXES-US-THEM-B",
+      "title": "Object Pronouns 3 - us, them, them",
+      "position": 31,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B033",
+      "id": "PAST-I-WE-YOU-B",
+      "title": "Past tense: 1st+2nd",
+      "position": 32,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B034",
+      "id": "ETZEL-DIRECTIONS-B",
+      "title": "אצל",
+      "position": 33,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B035",
+      "id": "DEMONSTRATIVE-PHRASES-B",
+      "title": "adjective 3: demonstratives",
+      "position": 34,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B036",
+      "id": "QST-B",
+      "title": "קסט",
+      "position": 35,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B037",
+      "id": "PRESENT-FOUR-FORMS-B",
+      "title": "Present tense: 4 forms",
+      "position": 36,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B038",
+      "id": "PRONOUN-REPERTOIRE-B",
+      "title": "Return: full pronoun repertoire and register",
+      "position": 37,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B039",
+      "id": "DIRECT-OBJECT-ET-B",
+      "title": "את",
+      "position": 38,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B040",
+      "id": "NOMINAL-VERBAL-DESCRIPTIONS-B",
+      "title": "Return: nominal versus verbal descriptions",
+      "position": 39,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B041",
+      "id": "OBJECT-AND-RECIPIENT-B",
+      "title": "Return: suffixes inside transitive sentences",
+      "position": 40,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B042",
+      "id": "COUNTING-ONE-TEN-B",
+      "title": "Numbers: generic counting (feminine) 1-10",
+      "position": 41,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B043",
+      "id": "TOOL-PATTERNS-B",
+      "title": "מַקְטֵל+מַקְטֵלָה",
+      "position": 42,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B044",
+      "id": "PIEL-B",
+      "title": "Binyan 2",
+      "position": 43,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B045",
+      "id": "COUNTING-ONE-SHOPPING-B",
+      "title": "Numbers: counting 1",
+      "position": 44,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B046",
+      "id": "PLACE-PATTERNS-B",
+      "title": "מִקְטָל+מִקְטַלָה",
+      "position": 45,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B047",
+      "id": "COUNTING-FEMININE-B",
+      "title": "Numbers: counting 2-10 feminine",
+      "position": 46,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B048",
+      "id": "ROOT-PATTERN-RETURN-B",
+      "title": "Return: root versus pattern across nouns and verbs",
+      "position": 47,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B049",
+      "id": "NIFAL-B",
+      "title": "Binyan 3",
+      "position": 48,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B050",
+      "id": "FEELING-HOT-COLD-B",
+      "title": "חם לי, קר לי, נעים לי...",
+      "position": 49,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B051",
+      "id": "BEGED-KEFET-B",
+      "title": "חוקי בג\"ד כפ\"ת",
+      "position": 50,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B052",
+      "id": "CONSTRUCT-CHAINS-B",
+      "title": "סמיכות",
+      "position": 51,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B053",
+      "id": "SEGOLATE-NOUNS-B",
+      "title": "קֶטֶל+קְטָלִים",
+      "position": 52,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B054",
+      "id": "FOUR-ROOT-CONSONANTS-B",
+      "title": "שורש מרובע",
+      "position": 53,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B055",
+      "id": "COUNTING-ELEVEN-NINETEEN-B",
+      "title": "Numbers: counting 11-19",
+      "position": 54,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B056",
+      "id": "HITPAEL-B",
+      "title": "Binyan 4",
+      "position": 55,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B057",
+      "id": "DUAL-B",
+      "title": "dual form",
+      "position": 56,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B058",
+      "id": "QATOL-ADJECTIVES-B",
+      "title": "קָטוֹל+קְטוּלִים",
+      "position": 57,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B059",
+      "id": "SAME-DIFFERENT-B",
+      "title": "אותו (same)",
+      "position": 58,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B060",
+      "id": "COUNTING-TENS-B",
+      "title": "Numbers: counting 20-99",
+      "position": 59,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B061",
+      "id": "HIFIL-B",
+      "title": "Binyan 5",
+      "position": 60,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B062",
+      "id": "COUNTING-MASCULINE-B",
+      "title": "Numbers: masculine independent (1-10)",
+      "position": 61,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B063",
+      "id": "QATIL-ADJECTIVES-B",
+      "title": "קָטִיל+קְטִילים",
+      "position": 62,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B064",
+      "id": "GUTTURAL-VERBS-B",
+      "title": "גרוניות",
+      "position": 63,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B065",
+      "id": "INFINITIVE-MODALS-B",
+      "title": "שם פועל + איווי",
+      "position": 64,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B066",
+      "id": "PREPOSITIONS-PLURAL-SUFFIXES-B",
+      "title": "Plural-style prepositions",
+      "position": 65,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B067",
+      "id": "COUNTING-MASCULINE-CONSTRUCT-B",
+      "title": "Numbers: masculine construct (1-10)",
+      "position": 66,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B068",
+      "id": "CONSTRUCT-CHAINS-RETURN-B",
+      "title": "Return: construct chains, plurals and definiteness",
+      "position": 67,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B069",
+      "id": "FUTURE-BASIC-B",
+      "title": "עתיד 1: צורות בסיס",
+      "position": 68,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B070",
+      "id": "PROFESSIONS-PATTERNS-B",
+      "title": "קָטָּל+קָטֵּלֵת+קָטָּלִים+קָטָּלוֹת",
+      "position": 69,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B071",
+      "id": "ADJECTIVES-YOD-B",
+      "title": "Adjective with י",
+      "position": 70,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B072",
+      "id": "FINAL-HE-VERBS-B",
+      "title": "לו\"י",
+      "position": 71,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B073",
+      "id": "STATES-HEALTH-B",
+      "title": "קָטֵל+קְטֵלִים",
+      "position": 72,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B074",
+      "id": "EMBEDDED-CLAUSES-B",
+      "title": "Linking and embedding clauses",
+      "position": 73,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B075",
+      "id": "FUTURE-YOU-COMMANDS-B",
+      "title": "עתיד 2: גוף שני, ציווי ואיסור (להפריד?)",
+      "position": 74,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B076",
+      "id": "COUNTING-MASCULINE-TEENS-B",
+      "title": "Numbers: masculine 11-19",
+      "position": 75,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B077",
+      "id": "HOLLOW-VERBS-B",
+      "title": "עו\"י",
+      "position": 76,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B078",
+      "id": "COUNTING-HUNDREDS-B",
+      "title": "Numbers: counting 100-999",
+      "position": 77,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B079",
+      "id": "ACTION-NOUNS-PIEL-B",
+      "title": "שמות פעולה: פִּיעוּל",
+      "position": 78,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B080",
+      "id": "FUTURE-SHE-THEY-B",
+      "title": "עתיד 3: היא והם",
+      "position": 79,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B082",
+      "id": "ACTION-NOUNS-HIFIL-B",
+      "title": "שמות פעולה: הֵפְעֵל+הַפְעָלָה",
+      "position": 80,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B083",
+      "id": "GENERIC-THEY-PASSIVE-B",
+      "title": "סביל טבעי (\"אמרו לי\")",
+      "position": 81,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B083a",
+      "id": "PAST-HABIT-B",
+      "title": "Past habit: היה + present form (G05.06)",
+      "position": 82,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B085",
+      "id": "COUNTING-THOUSANDS-B",
+      "title": "Numbers: 1000-999,999",
+      "position": 83,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B086",
+      "id": "ACTION-NOUNS-PAAL-B",
+      "title": "שמות פעולה: קְטִילָה",
+      "position": 84,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B087",
+      "id": "ACTION-NOUN-FAMILIES-B",
+      "title": "שמות פעולה 1-3",
+      "position": 85,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B088",
+      "id": "RELATIVE-CLAUSES-B",
+      "title": "Relative clauses",
+      "position": 86,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B089",
+      "id": "INITIAL-ALEPH-FUTURE-B",
+      "title": "א' שורש ראשונה עתיד גוף פעל-פועל",
+      "position": 87,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B091",
+      "id": "COUNTERFACTUAL-B",
+      "title": "תנאי בטל",
+      "position": 88,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B092",
+      "id": "PURPOSE-CLAUSES-B",
+      "title": "כדי ל/כדי ש",
+      "position": 89,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B092a",
+      "id": "RELATIVE-PREPOSITIONS-B",
+      "title": "Relative clauses with prepositions (G02.03)",
+      "position": 90,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B093",
+      "id": "PASSIVE-MORPHOLOGY-B",
+      "title": "סביל מליצי (פועל-מפועל/הופעל-מופעל)",
+      "position": 91,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B094",
+      "id": "ASSIMILATION-NUN-MEM-B",
+      "title": "היבלעות נ+מ",
+      "position": 92,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B095",
+      "id": "SPECIAL-VERB-PRACTICE-B",
+      "title": "פעלים יוצאי דופן",
+      "position": 93,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B096",
+      "id": "COUNTING-MILLIONS-B",
+      "title": "Numbers: million+",
+      "position": 94,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B097",
+      "id": "ALPHABET-ORDER-B",
+      "title": "סדר הא\"ב",
+      "position": 95,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B098",
+      "id": "GERESH-LETTERS-B",
+      "title": "אותיות עם גרש",
+      "position": 96,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B099",
+      "id": "REDUCED-NIKKUD-B",
+      "title": "Return: reading with reduced Nikkud",
+      "position": 97,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B100",
+      "id": "GEMATRIA-B",
+      "title": "גימטריה",
+      "position": 98,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B101",
+      "id": "TENSE-PERSON-RETURN-B",
+      "title": "Return: same message across tense/person/binyan",
+      "position": 99,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral B - verbs alongside",
+      "legacyId": "B102",
+      "id": "QUANTITIES-IN-CONTEXT-B",
+      "title": "Return: quantities in connected sentences",
+      "position": 100,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C001",
+      "id": "MEMORY-C",
+      "title": "How memory works",
+      "position": 1,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C002",
+      "id": "MNT-C",
+      "title": "מנת",
+      "position": 2,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C003",
+      "id": "WRITING-BASICS-C",
+      "title": "Writing: RTL, block/script, final-form logic",
+      "position": 3,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C004",
+      "id": "VOWELS-AEI-C",
+      "title": "a,e,i, shva Nakh",
+      "position": 4,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C005",
+      "id": "AHY-C",
+      "title": "אהי",
+      "position": 5,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C006",
+      "id": "PRONOUNS-C",
+      "title": "pronouns",
+      "position": 6,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C007",
+      "id": "NOMINAL-C",
+      "title": "nominal sentence",
+      "position": 7,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C008",
+      "id": "VAV-C",
+      "title": "ו",
+      "position": 8,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C009",
+      "id": "PREFIXES-MHV-C",
+      "title": "מ,ה,ו",
+      "position": 9,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C010",
+      "id": "VAV-YOD-SPELLING-C",
+      "title": "ו+י",
+      "position": 10,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C011",
+      "id": "VOWELS-OU-C",
+      "title": "o,u vowels+lack of usage",
+      "position": 11,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C012",
+      "id": "NOUN-GENDER-C",
+      "title": "feminine",
+      "position": 12,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C013",
+      "id": "LSHZ-C",
+      "title": "לשז",
+      "position": 13,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C014",
+      "id": "DEMONSTRATIVES-SG-C",
+      "title": "demonstratives",
+      "position": 14,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C015",
+      "id": "QUESTIONS-BASIC-C",
+      "title": "questions",
+      "position": 15,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C017",
+      "id": "EXISTENCE-POSSESSION-C",
+      "title": "יש ואין",
+      "position": 16,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C018",
+      "id": "BGD-C",
+      "title": "בגד",
+      "position": 17,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C019",
+      "id": "PREFIXES-BL-SHEL-C",
+      "title": "ב,ל,של",
+      "position": 18,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C020",
+      "id": "ADJECTIVE-PREDICATES-C",
+      "title": "adjective 1: Nominal sentence",
+      "position": 19,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C021",
+      "id": "ROOTS-C",
+      "title": "Roots & Patterns part 1: Roots",
+      "position": 20,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C022",
+      "id": "PREP-SUFFIXES-ME-HIM-HER-C",
+      "title": "Object Pronouns 1 - me, him, her",
+      "position": 21,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C023",
+      "id": "PATTERNS-C",
+      "title": "Roots & Patterns part 2: Patterns",
+      "position": 22,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C024",
+      "id": "KPTZ-C",
+      "title": "כפצ",
+      "position": 23,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C025",
+      "id": "PREP-SUFFIXES-YOU-C",
+      "title": "Object Pronouns 2 - You",
+      "position": 24,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C026",
+      "id": "TOOL-PATTERNS-C",
+      "title": "מַקְטֵל+מַקְטֵלָה",
+      "position": 25,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C027",
+      "id": "NOUN-PLURALS-C",
+      "title": "plural",
+      "position": 26,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C028",
+      "id": "NOUN-ADJECTIVE-C",
+      "title": "adjective 2: Noun+adjective",
+      "position": 27,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C029",
+      "id": "PAAL-C",
+      "title": "Roots & Patterns part 3: Binyanim (1st Binyan in present tense)",
+      "position": 28,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C030",
+      "id": "HET-AYIN-RESH-C",
+      "title": "חער",
+      "position": 29,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C031",
+      "id": "PREP-SUFFIXES-US-THEM-C",
+      "title": "Object Pronouns 3 - us, them, them",
+      "position": 30,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C032",
+      "id": "PRESENT-FOUR-FORMS-C",
+      "title": "Present tense: 4 forms",
+      "position": 31,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C033",
+      "id": "ETZEL-DIRECTIONS-C",
+      "title": "אצל",
+      "position": 32,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C034",
+      "id": "DEMONSTRATIVE-PHRASES-C",
+      "title": "adjective 3: demonstratives",
+      "position": 33,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C035",
+      "id": "QST-C",
+      "title": "קסט",
+      "position": 34,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C036",
+      "id": "PRONOUN-REPERTOIRE-C",
+      "title": "Return: full pronoun repertoire and register",
+      "position": 35,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C037",
+      "id": "NOMINAL-VERBAL-DESCRIPTIONS-C",
+      "title": "Return: nominal versus verbal descriptions",
+      "position": 36,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C038",
+      "id": "PLACE-PATTERNS-C",
+      "title": "מִקְטָל+מִקְטַלָה",
+      "position": 37,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C039",
+      "id": "COUNTING-ONE-TEN-C",
+      "title": "Numbers: generic counting (feminine) 1-10",
+      "position": 38,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C040",
+      "id": "DIRECT-OBJECT-ET-C",
+      "title": "את",
+      "position": 39,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C041",
+      "id": "PAST-HE-SHE-THEY-C",
+      "title": "Past tense: He, she, they + Green rule",
+      "position": 40,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C042",
+      "id": "COUNTING-ONE-SHOPPING-C",
+      "title": "Numbers: counting 1",
+      "position": 41,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C043",
+      "id": "SEGOLATE-NOUNS-C",
+      "title": "קֶטֶל+קְטָלִים",
+      "position": 42,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C044",
+      "id": "COUNTING-FEMININE-C",
+      "title": "Numbers: counting 2-10 feminine",
+      "position": 43,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C045",
+      "id": "PAST-I-C",
+      "title": "Past tense: I (+Blue rule?)",
+      "position": 44,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C046",
+      "id": "CONSTRUCT-CHAINS-C",
+      "title": "סמיכות",
+      "position": 45,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C047",
+      "id": "PAST-I-WE-YOU-C",
+      "title": "Past tense: 1st+2nd",
+      "position": 46,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C048",
+      "id": "OBJECT-AND-RECIPIENT-C",
+      "title": "Return: suffixes inside transitive sentences",
+      "position": 47,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C049",
+      "id": "COUNTING-ELEVEN-NINETEEN-C",
+      "title": "Numbers: counting 11-19",
+      "position": 48,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C050",
+      "id": "PIEL-C",
+      "title": "Binyan 2",
+      "position": 49,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C051",
+      "id": "ADJECTIVES-YOD-C",
+      "title": "Adjective with י",
+      "position": 50,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C052",
+      "id": "ROOT-PATTERN-RETURN-C",
+      "title": "Return: root versus pattern across nouns and verbs",
+      "position": 51,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C053",
+      "id": "QATOL-ADJECTIVES-C",
+      "title": "קָטוֹל+קְטוּלִים",
+      "position": 52,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C054",
+      "id": "FEELING-HOT-COLD-C",
+      "title": "חם לי, קר לי, נעים לי...",
+      "position": 53,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C055",
+      "id": "COUNTING-TENS-C",
+      "title": "Numbers: counting 20-99",
+      "position": 54,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C056",
+      "id": "NIFAL-C",
+      "title": "Binyan 3",
+      "position": 55,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C057",
+      "id": "DUAL-C",
+      "title": "dual form",
+      "position": 56,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C058",
+      "id": "QATIL-ADJECTIVES-C",
+      "title": "קָטִיל+קְטִילים",
+      "position": 57,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C059",
+      "id": "FOUR-ROOT-CONSONANTS-C",
+      "title": "שורש מרובע",
+      "position": 58,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C060",
+      "id": "COUNTING-MASCULINE-C",
+      "title": "Numbers: masculine independent (1-10)",
+      "position": 59,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C061",
+      "id": "SAME-DIFFERENT-C",
+      "title": "אותו (same)",
+      "position": 60,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C062",
+      "id": "HITPAEL-C",
+      "title": "Binyan 4",
+      "position": 61,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C063",
+      "id": "GUTTURAL-VERBS-C",
+      "title": "גרוניות",
+      "position": 62,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C064",
+      "id": "COUNTING-MASCULINE-CONSTRUCT-C",
+      "title": "Numbers: masculine construct (1-10)",
+      "position": 63,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C065",
+      "id": "CONSTRUCT-CHAINS-RETURN-C",
+      "title": "Return: construct chains, plurals and definiteness",
+      "position": 64,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C066",
+      "id": "STATES-HEALTH-C",
+      "title": "קָטֵל+קְטֵלִים",
+      "position": 65,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C067",
+      "id": "FINAL-HE-VERBS-C",
+      "title": "לו\"י",
+      "position": 66,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C068",
+      "id": "COUNTING-MASCULINE-TEENS-C",
+      "title": "Numbers: masculine 11-19",
+      "position": 67,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C069",
+      "id": "HIFIL-C",
+      "title": "Binyan 5",
+      "position": 68,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C070",
+      "id": "PROFESSIONS-PATTERNS-C",
+      "title": "קָטָּל+קָטֵּלֵת+קָטָּלִים+קָטָּלוֹת",
+      "position": 69,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C071",
+      "id": "PREPOSITIONS-PLURAL-SUFFIXES-C",
+      "title": "Plural-style prepositions",
+      "position": 70,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C072",
+      "id": "HOLLOW-VERBS-C",
+      "title": "עו\"י",
+      "position": 71,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C073",
+      "id": "COUNTING-HUNDREDS-C",
+      "title": "Numbers: counting 100-999",
+      "position": 72,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C074",
+      "id": "INFINITIVE-MODALS-C",
+      "title": "שם פועל + איווי",
+      "position": 73,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C075",
+      "id": "ACTION-NOUNS-PIEL-C",
+      "title": "שמות פעולה: פִּיעוּל",
+      "position": 74,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C077",
+      "id": "FUTURE-BASIC-C",
+      "title": "עתיד 1: צורות בסיס",
+      "position": 75,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C078",
+      "id": "ACTION-NOUNS-HIFIL-C",
+      "title": "שמות פעולה: הֵפְעֵל+הַפְעָלָה",
+      "position": 76,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C079",
+      "id": "EMBEDDED-CLAUSES-C",
+      "title": "Linking and embedding clauses",
+      "position": 77,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C080",
+      "id": "FUTURE-YOU-COMMANDS-C",
+      "title": "עתיד 2: גוף שני, ציווי ואיסור (להפריד?)",
+      "position": 78,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C081",
+      "id": "COUNTING-THOUSANDS-C",
+      "title": "Numbers: 1000-999,999",
+      "position": 79,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C082",
+      "id": "ACTION-NOUNS-PAAL-C",
+      "title": "שמות פעולה: קְטִילָה",
+      "position": 80,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C083",
+      "id": "FUTURE-SHE-THEY-C",
+      "title": "עתיד 3: היא והם",
+      "position": 81,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C085",
+      "id": "ACTION-NOUN-FAMILIES-C",
+      "title": "שמות פעולה 1-3",
+      "position": 82,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C086",
+      "id": "RELATIVE-CLAUSES-C",
+      "title": "Relative clauses",
+      "position": 83,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C087",
+      "id": "GENERIC-THEY-PASSIVE-C",
+      "title": "סביל טבעי (\"אמרו לי\")",
+      "position": 84,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C087a",
+      "id": "PAST-HABIT-C",
+      "title": "Past habit: היה + present form (G05.06)",
+      "position": 85,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C088",
+      "id": "INITIAL-ALEPH-FUTURE-C",
+      "title": "א' שורש ראשונה עתיד גוף פעל-פועל",
+      "position": 86,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C090",
+      "id": "PURPOSE-CLAUSES-C",
+      "title": "כדי ל/כדי ש",
+      "position": 87,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C091",
+      "id": "COUNTERFACTUAL-C",
+      "title": "תנאי בטל",
+      "position": 88,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C092",
+      "id": "PASSIVE-MORPHOLOGY-C",
+      "title": "סביל מליצי (פועל-מפועל/הופעל-מופעל)",
+      "position": 89,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C092a",
+      "id": "RELATIVE-PREPOSITIONS-C",
+      "title": "Relative clauses with prepositions (G02.03)",
+      "position": 90,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C093",
+      "id": "SPECIAL-VERB-PRACTICE-C",
+      "title": "פעלים יוצאי דופן",
+      "position": 91,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C094",
+      "id": "ASSIMILATION-NUN-MEM-C",
+      "title": "היבלעות נ+מ",
+      "position": 92,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C095",
+      "id": "COUNTING-MILLIONS-C",
+      "title": "Numbers: million+",
+      "position": 93,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C096",
+      "id": "BEGED-KEFET-C",
+      "title": "חוקי בג\"ד כפ\"ת",
+      "position": 94,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C097",
+      "id": "ALPHABET-ORDER-C",
+      "title": "סדר הא\"ב",
+      "position": 95,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C098",
+      "id": "GERESH-LETTERS-C",
+      "title": "אותיות עם גרש",
+      "position": 96,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C099",
+      "id": "REDUCED-NIKKUD-C",
+      "title": "Return: reading with reduced Nikkud",
+      "position": 97,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C100",
+      "id": "GEMATRIA-C",
+      "title": "גימטריה",
+      "position": 98,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C101",
+      "id": "QUANTITIES-IN-CONTEXT-C",
+      "title": "Return: quantities in connected sentences",
+      "position": 99,
+      "sourceReference": ""
+    },
+    {
+      "route": "Spiral C - patterns bridge",
+      "legacyId": "C102",
+      "id": "TENSE-PERSON-RETURN-C",
+      "title": "Return: same message across tense/person/binyan",
+      "position": 100,
+      "sourceReference": ""
+    }
+  ],
+  "policy": "Stable content IDs; position is separate. B/C/CONS suffixes distinguish alternative lesson records. External WordPress/Vimeo/Drive IDs and original lesson numbers remain source locators, not course-order IDs. Historical snapshots are immutable evidence; current artifacts resolve old aliases through this map."
+}

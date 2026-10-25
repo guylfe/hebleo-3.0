@@ -1,0 +1,689 @@
+{
+  "catalog": {
+    "lessons": 114,
+    "targets": 1087,
+    "sentences": 528,
+    "priorTargetsRetained": 1069,
+    "lost": [],
+    "relocations": 75,
+    "added": [
+      {
+        "id": "A030",
+        "head": "שירותים",
+        "meaning": "toilets / restroom"
+      },
+      {
+        "id": "A030",
+        "head": "נכון",
+        "meaning": "correct / right"
+      },
+      {
+        "id": "A030",
+        "head": "בסדר",
+        "meaning": "okay / all right"
+      },
+      {
+        "id": "A028",
+        "head": "למעלה",
+        "meaning": "up / upstairs"
+      },
+      {
+        "id": "A028",
+        "head": "למטה",
+        "meaning": "down / downstairs"
+      },
+      {
+        "id": "A042",
+        "head": "מספיק",
+        "meaning": "enough"
+      },
+      {
+        "id": "A042",
+        "head": "בדיוק",
+        "meaning": "exactly"
+      },
+      {
+        "id": "A060",
+        "head": "כמעט",
+        "meaning": "almost"
+      },
+      {
+        "id": "A028a",
+        "head": "הורים",
+        "meaning": "parents"
+      },
+      {
+        "id": "A028a",
+        "head": "סבא",
+        "meaning": "grandfather"
+      },
+      {
+        "id": "A028a",
+        "head": "סבתא",
+        "meaning": "grandmother"
+      },
+      {
+        "id": "A017",
+        "head": "לבד",
+        "meaning": "alone / by oneself"
+      },
+      {
+        "id": "A023",
+        "head": "קצת",
+        "meaning": "a little / a few"
+      },
+      {
+        "id": "A038",
+        "head": "דבר",
+        "meaning": "thing / matter"
+      },
+      {
+        "id": "A031",
+        "head": "הצטער–מצטער",
+        "meaning": "be sorry (present forms here)"
+      },
+      {
+        "id": "A051",
+        "head": "כבר לא",
+        "meaning": "no longer"
+      },
+      {
+        "id": "A084",
+        "head": "כלומר",
+        "meaning": "that is / in other words"
+      },
+      {
+        "id": "A050",
+        "head": "עדיין",
+        "meaning": "still / yet"
+      }
+    ],
+    "ids": 404,
+    "spacing": [
+      {
+        "family": "letters",
+        "from": "MNT",
+        "to": "AHY",
+        "intervening": 2
+      },
+      {
+        "family": "letters",
+        "from": "AHY",
+        "to": "VAV",
+        "intervening": 2
+      },
+      {
+        "family": "letters",
+        "from": "VAV",
+        "to": "LSHZ",
+        "intervening": 2
+      },
+      {
+        "family": "letters",
+        "from": "LSHZ",
+        "to": "BGD",
+        "intervening": 2
+      },
+      {
+        "family": "letters",
+        "from": "BGD",
+        "to": "KPTZ",
+        "intervening": 2
+      },
+      {
+        "family": "letters",
+        "from": "KPTZ",
+        "to": "HET-AYIN-RESH",
+        "intervening": 3
+      },
+      {
+        "family": "letters",
+        "from": "HET-AYIN-RESH",
+        "to": "QST",
+        "intervening": 4
+      },
+      {
+        "family": "adjectives",
+        "from": "ADJECTIVE-PREDICATES",
+        "to": "NOUN-ADJECTIVE",
+        "intervening": 6
+      },
+      {
+        "family": "adjectives",
+        "from": "NOUN-ADJECTIVE",
+        "to": "DEMONSTRATIVE-PHRASES",
+        "intervening": 3
+      },
+      {
+        "family": "adjectives",
+        "from": "DEMONSTRATIVE-PHRASES",
+        "to": "ADJECTIVES-YOD",
+        "intervening": 28
+      },
+      {
+        "family": "suffixes",
+        "from": "PREP-SUFFIXES-ME-HIM-HER",
+        "to": "PREP-SUFFIXES-US-THEM",
+        "intervening": 2
+      },
+      {
+        "family": "suffixes",
+        "from": "PREP-SUFFIXES-US-THEM",
+        "to": "PREP-SUFFIXES-YOU-SG",
+        "intervening": 3
+      },
+      {
+        "family": "suffixes",
+        "from": "PREP-SUFFIXES-YOU-SG",
+        "to": "PREP-SUFFIXES-YOU-PL",
+        "intervening": 4
+      },
+      {
+        "family": "suffixes",
+        "from": "PREP-SUFFIXES-YOU-PL",
+        "to": "ETZEL-DIRECTIONS",
+        "intervening": 6
+      },
+      {
+        "family": "suffixes",
+        "from": "ETZEL-DIRECTIONS",
+        "to": "IM-WITH",
+        "intervening": 2
+      },
+      {
+        "family": "suffixes",
+        "from": "IM-WITH",
+        "to": "OBJECT-AND-RECIPIENT",
+        "intervening": 7
+      },
+      {
+        "family": "suffixes",
+        "from": "OBJECT-AND-RECIPIENT",
+        "to": "PREPOSITIONS-PLURAL-SUFFIXES",
+        "intervening": 20
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-ONE-TEN",
+        "to": "COUNTING-ONE-SHOPPING",
+        "intervening": 3
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-ONE-SHOPPING",
+        "to": "COUNTING-FEMININE",
+        "intervening": 6
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-FEMININE",
+        "to": "COUNTING-ELEVEN-NINETEEN",
+        "intervening": 14
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-ELEVEN-NINETEEN",
+        "to": "COUNTING-TENS",
+        "intervening": 4
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-TENS",
+        "to": "COUNTING-MASCULINE",
+        "intervening": 8
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-MASCULINE",
+        "to": "COUNTING-MASCULINE-CONSTRUCT",
+        "intervening": 3
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-MASCULINE-CONSTRUCT",
+        "to": "COUNTING-MASCULINE-TEENS",
+        "intervening": 7
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-MASCULINE-TEENS",
+        "to": "COUNTING-HUNDREDS",
+        "intervening": 2
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-HUNDREDS",
+        "to": "COUNTING-THOUSANDS",
+        "intervening": 11
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-THOUSANDS",
+        "to": "COUNTING-MILLIONS",
+        "intervening": 2
+      },
+      {
+        "family": "numbers",
+        "from": "COUNTING-MILLIONS",
+        "to": "QUANTITIES-IN-CONTEXT",
+        "intervening": 2
+      },
+      {
+        "family": "numbers",
+        "from": "QUANTITIES-IN-CONTEXT",
+        "to": "GEMATRIA",
+        "intervening": 2
+      },
+      {
+        "family": "spelling",
+        "from": "WRITING-BASICS",
+        "to": "VAV-YOD-SPELLING",
+        "intervening": 6
+      },
+      {
+        "family": "spelling",
+        "from": "VAV-YOD-SPELLING",
+        "to": "BEGED-KEFET",
+        "intervening": 20
+      },
+      {
+        "family": "spelling",
+        "from": "BEGED-KEFET",
+        "to": "GERESH-LETTERS",
+        "intervening": 6
+      },
+      {
+        "family": "spelling",
+        "from": "GERESH-LETTERS",
+        "to": "ALPHABET-ORDER",
+        "intervening": 4
+      },
+      {
+        "family": "spelling",
+        "from": "ALPHABET-ORDER",
+        "to": "REDUCED-NIKKUD",
+        "intervening": 62
+      },
+      {
+        "family": "verbs",
+        "from": "PRESENT-BA-SAM-OLE-ROTZE",
+        "to": "COMMANDS-GIVE-SIT-GO",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "COMMANDS-GIVE-SIT-GO",
+        "to": "PAAL",
+        "intervening": 8
+      },
+      {
+        "family": "verbs",
+        "from": "PAAL",
+        "to": "INFINITIVE-WANT",
+        "intervening": 5
+      },
+      {
+        "family": "verbs",
+        "from": "INFINITIVE-WANT",
+        "to": "MODALS-CAN-NEED-MUST",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "MODALS-CAN-NEED-MUST",
+        "to": "PAST-HE-SHE-THEY",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "PAST-HE-SHE-THEY",
+        "to": "PAST-I",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "PAST-I",
+        "to": "PRESENT-FOUR-FORMS",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "PRESENT-FOUR-FORMS",
+        "to": "PAST-I-WE-YOU",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "PAST-I-WE-YOU",
+        "to": "PIEL",
+        "intervening": 4
+      },
+      {
+        "family": "verbs",
+        "from": "PIEL",
+        "to": "FOUR-ROOT-CONSONANTS",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "FOUR-ROOT-CONSONANTS",
+        "to": "NIFAL",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "NIFAL",
+        "to": "FINAL-HE-VERBS",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "FINAL-HE-VERBS",
+        "to": "HITPAEL",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "HITPAEL",
+        "to": "HOLLOW-VERBS",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "HOLLOW-VERBS",
+        "to": "HIFIL",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "HIFIL",
+        "to": "PERMISSION-IMMINENCE",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "PERMISSION-IMMINENCE",
+        "to": "PAST-HABIT",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "PAST-HABIT",
+        "to": "FUTURE-I-WE-HE",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "FUTURE-I-WE-HE",
+        "to": "FUTURE-YOU-COMMANDS",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "FUTURE-YOU-COMMANDS",
+        "to": "FUTURE-SHE-THEY",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "FUTURE-SHE-THEY",
+        "to": "GENERIC-THEY-PASSIVE",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "GENERIC-THEY-PASSIVE",
+        "to": "INITIAL-ALEPH-FUTURE",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "INITIAL-ALEPH-FUTURE",
+        "to": "PASSIVE-NIFAL",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "PASSIVE-NIFAL",
+        "to": "PASSIVE-PUAL",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "PASSIVE-PUAL",
+        "to": "PASSIVE-HUFAL",
+        "intervening": 2
+      },
+      {
+        "family": "verbs",
+        "from": "PASSIVE-HUFAL",
+        "to": "SPECIAL-VERB-PRACTICE",
+        "intervening": 2
+      },
+      {
+        "family": "patterns",
+        "from": "ROOTS",
+        "to": "PATTERNS",
+        "intervening": 3
+      },
+      {
+        "family": "patterns",
+        "from": "PATTERNS",
+        "to": "TOOL-PATTERNS",
+        "intervening": 6
+      },
+      {
+        "family": "patterns",
+        "from": "TOOL-PATTERNS",
+        "to": "PLACE-PATTERNS",
+        "intervening": 8
+      },
+      {
+        "family": "patterns",
+        "from": "PLACE-PATTERNS",
+        "to": "SEGOLATE-NOUNS",
+        "intervening": 9
+      },
+      {
+        "family": "patterns",
+        "from": "SEGOLATE-NOUNS",
+        "to": "FOUR-ROOT-CONSONANTS",
+        "intervening": 5
+      },
+      {
+        "family": "patterns",
+        "from": "FOUR-ROOT-CONSONANTS",
+        "to": "QATOL-ADJECTIVES",
+        "intervening": 3
+      },
+      {
+        "family": "patterns",
+        "from": "QATOL-ADJECTIVES",
+        "to": "PROFESSIONS-PATTERNS",
+        "intervening": 2
+      },
+      {
+        "family": "patterns",
+        "from": "PROFESSIONS-PATTERNS",
+        "to": "QATIL-ADJECTIVES",
+        "intervening": 5
+      },
+      {
+        "family": "patterns",
+        "from": "QATIL-ADJECTIVES",
+        "to": "STATES-HEALTH",
+        "intervening": 6
+      },
+      {
+        "family": "patterns",
+        "from": "STATES-HEALTH",
+        "to": "ACTION-NOUNS-PIEL",
+        "intervening": 2
+      },
+      {
+        "family": "patterns",
+        "from": "ACTION-NOUNS-PIEL",
+        "to": "ACTION-NOUNS-HIFIL",
+        "intervening": 4
+      },
+      {
+        "family": "patterns",
+        "from": "ACTION-NOUNS-HIFIL",
+        "to": "ACTION-NOUNS-PAAL",
+        "intervening": 2
+      },
+      {
+        "family": "clauses",
+        "from": "EMBEDDED-CLAUSES",
+        "to": "RELATIVE-CLAUSES",
+        "intervening": 2
+      },
+      {
+        "family": "clauses",
+        "from": "RELATIVE-CLAUSES",
+        "to": "COUNTERFACTUAL",
+        "intervening": 2
+      },
+      {
+        "family": "clauses",
+        "from": "COUNTERFACTUAL",
+        "to": "PURPOSE-CLAUSES",
+        "intervening": 2
+      },
+      {
+        "family": "clauses",
+        "from": "PURPOSE-CLAUSES",
+        "to": "RELATIVE-PREPOSITIONS",
+        "intervening": 2
+      }
+    ],
+    "requests": 1972,
+    "changedCells": 1858,
+    "nativeMoves": 17,
+    "archivedIdReferences": [
+      {
+        "sheet": "Spiral A - letters first",
+        "row": 60,
+        "col": 2,
+        "id": "A092"
+      },
+      {
+        "sheet": "Spiral A - letters first",
+        "row": 60,
+        "col": 2,
+        "id": "A092"
+      },
+      {
+        "sheet": "Spiral B - verbs alongside",
+        "row": 18,
+        "col": 7,
+        "id": "B016"
+      },
+      {
+        "sheet": "Spiral B - verbs alongside",
+        "row": 18,
+        "col": 7,
+        "id": "B016"
+      },
+      {
+        "sheet": "Spiral B - verbs alongside",
+        "row": 35,
+        "col": 7,
+        "id": "B081"
+      },
+      {
+        "sheet": "Spiral B - verbs alongside",
+        "row": 35,
+        "col": 7,
+        "id": "B081"
+      },
+      {
+        "sheet": "Spiral B - verbs alongside",
+        "row": 37,
+        "col": 7,
+        "id": "B084"
+      },
+      {
+        "sheet": "Spiral B - verbs alongside",
+        "row": 37,
+        "col": 7,
+        "id": "B084"
+      },
+      {
+        "sheet": "Spiral B - verbs alongside",
+        "row": 82,
+        "col": 7,
+        "id": "B090"
+      },
+      {
+        "sheet": "Spiral B - verbs alongside",
+        "row": 82,
+        "col": 7,
+        "id": "B090"
+      },
+      {
+        "sheet": "Spiral C - patterns bridge",
+        "row": 18,
+        "col": 7,
+        "id": "C016"
+      },
+      {
+        "sheet": "Spiral C - patterns bridge",
+        "row": 18,
+        "col": 7,
+        "id": "C016"
+      },
+      {
+        "sheet": "Spiral C - patterns bridge",
+        "row": 36,
+        "col": 7,
+        "id": "C076"
+      },
+      {
+        "sheet": "Spiral C - patterns bridge",
+        "row": 36,
+        "col": 7,
+        "id": "C076"
+      },
+      {
+        "sheet": "Spiral C - patterns bridge",
+        "row": 49,
+        "col": 7,
+        "id": "C084"
+      },
+      {
+        "sheet": "Spiral C - patterns bridge",
+        "row": 49,
+        "col": 7,
+        "id": "C084"
+      },
+      {
+        "sheet": "Spiral C - patterns bridge",
+        "row": 84,
+        "col": 7,
+        "id": "C089"
+      },
+      {
+        "sheet": "Spiral C - patterns bridge",
+        "row": 84,
+        "col": 7,
+        "id": "C089"
+      }
+    ],
+    "limits": "Spacing checks use teaching-purpose families. Form checks are bounded lexical checks, not native acceptance. External platform IDs are provenance and not renamed. Historical snapshots retain their original IDs and are resolved by the alias map."
+  },
+  "audit": {
+    "lessons": 114,
+    "targets": 1087,
+    "prereqErrors": [],
+    "letterErrors": [],
+    "countErrors": [],
+    "unknown": [],
+    "spacing": {
+      "present": 27,
+      "imperative": 30,
+      "intervening": 2
+    },
+    "limits": "Token/letter/ID/form availability checks are bounded. Legacy form evidence is reused and is not proof of an explicit teaching step, sense or naturalness; manual coherence review is separate."
+  }
+}
