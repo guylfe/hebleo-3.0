@@ -122,16 +122,22 @@ test('QA positive: integrated pack pages all traverse with production adapter, e
 });
 
 test('QA-TXT-01 learner outer Continue must not complete an unattempted gated text-only lesson',async t=>{
- const s=new Store();t.after(()=>s.close());addSynthetic(s,[choice,recall]);const {origin}=await http(t,s),{doc}=await actualApp(t,s,origin);
+ const s=new Store();t.after(()=>s.close());addSynthetic(s,[choice,recall]);const {origin}=await http(t,s),{doc,w}=await actualApp(t,s,origin);
  assert.equal(doc.querySelector('[data-reader-action="next"]').disabled,true);assert.equal(s.learner('learner-demo').textPages,undefined);
- const outer=doc.querySelector('.lesson-footer [data-action="step"][data-value="complete"]');assert.ok(outer);outer.click();await until(()=>s.learner('learner-demo').resumes['qa-text-only']?.step==='complete');
+ const outer=doc.querySelector('.lesson-footer [data-action="step"][data-value="complete"]');assert.ok(outer);
+ // The corrected control refuses advancement; do not wait for the invalid terminal
+ // progress write that the original reproduction deliberately exposed on d912e746.
+ assert.equal(outer.disabled,true);const protectedRows=allRows(s);outer.click();await tick();assert.equal(allRows(s),protectedRows);
  assert.equal(s.learner('learner-demo').completed.includes('qa-text-only'),false,'Outer Continue bypassed all mandatory choice/recall gates and marked the lesson complete');
+ const radio=doc.querySelector('[name="reader-choice"]');radio.checked=true;radio.dispatchEvent(new w.Event('change',{bubbles:true}));doc.querySelector('[data-reader-action="check"]').click();assert.equal(outer.disabled,true);
+ doc.querySelector('[data-reader-action="next"]').click();const attempt=doc.querySelector('[data-reader-attempt]');attempt.value='SYNTHETIC committed answer';attempt.dispatchEvent(new w.Event('input',{bubbles:true}));doc.querySelector('[data-reader-action="reveal"]').click();assert.equal(outer.disabled,false);outer.click();await until(()=>s.learner('learner-demo').completed.includes('qa-text-only'));
 });
 
 test('QA-TXT-01 Preview outer Continue must respect the same mandatory page gate',t=>{
  const s=new Store();t.after(()=>s.close());const l=addSynthetic(s,[choice,recall]),dom=new JSDOM('<main></main>',{pretendToBeVisual:true});t.after(()=>dom.window.close());let next=0;
  const renderer=createLearnerRenderer(),dispose=renderer.mount(dom.window.document.querySelector('main'),{content:s.snapshot(),lessonId:l.id,componentId:'qa-text',step:'learn',preferences:{},actions:{next(){next++;}}});t.after(dispose);
  assert.equal(dom.window.document.querySelector('[data-reader-action="next"]').disabled,true);dom.window.document.querySelector('.lesson-footer [data-action="next-step"]').click();assert.equal(next,0,'Preview outer Continue bypasses the required page answer');
+ const doc=dom.window.document,w=dom.window,radio=doc.querySelector('[name="reader-choice"]');radio.checked=true;radio.dispatchEvent(new w.Event('change',{bubbles:true}));doc.querySelector('[data-reader-action="check"]').click();doc.querySelector('[data-reader-action="next"]').click();const attempt=doc.querySelector('[data-reader-attempt]');attempt.value='SYNTHETIC Preview commitment';attempt.dispatchEvent(new w.Event('input',{bubbles:true}));doc.querySelector('[data-reader-action="reveal"]').click();doc.querySelector('.lesson-footer [data-action="next-step"]').click();assert.equal(next,1);assert.equal(s.learner('learner-demo').textPages,undefined);
 });
 
 test('QA-TXT-02 fresh-build demo reset must clear separately persisted text-page responses',t=>{
@@ -142,4 +148,12 @@ test('QA-TXT-02 fresh-build demo reset must clear separately persisted text-page
 test('QA-TXT-03 new prerequisite references must reject cycles before staging an import',t=>{
  const s=new Store();t.after(()=>s.close());const p=structuredClone(pack);p.lessons[0].prerequisites='MNT';p.lessons[1].prerequisites='MEMORY';const before=allRows(s);
  assert.throws(()=>s.importTextDraft(requestInput(s,p)),/cycl|prerequisite/i,'A mutual MEMORY/MNT prerequisite cycle was accepted');assert.equal(allRows(s),before);
+});
+
+test('QA-TXT-01 outer Finish waits for a delayed committed page save before navigating',async t=>{
+ const s=new Store();t.after(()=>s.close());addSynthetic(s,[recall]);const {origin}=await http(t,s);let release,hold=true;
+ const {doc,w}=await actualApp(t,s,origin,{beforeFetch:async(path,options)=>{if(path==='/api/text-progress'&&options?.method==='POST'&&hold&&JSON.parse(options.body).response.revealed){hold=false;await new Promise(r=>release=r);}}});t.after(()=>release?.());
+ const attempt=doc.querySelector('[data-reader-attempt]');attempt.value='SYNTHETIC pending answer';attempt.dispatchEvent(new w.Event('input',{bubbles:true}));doc.querySelector('[data-reader-action="reveal"]').click();await until(()=>release);
+ doc.querySelector('.lesson-footer [data-action="step"][data-value="complete"]').click();await tick();assert.equal(s.learner('learner-demo').completed.includes('qa-text-only'),false);assert.ok(doc.querySelector('[data-reader-heading]'));
+ release();await until(()=>s.learner('learner-demo').completed.includes('qa-text-only'));assert.equal(s.learner('learner-demo').textPages[0].responses[recall.id].revealed,true);
 });

@@ -1,5 +1,11 @@
 # Hebleo application UX contract
 
+## Interactive text gates — 25 October 2026
+
+ENGINEERING_BRIEF.md in docs/curriculum/first20-20261025 owns the authored page-gate requirement. public/text-contract.js owns the shared gate predicate; public/text-reader.js owns reader state and cancellation; learner-view.js owns the disabled outer Continue and inline reason across learner and Preview. Outer Continue waits for every required activity in the explanation, and Finish additionally requires all authored text gates in the lesson. Earlier portions and course navigation remain available. Store applies the same predicate before completion, including grading-driven completion. Page responses alone never complete a lesson. A forward continuation waits for pending response saves; failed saves retain answers and the existing Retry path. Preview keeps all of this disposable. No visual tokens change.
+
+Unpublished teaching eligibility is independent of removable import flags: pending adapted provenance, unresolved targets, human-review status and retained import identity remain ineligible for publication, active/historical restore and rollback. Source locators and prior approval provenance remain intact. Valid unpublished backup recovery remains supported. The normal explicit fresh-build demo reset clears text responses with other progress; the requested preservation installation never invokes that reset.
+
 ## Post-answer vocabulary — E10
 
 The shared vocabulary-reminder primitive owns nonmodal hover/focus preview, activation pinning, pointer transit, viewport placement, exact-trigger focus return and disposal. post-answer-vocabulary.js decorates only existing runtime-ID-backed occurrences after either grading outcome; it never identifies words by text. Recognition shows the original question word, matching uses explicit ID-backed words/placements, and typing shows its target entry independently of arbitrary learner input. Unbound choices, prompts, cloze/transformation text and ordering tokens remain plain. Answer actions stay locked.

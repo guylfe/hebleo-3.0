@@ -1,6 +1,6 @@
 # Native first20 candidate — 25 October 2026
 
-This is the integrated implementation candidate, pending independent review and preservation installation. No first20 teaching has been published. The shared checkout/index and the currently served demo remain unchanged.
+The historical d912e746 candidate was independently blocked. See FIRST20_REVIEW_CORRECTIONS.md for the corrected gate/publication/reset/cycle implementation and 831-test result; corrected-SHA recheck and preservation installation remain pending. The original implementation evidence below is retained as history. No first20 teaching has been published. The shared checkout/index and the currently served demo remain unchanged.
 
 ## Implementation
 

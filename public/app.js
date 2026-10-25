@@ -4,7 +4,7 @@ import {orderedLessons,courseOutline,keyboardForLesson,resolveComponent} from '.
 import {richCell,cellCSS} from './rich.js';
 import {renderLesson} from './rich-browser.js';
 import {hasTextPages,mountTextReader} from './text-reader.js';
-import {textPageMedia} from './learner-view.js';
+import {textPageMedia,textGatesPassed,syncTextContinue,textGateNotice} from './learner-view.js';
 import {composeSentence,bindMatching,matchWord} from './interactions.js';
 import {reviewNikkud} from './ux.js';
 import {scheduleReview,reviewIntervalLabel} from './review-schedule.js';
@@ -31,6 +31,24 @@ let exerciseDockBinding, pendingAttempt=null, answerPhase="ready", continueTarge
 let textReaderBindings=[];
 const textReaderStates=new Map();
 const textSaveQueues=new Map();
+function lessonTextReady(blockId){
+ if(state.page!=='lesson'||!state.session)return true;const l=lessonObject(),revisionId=state.session.revisionId;
+ return l.blocks.filter(b=>!blockId||b.id===blockId).every(b=>{
+  const key=JSON.stringify([state.user,revisionId,l.id,b.id]);
+  const saved=textReaderStates.get(key)||state.data.learner.textPages?.find(r=>r.lessonId===l.id&&r.componentId===b.id&&r.revisionId===revisionId);
+  return textGatesPassed(b.textPages,saved||{});
+ });
+}
+function syncLessonTextGates(){
+ if(state.page!=='lesson')return;const l=lessonObject(),keys=portionKeys(l),next=keys[keys.indexOf(state.step)+1];
+ syncTextContinue(root,(currentKind()!=='learn'||lessonTextReady(state.step))&&(next!=='complete'||lessonTextReady()));
+ for(const control of root.querySelectorAll('.step-strip [data-action="step"][data-value="complete"]'))control.disabled=!lessonTextReady();
+}
+async function settleTextSaves(){
+ await Promise.all(textReaderBindings.map(binding=>binding.settled()));
+ const prefix=JSON.stringify([state.user,state.session.revisionId,state.lessonId]).slice(0,-1)+',';
+ await Promise.all([...textSaveQueues].filter(([key])=>key.startsWith(prefix)).map(([,promise])=>promise));
+}
 function disposeTextReaders(){textReaderBindings.splice(0).forEach(binding=>binding.destroy());}
 function mountLessonTextReaders(scope=root){
  if(state.page!=='lesson'||!state.session)return;
@@ -40,7 +58,7 @@ function mountLessonTextReaders(scope=root){
  for(const host of scope.querySelectorAll('[data-text-reader]')){
   const current=()=>state.user===owner&&state.page==='lesson'&&state.session?.revisionId===revisionId&&state.lessonId===lessonId&&portionLesson(lessonObject(),state.step).textComponentId===lesson.textComponentId;
   const binding=mountTextReader(host,{textPages:lesson.textPages,renderLesson,word,renderWord:w=>wordCard(w),renderMedia:textPageMedia,dock:currentKind()==='learn',
-   initialState:textReaderStates.get(key),isCurrent:current,onState:saved=>textReaderStates.set(key,saved),
+   initialState:textReaderStates.get(key),isCurrent:current,onState:saved=>textReaderStates.set(key,saved),onGateChange:(_ready,saved)=>{textReaderStates.set(key,saved);syncLessonTextGates();},
    loadProgress:textReaderStates.has(key)?undefined:()=>api('text-progress?'+new URLSearchParams({lessonId,revisionId,componentId}),undefined,owner),
    saveProgress:record=>{
     const pending=(textSaveQueues.get(key)||Promise.resolve()).catch(()=>{}).then(()=>{
@@ -114,6 +132,7 @@ async function openLesson(id, step, replace=false) {
   else state.step=portionKeys(lessonObject())[0];
   step=portionKeys(lessonObject()).includes(step)?step:lessonObject().compositionVersion===2?lessonPortions(content(),lessonObject()).find(p=>p.kind===step)?.key:step;
   if(step && portionKeys(lessonObject()).includes(step) && step!==state.step){state.step=step;resetQuestion();state.practiceIds=[];}
+  if(state.step==='complete'&&!lessonTextReady()){state.step=lessonObject().blocks.find(b=>!lessonTextReady(b.id))?.id||portionKeys(lessonObject())[0];resetQuestion();}
   state.medium=defaultMedium(portionLesson(lessonObject(),state.step));state.panel=null;setRoute(replace);await queueSave();render();focusHeading();
 }
 function focusHeading() { window.scrollTo({top:0,behavior:pref().animations?'smooth':'instant'});document.querySelector('h1')?.focus({preventScroll:true}); }
@@ -174,7 +193,7 @@ function render() {
   const hasCourse=['lesson','course'].includes(state.page),courseLesson=hasCourse?(content().lessons.find(l=>l.id===state.lessonId)||orderedLessons(content())[0]):null;
   root.innerHTML='<a class="skip-link" href="#main-content" data-action="skip-content">Skip to content</a><header class="app-header" aria-label="Hebleo navigation">'+(hasCourse?navigationToggle():'')+'<a class="brand" href="#home" data-action="page" data-value="home" aria-label="Hebleo home"><span class="brand-logo-slot" aria-hidden="true"><img src="/assets/hebleo-wide-navy.png" alt="" width="3693" height="1198"></span></a><nav id="main-menu" class="nav main-navigation" aria-label="Main navigation">'+nav()+'</nav><div class="profile"><span class="demo-pill">DEMO CONTENT</span><label class="profile-control"><span>Demo profile</span><select id="demo-user" aria-label="Demo profile">'+state.data.users.map(x=>'<option value="'+x.id+'" '+(x.id===state.user?'selected':'')+'>'+esc(x.name)+' · '+esc(x.role)+'</option>').join('')+'</select></label></div></header><div class="shell nav-shell page-'+state.page+' '+(hasCourse?'has-course ':'')+(!pref().animations?'reduce-motion':'')+'">'+(hasCourse?courseNavigation(courseLesson):'')+'<main class="main" id="main-content" tabindex="-1"><div class="topbar"><div class="breadcrumb">Your Hebrew / '+esc({home:'Your path',course:'Foundations',lesson:label(state.step),review:'Review',library:'My Hebrew',studio:'Author workspace',settings:'Settings'}[state.page])+'</div></div><div class="content">'+pages[state.page]()+'</div></main><button type="button" class="nav-backdrop" data-action="navigation-close" aria-label="Close course outline" hidden></button></div>';
 
-  applyNavigation();bind();mountLessonTextReaders();exerciseDockBinding=state.page==='lesson'&&currentKind()==='learn'&&root.querySelector('[data-text-reader]')?null:mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio')pageStudioLists();syncKeyboard();if(state.panel)showPanel();
+  applyNavigation();bind();mountLessonTextReaders();syncLessonTextGates();exerciseDockBinding=state.page==='lesson'&&currentKind()==='learn'&&root.querySelector('[data-text-reader]')?null:mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio')pageStudioLists();syncKeyboard();if(state.panel)showPanel();
 }
 function lessonStarted(id) { const l=state.data.learner; return Boolean(l.resumes[id] || l.attempts.some(a=>a.lessonId===id)); }
 function lessonCards() {
@@ -219,7 +238,7 @@ function lesson() {
   else body=exercisePanel(l);
   const index=steps.indexOf(state.step),isExercise=['check','apply'].includes(currentKind());
   if(state.session.revisionId!==state.data.revisionId)body='<div class="hint">This saved session uses an earlier lesson. Starting the updated lesson resets this lesson’s current answers; your graded attempts and review progress remain. '+button('Start updated lesson','latest-lesson','small secondary')+'</div>'+body;
-  return '<div class="intro-row"><div><div class="eyebrow">'+esc(l.chapter)+'</div><h1 tabindex="-1">'+esc(l.title)+'</h1><p>'+esc(label(state.step))+' · Step '+(index+1)+' of '+steps.length+'</p></div>'+button('← Course','page','outline small','course')+'</div><div class="lesson-layout lesson-content-region"><div class="lesson-content"><nav class="step-strip" aria-label="Lesson portions">'+steps.map(s=>'<button data-action="step" data-value="'+s+'" class="'+(s===state.step?'active':'')+'" '+(s===state.step?'aria-current="step"':'')+'>'+esc(portionLabel(l,s))+'</button>').join('')+'</nav>'+lessonProgressBar(l)+'<section class="card lesson-section" data-portion-kind="'+esc(currentKind())+'" id="practice">'+body+'</section>'+(!isExercise&&state.step!=='complete'?'<div class="lesson-footer">'+button('← Back','step','outline',steps[index-1]||'',index===0)+button('Continue →','step','primary',steps[index+1])+'</div>':'')+'</div></div><section class="lesson-comments card" id="lesson-comments"><header><h2>Discussion under this lesson</h2><p>Share a question or comment. Author replies appear here.</p></header>'+commentComposer({lessonId:l.id,revisionId:state.session.revisionId})+'<div data-comment-feed>'+questionList(state.data.canAuthor,l.id)+'</div></section>';
+  return '<div class="intro-row"><div><div class="eyebrow">'+esc(l.chapter)+'</div><h1 tabindex="-1">'+esc(l.title)+'</h1><p>'+esc(label(state.step))+' · Step '+(index+1)+' of '+steps.length+'</p></div>'+button('← Course','page','outline small','course')+'</div><div class="lesson-layout lesson-content-region"><div class="lesson-content"><nav class="step-strip" aria-label="Lesson portions">'+steps.map(s=>'<button data-action="step" data-value="'+s+'" class="'+(s===state.step?'active':'')+'" '+(s===state.step?'aria-current="step"':'')+'>'+esc(portionLabel(l,s))+'</button>').join('')+'</nav>'+lessonProgressBar(l)+'<section class="card lesson-section" data-portion-kind="'+esc(currentKind())+'" id="practice">'+body+'</section>'+(!isExercise&&state.step!=='complete'?'<div class="lesson-footer">'+button('← Back','step','outline',steps[index-1]||'',index===0)+button('Continue →','step','primary',steps[index+1]).replace('<button','<button data-text-gated-continue')+textGateNotice()+'</div>':'')+'</div></div><section class="lesson-comments card" id="lesson-comments"><header><h2>Discussion under this lesson</h2><p>Share a question or comment. Author replies appear here.</p></header>'+commentComposer({lessonId:l.id,revisionId:state.session.revisionId})+'<div data-comment-feed>'+questionList(state.data.canAuthor,l.id)+'</div></section>';
 }
 function completion(l) {
   const completed=state.data.learner.completed.includes(l.id),next=followingLesson(content(),l.id),missed=questionProgress(l).missedIds;
@@ -492,7 +511,10 @@ async function act(action,value,source) {
   if(action==='page'){if(value!==state.page&&!await guardStudioDeparture('Leave Studio'))return;disposeTextReaders();rememberComposers();closeNavigation();await flushSave();closePanel();stopMedia();state.page=value;state.reviewSession=null;state.revealReview=false;state.search='';await load();setRoute();render();focusHeading();return;}
   if(action==='lesson'){await openLesson(value);return;}
   if(action==='outline'){closeNavigation();const [id,step]=value.split('|');if(id!==state.lessonId){await openLesson(id,step);return;}action='step';value=step;}
-  if(action==='step'){if(value===state.step || !portionKeys(lessonObject()).includes(value))return;disposeTextReaders();closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(portionLesson(lessonObject(),state.step));stopMedia();setRoute();await queueSave();render();focusHeading();return;}
+  if(action==='step'){if(value===state.step || !portionKeys(lessonObject()).includes(value))return;
+  const forward=portionKeys(lessonObject()).indexOf(value)>portionKeys(lessonObject()).indexOf(state.step);
+  if((value==='complete'&&!lessonTextReady())||(forward&&source?.closest('.lesson-footer')&&currentKind()==='learn'&&!lessonTextReady(state.step))){toast('Complete the required text-page activities before continuing.');root.querySelector('[data-reader-heading]')?.focus();return;}
+  if(forward)await settleTextSaves();disposeTextReaders();closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(portionLesson(lessonObject(),state.step));stopMedia();setRoute();await queueSave();render();focusHeading();return;}
   if(action==='mode'||action==='vocab-view'){await updatePreference(action==='mode'?'nikkud':'vocabularyView',value);render();return;}
   if(action==='keyboard-open'){window.HebleoKeyboard?.open(document.querySelector('#answer'));return;}
   if(action==='inline-choice'){const [i,j]=value.split('|').map(Number),item=portionLesson(lessonObject(),state.step).interactions[i];document.querySelector('#inline-feedback-'+i).textContent=(item.correctIndex===j?'Correct. ':'Try again. ')+item.feedback;return;}

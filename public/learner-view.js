@@ -10,6 +10,13 @@ export const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&am
 // Mark exact authored surfaces; decoration happens only after the current answer is graded.
 export const exerciseSurface = (text, field, index) => '<span data-vocabulary-surface="'+field+'"'+(index===undefined?'':' data-vocabulary-index="'+index+'"')+'>'+esc(text).replace(/\r/g,'&#13;')+'</span>';
 export const button = (label, action, cls='', value='', disabled=false) => '<button type="button" class="button '+cls+'" data-action="'+action+'" data-value="'+esc(value)+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
+export {textGatesPassed} from './text-contract.js';
+let textGateSerial=0;
+export const textGateNotice=()=>'<p class="hint" data-text-gate-notice role="status" hidden>Complete the required text-page activities before continuing.</p>';
+export function syncTextContinue(scope,ready){
+ const notice=scope.querySelector('[data-text-gate-notice]');if(notice){notice.hidden=ready;notice.id||='text-gate-'+(++textGateSerial);}
+ for(const control of scope.querySelectorAll('[data-text-gated-continue]')){control.disabled=!ready;if(!ready&&notice)control.setAttribute('aria-describedby',notice.id);else control.removeAttribute('aria-describedby');}
+}
 export function sourceCell(w,key){return w.fieldFormatting?.[key];}
 export function wordText(w,mode='full') {
   const key=mode==='none'?'unpointed':mode==='curated'?'curated':'pointed',cell=sourceCell(w,key),legacy=w.format||{};

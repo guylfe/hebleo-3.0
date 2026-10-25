@@ -38,6 +38,26 @@ export function validateTextPages(value,{wordIds=[],targetIds=[]}={}) {
  return value;
 }
 export function orderedTextPages(value){return value.order.map(id=>value.pages.find(p=>p.id===id));}
+export function textPageGatePassed(page,response={}){
+ if(!page.gate||page.gate==='none')return true;
+ if(page.type==='choice')return Number.isInteger(response.choice)&&response.checked===true;
+ if(['recall','timedRecall'].includes(page.type))return Boolean(response.text?.trim())&&(page.gate!=='reveal'||response.revealed===true);
+ return page.gate==='reveal'?response.revealed===true:response.checked===true;
+}
+export function textGatesPassed(textPages,state={}){return !textPages||textPages.pages.every(p=>textPageGatePassed(p,state.responses?.[p.id]));}
+// Release eligibility follows teaching/review semantics, independently of import flags.
+export function textPublicationIssues(content){
+ return content.lessons.flatMap(lesson=>{
+  const reasons=[],hasText=lesson.blocks?.some(b=>b.textPages);
+  if(lesson.draftImport||lesson.publicationStatus==='unpublished-adapted-draft'||lesson.status==='adapted-draft-for-Guy-review')reasons.push('unpublished adapted import');
+  if(lesson.provenance?.kind==='adapted-draft')reasons.push('adapted teaching has no promotion approval');
+  if((hasText||lesson.draftTargets)&&lesson.provenance?.approval&&lesson.provenance.approval!=='approved')reasons.push('pending teaching approval');
+  if(lesson.draftTargets?.some(t=>!t.wordId||t.mappingStatus!=='explicitly-mapped'))reasons.push('unresolved vocabulary targets');
+  if(lesson.blocks?.some(b=>b.textPages?.pages.some(p=>p.unresolvedTargetIds?.length)))reasons.push('unresolved page vocabulary');
+  if(lesson.authoringReview&&Object.values(lesson.authoringReview).some(value=>value!=='approved'))reasons.push('pending human authoring review');
+  return reasons.length?[{lessonId:lesson.id,reasons}]:[];
+ });
+}
 export function validateTextResponse(page,response){
  if(!plain(response)||Object.keys(response).some(k=>!['text','choice','checked','revealed'].includes(k)))fail('Invalid text page response.');
  if(response.text!==undefined){string(response.text,'response',12000,true);if(!['recall','timedRecall'].includes(page.type))fail('Written response on another page type.');}

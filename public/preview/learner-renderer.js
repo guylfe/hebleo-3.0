@@ -7,6 +7,7 @@ import {resolveBlock} from '../content.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../post-answer-vocabulary.js';
 import {hasTextPages,mountTextReader} from '../text-reader.js';
+import {textGatesPassed,syncTextContinue,textGateNotice} from '../learner-view.js';
 import {textPageMedia} from '../learner-view.js';
 import {bindMatching, matchWord} from '../interactions.js';
 import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseSurface, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls,applyMatchingResult,exerciseActionDock,mountExerciseDock} from '../learner-view.js';
@@ -91,7 +92,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const mountText=()=>{
         const host=root.querySelector('[data-text-reader]');if(!host||!hasTextPages(presentation))return;
         textBinding?.destroy();
-        textBinding=mountTextReader(host,{textPages:presentation.textPages,renderLesson,word,renderWord:w=>wordCard(w),renderMedia:textPageMedia,dock:step==='learn',initialState:textStates.get(context),onState:saved=>textStates.set(context,saved),isCurrent:active});
+        textBinding=mountTextReader(host,{textPages:presentation.textPages,renderLesson,word,renderWord:w=>wordCard(w),renderMedia:textPageMedia,dock:step==='learn',initialState:textStates.get(context),onState:saved=>textStates.set(context,saved),onGateChange:(_ready,saved)=>{textStates.set(context,saved);syncTextContinue(root,textGatesPassed(presentation.textPages,saved));},isCurrent:active});
       };
       let draft = draftOf(props.answer), message = '', conceptOpen = false, answerSelection = null;
       const root = doc.createElement('div');
@@ -139,7 +140,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
         return w ? '<aside class="card preview-lookup" aria-label="Vocabulary entry"><div class="panel-header"><h3>' + esc(w.english) + '</h3><button type="button" class="button small outline" data-preview-lookup-close>Close</button></div><div class="hebrew">' + wordText(w) + '</div><div class="meaning">' + fieldText(w, 'english', w.english) + '</div>' + audioControls(w.audio, w.english) + (w.notes ? '<p class="note"' + cellAttribute(w, 'notes') + '>' + fieldText(w, 'notes', w.notes) + '</p>' : '') + richFields(w) + '</aside>' : '';
       };
       const note = () => message ? '<p class="hint" role="alert" data-preview-message>' + esc(message) + '</p>' : '';
-      const continueRow = () => '<div class="lesson-footer">' + button('Continue →', 'next-step', 'primary') + '</div>';
+      const continueRow = () => '<div class="lesson-footer">' + button('Continue →', 'next-step', 'primary').replace('<button','<button data-text-gated-continue') + textGateNotice() + '</div>';
       function learn() {
         const hasText = Boolean(presentation.explanation?.trim())||hasTextPages(presentation), video = Boolean(audioURL(presentation.video)), mode = video && hasText ? (medium || 'watch') : video ? 'watch' : 'read';
         return (video && hasText ? '<div class="mode-bar"><h2>Your explanation</h2><div class="segmented" role="group" aria-label="Lesson format">' + [['watch','Watch'],['read','Read']].map(([v, t]) => '<button type="button" data-preview-medium="' + v + '" aria-pressed="' + (mode === v) + '">' + t + '</button>').join('') + '</div></div>' : '') + learnMedia(presentation, mode, renderLesson) + continueRow();
@@ -174,7 +175,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           : step === 'complete' ? '<div class="empty"><h2>Rehearsal finished.</h2><p>Nothing in this rehearsal was saved to a learner profile.</p><div class="button-row centered">' + button('Exit rehearsal', 'exit', 'primary') + '</div></div>'
           : practice();
         root.innerHTML = settings() + (exercise ? '' : note()) + '<section class="card lesson-section">' + body + '</section>' + lookupCard();
-        mountText();lexicalBinding=bindLexicalVocabulary(root);
+        mountText();syncTextContinue(root,step!=='learn'||textGatesPassed(presentation.textPages,textStates.get(context)||{}));lexicalBinding=bindLexicalVocabulary(root);
         syncAudioControls(root,Number(preferences.audioSpeed)||1,getPlaybackState());bindResultExplanations(root);
         if(exercise&&result&&!busy)reminderBinding=mountAnsweredVocabulary(root,{content,exercise,result,mode:exercise.nikkudOverride||preferences.nikkud||'full',isCurrent:()=>active(),playAudio,stopMedia,getPlaybackState});
         if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select,textarea').forEach(el => { el.disabled = true; }); }
@@ -232,7 +233,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           }else{textBinding?.destroy();slot.replaceChildren();conceptOpen=false;trigger.setAttribute('aria-expanded','false');trigger.focus({preventScroll:true});}
         }
         else if (action === 'retry-question') call('retry');
-        else if (action === 'next-question' || action === 'next-step') call('next');
+        else if (action === 'next-question' || action === 'next-step') {if(action==='next-step'&&step==='learn'&&!textGatesPassed(presentation.textPages,textStates.get(context)||{}))return;call('next');}
         else if (action === 'lookup') call('lookup', value);
         else if (action === 'exit') call('exit');
         else if (action === 'audio' || action === 'audio-replay') { if (value) playAudio?.(value, Number(preferences.audioSpeed) || 1, action === 'audio-replay')?.catch?.(error => { if (active()) show(error.message); }); }

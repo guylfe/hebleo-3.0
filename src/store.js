@@ -16,8 +16,8 @@ import {validateFormatting,validateImportSource} from '../public/vocabulary-impo
 import {validateLexicalSnapshot,assertLexicalTransition,assertKnownLexicalRestore} from './lexical-trust.js';
 import {projectLexicalRows} from '../public/lexical-runtime.js';
 import {previewProgressMigration} from '../public/lexical-contract.js';
-import {validateTextResponse,validateTextMetadata} from '../public/text-contract.js';
-import {validateContentIdentities,assertContentIdentityTransition,resolveContentID} from '../public/content-identity.js';
+import {validateTextResponse,validateTextMetadata,textGatesPassed,textPublicationIssues} from '../public/text-contract.js';
+import {validateContentIdentities,assertContentIdentityTransition,resolveContentID,assertKnownTextIdentityRestore} from '../public/content-identity.js';
 import {prepareTextDraftImport} from './text-import.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
 
@@ -224,7 +224,7 @@ export class Store {
     if(typeof build!=='string'||!build.trim()||build.length>100)throw new DomainError('Invalid demo build.');
     if(this.get('demo-progress-build')===build)return false;
     return this.transaction(()=>{
-      for(const user of users){const state=this.learner(user.id);Object.assign(state,{completed:[],attempts:[],cards:{},resumes:{},lastReview:null});delete state.lastLessonId;this.saveLearner(user.id,state);}
+      for(const user of users){const state=this.learner(user.id);Object.assign(state,{completed:[],attempts:[],cards:{},resumes:{},lastReview:null});delete state.lastLessonId;delete state.textPages;this.saveLearner(user.id,state);}
       this.db.exec("DELETE FROM kv WHERE key LIKE 'review-%'");
       this.set('demo-progress-build',build);this.set('demo-progress-reset-at',new Date().toISOString());return true;
     });
@@ -298,7 +298,7 @@ export class Store {
     state.attempts.push(result);
     const lesson = content.lessons.find(l => l.id === lessonId);
     // Completion needs every core question answered correctly in this one pinned revision; retries count once and revisions never combine.
-    if (lessonQuestionProgress(lesson, state.attempts, input.revisionId).correctIds.length === lesson.exerciseIds.length) {
+    if (lessonQuestionProgress(lesson, state.attempts, input.revisionId).correctIds.length === lesson.exerciseIds.length && this.textLessonGatesPassed(state,lesson,input.revisionId)) {
       if (!state.completed.includes(lesson.id)) state.completed.push(lesson.id);
       for (const wordId of lesson.wordIds) if (!content.words.find(w=>w.id===wordId)?.noCard && !state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false };
     }
@@ -351,7 +351,8 @@ export class Store {
     // Optional lessons with no assessed questions complete only after an explicit,
     // validated Finish position. Merely opening a lesson never completes it.
     const content = this.snapshot(input.revisionId), lesson = content.lessons.find(l => l.id === input.lessonId);
-    if (input.step === 'complete' && lesson.exerciseIds.length === 0) {
+    if(input.step==='complete'&&!this.textLessonGatesPassed(state,lesson,input.revisionId))throw new DomainError('Complete the required text-page activities before finishing this lesson.',409,'TEXT_GATES_REQUIRED');
+    if (input.step === 'complete' && lessonQuestionProgress(lesson,state.attempts,input.revisionId).correctIds.length===lesson.exerciseIds.length) {
       if (!state.completed.includes(lesson.id)) state.completed.push(lesson.id);
       for (const wordId of lesson.wordIds) if (!content.words.find(w=>w.id===wordId)?.noCard && !state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false };
     }
@@ -373,7 +374,13 @@ export class Store {
     return record;
   }
   textProgress(userId,input){
-    const {state,block,revisionId}=this.textContext(userId,input),records=state.textPages||[];
+    const {state,block,lesson,revisionId}=this.textContext(userId,input);
+    return this.textProgressFor(state,lesson,block,revisionId);
+  }
+  textLessonGatesPassed(state,lesson,revisionId){return lesson.blocks.every(block=>textGatesPassed(block.textPages,this.textProgressFor(state,lesson,block,revisionId)));}
+  textProgressFor(state,lesson,block,revisionId){
+    if(!block.textPages)return {responses:{}};
+    const input={lessonId:lesson.id,componentId:block.id},records=state.textPages||[];
     let record=records.find(r=>r.lessonId===input.lessonId&&r.componentId===input.componentId&&r.revisionId===revisionId);
     if(!record){
       // Across order-only publication, carry answers only for byte-equivalent stable pages.
@@ -407,7 +414,7 @@ export class Store {
   importTextDraft(input){
     return this.transaction(()=>{
       const result=this.reviewTextImport(input);
-      if(!result.content)throw new DomainError('Text import requires explicit conflict review. No data was changed.',409,'TEXT_IMPORT_CONFLICT',{conflicts:result.conflicts});
+      if(!result.content)throw new DomainError('Text import requires explicit conflict review: '+result.conflicts.slice(0,3).map(c=>c.message).join('; ')+'. No data was changed.',409,'TEXT_IMPORT_CONFLICT',{conflicts:result.conflicts});
       const staged=this.stage({baseRevisionId:input.baseRevisionId,expectedDraftToken:input.expectedDraftToken,content:result.content});
       return {...staged,importReceipt:result.receipt};
     });
@@ -591,6 +598,10 @@ export class Store {
     const affected = new Set([...changes.flatMap(c => c.impact?.lessons || []), ...allLessons.filter(id => view(current, id) !== view(next, id))]);
     return { draft, changes, affectedLessons: allLessons.filter(id => affected.has(id)) };
   }
+  assertTextPublicationEligible(content){
+    const issues=textPublicationIssues(content);
+    if(issues.length)throw new DomainError('Adapted text drafts require human wording, vocabulary and source review before publication or release activation.',409,'TEXT_DRAFT_REVIEW_REQUIRED',{issues});
+  }
   publish(baseRevisionId, draftToken,sourcePermit) {
     if(this.get('source-state')?.draftBinding && sourcePermit!==this.sourcePermit)throw new DomainError('Source-backed drafts publish only through the reviewed source freshness and approval path.',409,'SOURCE_PUBLICATION_REQUIRED');
     if (typeof draftToken !== 'string' || !draftToken) throw this.draftConflict('Publishing needs the reviewed draft token.', 'DRAFT_TOKEN_REQUIRED');
@@ -598,7 +609,7 @@ export class Store {
     return this.transaction(() => {
       this.expectBase(baseRevisionId, 'Stale publication request.'); this.expectDraft(draftToken);
       const draft = this.currentDraft(); validateContent(draft.content);
-      if(draft.content.lessons.some(l=>l.publicationStatus==='unpublished-adapted-draft'||l.draftImport))throw new DomainError('Adapted text drafts require human wording, vocabulary and source review before publication.',409,'TEXT_DRAFT_REVIEW_REQUIRED');
+      this.assertTextPublicationEligible(draft.content);
       this.media.checkPublication(draft.content,{trustedContentApproval:sourcePermit===this.sourcePermit});this.media.persistPlan(this.media.plan(draft.content,{strict:true}));
       const revisionId = this.addRevision(draft.content, 'Published draft'); this.set('active', revisionId); this.set('draft', null); return { revisionId };
     });
@@ -609,7 +620,7 @@ export class Store {
     if (expectedDraftToken === undefined) throw this.draftConflict('Rollback discards the draft; name it, or null when there is none.', 'DRAFT_TOKEN_REQUIRED');
     return this.transaction(() => {
       this.expectBase(baseRevisionId, 'Stale rollback request.'); this.expectDraft(expectedDraftToken);
-      const content = this.snapshot(revisionId); validateContent(content);this.media.persistPlan(this.media.plan(content,{strict:true}));
+      const content = this.snapshot(revisionId); validateContent(content);this.assertTextPublicationEligible(content);this.media.persistPlan(this.media.plan(content,{strict:true}));
       const next = this.addRevision(content, 'Restored content revision ' + revisionId); this.set('active', next); this.set('draft', null);if(sourcePermit!==this.sourcePermit)this.sourceAuthoring?.onRollback(revisionId,next); return { revisionId: next };
     });
   }
@@ -658,17 +669,18 @@ export class Store {
     if (!RESTORABLE_SCHEMA_VERSIONS[input.format].includes(input.storeSchemaVersion)) throw new DomainError('This backup declares store schema ' + JSON.stringify(input.storeSchemaVersion ?? null) + '; this build restores ' + input.format + ' with schema ' + RESTORABLE_SCHEMA_VERSIONS[input.format].filter(Boolean).join(' or ') + '. Use a newer build.', 409);
     const v2 = input.format === 'hebleo-demo-backup-v2';
     validateContent(input.content);
-    if(input.content.lessons.some(l=>l.draftImport||l.publicationStatus==='unpublished-adapted-draft'))throw new DomainError('Unpublished adapted lessons cannot be restored as active course content.',409,'TEXT_DRAFT_REVIEW_REQUIRED');
+    this.assertTextPublicationEligible(input.content);
     // v1 carried only resumed-lesson snapshots; v2 carries every referenced revision, including the active one.
     const reports=input.reports || [], sessions=(v2 ? input.revisionSnapshots : input.sessionSnapshots) || [], questions=input.questions||[];
     if(!Array.isArray(questions)||new Set(questions.map(q=>q?.key)).size!==questions.length)throw new DomainError('Invalid backup questions.');
     if(!Array.isArray(reports)||new Set(reports.map(r=>r?.key)).size!==reports.length||!Array.isArray(sessions)||new Set(sessions.map(x=>x?.revisionId)).size!==sessions.length)throw new DomainError('Invalid backup reports or lesson sessions.');
-    for(const session of sessions){if(!Number.isInteger(session?.revisionId))throw new DomainError('Invalid session revision.');validateContent(session.content);if(session.content.lessons.some(l=>l.draftImport||l.publicationStatus==='unpublished-adapted-draft'))throw new DomainError('Historical releases cannot contain unpublished text imports.',409,'TEXT_DRAFT_REVIEW_REQUIRED');}
+    for(const session of sessions){if(!Number.isInteger(session?.revisionId))throw new DomainError('Invalid session revision.');validateContent(session.content);this.assertTextPublicationEligible(session.content);}
     const carried = new Map(sessions.map(s => [s.revisionId, s.content]));
     if (v2) {
       if (!carried.has(input.activeRevisionId) || JSON.stringify(carried.get(input.activeRevisionId)) !== JSON.stringify(input.content)) throw new DomainError('Backup active revision does not match its content.');
       if (input.draft != null) { if (typeof input.draft !== 'object' || input.draft.baseRevisionId !== input.activeRevisionId || typeof input.draft.stagedAt !== 'string') throw new DomainError('Invalid backup draft.'); validateContent(input.draft.content); }
     }
+    try{assertKnownTextIdentityRestore([...this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot)),this.currentDraft()?.content],[input.content,...sessions.map(s=>s.content),input.draft?.content]);}catch(error){throw new DomainError(error.message,409,'TEXT_IMPORT_IDENTITY_REQUIRED');}
     assertKnownLexicalRestore(this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot)),[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[])]);
     const restoredSource=validateSourceState(input.sourceAuthoring??null,carried,input.draft,input.content);
     if(input.mediaRecovery!==undefined&&!(Number.isInteger(input.storeSchemaVersion)&&input.storeSchemaVersion>=7))throw new DomainError('Media-bearing backups require Store/backup reader 7.',409,'MEDIA_READER_MISMATCH');

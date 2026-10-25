@@ -3,6 +3,7 @@ const collections=['lessons','words','exercises'];
 const aliasRE=/^[A-Za-z0-9][A-Za-z0-9_.-]{0,119}$/;
 const fail=message=>{throw new Error(message);};
 const norm=value=>value.toUpperCase();
+const identityJSON=value=>JSON.stringify(value,(_key,item)=>item&&typeof item==='object'&&!Array.isArray(item)?Object.fromEntries(Object.entries(item).sort(([a],[b])=>a<b?-1:a>b?1:0)):item);
 function entries(content,kind){return content[kind].flatMap(item=>[{id:item.id,value:item.id,namespace:'primary'},...(item.contentId?[{id:item.id,value:item.contentId,namespace:'readable'}]:[]),...(item.contentAliases||[]).map(a=>({...a,id:item.id}))]);}
 export function validateContentIdentities(content){
  for(const kind of collections){const scoped=new Map(),global=new Map();
@@ -17,6 +18,9 @@ export function validateContentIdentities(content){
    if(['primary','readable'].includes(entry.namespace)){const key=norm(entry.value),previous=global.get(key);if(previous&&previous!==entry.id)fail('Readable alias collides with persisted identity: '+entry.value);global.set(key,entry.id);}
   }
  }
+ const visiting=new Set(),visited=new Set(),lessons=new Map(content.lessons.map(l=>[l.id,l]));
+ const visit=id=>{if(visiting.has(id))fail('Cyclic prerequisite references: '+id);if(visited.has(id))return;visiting.add(id);for(const ref of lessons.get(id).prerequisiteIds||[])visit(ref);visiting.delete(id);visited.add(id);};
+ for(const id of lessons.keys())visit(id);
 }
 export function resolveContentID(content,kind,value,{namespace}={}){
  if(!collections.includes(kind)||typeof value!=='string')fail('Unknown content reference.');
@@ -28,9 +32,18 @@ export function assertContentIdentityTransition(previous,next){
   const item=next[kind].find(x=>x.id===old.id);
   if(old.draftImport&&!item)fail('Imported persisted identity cannot be removed or reissued by import.');
   if(!item)continue;
-  if(old.draftImport&&JSON.stringify(old.draftImport)!==JSON.stringify(item.draftImport))fail('Frozen draft import identity cannot change.');
+  if(old.draftImport&&identityJSON(old.draftImport)!==identityJSON(item.draftImport))fail('Frozen draft import identity cannot change.');
   const all=[item.contentId,...(item.contentAliases||[]).map(a=>a.value)].filter(Boolean).map(norm);
   if(old.contentId&&!all.includes(norm(old.contentId)))fail('Retain the former readable ID as an alias.');
   for(const a of old.contentAliases||[])if(!(item.contentAliases||[]).some(b=>b.namespace===a.namespace&&norm(a.value)===norm(b.value)))fail('Historical content aliases must be retained.');
+ }
+}
+export function assertKnownTextIdentityRestore(knownContents,incomingContents){
+ const byId=new Map(),bySource=new Map();
+ for(const content of knownContents)for(const lesson of content?.lessons||[])if(lesson.draftImport){byId.set(lesson.id,lesson.draftImport);bySource.set(lesson.draftImport.namespace+'/'+lesson.draftImport.sourceLessonId,lesson.id);}
+ for(const content of incomingContents)for(const lesson of content?.lessons||[]){
+  const known=byId.get(lesson.id);
+  if(known&&identityJSON(known)!==identityJSON(lesson.draftImport))fail('Restore cannot remove or change a known imported text identity: '+lesson.id);
+  if(lesson.draftImport){const owner=bySource.get(lesson.draftImport.namespace+'/'+lesson.draftImport.sourceLessonId);if(owner&&owner!==lesson.id)fail('Restore cannot reissue an imported text primary ID.');}
  }
 }

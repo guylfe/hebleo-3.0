@@ -7,6 +7,7 @@ import { audioURL } from '../../public/ux.js';
 import {hasGradingContent} from '../../public/answer-policy.js';
 import {validateExerciseVocabularyBindings, exerciseVocabularyReferenceIds} from '../../public/exercise-bindings.js';
 import {validateContentIdentities} from '../../public/content-identity.js';
+import {textPublicationIssues} from '../../public/text-contract.js';
 
 // Validation never coerces, strips fields, adds defaults or normalizes Hebrew.
 const directory = new URL('../', import.meta.url);
@@ -145,6 +146,7 @@ export function publicationEligibility(pack, { mode = 'canonical' } = {}) {
   const structural = validateSchema('content-pack', pack);
   if (structural.length) return { eligible: false, mode, reasons: structural };
   const reasons = semanticErrors(pack);
+  reasons.push(...textPublicationIssues(pack).map(issue=>issue.lessonId+': '+issue.reasons.join(', ')));
   if (!['canonical', 'private-demo'].includes(mode)) throw new Error('Unknown publication mode');
   const syntheticPack = pack.provenance.kind === 'synthetic-demo';
   if (!['synthetic-demo', 'verified-source'].includes(pack.provenance.kind)) reasons.push('pack provenance is publication-ineligible');

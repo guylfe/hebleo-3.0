@@ -1,6 +1,7 @@
 // One text explanation reader for learner and disposable Studio Preview.
 // Authored HTML is rendered only through the host's safe renderLesson function.
 import {exerciseActionDock,mountExerciseDock} from './exercise-actions.js';
+import {textPageGatePassed,textGatesPassed} from './text-contract.js';
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const hasTextPages = lesson => Boolean(lesson?.textPages?.pages?.length);
 export const textReaderSlot = () => '<div class="text-reader" data-text-reader></div>';
@@ -19,7 +20,7 @@ export function createTextTimer({now, schedule, cancel, onChange}) {
   return {play,stop,get phase(){return phase;},get visible(){return phase==='running'&&now()<deadline;}};
 }
 
-export function mountTextReader(host,{textPages,renderLesson,renderWord=()=>'',word=()=>null,renderMedia=()=>'',loadProgress,saveProgress,onState=()=>{},initialState={},isCurrent=()=>true,clock,dock=true}={}) {
+export function mountTextReader(host,{textPages,renderLesson,renderWord=()=>'',word=()=>null,renderMedia=()=>'',loadProgress,saveProgress,onState=()=>{},onGateChange=()=>{},initialState={},isCurrent=()=>true,clock,dock=true}={}) {
   const doc=host.ownerDocument,view=doc.defaultView;
   const pages=ordered(textPages),responses=Object.assign(Object.create(null),structuredClone(initialState.responses||{}));
   let index=Math.max(0,pages.findIndex(p=>p.id===initialState.cursorPageId)),disposed=false,edited=false,untimed=false,queue=Promise.resolve(),failed=new Map(),saveVersion=0;
@@ -43,10 +44,7 @@ export function mountTextReader(host,{textPages,renderLesson,renderWord=()=>'',w
     queue=queue.catch(()=>{}).then(()=>latest.get(p.id)===record?saveProgress(record):undefined).then(()=>{if(latest.get(p.id)===record)failed.delete(p.id);if(active()&&version===saveVersion){saveMessage=failed.size?'Some text progress is not saved. Retry saving.':'Text progress saved.';saveStatus();}},()=>{if(latest.get(p.id)===record){failed.set(p.id,record);if(active()){saveMessage='Text progress could not save. Your answers remain here. Retry saving.';saveStatus();}}});
   }
   function gatePassed(p,r) {
-    if(!p.gate||p.gate==='none')return true;
-    if(p.type==='choice')return Boolean(r.checked);
-    if(p.type==='recall'||p.type==='timedRecall')return p.gate==='reveal'?Boolean(r.revealed):Boolean(r.text?.trim());
-    return p.gate==='reveal'?Boolean(r.revealed):Boolean(r.checked);
+    return textPageGatePassed(p,r);
   }
   function body(p,r) {
     const html=safe(p.html),prompt=p.prompt?'<p dir="auto">'+esc(p.prompt)+'</p>':'';
@@ -71,6 +69,7 @@ export function mountTextReader(host,{textPages,renderLesson,renderWord=()=>'',w
     if(dock)dockBinding=mountExerciseDock(host);
     if(focus)host.querySelector('[data-reader-heading]')?.focus({preventScroll:true});
     else if(focusedAction){const target=[...host.querySelectorAll('[data-reader-action]')].find(el=>el.dataset.readerAction===focusedAction&&!el.disabled);target?.focus({preventScroll:true});}
+    onGateChange(textGatesPassed(textPages,snapshot()),snapshot());
   }
   function cancelAttempt(){if(page()?.type==='timedRecall'&&!response().revealed&&response().text){responses[page().id]={};persist();}}
   function clearTimed() {cancelAttempt();untimed=false;timer.stop();}
@@ -95,6 +94,7 @@ export function mountTextReader(host,{textPages,renderLesson,renderWord=()=>'',w
     responses[page().id]={text:event.target.value};persist();
     const reveal=host.querySelector('[data-reader-action="reveal"]');if(reveal)reveal.disabled=!event.target.value.trim();
     const next=host.querySelector('[data-reader-action="next"]');if(next)next.disabled=index===pages.length-1||!gatePassed(page(),response());
+    onGateChange(textGatesPassed(textPages,snapshot()),snapshot());
   }
   const visibility=()=>{if(doc.hidden)clearTimed();};
   host.addEventListener('click',click);host.addEventListener('change',change);host.addEventListener('input',input);doc.addEventListener('visibilitychange',visibility);
