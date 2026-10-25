@@ -16,7 +16,7 @@ export function mountExerciseDock(scope) {
   const set=(el,key,value)=>{if(el.style.getPropertyValue(key)!==value)el.style.setProperty(key,value);};
   function restoreAnswer(el){
     const saved=constrainedAnswers.get(el);if(!saved)return;
-    for(const [key,value]of Object.entries(saved.styles))value?el.style.setProperty(key,value):el.style.removeProperty(key);
+    for(const [key,{value,priority}]of Object.entries(saved.styles))value?el.style.setProperty(key,value,priority):el.style.removeProperty(key);
     constrainedAnswers.delete(el);
   }
   function revealFocusedAnswer(el){
@@ -42,7 +42,7 @@ export function mountExerciseDock(scope) {
     // Keep a focused multiline answer operable in a short viewport. Restore its
     // authored size when space returns; content/value/caret remain on the same node.
     if(el.tagName==='TEXTAREA'&&r.height>available){
-      if(!constrainedAnswers.has(el))constrainedAnswers.set(el,{height:r.height,styles:Object.fromEntries(['min-height','max-height','overflow-y'].map(key=>[key,el.style.getPropertyValue(key)]))});
+      if(!constrainedAnswers.has(el))constrainedAnswers.set(el,{height:r.height,styles:Object.fromEntries(['min-height','max-height','overflow-y'].map(key=>[key,{value:el.style.getPropertyValue(key),priority:el.style.getPropertyPriority(key)}]))});
       set(el,'min-height','0px');set(el,'max-height',available+'px');set(el,'overflow-y','auto');r=el.getBoundingClientRect();
     }
     if(r.top>=top&&r.bottom<=bottom)return;
@@ -104,8 +104,15 @@ export function mountExerciseDock(scope) {
     schedule();
   },{signal,capture:true});
   doc.addEventListener('focusin',event=>{
-    const el=event.target;if(!scope.contains(el)||dock.contains(el)||el.closest('.vocabulary-reminder'))return;
-    revealFocusedAnswer(el);
+    revealFocusedAnswer(event.target);
+  },{signal});
+  // Blur can leave no subsequent focusin event. Wait for focus to settle before
+  // restoring an abandoned field; keyboard pointer handlers retain answer focus.
+  doc.addEventListener('focusout',()=>{
+    win.queueMicrotask(()=>{
+      if(destroyed)return;
+      for(const el of constrainedAnswers.keys())if(el!==doc.activeElement)restoreAnswer(el);
+    });
   },{signal});
   measure();
   return {refresh:measure,destroy(){if(destroyed)return;destroyed=true;controller.abort();resize?.disconnect();mutation.disconnect();transitions.clear();keyboardNodes.clear();for(const el of constrainedAnswers.keys())restoreAnswer(el);if(frame!==null)cancelFrame(frame);scope.style.removeProperty('--exercise-dock-reserve');delete scope.dataset.exerciseDockHost;}};
