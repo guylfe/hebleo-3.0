@@ -1,0 +1,29 @@
+✖ QA-TXT-04 delayed outer Finish must not complete a different profile and lesson after navigation (761.7932ms)
+ℹ {"terminalWrites":[{"user":"learner-core","lessonId":"qa-other","revisionId":3,"step":"complete","componentId":null,"question":0,"answer":"","selectedTokens":[],"matching":{},"resultRequestId":null,"practiceIds":[]}],"samCompleted":["qa-other"],"route":"#lesson/qa-other/complete"}
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2467.9013
+
+✖ failing tests:
+
+test at test\qa-first20-independent.test.js:187:1
+✖ QA-TXT-04 delayed outer Finish must not complete a different profile and lesson after navigation (761.7932ms)
+  AssertionError [ERR_ASSERTION]: Alex pending Finish completed Sam other lesson
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/71c71389-5334-4e0c-9ca8-d80dd28223d1/653fb433-7485-48b1-9f7c-cb22711bda02/hebleo-3/qa-native-first20-81a44f05/test/qa-first20-independent.test.js:198:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

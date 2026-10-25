@@ -157,3 +157,43 @@ test('QA-TXT-01 outer Finish waits for a delayed committed page save before navi
  doc.querySelector('.lesson-footer [data-action="step"][data-value="complete"]').click();await tick();assert.equal(s.learner('learner-demo').completed.includes('qa-text-only'),false);assert.ok(doc.querySelector('[data-reader-heading]'));
  release();await until(()=>s.learner('learner-demo').completed.includes('qa-text-only'));assert.equal(s.learner('learner-demo').textPages[0].responses[recall.id].revealed,true);
 });
+
+test('QA corrected: HTTP Finish checks every text block before writing and unlocks after all commitments',async t=>{
+ const s=new Store();t.after(()=>s.close());addSynthetic(s,[choice]);const c=s.snapshot(),l=c.lessons.find(l=>l.id==='qa-text-only');
+ l.blocks.push({id:'qa-second',type:'explanation',source:'inline',renderer:'text',text:'',textPages:pages([recall])});
+ const draft=s.stage({baseRevisionId:s.get('active'),expectedDraftToken:null,content:c});s.publish(draft.baseRevisionId,draft.draftToken);
+ const api=await http(t,s),revisionId=s.get('active'),finish={lessonId:l.id,componentId:null,revisionId,step:'complete',question:0,answer:'',selectedTokens:[],matching:{}};
+ const refused=async()=>{const before=allRows(s),r=await api.call('progress',finish);assert.equal(r.status,409);assert.equal(r.value.code,'TEXT_GATES_REQUIRED');assert.equal(allRows(s),before);};
+ await refused();assert.equal((await api.call('text-progress',{lessonId:l.id,revisionId,componentId:'qa-text',pageId:choice.id,cursorPageId:choice.id,response:{choice:1,checked:true}})).status,200);
+ await refused();assert.equal((await api.call('text-progress',{lessonId:l.id,revisionId,componentId:'qa-second',pageId:recall.id,cursorPageId:recall.id,response:{text:'תּוֹדָה',revealed:true}})).status,200);
+ assert.equal(s.learner('learner-demo').completed.includes(l.id),false);assert.equal((await api.call('progress',finish)).status,200);assert.equal(s.learner('learner-demo').completed.includes(l.id),true);
+});
+
+test('QA corrected: same-build startup retains all profiles text responses; next build clears responses while preserving draft and settings',t=>{
+ const s=new Store();t.after(()=>s.close());addSynthetic(s,[recall]);s.resetDemoProgressForBuild('qa-build-a');
+ for(const user of ['learner-demo','learner-core','author-demo']){s.updateLearner(user,{nikkud:'full',note:{wordId:'w-ani',text:'SYNTHETIC retained note'}});s.saveTextProgress(user,{lessonId:'qa-text-only',componentId:'qa-text',revisionId:s.get('active'),pageId:recall.id,cursorPageId:recall.id,response:{text:user,revealed:true}});}
+ s.stage({baseRevisionId:s.get('active'),expectedDraftToken:null,word:{id:'w-ani',notes:'SYNTHETIC retained draft'}});const draft=s.currentDraft(),before=allRows(s);
+ assert.equal(s.resetDemoProgressForBuild('qa-build-a'),false);assert.equal(allRows(s),before);assert.equal(s.resetDemoProgressForBuild('qa-build-b'),true);
+ for(const user of ['learner-demo','learner-core','author-demo']){const learner=s.learner(user);assert.equal(learner.textPages,undefined);assert.equal(learner.preferences.nikkud,'full');assert.equal(learner.notes['w-ani'],'SYNTHETIC retained note');}assert.deepEqual(s.currentDraft(),draft);
+});
+
+test('QA corrected: three-node prerequisite cycle refuses atomically with concrete review conflict; acyclic chain imports',t=>{
+ const s=new Store();t.after(()=>s.close());const p=structuredClone(pack);for(const l of p.lessons)l.prerequisites='None';
+ p.lessons[0].prerequisites=p.lessons[1].id;p.lessons[1].prerequisites=p.lessons[2].id;p.lessons[2].prerequisites=p.lessons[0].id;
+ const before=allRows(s),review=s.reviewTextImport(requestInput(s,p));assert.equal(review.status,'review-required');assert.match(review.conflicts[0].message,/Cyclic prerequisite references: draft-first20-/);assert.equal(allRows(s),before);assert.throws(()=>s.importTextDraft(requestInput(s,p)),e=>e.code==='TEXT_IMPORT_CONFLICT');assert.equal(allRows(s),before);
+ p.lessons[2].prerequisites='None';assert.equal(s.reviewTextImport(requestInput(s,p)).status,'ready-unpublished');assert.equal(s.importTextDraft(requestInput(s,p)).importReceipt.lessonCount,20);
+});
+
+test('QA-TXT-04 delayed outer Finish must not complete a different profile and lesson after navigation',async t=>{
+ const s=new Store();t.after(()=>s.close());addSynthetic(s,[recall]);const c=s.snapshot(),other=structuredClone(c.lessons.find(l=>l.id==='qa-text-only'));other.id='qa-other';other.title='SYNTHETIC other lesson';other.blocks[0].textPages.pages[0].gate='none';c.lessons.push(other);c.curriculum.order.push({lessonId:other.id});
+ const d=s.stage({baseRevisionId:s.get('active'),expectedDraftToken:null,content:c});s.publish(d.baseRevisionId,d.draftToken);
+ const {origin}=await http(t,s);let release,hold=true;const {doc,w,calls}=await actualApp(t,s,origin,{beforeFetch:async(path,options)=>{if(path==='/api/text-progress'&&options?.method==='POST'&&hold&&JSON.parse(options.body).response.revealed){hold=false;await new Promise(r=>release=r);}}});t.after(()=>release?.());
+ const attempt=doc.querySelector('[data-reader-attempt]');attempt.value='SYNTHETIC Alex pending commitment';attempt.dispatchEvent(new w.Event('input',{bubbles:true}));doc.querySelector('[data-reader-action="reveal"]').click();await until(()=>release);
+ doc.querySelector('.lesson-footer [data-action="step"][data-value="complete"]').click();await tick();
+ const chooser=doc.querySelector('#demo-user');chooser.value='learner-core';chooser.dispatchEvent(new w.Event('change'));await until(()=>w.localStorage.getItem('hebleo-demo-user')==='learner-core'&&!doc.querySelector('[data-reader-heading]'));
+ w.history.pushState({},'','#lesson/qa-other/qa-text');w.dispatchEvent(new w.PopStateEvent('popstate'));await until(()=>doc.querySelector('[data-reader-heading]')&&doc.querySelector('h1')?.textContent===other.title);
+ release();await until(()=>s.learner('learner-demo').textPages?.[0]?.responses[recall.id]?.revealed===true);
+ for(let n=0;n<10;n++)await new Promise(r=>setTimeout(r,10));
+ t.diagnostic(JSON.stringify({terminalWrites:calls.filter(c=>c.path==='/api/progress'&&c.body&&JSON.parse(c.body).step==='complete').map(c=>({user:c.headers['x-demo-user'],...JSON.parse(c.body)})),samCompleted:s.learner('learner-core').completed,route:w.location.hash}));
+ assert.equal(s.learner('learner-core').completed.includes(other.id),false,'Alex pending Finish completed Sam other lesson');assert.ok(doc.querySelector('[data-reader-heading]'),'Stale Finish replaced the newly opened lesson portion');
+});

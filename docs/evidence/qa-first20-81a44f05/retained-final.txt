@@ -1,0 +1,35 @@
+✔ Demo reset clears only progress for all three profiles once per build and survives process restart (159.0557ms)
+✔ Demo fingerprint detects app edits, ignores documentation edits and normalizes Windows line endings (31.0645ms)
+✔ Demo fingerprint covers nested executable assets at any depth and ignores docs, data and uploads (135.3602ms)
+✔ Startup reset follows nested-only deployments once per build and keeps settings, content and drafts (100.1108ms)
+✔ The checkout fingerprint includes every nested public module and no docs or mutable data (8.494ms)
+✔ Studio text import review is read-only; input changes invalidate late reviews and staging uses exact CAS workspace save (1066.6603ms)
+✔ preservation rehearsal and explicit application conserve all prior records; old code is not silently migrated by startup (1837.2121ms)
+✔ all 20 adapted drafts, 154 stable pages and 127 targets import additively and remain unpublished (719.1826ms)
+✔ two lesson/page reorders survive save, reopen, export/import twice with IDs, targets and references intact (1944.0346ms)
+✔ alias collisions, unknown and ambiguous mappings fail without writing or equating planning IDs to fixtures (610.3274ms)
+✔ conflicting existing draft and explicit fixture mapping require review without partial writes (877.233ms)
+✔ canonical mapping is explicit and draft targets retain source metadata; no lexemes are synthesized (242.9681ms)
+✔ malformed bounds, missing/duplicate pages, bad references and unsafe imported HTML are handled (254.2392ms)
+✔ response saving never completes a lesson and survives two recovery cycles and order-only publication (43.7574ms)
+✔ forged reveal, missing pages, timer fields, wrong profile/revision and corrupt backup are atomic refusals (19.5261ms)
+✔ legacy text/video, actual HTTP projection/progress and author-only draft import endpoints integrate (785.1296ms)
+✔ exact source number, no autoplay, 9999 visible / 10000 hidden and replay invalidates stale callbacks (405.9143ms)
+✔ elapsed deadline handles early scheduler and late callbacks without accumulated counter drift (0.6444ms)
+✔ hidden-tab cancellation, untimed alternative, navigation and explicit unmount hide timed content (170.4899ms)
+✔ removing a host cancels timers and stale asynchronous loads never update it (50.9578ms)
+✔ choices require explicit selection and Check; recall requires nonblank commitment, preserves exact Hebrew and safe source HTML (111.1267ms)
+✔ save failure is retryable, input remains, writes serialize and stale loads cannot replace user edits (35.1777ms)
+✔ canonical vocabulary cards and media use existing actions; unresolved targets are explicit and no parallel lexemes appear (35.4022ms)
+✔ saved response identities survive page reordering and are independent of course completion (51.6882ms)
+✔ all 154 supplied draft pages render and traverse through the native contract without creating vocabulary records (3445.4623ms)
+✔ incomplete timed attempts are cancelled by tab hiding and require fresh Play (57.3213ms)
+✔ native lesson markup and Preview share the reader; Watch/Read and legacy text remain available without Preview persistence (89.2653ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8136.6358
