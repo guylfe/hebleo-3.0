@@ -21,7 +21,7 @@ export function moveCurriculumEntry(content,{chapterId,lessonId},delta){
  if(index<0)throw new Error('Placement not found.');const target=index+delta;if(target<0||target>=list.length)return next;
  const [entry]=list.splice(index,1);list.splice(target,0,entry);validateCurriculum(next);return next;
 }
-export function mountCurriculumEditor(host,{getContent,onChange,selectedLessonId,onLessonSelect,newId=()=> 'chapter-'+crypto.randomUUID()}){
+export function mountCurriculumEditor(host,{getContent,getLessonOptions=()=>getContent().lessons,onChange,selectedLessonId,onLessonSelect,newId=()=> 'chapter-'+crypto.randomUUID()}){
  const ctl=new host.ownerDocument.defaultView.AbortController();let currentLesson=selectedLessonId,filter='',disposed=false;
  const source=()=>{const c=structuredClone(getContent());c.curriculum=projectCurriculum(c);return c;};
  const lessonLabel=(c,id)=>c.lessons.find(l=>l.id===id)?.title||id;
@@ -44,5 +44,35 @@ export function mountCurriculumEditor(host,{getContent,onChange,selectedLessonId
  else if(b.matches('[data-remove-chapter]'))changed(removeChapter(c,b.dataset.removeChapter));
  else if(b.matches('[data-move-lesson]'))changed(moveLesson(c,currentLesson,host.querySelector('[data-move-destination]').value||null));
  }catch(err){host.querySelector('[data-curriculum-status]').textContent=err.message;}},{signal:ctl.signal});
- draw();return {refresh:draw,dispose(){disposed=true;ctl.abort();host.replaceChildren();}};
+ let picker;
+ function openPicker(opener,onSelected=()=>{}){
+  if(disposed)return;
+  if(picker){picker.querySelector('input').focus();return;}
+  const doc=host.ownerDocument,dialog=doc.createElement('dialog');picker=dialog;
+  dialog.className='confirmation-dialog studio-lesson-picker';dialog.setAttribute('aria-labelledby','studio-lesson-picker-title');
+  dialog.innerHTML='<h2 id="studio-lesson-picker-title">Choose a draft lesson</h2><p>Choose a lesson to edit. Preview uses its saved draft.</p><label>Search lessons<input type="search" data-lesson-search placeholder="Title or readable ID, e.g. MEMORY"></label><p data-picker-count role="status"></p><p data-picker-error role="alert"></p><ul data-picker-lessons></ul><button type="button" data-picker-close>Cancel</button>';
+  function dismiss(selected=false){dialog.close();dialog.remove();picker=undefined;if(selected)onSelected();else if(opener?.isConnected)opener.focus({preventScroll:true});}
+  function list(){
+   try{
+    const all=getLessonOptions(),query=dialog.querySelector('input').value.trim().toLocaleLowerCase();
+    const lessons=all.filter(l=>[l.id,l.contentId,l.title].some(value=>String(value||'').toLocaleLowerCase().includes(query)));
+    dialog.querySelector('[data-picker-count]').textContent=lessons.length+' of '+all.length+' lessons';
+    dialog.querySelector('ul').innerHTML=lessons.map(l=>'<li><button type="button" class="outline" data-pick-lesson="'+e(l.id)+'"'+(l.id===currentLesson?' aria-current="true"':'')+'><strong><bdi>'+e(l.contentId||l.id)+'</bdi></strong><span dir="auto">'+e(l.title)+'</span><small>'+e(l.id)+(l.id===currentLesson?' · Selected':'')+'</small></button></li>').join('')||'<li>No matching lessons. Try another title or ID.</li>';
+   }catch(err){dialog.querySelector('[data-picker-error]').textContent=err.message;}
+  }
+  dialog.addEventListener('input',list);
+  dialog.addEventListener('cancel',event=>{event.preventDefault();dismiss();});
+  dialog.addEventListener('click',event=>{
+   const button=event.target.closest('button');if(!button)return;
+   if(button.matches('[data-picker-close]')){dismiss();return;}
+   if(!button.matches('[data-pick-lesson]'))return;
+   try{
+    const id=button.dataset.pickLesson;
+    if(onLessonSelect(id)===false)throw new Error('Lesson was not changed. Correct the workspace error and try again.');
+    currentLesson=id;filter='';draw();dismiss(true);
+   }catch(err){dialog.querySelector('[data-picker-error]').textContent='Lesson was not changed: '+err.message+' Your edits are retained. Cancel to correct them.';}
+  });
+  doc.body.append(dialog);list();dialog.showModal();dialog.querySelector('input').focus();
+ }
+ draw();return {refresh:draw,openPicker,dispose(){disposed=true;ctl.abort();picker?.close();picker?.remove();picker=undefined;host.replaceChildren();}};
 }

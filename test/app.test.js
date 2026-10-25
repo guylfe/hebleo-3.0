@@ -73,6 +73,63 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
 
+function first20Draft(store){store.importTextDraft({baseRevisionId:store.get('active'),expectedDraftToken:null,pack:JSON.parse(readFileSync(new URL('../docs/curriculum/first20-20261025/content.json',import.meta.url)))});}
+const pickerDump=store=>JSON.stringify(store.db.prepare("SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name").all().map(({name})=>[name,store.db.prepare('SELECT * FROM "'+name+'" ORDER BY 1').all()]));
+
+test('STUDIO-PICKER-01 real app Choose lesson lists all23 drafts and routes MEMORY/MNT editor and saved Preview without writes',async t=>{
+ const {store,w,doc,calls}=await app(t,{author:true,page:'studio',realHTTP:true,prepare:first20Draft});
+ await settled(()=>doc.querySelector('[data-current-lesson]'));
+ const before=pickerDump(store),requests=[],fetch=w.fetch;
+ w.fetch=(path,options)=>{if(path==='/api/studio/preview/session')requests.push(JSON.parse(options.body));return fetch(path,options);};
+ for(const readable of ['MEMORY','MNT']){
+  const lesson=store.currentDraft().content.lessons.find(l=>l.contentId===readable);
+  doc.querySelector('.studio-context button').click();const picker=doc.querySelector('.studio-lesson-picker');assert.ok(picker?.open,'Choose lesson opens a visible native dialog');
+  assert.equal(picker.querySelectorAll('[data-pick-lesson]').length,23);assert.equal(doc.activeElement,picker.querySelector('input'));
+  assert.equal(picker.querySelectorAll('[aria-current=true]').length,1);
+  picker.querySelector('[data-pick-lesson="'+lesson.id+'"]').click();
+  assert.equal(doc.querySelector('.studio-lesson-picker'),null);assert.equal(doc.querySelector('[data-selected-lesson]').textContent,lesson.id);
+  assert.equal(doc.querySelector('[data-lesson-metadata] [name=title]').value,lesson.title);
+  assert.equal(doc.activeElement,doc.querySelector('[data-lesson-metadata] [name=title]'));
+  assert.equal(doc.querySelector('[data-page-select]').options.length,lesson.blocks[0].textPages.pages.length);
+  assert.equal(doc.querySelector('[data-action=rehearse]').dataset.value,lesson.id);
+  click(doc,'rehearse');await settled(()=>doc.querySelector('#rehearsal-panel .learner-preview'));
+  assert.equal(requests.at(-1).lessonId,lesson.id);assert.equal(requests.at(-1).draftToken,store.currentDraft().draftToken);
+  assert.ok(doc.querySelector('#rehearsal-panel [data-text-reader]'),'saved paginated text is mounted in the actual shared Preview');
+  doc.querySelector('#rehearsal-panel [data-preview-exit]').click();await settled(()=>!doc.querySelector('#rehearsal-panel'));
+ }
+ assert.equal(pickerDump(store),before,'chooser/editor/Preview never save or publish');
+ assert.equal(calls.some(path=>['/api/studio/draft','/api/studio/publish','/api/progress'].includes(path)),false);
+});
+
+test('STUDIO-PICKER-02 switching retains lesson/page/sibling edits; Preview remains the saved draft',async t=>{
+ const {store,w,doc}=await app(t,{author:true,page:'studio',realHTTP:true,prepare:first20Draft});await settled(()=>doc.querySelector('[data-current-lesson]'));
+ const before=pickerDump(store),title=doc.querySelector('[data-lesson-metadata] [name=title]');edit(w,title,'SYNTHETIC unsaved original title');
+ const word=doc.querySelector('[data-canonical-word] [name=notes]');edit(w,word,'SYNTHETIC sibling notes retained');
+ const choose=id=>{click(doc,'studio-choose-lesson');doc.querySelector('[data-pick-lesson="'+id+'"]').click();};
+ choose('draft-first20-MEMORY');edit(w,doc.querySelector('[data-page-field=title]'),'SYNTHETIC unsaved MEMORY page');
+ choose('draft-first20-MNT');choose('draft-first20-MEMORY');assert.equal(doc.querySelector('[data-page-field=title]').value,'SYNTHETIC unsaved MEMORY page');
+ click(doc,'rehearse');await settled(()=>doc.querySelector('#rehearsal-panel .learner-preview'));assert.equal(doc.querySelector('#rehearsal-panel').textContent.includes('SYNTHETIC unsaved MEMORY page'),false);doc.querySelector('#rehearsal-panel [data-preview-exit]').click();
+ choose('lesson-1');assert.equal(doc.querySelector('[data-lesson-metadata] [name=title]').value,'SYNTHETIC unsaved original title');assert.equal(doc.querySelector('[data-canonical-word] [name=notes]').value,'SYNTHETIC sibling notes retained');assert.equal(pickerDump(store),before);
+});
+
+test('STUDIO-PICKER-03 chapter filtering cannot omit drafts; search, cancel, Escape and visible validation failure retain focus and edits',async t=>{
+ const {store,w,doc}=await app(t,{author:true,page:'studio',realHTTP:true,prepare:first20Draft});await settled(()=>doc.querySelector('[data-current-lesson]'));
+ const before=pickerDump(store),filter=doc.querySelector('[data-chapter-filter]');filter.value='ungrouped';filter.dispatchEvent(new w.Event('change',{bubbles:true}));
+ click(doc,'studio-choose-lesson');let picker=doc.querySelector('.studio-lesson-picker');assert.equal(picker.querySelectorAll('[data-pick-lesson]').length,23);
+ edit(w,picker.querySelector('input'),'MEMORY');assert.equal(picker.querySelectorAll('[data-pick-lesson]').length,1);picker.querySelector('[data-picker-close]').click();assert.equal(doc.activeElement,doc.querySelector('[data-action=studio-choose-lesson]'));
+ click(doc,'studio-choose-lesson');picker=doc.querySelector('.studio-lesson-picker');picker.dispatchEvent(new w.Event('cancel',{cancelable:true}));assert.equal(doc.querySelector('.studio-lesson-picker'),null);assert.equal(doc.activeElement,doc.querySelector('[data-action=studio-choose-lesson]'));
+ const invalid=doc.querySelector('[data-canonical-word] [name=richFields]');edit(w,invalid,'{incomplete');const selected=doc.querySelector('[data-selected-lesson]').textContent;
+ click(doc,'studio-choose-lesson');picker=doc.querySelector('.studio-lesson-picker');picker.querySelector('[data-pick-lesson="draft-first20-MEMORY"]').click();assert.equal(picker.open,true);assert.match(picker.querySelector('[role=alert]').textContent,/not changed.*edits are retained/);assert.equal(doc.querySelector('[data-selected-lesson]').textContent,selected);picker.querySelector('[data-picker-close]').click();assert.equal(invalid.value,'{incomplete');assert.equal(pickerDump(store),before);
+});
+
+test('STUDIO-PICKER-04 pending CAS save refuses lesson replacement and retains the matching Preview target',async t=>{
+ const {store,w,doc}=await app(t,{author:true,page:'studio',realHTTP:true,prepare:first20Draft});await settled(()=>doc.querySelector('[data-current-lesson]'));
+ const reload=holdStudioReload(w);t.after(()=>reload.release());reload.hold();
+ edit(w,doc.querySelector('[data-lesson-metadata] [name=title]'),'SYNTHETIC explicitly saved title');submit(w,doc.querySelector('[data-lesson-metadata]'));
+ await settled(()=>reload.waiting);click(doc,'studio-choose-lesson');const picker=doc.querySelector('.studio-lesson-picker');picker.querySelector('[data-pick-lesson="draft-first20-MEMORY"]').click();assert.equal(picker.open,true);assert.match(picker.querySelector('[role=alert]').textContent,/not changed/);assert.equal(doc.querySelector('[data-selected-lesson]').textContent,'lesson-1');assert.equal(doc.querySelector('[data-action=rehearse]').dataset.value,'lesson-1');picker.querySelector('[data-picker-close]').click();reload.release();await settled(()=>!doc.querySelector('#unified-studio-mount [aria-busy=true]'));
+ assert.equal(store.snapshot().lessons.length,3);assert.equal(store.currentDraft().content.lessons.length,23);
+});
+
 test('Ordering word selection and removal stay immediate during a slow save and persist the latest sentence',async t=>{
  const {w,doc,store}=await app(t,{page:'lesson/lesson-2/apply',realHTTP:true}),fetch=w.fetch;
  let release,held=true;

@@ -107,6 +107,10 @@ body{background:var(--canvas);color:var(--ink);font:16px/1.5 "Segoe UI",Arial,sa
 /* Reply density is distinct from the full comment composer. */
 .comment-body .reply-composer .compose-field textarea{min-height:88px}
 dialog.confirmation-dialog{width:min(560px,calc(100vw - 32px));padding:24px;border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);background:var(--paper)}
+dialog.studio-lesson-picker{max-height:calc(100dvh - 32px);overflow:auto}
+.studio-lesson-picker ul{list-style:none;padding:0;display:grid;gap:8px}
+.studio-lesson-picker li button{display:grid;gap:4px;width:100%;min-height:42px;text-align:start;overflow-wrap:anywhere}
+.studio-lesson-picker [aria-current=true]{border-color:var(--accent);background:var(--selection)}
 .setup-page>.content{max-width:calc(1120px + 64px);padding:24px 32px}
 
 /* Adapt keyboard chrome; authored learned-key colors retain their own tokens. */

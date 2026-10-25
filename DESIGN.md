@@ -79,6 +79,8 @@ Radius8px for controls, Cards and dialogs. At least42px header controls. Small c
 
 ## Components
 
+Studio Choose lesson uses the existing native confirmation-dialog surface as an all-draft navigation dialog, owned by curriculum-editor.js. Search and ordinary full-width lesson buttons retain native focus/activation; readable IDs and authored titles wrap within the viewport. Existing ink/paper/accent/selection/line/radius tokens supply contrast and current state. It does not change chapter order, automatically save edits or publish content. Selected lesson content continues in the existing paginated authoring and saved-draft Preview owners.
+
 The actual learner renderer, vocabularyTable/wordCard, unified Studio, EasyMDE and owner keyboard remain canonical. Studio shows one title editor at its display location, editable content at its location, explicit Add/Edit/Reuse and shared-reference impact. The current exercise has one measured visible action dock: Check, pending, then primary Next/Continue. Concept sits beside the question header; verdict and optional Explanation precede compact Accepted answer(s). Concept help is inline and does not remount the answer. Native select popup behavior is intentionally retained; there is no authored popup geometry claim.
 
 Global scrollbars inherit thumb/track/hover/active tokens with forced-colors fallback. Accessible labels/current/expanded state, native tab semantics, focus indicators and reduced-motion rules are preserved. All profile, note, anonymity, source/session/revision and publishing contracts remain in UX-CONTRACT.md and the existing architecture documents.
