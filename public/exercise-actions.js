@@ -14,6 +14,22 @@ export function mountExerciseDock(scope) {
   const keyboardNodes=new Set(), transitions=new Map();
   const keyboardSelector='.hebleo-keyboard__panel, .hebleo-keyboard__launcher';
   const set=(el,key,value)=>{if(el.style.getPropertyValue(key)!==value)el.style.setProperty(key,value);};
+  function revealFocusedAnswer(el){
+    if(!el||!scope.contains(el)||dock.contains(el)||el.closest('.vocabulary-reminder')||dock.hidden)return;
+    const vv=win.visualViewport,bounds=dialog?.getBoundingClientRect(),gap=Number.parseFloat(win.getComputedStyle(dock).gap)||8;
+    let scroller=dialog||win,clip=bounds;
+    for(let parent=el.parentElement;parent&&parent!==dialog&&parent!==doc.body;parent=parent.parentElement){
+      if(/auto|scroll|overlay/.test(win.getComputedStyle(parent).overflowY)&&parent.scrollHeight>parent.clientHeight){scroller=parent;clip=parent.getBoundingClientRect();break;}
+    }
+    const top=Math.max(vv?.offsetTop||0,bounds?.top??0,clip?.top??0)+gap;
+    const bottom=Math.min(dock.getBoundingClientRect().top-gap,clip?.bottom??Infinity);
+    const r=el.getBoundingClientRect();
+    if(bottom<=top||r.top>=top&&r.bottom<=bottom)return;
+    // Center within the usable interval, not the full document/dialog viewport.
+    // A field taller than the interval aligns its start rather than oscillating.
+    const targetTop=top+Math.max(0,(bottom-top-r.height)/2),delta=r.top-targetTop;
+    if(Math.abs(delta)>1)scroller.scrollBy?.({top:delta,behavior:'instant'});
+  }
   function measure(){
     frame=null;if(destroyed||!scope.isConnected)return;
     const vv=win.visualViewport, left=vv?.offsetLeft||0, top=vv?.offsetTop||0;
@@ -43,13 +59,7 @@ export function mountExerciseDock(scope) {
     reserve=Math.max(height+Math.max(0,(bounds?.bottom??viewportBottom)-bottom)+16,reserve);
     set(scope,'--exercise-dock-reserve',reserve+'px');
     scope.dataset.exerciseDockHost='';
-    if(!suspended){
-      const active=doc.activeElement;
-      if(scope.contains(active)&&!dock.contains(active)&&!active.closest('.vocabulary-reminder')){
-        const r=active.getBoundingClientRect(),d=dock.getBoundingClientRect();
-        if(r.bottom>d.top&&r.top<viewportBottom)active.scrollIntoView?.({block:'center',behavior:'instant'});
-      }
-    }
+    if(!suspended)revealFocusedAnswer(doc.activeElement);
     for(const [node,deadline]of transitions)if(!node.isConnected||win.performance.now()>=deadline)transitions.delete(node);
     if(transitions.size)schedule();
   }
@@ -74,8 +84,7 @@ export function mountExerciseDock(scope) {
   },{signal,capture:true});
   doc.addEventListener('focusin',event=>{
     const el=event.target;if(!scope.contains(el)||dock.contains(el)||el.closest('.vocabulary-reminder'))return;
-    const r=el.getBoundingClientRect(),d=dock.getBoundingClientRect();
-    if(r.bottom>d.top&&r.top<d.bottom)el.scrollIntoView?.({block:'center',behavior:'instant'});
+    revealFocusedAnswer(el);
   },{signal});
   measure();
   return {refresh:measure,destroy(){if(destroyed)return;destroyed=true;controller.abort();resize?.disconnect();mutation.disconnect();transitions.clear();keyboardNodes.clear();if(frame!==null)cancelFrame(frame);scope.style.removeProperty('--exercise-dock-reserve');delete scope.dataset.exerciseDockHost;}};

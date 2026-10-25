@@ -16,7 +16,8 @@ function fixture(t,{preview=false,keyboard=true}={}){
  dock.getBoundingClientRect=()=>rect(Number.parseFloat(dock.style.left)||0,800-(Number.parseFloat(dock.style.bottom)||0)-dockHeight,Number.parseFloat(dock.style.width)||440,dockHeight);
  if(launcher)launcher.getBoundingClientRect=()=>rect(410,launcherTop,54,54);
  if(preview)d.querySelector('dialog').getBoundingClientRect=()=>rect(10,20,460,740);
- field.getBoundingClientRect=()=>rect(30,fieldTop,400,60);field.scrollIntoView=()=>{scrolls++;fieldTop=100;};
+ field.getBoundingClientRect=()=>rect(30,fieldTop,400,60);
+ const scrollBy=options=>{scrolls++;fieldTop-=options.top;};w.scrollBy=scrollBy;if(preview)d.querySelector('dialog').scrollBy=scrollBy;
  if(launcher)launcher.parentElement.className='hebleo-keyboard';
  const owner=mountExerciseDock(scope);t.after(()=>{owner.destroy();w.close();});
  return {w,d,scope,dock,field,launcher,owner,observers,setDockHeight:n=>dockHeight=n,setLauncherTop:n=>launcherTop=n,occludeField:()=>fieldTop=dock.getBoundingClientRect().top+10,get scrolls(){return scrolls;},resize(node){for(const o of observers)if(o.nodes.has(node))o.fn([{target:node}]);}};

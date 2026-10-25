@@ -24,6 +24,9 @@ function fixture(t,{preview=false}={}){
  // Preview scrolls its dialog (20..760), including its CSS fallback 100px end inset.
  // The measured reserve is on a non-scrolling child, not either scroll container.
  field.scrollIntoView=options=>{scrolls++;assert.equal(options.block,'center');fieldTop=(preview?(20+760-100)/2:800/2)-60/2;};
+  // CSSOM scrollBy moves the field by the requested delta in its actual owner.
+  const scrollBy=options=>{scrolls++;fieldTop-=options.top;};
+  w.scrollBy=scrollBy;if(preview)d.querySelector('dialog').scrollBy=scrollBy;
  const owner=mountExerciseDock(scope);t.after(()=>{owner.destroy();w.close();});
  const flush=async(ms=16)=>{await tick();now+=ms;const current=[...jobs];jobs.clear();for(const [,fn]of current)fn(now);await tick();};
  function keyboard({top=600,left=0,width=480,height=200,css=''}={}){const node=d.createElement('section');node.className='hebleo-keyboard__panel';node.style.cssText=css;const geometry={top,left,width,height};node.getBoundingClientRect=()=>box(geometry.left,geometry.top,geometry.width,geometry.height);d.body.append(node);return {node,geometry};}
