@@ -1,0 +1,90 @@
+{
+  "status": "prepared curriculum update; working standalone reader; native Sheets write rejected; engineering handoff pending",
+  "files": [
+    {
+      "name": "author-content.cjs",
+      "bytes": 34903,
+      "sha256": "3fc0df492b7ef0557432a7d45443c0adf821afdeb0bcf9363a4223b873f27945"
+    },
+    {
+      "name": "browser-review.json",
+      "bytes": 179697,
+      "sha256": "ad30d5b7b267865aea9c8c99b4d03f7c4cad21552b99e3069bf4a2ae84cf4085"
+    },
+    {
+      "name": "build-reader.cjs",
+      "bytes": 1918,
+      "sha256": "03d0984a4e8d6f886e1f6eb1daf45b217cc3f0bd62081c22f73c546e1b596028"
+    },
+    {
+      "name": "content.json",
+      "bytes": 209346,
+      "sha256": "ffebf920a673cdca6502f7c0b1d9893eac4054be4e96342ef8250db42f523e36"
+    },
+    {
+      "name": "curriculum-checks.json",
+      "bytes": 15609,
+      "sha256": "1992c83798678b69ed7c4705f924ab1a38b93e071f2a4243e231cc719012a510"
+    },
+    {
+      "name": "ENGINEERING_BRIEF.md",
+      "bytes": 9509,
+      "sha256": "260542ad56f97bf2da433533fed702016db5ab642d962d26ff83523b92e8dda9"
+    },
+    {
+      "name": "first20.html",
+      "bytes": 234243,
+      "sha256": "1fc1d633fc4cd6437da9f95fdedb6a1088d981a667285fa87ce1424e76fa3b1f"
+    },
+    {
+      "name": "FIRST20_CONTENT.md",
+      "bytes": 52072,
+      "sha256": "1460b2670d30dc662e1016c8ca178c38b58c3fd3680b2c76d50a25e221f7eaa9"
+    },
+    {
+      "name": "lesson-catalog.json",
+      "bytes": 464460,
+      "sha256": "eb4a7765484f3668d90cd4233f5a2b26f712510aff81fab8bcb67c270bc4bc66"
+    },
+    {
+      "name": "lesson-id-map.json",
+      "bytes": 103720,
+      "sha256": "228836b12f9c8eb9ec6c540e1d952123e3c5fe5f9c0d4746e5abac5c0be5d726"
+    },
+    {
+      "name": "make-reports.cjs",
+      "bytes": 7089,
+      "sha256": "b52a6842367948c7fcf88129ad9f8430e23aa11ef74b5509cf8ed7fe78e12716"
+    },
+    {
+      "name": "reader-test-results.json",
+      "bytes": 418,
+      "sha256": "de2b31faff9e5773f0f921b17fcbf6cf0ac8560708217281eb4ac52db5e1fa01"
+    },
+    {
+      "name": "reader.css",
+      "bytes": 5051,
+      "sha256": "f62b043bdf2d37c604ba2810e376336147d956b10bdc8711f07bc7e8ad67075d"
+    },
+    {
+      "name": "reader.js",
+      "bytes": 12329,
+      "sha256": "c7129280ce4cd55103af3467c05871e2e71470bab04cfa77d82b62b96ada63ac"
+    },
+    {
+      "name": "README.md",
+      "bytes": 3292,
+      "sha256": "79d4b1480264102f3938a8361509c63ab585da028ee5f7c710f08c0df13dbbbf"
+    },
+    {
+      "name": "REDISTRIBUTION.md",
+      "bytes": 9071,
+      "sha256": "34304228132a86d3dc064f6d56bfda2be5ff4047c486eab4b7801122a631f8db"
+    },
+    {
+      "name": "test-reader.cjs",
+      "bytes": 5645,
+      "sha256": "6efc781d1d5f3b6b1d8ad08e9bba67c1b82b7c82f49149848d0762e77e36cf2e"
+    }
+  ]
+}
