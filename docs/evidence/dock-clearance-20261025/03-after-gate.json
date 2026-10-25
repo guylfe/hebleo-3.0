@@ -1,0 +1,1074 @@
+{
+  "content_refs": [
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Hebleo · SYNTHETIC dock clearance",
+      "ref": "p62:0",
+      "role": "rootwebarea",
+      "states": {
+        "focusable": true,
+        "focused": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:15",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Hebleo navigation",
+      "ref": "p62:16",
+      "role": "banner",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Main navigation",
+      "ref": "p62:17",
+      "role": "navigation",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "DEMO CONTENT",
+      "ref": "p62:18",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:19",
+      "role": "labeltext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Demo profile",
+      "ref": "p62:20",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:21",
+      "role": "main",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:22",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Your Hebrew / Learn",
+      "ref": "p62:23",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:24",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "SYNTHETIC ENGINEERING FIXTURE",
+      "ref": "p62:25",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "SYNTHETIC dock clearance",
+      "ref": "p62:26",
+      "role": "heading",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:27",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Learn · Step 1 of 2",
+      "ref": "p62:28",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Lesson portions",
+      "ref": "p62:29",
+      "role": "navigation",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Finish",
+      "ref": "p62:30",
+      "role": "button",
+      "states": {
+        "disabled": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:31",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:32",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:33",
+      "role": "sectionheader",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:34",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Page 2 of 2",
+      "ref": "p62:35",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "SYNTHETIC commitment gate",
+      "ref": "p62:36",
+      "role": "heading",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:44",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Enter a sample before revealing the engineering model.",
+      "ref": "p62:45",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:46",
+      "role": "labeltext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Your attempt",
+      "ref": "p62:47",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:48",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Text page actions",
+      "ref": "p62:49",
+      "role": "navigation",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Continue →",
+      "ref": "p62:50",
+      "role": "button",
+      "states": {
+        "disabled": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:51",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Show model answer",
+      "ref": "p62:52",
+      "role": "button",
+      "states": {
+        "disabled": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:53",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Reveal or acknowledge this page before continuing.",
+      "ref": "p62:54",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:55",
+      "role": "status",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Text progress saved.",
+      "ref": "p62:56",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "← Back",
+      "ref": "p62:57",
+      "role": "button",
+      "states": {
+        "disabled": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Continue →",
+      "ref": "p62:58",
+      "role": "button",
+      "states": {
+        "disabled": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:59",
+      "role": "status",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Complete the required text-page activities before continuing.",
+      "ref": "p62:60",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:61",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:62",
+      "role": "sectionheader",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Discussion under this lesson",
+      "ref": "p62:63",
+      "role": "heading",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:69",
+      "role": "status",
+      "states": {},
+      "value": null,
+      "visibility": "no_layout"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:70",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "no_layout"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:71",
+      "role": "menulistpopup",
+      "states": {},
+      "value": null,
+      "visibility": "unknown"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:76",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Share a question or comment. Author replies appear here.",
+      "ref": "p62:77",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:78",
+      "role": "form",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:79",
+      "role": "labeltext",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Your comment or question",
+      "ref": "p62:80",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:81",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Visible immediately to learners with course access. Author can identify and moderate posts.",
+      "ref": "p62:82",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:83",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "0 comments",
+      "ref": "p62:84",
+      "role": "heading",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:85",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "No comments yet. Start the discussion above.",
+      "ref": "p62:86",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "offscreen"
+    }
+  ],
+  "mode": "snapshot",
+  "oopif": {
+    "frames": 0,
+    "status": "attached"
+  },
+  "outline": "- generic\n  - link \"Skip to content\" [focusable=true]\n  - banner \"Hebleo navigation\"\n    - button \"Expand course outline\" [expanded=false,focusable=true]\n    - link \"Hebleo home\" [focusable=true]\n    - navigation \"Main navigation\"\n      - button \"Your path\" [focusable=true]\n- statictext \"Your path\"\n      - button \"Course\" [focusable=true]\n- statictext \"Course\"\n      - button \"Review\" [focusable=true]\n- statictext \"Review\"\n      - button \"My Hebrew\" [focusable=true]\n- statictext \"My Hebrew\"\n      - button \"Settings\" [focusable=true]\n- statictext \"Settings\"\n- statictext \"DEMO CONTENT\"\n- labeltext\n- statictext \"Demo profile\"\n  - combobox \"Demo profile\": Alex · Course + membership [expanded=false,focusable=true]\n- option \"Alex · Course + membership\" [focusable=true,selected=true]\n- option \"Sam · Course purchaser\" [focusable=true,selected=false]\n- option \"Author · Content author\" [focusable=true,selected=false]\n- main [focusable=true]\n- generic\n  - statictext \"Your Hebrew / Learn\"\n- generic\n  - statictext \"SYNTHETIC ENGINEERING FIXTURE\"\n- heading \"SYNTHETIC dock clearance\" [focusable=true]\n- paragraph\n  - statictext \"Learn · Step 1 of 2\"\n- button \"← Course\" [focusable=true]\n- navigation \"Lesson portions\"\n  - button \"●Learn\" [focusable=true]\n    - statictext \"Learn\"\n  - button \"Finish\" [disabled=true]\n- generic\n- generic\n  - sectionheader\n    - paragraph\n      - statictext \"Page 2 of 2\"\n    - heading \"SYNTHETIC commitment gate\" [focusable=true]\n- paragraph\n  - statictext \"Enter a sample before revealing the engineering model.\"\n- labeltext\n  - statictext \"Your attempt\"\n  - textbox \"Your attempt\" [editable=\"plaintext\",focusable=true,required=false]\n  - generic\n    - navigation \"Text page actions\"\n- button \"← Back\" [focusable=true]\n- button \"Continue →\" [disabled=true]\n      - generic\n        - button \"Show model answer\" [disabled=true]\n  - paragraph\n    - statictext \"Reveal or acknowledge this page before continuing.\"\n  - status\n    - statictext \"Text progress saved.\"\n- button \"Lesson help & comments\" [focusable=true]\n- button \"← Back\" [disabled=true]\n- button \"Continue →\" [disabled=true]\n- status\n  - statictext \"Complete the required text-page activities before continuing.\"\n- generic\n  - sectionheader\n    - heading \"Discussion under this lesson\"\n    - paragraph\n      - statictext \"Share a question or comment. Author replies appear here.\"\n  - form\n    - labeltext\n- statictext \"Your comment or question\"\n      - textbox \"Your comment or question\" [editable=\"plaintext\",focusable=true,required=true]\n- checkbox \"Post anonymously to learners\" [checked=\"false\",focusable=true]\n    - paragraph\n      - statictext \"Visible immediately to learners with course access. Author can identify and moderate posts.\"\n    - button \"Post lesson comment\" [focusable=true]\n    - status\n- generic\n  - heading \"0 comments\"\n  - paragraph\n    - statictext \"No comments yet. Start the discussion above.\"\n- generic\n  - button \"Open Hebrew keyboard\" [expanded=false,focusable=true]\n    - menulistpopup\n- statictext \"●\"\n    - generic [editable=\"plaintext\"]\n        - generic [editable=\"plaintext\"]",
+  "page": {
+    "title": "about:blank",
+    "url": "http://127.0.0.1:63891/?dock-candidate=1#lesson/dock-test-only/dock-text"
+  },
+  "refs": [
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Expand course outline",
+      "ref": "p62:1",
+      "role": "button",
+      "states": {
+        "expanded": false,
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Hebleo home",
+      "ref": "p62:2",
+      "role": "link",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Your path",
+      "ref": "p62:3",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Your path",
+      "ref": "p62:4",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Course",
+      "ref": "p62:5",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Course",
+      "ref": "p62:6",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Review",
+      "ref": "p62:7",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Review",
+      "ref": "p62:8",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "My Hebrew",
+      "ref": "p62:9",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "My Hebrew",
+      "ref": "p62:10",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Demo profile",
+      "ref": "p62:11",
+      "role": "combobox",
+      "states": {
+        "expanded": false,
+        "focusable": true
+      },
+      "value": "Alex · Course + membership",
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "← Course",
+      "ref": "p62:12",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "●Learn",
+      "ref": "p62:13",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Learn",
+      "ref": "p62:14",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Skip to content",
+      "ref": "p62:37",
+      "role": "link",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Settings",
+      "ref": "p62:38",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Settings",
+      "ref": "p62:39",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [
+        "type",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Your attempt",
+      "ref": "p62:40",
+      "role": "textbox",
+      "states": {
+        "editable": "plaintext",
+        "focusable": true,
+        "required": false
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "← Back",
+      "ref": "p62:41",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Lesson help & comments",
+      "ref": "p62:42",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Open Hebrew keyboard",
+      "ref": "p62:43",
+      "role": "button",
+      "states": {
+        "expanded": false,
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [
+        "click"
+      ],
+      "frame": "main",
+      "name": "Alex · Course + membership",
+      "ref": "p62:64",
+      "role": "option",
+      "states": {
+        "focusable": true,
+        "selected": true
+      },
+      "value": null,
+      "visibility": "unknown"
+    },
+    {
+      "actions": [
+        "click"
+      ],
+      "frame": "main",
+      "name": "Sam · Course purchaser",
+      "ref": "p62:65",
+      "role": "option",
+      "states": {
+        "focusable": true,
+        "selected": false
+      },
+      "value": null,
+      "visibility": "unknown"
+    },
+    {
+      "actions": [
+        "click"
+      ],
+      "frame": "main",
+      "name": "Author · Content author",
+      "ref": "p62:66",
+      "role": "option",
+      "states": {
+        "focusable": true,
+        "selected": false
+      },
+      "value": null,
+      "visibility": "unknown"
+    },
+    {
+      "actions": [
+        "type"
+      ],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:67",
+      "role": "generic",
+      "states": {
+        "editable": "plaintext"
+      },
+      "value": null,
+      "visibility": "unknown"
+    },
+    {
+      "actions": [
+        "type"
+      ],
+      "frame": "main",
+      "name": null,
+      "ref": "p62:68",
+      "role": "generic",
+      "states": {
+        "editable": "plaintext"
+      },
+      "value": null,
+      "visibility": "unknown"
+    },
+    {
+      "actions": [
+        "type",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Your comment or question",
+      "ref": "p62:73",
+      "role": "textbox",
+      "states": {
+        "editable": "plaintext",
+        "focusable": true,
+        "required": true
+      },
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [
+        "click",
+        "type",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Post anonymously to learners",
+      "ref": "p62:74",
+      "role": "checkbox",
+      "states": {
+        "checked": "false",
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "offscreen"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Post lesson comment",
+      "ref": "p62:75",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "offscreen"
+    }
+  ],
+  "screenshot": {
+    "coordinate_space": "viewport_css_px",
+    "height": 871,
+    "mime_type": "image/png",
+    "pixel_to_css_scale_x": 0.8013223443149535,
+    "pixel_to_css_scale_y": 0.8009185265454578,
+    "scope": "viewport",
+    "source": "cdp_tab",
+    "tab_activation": "not_requested",
+    "viewport_css_height": 697.6000366210938,
+    "viewport_css_width": 484.8000183105469,
+    "width": 605,
+    "window_foregrounding": "not_requested"
+  },
+  "screenshot_height": 871,
+  "screenshot_mime_type": "image/png",
+  "screenshot_width": 605,
+  "snapshot": {
+    "complete": true,
+    "continuation": null,
+    "format": "semantic_v2",
+    "id": "p62",
+    "node_budget": 300,
+    "omitted": {
+      "budget": 0,
+      "css_hidden": 12,
+      "no_layout": 2,
+      "offscreen": 14,
+      "page_occluded": 0,
+      "unknown": 7,
+      "unprovable_frame": 0
+    },
+    "scope": "viewport",
+    "selected_nodes": 87,
+    "total_nodes": 87
+  },
+  "status": "ok",
+  "tab_id": "tab-7bc3a81d-b77d-441e-9ce9-357179e2be83",
+  "target_id": "bt-2e25c242-9526-4b66-a679-4c5764d490fb"
+}

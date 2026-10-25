@@ -1,0 +1,377 @@
+{
+  "content_refs": [
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Hebleo · SYNTHETIC dock clearance",
+      "ref": "p67:0",
+      "role": "rootwebarea",
+      "states": {
+        "focusable": true,
+        "focused": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Lesson help & comments",
+      "ref": "p67:5",
+      "role": "heading",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:6",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "DEMO-AUTHORED EXPLANATION",
+      "ref": "p67:7",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:8",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Opening the explanation…",
+      "ref": "p67:9",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:10",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "AI clarification is not connected.",
+      "ref": "p67:11",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:12",
+      "role": "form",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:13",
+      "role": "labeltext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Your comment or question",
+      "ref": "p67:14",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:17",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Visible immediately to learners with course access. Author can identify and moderate posts.",
+      "ref": "p67:18",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:19",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "0 comments",
+      "ref": "p67:20",
+      "role": "heading",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:21",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "No comments yet. Start the discussion above.",
+      "ref": "p67:22",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:23",
+      "role": "paragraph",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": "Extra practice repeats authored questions you last answered incorrectly in this lesson; if none are incorrect, it repeats the lesson set.",
+      "ref": "p67:24",
+      "role": "statictext",
+      "states": {},
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:26",
+      "role": "status",
+      "states": {},
+      "value": null,
+      "visibility": "no_layout"
+    },
+    {
+      "actions": [],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:27",
+      "role": "generic",
+      "states": {},
+      "value": null,
+      "visibility": "no_layout"
+    }
+  ],
+  "mode": "snapshot",
+  "oopif": {
+    "frames": 0,
+    "status": "attached"
+  },
+  "outline": "- dialog \"Lesson help & comments\" [focusable=true]\n- heading \"Lesson help & comments\"\n- button \"Close\" [focusable=true,focused=true]\n  - paragraph\n    - statictext \"DEMO-AUTHORED EXPLANATION\"\n- paragraph\n  - statictext \"Opening the explanation…\"\n  - paragraph\n    - statictext \"AI clarification is not connected.\"\n  - form\n    - labeltext\n- statictext \"Your comment or question\"\n      - textbox \"Your comment or question\" [editable=\"plaintext\",focusable=true,required=true]\n- checkbox \"Post anonymously to learners\" [checked=\"false\",focusable=true]\n    - paragraph\n      - statictext \"Visible immediately to learners with course access. Author can identify and moderate posts.\"\n    - button \"Post lesson comment\" [focusable=true]\n    - status\n- generic\n  - heading \"0 comments\"\n  - paragraph\n    - statictext \"No comments yet. Start the discussion above.\"\n  - paragraph\n    - statictext \"Extra practice repeats authored questions you last answered incorrectly in this lesson; if none are incorrect, it repeats the lesson set.\"\n  - generic\n    - button \"Open Hebrew keyboard\" [expanded=false,focusable=true]\n        - generic [editable=\"plaintext\"]",
+  "page": {
+    "title": "about:blank",
+    "url": "http://127.0.0.1:63891/#lesson/dock-test-only/dock-text"
+  },
+  "refs": [
+    {
+      "actions": [
+        "scroll"
+      ],
+      "frame": "main",
+      "name": "Lesson help & comments",
+      "ref": "p67:1",
+      "role": "dialog",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Close",
+      "ref": "p67:2",
+      "role": "button",
+      "states": {
+        "focusable": true,
+        "focused": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "type",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Your comment or question",
+      "ref": "p67:3",
+      "role": "textbox",
+      "states": {
+        "editable": "plaintext",
+        "focusable": true,
+        "required": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "type",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Post anonymously to learners",
+      "ref": "p67:4",
+      "role": "checkbox",
+      "states": {
+        "checked": "false",
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "in_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Post lesson comment",
+      "ref": "p67:15",
+      "role": "button",
+      "states": {
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [
+        "click",
+        "pointer"
+      ],
+      "frame": "main",
+      "name": "Open Hebrew keyboard",
+      "ref": "p67:16",
+      "role": "button",
+      "states": {
+        "expanded": false,
+        "focusable": true
+      },
+      "value": null,
+      "visibility": "near_viewport"
+    },
+    {
+      "actions": [
+        "type"
+      ],
+      "frame": "main",
+      "name": null,
+      "ref": "p67:25",
+      "role": "generic",
+      "states": {
+        "editable": "plaintext"
+      },
+      "value": null,
+      "visibility": "unknown"
+    }
+  ],
+  "screenshot": {
+    "coordinate_space": "viewport_css_px",
+    "height": 871,
+    "mime_type": "image/png",
+    "pixel_to_css_scale_x": 0.8,
+    "pixel_to_css_scale_y": 0.8009185265454578,
+    "scope": "viewport",
+    "source": "cdp_tab",
+    "tab_activation": "not_requested",
+    "viewport_css_height": 697.6000366210938,
+    "viewport_css_width": 1184,
+    "width": 1480,
+    "window_foregrounding": "not_requested"
+  },
+  "screenshot_height": 871,
+  "screenshot_mime_type": "image/png",
+  "screenshot_width": 1480,
+  "snapshot": {
+    "complete": true,
+    "continuation": null,
+    "format": "semantic_v2",
+    "id": "p67",
+    "node_budget": 300,
+    "omitted": {
+      "budget": 0,
+      "css_hidden": 12,
+      "no_layout": 2,
+      "offscreen": 0,
+      "page_occluded": 0,
+      "unknown": 1,
+      "unprovable_frame": 0
+    },
+    "scope": "viewport",
+    "selected_nodes": 28,
+    "total_nodes": 28
+  },
+  "status": "ok",
+  "tab_id": "tab-c6fac94c-3b43-43e3-9796-eefd555ccebe",
+  "target_id": "bt-e2d134e2-9a0b-40c1-8061-c2b665db2d1b"
+}

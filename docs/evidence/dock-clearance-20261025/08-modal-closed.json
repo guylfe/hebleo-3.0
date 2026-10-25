@@ -1,0 +1,812 @@
+{
+  "mode": "snapshot",
+  "oopif": {
+    "frames": 0,
+    "status": "attached"
+  },
+  "refs": [
+    {
+      "frame": "main",
+      "label": "href=/styles.css",
+      "node": "link",
+      "ref": "p68:0"
+    },
+    {
+      "frame": "main",
+      "label": "href=/keyboard-owner.css",
+      "node": "link",
+      "ref": "p68:1"
+    },
+    {
+      "frame": "main",
+      "label": "href=/studio/studio.css",
+      "node": "link",
+      "ref": "p68:2"
+    },
+    {
+      "frame": "main",
+      "label": "href=/refinement.css",
+      "node": "link",
+      "ref": "p68:3"
+    },
+    {
+      "frame": "main",
+      "label": "href=/lexical-vocabulary.css",
+      "node": "link",
+      "ref": "p68:4"
+    },
+    {
+      "frame": "main",
+      "label": "href=/vocabulary-reminder.css",
+      "node": "link",
+      "ref": "p68:5"
+    },
+    {
+      "frame": "main",
+      "label": "href=/studio/sources.css",
+      "node": "link",
+      "ref": "p68:6"
+    },
+    {
+      "frame": "main",
+      "label": "href=/studio/media-library.css",
+      "node": "link",
+      "ref": "p68:7"
+    },
+    {
+      "frame": "main",
+      "label": "href=#main-content",
+      "node": "a",
+      "ref": "p68:8"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Collapse course outline type=button",
+      "node": "button",
+      "ref": "p68:9"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Hebleo home href=#home",
+      "node": "a",
+      "ref": "p68:10"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Your path",
+      "node": "button",
+      "ref": "p68:11"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Course",
+      "node": "button",
+      "ref": "p68:12"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Review",
+      "node": "button",
+      "ref": "p68:13"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=My Hebrew",
+      "node": "button",
+      "ref": "p68:14"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Settings",
+      "node": "button",
+      "ref": "p68:15"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "label",
+      "ref": "p68:16"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Demo profile id=demo-user",
+      "node": "select",
+      "ref": "p68:17"
+    },
+    {
+      "frame": "main",
+      "label": "value=learner-demo",
+      "node": "option",
+      "ref": "p68:18"
+    },
+    {
+      "frame": "main",
+      "label": "value=learner-core",
+      "node": "option",
+      "ref": "p68:19"
+    },
+    {
+      "frame": "main",
+      "label": "value=author-demo",
+      "node": "option",
+      "ref": "p68:20"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "summary",
+      "ref": "p68:21"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "summary",
+      "ref": "p68:22"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:23"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:24"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:25"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:26"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:27"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "summary",
+      "ref": "p68:28"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "summary",
+      "ref": "p68:29"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:30"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:31"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:32"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:33"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "summary",
+      "ref": "p68:34"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "summary",
+      "ref": "p68:35"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:36"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:37"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:38"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:39"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "summary",
+      "ref": "p68:40"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "summary",
+      "ref": "p68:41"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:42"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:43"
+    },
+    {
+      "frame": "main",
+      "label": "id=main-content",
+      "node": "main",
+      "ref": "p68:44"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "h1",
+      "ref": "p68:45"
+    },
+    {
+      "frame": "main",
+      "label": "type=button",
+      "node": "button",
+      "ref": "p68:46"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:47"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:48"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "h3",
+      "ref": "p68:49"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "label",
+      "ref": "p68:50"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "textarea",
+      "ref": "p68:51"
+    },
+    {
+      "frame": "main",
+      "label": "type=button",
+      "node": "button",
+      "ref": "p68:52"
+    },
+    {
+      "frame": "main",
+      "label": "type=button",
+      "node": "button",
+      "ref": "p68:53"
+    },
+    {
+      "frame": "main",
+      "label": "type=button",
+      "node": "button",
+      "ref": "p68:54"
+    },
+    {
+      "frame": "main",
+      "label": "role=status",
+      "node": "p",
+      "ref": "p68:55"
+    },
+    {
+      "frame": "main",
+      "label": "type=button",
+      "node": "button",
+      "ref": "p68:56"
+    },
+    {
+      "frame": "main",
+      "label": "type=button",
+      "node": "button",
+      "ref": "p68:57"
+    },
+    {
+      "frame": "main",
+      "label": "type=button",
+      "node": "button",
+      "ref": "p68:58"
+    },
+    {
+      "frame": "main",
+      "label": "type=button",
+      "node": "button",
+      "ref": "p68:59"
+    },
+    {
+      "frame": "main",
+      "label": "id=text-gate-1 role=status",
+      "node": "p",
+      "ref": "p68:60"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "label",
+      "ref": "p68:61"
+    },
+    {
+      "frame": "main",
+      "label": "placeholder=Write about this lesson… name=question",
+      "node": "textarea",
+      "ref": "p68:62"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "label",
+      "ref": "p68:63"
+    },
+    {
+      "frame": "main",
+      "label": "name=anonymous type=checkbox",
+      "node": "input",
+      "ref": "p68:64"
+    },
+    {
+      "frame": "main",
+      "label": null,
+      "node": "button",
+      "ref": "p68:65"
+    },
+    {
+      "frame": "main",
+      "label": "role=status",
+      "node": "p",
+      "ref": "p68:66"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Close course outline type=button",
+      "node": "button",
+      "ref": "p68:67"
+    },
+    {
+      "frame": "main",
+      "label": "id=toast role=status",
+      "node": "div",
+      "ref": "p68:68"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Open Hebrew keyboard type=button",
+      "node": "button",
+      "ref": "p68:69"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Keep keyboard visible between typing questions type=button",
+      "node": "button",
+      "ref": "p68:70"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Close keyboard type=button",
+      "node": "button",
+      "ref": "p68:71"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type / type=button",
+      "node": "button",
+      "ref": "p68:72"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ׳ type=button",
+      "node": "button",
+      "ref": "p68:73"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ק type=button",
+      "node": "button",
+      "ref": "p68:74"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ר type=button",
+      "node": "button",
+      "ref": "p68:75"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type א type=button",
+      "node": "button",
+      "ref": "p68:76"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ט type=button",
+      "node": "button",
+      "ref": "p68:77"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ו type=button",
+      "node": "button",
+      "ref": "p68:78"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ן type=button",
+      "node": "button",
+      "ref": "p68:79"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ם type=button",
+      "node": "button",
+      "ref": "p68:80"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type פ type=button",
+      "node": "button",
+      "ref": "p68:81"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Backspace type=button",
+      "node": "button",
+      "ref": "p68:82"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ש type=button",
+      "node": "button",
+      "ref": "p68:83"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ד type=button",
+      "node": "button",
+      "ref": "p68:84"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ג type=button",
+      "node": "button",
+      "ref": "p68:85"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type כ type=button",
+      "node": "button",
+      "ref": "p68:86"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ע type=button",
+      "node": "button",
+      "ref": "p68:87"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type י type=button",
+      "node": "button",
+      "ref": "p68:88"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ח type=button",
+      "node": "button",
+      "ref": "p68:89"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ל type=button",
+      "node": "button",
+      "ref": "p68:90"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ך type=button",
+      "node": "button",
+      "ref": "p68:91"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ף type=button",
+      "node": "button",
+      "ref": "p68:92"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type , type=button",
+      "node": "button",
+      "ref": "p68:93"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type \" type=button",
+      "node": "button",
+      "ref": "p68:94"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ז type=button",
+      "node": "button",
+      "ref": "p68:95"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ס type=button",
+      "node": "button",
+      "ref": "p68:96"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ב type=button",
+      "node": "button",
+      "ref": "p68:97"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ה type=button",
+      "node": "button",
+      "ref": "p68:98"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type נ type=button",
+      "node": "button",
+      "ref": "p68:99"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type מ type=button",
+      "node": "button",
+      "ref": "p68:100"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type צ type=button",
+      "node": "button",
+      "ref": "p68:101"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ת type=button",
+      "node": "button",
+      "ref": "p68:102"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ץ type=button",
+      "node": "button",
+      "ref": "p68:103"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type . type=button",
+      "node": "button",
+      "ref": "p68:104"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Type ? type=button",
+      "node": "button",
+      "ref": "p68:105"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Nikkud (vowel marks) type=button",
+      "node": "button",
+      "ref": "p68:106"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Patah (a) type=button",
+      "node": "button",
+      "ref": "p68:107"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Qamats type=button",
+      "node": "button",
+      "ref": "p68:108"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Hataf patah type=button",
+      "node": "button",
+      "ref": "p68:109"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Hataf qamats type=button",
+      "node": "button",
+      "ref": "p68:110"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Segol (e) type=button",
+      "node": "button",
+      "ref": "p68:111"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Tsere type=button",
+      "node": "button",
+      "ref": "p68:112"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Hataf segol type=button",
+      "node": "button",
+      "ref": "p68:113"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Hiriq (i) type=button",
+      "node": "button",
+      "ref": "p68:114"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Hiriq with yod type=button",
+      "node": "button",
+      "ref": "p68:115"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Holam (o) type=button",
+      "node": "button",
+      "ref": "p68:116"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Holam with vav type=button",
+      "node": "button",
+      "ref": "p68:117"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Sin dot type=button",
+      "node": "button",
+      "ref": "p68:118"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Qubuts (u) type=button",
+      "node": "button",
+      "ref": "p68:119"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Shuruk type=button",
+      "node": "button",
+      "ref": "p68:120"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Sheva type=button",
+      "node": "button",
+      "ref": "p68:121"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Other marks: dagesh and right Shin dot type=button",
+      "node": "button",
+      "ref": "p68:122"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Dagesh type=button",
+      "node": "button",
+      "ref": "p68:123"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Insert Right Shin dot type=button",
+      "node": "button",
+      "ref": "p68:124"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Toggle physical English keys to Hebrew type=button",
+      "node": "button",
+      "ref": "p68:125"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Move cursor left type=button",
+      "node": "button",
+      "ref": "p68:126"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Space type=button",
+      "node": "button",
+      "ref": "p68:127"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Move cursor right type=button",
+      "node": "button",
+      "ref": "p68:128"
+    },
+    {
+      "frame": "main",
+      "label": "aria-label=Enter type=button",
+      "node": "button",
+      "ref": "p68:129"
+    }
+  ],
+  "screenshot": {
+    "coordinate_space": "viewport_css_px",
+    "height": 871,
+    "mime_type": "image/png",
+    "pixel_to_css_scale_x": 0.8,
+    "pixel_to_css_scale_y": 0.8009185265454578,
+    "scope": "viewport",
+    "source": "cdp_tab",
+    "tab_activation": "not_requested",
+    "viewport_css_height": 697.6000366210938,
+    "viewport_css_width": 1184,
+    "width": 1480,
+    "window_foregrounding": "not_requested"
+  },
+  "screenshot_height": 871,
+  "screenshot_mime_type": "image/png",
+  "screenshot_width": 1480,
+  "snapshot_id": "p68",
+  "status": "ok",
+  "tab_id": "tab-c6fac94c-3b43-43e3-9796-eefd555ccebe",
+  "target_id": "bt-e2d134e2-9a0b-40c1-8061-c2b665db2d1b",
+  "truncated": false,
+  "url": "http://127.0.0.1:63891/#lesson/dock-test-only/dock-text"
+}

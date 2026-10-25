@@ -1,0 +1,72 @@
+✔ launcher clears changing dock and open keyboard at synthetic width 360 (416.2753ms)
+✔ launcher clears changing dock and open keyboard at synthetic width 484.8 (217.5667ms)
+✔ launcher clears changing dock and open keyboard at synthetic width 760 (200.4917ms)
+✔ launcher clears changing dock and open keyboard at synthetic width 1280 (199.5075ms)
+✔ visual viewport changes and modal suspension release only the active launcher reservation (77.4607ms)
+✔ drawer suspension, navigation removal and explicit disposal clear shared state and observers (190.8334ms)
+✔ keyboard replacement is observed and prior inline launcher reservation is restored (79.0241ms)
+✔ Nikkud uses five sound slots, inserts at the actual caret, and preserves native field editing (585.7879ms)
+✔ Vowel hover waits 1500ms, cancels on early exit, keeps variants reachable, and inserts an alternative (145.6269ms)
+✔ Vowel variants have a keyboard path, include auxiliary marks, and dismiss on Escape (264.863ms)
+✔ Keep open holds the dock across click-away and valid typing questions; unpinned click-away dismisses it (269.599ms)
+✔ Known and new keys derive dark and bright shades from one authored hue, including legacy two-color data (130.729ms)
+✔ Read-only fields cannot be edited by the custom keyboard (114.8019ms)
+✔ DESIGN13 keyboard shared close clears dock space, caret target and all expanded states (146.9046ms)
+▶ DESIGN13 keyboard insert, delete, cursor and physical conversion reject inactive target states
+  ✔ hidden (129.4644ms)
+  ✔ ancestorHidden (129.6704ms)
+  ✔ inert (146.2209ms)
+  ✔ ariaHidden (128.4295ms)
+  ✔ busy (124.2193ms)
+  ✔ displayNone (152.9735ms)
+  ✔ visibilityHidden (147.5603ms)
+  ✔ closedDetails (152.3891ms)
+  ✔ closedDialog (203.0899ms)
+  ✔ backgroundModal (137.2536ms)
+  ✔ readOnly (128.9799ms)
+  ✔ disabled (139.0927ms)
+  ✔ detached (131.5583ms)
+✔ DESIGN13 keyboard insert, delete, cursor and physical conversion reject inactive target states (1856.041ms)
+✔ DESIGN13 physical conversion requires focused editable target and respects modifiers/IME (129.2408ms)
+✔ DESIGN13 Keep open retargets valid next typing question and closes on non-typing or route changes (185.0069ms)
+✔ DESIGN13 unrelated modal clears old target and valid author Preview can use the same keyboard (252.2696ms)
+✔ exact source number, no autoplay, 9999 visible / 10000 hidden and replay invalidates stale callbacks (399.0947ms)
+✔ elapsed deadline handles early scheduler and late callbacks without accumulated counter drift (0.3866ms)
+✔ hidden-tab cancellation, untimed alternative, navigation and explicit unmount hide timed content (165.7545ms)
+✔ removing a host cancels timers and stale asynchronous loads never update it (54.4987ms)
+✔ choices require explicit selection and Check; recall requires nonblank commitment, preserves exact Hebrew and safe source HTML (103.9407ms)
+✔ save failure is retryable, input remains, writes serialize and stale loads cannot replace user edits (32.1881ms)
+✔ canonical vocabulary cards and media use existing actions; unresolved targets are explicit and no parallel lexemes appear (33.8245ms)
+✔ saved response identities survive page reordering and are independent of course completion (42.8717ms)
+✔ all 154 supplied draft pages render and traverse through the native contract without creating vocabulary records (3502.1356ms)
+✔ incomplete timed attempts are cancelled by tab hiding and require fresh Play (78.6489ms)
+✔ native lesson markup and Preview share the reader; Watch/Read and legacy text remain available without Preview persistence (84.8285ms)
+✔ RR-TXT-01 actual author HTTP restore cannot strip two flags and release pending teaching (860.0914ms)
+✔ RR-TXT-01 active and historical restores check pending review semantics independently of removable markers (574.1148ms)
+✔ RR-TXT-01 valid unpublished recovery retains source identity and tolerates JSON key-order changes (449.0584ms)
+✔ RR-TXT-01 pending adapted provenance and review/target records cannot be laundered as ordinary synthetic text (437.132ms)
+✔ required text gates refuse forged Finish atomically; grades and page responses still require deliberate completion (33.9894ms)
+✔ UX-ACT-01 Concept retains exact answer node selection and authored content gates (902.4781ms)
+✔ UX-ACT-02 pending duplicate/departure guards and known-grade save state preserve nodes (1056.4368ms)
+✔ UX-ACT-03 dock lifecycle suspends modal/drawer and releases listeners/reserve (33.6126ms)
+MATCHING_RESULT_OBSERVATION [{"id":"w-hu","status":"✕ Incorrect","class":"match-tile pair-incorrect"},{"id":"w-hi","status":"✕ Incorrect","class":"match-tile pair-incorrect"},{"id":"w-mi","status":"✓ Correct","class":"match-tile pair-correct"}]
+MATCHING_RESTORED_OBSERVATION [{"id":"w-hu","status":"✕ Incorrect","class":"match-tile pair-incorrect"},{"id":"w-hi","status":"✕ Incorrect","class":"match-tile pair-incorrect"},{"id":"w-mi","status":"✓ Correct","class":"match-tile pair-correct"}]
+✔ UX-ACT-04 Preview matching in-place grade retains per-pair correct/incorrect feedback (291.425ms)
+✔ UX-ACT-05 Preview failed request preserves mounted answer selection and retry remains available (100.4119ms)
+RECOVERY_FOCUS_OBSERVATION DIV null
+✔ UX-ACT-06 repeated save-only failure retains recovery focus in exercise workspace (875.3963ms)
+PENDING_ANNOUNCEMENT_OBSERVATION {"busy":null,"announcements":["<p class=\"sr-only\" data-answer-pending=\"\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\">Checking…</p>"]}
+✔ UX-ACT-07 learner pending state exposes one busy or live announcement (765.0892ms)
+✔ UX-ACT-04 matching initial/restored bank and target parity 0-1-2 (236.1395ms)
+✔ UX-ACT-04 matching initial/restored bank and target parity 1-0-2 (176.4952ms)
+✔ UX-ACT-04 matching initial/restored bank and target parity 1-2-0 (188.172ms)
+✔ UX-ACT-06 uncertain recovery failures keep focus and submitted answer locked (341.1244ms)
+✔ UX-ACT-06 continuing recovery failures keep focus and the graded question (385.5298ms)
+ℹ tests 59
+ℹ suites 0
+ℹ pass 59
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7793.8707

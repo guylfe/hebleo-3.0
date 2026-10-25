@@ -26,7 +26,7 @@
   background: var(--hebleo-keyboard-blue);
   border: 0;
   border-radius: 999px;
-  bottom: 22px;
+  bottom: max(var(--hebleo-keyboard-launcher-edge, 22px), var(--exercise-keyboard-launcher-bottom, 0px));
   box-shadow: 0 12px 30px rgba(0, 75, 142, 0.28);
   color: #ffffff;
   cursor: pointer;
@@ -337,7 +337,7 @@ body.hebleo-keyboard-is-open {
 
 @media (max-width: 680px) {
   .hebleo-keyboard__launcher {
-    bottom: 16px;
+    --hebleo-keyboard-launcher-edge: 16px;
     height: 54px;
     right: 16px;
     width: 54px;

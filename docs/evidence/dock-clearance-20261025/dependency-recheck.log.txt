@@ -1,0 +1,39 @@
+✔ FB14 item2 intact authored examples preserve bidi runs prefix notes multiple entries and unknown fields (105.0895ms)
+✔ FB14 items3 5 one Play/Pause per linked form no replay or absent-reference clutter and one surface selector (82.2228ms)
+✔ FB14 item5 actual managed synthetic signal serves exact local bytes and survives backup without source invention (101.1957ms)
+✔ FB14 items10 11 ordinary projections omit removed comments while explicit disabled-by-default audit retains history and access (41.3138ms)
+✔ FB14 item13 touching-edge classes use explicit token indices and preserve multiple prefixes spaces and individual removal positions (34.9875ms)
+✔ FB14 item14 concise status uses authoritative alternatives only and conditional accessible dismissible explanation (43.0282ms)
+✔ FB14 item14 real learner and saved-draft evaluator return the same exact authored alternatives with valid wire and retained history (41.3895ms)
+✔ FB14 item5 existing synthetic upgrade preserves learner state and refuses saved draft or verified source changes (216.0612ms)
+✔ all 20 adapted drafts, 154 stable pages and 127 targets import additively and remain unpublished (642.4541ms)
+✔ two lesson/page reorders survive save, reopen, export/import twice with IDs, targets and references intact (1544.3707ms)
+✔ alias collisions, unknown and ambiguous mappings fail without writing or equating planning IDs to fixtures (561.7679ms)
+✔ conflicting existing draft and explicit fixture mapping require review without partial writes (884.5554ms)
+✔ canonical mapping is explicit and draft targets retain source metadata; no lexemes are synthesized (298.3828ms)
+✔ malformed bounds, missing/duplicate pages, bad references and unsafe imported HTML are handled (315.8901ms)
+✔ response saving never completes a lesson and survives two recovery cycles and order-only publication (66.4446ms)
+✔ forged reveal, missing pages, timer fields, wrong profile/revision and corrupt backup are atomic refusals (27.3178ms)
+✔ legacy text/video, actual HTTP projection/progress and author-only draft import endpoints integrate (975.5535ms)
+{"type":"recognition","preview":{"exerciseId":"ex-1-recognize","lessonId":"lesson-1","answer":"SYNTHETIC stale answer A","correct":false,"expected":"who"},"result":{"requestId":"9292a164-b6d1-4aad-9d70-debcdb70bf9b","exerciseId":"ex-1-recognize","lessonId":"lesson-1","revisionId":2,"answer":"SYNTHETIC stale answer A","correct":false,"expected":"who","at":"2026-10-25T13:31:26.945Z"},"rendered":"<div class=\"feedback compact-result wrong\" role=\"status\" aria-label=\"Incorrect\"><span class=\"result-icon\" aria-hidden=\"true\"><span aria-hidden=\"true\">✕</span><span class=\"sr-only\">Incorrect</span></span><strong>Incorrect</strong><span class=\"result-explanation\"><button type=\"button\" class=\"exercise-quiet\" data-result-explanation aria-label=\"Incorrect. Show explanation\" aria-expanded=\"false\">Explanation</button><span class=\"result-popover\" data-result-popover role=\"note\" hidden><p dir=\"auto\"><span data-vocabulary-surface=\"feedback\">מִי asks “who”. The pronouns refer to the speaker or another person.</span></p></span></span></div>"}
+{"type":"matching","preview":{"exerciseId":"ex-1-match","lessonId":"lesson-1","answer":{"w-hu":"SYNTHETIC stale answer A","w-hi":"SYNTHETIC stale answer A","w-mi":"SYNTHETIC stale answer A"},"correct":false,"expected":{"w-hu":"he","w-hi":"she","w-mi":"who"},"pairResults":{"w-hu":false,"w-hi":false,"w-mi":false}},"result":{"requestId":"f8091038-aaa9-49b5-b5ee-bbb8262a202a","exerciseId":"ex-1-match","lessonId":"lesson-1","revisionId":2,"answer":{"w-hu":"SYNTHETIC stale answer A","w-hi":"SYNTHETIC stale answer A","w-mi":"SYNTHETIC stale answer A"},"correct":false,"expected":{"w-hu":"he","w-hi":"she","w-mi":"who"},"pairResults":{"w-hu":false,"w-hi":false,"w-mi":false},"at":"2026-10-25T13:31:26.977Z"},"rendered":"<div class=\"feedback compact-result wrong\" role=\"status\" aria-label=\"Incorrect\"><span class=\"result-icon\" aria-hidden=\"true\"><span aria-hidden=\"true\">✕</span><span class=\"sr-only\">Incorrect</span></span><strong>Incorrect</strong><span class=\"result-explanation\"><button type=\"button\" class=\"exercise-quiet\" data-result-explanation aria-label=\"Incorrect. Show explanation\" aria-expanded=\"false\">Explanation</button><span class=\"result-popover\" data-result-popover role=\"note\" hidden><p dir=\"auto\"><span data-vocabulary-surface=\"feedback\">הוּא means “he”, הִיא means “she”, and מִי means “who”.</span></p></span></span></div>"}
+{"focus":"BODY","hiddenImmediatelyAfterGapLeave":false,"popoverOffset":"100% + 8px","evidence":"JSDOM handler state and declared CSS, no native geometry"}
+✔ UX14-01 recognition ignores answer fields not used by its grader (42.6802ms)
+✔ UX14-01 matching ignores answer fields not used by its grader (26.6915ms)
+✔ UX14-02 hover-only explanation remains available while crossing its CSS gap (67.6025ms)
+✔ UX14-01 typing emits the exact explicit list it evaluates in learner and Preview (36.9245ms)
+✔ UX14-01 ordering emits the exact explicit list it evaluates in learner and Preview (18.0445ms)
+✔ UX14-01 cloze emits the exact explicit list it evaluates in learner and Preview (15.3844ms)
+✔ UX14-01 transformation emits the exact explicit list it evaluates in learner and Preview (19.0658ms)
+✔ UX14-01 implicit typing forms are not invented as explicit alternatives; legacy unrelated metadata is display-inert (5.3229ms)
+✔ UX14-02 gap transit cancels close when content is entered; leaving both closes and reversal stays usable (27.5126ms)
+✔ UX14-02 Escape consumes pending hides; focus keeps content until blur; touch click toggles without hover (27.8536ms)
+✔ UX14-02 detached context timer cannot alter a later result; rebinding avoids duplicate timers and empty affordances (25.8245ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8187.45
