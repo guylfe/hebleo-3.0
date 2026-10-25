@@ -197,3 +197,31 @@ test('QA-TXT-04 delayed outer Finish must not complete a different profile and l
  t.diagnostic(JSON.stringify({terminalWrites:calls.filter(c=>c.path==='/api/progress'&&c.body&&JSON.parse(c.body).step==='complete').map(c=>({user:c.headers['x-demo-user'],...JSON.parse(c.body)})),samCompleted:s.learner('learner-core').completed,route:w.location.hash}));
  assert.equal(s.learner('learner-core').completed.includes(other.id),false,'Alex pending Finish completed Sam other lesson');assert.ok(doc.querySelector('[data-reader-heading]'),'Stale Finish replaced the newly opened lesson portion');
 });
+
+for(const departure of ['later portion request','history away and back','profile switch with failed save'])test('Lead QA-TXT-04: '+departure+' cancels a pending Finish',async t=>{
+ const s=new Store();t.after(()=>s.close());addSynthetic(s,[recall]);
+ const c=s.snapshot(),l=c.lessons.find(l=>l.id==='qa-text-only');
+ l.blocks.push({id:'qa-second',type:'explanation',source:'inline',renderer:'text',text:'SYNTHETIC second portion',textPages:pages([{id:'qa.reading',type:'reading',title:'SYNTHETIC second portion',html:'Read the next portion',gate:'none'}])});
+ const d=s.stage({baseRevisionId:s.get('active'),expectedDraftToken:null,content:c});s.publish(d.baseRevisionId,d.draftToken);
+ const {origin}=await http(t,s);let release,hold=true;
+ const {doc,w,calls}=await actualApp(t,s,origin,{beforeFetch:async(path,options)=>{
+  if(path==='/api/text-progress'&&options?.method==='POST'&&hold&&JSON.parse(options.body).response.revealed){hold=false;await new Promise(r=>release=r);if(departure==='profile switch with failed save')throw Error('SYNTHETIC disconnected save');}
+ }});t.after(()=>release?.());
+ const attempt=doc.querySelector('[data-reader-attempt]');attempt.value='SYNTHETIC pending Finish';attempt.dispatchEvent(new w.Event('input',{bubbles:true}));doc.querySelector('[data-reader-action="reveal"]').click();await until(()=>release);
+ doc.querySelector('.step-strip [data-action="step"][data-value="complete"]').click();await tick();
+ if(departure==='later portion request')doc.querySelector('.step-strip [data-action="step"][data-value="qa-second"]').click();
+ if(departure==='history away and back'){
+  w.history.pushState({},'','#home');w.dispatchEvent(new w.PopStateEvent('popstate'));await until(()=>!doc.querySelector('[data-reader-heading]'));
+  w.history.pushState({},'','#lesson/qa-text-only/qa-text');w.dispatchEvent(new w.PopStateEvent('popstate'));await until(()=>doc.querySelector('[data-reader-heading]'));
+ }
+ if(departure==='profile switch with failed save'){
+  const chooser=doc.querySelector('#demo-user');chooser.value='learner-core';chooser.dispatchEvent(new w.Event('change'));await until(()=>w.localStorage.getItem('hebleo-demo-user')==='learner-core'&&!doc.querySelector('[data-reader-heading]'));
+ }
+ release();await until(()=>calls.some(c=>c.path==='/api/text-progress'&&c.method==='POST'));
+ if(departure==='later portion request')await until(()=>doc.querySelector('[data-reader-heading]')?.textContent==='SYNTHETIC second portion');
+ else for(let n=0;n<10;n++)await new Promise(r=>setTimeout(r,10));
+ assert.deepEqual(calls.filter(c=>c.path==='/api/progress'&&JSON.parse(c.body).step==='complete'),[],'A cancelled Finish issued a terminal write');
+ for(const user of ['learner-demo','learner-core'])assert.equal(s.learner(user).completed.includes(l.id),false);
+ if(departure==='history away and back')assert.equal(w.location.hash,'#lesson/qa-text-only/qa-text');
+ if(departure==='profile switch with failed save')assert.equal(doc.querySelector('#toast').textContent,'','An abandoned save error surfaced in the new profile');
+});

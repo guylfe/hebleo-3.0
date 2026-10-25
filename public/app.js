@@ -29,8 +29,13 @@ const pref = () => state.data.learner.preferences;
 let navigationHideTimer;const navigationMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
 let exerciseDockBinding, pendingAttempt=null, answerPhase="ready", continueTarget=null;
 let textReaderBindings=[];
+let textReaderGeneration=0;
 const textReaderStates=new Map();
 const textSaveQueues=new Map();
+function captureTextDestination(){
+ const generation=textReaderGeneration,owner=state.user,page=state.page,session=state.session,lessonId=state.lessonId,step=state.step;
+ return ()=>generation===textReaderGeneration&&owner===state.user&&page===state.page&&session===state.session&&lessonId===state.lessonId&&step===state.step;
+}
 function lessonTextReady(blockId){
  if(state.page!=='lesson'||!state.session)return true;const l=lessonObject(),revisionId=state.session.revisionId;
  return l.blocks.filter(b=>!blockId||b.id===blockId).every(b=>{
@@ -45,11 +50,12 @@ function syncLessonTextGates(){
  for(const control of root.querySelectorAll('.step-strip [data-action="step"][data-value="complete"]'))control.disabled=!lessonTextReady();
 }
 async function settleTextSaves(){
- await Promise.all(textReaderBindings.map(binding=>binding.settled()));
  const prefix=JSON.stringify([state.user,state.session.revisionId,state.lessonId]).slice(0,-1)+',';
+ const bindings=[...textReaderBindings];
+ await Promise.all(bindings.map(binding=>binding.settled()));
  await Promise.all([...textSaveQueues].filter(([key])=>key.startsWith(prefix)).map(([,promise])=>promise));
 }
-function disposeTextReaders(){textReaderBindings.splice(0).forEach(binding=>binding.destroy());}
+function disposeTextReaders(){textReaderGeneration++;textReaderBindings.splice(0).forEach(binding=>binding.destroy());}
 function mountLessonTextReaders(scope=root){
  if(state.page!=='lesson'||!state.session)return;
  const lesson=portionLesson(lessonObject(),state.step);if(!hasTextPages(lesson))return;
@@ -113,8 +119,8 @@ function lessonProgressBar(l) { if(!l.exerciseIds.length)return '';const n=quest
 function progressPayload() { return {lessonId:state.lessonId,revisionId:state.session.revisionId,step:currentKind(),...(lessonObject().compositionVersion===2?{componentId:state.step==='complete'?null:state.step}:{}),question:state.question,answer:state.answer,selectedTokens:[...state.selectedTokens],matching:{...state.matching},resultRequestId:state.result?.requestId || null,practiceIds:state.practiceIds}; }
 function queueSave() {
   if(state.page!=='lesson' || !state.session)return saveChain;
-  const payload=progressPayload(),user=state.user,finishesWithoutQuestions=payload.step==='complete'&&!lessonObject().exerciseIds.length;
-  saveChain=saveChain.catch(()=>{}).then(async()=>{ const saved=await api('progress',payload,user);if(state.user===user){state.data.learner.resumes[payload.lessonId]=saved;state.data.learner.lastLessonId=payload.lessonId;if(finishesWithoutQuestions){const fresh=await api('bootstrap',undefined,user);if(state.user===user)state.data.learner=fresh.learner;}} }).catch(error=>{toast('Position was not saved: '+error.message);throw error;});
+  const payload=progressPayload(),user=state.user,isCurrent=captureTextDestination(),finishesWithoutQuestions=payload.step==='complete'&&!lessonObject().exerciseIds.length;
+  saveChain=saveChain.catch(()=>{}).then(async()=>{ const saved=await api('progress',payload,user);if(state.user===user){state.data.learner.resumes[payload.lessonId]=saved;state.data.learner.lastLessonId=payload.lessonId;if(finishesWithoutQuestions){const fresh=await api('bootstrap',undefined,user);if(state.user===user)state.data.learner=fresh.learner;}} }).catch(error=>{if(isCurrent())toast('Position was not saved: '+error.message);throw error;});
   return saveChain;
 }
 function scheduleSave() { clearTimeout(saveTimer);saveTimer=setTimeout(()=>queueSave().catch(()=>{}),400); }
@@ -513,8 +519,19 @@ async function act(action,value,source) {
   if(action==='outline'){closeNavigation();const [id,step]=value.split('|');if(id!==state.lessonId){await openLesson(id,step);return;}action='step';value=step;}
   if(action==='step'){if(value===state.step || !portionKeys(lessonObject()).includes(value))return;
   const forward=portionKeys(lessonObject()).indexOf(value)>portionKeys(lessonObject()).indexOf(state.step);
-  if((value==='complete'&&!lessonTextReady())||(forward&&source?.closest('.lesson-footer')&&currentKind()==='learn'&&!lessonTextReady(state.step))){toast('Complete the required text-page activities before continuing.');root.querySelector('[data-reader-heading]')?.focus();return;}
-  if(forward)await settleTextSaves();disposeTextReaders();closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(portionLesson(lessonObject(),state.step));stopMedia();setRoute();await queueSave();render();focusHeading();return;}
+  const gated=()=>(value==='complete'&&!lessonTextReady())||(forward&&source?.closest('.lesson-footer')&&currentKind()==='learn'&&!lessonTextReady(state.step));
+  const refuse=()=>{toast('Complete the required text-page activities before continuing.');root.querySelector('[data-reader-heading]')?.focus();};
+  if(gated()){refuse();return;}
+  // A later portion request supersedes an earlier continuation even while both wait for the same save.
+  textReaderGeneration++;
+  let isCurrent=captureTextDestination();
+  try{
+   if(forward)await settleTextSaves();
+   if(!isCurrent())return;
+   if(gated()){refuse();return;}
+   disposeTextReaders();closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(portionLesson(lessonObject(),state.step));stopMedia();setRoute();isCurrent=captureTextDestination();
+   await queueSave();if(!isCurrent())return;render();focusHeading();
+  }catch(error){if(isCurrent())throw error;}return;}
   if(action==='mode'||action==='vocab-view'){await updatePreference(action==='mode'?'nikkud':'vocabularyView',value);render();return;}
   if(action==='keyboard-open'){window.HebleoKeyboard?.open(document.querySelector('#answer'));return;}
   if(action==='inline-choice'){const [i,j]=value.split('|').map(Number),item=portionLesson(lessonObject(),state.step).interactions[i];document.querySelector('#inline-feedback-'+i).textContent=(item.correctIndex===j?'Correct. ':'Try again. ')+item.feedback;return;}
