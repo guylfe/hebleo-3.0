@@ -1,5 +1,11 @@
 # First20 native text and readable IDs — installed local delivery
 
+**Current installed state (25 October, 2026-10-25T14:26:46.9142203Z):** demo63358 serves **59f50184f7851ec682fc1a35435ed99591b93b74**, runtime d53b093709b4a2f75c9e1a6edd195e8f7c685918f3af5e05186e9b4d706ce583, PID50556, preservation mode. TXT-NATIVE-01 keyboard overlap and QA-KBD-08 focus recovery are corrected. Final866 candidate tests and exact runtime CI pass; all110 source/59 served asset hashes,20 Preview sessions/154 pages and entire unchanged DB5627eb01 are verified. Native screenshots are242faf5 evidence; final59f5018 cleanup has executable/HTTP verification. Studio selection background routes were tried and no-op; precise native pre-expiry cancellation, physical/accessibility and Guy acceptance remain unverified. See [current installation and limitations](KEYBOARD_CLEARANCE_INSTALLED.md).
+
+## Historical first installation and initial native follow-up
+
+The following record describes the superseded2053b8ff installation; its receipts are retained as historical evidence.
+
 **Current native follow-up (25 October, 13:06 UTC):** The mounted driver's isolated profile was admitted for a bounded native learner pass on a disposable SQLite backup. All110 executable hashes match the installed runtime. Hebrew RTL/Nikkud, commitment/model gates, timed value shown/hidden, replay, untimed study, page navigation and persisted completion have direct browser evidence, with trusted input and synthetic DOM clicks distinguished. Studio selection, physical background keys and precise running-timer cancellation remain unverified; one narrow-layout overlap is open. See [native evidence and six screenshots](FIRST20_NATIVE_VERIFICATION.md). The existing-Edge-profile refusal below is historical, not a blanket browser blocker.
 
 **Current Sheets coordination:** Leo reports Curriculum Designer subsequently completed the approved Sheet write and full readback:114 lessons,1087 targets,528 sentences,404 readable IDs, retaining30 active comments. This engineering follow-up neither accessed nor wrote Sheets and did not independently reverify that report. The frozen pack's rejected-write status records its creation-time history. Renewed Sheets approval is not a current engineering blocker; the reported write does not approve the127 app mappings or replace active app curriculum.

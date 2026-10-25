@@ -1,5 +1,7 @@
 # First20 mounted-browser verification — 25 October 2026
 
+**Historical2053b8ff native pass.** TXT-NATIVE-01 is corrected and preservation-installed59f5018. See [current installation](KEYBOARD_CLEARANCE_INSTALLED.md) and [later mounted screenshots/limits](KEYBOARD_CLEARANCE_NATIVE.md). The observations below retain their original build and partial-pass boundary.
+
 Bounded learner verification completed through the mounted Cua Driver on this computer. This is a partial native pass, with exact remaining refusals and one open layout finding. It is not full Studio/native accessibility acceptance or Guy acceptance.
 
 ## Build and isolation

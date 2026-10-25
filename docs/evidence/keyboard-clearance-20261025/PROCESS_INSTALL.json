@@ -1,0 +1,17 @@
+{
+  "backendSha256": "8538730ba39c2f00d6afe8529d06afc9c0f7c0f7131e95757c5bf1146913a89a",
+  "revision": "59f50184f7851ec682fc1a35435ed99591b93b74",
+  "port": 63358,
+  "previousRevision": "2053b8ffd3ef26de0781715609806cc7721fa1b8",
+  "unrelatedListenersPreserved": 48,
+  "pid": 50556,
+  "previousPid": 8300,
+  "runtimeSha256": "d53b093709b4a2f75c9e1a6edd195e8f7c685918f3af5e05186e9b4d706ce583",
+  "installedAt": "2026-10-25T14:26:46.9142203Z",
+  "preservationMode": true,
+  "database": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\b1d5e7a0-1d13-4e9e-b544-06d3b889fb9e\\hebleo-consolidated\\data\\lexical-private-demo.sqlite",
+  "backupFolder": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\860f6c51-8c5b-44fe-a6a3-1cdd3edbb329\\hebleo-native-verification\\.private\\keyboard-install-59f5018",
+  "checkout": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\860f6c51-8c5b-44fe-a6a3-1cdd3edbb329\\hebleo-keyboard-runtime",
+  "nativeTestedRevision": "242faf5c5849665a9d6552fb0a60b9415f1fc3ca",
+  "nativeFinalRevisionTested": false
+}
