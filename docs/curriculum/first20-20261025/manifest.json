@@ -1,10 +1,10 @@
 {
-  "status": "prepared curriculum update; working standalone reader; native Sheets write rejected; engineering handoff pending",
+  "status": "Native curriculum Sheet saved and verified; working standalone reader; engineering implementation in flight",
   "files": [
     {
       "name": "author-content.cjs",
-      "bytes": 34903,
-      "sha256": "3fc0df492b7ef0557432a7d45443c0adf821afdeb0bcf9363a4223b873f27945"
+      "bytes": 34906,
+      "sha256": "8e180fff7ccae87aa0043eb1ba19a073206eb7501ae37aefbcd7174653a7841b"
     },
     {
       "name": "browser-review.json",
@@ -18,8 +18,8 @@
     },
     {
       "name": "content.json",
-      "bytes": 209346,
-      "sha256": "ffebf920a673cdca6502f7c0b1d9893eac4054be4e96342ef8250db42f523e36"
+      "bytes": 209348,
+      "sha256": "e9fca709a4bf6712fcaabe5dca1b7b43b239db1bb46789d85ec0e5e3c46bf42c"
     },
     {
       "name": "curriculum-checks.json",
@@ -28,23 +28,23 @@
     },
     {
       "name": "ENGINEERING_BRIEF.md",
-      "bytes": 9509,
-      "sha256": "260542ad56f97bf2da433533fed702016db5ab642d962d26ff83523b92e8dda9"
+      "bytes": 9457,
+      "sha256": "4bab67a89463c245582bdfac808a4a1a65b4f30d1f866590ecc2a475e9bf0b11"
     },
     {
       "name": "first20.html",
-      "bytes": 234243,
-      "sha256": "1fc1d633fc4cd6437da9f95fdedb6a1088d981a667285fa87ce1424e76fa3b1f"
+      "bytes": 234245,
+      "sha256": "881d8e5610cb78193e9b3b2c717177b044f4e19dba09800fad6c218e2698132a"
     },
     {
       "name": "FIRST20_CONTENT.md",
       "bytes": 52072,
-      "sha256": "1460b2670d30dc662e1016c8ca178c38b58c3fd3680b2c76d50a25e221f7eaa9"
+      "sha256": "37f9d7573c4f3a4d62213efd13e9d1175163d206f925e6b00e016a9060ceb0dd"
     },
     {
       "name": "lesson-catalog.json",
-      "bytes": 464460,
-      "sha256": "eb4a7765484f3668d90cd4233f5a2b26f712510aff81fab8bcb67c270bc4bc66"
+      "bytes": 464461,
+      "sha256": "342e71489aa21668fdaadaecc6bc443cdcc348c029edca3fe23523f222895ff6"
     },
     {
       "name": "lesson-id-map.json",
@@ -53,8 +53,8 @@
     },
     {
       "name": "make-reports.cjs",
-      "bytes": 7089,
-      "sha256": "b52a6842367948c7fcf88129ad9f8430e23aa11ef74b5509cf8ed7fe78e12716"
+      "bytes": 6886,
+      "sha256": "079efbc6fefc4998a0ceb41bec36b9a71e0b6ef42969cbbbb564e39dcef8e61f"
     },
     {
       "name": "reader-test-results.json",
@@ -73,18 +73,28 @@
     },
     {
       "name": "README.md",
-      "bytes": 3292,
-      "sha256": "79d4b1480264102f3938a8361509c63ab585da028ee5f7c710f08c0df13dbbbf"
+      "bytes": 3338,
+      "sha256": "dd0204df343605b97eb6623aceb334c41e7185c7a4a903f551806735aaa129a4"
     },
     {
       "name": "REDISTRIBUTION.md",
-      "bytes": 9071,
-      "sha256": "34304228132a86d3dc064f6d56bfda2be5ff4047c486eab4b7801122a631f8db"
+      "bytes": 8952,
+      "sha256": "8b03e27aa36e21305dd07fc5674a06c3b4393b3b37dcde5585d37d29ec33c292"
     },
     {
       "name": "test-reader.cjs",
       "bytes": 5645,
       "sha256": "6efc781d1d5f3b6b1d8ad08e9bba67c1b82b7c82f49149848d0762e77e36cf2e"
+    },
+    {
+      "name": "sheet-save-verification.json",
+      "bytes": 495,
+      "sha256": "1be6f96cbaf690bae7556e14157e241f4792eac4db8fb8e63c740476b9fbaa59"
+    },
+    {
+      "name": "SHEET_SAVE_RECEIPT.md",
+      "bytes": 1702,
+      "sha256": "c93bfcb58b1b62c3f81e73740e49f3d4e1a18dd060831779227511f5c6cbc5ef"
     }
   ]
 }

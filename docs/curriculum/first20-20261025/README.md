@@ -14,7 +14,7 @@ Plural **אלה** is explicitly taught in lesson20, **NOUN-PLURALS**. The later 
 
 `REDISTRIBUTION.md` records all 75 relocations and 18 additions in the prepared 114-lesson revision. `lesson-catalog.json` contains the resulting route. `lesson-id-map.json` maps 404 lesson records across the four routes to readable IDs such as **MNT**, **NOMINAL** and **PASSIVE-NIFAL**, independently of order. Source-platform IDs remain source references.
 
-The native Sheets update did **not** run. The tool returned `user rejected MCP tool call` without a further reason, and readback retained A001/A002/A003. This package reflects the prepared revision; it is not evidence that the live sheet or application IDs have changed.
+The native Sheets update is saved after renewed owner approval. All 114 lessons, 1087 targets, 528 sentences and 404 readable IDs match readback. All 30 active comment threads and conditional-format rules were verified. See SHEET_SAVE_RECEIPT.md. Application migration/installation remains separate engineering work.
 
 `ENGINEERING_BRIEF.md` specifies the requested native Hebleo text-component support and alias-aware import/reordering behavior. The standalone reader is working; native application implementation and installation are separate engineering work.
 

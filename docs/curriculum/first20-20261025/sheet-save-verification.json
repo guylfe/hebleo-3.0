@@ -1,0 +1,15 @@
+{
+  "nativeWrite": "success",
+  "liveUrl": "https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit",
+  "lessons": 114,
+  "targets": 1087,
+  "sentences": 528,
+  "readableIds": 404,
+  "cellDifferences": 0,
+  "samples": [],
+  "formulaErrors": [],
+  "ruleDifferences": [],
+  "activeComments": 30,
+  "commentDifferences": [],
+  "notes": "Native cell/formula/format-rule/ID and comment readback. Rendered sheet layout and human linguistic acceptance are separate."
+}

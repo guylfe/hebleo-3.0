@@ -49,12 +49,12 @@ These are starting points verified in this checkout, not a mandate to place ever
 - Preserve settings, authored content, drafts and existing history/progress. Do not reset or reseed a running demo for this content handoff. Installed behavior must be verified at the actual learner destination, separately from prototype and Preview tests.
 - Report exact branch/commit, commands actually run, automated results, native checks, remaining human content review, and installed versus proposed status. No production publishing.
 
-## Current verification and pending sheet write
+## Current verification and saved sheet update
 
 Reference reader: 179 executable checks pass, all 154 pages completable, no jsdom runtime errors. Native isolated Chrome inspection confirmed representative Hebrew layout at desktop and narrow widths, explicit choice feedback, vocabulary reveal, and timer running/expired states. Native clicks used background synthetic DOM delivery and independent readback; physical pointer and screen-reader behavior were not certified.
 
 Prepared planning revision: 114 lessons, 1087 targets (all 1069 prior entries retained), 528 sentences, 404 unique readable IDs, and at least two intervening lessons for all audited topic-family returns. Letter/prerequisite/count/example-token checks pass within their stated bounds; they are not final native linguistic approval.
 
-**The Sheets write was rejected:** native tool returned `user rejected MCP tool call`, no further reason. Readback still showed A001/A002/A003. The prepared batch in `.curriculum-content-20261025/requests.json` is not applied. Do not retry that rejected action through another tool or browser. Curriculum Designer owns renewed approval and fresh conflict detection before any retry. Engineering can proceed independently on the requested local text-component capabilities.
+**Sheets is now saved:** Guy renewed approval through the update card. Fresh prewrite comparison found no content, metadata or active-comment differences. The native batch succeeded, and readback matches all prepared cells, 404 IDs and format rules; all 30 active comments are unchanged. See SHEET_SAVE_RECEIPT.md and sheet-save-verification.json. Native application implementation/installation is still engineering work.
 
 Original presentation: https://drive.google.com/file/d/1ImMGqVDWT8BMN63xay1-DT7ug3Z1W9mr/view . Its slide text/notes and linked human-written WordPress lessons were inspected. Video recordings/captions were not inspected, and no invented timestamps or synthetic audio were supplied.

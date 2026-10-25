@@ -1,6 +1,6 @@
 # Vocabulary redistribution and readable lesson IDs
 
-Status: prepared and locally verified; native Sheets write was rejected with the literal response `user rejected MCP tool call`. No reason was supplied. Readback still showed A001/A002/A003. This report describes the prepared revision, not saved live content.
+Status: saved in the native Google Sheet after renewed owner approval, with complete cell/reference/format-rule/comment readback. See SHEET_SAVE_RECEIPT.md.
 
 The revision preserves all 1069 existing target entries, relocates 75 entries and adds 18, for 1087 targets across 114 lessons. The catalog includes 528 example sentences. Counts are entries/meaning targets, not unique Hebrew lemmas.
 
@@ -129,4 +129,4 @@ External WordPress post IDs, Vimeo IDs, Drive file IDs and original lesson numbe
 
 ## Verification and limits
 
-The prepared catalog passes declared prerequisite, introduced-letter, target-count and bounded example-token checks. All 1069 prior targets remain; all 404 IDs are unique; checked same-topic families have two or more intervening lessons. This does not prove native wording quality, every semantic sense, or final author/audio/Nikkud approval. The workbook batch is still pending and requires fresh conflict detection before any approved retry.
+The prepared catalog passes declared prerequisite, introduced-letter, target-count and bounded example-token checks. All 1069 prior targets remain; all 404 IDs are unique; checked same-topic families have two or more intervening lessons. This does not prove native wording quality, every semantic sense, or final author/audio/Nikkud approval. The workbook batch is saved; prewrite conflict checks and postwrite readback passed.

@@ -2,7 +2,7 @@
 
 Status: adapted draft for Guy’s review. Open first20.html for the working interactions. This file is the complete author-review text, including model answers. Native audio and final curated Nikkud remain authoring work.
 
-Original presentation text and written lessons were inspected; the linked videos were not watched or transcribed. The prepared spreadsheet revision has not been saved because its write call was rejected.
+Original presentation text and written lessons were inspected; the linked videos were not watched or transcribed. The matching spreadsheet revision is now saved and verified after renewed owner approval.
 
 ## 1. Give new information a familiar home — MEMORY
 
