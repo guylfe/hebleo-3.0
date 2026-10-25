@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-25T13:09:50.219Z",
+  "disposableProcess": 8292,
+  "disposableOriginUnreachable": true,
+  "liveRevision": "2053b8ffd3ef26de0781715609806cc7721fa1b8",
+  "liveRuntimeSha256": "dc9fba405653a629f21306ee6529b3585ded140e45a9ab280d71b9b8311f1102",
+  "liveDatabaseSHA256": "5627eb01b286a51bcad988c6dae9832c308623690ce5041aa31375f4c5c4d99c",
+  "liveUnchanged": true,
+  "namedBrowserSessionsEnded": [
+    "first20-native-disposable",
+    "first20-native-studio"
+  ]
+}

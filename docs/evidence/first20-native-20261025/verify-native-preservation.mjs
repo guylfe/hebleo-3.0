@@ -1,0 +1,30 @@
+import {readFileSync,writeFileSync,existsSync,statSync} from 'node:fs';
+import {DatabaseSync} from 'node:sqlite';
+import assert from 'node:assert/strict';
+import {resolve} from 'node:path';
+import {databaseReceipt,sha256} from './hebleo-native-verification/scripts/runtime-state.mjs';
+const root=resolve('hebleo-native-verification'),folder=resolve(root,'docs/evidence/first20-native-20261025');
+const setup=JSON.parse(readFileSync(resolve(folder,'SETUP.json')));
+const liveBefore=databaseReceipt(setup.liveDatabase);
+assert.deepEqual(liveBefore,setup.liveBefore);
+const getBuild=async port=>{const r=await fetch('http://127.0.0.1:'+port+'/api/build');assert.equal(r.status,200);return r.json();};
+const liveBuild=await getBuild(63358),testBuild=await getBuild(63881);
+assert.equal(liveBuild.revision,'2053b8ffd3ef26de0781715609806cc7721fa1b8');
+assert.equal(liveBuild.runtimeSha256,'dc9fba405653a629f21306ee6529b3585ded140e45a9ab280d71b9b8311f1102');
+assert.equal(testBuild.revision,'8e94c7d18972d716524c17c95995dcb29008c36e');
+assert.deepEqual(testBuild.files,liveBuild.files);
+assert.deepEqual(testBuild.files,setup.build.files);
+const inspect=file=>{const db=new DatabaseSync(file,{readOnly:true});try{
+ const value=key=>JSON.parse(db.prepare('SELECT value FROM kv WHERE key=?').get(key).value);
+ const draft=value('draft'),active=value('active'),snapshot=JSON.parse(db.prepare('SELECT snapshot FROM revisions WHERE id=?').get(active).snapshot);
+ const result={activeRevision:active,draftLessons:draft.content.lessons.length,unpublishedFirst20:draft.content.lessons.filter(l=>l.draftImport).length,activeFirst20:snapshot.lessons.filter(l=>l.draftImport).length,learnerCount:db.prepare('SELECT count(*) n FROM learners').get().n};
+ if(file===setup.disposableDatabase){const learner=JSON.parse(db.prepare('SELECT state FROM learners WHERE id=?').get('learner-demo').state);const text=learner.textPages.find(x=>x.lessonId==='native-test-only');result.fixtureCompleted=learner.completed.includes('native-test-only');result.fixturePageResponses=Object.keys(text.responses).length;}
+ return result;
+}finally{db.close();}};
+const live=inspect(setup.liveDatabase),disposable=inspect(setup.disposableDatabase);
+assert.equal(live.activeRevision,4);assert.equal(live.draftLessons,23);assert.equal(live.unpublishedFirst20,20);assert.equal(live.activeFirst20,0);assert.equal(live.learnerCount,3);
+assert.equal(disposable.fixtureCompleted,true);assert.equal(disposable.fixturePageResponses,4);assert.equal(disposable.activeFirst20,0);assert.equal(disposable.unpublishedFirst20,20);
+assert.deepEqual(databaseReceipt(setup.liveDatabase),liveBefore);
+const screenshots=Object.fromEntries(['01-learner-gates','02-hebrew-model','03-timer-running','04-timer-expired','05-hebrew-rtl','06-narrow'].map(name=>{const file=resolve(folder,name+'.png');assert.ok(existsSync(file));return [name+'.png',{bytes:statSync(file).size,sha256:sha256(readFileSync(file))}];}));
+const result={verifiedAt:new Date().toISOString(),liveDatabaseUnchanged:true,liveBeforeSha256:setup.liveBefore.sha256,liveAfter:databaseReceipt(setup.liveDatabase),live,disposable,liveBuild:{revision:liveBuild.revision,runtimeSha256:liveBuild.runtimeSha256},testedBuild:{revision:testBuild.revision,runtimeSha256:testBuild.runtimeSha256,executableFiles:Object.keys(testBuild.files).length},allTestedExecutableBytesMatchLive:true,screenshots};
+writeFileSync(resolve(folder,'PRESERVATION.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));

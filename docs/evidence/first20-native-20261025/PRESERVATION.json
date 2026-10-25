@@ -1,0 +1,91 @@
+{
+  "verifiedAt": "2026-10-25T13:06:14.197Z",
+  "liveDatabaseUnchanged": true,
+  "liveBeforeSha256": "5627eb01b286a51bcad988c6dae9832c308623690ce5041aa31375f4c5c4d99c",
+  "liveAfter": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 6,
+        "sha256": "1682f009c438482dbc5a2ae11be606818ceb63c4c2184d9fc0b9d6dd51362e66"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "068f078a05561b442dc0f4123fbe1e0c383fd1282be9c9ce0fe5b89c5c752bc8"
+      },
+      "media_aliases": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "media_blobs": {
+        "rows": 1,
+        "sha256": "9342c954c2f006cd734a41a4c434d95562c9ab8baf981951a855d72404ce077d"
+      },
+      "revisions": {
+        "rows": 4,
+        "sha256": "6088e682b3031a07267658db0c88a9fdfbef9fddcaa4f54bb2080caf72324ae5"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "0f509631177ffa29be06ad43580a0570a91d1eb6ddf6f54ad724a10835b5f6ab"
+      }
+    },
+    "sha256": "5627eb01b286a51bcad988c6dae9832c308623690ce5041aa31375f4c5c4d99c"
+  },
+  "live": {
+    "activeRevision": 4,
+    "draftLessons": 23,
+    "unpublishedFirst20": 20,
+    "activeFirst20": 0,
+    "learnerCount": 3
+  },
+  "disposable": {
+    "activeRevision": 5,
+    "draftLessons": 24,
+    "unpublishedFirst20": 20,
+    "activeFirst20": 0,
+    "learnerCount": 3,
+    "fixtureCompleted": true,
+    "fixturePageResponses": 4
+  },
+  "liveBuild": {
+    "revision": "2053b8ffd3ef26de0781715609806cc7721fa1b8",
+    "runtimeSha256": "dc9fba405653a629f21306ee6529b3585ded140e45a9ab280d71b9b8311f1102"
+  },
+  "testedBuild": {
+    "revision": "8e94c7d18972d716524c17c95995dcb29008c36e",
+    "runtimeSha256": "dc9fba405653a629f21306ee6529b3585ded140e45a9ab280d71b9b8311f1102",
+    "executableFiles": 110
+  },
+  "allTestedExecutableBytesMatchLive": true,
+  "screenshots": {
+    "01-learner-gates.png": {
+      "bytes": 59357,
+      "sha256": "9b339420b332c15db86233a07f95a92b73e3aeb3758a6c7eb6f8987c16a7c7d2"
+    },
+    "02-hebrew-model.png": {
+      "bytes": 75208,
+      "sha256": "8df4b235de642e54ada5e6a6f9df5a7975307005d3fb03ae70471637b625ebd6"
+    },
+    "03-timer-running.png": {
+      "bytes": 95822,
+      "sha256": "078effc1cfd39601423fc74d595f798c3822d350e9f308cdc3e9eed4f1ec4561"
+    },
+    "04-timer-expired.png": {
+      "bytes": 90688,
+      "sha256": "c5dd5ccc411a1a578ae08493bdc5a63f9f6eae0a22a4ba88f3ae83ad84df2c37"
+    },
+    "05-hebrew-rtl.png": {
+      "bytes": 83433,
+      "sha256": "1e6bc4a0dd3d3cc53f5c463394521622f8e1a017e584107cf6c57fc45c0e3340"
+    },
+    "06-narrow.png": {
+      "bytes": 50078,
+      "sha256": "21852809bdf559a03207f38c6f235f13a3ef43d5f786d3aa2677ae347624a50b"
+    }
+  }
+}

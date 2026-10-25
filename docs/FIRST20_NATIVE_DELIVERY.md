@@ -1,6 +1,6 @@
 # Native first20 candidate — 25 October 2026
 
-Historical initial candidate evidence. The reviewed code is now locally installed; [FIRST20_INSTALLED_DELIVERY.md](FIRST20_INSTALLED_DELIVERY.md) is the current installation, preservation and remaining-blocker receipt. The initial failures and installation-pending observations below remain attributed to their original candidate.
+Historical initial candidate evidence. Current native results and current-versus-historical Sheets coordination are in [FIRST20_NATIVE_VERIFICATION.md](FIRST20_NATIVE_VERIFICATION.md); renewed Sheets approval and existing-profile access are not current blanket blockers. The reviewed code is now locally installed; [FIRST20_INSTALLED_DELIVERY.md](FIRST20_INSTALLED_DELIVERY.md) is the current installation, preservation and remaining-blocker receipt. The initial failures and installation-pending observations below remain attributed to their original candidate.
 
 The historical d912e746 candidate was independently blocked. See FIRST20_REVIEW_CORRECTIONS.md for the corrected gate/publication/reset/cycle implementation and 831-test result; corrected-SHA recheck and preservation installation remain pending. The original implementation evidence below is retained as history. No first20 teaching has been published. The shared checkout/index and the currently served demo remain unchanged.
 
