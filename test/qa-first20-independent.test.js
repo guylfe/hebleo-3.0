@@ -225,3 +225,26 @@ for(const departure of ['later portion request','history away and back','profile
  if(departure==='history away and back')assert.equal(w.location.hash,'#lesson/qa-text-only/qa-text');
  if(departure==='profile switch with failed save')assert.equal(doc.querySelector('#toast').textContent,'','An abandoned save error surfaced in the new profile');
 });
+
+test('QA-TXT-04 independent: same-profile lesson change cancels delayed Finish without stealing focus',async t=>{
+ const s=new Store();t.after(()=>s.close());addSynthetic(s,[recall]);const c=s.snapshot(),other=structuredClone(c.lessons.find(l=>l.id==='qa-text-only'));other.id='qa-other';other.title='SYNTHETIC other lesson';other.blocks[0].textPages.pages[0].gate='none';c.lessons.push(other);c.curriculum.order.push({lessonId:other.id});
+ const d=s.stage({baseRevisionId:s.get('active'),expectedDraftToken:null,content:c});s.publish(d.baseRevisionId,d.draftToken);
+ const {origin}=await http(t,s);let release,hold=true;const {doc,w,calls}=await actualApp(t,s,origin,{beforeFetch:async(path,options)=>{if(path==='/api/text-progress'&&options?.method==='POST'&&hold&&JSON.parse(options.body).response.revealed){hold=false;await new Promise(r=>release=r);}}});t.after(()=>release?.());
+ const attempt=doc.querySelector('[data-reader-attempt]');attempt.value='SYNTHETIC pending old lesson';attempt.dispatchEvent(new w.Event('input',{bubbles:true}));doc.querySelector('[data-reader-action="reveal"]').click();await until(()=>release);
+ doc.querySelector('.lesson-footer [data-action="step"][data-value="complete"]').click();await tick();w.history.pushState({},'','#lesson/qa-other/qa-text');w.dispatchEvent(new w.PopStateEvent('popstate'));await until(()=>doc.querySelector('h1')?.textContent===other.title);
+ await until(()=>doc.querySelector('[data-reader-save]')?.textContent==='');const current=doc.querySelector('[data-reader-attempt]');current.focus();assert.equal(doc.activeElement,current);release();await until(()=>s.learner('learner-demo').textPages?.some(r=>r.lessonId==='qa-text-only'&&r.responses[recall.id]?.revealed));
+ for(let n=0;n<10;n++)await new Promise(r=>setTimeout(r,10));
+ assert.deepEqual(calls.filter(c=>c.path==='/api/progress'&&JSON.parse(c.body).step==='complete'),[]);assert.deepEqual(s.learner('learner-demo').completed,[]);assert.equal(w.location.hash,'#lesson/qa-other/qa-text');assert.equal(doc.activeElement,current);assert.equal(doc.querySelector('#toast').textContent,'');
+});
+
+for(const outcome of ['success','failure'])test('QA-TXT-04 independent: newer Back supersedes delayed position '+outcome+' after text settling',async t=>{
+ const s=new Store();t.after(()=>s.close());addSynthetic(s,[recall]);const {origin}=await http(t,s);let release,hold=true;
+ const {doc,w,calls}=await actualApp(t,s,origin,{beforeFetch:async(path,options)=>{if(path==='/api/progress'&&options?.method==='POST'&&JSON.parse(options.body).step==='complete'&&hold){hold=false;await new Promise(r=>release=r);if(outcome==='failure')throw Error('SYNTHETIC abandoned position failure');}}});t.after(()=>release?.());
+ const attempt=doc.querySelector('[data-reader-attempt]');attempt.value='SYNTHETIC position boundary';attempt.dispatchEvent(new w.Event('input',{bubbles:true}));doc.querySelector('[data-reader-action="reveal"]').click();
+ let headingFocus=0;const focus=w.HTMLElement.prototype.focus;w.HTMLElement.prototype.focus=function(...args){if(this.tagName==='H1')headingFocus++;return focus.apply(this,args);};
+ doc.querySelector('.lesson-footer [data-action="step"][data-value="complete"]').click();await until(()=>release);assert.equal(w.location.hash,'#lesson/qa-text-only/complete');
+ doc.querySelector('.step-strip [data-action="step"][data-value="qa-text"]').click();await until(()=>w.location.hash==='#lesson/qa-text-only/qa-text');release();await until(()=>headingFocus>0);
+ for(let n=0;n<10;n++)await new Promise(r=>setTimeout(r,10));
+ assert.equal(headingFocus,1,'Abandoned Finish rendered/focused in addition to the newer Back');assert.ok(doc.querySelector('[data-reader-heading]'));assert.equal(w.location.hash,'#lesson/qa-text-only/qa-text');assert.equal(doc.querySelector('#toast').textContent,'');
+ const terminal=calls.filter(c=>c.path==='/api/progress'&&JSON.parse(c.body).step==='complete');assert.equal(terminal.length,1);assert.equal(terminal[0].headers['x-demo-user'],'learner-demo');assert.equal(JSON.parse(terminal[0].body).lessonId,'qa-text-only');assert.equal(s.learner('learner-demo').completed.includes('qa-text-only'),outcome==='success');assert.equal(s.learner('learner-demo').resumes['qa-text-only'].componentId,'qa-text');
+});
