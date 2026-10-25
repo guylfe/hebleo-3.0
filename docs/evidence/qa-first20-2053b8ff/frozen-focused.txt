@@ -1,0 +1,31 @@
+✔ QA positive: actual HTTP response/revision/profile/entitlement isolation and atomic malformed writes (231.5693ms)
+✔ QA positive: real first20 import, aliases, sources, two lesson/page reorders and two backup/restores preserve synthetic state (1917.393ms)
+✔ QA positive: unknown/ambiguous mapping, CAS, collision and malformed packs leave every table unchanged (897.7837ms)
+✔ QA positive: actual learner delayed GET/POST remain with initiating profile across switching and reload (1035.6844ms)
+✔ QA positive: integrated pack pages all traverse with production adapter, exact timing, commitment and hidden-tab cancellation (2393.8324ms)
+✔ QA-TXT-01 learner outer Continue must not complete an unattempted gated text-only lesson (283.7477ms)
+✔ QA-TXT-01 Preview outer Continue must respect the same mandatory page gate (83.8264ms)
+✔ QA-TXT-02 fresh-build demo reset must clear separately persisted text-page responses (14.9256ms)
+✔ QA-TXT-03 new prerequisite references must reject cycles before staging an import (214.2839ms)
+✔ QA-TXT-01 outer Finish waits for a delayed committed page save before navigating (170.9387ms)
+✔ QA corrected: HTTP Finish checks every text block before writing and unlocks after all commitments (94.333ms)
+✔ QA corrected: same-build startup retains all profiles text responses; next build clears responses while preserving draft and settings (24.4547ms)
+✔ QA corrected: three-node prerequisite cycle refuses atomically with concrete review conflict; acyclic chain imports (796.6033ms)
+✔ QA-TXT-04 delayed outer Finish must not complete a different profile and lesson after navigation (440.9693ms)
+ℹ {"terminalWrites":[],"samCompleted":[],"route":"#lesson/qa-other/qa-text"}
+✔ Lead QA-TXT-04: later portion request cancels a pending Finish (254.7548ms)
+✔ Lead QA-TXT-04: history away and back cancels a pending Finish (417.3426ms)
+✔ Lead QA-TXT-04: profile switch with failed save cancels a pending Finish (370.9535ms)
+✔ RR-TXT-01 actual author HTTP restore cannot strip two flags and release pending teaching (848.6699ms)
+✔ RR-TXT-01 active and historical restores check pending review semantics independently of removable markers (461.965ms)
+✔ RR-TXT-01 valid unpublished recovery retains source identity and tolerates JSON key-order changes (366.529ms)
+✔ RR-TXT-01 pending adapted provenance and review/target records cannot be laundered as ordinary synthetic text (306.0229ms)
+✔ required text gates refuse forged Finish atomically; grades and page responses still require deliberate completion (28.3275ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12715.4992

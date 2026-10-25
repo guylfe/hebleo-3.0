@@ -1,0 +1,34 @@
+✔ QA positive: actual HTTP response/revision/profile/entitlement isolation and atomic malformed writes (244.0381ms)
+✔ QA positive: real first20 import, aliases, sources, two lesson/page reorders and two backup/restores preserve synthetic state (1689.0908ms)
+✔ QA positive: unknown/ambiguous mapping, CAS, collision and malformed packs leave every table unchanged (873.1414ms)
+✔ QA positive: actual learner delayed GET/POST remain with initiating profile across switching and reload (650.9626ms)
+✔ QA positive: integrated pack pages all traverse with production adapter, exact timing, commitment and hidden-tab cancellation (2680.5246ms)
+✔ QA-TXT-01 learner outer Continue must not complete an unattempted gated text-only lesson (241.6785ms)
+✔ QA-TXT-01 Preview outer Continue must respect the same mandatory page gate (74.5404ms)
+✔ QA-TXT-02 fresh-build demo reset must clear separately persisted text-page responses (13.6153ms)
+✔ QA-TXT-03 new prerequisite references must reject cycles before staging an import (200.689ms)
+✔ QA-TXT-01 outer Finish waits for a delayed committed page save before navigating (224.4483ms)
+✔ QA corrected: HTTP Finish checks every text block before writing and unlocks after all commitments (84.697ms)
+✔ QA corrected: same-build startup retains all profiles text responses; next build clears responses while preserving draft and settings (40.1261ms)
+✔ QA corrected: three-node prerequisite cycle refuses atomically with concrete review conflict; acyclic chain imports (859.7047ms)
+✔ QA-TXT-04 delayed outer Finish must not complete a different profile and lesson after navigation (478.1517ms)
+ℹ {"terminalWrites":[],"samCompleted":[],"route":"#lesson/qa-other/qa-text"}
+✔ Lead QA-TXT-04: later portion request cancels a pending Finish (207.5057ms)
+✔ Lead QA-TXT-04: history away and back cancels a pending Finish (402.5006ms)
+✔ Lead QA-TXT-04: profile switch with failed save cancels a pending Finish (360.1369ms)
+✔ QA-TXT-04 independent: same-profile lesson change cancels delayed Finish without stealing focus (453.2339ms)
+✔ QA-TXT-04 independent: newer Back supersedes delayed position success after text settling (408.3794ms)
+✔ QA-TXT-04 independent: newer Back supersedes delayed position failure after text settling (432.266ms)
+✔ RR-TXT-01 actual author HTTP restore cannot strip two flags and release pending teaching (793.0739ms)
+✔ RR-TXT-01 active and historical restores check pending review semantics independently of removable markers (356.0314ms)
+✔ RR-TXT-01 valid unpublished recovery retains source identity and tolerates JSON key-order changes (296.6805ms)
+✔ RR-TXT-01 pending adapted provenance and review/target records cannot be laundered as ordinary synthetic text (373.4406ms)
+✔ required text gates refuse forged Finish atomically; grades and page responses still require deliberate completion (28.0483ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12409.1237
