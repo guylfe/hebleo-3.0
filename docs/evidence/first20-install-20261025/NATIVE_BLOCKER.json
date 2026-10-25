@@ -1,0 +1,12 @@
+{
+  "refusal": {
+    "code": "browser_consent_required",
+    "detail": {
+      "authorization_host": null,
+      "authorization_required": true,
+      "permission_mode": "standard"
+    },
+    "message": "existing-profile attachment in standard mode requires --grant existing-profile or an embedding authorization host; bounded mode requires a matching manifest"
+  },
+  "status": "refused"
+}

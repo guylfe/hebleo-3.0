@@ -1,5 +1,7 @@
 # First20 independent review corrections — 25 October 2026
 
+Current status: QA-TXT-04 closed independently on2053b8ff; that exact runtime is now preservation-installed at63358. [FIRST20_INSTALLED_DELIVERY.md](FIRST20_INSTALLED_DELIVERY.md) records the actual install, protected-state receipts and native-browser blocker. Earlier pending/failing states below remain historical evidence.
+
 Historical candidate `d912e746d43efc399c1972ce2c7da043e2fc8da0` was blocked by QA-TXT-01 and RR-TXT-01. It was never installed. QA regression/report commit `e2a6f0993252800243dde83e4177dc7320a34c00` was integrated as `8d1ed4130b57b9f26524725d5cd8b3ed4ce44a4f`. Original failing evidence is retained in docs/qa/FIRST20_d912e746_QA.md and its evidence directory. Release's original report is in docs/qa/FIRST20_d912e746_RELEASE.md.
 
 ## Corrections

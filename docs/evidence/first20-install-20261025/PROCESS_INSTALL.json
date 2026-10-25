@@ -1,0 +1,14 @@
+{
+  "previousPid": 46656,
+  "backupFolder": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\5308955e-b6c5-4326-be9d-f29dedb237ef\\hebleo-first20\\.private\\first20-install-2053b8f",
+  "revision": "2053b8ffd3ef26de0781715609806cc7721fa1b8",
+  "nativeVerified": false,
+  "startedAt": "2026-10-25T12:27:07.9729239Z",
+  "pid": 8300,
+  "previousRevision": "ba3ad389a6af9807f8eb90e7c34b8723cb1ffc80",
+  "port": 63358,
+  "preservationMode": true,
+  "database": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\b1d5e7a0-1d13-4e9e-b544-06d3b889fb9e\\hebleo-consolidated\\data\\lexical-private-demo.sqlite",
+  "checkout": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\5308955e-b6c5-4326-be9d-f29dedb237ef\\hebleo-first20",
+  "runtimeSha256": "dc9fba405653a629f21306ee6529b3585ded140e45a9ab280d71b9b8311f1102"
+}
