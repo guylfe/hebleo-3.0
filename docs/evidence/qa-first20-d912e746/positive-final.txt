@@ -1,0 +1,13 @@
+✔ QA positive: actual HTTP response/revision/profile/entitlement isolation and atomic malformed writes (223.6541ms)
+✔ QA positive: real first20 import, aliases, sources, two lesson/page reorders and two backup/restores preserve synthetic state (1356.9802ms)
+✔ QA positive: unknown/ambiguous mapping, CAS, collision and malformed packs leave every table unchanged (1167.8278ms)
+✔ QA positive: actual learner delayed GET/POST remain with initiating profile across switching and reload (751.0872ms)
+✔ QA positive: integrated pack pages all traverse with production adapter, exact timing, commitment and hidden-tab cancellation (2308.7105ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7486.7808
