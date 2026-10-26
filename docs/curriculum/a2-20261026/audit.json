@@ -1,0 +1,49 @@
+{
+  "lessons": 117,
+  "baseLessons": 114,
+  "baseTargets": 1087,
+  "targets": 1088,
+  "missing": [],
+  "duplicates": [],
+  "under": [],
+  "over": [],
+  "gaps": [
+    [
+      61,
+      63,
+      "Sentence grammar"
+    ],
+    [
+      87,
+      89,
+      "Sentence grammar"
+    ],
+    [
+      100,
+      102,
+      "Sentence grammar"
+    ],
+    [
+      102,
+      103,
+      "Sentence grammar"
+    ],
+    [
+      115,
+      117,
+      "Sentence grammar"
+    ]
+  ],
+  "letters": [],
+  "dependencies": [],
+  "groups": {
+    "2": "מנתל",
+    "5": "אהי",
+    "8": "ו",
+    "11": "שזר",
+    "14": "בדצ",
+    "17": "כפג",
+    "20": "חע",
+    "23": "קסט"
+  }
+}

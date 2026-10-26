@@ -1,0 +1,2317 @@
+{
+  "אדומה": {
+    "pos": 29,
+    "origin": "historical proposed form model",
+    "lemma": "אדום"
+  },
+  "אדומים": {
+    "pos": 29,
+    "origin": "historical proposed form model",
+    "lemma": "אדום"
+  },
+  "לבנה": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לי": {
+    "pos": 26,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לו": {
+    "pos": 26,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לה": {
+    "pos": 26,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "ממני": {
+    "pos": 26,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "ממנו": {
+    "pos": 26,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "ממנה": {
+    "pos": 26,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שלי": {
+    "pos": 16,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שלו": {
+    "pos": 26,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שלה": {
+    "pos": 26,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "ילדים": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "ילדות": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "כלבים": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שכנים": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "בניינים": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "מדפים": {
+    "pos": 34,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "נמוכים": {
+    "pos": 34,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לך": {
+    "pos": 32,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לכם": {
+    "pos": 32,
+    "origin": "historical proposed form model",
+    "lemma": "ל־ / של / מ־"
+  },
+  "לכן": {
+    "pos": 32,
+    "origin": "historical proposed form model",
+    "lemma": "ל־ / של / מ־"
+  },
+  "שלך": {
+    "pos": 32,
+    "origin": "historical proposed form model",
+    "lemma": "ל־ / של / מ־"
+  },
+  "מכם": {
+    "pos": 32,
+    "origin": "historical proposed form model",
+    "lemma": "ל־ / של / מ־"
+  },
+  "כפיות": {
+    "pos": 25,
+    "origin": "historical proposed form model",
+    "lemma": "כפית"
+  },
+  "מזלגות": {
+    "pos": 32,
+    "origin": "historical proposed form model",
+    "lemma": "מזלג"
+  },
+  "חמה": {
+    "pos": 20,
+    "origin": "historical proposed form model",
+    "lemma": "חם"
+  },
+  "קטנה": {
+    "pos": 23,
+    "origin": "historical proposed form model",
+    "lemma": "קטן"
+  },
+  "טובה": {
+    "pos": 23,
+    "origin": "historical proposed form model",
+    "lemma": "טוב"
+  },
+  "חברים": {
+    "pos": 37,
+    "origin": "historical proposed form model",
+    "lemma": "חבר"
+  },
+  "שלנו": {
+    "pos": 37,
+    "origin": "historical proposed form model",
+    "lemma": "של / ל־"
+  },
+  "שלהם": {
+    "pos": 37,
+    "origin": "historical proposed form model",
+    "lemma": "של / ל־"
+  },
+  "שלהן": {
+    "pos": 37,
+    "origin": "historical proposed form model",
+    "lemma": "של / ל־"
+  },
+  "לנו": {
+    "pos": 37,
+    "origin": "historical proposed form model",
+    "lemma": "של / ל־"
+  },
+  "להם": {
+    "pos": 37,
+    "origin": "historical proposed form model",
+    "lemma": "של / ל־"
+  },
+  "להן": {
+    "pos": 37,
+    "origin": "historical proposed form model",
+    "lemma": "של / ל־"
+  },
+  "כואבת": {
+    "pos": 53,
+    "origin": "historical proposed form model",
+    "lemma": "כואב"
+  },
+  "כבדה": {
+    "pos": 39,
+    "origin": "historical proposed form model",
+    "lemma": "כבד"
+  },
+  "נקייה": {
+    "pos": 39,
+    "origin": "historical proposed form model",
+    "lemma": "נקי"
+  },
+  "נקיות": {
+    "pos": 39,
+    "origin": "historical proposed form model",
+    "lemma": "נקי"
+  },
+  "נקיים": {
+    "pos": 39,
+    "origin": "historical proposed form model",
+    "lemma": "נקי"
+  },
+  "אצלי": {
+    "pos": 49,
+    "origin": "historical proposed form model",
+    "lemma": "אצל"
+  },
+  "אצלם": {
+    "pos": 49,
+    "origin": "historical proposed form model",
+    "lemma": "אצל"
+  },
+  "אצלך": {
+    "pos": 49,
+    "origin": "historical proposed form model",
+    "lemma": "אצל"
+  },
+  "אחד": {
+    "pos": 35,
+    "origin": "historical proposed form model",
+    "lemma": "one"
+  },
+  "ברורה": {
+    "pos": 39,
+    "origin": "historical proposed form model",
+    "lemma": "ברור"
+  },
+  "שתי": {
+    "pos": 48,
+    "origin": "historical proposed form model",
+    "lemma": "שתיים"
+  },
+  "צלחות": {
+    "pos": 48,
+    "origin": "historical proposed form model",
+    "lemma": "צלחת"
+  },
+  "כוסות": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שעות": {
+    "pos": 48,
+    "origin": "historical proposed form model",
+    "lemma": "שעה"
+  },
+  "מפיות": {
+    "pos": 25,
+    "origin": "historical proposed form model",
+    "lemma": "מפית"
+  },
+  "דקות": {
+    "pos": 48,
+    "origin": "historical proposed form model",
+    "lemma": "דקה"
+  },
+  "ידיים": {
+    "pos": 55,
+    "origin": "historical proposed form model",
+    "lemma": "יד"
+  },
+  "נעליים": {
+    "pos": 55,
+    "origin": "historical proposed form model",
+    "lemma": "נעל"
+  },
+  "מזוודות": {
+    "pos": 34,
+    "origin": "historical proposed form model",
+    "lemma": "מזוודה"
+  },
+  "עסוקה": {
+    "pos": 61,
+    "origin": "historical proposed form model",
+    "lemma": "עסוק"
+  },
+  "עסוקים": {
+    "pos": 61,
+    "origin": "historical proposed form model",
+    "lemma": "עסוק"
+  },
+  "מוכנה": {
+    "pos": 61,
+    "origin": "historical proposed form model",
+    "lemma": "מוכן"
+  },
+  "דגלים": {
+    "pos": 62,
+    "origin": "historical proposed form model",
+    "lemma": "דגל"
+  },
+  "פרקים": {
+    "pos": 62,
+    "origin": "historical proposed form model",
+    "lemma": "פרק"
+  },
+  "שתים": {
+    "pos": 64,
+    "origin": "historical proposed form model",
+    "lemma": "feminine 11–19"
+  },
+  "עשרה": {
+    "pos": 64,
+    "origin": "historical proposed form model",
+    "lemma": "feminine 11–19"
+  },
+  "קופסאות": {
+    "pos": 48,
+    "origin": "historical proposed form model",
+    "lemma": "קופסה"
+  },
+  "תלמידות": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "תיקים": {
+    "pos": 23,
+    "origin": "historical proposed form model",
+    "lemma": "תיק"
+  },
+  "כחולים": {
+    "pos": 72,
+    "origin": "historical proposed form model",
+    "lemma": "כחול"
+  },
+  "בתים": {
+    "pos": 25,
+    "origin": "historical proposed form model",
+    "lemma": "בית"
+  },
+  "רחובות": {
+    "pos": 20,
+    "origin": "historical proposed form model",
+    "lemma": "רחוב"
+  },
+  "ארוכים": {
+    "pos": 72,
+    "origin": "historical proposed form model",
+    "lemma": "ארוך"
+  },
+  "ירוקות": {
+    "pos": 72,
+    "origin": "historical proposed form model",
+    "lemma": "ירוק"
+  },
+  "דלתות": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "צהובות": {
+    "pos": 72,
+    "origin": "historical proposed form model",
+    "lemma": "צהוב"
+  },
+  "צלמת": {
+    "pos": 75,
+    "origin": "historical proposed form model",
+    "lemma": "צלם"
+  },
+  "זמרים": {
+    "pos": 75,
+    "origin": "historical proposed form model",
+    "lemma": "זמר"
+  },
+  "גננת": {
+    "pos": 75,
+    "origin": "historical proposed form model",
+    "lemma": "גנן"
+  },
+  "טייסת": {
+    "pos": 75,
+    "origin": "historical proposed form model",
+    "lemma": "טייס"
+  },
+  "דיילות": {
+    "pos": 75,
+    "origin": "historical proposed form model",
+    "lemma": "דייל"
+  },
+  "אותה": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "אותם": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "אותן": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "צבעים": {
+    "pos": 76,
+    "origin": "historical proposed form model",
+    "lemma": "צבע"
+  },
+  "שאלות": {
+    "pos": 38,
+    "origin": "historical proposed form model",
+    "lemma": "שאלה"
+  },
+  "שלושה": {
+    "pos": 78,
+    "origin": "historical proposed form model",
+    "lemma": "masculine 1–10"
+  },
+  "חמישה": {
+    "pos": 78,
+    "origin": "historical proposed form model",
+    "lemma": "masculine 1–10"
+  },
+  "שני": {
+    "pos": 82,
+    "origin": "historical explicit model"
+  },
+  "ארבעה": {
+    "pos": 78,
+    "origin": "historical proposed form model",
+    "lemma": "masculine 1–10"
+  },
+  "שישה": {
+    "pos": 78,
+    "origin": "historical proposed form model",
+    "lemma": "masculine 1–10"
+  },
+  "תשעה": {
+    "pos": 78,
+    "origin": "historical proposed form model",
+    "lemma": "masculine 1–10"
+  },
+  "כיסאות": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "תפוחים": {
+    "pos": 78,
+    "origin": "historical proposed form model",
+    "lemma": "תפוח"
+  },
+  "כדורים": {
+    "pos": 78,
+    "origin": "historical proposed form model",
+    "lemma": "כדור"
+  },
+  "צעצועים": {
+    "pos": 78,
+    "origin": "historical proposed form model",
+    "lemma": "צעצוע"
+  },
+  "אורחים": {
+    "pos": 78,
+    "origin": "historical proposed form model",
+    "lemma": "אורח"
+  },
+  "בריאים": {
+    "pos": 81,
+    "origin": "historical proposed form model",
+    "lemma": "בריא"
+  },
+  "רגישה": {
+    "pos": 81,
+    "origin": "historical proposed form model",
+    "lemma": "רגיש"
+  },
+  "זהירים": {
+    "pos": 81,
+    "origin": "historical proposed form model",
+    "lemma": "זהיר"
+  },
+  "פעילים": {
+    "pos": 81,
+    "origin": "historical proposed form model",
+    "lemma": "פעיל"
+  },
+  "מאחוריי": {
+    "pos": 79,
+    "origin": "historical proposed form model",
+    "lemma": "מאחורי / ליד / על / אחרי / מעל"
+  },
+  "לידו": {
+    "pos": 79,
+    "origin": "historical proposed form model",
+    "lemma": "מאחורי / ליד / על / אחרי / מעל"
+  },
+  "עליהם": {
+    "pos": 79,
+    "origin": "historical proposed form model",
+    "lemma": "מאחורי / ליד / על / אחרי / מעל"
+  },
+  "אחרינו": {
+    "pos": 79,
+    "origin": "historical proposed form model",
+    "lemma": "מאחורי / ליד / על / אחרי / מעל"
+  },
+  "מעלינו": {
+    "pos": 79,
+    "origin": "historical proposed form model",
+    "lemma": "מאחורי / ליד / על / אחרי / מעל"
+  },
+  "עליו": {
+    "pos": 79,
+    "origin": "historical proposed form model",
+    "lemma": "מאחורי / ליד / על / אחרי / מעל"
+  },
+  "שלושת": {
+    "pos": 82,
+    "origin": "historical proposed form model",
+    "lemma": "masculine construct 1–10"
+  },
+  "ארבעת": {
+    "pos": 82,
+    "origin": "historical proposed form model",
+    "lemma": "masculine construct 1–10"
+  },
+  "חמשת": {
+    "pos": 82,
+    "origin": "historical proposed form model",
+    "lemma": "masculine construct 1–10"
+  },
+  "ששת": {
+    "pos": 82,
+    "origin": "historical proposed form model",
+    "lemma": "masculine construct 1–10"
+  },
+  "עשרת": {
+    "pos": 82,
+    "origin": "historical proposed form model",
+    "lemma": "masculine construct 1–10"
+  },
+  "כרטיסים": {
+    "pos": 82,
+    "origin": "historical proposed form model",
+    "lemma": "כרטיס"
+  },
+  "מושבים": {
+    "pos": 82,
+    "origin": "historical proposed form model",
+    "lemma": "מושב"
+  },
+  "נוחים": {
+    "pos": 53,
+    "origin": "historical proposed form model",
+    "lemma": "נוח"
+  },
+  "שערים": {
+    "pos": 82,
+    "origin": "historical proposed form model",
+    "lemma": "שער"
+  },
+  "פתוחים": {
+    "pos": 39,
+    "origin": "historical proposed form model",
+    "lemma": "פתוח"
+  },
+  "תחנות": {
+    "pos": 84,
+    "origin": "historical proposed form model",
+    "lemma": "תחנה"
+  },
+  "קרובות": {
+    "pos": 72,
+    "origin": "historical proposed form model",
+    "lemma": "קרוב"
+  },
+  "קרובה": {
+    "pos": 72,
+    "origin": "historical proposed form model",
+    "lemma": "קרוב"
+  },
+  "בתי": {
+    "pos": 84,
+    "origin": "historical proposed form model",
+    "lemma": "בית"
+  },
+  "בקבוקי": {
+    "pos": 84,
+    "origin": "historical proposed form model",
+    "lemma": "בקבוק"
+  },
+  "חדרי": {
+    "pos": 84,
+    "origin": "historical proposed form model",
+    "lemma": "חדר"
+  },
+  "חדשה": {
+    "pos": 40,
+    "origin": "historical proposed form model",
+    "lemma": "חדש"
+  },
+  "רחוקה": {
+    "pos": 72,
+    "origin": "historical proposed form model",
+    "lemma": "רחוק"
+  },
+  "צריכה": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "יכולים": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "עייפים": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "עייפה": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "רעבה": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שמחים": {
+    "pos": 88,
+    "origin": "historical proposed form model",
+    "lemma": "שמח"
+  },
+  "רופאים": {
+    "pos": 88,
+    "origin": "historical proposed form model",
+    "lemma": "רופא"
+  },
+  "שנים": {
+    "pos": 90,
+    "origin": "historical proposed form model",
+    "lemma": "masculine 11–19"
+  },
+  "ימים": {
+    "pos": 25,
+    "origin": "historical proposed form model",
+    "lemma": "יום"
+  },
+  "מאתיים": {
+    "pos": 93,
+    "origin": "historical proposed form model",
+    "lemma": "מאה"
+  },
+  "מאות": {
+    "pos": 93,
+    "origin": "historical proposed form model",
+    "lemma": "מאה"
+  },
+  "שקלים": {
+    "pos": 35,
+    "origin": "historical proposed form model",
+    "lemma": "שקל"
+  },
+  "חשובה": {
+    "pos": 61,
+    "origin": "historical proposed form model",
+    "lemma": "חשוב"
+  },
+  "נעימה": {
+    "pos": 81,
+    "origin": "historical proposed form model",
+    "lemma": "נעים"
+  },
+  "אלפיים": {
+    "pos": 105,
+    "origin": "historical proposed form model",
+    "lemma": "אלף"
+  },
+  "אלפים": {
+    "pos": 105,
+    "origin": "historical proposed form model",
+    "lemma": "אלף"
+  },
+  "קילומטרים": {
+    "pos": 105,
+    "origin": "historical proposed form model",
+    "lemma": "קילומטר"
+  },
+  "מטרים": {
+    "pos": 64,
+    "origin": "historical proposed form model",
+    "lemma": "מטר"
+  },
+  "מנהלת": {
+    "pos": 97,
+    "origin": "historical proposed form model",
+    "lemma": "מנהל"
+  },
+  "מוכרת": {
+    "pos": 97,
+    "origin": "historical proposed form model",
+    "lemma": "מוכר"
+  },
+  "אותי": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "אותו": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "איתה": {
+    "pos": 52,
+    "origin": "historical explicit model"
+  },
+  "אחוזים": {
+    "pos": 108,
+    "origin": "historical proposed form model",
+    "lemma": "אחוז"
+  },
+  "עגבניות": {
+    "pos": 111,
+    "origin": "historical proposed form model",
+    "lemma": "עגבנייה"
+  },
+  "תפוחי": {
+    "pos": 111,
+    "origin": "historical proposed form model",
+    "lemma": "תפוח אדמה"
+  },
+  "ליטרים": {
+    "pos": 64,
+    "origin": "historical proposed form model",
+    "lemma": "ליטר"
+  },
+  "י\"א": {
+    "pos": 114,
+    "origin": "historical proposed form model",
+    "lemma": "letter-number notation"
+  },
+  "ט\"ו": {
+    "pos": 114,
+    "origin": "historical proposed form model",
+    "lemma": "letter-number notation"
+  },
+  "ט\"ז": {
+    "pos": 114,
+    "origin": "historical proposed form model",
+    "lemma": "letter-number notation"
+  },
+  "ב": {
+    "pos": 114,
+    "origin": "historical proposed form model",
+    "lemma": "letter-number notation"
+  },
+  "קראה": {
+    "pos": 50,
+    "origin": "historical proposed form model",
+    "lemma": "קרא"
+  },
+  "קראו": {
+    "pos": 50,
+    "origin": "historical proposed form model",
+    "lemma": "קרא"
+  },
+  "למדו": {
+    "pos": 50,
+    "origin": "historical proposed form model",
+    "lemma": "למד"
+  },
+  "בדקו": {
+    "pos": 50,
+    "origin": "historical proposed form model",
+    "lemma": "בדק"
+  },
+  "אכלה": {
+    "pos": 50,
+    "origin": "historical proposed form model",
+    "lemma": "אכל"
+  },
+  "עבדה": {
+    "pos": 50,
+    "origin": "historical proposed form model",
+    "lemma": "עבד"
+  },
+  "שלחה": {
+    "pos": 58,
+    "origin": "historical proposed form model",
+    "lemma": "שלח"
+  },
+  "שלחו": {
+    "pos": 58,
+    "origin": "historical proposed form model",
+    "lemma": "שלח"
+  },
+  "בחרו": {
+    "pos": 58,
+    "origin": "historical proposed form model",
+    "lemma": "בחר"
+  },
+  "סגרתי": {
+    "pos": 54,
+    "origin": "historical proposed form model",
+    "lemma": "סגר"
+  },
+  "גמרתי": {
+    "pos": 54,
+    "origin": "historical proposed form model",
+    "lemma": "גמר"
+  },
+  "גמרה": {
+    "pos": 54,
+    "origin": "historical proposed form model",
+    "lemma": "גמר"
+  },
+  "ספרתי": {
+    "pos": 54,
+    "origin": "historical proposed form model",
+    "lemma": "ספר"
+  },
+  "אספתי": {
+    "pos": 54,
+    "origin": "historical proposed form model",
+    "lemma": "אסף"
+  },
+  "כתבתי": {
+    "pos": 54,
+    "origin": "historical proposed form model",
+    "lemma": "כתב"
+  },
+  "הייתי": {
+    "pos": 60,
+    "origin": "historical proposed form model",
+    "lemma": "היה"
+  },
+  "היינו": {
+    "pos": 60,
+    "origin": "historical proposed form model",
+    "lemma": "היה"
+  },
+  "הייתם": {
+    "pos": 60,
+    "origin": "historical proposed form model",
+    "lemma": "היה"
+  },
+  "הייתה": {
+    "pos": 60,
+    "origin": "historical proposed form model",
+    "lemma": "היה"
+  },
+  "היו": {
+    "pos": 60,
+    "origin": "historical proposed form model",
+    "lemma": "היה"
+  },
+  "היית": {
+    "pos": 60,
+    "origin": "historical proposed form model",
+    "lemma": "היה"
+  },
+  "כתבת": {
+    "pos": 60,
+    "origin": "historical proposed form model",
+    "lemma": "כתב"
+  },
+  "למדנו": {
+    "pos": 60,
+    "origin": "historical proposed form model",
+    "lemma": "למד"
+  },
+  "לובשת": {
+    "pos": 57,
+    "origin": "historical proposed form model",
+    "lemma": "לבש"
+  },
+  "פותחים": {
+    "pos": 57,
+    "origin": "historical proposed form model",
+    "lemma": "פתח"
+  },
+  "פותחות": {
+    "pos": 57,
+    "origin": "historical proposed form model",
+    "lemma": "פתח"
+  },
+  "סוחבות": {
+    "pos": 57,
+    "origin": "historical proposed form model",
+    "lemma": "סחב"
+  },
+  "כותבת": {
+    "pos": 57,
+    "origin": "historical proposed form model",
+    "lemma": "כתב"
+  },
+  "לומדים": {
+    "pos": 57,
+    "origin": "historical proposed form model",
+    "lemma": "למד"
+  },
+  "מלמדת": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "לימד"
+  },
+  "דיברתי": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "דיבר"
+  },
+  "מדברת": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "דיבר"
+  },
+  "מדברות": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "דיבר"
+  },
+  "מבשלים": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "חיפשנו": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "חיפש"
+  },
+  "משחקת": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "שיחק"
+  },
+  "משחקים": {
+    "pos": 65,
+    "origin": "historical explicit model"
+  },
+  "שילמה": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "שילם"
+  },
+  "שילמתי": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "שילם"
+  },
+  "נכנסה": {
+    "pos": 71,
+    "origin": "historical proposed form model",
+    "lemma": "נכנס"
+  },
+  "נכנסו": {
+    "pos": 71,
+    "origin": "historical proposed form model",
+    "lemma": "נכנס"
+  },
+  "נפגשנו": {
+    "pos": 71,
+    "origin": "historical proposed form model",
+    "lemma": "נפגש"
+  },
+  "נפגשים": {
+    "pos": 71,
+    "origin": "historical proposed form model",
+    "lemma": "נפגש"
+  },
+  "נסגרה": {
+    "pos": 71,
+    "origin": "historical proposed form model",
+    "lemma": "נסגר"
+  },
+  "נשארו": {
+    "pos": 71,
+    "origin": "historical proposed form model",
+    "lemma": "נשאר"
+  },
+  "נשברה": {
+    "pos": 71,
+    "origin": "historical proposed form model",
+    "lemma": "נשבר"
+  },
+  "תכננתי": {
+    "pos": 68,
+    "origin": "historical proposed form model",
+    "lemma": "תכנן"
+  },
+  "תרגמה": {
+    "pos": 68,
+    "origin": "historical proposed form model",
+    "lemma": "תרגם"
+  },
+  "ארגנו": {
+    "pos": 68,
+    "origin": "historical proposed form model",
+    "lemma": "ארגן"
+  },
+  "עדכנה": {
+    "pos": 68,
+    "origin": "historical proposed form model",
+    "lemma": "עדכן"
+  },
+  "עוזרת": {
+    "pos": 46,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שמעתי": {
+    "pos": 73,
+    "origin": "historical proposed form model",
+    "lemma": "שמע"
+  },
+  "עמדו": {
+    "pos": 73,
+    "origin": "historical proposed form model",
+    "lemma": "עמד"
+  },
+  "חזרה": {
+    "pos": 73,
+    "origin": "historical proposed form model",
+    "lemma": "חזר"
+  },
+  "קנתה": {
+    "pos": 74,
+    "origin": "historical proposed form model",
+    "lemma": "קנה"
+  },
+  "קניתי": {
+    "pos": 74,
+    "origin": "historical proposed form model",
+    "lemma": "קנה"
+  },
+  "קנינו": {
+    "pos": 74,
+    "origin": "historical proposed form model",
+    "lemma": "קנה"
+  },
+  "שותים": {
+    "pos": 21,
+    "origin": "historical explicit model"
+  },
+  "ראו": {
+    "pos": 74,
+    "origin": "historical proposed form model",
+    "lemma": "ראה"
+  },
+  "עובדים": {
+    "pos": 61,
+    "origin": "historical explicit model"
+  },
+  "עובדת": {
+    "pos": 61,
+    "origin": "historical explicit model"
+  },
+  "קוראת": {
+    "pos": 57,
+    "origin": "historical proposed form model",
+    "lemma": "קרא"
+  },
+  "התלבשה": {
+    "pos": 77,
+    "origin": "historical proposed form model",
+    "lemma": "התלבש"
+  },
+  "התקרבו": {
+    "pos": 77,
+    "origin": "historical proposed form model",
+    "lemma": "התקרב"
+  },
+  "התקלחתי": {
+    "pos": 77,
+    "origin": "historical proposed form model",
+    "lemma": "התקלח"
+  },
+  "מתעניינת": {
+    "pos": 77,
+    "origin": "historical proposed form model",
+    "lemma": "התעניין"
+  },
+  "קיבלה": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "קיבלתי": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "קיבל"
+  },
+  "קיבלנו": {
+    "pos": 65,
+    "origin": "historical proposed form model",
+    "lemma": "קיבל"
+  },
+  "גרתי": {
+    "pos": 80,
+    "origin": "historical proposed form model",
+    "lemma": "גר"
+  },
+  "שרו": {
+    "pos": 80,
+    "origin": "historical proposed form model",
+    "lemma": "שר"
+  },
+  "נחתי": {
+    "pos": 80,
+    "origin": "historical proposed form model",
+    "lemma": "נח"
+  },
+  "הסבירה": {
+    "pos": 83,
+    "origin": "historical proposed form model",
+    "lemma": "הסביר"
+  },
+  "הכנסתי": {
+    "pos": 83,
+    "origin": "historical proposed form model",
+    "lemma": "הכניס"
+  },
+  "הגיעו": {
+    "pos": 83,
+    "origin": "historical proposed form model",
+    "lemma": "הגיע"
+  },
+  "מגיעים": {
+    "pos": 83,
+    "origin": "historical proposed form model",
+    "lemma": "הגיע"
+  },
+  "הציעה": {
+    "pos": 83,
+    "origin": "historical proposed form model",
+    "lemma": "הציע"
+  },
+  "הבאתי": {
+    "pos": 84,
+    "origin": "historical proposed form model",
+    "lemma": "הביא"
+  },
+  "הוציאה": {
+    "pos": 85,
+    "origin": "historical proposed form model",
+    "lemma": "הוציא"
+  },
+  "לשתות": {
+    "pos": 21,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לקנות": {
+    "pos": 86,
+    "origin": "historical proposed form model",
+    "lemma": "קנה"
+  },
+  "להיכנס": {
+    "pos": 86,
+    "origin": "historical explicit model"
+  },
+  "לעזור": {
+    "pos": 86,
+    "origin": "historical proposed form model",
+    "lemma": "עזר"
+  },
+  "מתחילים": {
+    "pos": 83,
+    "origin": "historical proposed form model",
+    "lemma": "התחיל"
+  },
+  "אלמד": {
+    "pos": 92,
+    "origin": "historical explicit model"
+  },
+  "יכתוב": {
+    "pos": 92,
+    "origin": "historical proposed form model",
+    "lemma": "כתב"
+  },
+  "אקנה": {
+    "pos": 92,
+    "origin": "historical proposed form model",
+    "lemma": "קנה"
+  },
+  "יעבוד": {
+    "pos": 92,
+    "origin": "historical proposed form model",
+    "lemma": "עבד"
+  },
+  "אשלח": {
+    "pos": 92,
+    "origin": "historical proposed form model",
+    "lemma": "שלח"
+  },
+  "שלחתי": {
+    "pos": 54,
+    "origin": "historical proposed form model",
+    "lemma": "שלח"
+  },
+  "הפסיקו": {
+    "pos": 83,
+    "origin": "historical proposed form model",
+    "lemma": "הפסיק"
+  },
+  "תיכנס": {
+    "pos": 95,
+    "origin": "historical proposed form model",
+    "lemma": "נכנס"
+  },
+  "תכתבו": {
+    "pos": 95,
+    "origin": "historical proposed form model",
+    "lemma": "כתב"
+  },
+  "תפתחו": {
+    "pos": 95,
+    "origin": "historical proposed form model",
+    "lemma": "פתח"
+  },
+  "פתחו": {
+    "pos": 95,
+    "origin": "historical proposed form model",
+    "lemma": "פתח"
+  },
+  "אמרה": {
+    "pos": 67,
+    "origin": "historical proposed form model",
+    "lemma": "אמר"
+  },
+  "אמרו": {
+    "pos": 67,
+    "origin": "historical proposed form model",
+    "lemma": "אמר"
+  },
+  "חושבים": {
+    "pos": 62,
+    "origin": "historical proposed form model",
+    "lemma": "חשב"
+  },
+  "נגמרה": {
+    "pos": 71,
+    "origin": "historical proposed form model",
+    "lemma": "נגמר"
+  },
+  "תקנה": {
+    "pos": 98,
+    "origin": "historical proposed form model",
+    "lemma": "קנה"
+  },
+  "נקנה": {
+    "pos": 98,
+    "origin": "historical proposed form model",
+    "lemma": "קנה"
+  },
+  "יגיעו": {
+    "pos": 98,
+    "origin": "historical explicit model"
+  },
+  "תגיע": {
+    "pos": 98,
+    "origin": "historical explicit model"
+  },
+  "ילמדו": {
+    "pos": 98,
+    "origin": "historical proposed form model",
+    "lemma": "למד"
+  },
+  "נתחיל": {
+    "pos": 98,
+    "origin": "historical explicit model"
+  },
+  "תהיה": {
+    "pos": 98,
+    "origin": "historical proposed form model",
+    "lemma": "היה"
+  },
+  "עלתה": {
+    "pos": 74,
+    "origin": "historical proposed form model",
+    "lemma": "עלה"
+  },
+  "גנבו": {
+    "pos": 101,
+    "origin": "historical proposed form model",
+    "lemma": "גנב"
+  },
+  "מסרו": {
+    "pos": 101,
+    "origin": "historical proposed form model",
+    "lemma": "מסר"
+  },
+  "דיווחו": {
+    "pos": 101,
+    "origin": "historical proposed form model",
+    "lemma": "דיווח"
+  },
+  "תאפה": {
+    "pos": 104,
+    "origin": "historical proposed form model",
+    "lemma": "אפה"
+  },
+  "יאמר": {
+    "pos": 104,
+    "origin": "historical proposed form model",
+    "lemma": "אמר"
+  },
+  "נאסוף": {
+    "pos": 104,
+    "origin": "historical proposed form model",
+    "lemma": "אסף"
+  },
+  "תאהב": {
+    "pos": 104,
+    "origin": "historical proposed form model",
+    "lemma": "אהב"
+  },
+  "פורסמה": {
+    "pos": 107,
+    "origin": "historical proposed form model",
+    "lemma": "פרסם"
+  },
+  "הוזמנו": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "תוקן": {
+    "pos": 110,
+    "origin": "historical explicit model"
+  },
+  "תורגם": {
+    "pos": 107,
+    "origin": "historical proposed form model",
+    "lemma": "תרגם"
+  },
+  "הוכנסה": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "יודעת": {
+    "pos": 73,
+    "origin": "historical proposed form model",
+    "lemma": "ידע"
+  },
+  "תקרא": {
+    "pos": 104,
+    "origin": "historical proposed form model",
+    "lemma": "קרא"
+  },
+  "נבין": {
+    "pos": 98,
+    "origin": "historical proposed form model",
+    "lemma": "הבין"
+  },
+  "מתאמצים": {
+    "pos": 103,
+    "origin": "historical proposed form model",
+    "lemma": "התאמץ"
+  },
+  "ישנתי": {
+    "pos": 116,
+    "origin": "historical proposed form model",
+    "lemma": "ישן"
+  },
+  "צחקו": {
+    "pos": 116,
+    "origin": "historical proposed form model",
+    "lemma": "צחק"
+  },
+  "שחו": {
+    "pos": 116,
+    "origin": "historical proposed form model",
+    "lemma": "שחה"
+  },
+  "שכחתי": {
+    "pos": 54,
+    "origin": "historical proposed form model",
+    "lemma": "שכח"
+  },
+  "שינתה": {
+    "pos": 117,
+    "origin": "historical proposed form model",
+    "lemma": "שינה"
+  },
+  "תשנה": {
+    "pos": 117,
+    "origin": "historical proposed form model",
+    "lemma": "שינה"
+  },
+  "נשנה": {
+    "pos": 117,
+    "origin": "historical proposed form model",
+    "lemma": "שינה"
+  },
+  "הזמנתי": {
+    "pos": 83,
+    "origin": "historical proposed form model",
+    "lemma": "הזמין"
+  },
+  "תביאי": {
+    "pos": 98,
+    "origin": "historical proposed form model",
+    "lemma": "הביא"
+  },
+  "ניפגש": {
+    "pos": 98,
+    "origin": "historical proposed form model",
+    "lemma": "נפגש"
+  },
+  "בוטל": {
+    "pos": 117,
+    "origin": "historical proposed form model",
+    "lemma": "ביטל"
+  },
+  "מבקשים": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "נשלח": {
+    "pos": 107,
+    "origin": "historical explicit model"
+  },
+  "להירשם": {
+    "pos": 86,
+    "origin": "historical proposed form model",
+    "lemma": "נרשם"
+  },
+  "לקרוא": {
+    "pos": 41,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "בה": {
+    "pos": 26,
+    "origin": "historical proposed form model",
+    "lemma": "ב־"
+  },
+  "לפתוח": {
+    "pos": 86,
+    "origin": "historical proposed form model",
+    "lemma": "פתח"
+  },
+  "לשלוח": {
+    "pos": 86,
+    "origin": "historical proposed form model",
+    "lemma": "שלח"
+  },
+  "להצליח": {
+    "pos": 103,
+    "origin": "historical proposed form model",
+    "lemma": "הצליח"
+  },
+  "להגיע": {
+    "pos": 86,
+    "origin": "historical proposed form model",
+    "lemma": "הגיע"
+  },
+  "שלחנו": {
+    "pos": 60,
+    "origin": "historical proposed form model",
+    "lemma": "שלח"
+  },
+  "רעבים": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "רעבות": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "עייפות": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "איתי": {
+    "pos": 52,
+    "origin": "historical explicit model"
+  },
+  "איתך": {
+    "pos": 52,
+    "origin": "historical explicit model"
+  },
+  "איתו": {
+    "pos": 52,
+    "origin": "historical explicit model"
+  },
+  "איתנו": {
+    "pos": 52,
+    "origin": "historical explicit model"
+  },
+  "איתכם": {
+    "pos": 52,
+    "origin": "historical explicit model"
+  },
+  "איתכן": {
+    "pos": 52,
+    "origin": "historical explicit model"
+  },
+  "איתם": {
+    "pos": 52,
+    "origin": "historical explicit model"
+  },
+  "איתן": {
+    "pos": 52,
+    "origin": "historical explicit model"
+  },
+  "גר": {
+    "pos": 56,
+    "origin": "historical explicit model"
+  },
+  "גרה": {
+    "pos": 56,
+    "origin": "historical explicit model"
+  },
+  "גרים": {
+    "pos": 56,
+    "origin": "historical explicit model"
+  },
+  "גרות": {
+    "pos": 56,
+    "origin": "historical explicit model"
+  },
+  "לבוא": {
+    "pos": 21,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לשים": {
+    "pos": 86,
+    "origin": "historical explicit model"
+  },
+  "ללמוד": {
+    "pos": 21,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שותה": {
+    "pos": 21,
+    "origin": "historical explicit model"
+  },
+  "שותות": {
+    "pos": 21,
+    "origin": "historical explicit model"
+  },
+  "יכול": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "יכולה": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "יכולות": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "צריך": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "צריכים": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "צריכות": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "חייב": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "חייבת": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "חייבים": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "חייבות": {
+    "pos": 47,
+    "origin": "historical explicit model"
+  },
+  "עובד": {
+    "pos": 61,
+    "origin": "historical explicit model"
+  },
+  "עובדות": {
+    "pos": 61,
+    "origin": "historical explicit model"
+  },
+  "ביקש": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "ביקשה": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "ביקשו": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מבקש": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מבקשת": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מבקשות": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "חיפש": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "חיפשה": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "חיפשו": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מחפש": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מחפשת": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מחפשים": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מחפשות": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "קיבל": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "קיבלו": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מקבל": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מקבלת": {
+    "pos": 58,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "מקבלים": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מקבלות": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "ניקה": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "ניקתה": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "ניקו": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מנקה": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מנקים": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מנקות": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "תיקן": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "תיקנה": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "תיקנו": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מתקן": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מתקנת": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מתקנים": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מתקנות": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "בישל": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "בישלה": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "בישלו": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מבשל": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מבשלת": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "מבשלות": {
+    "pos": 70,
+    "origin": "historical explicit model"
+  },
+  "שומר": {
+    "pos": 67,
+    "origin": "historical explicit model"
+  },
+  "שומרת": {
+    "pos": 67,
+    "origin": "historical explicit model"
+  },
+  "שומרים": {
+    "pos": 67,
+    "origin": "historical explicit model"
+  },
+  "שומרות": {
+    "pos": 67,
+    "origin": "historical explicit model"
+  },
+  "זוכר": {
+    "pos": 67,
+    "origin": "historical explicit model"
+  },
+  "זוכרת": {
+    "pos": 67,
+    "origin": "historical explicit model"
+  },
+  "זוכרים": {
+    "pos": 67,
+    "origin": "historical explicit model"
+  },
+  "זוכרות": {
+    "pos": 67,
+    "origin": "historical explicit model"
+  },
+  "עולה": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "עולים": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "עולות": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "מישהו": {
+    "pos": 87,
+    "origin": "historical explicit model"
+  },
+  "מישהי": {
+    "pos": 87,
+    "origin": "historical explicit model"
+  },
+  "משהו": {
+    "pos": 87,
+    "origin": "historical explicit model"
+  },
+  "איפשהו": {
+    "pos": 87,
+    "origin": "historical explicit model"
+  },
+  "מתישהו": {
+    "pos": 87,
+    "origin": "historical explicit model"
+  },
+  "איכשהו": {
+    "pos": 87,
+    "origin": "historical explicit model"
+  },
+  "לאנשהו": {
+    "pos": 87,
+    "origin": "historical explicit model"
+  },
+  "רואה": {
+    "pos": 87,
+    "origin": "historical explicit model"
+  },
+  "לצאת": {
+    "pos": 86,
+    "origin": "historical explicit model"
+  },
+  "עומד": {
+    "pos": 86,
+    "origin": "historical explicit model"
+  },
+  "עומדת": {
+    "pos": 86,
+    "origin": "historical explicit model"
+  },
+  "עומדים": {
+    "pos": 86,
+    "origin": "historical explicit model"
+  },
+  "עומדות": {
+    "pos": 86,
+    "origin": "historical explicit model"
+  },
+  "לשלם": {
+    "pos": 86,
+    "origin": "historical explicit model"
+  },
+  "לעבוד": {
+    "pos": 63,
+    "origin": "historical explicit model"
+  },
+  "ראשון": {
+    "pos": 63,
+    "origin": "historical explicit model"
+  },
+  "שלישי": {
+    "pos": 63,
+    "origin": "historical explicit model"
+  },
+  "רביעי": {
+    "pos": 63,
+    "origin": "historical explicit model"
+  },
+  "חמישי": {
+    "pos": 63,
+    "origin": "historical explicit model"
+  },
+  "שישי": {
+    "pos": 63,
+    "origin": "historical explicit model"
+  },
+  "שבת": {
+    "pos": 63,
+    "origin": "historical explicit model"
+  },
+  "כובעים": {
+    "pos": 90,
+    "origin": "historical explicit model"
+  },
+  "צעיפים": {
+    "pos": 90,
+    "origin": "historical explicit model"
+  },
+  "מגפיים": {
+    "pos": 90,
+    "origin": "historical explicit model"
+  },
+  "נלמד": {
+    "pos": 92,
+    "origin": "historical explicit model"
+  },
+  "ילמד": {
+    "pos": 92,
+    "origin": "historical explicit model"
+  },
+  "אספר": {
+    "pos": 92,
+    "origin": "historical explicit model"
+  },
+  "נספר": {
+    "pos": 92,
+    "origin": "historical explicit model"
+  },
+  "יספר": {
+    "pos": 92,
+    "origin": "historical explicit model"
+  },
+  "אסביר": {
+    "pos": 92,
+    "origin": "historical explicit model"
+  },
+  "נסביר": {
+    "pos": 92,
+    "origin": "historical explicit model"
+  },
+  "יסביר": {
+    "pos": 92,
+    "origin": "historical explicit model"
+  },
+  "נכתב": {
+    "pos": 107,
+    "origin": "historical explicit model"
+  },
+  "נכתבה": {
+    "pos": 107,
+    "origin": "historical explicit model"
+  },
+  "נכתבו": {
+    "pos": 107,
+    "origin": "historical explicit model"
+  },
+  "נשלחה": {
+    "pos": 107,
+    "origin": "historical explicit model"
+  },
+  "נשלחו": {
+    "pos": 107,
+    "origin": "historical explicit model"
+  },
+  "תוקנה": {
+    "pos": 110,
+    "origin": "historical explicit model"
+  },
+  "תוקנו": {
+    "pos": 110,
+    "origin": "historical explicit model"
+  },
+  "שולם": {
+    "pos": 110,
+    "origin": "historical explicit model"
+  },
+  "שולמה": {
+    "pos": 110,
+    "origin": "historical explicit model"
+  },
+  "שולמו": {
+    "pos": 110,
+    "origin": "historical explicit model"
+  },
+  "מתוקן": {
+    "pos": 110,
+    "origin": "historical explicit model"
+  },
+  "משולם": {
+    "pos": 110,
+    "origin": "historical explicit model"
+  },
+  "הוזמן": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "הוזמנה": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "הוכנס": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "הוכנסו": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "מוזמן": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "מוזמנת": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "מוזמנים": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "מוזמנות": {
+    "pos": 113,
+    "origin": "historical explicit model"
+  },
+  "קבענו": {
+    "pos": 117,
+    "origin": "historical explicit model"
+  },
+  "איחרה": {
+    "pos": 117,
+    "origin": "historical explicit model"
+  },
+  "התנצלה": {
+    "pos": 117,
+    "origin": "historical explicit model"
+  },
+  "ביטלנו": {
+    "pos": 117,
+    "origin": "historical explicit model"
+  },
+  "משנים": {
+    "pos": 117,
+    "origin": "historical explicit model"
+  },
+  "הבטיחה": {
+    "pos": 117,
+    "origin": "historical explicit model"
+  },
+  "תתחיל": {
+    "pos": 117,
+    "origin": "historical explicit model"
+  },
+  "תלמידים": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "אותך": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "אותנו": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "אתכם": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "אתכן": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "שולח": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "שולחת": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "שולחים": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "שולחות": {
+    "pos": 58,
+    "origin": "historical explicit model"
+  },
+  "שיחקו": {
+    "pos": 65,
+    "origin": "historical explicit model"
+  },
+  "סיפרתי": {
+    "pos": 65,
+    "origin": "historical explicit model"
+  },
+  "סידרנו": {
+    "pos": 65,
+    "origin": "historical explicit model"
+  },
+  "משלמת": {
+    "pos": 35,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "נסע": {
+    "pos": 85,
+    "origin": "historical explicit model"
+  },
+  "נוסע": {
+    "pos": 85,
+    "origin": "historical explicit model"
+  },
+  "נוסעת": {
+    "pos": 85,
+    "origin": "historical explicit model"
+  },
+  "נוסעים": {
+    "pos": 85,
+    "origin": "historical explicit model"
+  },
+  "נוסעות": {
+    "pos": 85,
+    "origin": "historical explicit model"
+  },
+  "ערים": {
+    "pos": 20,
+    "origin": "historical explicit model"
+  },
+  "מסמכים": {
+    "pos": 45,
+    "origin": "historical explicit model"
+  },
+  "תמי": {
+    "pos": 7,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "מתן": {
+    "pos": 8,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "בוא": {
+    "pos": 18,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "בואי": {
+    "pos": 18,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "בואו": {
+    "pos": 18,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שב": {
+    "pos": 18,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שבי": {
+    "pos": 18,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שבו": {
+    "pos": 18,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "תן": {
+    "pos": 18,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "תני": {
+    "pos": 18,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "תנו": {
+    "pos": 18,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לשבת": {
+    "pos": 21,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שכנות": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "כיתות": {
+    "pos": 25,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "גדולה": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "גדולים": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "גדולות": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לבנים": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לבנות": {
+    "pos": 29,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "בא": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "באה": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "באים": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "באות": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שם": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שמה": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שמים": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שמות": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "רוצה": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "רוצים": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "רוצות": {
+    "pos": 30,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "מבינה": {
+    "pos": 27,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לדבר": {
+    "pos": 27,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לכי": {
+    "pos": 32,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לכו": {
+    "pos": 32,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שים": {
+    "pos": 34,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שימי": {
+    "pos": 34,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שימו": {
+    "pos": 34,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "הבא": {
+    "pos": 34,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "הבאה": {
+    "pos": 34,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "הבאים": {
+    "pos": 34,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "הבאות": {
+    "pos": 34,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "צמאה": {
+    "pos": 53,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "תפוזים": {
+    "pos": 42,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שלכם": {
+    "pos": 42,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "יודעים": {
+    "pos": 42,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "אוהבת": {
+    "pos": 45,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לכתוב": {
+    "pos": 41,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "לומדת": {
+    "pos": 41,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "נחה": {
+    "pos": 56,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "רוחצת": {
+    "pos": 57,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "בחרה": {
+    "pos": 58,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "חושבת": {
+    "pos": 62,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "נשארה": {
+    "pos": 71,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "משתמשת": {
+    "pos": 77,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "אחריו": {
+    "pos": 79,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "רצה": {
+    "pos": 80,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "טסה": {
+    "pos": 80,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "אוטובוסים": {
+    "pos": 84,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "חדשים": {
+    "pos": 84,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "שכרתי": {
+    "pos": 116,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "ישנה": {
+    "pos": 116,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  },
+  "תלמד": {
+    "pos": 98,
+    "origin": "explicit A2 model; human audio/Nikkud review pending"
+  }
+}

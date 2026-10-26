@@ -1,0 +1,24 @@
+{
+  "destination": "https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001",
+  "lessons": 117,
+  "targets": 1088,
+  "originalADataUnchanged": true,
+  "oldSheetMetadataUnchangedExceptIndices": true,
+  "commentsUnchanged": true,
+  "commentCount": 32,
+  "activeComments": 30,
+  "readbackMismatches": [],
+  "formulaErrors": [],
+  "ordinalErrors": [],
+  "styleErrors": [],
+  "conditionalRules": 12,
+  "conditionalRangesValid": true,
+  "grid": {
+    "rowCount": 139,
+    "columnCount": 13,
+    "frozenRowCount": 3,
+    "frozenColumnCount": 1
+  },
+  "sourceHash": "7fcc23110f0a97a66d4e848de2751d50e55db75d2c68db1303044e538a79fcf7",
+  "limits": "Content, notes, native formats, formulas and conditional rules verified through Sheets API. This is not native rendered-layout or human teaching/audio approval."
+}
