@@ -1,0 +1,140 @@
+{
+  "at": "2026-10-26T00:01:49.196Z",
+  "browser": {
+    "pid": 3808,
+    "window": 2559564,
+    "profile": "driver-owned isolated_new",
+    "foregrounded": false
+  },
+  "testedBuild": "59f50184f7851ec682fc1a35435ed99591b93b74",
+  "events": [
+    {
+      "action": "openDemoProfile",
+      "text": [
+        "dispatched synthetic DOM click on p116:11 in tab-49601f1f-b4dd-4ead-b6e2-fe87815aea81; application effect not verified (trust-gated controls may ignore untrusted events). Refresh page state and verify the expected postcondition"
+      ],
+      "structured": {
+        "delivery": {
+          "mode": "background"
+        },
+        "effect": "unverifiable",
+        "escalation": {
+          "reason": "effect_unconfirmed",
+          "target": "page"
+        },
+        "route": "dom"
+      }
+    },
+    {
+      "action": "nativeComboReadback",
+      "text": [
+        "window_id=2559564 pid=3808 elements=14\n\n"
+      ],
+      "structured": {
+        "_note": "Prefer `elements` — `tree_markdown` will continue to work but new fields will only be added to the structured side. Issue #22865: use `max_elements` / `max_depth` to bound the UIA walk on apps with very large trees.",
+        "app_name": "chrome.exe",
+        "capture_coverage": {
+          "browser_chrome": {
+            "status": "not_observable_in_window_scope"
+          },
+          "recovery": {
+            "act_target": {
+              "display_id": "primary",
+              "kind": "desktop"
+            },
+            "inspect": "get_desktop_state",
+            "verify": "get_desktop_state",
+            "when": "verified_window_action_ineffective"
+          }
+        },
+        "element_count": 14,
+        "elements": [],
+        "elements_complete": false,
+        "pid": 3808,
+        "returned_element_count": 0,
+        "snapshot_id": "s0000000b",
+        "total_element_count": 14,
+        "tree_markdown": "",
+        "window_bounds": {
+          "height": 792,
+          "width": 1109,
+          "x": 58,
+          "y": 50
+        },
+        "window_id": 2559564,
+        "window_title": "Hebleo · Your path - Google Chrome"
+      }
+    },
+    {
+      "action": "freshProfileReadback",
+      "text": [
+        "semantic snapshot p117 of http://127.0.0.1:63358/#studio: 1 action ref(s), 1 content ref(s)"
+      ],
+      "structured": {
+        "content_refs": [
+          {
+            "actions": [],
+            "frame": "main",
+            "name": "Demo profile",
+            "ref": "p117:1",
+            "role": "statictext",
+            "states": {},
+            "value": null,
+            "visibility": "in_viewport"
+          }
+        ],
+        "mode": "snapshot",
+        "oopif": {
+          "frames": 0,
+          "status": "attached"
+        },
+        "outline": "- labeltext\n- statictext \"Demo profile\"\n  - combobox \"Demo profile\": Alex · Course + membership [expanded=false,focusable=true]",
+        "page": {
+          "title": "about:blank",
+          "url": "http://127.0.0.1:63358/#studio"
+        },
+        "refs": [
+          {
+            "actions": [
+              "click",
+              "pointer"
+            ],
+            "frame": "main",
+            "name": "Demo profile",
+            "ref": "p117:0",
+            "role": "combobox",
+            "states": {
+              "expanded": false,
+              "focusable": true
+            },
+            "value": "Alex · Course + membership",
+            "visibility": "in_viewport"
+          }
+        ],
+        "snapshot": {
+          "complete": true,
+          "continuation": null,
+          "format": "semantic_v2",
+          "id": "p117",
+          "node_budget": 300,
+          "omitted": {
+            "budget": 0,
+            "css_hidden": 9,
+            "no_layout": 1,
+            "offscreen": 0,
+            "page_occluded": 0,
+            "unknown": 4,
+            "unprovable_frame": 0
+          },
+          "scope": "query",
+          "selected_nodes": 2,
+          "total_nodes": 2
+        },
+        "status": "ok",
+        "tab_id": "tab-49601f1f-b4dd-4ead-b6e2-fe87815aea81",
+        "target_id": "bt-90849739-3cd7-4684-a1c4-b665e942d6e7"
+      }
+    }
+  ],
+  "limitation": "Fresh Windows UIA contained only14 browser-chrome nodes and no Demo profile element. Typed synthetic DOM click returned unverifiable; fresh browser readback retained Alex. No native Studio chooser/Preview test occurred. Session ended. No foreground, raw JS/localStorage injection or substitute browser used."
+}

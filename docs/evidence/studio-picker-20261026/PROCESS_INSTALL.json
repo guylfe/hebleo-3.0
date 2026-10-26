@@ -1,0 +1,17 @@
+{
+  "unrelatedListenersPreserved": 47,
+  "nativeFinalRevisionTested": false,
+  "previousPid": 50556,
+  "checkout": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\860f6c51-8c5b-44fe-a6a3-1cdd3edbb329\\hebleo-studio-picker-runtime",
+  "pid": 22424,
+  "port": 63358,
+  "installedAt": "2026-10-26T00:05:33.1930809Z",
+  "backendSha256": "8538730ba39c2f00d6afe8529d06afc9c0f7c0f7131e95757c5bf1146913a89a",
+  "nativeTestedRevision": null,
+  "preservationMode": true,
+  "revision": "83abf400467f2206e9a88356bdf8352ff7add2bf",
+  "runtimeSha256": "6f1c7576c8f4345da4cbd3fd92e29f18dd879d44cd169cd8b9875b3c85dd25ec",
+  "previousRevision": "59f50184f7851ec682fc1a35435ed99591b93b74",
+  "database": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\b1d5e7a0-1d13-4e9e-b544-06d3b889fb9e\\hebleo-consolidated\\data\\lexical-private-demo.sqlite",
+  "backupFolder": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\860f6c51-8c5b-44fe-a6a3-1cdd3edbb329\\hebleo-lesson-picker\\.private\\picker-install-83abf40"
+}

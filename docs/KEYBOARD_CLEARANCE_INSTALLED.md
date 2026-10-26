@@ -1,5 +1,7 @@
 # Keyboard clearance — current installed delivery
 
+**Historical59f5018 keyboard correction. Current runtime83abf40 adds the Studio lesson picker.** See [current delivery](STUDIO_LESSON_PICKER_DELIVERY.md). All observations and receipts below retain their original build attribution.
+
 Installed at http://127.0.0.1:63358/ on 2026-10-25T14:26:46.9142203Z. Exact runtime commit **59f50184f7851ec682fc1a35435ed99591b93b74**, runtime SHA-256 **d53b093709b4a2f75c9e1a6edd195e8f7c685918f3af5e05186e9b4d706ce583**, PID **50556**, preservation mode. Backend SHA-256 remains 8538730ba39c2f00d6afe8529d06afc9c0f7c0f7131e95757c5bf1146913a89a, identical to2053b8ff. Only public/exercise-actions.js changes executable behavior. The runtime is frozen separately from the documentation/integration checkout.
 
 TXT-NATIVE-01 is corrected: the shared learner/Studio Preview dock measures the actual visible keyboard launcher/panel and its intersection with the dock, follows size and transform changes, and reserves scroll space. The existing keyboard and action controls remain. Focus recovery uses the available interval above actions, including sticky navigation and nearer scrolling containers. Short textareas temporarily fit that interval; authored sizes and inline priorities restore on focus departure, more space or disposal.

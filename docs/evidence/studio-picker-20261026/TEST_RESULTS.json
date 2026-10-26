@@ -1,0 +1,40 @@
+{
+  "revision": "83abf400467f2206e9a88356bdf8352ff7add2bf",
+  "commands": [
+    {
+      "command": "npm ci --offline --ignore-scripts; npm ci --offline --ignore-scripts --prefix schemas",
+      "outcome": "pinned application and schema dependencies installed"
+    },
+    {
+      "command": "npm run verify:candidate",
+      "tests": 870,
+      "pass": 870,
+      "fail": 0,
+      "skip": 0,
+      "syntax": "pass",
+      "audio": "existing configured exclusions retained"
+    },
+    {
+      "command": "node --test --test-name-pattern=STUDIO-PICKER test/app.test.js",
+      "tests": 4,
+      "pass": 4,
+      "fail": 0
+    },
+    {
+      "command": "HEBLEO_APP_SOURCE=<installed59f5018/public/app.js> node --test --test-name-pattern=STUDIO-PICKER-01 test/app.test.js",
+      "tests": 1,
+      "fail": 1,
+      "outcome": "expected baseline failure: visible Choose lesson click opens no dialog"
+    },
+    {
+      "command": "git diff --check",
+      "outcome": "pass"
+    }
+  ],
+  "runtimeCI": {
+    "id": 40247261064,
+    "status": "success"
+  },
+  "independentReview": "No new independent reviewer run claimed",
+  "native": "No native Studio picker/Preview pass claimed; see exact limitation"
+}
