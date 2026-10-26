@@ -1,12 +1,24 @@
 {
+  "status": "Applied and API-verified",
+  "appliedAt": "2026-10-26T23:49:42.168Z",
   "spreadsheet_id": "1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc",
-  "status": "Write rejected; prepared revision NOT applied",
-  "error": "user rejected MCP tool call",
-  "checks": {
-    "sourceUnchanged": true,
-    "metaUnchanged": true,
-    "commentsUnchanged": true,
-    "activeComments": 39
-  },
-  "checkedAt": "2026-10-26T14:39:37.891Z"
+  "sheetId": 102626001,
+  "lessonCount": 116,
+  "uniqueIds": 116,
+  "practiceModels": 1088,
+  "originalSourceLinks": 113,
+  "activeComments": 39,
+  "commentThreadsUnchanged": true,
+  "originalAUnchanged": true,
+  "topicRulesMatch": true,
+  "cellMismatches": [],
+  "formatMismatches": [],
+  "formulaErrors": [],
+  "questionLessonPosition": 7,
+  "retiredPronounsAbsent": true,
+  "renderedLayout": "Unverified: mounted browser inspection refused browser_consent_required. Saved cell formatting verified through API.",
+  "wordingStatus": "Proposed practice wording; human editorial/Nikkud/audio review remains.",
+  "derivedHyperlinkFormatsVerified": 113,
+  "apiNormalization": "Google omits empty string cells and derives text-format links from HYPERLINK formulas; RGB floats compared at five decimal places.",
+  "pendingWriteMustNotBeReplayed": true
 }

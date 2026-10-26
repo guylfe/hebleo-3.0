@@ -1,6 +1,6 @@
-# A2 revision — ready, spreadsheet write blocked
+# A2 revision — applied and API-verified
 
-Status on 26 October 2026: Guy authorized these curriculum changes. The Sheets write returned **“user rejected MCP tool call”**, with no reason. A fresh read confirmed that A2, original A, all sheet properties/conditional rules and all 39 active comment threads are unchanged. This file describes the prepared revision, not a saved spreadsheet update.
+Status on 27 October 2026: Guy renewed authorization with “Try again.” The prepared revision was applied to A2 through the native Sheets API. Full readback verifies 116 unique lesson IDs, 1,088 practice models, 113 source hyperlinks, all changed values/notes/formats and the topic-color rules. Original A and all 39 active comment threads remain unchanged. The earlier write rejection is resolved.
 
 Target: [Spiral A2 — early expression](https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001).
 
@@ -95,10 +95,12 @@ Spacing flags remain visible:
 
 Five A2 content IDs change to match revised scope; PRONOUNS-A2 is absorbed into three opening lessons. The full mapping is in id-crosswalk.json. Original A IDs, external sources and app records are untouched.
 
-## Pending delivery
+## Applied delivery
 
-The optimized pending batch is .curriculum-a2-revision-20261026/write-request.json: nine native row moves, retirement of the absorbed pronoun row, changed values/practice/notes and formatting, topic-color rules and comparison footer. It preserves source notes and uses row moves to retain comment associations. It has **not** run. A renewed approval is needed because the previous authorized write was rejected by the tool, not because this pedagogy needs another general confirmation.
+The 38-request native batch succeeded: nine row moves, retirement of the absorbed pronoun row, revised content/practice/notes/formatting, topic-color rules and comparison footer. A subsequent bounded J4:J119 update supplied working HYPERLINK formulas for all 113 source lessons. Source comments were retained with native row moves.
 
-Before retry: re-read A2, original A and comments and compare to the saved source snapshot. After an approved write: verify every expected cell, source-A preservation, 39 active comment threads, IDs, model coverage and color rules. Native rendered-layout review is still outstanding. Curriculum Designer owns this completion; no engineering implementation or publication is implied.
+Actual verification used get_spreadsheet_cells, get_spreadsheet_metadata and get_spreadsheet_comments before and after the write. All lesson and footer values, notes, formatting and references match the prepared revision, allowing normal API omission of empty strings and derived hyperlink formatting. No formula errors were returned. The saved receipt is APPLIED_VERIFICATION.json.
 
-The scripts saved here document the preparation actually run; their inputs are the original A2 artifact plus the local bounded source snapshot in .curriculum-a2-revision-20261026. The snapshot and raw API request remain local, outside this committed content pack.
+Rendered layout remains unverified: mounted-browser inspection returned browser_consent_required. It was not bypassed. Cell formatting and topic-color rules are verified through the API. Human editorial, Nikkud and audio approval remain separate from this applied sequence revision. No app import/publication or original-A replacement occurred.
+
+The original write-request.json is now a historical applied request. **Do not replay it**: its native row moves refer to the old order. A future change must read the current A2 first. The preparation scripts retain historical inputs for audit; the current committed route and practice files describe the applied content.
