@@ -1,0 +1,722 @@
+[
+  {
+    "token": "PRONOUNS:0",
+    "entry": "אני",
+    "from": "PRONOUNS-A2",
+    "to": "NOMINAL-A2",
+    "position": 6,
+    "model": "אני מתן."
+  },
+  {
+    "token": "VOWELS-OU:0",
+    "entry": "לא",
+    "from": "VOWELS-OU-A2",
+    "to": "NOMINAL-A2",
+    "position": 6,
+    "model": "אני לא תמי."
+  },
+  {
+    "token": "NOMINAL:1",
+    "entry": "אמן",
+    "from": "VOWELS-OU-A2",
+    "to": "NOMINAL-A2",
+    "position": 6,
+    "model": "אני אמן. / אני אמנית."
+  },
+  {
+    "token": "PASSIVE-HUFAL:5",
+    "entry": "מנהל",
+    "from": "PASSIVE-HUFAL-A2",
+    "to": "NOMINAL-A2",
+    "position": 6,
+    "model": "אני מנהל. / אני מנהלת."
+  },
+  {
+    "token": "QUESTIONS-BASIC:0",
+    "entry": "מי",
+    "from": "PRONOUNS-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "מי את?"
+  },
+  {
+    "token": "QUESTIONS-BASIC:1",
+    "entry": "מה",
+    "from": "PRONOUNS-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "מה?"
+  },
+  {
+    "token": "PRONOUNS:1",
+    "entry": "אתה",
+    "from": "PRONOUNS-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "אתה מתן?"
+  },
+  {
+    "token": "PRONOUNS:2",
+    "entry": "את",
+    "from": "PRONOUNS-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "את תמי?"
+  },
+  {
+    "token": "PRONOUNS:6",
+    "entry": "אתם",
+    "from": "NOUN-PLURALS-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "מי אתם?"
+  },
+  {
+    "token": "PRONOUNS:7",
+    "entry": "אתן",
+    "from": "NOUN-PLURALS-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "מי אתן?"
+  },
+  {
+    "token": "NOMINAL:0",
+    "entry": "אמת",
+    "from": "NOMINAL-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "אמת?"
+  },
+  {
+    "token": "NOMINAL:2",
+    "entry": "אי",
+    "from": "NOMINAL-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "אי?"
+  },
+  {
+    "token": "NOMINAL:3",
+    "entry": "תה",
+    "from": "NOMINAL-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "תה?"
+  },
+  {
+    "token": "NOMINAL:4",
+    "entry": "תאנה",
+    "from": "NOMINAL-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "תאנה?"
+  },
+  {
+    "token": "DEMONSTRATIVES-SG:3",
+    "entry": "מילה",
+    "from": "NOMINAL-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "מילה?"
+  },
+  {
+    "token": "VAV-YOD-SPELLING:5",
+    "entry": "תא",
+    "from": "VAV-YOD-SPELLING-A2",
+    "to": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "model": "תא?"
+  },
+  {
+    "token": "PRONOUNS:3",
+    "entry": "היא",
+    "from": "PRONOUNS-A2",
+    "to": "VAV-A2",
+    "position": 8,
+    "model": "היא תמי."
+  },
+  {
+    "token": "PRONOUNS:4",
+    "entry": "הם",
+    "from": "NOUN-PLURALS-A2",
+    "to": "VAV-A2",
+    "position": 8,
+    "model": "מי הם?"
+  },
+  {
+    "token": "PRONOUNS:5",
+    "entry": "הן",
+    "from": "NOUN-PLURALS-A2",
+    "to": "VAV-A2",
+    "position": 8,
+    "model": "מי הן?"
+  },
+  {
+    "token": "VOWELS-OU:1",
+    "entry": "מילון",
+    "from": "VOWELS-OU-A2",
+    "to": "VAV-A2",
+    "position": 8,
+    "model": "מילון?"
+  },
+  {
+    "token": "EXISTENCE-POSSESSION:2",
+    "entry": "מלון",
+    "from": "EXISTENCE-POSSESSION-A2",
+    "to": "INTRODUCTIONS-INTEGRATION-A2",
+    "position": 9,
+    "model": "מלון?"
+  },
+  {
+    "token": "VAV-YOD-SPELLING:3",
+    "entry": "אונייה",
+    "from": "VAV-YOD-SPELLING-A2",
+    "to": "INTRODUCTIONS-INTEGRATION-A2",
+    "position": 9,
+    "model": "מונית? לא, אונייה."
+  },
+  {
+    "token": "ADJECTIVES-YOD:9",
+    "entry": "תאום / תאומה",
+    "from": "ADJECTIVES-YOD-A2",
+    "to": "INTRODUCTIONS-INTEGRATION-A2",
+    "position": 9,
+    "model": "הוא תאום. / היא תאומה."
+  },
+  {
+    "token": "LSHZ:2",
+    "entry": "לילה",
+    "from": "VAV-YOD-SPELLING-A2",
+    "to": "PREFIXES-MHV-A2",
+    "position": 10,
+    "model": "לילה?"
+  },
+  {
+    "token": "LSHZ:4",
+    "entry": "הלילה",
+    "from": "VAV-YOD-SPELLING-A2",
+    "to": "PREFIXES-MHV-A2",
+    "position": 10,
+    "model": "הלילה?"
+  },
+  {
+    "token": "COUNTING-MASCULINE-CONSTRUCT:10",
+    "entry": "אולם",
+    "from": "COUNTING-MASCULINE-CONSTRUCT-A2",
+    "to": "PREFIXES-MHV-A2",
+    "position": 10,
+    "model": "המתנה מהאולם."
+  },
+  {
+    "token": "QUESTIONS-BASIC:2",
+    "entry": "מתי",
+    "from": "QUESTIONS-BASIC-A2",
+    "to": "PREFIXES-MHV-A2",
+    "position": 10,
+    "model": "מתי האימון? — היום."
+  },
+  {
+    "token": "PREP-SUFFIXES-ME-HIM-HER:0",
+    "entry": "תודה",
+    "from": "BDTZ-A2",
+    "to": "SHZD-A2",
+    "position": 11,
+    "model": "תודה."
+  },
+  {
+    "token": "BGD:2",
+    "entry": "דלת",
+    "from": "BDTZ-A2",
+    "to": "SHZD-A2",
+    "position": 11,
+    "model": "הדלת?"
+  },
+  {
+    "token": "BGD:3",
+    "entry": "יד",
+    "from": "BDTZ-A2",
+    "to": "SHZD-A2",
+    "position": 11,
+    "model": "היד?"
+  },
+  {
+    "token": "IM-WITH:6",
+    "entry": "שם",
+    "from": "IM-WITH-A2",
+    "to": "SHZD-A2",
+    "position": 11,
+    "model": "מה השם?"
+  },
+  {
+    "token": "PATTERNS:1",
+    "entry": "שאלה",
+    "from": "EXISTENCE-POSSESSION-A2",
+    "to": "DEMONSTRATIVES-SG-A2",
+    "position": 12,
+    "model": "זאת שאלה."
+  },
+  {
+    "token": "COUNTING-MASCULINE:8",
+    "entry": "זית",
+    "from": "COUNTING-MASCULINE-A2",
+    "to": "DEMONSTRATIVES-SG-A2",
+    "position": 12,
+    "model": "זה זית."
+  },
+  {
+    "token": "QUESTIONS-BASIC:9",
+    "entry": "איזה / איזו",
+    "from": "QUESTIONS-BASIC-A2",
+    "to": "NOUN-GENDER-A2",
+    "position": 13,
+    "model": "איזה ילד? איזו ילדה?"
+  },
+  {
+    "token": "QST:9",
+    "entry": "שירותים",
+    "from": "SHZR-A2",
+    "to": "BRTZ-A2",
+    "position": 14,
+    "model": "השירותים שם."
+  },
+  {
+    "token": "PRONUNCIATION-KH-R:3",
+    "entry": "אור",
+    "from": "SHZR-A2",
+    "to": "BRTZ-A2",
+    "position": 14,
+    "model": "האור שם."
+  },
+  {
+    "token": "PRONUNCIATION-KH-R:4",
+    "entry": "שיר",
+    "from": "SHZR-A2",
+    "to": "BRTZ-A2",
+    "position": 14,
+    "model": "זה שיר."
+  },
+  {
+    "token": "NOUN-GENDER:5",
+    "entry": "בן / בת",
+    "from": "NOUN-GENDER-A2",
+    "to": "BRTZ-A2",
+    "position": 14,
+    "model": "זה בן. זאת בת."
+  },
+  {
+    "token": "IM-WITH:2",
+    "entry": "להתראות",
+    "from": "WANTS-SG-A2",
+    "to": "BRTZ-A2",
+    "position": 14,
+    "model": "להתראות."
+  },
+  {
+    "token": "INFINITIVE-WANT:6",
+    "entry": "דיבר–מדבר",
+    "from": "REPAIR-CONVERSATION-A2",
+    "to": "PRESENT-SG-A2",
+    "position": 15,
+    "model": "אני מדבר. / אני מדברת."
+  },
+  {
+    "token": "PAAL:0",
+    "entry": "למד–לומד",
+    "from": "PAAL-A2",
+    "to": "PRESENT-SG-A2",
+    "position": 15,
+    "model": "אני לומד שיר. / אני לומדת שיר."
+  },
+  {
+    "token": "PRESENT-BA-SAM-OLE-ROTZE:0",
+    "entry": "בא",
+    "from": "COMMANDS-GIVE-SIT-GO-A2",
+    "to": "PRESENT-SG-A2",
+    "position": 15,
+    "model": "אני בא. / אני באה."
+  },
+  {
+    "token": "NEW:לי",
+    "entry": "לי",
+    "from": "EXISTENCE-POSSESSION-A2",
+    "to": "PREFIXES-BL-SHEL-A2",
+    "position": 16,
+    "model": "המתנה לי."
+  },
+  {
+    "token": "DEMONSTRATIVES-SG:11",
+    "entry": "ימין",
+    "from": "QUESTIONS-BASIC-A2",
+    "to": "PREFIXES-BL-SHEL-A2",
+    "position": 16,
+    "model": "ימין או שמאל?"
+  },
+  {
+    "token": "INFINITIVE-WANT:5",
+    "entry": "אורז",
+    "from": "WANTS-SG-A2",
+    "to": "PREFIXES-BL-SHEL-A2",
+    "position": 16,
+    "model": "האורז שלי."
+  },
+  {
+    "token": "VOWELS-OU:5",
+    "entry": "שמן",
+    "from": "WANTS-SG-A2",
+    "to": "PREFIXES-BL-SHEL-A2",
+    "position": 16,
+    "model": "השמן שלי."
+  },
+  {
+    "token": "PREFIXES-BL-SHEL:5",
+    "entry": "בגד",
+    "from": "NOUN-GENDER-A2",
+    "to": "KPG-A2",
+    "position": 17,
+    "model": "זה הבגד שלי."
+  },
+  {
+    "token": "COMMANDS-GIVE-SIT-GO:4",
+    "entry": "הלך–הולך",
+    "from": "PREP-SUFFIXES-YOU-SG-A2",
+    "to": "KPG-A2",
+    "position": 17,
+    "model": "אני הולך לבית. / אני הולכת לבית."
+  },
+  {
+    "token": "QUESTIONS-BASIC:8",
+    "entry": "איפה",
+    "from": "QUESTIONS-BASIC-A2",
+    "to": "KPG-A2",
+    "position": 17,
+    "model": "איפה המפה?"
+  },
+  {
+    "token": "QUESTIONS-BASIC:4",
+    "entry": "לאן",
+    "from": "QUESTIONS-BASIC-A2",
+    "to": "COMMANDS-GIVE-SIT-GO-A2",
+    "position": 18,
+    "model": "לאן אתה הולך?"
+  },
+  {
+    "token": "EXISTENCE-POSSESSION:10",
+    "entry": "לבד",
+    "from": "DEMONSTRATIVE-PHRASES-A2",
+    "to": "EXISTENCE-POSSESSION-A2",
+    "position": 19,
+    "model": "אני לבד."
+  },
+  {
+    "token": "BGD:7",
+    "entry": "דלי",
+    "from": "PREP-SUFFIXES-ME-HIM-HER-A2",
+    "to": "EXISTENCE-POSSESSION-A2",
+    "position": 19,
+    "model": "יש לי דלי."
+  },
+  {
+    "token": "NOUN-ADJECTIVE:1",
+    "entry": "כל",
+    "from": "NOUN-ADJECTIVE-A2",
+    "to": "EXISTENCE-POSSESSION-A2",
+    "position": 19,
+    "model": "אני לומד כל היום."
+  },
+  {
+    "token": "LSHZ:1",
+    "entry": "שנה",
+    "from": "VAV-YOD-SPELLING-A2",
+    "to": "EXISTENCE-POSSESSION-A2",
+    "position": 19,
+    "model": "יש לי שנה."
+  },
+  {
+    "token": "VAV-YOD-SPELLING:1",
+    "entry": "נו",
+    "from": "VAV-YOD-SPELLING-A2",
+    "to": "EXISTENCE-POSSESSION-A2",
+    "position": 19,
+    "model": "נו, בוא."
+  },
+  {
+    "token": "PRONUNCIATION-KH-R:7",
+    "entry": "עברית",
+    "from": "REPAIR-CONVERSATION-A2",
+    "to": "HET-AYIN-A2",
+    "position": 20,
+    "model": "אני מדבר עברית. / אני מדברת עברית."
+  },
+  {
+    "token": "PRONUNCIATION-KH-R:2",
+    "entry": "חלב",
+    "from": "INFINITIVE-WANT-A2",
+    "to": "HET-AYIN-A2",
+    "position": 20,
+    "model": "יש חלב?"
+  },
+  {
+    "token": "HET-AYIN-RESH:11",
+    "entry": "עיר",
+    "from": "QUESTIONS-BASIC-A2",
+    "to": "HET-AYIN-A2",
+    "position": 20,
+    "model": "אני בעיר."
+  },
+  {
+    "token": "DEMONSTRATIVE-PHRASES:9",
+    "entry": "עוד",
+    "from": "INFINITIVE-WANT-A2",
+    "to": "HET-AYIN-A2",
+    "position": 20,
+    "model": "יש עוד מים?"
+  },
+  {
+    "token": "COMMANDS-GIVE-SIT-GO:6",
+    "entry": "עכשיו",
+    "from": "INFINITIVE-WANT-A2",
+    "to": "HET-AYIN-A2",
+    "position": 20,
+    "model": "אני רוצה מים עכשיו."
+  },
+  {
+    "token": "COMMANDS-GIVE-SIT-GO:7",
+    "entry": "רגע",
+    "from": "INFINITIVE-WANT-A2",
+    "to": "HET-AYIN-A2",
+    "position": 20,
+    "model": "רגע, אני בא."
+  },
+  {
+    "token": "BEGED-KEFET:0",
+    "entry": "ירד–יורד",
+    "from": "BEGED-KEFET-A2",
+    "to": "INFINITIVE-WANT-A2",
+    "position": 21,
+    "model": "אני רוצה לרדת לעיר."
+  },
+  {
+    "token": "ALPHABET-ORDER:11",
+    "entry": "מחר",
+    "from": "ALPHABET-ORDER-A2",
+    "to": "INFINITIVE-WANT-A2",
+    "position": 21,
+    "model": "אני רוצה ללכת מחר."
+  },
+  {
+    "token": "FUTURE-I-WE-HE:0",
+    "entry": "אחר כך",
+    "from": "FUTURE-I-WE-HE-A2",
+    "to": "INFINITIVE-WANT-A2",
+    "position": 21,
+    "model": "אני רוצה לשבת אחר כך."
+  },
+  {
+    "token": "PRESENT-BA-SAM-OLE-ROTZE:4",
+    "entry": "חדר",
+    "from": "PRESENT-BA-SAM-OLE-ROTZE-A2",
+    "to": "INFINITIVE-WANT-A2",
+    "position": 21,
+    "model": "אני רוצה לשבת בחדר."
+  },
+  {
+    "token": "PRESENT-BA-SAM-OLE-ROTZE:5",
+    "entry": "דירה",
+    "from": "PRESENT-BA-SAM-OLE-ROTZE-A2",
+    "to": "INFINITIVE-WANT-A2",
+    "position": 21,
+    "model": "הדירה שלי."
+  },
+  {
+    "token": "ETZEL-DIRECTIONS:1",
+    "entry": "הביתה",
+    "from": "ETZEL-DIRECTIONS-A2",
+    "to": "INFINITIVE-WANT-A2",
+    "position": 21,
+    "model": "אני רוצה ללכת הביתה."
+  },
+  {
+    "token": "HET-AYIN-RESH:3",
+    "entry": "עץ",
+    "from": "HET-AYIN-A2",
+    "to": "INFINITIVE-WANT-A2",
+    "position": 21,
+    "model": "אני רוצה לשבת ליד העץ."
+  },
+  {
+    "token": "HET-AYIN-RESH:6",
+    "entry": "עין",
+    "from": "HET-AYIN-A2",
+    "to": "NOUN-PLURALS-A2",
+    "position": 22,
+    "model": "זאת עין."
+  },
+  {
+    "token": "INFINITIVE-WANT:0",
+    "entry": "שתה–שותה",
+    "from": "INFINITIVE-WANT-A2",
+    "to": "QST-A2",
+    "position": 23,
+    "model": "אני רוצה לשתות מים."
+  },
+  {
+    "token": "HOME-VISIT:0",
+    "entry": "לקח–לוקח",
+    "from": "HOME-VISIT-A2",
+    "to": "PERMISSION-REQUESTS-A2",
+    "position": 24,
+    "model": "אפשר לקחת כוס?"
+  },
+  {
+    "token": "DEMONSTRATIVE-PHRASES:6",
+    "entry": "ארוחה",
+    "from": "DEMONSTRATIVE-PHRASES-A2",
+    "to": "PREP-SUFFIXES-ME-HIM-HER-A2",
+    "position": 25,
+    "model": "הארוחה ממני."
+  },
+  {
+    "token": "PREP-SUFFIXES-US-THEM:5",
+    "entry": "בוקר",
+    "from": "PREP-SUFFIXES-US-THEM-A2",
+    "to": "PREP-SUFFIXES-ME-HIM-HER-A2",
+    "position": 25,
+    "model": "הארוחה בבוקר."
+  },
+  {
+    "token": "PREP-SUFFIXES-YOU-SG:0",
+    "entry": "איך",
+    "from": "QUESTIONS-BASIC-A2",
+    "to": "REPAIR-CONVERSATION-A2",
+    "position": 26,
+    "model": "איך?"
+  },
+  {
+    "token": "IM-WITH:1",
+    "entry": "מה שלומך",
+    "from": "QUESTIONS-BASIC-A2",
+    "to": "REPAIR-CONVERSATION-A2",
+    "position": 26,
+    "model": "מה שלומך? — בסדר, תודה."
+  },
+  {
+    "token": "FUTURE-YOU-COMMANDS:6",
+    "entry": "עזרה",
+    "from": "FUTURE-YOU-COMMANDS-A2",
+    "to": "REPAIR-CONVERSATION-A2",
+    "position": 26,
+    "model": "אפשר עזרה, בבקשה?"
+  },
+  {
+    "token": "PREP-SUFFIXES-YOU-SG:1",
+    "entry": "כמה",
+    "from": "QUESTIONS-BASIC-A2",
+    "to": "COUNTING-ONE-TEN-A2",
+    "position": 27,
+    "model": "כמה מילים?"
+  },
+  {
+    "token": "PREP-SUFFIXES-ME-HIM-HER:6",
+    "entry": "מדי",
+    "from": "PREP-SUFFIXES-ME-HIM-HER-A2",
+    "to": "ADJECTIVE-PREDICATES-A2",
+    "position": 28,
+    "model": "המיץ קר מדי."
+  },
+  {
+    "token": "HET-AYIN-RESH:0",
+    "entry": "חם",
+    "from": "HET-AYIN-A2",
+    "to": "ADJECTIVE-PREDICATES-A2",
+    "position": 28,
+    "model": "התה חם."
+  },
+  {
+    "token": "ADJECTIVE-PREDICATES:0",
+    "entry": "גדול",
+    "from": "ADJECTIVE-PREDICATES-A2",
+    "to": "PRESENT-BA-SAM-OLE-ROTZE-A2",
+    "position": 29,
+    "model": "הגג גדול."
+  },
+  {
+    "token": "HET-AYIN-RESH:7",
+    "entry": "רגל",
+    "from": "HET-AYIN-A2",
+    "to": "PRONUNCIATION-KH-R-A2",
+    "position": 30,
+    "model": "זאת רגל."
+  },
+  {
+    "token": "ADJECTIVE-PREDICATES:7",
+    "entry": "אדום",
+    "from": "ADJECTIVE-PREDICATES-A2",
+    "to": "NOUN-ADJECTIVE-A2",
+    "position": 33,
+    "model": "זה ספר אדום."
+  },
+  {
+    "token": "PLACE-PATTERNS:1",
+    "entry": "מסעדה",
+    "from": "PLACE-PATTERNS-A2",
+    "to": "MODALS-CAN-NEED-MUST-A2",
+    "position": 46,
+    "model": "יש מסעדה."
+  },
+  {
+    "token": "PLACE-PATTERNS:4",
+    "entry": "משרד",
+    "from": "PLACE-PATTERNS-A2",
+    "to": "MODALS-CAN-NEED-MUST-A2",
+    "position": 46,
+    "model": "יש משרד."
+  },
+  {
+    "token": "HOME-VISIT:3",
+    "entry": "עניין",
+    "from": "HOME-VISIT-A2",
+    "to": "IM-WITH-A2",
+    "position": 51,
+    "model": "יש לי עניין בספר."
+  },
+  {
+    "token": "HOLLOW-VERBS:4",
+    "entry": "מנוחה",
+    "from": "HOLLOW-VERBS-A2",
+    "to": "PERMISSION-IMMINENCE-A2",
+    "position": 85,
+    "model": "אני צריך מנוחה."
+  },
+  {
+    "token": "HOLLOW-VERBS:6",
+    "entry": "נסיעה",
+    "from": "HOLLOW-VERBS-A2",
+    "to": "PERMISSION-IMMINENCE-A2",
+    "position": 85,
+    "model": "זאת נסיעה ארוכה."
+  },
+  {
+    "token": "ETZEL-DIRECTIONS:8",
+    "entry": "טיול",
+    "from": "ETZEL-DIRECTIONS-A2",
+    "to": "PERMISSION-IMMINENCE-A2",
+    "position": 85,
+    "model": "אני רוצה טיול."
+  },
+  {
+    "token": "COUNTERFACTUAL:4",
+    "entry": "טעות",
+    "from": "COUNTERFACTUAL-A2",
+    "to": "EMBEDDED-CLAUSES-A2",
+    "position": 93,
+    "model": "זאת טעות."
+  },
+  {
+    "token": "GENERIC-THEY-PASSIVE:9",
+    "entry": "אישור",
+    "from": "GENERIC-THEY-PASSIVE-A2",
+    "to": "PASSIVE-HUFAL-A2",
+    "position": 112,
+    "model": "יש אישור."
+  }
+]

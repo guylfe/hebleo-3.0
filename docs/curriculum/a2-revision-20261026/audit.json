@@ -1,0 +1,728 @@
+{
+  "lessonCount": 116,
+  "entryCount": 1088,
+  "practiceCount": 1088,
+  "missing": [],
+  "duplicates": [],
+  "unknown": [],
+  "letters": [],
+  "dependencies": [],
+  "gram": [],
+  "counts": [
+    {
+      "lesson": "AHY-A2",
+      "pos": 5,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "NOMINAL-A2",
+      "pos": 6,
+      "n": 3,
+      "struct": 2
+    },
+    {
+      "lesson": "QUESTIONS-BASIC-A2",
+      "pos": 7,
+      "n": 6,
+      "struct": 6
+    },
+    {
+      "lesson": "VAV-A2",
+      "pos": 8,
+      "n": 6,
+      "struct": 4
+    },
+    {
+      "lesson": "INTRODUCTIONS-INTEGRATION-A2",
+      "pos": 9,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "PREFIXES-MHV-A2",
+      "pos": 10,
+      "n": 7,
+      "struct": 3
+    },
+    {
+      "lesson": "SHZD-A2",
+      "pos": 11,
+      "n": 7,
+      "struct": 0
+    },
+    {
+      "lesson": "DEMONSTRATIVES-SG-A2",
+      "pos": 12,
+      "n": 6,
+      "struct": 2
+    },
+    {
+      "lesson": "NOUN-GENDER-A2",
+      "pos": 13,
+      "n": 8,
+      "struct": 0
+    },
+    {
+      "lesson": "BRTZ-A2",
+      "pos": 14,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "PRESENT-SG-A2",
+      "pos": 15,
+      "n": 9,
+      "struct": 0
+    },
+    {
+      "lesson": "PREFIXES-BL-SHEL-A2",
+      "pos": 16,
+      "n": 6,
+      "struct": 4
+    },
+    {
+      "lesson": "KPG-A2",
+      "pos": 17,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "COMMANDS-GIVE-SIT-GO-A2",
+      "pos": 18,
+      "n": 8,
+      "struct": 0
+    },
+    {
+      "lesson": "EXISTENCE-POSSESSION-A2",
+      "pos": 19,
+      "n": 6,
+      "struct": 2
+    },
+    {
+      "lesson": "HET-AYIN-A2",
+      "pos": 20,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "INFINITIVE-WANT-A2",
+      "pos": 21,
+      "n": 8,
+      "struct": 0
+    },
+    {
+      "lesson": "NOUN-PLURALS-A2",
+      "pos": 22,
+      "n": 7,
+      "struct": 1
+    },
+    {
+      "lesson": "QST-A2",
+      "pos": 23,
+      "n": 11,
+      "struct": 0
+    },
+    {
+      "lesson": "PERMISSION-REQUESTS-A2",
+      "pos": 24,
+      "n": 7,
+      "struct": 1
+    },
+    {
+      "lesson": "PREP-SUFFIXES-ME-HIM-HER-A2",
+      "pos": 25,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "REPAIR-CONVERSATION-A2",
+      "pos": 26,
+      "n": 8,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-ONE-TEN-A2",
+      "pos": 27,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "ADJECTIVE-PREDICATES-A2",
+      "pos": 28,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "PRESENT-BA-SAM-OLE-ROTZE-A2",
+      "pos": 29,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "PRONUNCIATION-KH-R-A2",
+      "pos": 30,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "PREP-SUFFIXES-YOU-SG-A2",
+      "pos": 31,
+      "n": 8,
+      "struct": 0
+    },
+    {
+      "lesson": "ROOTS-A2",
+      "pos": 32,
+      "n": 7,
+      "struct": 0
+    },
+    {
+      "lesson": "NOUN-ADJECTIVE-A2",
+      "pos": 33,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-ONE-SHOPPING-A2",
+      "pos": 34,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "VAV-YOD-SPELLING-A2",
+      "pos": 35,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "PREP-SUFFIXES-US-THEM-A2",
+      "pos": 36,
+      "n": 9,
+      "struct": 1
+    },
+    {
+      "lesson": "PATTERNS-A2",
+      "pos": 37,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "BEGED-KEFET-A2",
+      "pos": 38,
+      "n": 11,
+      "struct": 0
+    },
+    {
+      "lesson": "DEMONSTRATIVE-PHRASES-A2",
+      "pos": 39,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "PAAL-A2",
+      "pos": 40,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "PREP-SUFFIXES-YOU-PL-A2",
+      "pos": 41,
+      "n": 7,
+      "struct": 0
+    },
+    {
+      "lesson": "GERESH-LETTERS-A2",
+      "pos": 42,
+      "n": 9,
+      "struct": 0
+    },
+    {
+      "lesson": "TOOL-PATTERNS-A2",
+      "pos": 43,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "DIRECT-OBJECT-ET-A2",
+      "pos": 44,
+      "n": 11,
+      "struct": 1
+    },
+    {
+      "lesson": "ALPHABET-ORDER-A2",
+      "pos": 45,
+      "n": 11,
+      "struct": 0
+    },
+    {
+      "lesson": "MODALS-CAN-NEED-MUST-A2",
+      "pos": 46,
+      "n": 6,
+      "struct": 3
+    },
+    {
+      "lesson": "COUNTING-FEMININE-A2",
+      "pos": 47,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "ETZEL-DIRECTIONS-A2",
+      "pos": 48,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "PAST-HE-SHE-THEY-A2",
+      "pos": 49,
+      "n": 11,
+      "struct": 0
+    },
+    {
+      "lesson": "PLACE-PATTERNS-A2",
+      "pos": 50,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "IM-WITH-A2",
+      "pos": 51,
+      "n": 6,
+      "struct": 1
+    },
+    {
+      "lesson": "FEELING-HOT-COLD-A2",
+      "pos": 52,
+      "n": 11,
+      "struct": 0
+    },
+    {
+      "lesson": "PAST-I-A2",
+      "pos": 53,
+      "n": 11,
+      "struct": 0
+    },
+    {
+      "lesson": "DUAL-A2",
+      "pos": 54,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "HOME-VISIT-A2",
+      "pos": 55,
+      "n": 9,
+      "struct": 0
+    },
+    {
+      "lesson": "PRESENT-FOUR-FORMS-A2",
+      "pos": 56,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "OBJECT-AND-RECIPIENT-A2",
+      "pos": 57,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "CONSTRUCT-CHAINS-A2",
+      "pos": 58,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "PAST-I-WE-YOU-A2",
+      "pos": 59,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "MISSING-BOOK-A2",
+      "pos": 60,
+      "n": 8,
+      "struct": 0
+    },
+    {
+      "lesson": "SEGOLATE-NOUNS-A2",
+      "pos": 61,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "WEEK-PLANS-A2",
+      "pos": 62,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-ELEVEN-NINETEEN-A2",
+      "pos": 63,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "PIEL-A2",
+      "pos": 64,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "ADJECTIVES-YOD-A2",
+      "pos": 65,
+      "n": 9,
+      "struct": 0
+    },
+    {
+      "lesson": "CLASSROOM-PROBLEM-A2",
+      "pos": 66,
+      "n": 7,
+      "struct": 0
+    },
+    {
+      "lesson": "FOUR-ROOT-CONSONANTS-A2",
+      "pos": 67,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-TENS-A2",
+      "pos": 68,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "CLASSROOM-PREPARATION-A2",
+      "pos": 69,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "NIFAL-A2",
+      "pos": 70,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "QATOL-ADJECTIVES-A2",
+      "pos": 71,
+      "n": 11,
+      "struct": 0
+    },
+    {
+      "lesson": "GUTTURAL-VERBS-A2",
+      "pos": 72,
+      "n": 7,
+      "struct": 0
+    },
+    {
+      "lesson": "FINAL-HE-VERBS-A2",
+      "pos": 73,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "PROFESSIONS-PATTERNS-A2",
+      "pos": 74,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "SAME-DIFFERENT-A2",
+      "pos": 75,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "HITPAEL-A2",
+      "pos": 76,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-MASCULINE-A2",
+      "pos": 77,
+      "n": 9,
+      "struct": 0
+    },
+    {
+      "lesson": "PREPOSITIONS-PLURAL-SUFFIXES-A2",
+      "pos": 78,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "HOLLOW-VERBS-A2",
+      "pos": 79,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "QATIL-ADJECTIVES-A2",
+      "pos": 80,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-MASCULINE-CONSTRUCT-A2",
+      "pos": 81,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "HIFIL-A2",
+      "pos": 82,
+      "n": 9,
+      "struct": 0
+    },
+    {
+      "lesson": "CONSTRUCT-CHAINS-RETURN-A2",
+      "pos": 83,
+      "n": 11,
+      "struct": 0
+    },
+    {
+      "lesson": "ASSIMILATION-NUN-MEM-A2",
+      "pos": 84,
+      "n": 9,
+      "struct": 0
+    },
+    {
+      "lesson": "PERMISSION-IMMINENCE-A2",
+      "pos": 85,
+      "n": 6,
+      "struct": 3
+    },
+    {
+      "lesson": "FINDING-SOMEONE-A2",
+      "pos": 86,
+      "n": 8,
+      "struct": 0
+    },
+    {
+      "lesson": "STATES-HEALTH-A2",
+      "pos": 87,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "PAST-HABIT-A2",
+      "pos": 88,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-MASCULINE-TEENS-A2",
+      "pos": 89,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "ACTION-NOUNS-PIEL-A2",
+      "pos": 90,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "FUTURE-I-WE-HE-A2",
+      "pos": 91,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-HUNDREDS-A2",
+      "pos": 92,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "EMBEDDED-CLAUSES-A2",
+      "pos": 93,
+      "n": 6,
+      "struct": 1
+    },
+    {
+      "lesson": "FUTURE-YOU-COMMANDS-A2",
+      "pos": 94,
+      "n": 9,
+      "struct": 1
+    },
+    {
+      "lesson": "ACTION-NOUNS-HIFIL-A2",
+      "pos": 95,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "RELATIVE-CLAUSES-A2",
+      "pos": 96,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "FUTURE-SHE-THEY-A2",
+      "pos": 97,
+      "n": 11,
+      "struct": 0
+    },
+    {
+      "lesson": "ACTION-NOUNS-PAAL-A2",
+      "pos": 98,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTERFACTUAL-A2",
+      "pos": 99,
+      "n": 10,
+      "struct": 1
+    },
+    {
+      "lesson": "GENERIC-THEY-PASSIVE-A2",
+      "pos": 100,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "ACTION-NOUN-FAMILIES-A2",
+      "pos": 101,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "PURPOSE-CLAUSES-A2",
+      "pos": 102,
+      "n": 11,
+      "struct": 1
+    },
+    {
+      "lesson": "INITIAL-ALEPH-FUTURE-A2",
+      "pos": 103,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-THOUSANDS-A2",
+      "pos": 104,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "RELATIVE-PREPOSITIONS-A2",
+      "pos": 105,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "PASSIVE-NIFAL-A2",
+      "pos": 106,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "COUNTING-MILLIONS-A2",
+      "pos": 107,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "REDUCED-NIKKUD-A2",
+      "pos": 108,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "PASSIVE-PUAL-A2",
+      "pos": 109,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "QUANTITIES-IN-CONTEXT-A2",
+      "pos": 110,
+      "n": 7,
+      "struct": 0
+    },
+    {
+      "lesson": "SPOKEN-REGISTER-A2",
+      "pos": 111,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "PASSIVE-HUFAL-A2",
+      "pos": 112,
+      "n": 6,
+      "struct": 0
+    },
+    {
+      "lesson": "GEMATRIA-A2",
+      "pos": 113,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "FORMAL-REGISTER-A2",
+      "pos": 114,
+      "n": 12,
+      "struct": 0
+    },
+    {
+      "lesson": "SPECIAL-VERB-PRACTICE-A2",
+      "pos": 115,
+      "n": 10,
+      "struct": 0
+    },
+    {
+      "lesson": "CHANGED-APPOINTMENT-A2",
+      "pos": 116,
+      "n": 6,
+      "struct": 0
+    }
+  ],
+  "gaps": [
+    {
+      "from": 6,
+      "to": 7,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 7,
+      "to": 9,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 12,
+      "to": 13,
+      "family": "Nouns"
+    },
+    {
+      "from": 60,
+      "to": 62,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 86,
+      "to": 88,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 99,
+      "to": 101,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 101,
+      "to": 102,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 114,
+      "to": 116,
+      "family": "Sentence grammar"
+    }
+  ],
+  "limits": "Executed letter, token/form, prerequisite-reference and coverage checks plus selected grammar traps. These checks do not establish human linguistic/audio approval or learner mastery. All new wording remains author draft."
+}

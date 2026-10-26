@@ -1,0 +1,941 @@
+{
+  "scope": "A2 only; original A and app IDs unchanged",
+  "renamed": {
+    "VOWELS-AEI-A2": "VOWELS-AEIO-A2",
+    "VOWELS-OU-A2": "INTRODUCTIONS-INTEGRATION-A2",
+    "SHZR-A2": "SHZD-A2",
+    "BDTZ-A2": "BRTZ-A2",
+    "WANTS-SG-A2": "PRESENT-SG-A2",
+    "PRONOUNS-A2": "NOMINAL-A2 / QUESTIONS-BASIC-A2 / VAV-A2"
+  },
+  "lessons": [
+    {
+      "id": "MEMORY-A2",
+      "previousId": "MEMORY-A2",
+      "position": 1,
+      "previousPosition": 1,
+      "originalAId": "MEMORY",
+      "originalAPosition": 1
+    },
+    {
+      "id": "MNTL-A2",
+      "previousId": "MNTL-A2",
+      "position": 2,
+      "previousPosition": 2,
+      "originalAId": "MNT",
+      "originalAPosition": 2
+    },
+    {
+      "id": "WRITING-BASICS-A2",
+      "previousId": "WRITING-BASICS-A2",
+      "position": 3,
+      "previousPosition": 3,
+      "originalAId": "WRITING-BASICS",
+      "originalAPosition": 3
+    },
+    {
+      "id": "VOWELS-AEIO-A2",
+      "previousId": "VOWELS-AEI-A2",
+      "position": 4,
+      "previousPosition": 4,
+      "originalAId": "VOWELS-AEI",
+      "originalAPosition": 4
+    },
+    {
+      "id": "AHY-A2",
+      "previousId": "AHY-A2",
+      "position": 5,
+      "previousPosition": 5,
+      "originalAId": "AHY",
+      "originalAPosition": 5
+    },
+    {
+      "id": "NOMINAL-A2",
+      "previousId": "NOMINAL-A2",
+      "position": 6,
+      "previousPosition": 7,
+      "originalAId": "NOMINAL",
+      "originalAPosition": 7
+    },
+    {
+      "id": "QUESTIONS-BASIC-A2",
+      "previousId": "QUESTIONS-BASIC-A2",
+      "position": 7,
+      "previousPosition": 22,
+      "originalAId": "QUESTIONS-BASIC",
+      "originalAPosition": 18
+    },
+    {
+      "id": "VAV-A2",
+      "previousId": "VAV-A2",
+      "position": 8,
+      "previousPosition": 8,
+      "originalAId": "VAV",
+      "originalAPosition": 8
+    },
+    {
+      "id": "INTRODUCTIONS-INTEGRATION-A2",
+      "previousId": "VOWELS-OU-A2",
+      "position": 9,
+      "previousPosition": 9,
+      "originalAId": "VOWELS-OU",
+      "originalAPosition": 12
+    },
+    {
+      "id": "PREFIXES-MHV-A2",
+      "previousId": "PREFIXES-MHV-A2",
+      "position": 10,
+      "previousPosition": 10,
+      "originalAId": "PREFIXES-MHV",
+      "originalAPosition": 9
+    },
+    {
+      "id": "SHZD-A2",
+      "previousId": "SHZR-A2",
+      "position": 11,
+      "previousPosition": 11,
+      "originalAId": "LSHZ",
+      "originalAPosition": 11
+    },
+    {
+      "id": "DEMONSTRATIVES-SG-A2",
+      "previousId": "DEMONSTRATIVES-SG-A2",
+      "position": 12,
+      "previousPosition": 12,
+      "originalAId": "DEMONSTRATIVES-SG",
+      "originalAPosition": 13
+    },
+    {
+      "id": "NOUN-GENDER-A2",
+      "previousId": "NOUN-GENDER-A2",
+      "position": 13,
+      "previousPosition": 19,
+      "originalAId": "NOUN-GENDER",
+      "originalAPosition": 15
+    },
+    {
+      "id": "BRTZ-A2",
+      "previousId": "BDTZ-A2",
+      "position": 14,
+      "previousPosition": 14,
+      "originalAId": "BGD",
+      "originalAPosition": 14
+    },
+    {
+      "id": "PRESENT-SG-A2",
+      "previousId": "WANTS-SG-A2",
+      "position": 15,
+      "previousPosition": 15,
+      "originalAId": null,
+      "originalAPosition": null
+    },
+    {
+      "id": "PREFIXES-BL-SHEL-A2",
+      "previousId": "PREFIXES-BL-SHEL-A2",
+      "position": 16,
+      "previousPosition": 16,
+      "originalAId": "PREFIXES-BL-SHEL",
+      "originalAPosition": 16
+    },
+    {
+      "id": "KPG-A2",
+      "previousId": "KPG-A2",
+      "position": 17,
+      "previousPosition": 17,
+      "originalAId": "KPTZ",
+      "originalAPosition": 17
+    },
+    {
+      "id": "COMMANDS-GIVE-SIT-GO-A2",
+      "previousId": "COMMANDS-GIVE-SIT-GO-A2",
+      "position": 18,
+      "previousPosition": 18,
+      "originalAId": "COMMANDS-GIVE-SIT-GO",
+      "originalAPosition": 27
+    },
+    {
+      "id": "EXISTENCE-POSSESSION-A2",
+      "previousId": "EXISTENCE-POSSESSION-A2",
+      "position": 19,
+      "previousPosition": 13,
+      "originalAId": "EXISTENCE-POSSESSION",
+      "originalAPosition": 19
+    },
+    {
+      "id": "HET-AYIN-A2",
+      "previousId": "HET-AYIN-A2",
+      "position": 20,
+      "previousPosition": 20,
+      "originalAId": "HET-AYIN-RESH",
+      "originalAPosition": 21
+    },
+    {
+      "id": "INFINITIVE-WANT-A2",
+      "previousId": "INFINITIVE-WANT-A2",
+      "position": 21,
+      "previousPosition": 21,
+      "originalAId": "INFINITIVE-WANT",
+      "originalAPosition": 42
+    },
+    {
+      "id": "NOUN-PLURALS-A2",
+      "previousId": "NOUN-PLURALS-A2",
+      "position": 22,
+      "previousPosition": 25,
+      "originalAId": "NOUN-PLURALS",
+      "originalAPosition": 20
+    },
+    {
+      "id": "QST-A2",
+      "previousId": "QST-A2",
+      "position": 23,
+      "previousPosition": 23,
+      "originalAId": "QST",
+      "originalAPosition": 26
+    },
+    {
+      "id": "PERMISSION-REQUESTS-A2",
+      "previousId": "PERMISSION-REQUESTS-A2",
+      "position": 24,
+      "previousPosition": 24,
+      "originalAId": null,
+      "originalAPosition": null
+    },
+    {
+      "id": "PREP-SUFFIXES-ME-HIM-HER-A2",
+      "previousId": "PREP-SUFFIXES-ME-HIM-HER-A2",
+      "position": 25,
+      "previousPosition": 26,
+      "originalAId": "PREP-SUFFIXES-ME-HIM-HER",
+      "originalAPosition": 25
+    },
+    {
+      "id": "REPAIR-CONVERSATION-A2",
+      "previousId": "REPAIR-CONVERSATION-A2",
+      "position": 26,
+      "previousPosition": 27,
+      "originalAId": null,
+      "originalAPosition": null
+    },
+    {
+      "id": "COUNTING-ONE-TEN-A2",
+      "previousId": "COUNTING-ONE-TEN-A2",
+      "position": 27,
+      "previousPosition": 28,
+      "originalAId": "COUNTING-ONE-TEN",
+      "originalAPosition": 35
+    },
+    {
+      "id": "ADJECTIVE-PREDICATES-A2",
+      "previousId": "ADJECTIVE-PREDICATES-A2",
+      "position": 28,
+      "previousPosition": 29,
+      "originalAId": "ADJECTIVE-PREDICATES",
+      "originalAPosition": 23
+    },
+    {
+      "id": "PRESENT-BA-SAM-OLE-ROTZE-A2",
+      "previousId": "PRESENT-BA-SAM-OLE-ROTZE-A2",
+      "position": 29,
+      "previousPosition": 30,
+      "originalAId": "PRESENT-BA-SAM-OLE-ROTZE",
+      "originalAPosition": 24
+    },
+    {
+      "id": "PRONUNCIATION-KH-R-A2",
+      "previousId": "PRONUNCIATION-KH-R-A2",
+      "position": 30,
+      "previousPosition": 31,
+      "originalAId": "PRONUNCIATION-KH-R",
+      "originalAPosition": 22
+    },
+    {
+      "id": "PREP-SUFFIXES-YOU-SG-A2",
+      "previousId": "PREP-SUFFIXES-YOU-SG-A2",
+      "position": 31,
+      "previousPosition": 32,
+      "originalAId": "PREP-SUFFIXES-YOU-SG",
+      "originalAPosition": 32
+    },
+    {
+      "id": "ROOTS-A2",
+      "previousId": "ROOTS-A2",
+      "position": 32,
+      "previousPosition": 33,
+      "originalAId": "ROOTS",
+      "originalAPosition": 29
+    },
+    {
+      "id": "NOUN-ADJECTIVE-A2",
+      "previousId": "NOUN-ADJECTIVE-A2",
+      "position": 33,
+      "previousPosition": 34,
+      "originalAId": "NOUN-ADJECTIVE",
+      "originalAPosition": 30
+    },
+    {
+      "id": "COUNTING-ONE-SHOPPING-A2",
+      "previousId": "COUNTING-ONE-SHOPPING-A2",
+      "position": 34,
+      "previousPosition": 35,
+      "originalAId": "COUNTING-ONE-SHOPPING",
+      "originalAPosition": 39
+    },
+    {
+      "id": "VAV-YOD-SPELLING-A2",
+      "previousId": "VAV-YOD-SPELLING-A2",
+      "position": 35,
+      "previousPosition": 36,
+      "originalAId": "VAV-YOD-SPELLING",
+      "originalAPosition": 10
+    },
+    {
+      "id": "PREP-SUFFIXES-US-THEM-A2",
+      "previousId": "PREP-SUFFIXES-US-THEM-A2",
+      "position": 36,
+      "previousPosition": 37,
+      "originalAId": "PREP-SUFFIXES-US-THEM",
+      "originalAPosition": 28
+    },
+    {
+      "id": "PATTERNS-A2",
+      "previousId": "PATTERNS-A2",
+      "position": 37,
+      "previousPosition": 38,
+      "originalAId": "PATTERNS",
+      "originalAPosition": 33
+    },
+    {
+      "id": "BEGED-KEFET-A2",
+      "previousId": "BEGED-KEFET-A2",
+      "position": 38,
+      "previousPosition": 39,
+      "originalAId": "BEGED-KEFET",
+      "originalAPosition": 31
+    },
+    {
+      "id": "DEMONSTRATIVE-PHRASES-A2",
+      "previousId": "DEMONSTRATIVE-PHRASES-A2",
+      "position": 39,
+      "previousPosition": 40,
+      "originalAId": "DEMONSTRATIVE-PHRASES",
+      "originalAPosition": 34
+    },
+    {
+      "id": "PAAL-A2",
+      "previousId": "PAAL-A2",
+      "position": 40,
+      "previousPosition": 41,
+      "originalAId": "PAAL",
+      "originalAPosition": 36
+    },
+    {
+      "id": "PREP-SUFFIXES-YOU-PL-A2",
+      "previousId": "PREP-SUFFIXES-YOU-PL-A2",
+      "position": 41,
+      "previousPosition": 42,
+      "originalAId": "PREP-SUFFIXES-YOU-PL",
+      "originalAPosition": 37
+    },
+    {
+      "id": "GERESH-LETTERS-A2",
+      "previousId": "GERESH-LETTERS-A2",
+      "position": 42,
+      "previousPosition": 43,
+      "originalAId": "GERESH-LETTERS",
+      "originalAPosition": 38
+    },
+    {
+      "id": "TOOL-PATTERNS-A2",
+      "previousId": "TOOL-PATTERNS-A2",
+      "position": 43,
+      "previousPosition": 44,
+      "originalAId": "TOOL-PATTERNS",
+      "originalAPosition": 40
+    },
+    {
+      "id": "DIRECT-OBJECT-ET-A2",
+      "previousId": "DIRECT-OBJECT-ET-A2",
+      "position": 44,
+      "previousPosition": 45,
+      "originalAId": "DIRECT-OBJECT-ET",
+      "originalAPosition": 41
+    },
+    {
+      "id": "ALPHABET-ORDER-A2",
+      "previousId": "ALPHABET-ORDER-A2",
+      "position": 45,
+      "previousPosition": 46,
+      "originalAId": "ALPHABET-ORDER",
+      "originalAPosition": 43
+    },
+    {
+      "id": "MODALS-CAN-NEED-MUST-A2",
+      "previousId": "MODALS-CAN-NEED-MUST-A2",
+      "position": 46,
+      "previousPosition": 47,
+      "originalAId": "MODALS-CAN-NEED-MUST",
+      "originalAPosition": 45
+    },
+    {
+      "id": "COUNTING-FEMININE-A2",
+      "previousId": "COUNTING-FEMININE-A2",
+      "position": 47,
+      "previousPosition": 48,
+      "originalAId": "COUNTING-FEMININE",
+      "originalAPosition": 46
+    },
+    {
+      "id": "ETZEL-DIRECTIONS-A2",
+      "previousId": "ETZEL-DIRECTIONS-A2",
+      "position": 48,
+      "previousPosition": 49,
+      "originalAId": "ETZEL-DIRECTIONS",
+      "originalAPosition": 44
+    },
+    {
+      "id": "PAST-HE-SHE-THEY-A2",
+      "previousId": "PAST-HE-SHE-THEY-A2",
+      "position": 49,
+      "previousPosition": 50,
+      "originalAId": "PAST-HE-SHE-THEY",
+      "originalAPosition": 48
+    },
+    {
+      "id": "PLACE-PATTERNS-A2",
+      "previousId": "PLACE-PATTERNS-A2",
+      "position": 50,
+      "previousPosition": 51,
+      "originalAId": "PLACE-PATTERNS",
+      "originalAPosition": 49
+    },
+    {
+      "id": "IM-WITH-A2",
+      "previousId": "IM-WITH-A2",
+      "position": 51,
+      "previousPosition": 52,
+      "originalAId": "IM-WITH",
+      "originalAPosition": 47
+    },
+    {
+      "id": "FEELING-HOT-COLD-A2",
+      "previousId": "FEELING-HOT-COLD-A2",
+      "position": 52,
+      "previousPosition": 53,
+      "originalAId": "FEELING-HOT-COLD",
+      "originalAPosition": 50
+    },
+    {
+      "id": "PAST-I-A2",
+      "previousId": "PAST-I-A2",
+      "position": 53,
+      "previousPosition": 54,
+      "originalAId": "PAST-I",
+      "originalAPosition": 51
+    },
+    {
+      "id": "DUAL-A2",
+      "previousId": "DUAL-A2",
+      "position": 54,
+      "previousPosition": 55,
+      "originalAId": "DUAL",
+      "originalAPosition": 52
+    },
+    {
+      "id": "HOME-VISIT-A2",
+      "previousId": "HOME-VISIT-A2",
+      "position": 55,
+      "previousPosition": 56,
+      "originalAId": "HOME-VISIT",
+      "originalAPosition": 53
+    },
+    {
+      "id": "PRESENT-FOUR-FORMS-A2",
+      "previousId": "PRESENT-FOUR-FORMS-A2",
+      "position": 56,
+      "previousPosition": 57,
+      "originalAId": "PRESENT-FOUR-FORMS",
+      "originalAPosition": 54
+    },
+    {
+      "id": "OBJECT-AND-RECIPIENT-A2",
+      "previousId": "OBJECT-AND-RECIPIENT-A2",
+      "position": 57,
+      "previousPosition": 58,
+      "originalAId": "OBJECT-AND-RECIPIENT",
+      "originalAPosition": 55
+    },
+    {
+      "id": "CONSTRUCT-CHAINS-A2",
+      "previousId": "CONSTRUCT-CHAINS-A2",
+      "position": 58,
+      "previousPosition": 59,
+      "originalAId": "CONSTRUCT-CHAINS",
+      "originalAPosition": 56
+    },
+    {
+      "id": "PAST-I-WE-YOU-A2",
+      "previousId": "PAST-I-WE-YOU-A2",
+      "position": 59,
+      "previousPosition": 60,
+      "originalAId": "PAST-I-WE-YOU",
+      "originalAPosition": 57
+    },
+    {
+      "id": "MISSING-BOOK-A2",
+      "previousId": "MISSING-BOOK-A2",
+      "position": 60,
+      "previousPosition": 61,
+      "originalAId": "MISSING-BOOK",
+      "originalAPosition": 58
+    },
+    {
+      "id": "SEGOLATE-NOUNS-A2",
+      "previousId": "SEGOLATE-NOUNS-A2",
+      "position": 61,
+      "previousPosition": 62,
+      "originalAId": "SEGOLATE-NOUNS",
+      "originalAPosition": 59
+    },
+    {
+      "id": "WEEK-PLANS-A2",
+      "previousId": "WEEK-PLANS-A2",
+      "position": 62,
+      "previousPosition": 63,
+      "originalAId": "WEEK-PLANS",
+      "originalAPosition": 60
+    },
+    {
+      "id": "COUNTING-ELEVEN-NINETEEN-A2",
+      "previousId": "COUNTING-ELEVEN-NINETEEN-A2",
+      "position": 63,
+      "previousPosition": 64,
+      "originalAId": "COUNTING-ELEVEN-NINETEEN",
+      "originalAPosition": 61
+    },
+    {
+      "id": "PIEL-A2",
+      "previousId": "PIEL-A2",
+      "position": 64,
+      "previousPosition": 65,
+      "originalAId": "PIEL",
+      "originalAPosition": 62
+    },
+    {
+      "id": "ADJECTIVES-YOD-A2",
+      "previousId": "ADJECTIVES-YOD-A2",
+      "position": 65,
+      "previousPosition": 66,
+      "originalAId": "ADJECTIVES-YOD",
+      "originalAPosition": 63
+    },
+    {
+      "id": "CLASSROOM-PROBLEM-A2",
+      "previousId": "CLASSROOM-PROBLEM-A2",
+      "position": 66,
+      "previousPosition": 67,
+      "originalAId": "CLASSROOM-PROBLEM",
+      "originalAPosition": 64
+    },
+    {
+      "id": "FOUR-ROOT-CONSONANTS-A2",
+      "previousId": "FOUR-ROOT-CONSONANTS-A2",
+      "position": 67,
+      "previousPosition": 68,
+      "originalAId": "FOUR-ROOT-CONSONANTS",
+      "originalAPosition": 65
+    },
+    {
+      "id": "COUNTING-TENS-A2",
+      "previousId": "COUNTING-TENS-A2",
+      "position": 68,
+      "previousPosition": 69,
+      "originalAId": "COUNTING-TENS",
+      "originalAPosition": 66
+    },
+    {
+      "id": "CLASSROOM-PREPARATION-A2",
+      "previousId": "CLASSROOM-PREPARATION-A2",
+      "position": 69,
+      "previousPosition": 70,
+      "originalAId": "CLASSROOM-PREPARATION",
+      "originalAPosition": 67
+    },
+    {
+      "id": "NIFAL-A2",
+      "previousId": "NIFAL-A2",
+      "position": 70,
+      "previousPosition": 71,
+      "originalAId": "NIFAL",
+      "originalAPosition": 68
+    },
+    {
+      "id": "QATOL-ADJECTIVES-A2",
+      "previousId": "QATOL-ADJECTIVES-A2",
+      "position": 71,
+      "previousPosition": 72,
+      "originalAId": "QATOL-ADJECTIVES",
+      "originalAPosition": 69
+    },
+    {
+      "id": "GUTTURAL-VERBS-A2",
+      "previousId": "GUTTURAL-VERBS-A2",
+      "position": 72,
+      "previousPosition": 73,
+      "originalAId": "GUTTURAL-VERBS",
+      "originalAPosition": 70
+    },
+    {
+      "id": "FINAL-HE-VERBS-A2",
+      "previousId": "FINAL-HE-VERBS-A2",
+      "position": 73,
+      "previousPosition": 74,
+      "originalAId": "FINAL-HE-VERBS",
+      "originalAPosition": 71
+    },
+    {
+      "id": "PROFESSIONS-PATTERNS-A2",
+      "previousId": "PROFESSIONS-PATTERNS-A2",
+      "position": 74,
+      "previousPosition": 75,
+      "originalAId": "PROFESSIONS-PATTERNS",
+      "originalAPosition": 72
+    },
+    {
+      "id": "SAME-DIFFERENT-A2",
+      "previousId": "SAME-DIFFERENT-A2",
+      "position": 75,
+      "previousPosition": 76,
+      "originalAId": "SAME-DIFFERENT",
+      "originalAPosition": 73
+    },
+    {
+      "id": "HITPAEL-A2",
+      "previousId": "HITPAEL-A2",
+      "position": 76,
+      "previousPosition": 77,
+      "originalAId": "HITPAEL",
+      "originalAPosition": 74
+    },
+    {
+      "id": "COUNTING-MASCULINE-A2",
+      "previousId": "COUNTING-MASCULINE-A2",
+      "position": 77,
+      "previousPosition": 78,
+      "originalAId": "COUNTING-MASCULINE",
+      "originalAPosition": 75
+    },
+    {
+      "id": "PREPOSITIONS-PLURAL-SUFFIXES-A2",
+      "previousId": "PREPOSITIONS-PLURAL-SUFFIXES-A2",
+      "position": 78,
+      "previousPosition": 79,
+      "originalAId": "PREPOSITIONS-PLURAL-SUFFIXES",
+      "originalAPosition": 76
+    },
+    {
+      "id": "HOLLOW-VERBS-A2",
+      "previousId": "HOLLOW-VERBS-A2",
+      "position": 79,
+      "previousPosition": 80,
+      "originalAId": "HOLLOW-VERBS",
+      "originalAPosition": 77
+    },
+    {
+      "id": "QATIL-ADJECTIVES-A2",
+      "previousId": "QATIL-ADJECTIVES-A2",
+      "position": 80,
+      "previousPosition": 81,
+      "originalAId": "QATIL-ADJECTIVES",
+      "originalAPosition": 78
+    },
+    {
+      "id": "COUNTING-MASCULINE-CONSTRUCT-A2",
+      "previousId": "COUNTING-MASCULINE-CONSTRUCT-A2",
+      "position": 81,
+      "previousPosition": 82,
+      "originalAId": "COUNTING-MASCULINE-CONSTRUCT",
+      "originalAPosition": 79
+    },
+    {
+      "id": "HIFIL-A2",
+      "previousId": "HIFIL-A2",
+      "position": 82,
+      "previousPosition": 83,
+      "originalAId": "HIFIL",
+      "originalAPosition": 80
+    },
+    {
+      "id": "CONSTRUCT-CHAINS-RETURN-A2",
+      "previousId": "CONSTRUCT-CHAINS-RETURN-A2",
+      "position": 83,
+      "previousPosition": 84,
+      "originalAId": "CONSTRUCT-CHAINS-RETURN",
+      "originalAPosition": 81
+    },
+    {
+      "id": "ASSIMILATION-NUN-MEM-A2",
+      "previousId": "ASSIMILATION-NUN-MEM-A2",
+      "position": 84,
+      "previousPosition": 85,
+      "originalAId": "ASSIMILATION-NUN-MEM",
+      "originalAPosition": 82
+    },
+    {
+      "id": "PERMISSION-IMMINENCE-A2",
+      "previousId": "PERMISSION-IMMINENCE-A2",
+      "position": 85,
+      "previousPosition": 86,
+      "originalAId": "PERMISSION-IMMINENCE",
+      "originalAPosition": 83
+    },
+    {
+      "id": "FINDING-SOMEONE-A2",
+      "previousId": "FINDING-SOMEONE-A2",
+      "position": 86,
+      "previousPosition": 87,
+      "originalAId": "FINDING-SOMEONE",
+      "originalAPosition": 84
+    },
+    {
+      "id": "STATES-HEALTH-A2",
+      "previousId": "STATES-HEALTH-A2",
+      "position": 87,
+      "previousPosition": 88,
+      "originalAId": "STATES-HEALTH",
+      "originalAPosition": 85
+    },
+    {
+      "id": "PAST-HABIT-A2",
+      "previousId": "PAST-HABIT-A2",
+      "position": 88,
+      "previousPosition": 89,
+      "originalAId": "PAST-HABIT",
+      "originalAPosition": 86
+    },
+    {
+      "id": "COUNTING-MASCULINE-TEENS-A2",
+      "previousId": "COUNTING-MASCULINE-TEENS-A2",
+      "position": 89,
+      "previousPosition": 90,
+      "originalAId": "COUNTING-MASCULINE-TEENS",
+      "originalAPosition": 87
+    },
+    {
+      "id": "ACTION-NOUNS-PIEL-A2",
+      "previousId": "ACTION-NOUNS-PIEL-A2",
+      "position": 90,
+      "previousPosition": 91,
+      "originalAId": "ACTION-NOUNS-PIEL",
+      "originalAPosition": 88
+    },
+    {
+      "id": "FUTURE-I-WE-HE-A2",
+      "previousId": "FUTURE-I-WE-HE-A2",
+      "position": 91,
+      "previousPosition": 92,
+      "originalAId": "FUTURE-I-WE-HE",
+      "originalAPosition": 89
+    },
+    {
+      "id": "COUNTING-HUNDREDS-A2",
+      "previousId": "COUNTING-HUNDREDS-A2",
+      "position": 92,
+      "previousPosition": 93,
+      "originalAId": "COUNTING-HUNDREDS",
+      "originalAPosition": 90
+    },
+    {
+      "id": "EMBEDDED-CLAUSES-A2",
+      "previousId": "EMBEDDED-CLAUSES-A2",
+      "position": 93,
+      "previousPosition": 94,
+      "originalAId": "EMBEDDED-CLAUSES",
+      "originalAPosition": 91
+    },
+    {
+      "id": "FUTURE-YOU-COMMANDS-A2",
+      "previousId": "FUTURE-YOU-COMMANDS-A2",
+      "position": 94,
+      "previousPosition": 95,
+      "originalAId": "FUTURE-YOU-COMMANDS",
+      "originalAPosition": 92
+    },
+    {
+      "id": "ACTION-NOUNS-HIFIL-A2",
+      "previousId": "ACTION-NOUNS-HIFIL-A2",
+      "position": 95,
+      "previousPosition": 96,
+      "originalAId": "ACTION-NOUNS-HIFIL",
+      "originalAPosition": 93
+    },
+    {
+      "id": "RELATIVE-CLAUSES-A2",
+      "previousId": "RELATIVE-CLAUSES-A2",
+      "position": 96,
+      "previousPosition": 97,
+      "originalAId": "RELATIVE-CLAUSES",
+      "originalAPosition": 94
+    },
+    {
+      "id": "FUTURE-SHE-THEY-A2",
+      "previousId": "FUTURE-SHE-THEY-A2",
+      "position": 97,
+      "previousPosition": 98,
+      "originalAId": "FUTURE-SHE-THEY",
+      "originalAPosition": 95
+    },
+    {
+      "id": "ACTION-NOUNS-PAAL-A2",
+      "previousId": "ACTION-NOUNS-PAAL-A2",
+      "position": 98,
+      "previousPosition": 99,
+      "originalAId": "ACTION-NOUNS-PAAL",
+      "originalAPosition": 96
+    },
+    {
+      "id": "COUNTERFACTUAL-A2",
+      "previousId": "COUNTERFACTUAL-A2",
+      "position": 99,
+      "previousPosition": 100,
+      "originalAId": "COUNTERFACTUAL",
+      "originalAPosition": 97
+    },
+    {
+      "id": "GENERIC-THEY-PASSIVE-A2",
+      "previousId": "GENERIC-THEY-PASSIVE-A2",
+      "position": 100,
+      "previousPosition": 101,
+      "originalAId": "GENERIC-THEY-PASSIVE",
+      "originalAPosition": 98
+    },
+    {
+      "id": "ACTION-NOUN-FAMILIES-A2",
+      "previousId": "ACTION-NOUN-FAMILIES-A2",
+      "position": 101,
+      "previousPosition": 102,
+      "originalAId": "ACTION-NOUN-FAMILIES",
+      "originalAPosition": 99
+    },
+    {
+      "id": "PURPOSE-CLAUSES-A2",
+      "previousId": "PURPOSE-CLAUSES-A2",
+      "position": 102,
+      "previousPosition": 103,
+      "originalAId": "PURPOSE-CLAUSES",
+      "originalAPosition": 100
+    },
+    {
+      "id": "INITIAL-ALEPH-FUTURE-A2",
+      "previousId": "INITIAL-ALEPH-FUTURE-A2",
+      "position": 103,
+      "previousPosition": 104,
+      "originalAId": "INITIAL-ALEPH-FUTURE",
+      "originalAPosition": 101
+    },
+    {
+      "id": "COUNTING-THOUSANDS-A2",
+      "previousId": "COUNTING-THOUSANDS-A2",
+      "position": 104,
+      "previousPosition": 105,
+      "originalAId": "COUNTING-THOUSANDS",
+      "originalAPosition": 102
+    },
+    {
+      "id": "RELATIVE-PREPOSITIONS-A2",
+      "previousId": "RELATIVE-PREPOSITIONS-A2",
+      "position": 105,
+      "previousPosition": 106,
+      "originalAId": "RELATIVE-PREPOSITIONS",
+      "originalAPosition": 103
+    },
+    {
+      "id": "PASSIVE-NIFAL-A2",
+      "previousId": "PASSIVE-NIFAL-A2",
+      "position": 106,
+      "previousPosition": 107,
+      "originalAId": "PASSIVE-NIFAL",
+      "originalAPosition": 104
+    },
+    {
+      "id": "COUNTING-MILLIONS-A2",
+      "previousId": "COUNTING-MILLIONS-A2",
+      "position": 107,
+      "previousPosition": 108,
+      "originalAId": "COUNTING-MILLIONS",
+      "originalAPosition": 105
+    },
+    {
+      "id": "REDUCED-NIKKUD-A2",
+      "previousId": "REDUCED-NIKKUD-A2",
+      "position": 108,
+      "previousPosition": 109,
+      "originalAId": "REDUCED-NIKKUD",
+      "originalAPosition": 106
+    },
+    {
+      "id": "PASSIVE-PUAL-A2",
+      "previousId": "PASSIVE-PUAL-A2",
+      "position": 109,
+      "previousPosition": 110,
+      "originalAId": "PASSIVE-PUAL",
+      "originalAPosition": 107
+    },
+    {
+      "id": "QUANTITIES-IN-CONTEXT-A2",
+      "previousId": "QUANTITIES-IN-CONTEXT-A2",
+      "position": 110,
+      "previousPosition": 111,
+      "originalAId": "QUANTITIES-IN-CONTEXT",
+      "originalAPosition": 108
+    },
+    {
+      "id": "SPOKEN-REGISTER-A2",
+      "previousId": "SPOKEN-REGISTER-A2",
+      "position": 111,
+      "previousPosition": 112,
+      "originalAId": "SPOKEN-REGISTER",
+      "originalAPosition": 109
+    },
+    {
+      "id": "PASSIVE-HUFAL-A2",
+      "previousId": "PASSIVE-HUFAL-A2",
+      "position": 112,
+      "previousPosition": 113,
+      "originalAId": "PASSIVE-HUFAL",
+      "originalAPosition": 110
+    },
+    {
+      "id": "GEMATRIA-A2",
+      "previousId": "GEMATRIA-A2",
+      "position": 113,
+      "previousPosition": 114,
+      "originalAId": "GEMATRIA",
+      "originalAPosition": 111
+    },
+    {
+      "id": "FORMAL-REGISTER-A2",
+      "previousId": "FORMAL-REGISTER-A2",
+      "position": 114,
+      "previousPosition": 115,
+      "originalAId": "FORMAL-REGISTER",
+      "originalAPosition": 112
+    },
+    {
+      "id": "SPECIAL-VERB-PRACTICE-A2",
+      "previousId": "SPECIAL-VERB-PRACTICE-A2",
+      "position": 115,
+      "previousPosition": 116,
+      "originalAId": "SPECIAL-VERB-PRACTICE",
+      "originalAPosition": 113
+    },
+    {
+      "id": "CHANGED-APPOINTMENT-A2",
+      "previousId": "CHANGED-APPOINTMENT-A2",
+      "position": 116,
+      "previousPosition": 117,
+      "originalAId": "CHANGED-APPOINTMENT",
+      "originalAPosition": 114
+    }
+  ]
+}
