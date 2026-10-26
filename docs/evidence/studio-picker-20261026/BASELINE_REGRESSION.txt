@@ -1,0 +1,27 @@
+✖ STUDIO-PICKER-01 real app Choose lesson lists all23 drafts and routes MEMORY/MNT editor and saved Preview without writes (1721.3968ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3940.9273
+
+✖ failing tests:
+
+test at test\app.test.js:79:1
+✖ STUDIO-PICKER-01 real app Choose lesson lists all23 drafts and routes MEMORY/MNT editor and saved Preview without writes (1721.3968ms)
+  AssertionError [ERR_ASSERTION]: Choose lesson opens a visible native dialog
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/860f6c51-8c5b-44fe-a6a3-1cdd3edbb329/hebleo-lesson-picker/test/app.test.js:86:118)
+      at runNextTicks (node:internal/process/task_queues:65:5)
+      at process.processTimers (node:internal/timers:568:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

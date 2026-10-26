@@ -1,0 +1,12 @@
+✔ STUDIO-PICKER-01 real app Choose lesson lists all23 drafts and routes MEMORY/MNT editor and saved Preview without writes (2729.8117ms)
+✔ STUDIO-PICKER-02 switching retains lesson/page/sibling edits; Preview remains the saved draft (2820.7956ms)
+✔ STUDIO-PICKER-03 chapter filtering cannot omit drafts; search, cancel, Escape and visible validation failure retain focus and edits (1631.3848ms)
+✔ STUDIO-PICKER-04 pending CAS save refuses lesson replacement and retains the matching Preview target (1770.9234ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11003.9771
