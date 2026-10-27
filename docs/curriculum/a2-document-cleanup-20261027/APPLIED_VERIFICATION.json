@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-27T12:45:55.601Z",
+  "spreadsheetId": "1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc",
+  "sheetId": 102626001,
+  "lessonCount": 116,
+  "vocabularyEntries": 1088,
+  "combinedExampleCells": 112,
+  "exampleBlocks": 379,
+  "changedCells": 471,
+  "rowMove": {
+    "id": "PREFIXES-MHV-A2",
+    "from": 13,
+    "to": 12
+  },
+  "cellDifferences": [],
+  "originalAUnchanged": true,
+  "conditionalFormatsUnchanged": true,
+  "commentsPreserved": true,
+  "activeComments": 44,
+  "commentsNextPageToken": null,
+  "sourceHyperlinkFormulas": 113,
+  "sourceVocabularyPreserved": true,
+  "checks": {
+    "unknownForms": 0,
+    "untaughtLetters": 0,
+    "invalidPrerequisites": 0,
+    "selectedGrammarTraps": 0,
+    "repeatedBoilerplate": 0
+  },
+  "renderedLayout": "Not verified",
+  "publication": "Curriculum sheet only; no app or WordPress publication"
+}

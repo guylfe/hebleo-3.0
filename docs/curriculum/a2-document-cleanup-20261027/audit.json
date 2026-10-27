@@ -1,0 +1,51 @@
+{
+  "lessons": 116,
+  "entries": 1088,
+  "uniqueIds": 116,
+  "sourceEntriesIdentical": true,
+  "unknown": [],
+  "letters": [],
+  "dependencies": [],
+  "grammar": [],
+  "boilerplate": [],
+  "gaps": [
+    {
+      "from": 6,
+      "to": 7,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 12,
+      "to": 13,
+      "family": "Nouns"
+    },
+    {
+      "from": 60,
+      "to": 62,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 86,
+      "to": 88,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 99,
+      "to": 101,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 101,
+      "to": 102,
+      "family": "Sentence grammar"
+    },
+    {
+      "from": 114,
+      "to": 116,
+      "family": "Sentence grammar"
+    }
+  ],
+  "combinedExampleCells": 112,
+  "exampleBlocks": 379,
+  "limits": "Executed vocabulary/form availability, letters, prerequisite references, selected grammar traps and preservation checks. Vocabulary recognition/recall is specified for each entry; E combines selected words. This is an authoring plan, not completed exercises, audio approval or learner-performance evidence."
+}

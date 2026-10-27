@@ -1,5 +1,7 @@
 # A2 revision — applied and API-verified
 
+**Historical checkpoint:** the 27 October [document-wide cleanup](../a2-document-cleanup-20261027/DELIVERY.md) supersedes the one-model-per-entry practice below and moves integration after prefixes. The current examples combine vocabulary in coherent contexts; separate vocabulary exercises cover remaining entries. See that pack for the current route and destination verification.
+
 Status on 27 October 2026: Guy renewed authorization with “Try again.” The prepared revision was applied to A2 through the native Sheets API. Full readback verifies 116 unique lesson IDs, 1,088 practice models, 113 source hyperlinks, all changed values/notes/formats and the topic-color rules. Original A and all 39 active comment threads remain unchanged. The earlier write rejection is resolved.
 
 Target: [Spiral A2 — early expression](https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001).

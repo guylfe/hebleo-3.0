@@ -1,0 +1,2190 @@
+[
+  {
+    "id": "AHY-A2",
+    "position": 5,
+    "blocks": [
+      [
+        "Pictures and audio",
+        "אמא · ים · מים · מתנה · יין · מנה"
+      ]
+    ]
+  },
+  {
+    "id": "NOMINAL-A2",
+    "position": 6,
+    "blocks": [
+      [
+        "Introduce yourself",
+        "היי, אני מתן. אני אמן."
+      ],
+      [
+        "Correct a mistaken name",
+        "אני לא תמי. אני מתן."
+      ],
+      [
+        "A woman introduces her role",
+        "היי, אני תמי. אני מנהלת."
+      ]
+    ]
+  },
+  {
+    "id": "QUESTIONS-BASIC-A2",
+    "position": 7,
+    "blocks": [
+      [
+        "Meet someone",
+        "מי אתה? — אני מתן. אתה אמן? — אני מנהל."
+      ],
+      [
+        "Address a woman",
+        "מי את? — אני תמי. את אמנית? — אני מנהלת."
+      ],
+      [
+        "Meet two groups; each person gives their own name",
+        "מי אתם? / מי אתן? — אני מתן. — אני תמי."
+      ]
+    ]
+  },
+  {
+    "id": "VAV-A2",
+    "position": 8,
+    "blocks": [
+      [
+        "Offer a choice of fruit",
+        "תאנה או תות? — תות."
+      ],
+      [
+        "Identify the people being discussed",
+        "מי הוא? — הוא מתן. מי היא? — היא תמי."
+      ],
+      [
+        "Address a group, then identify the same people to someone else",
+        "מי אתן? — אני תמי. — אני אמא. מי הן? — היא אמא. היא תמי."
+      ]
+    ]
+  },
+  {
+    "id": "PREFIXES-MHV-A2",
+    "position": 9,
+    "blocks": [
+      [
+        "Identify the source of a gift",
+        "המתנה מאמא או מתמי? — המתנה מאמא."
+      ],
+      [
+        "Trace the source of water",
+        "המים מהים."
+      ],
+      [
+        "Choose a day or night appointment",
+        "מתי? — היום או הלילה? — הלילה."
+      ],
+      [
+        "Combine the items pictured",
+        "מים ותה. המון מים."
+      ]
+    ]
+  },
+  {
+    "id": "INTRODUCTIONS-INTEGRATION-A2",
+    "position": 10,
+    "blocks": [
+      [
+        "Look at two travel photographs",
+        "התמונה מהמלון או מהאונייה? — מהאונייה."
+      ],
+      [
+        "Arrange a workout",
+        "מתי האימון? — היום. היום או הלילה? — הלילה."
+      ],
+      [
+        "Identify a twin",
+        "מי התאום? — הוא. היא תאומה? — היא תאומה."
+      ],
+      [
+        "Offer a drink and hear the choice",
+        "מים או תה? — תה ולימון."
+      ]
+    ]
+  },
+  {
+    "id": "SHZD-A2",
+    "position": 11,
+    "blocks": [
+      [
+        "Meet someone",
+        "שלום, מה השם? — אני דנה."
+      ],
+      [
+        "Check who gave the gift, then thank them",
+        "המתנה מדנה? — לא, המתנה מתמי. — תודה, תמי."
+      ]
+    ]
+  },
+  {
+    "id": "DEMONSTRATIVES-SG-A2",
+    "position": 12,
+    "blocks": [
+      [
+        "Correct a mistaken identification",
+        "זאת תאנה? — לא, זה זית."
+      ],
+      [
+        "Point out a lost gift",
+        "המתנה שם? — אולי. זאת המתנה? — זאת המתנה."
+      ],
+      [
+        "Check whether someone is asking or stating",
+        "זאת שאלה? — זאת שאלה."
+      ]
+    ]
+  },
+  {
+    "id": "NOUN-GENDER-A2",
+    "position": 13,
+    "blocks": [
+      [
+        "Identify people in a class photograph",
+        "מי זאת? — זאת תלמידה. מי זה? — זה תלמיד."
+      ],
+      [
+        "Distinguish two children",
+        "איזה ילד? — הילד שם. איזו ילדה? — הילדה שם."
+      ],
+      [
+        "Identify relatives",
+        "זה דוד. זאת דודה."
+      ]
+    ]
+  },
+  {
+    "id": "BRTZ-A2",
+    "position": 14,
+    "blocks": [
+      [
+        "Find the facilities",
+        "השירותים שם? — לא, זאת הדלת. השירותים שם."
+      ],
+      [
+        "Introduce family",
+        "זה אבא. זאת בת. זה בן."
+      ],
+      [
+        "Choose a drink and close the exchange",
+        "תה או מיץ? — מיץ. תודה. ביי! — להתראות."
+      ]
+    ]
+  },
+  {
+    "id": "PRESENT-SG-A2",
+    "position": 15,
+    "blocks": [
+      [
+        "Choose a drink",
+        "את רוצה מיץ? — אני רוצה תה."
+      ],
+      [
+        "Discuss a current activity",
+        "מה את לומדת? — אני לומדת שיר."
+      ],
+      [
+        "Recognise the speaker",
+        "מי מדבר? — אני, מתן."
+      ],
+      [
+        "Respond to someone waiting for you",
+        "אני באה מיד."
+      ]
+    ]
+  },
+  {
+    "id": "PREFIXES-BL-SHEL-A2",
+    "position": 16,
+    "blocks": [
+      [
+        "Find a gift and identify its owner",
+        "המתנה בבית, ליד הדלת. המתנה של אמא? — לא, המתנה שלי."
+      ],
+      [
+        "Contrast recipient and owner",
+        "המתנה לי. המתנה שלי."
+      ],
+      [
+        "Choose different drinks",
+        "אני רוצה מים, אבל היא רוצה תה."
+      ],
+      [
+        "Read a food label and identify the owner",
+        "האורז של אמא. השמן שלי."
+      ]
+    ]
+  },
+  {
+    "id": "KPG-A2",
+    "position": 17,
+    "blocks": [
+      [
+        "Set the table",
+        "איפה הכפית? — ליד הכף. המפית כאן, ליד המפה."
+      ],
+      [
+        "Choose food",
+        "אתה רוצה מלפפון? — כן. אני גם רוצה תה."
+      ],
+      [
+        "Say where you are going",
+        "אני הולכת לבית של אמא."
+      ],
+      [
+        "Find an animal",
+        "איפה הכלב? — הכלב בבית."
+      ]
+    ]
+  },
+  {
+    "id": "COMMANDS-GIVE-SIT-GO-A2",
+    "position": 18,
+    "blocks": [
+      [
+        "Invite a woman to sit",
+        "בואי, שבי פה."
+      ],
+      [
+        "Direct someone and ask a destination",
+        "לכי לדלת. לאן אתה הולך? — לבית של אמא."
+      ],
+      [
+        "Request food from a familiar person",
+        "תן לי דג בלי פלפל."
+      ],
+      [
+        "Address a group",
+        "בואו, שבו פה. תנו לי מיץ."
+      ]
+    ]
+  },
+  {
+    "id": "EXISTENCE-POSSESSION-A2",
+    "position": 19,
+    "blocks": [
+      [
+        "Adapt a request to what is available",
+        "אני רוצה מים. — אין מים. יש תה. — אני רוצה תה."
+      ],
+      [
+        "Ask for help with a question",
+        "יש לי שאלה."
+      ],
+      [
+        "Check whether an activity costs money",
+        "יש תשלום? — אין תשלום."
+      ],
+      [
+        "Describe a long study day",
+        "אני לבד בבית. אני לומד כל היום."
+      ]
+    ]
+  },
+  {
+    "id": "HET-AYIN-A2",
+    "position": 20,
+    "blocks": [
+      [
+        "Introduce a sibling",
+        "זה אח שלי. — נעים מאוד. אתה מדבר עברית? — כן."
+      ],
+      [
+        "Ask for more food",
+        "יש עוד לחם? — יש לחם וחלב."
+      ],
+      [
+        "Find a gift",
+        "הפרח על המפה."
+      ],
+      [
+        "Ask someone to wait",
+        "רגע, אני בא עכשיו."
+      ]
+    ]
+  },
+  {
+    "id": "INFINITIVE-WANT-A2",
+    "position": 21,
+    "blocks": [
+      [
+        "Agree on where to sit",
+        "את רוצה לשבת בחדר? — אני רוצה לשבת ליד העץ."
+      ],
+      [
+        "Decide when to leave",
+        "אני רוצה ללכת הביתה. — עכשיו? — לא, אחר כך."
+      ],
+      [
+        "Express a plan for tomorrow",
+        "מחר אני רוצה לרדת לעיר."
+      ],
+      [
+        "Specify a food preference",
+        "אני רוצה דג בלי מלח."
+      ]
+    ]
+  },
+  {
+    "id": "NOUN-PLURALS-A2",
+    "position": 22,
+    "blocks": [
+      [
+        "Identify a class",
+        "אלה תלמידים. זאת הכיתה."
+      ],
+      [
+        "Introduce neighbours",
+        "זה שכן. זאת שכנה. אלה שכנים."
+      ],
+      [
+        "Choose a shaded place",
+        "יש צל ליד הבניינים. אני רוצה לשבת שם."
+      ],
+      [
+        "Distinguish two sides",
+        "זה הצד שלי. זה הצד של השכן."
+      ]
+    ]
+  },
+  {
+    "id": "QST-A2",
+    "position": 23,
+    "blocks": [
+      [
+        "Ask politely for a drink",
+        "אני רוצה לשתות מים, בבקשה. — בסדר. הכוס כאן."
+      ],
+      [
+        "Find the facilities",
+        "סליחה, איפה השירותים? — ליד הדלת. — תודה."
+      ],
+      [
+        "Ask for an item",
+        "תן לי ספר, בבקשה."
+      ],
+      [
+        "Find seating",
+        "הכיסא כאן. הכיסאות ליד הדלת."
+      ]
+    ]
+  },
+  {
+    "id": "PERMISSION-REQUESTS-A2",
+    "position": 24,
+    "blocks": [
+      [
+        "Ask permission to sit",
+        "אפשר לשבת פה? — כן, יש מקום."
+      ],
+      [
+        "Ask before taking an object",
+        "אפשר לקחת כוס? — כן."
+      ],
+      [
+        "Explain why you want a key",
+        "אפשר לקחת מפתח? אני רוצה לתת לאמא מפתח."
+      ],
+      [
+        "Ask for a drink",
+        "אפשר קפה, בבקשה?"
+      ]
+    ]
+  },
+  {
+    "id": "PREP-SUFFIXES-ME-HIM-HER-A2",
+    "position": 25,
+    "blocks": [
+      [
+        "Identify who brought a meal",
+        "הארוחה ממני. האוכל ממנו? — לא, האוכל ממנה."
+      ],
+      [
+        "Identify food belonging to different people",
+        "הגבינה שלה. הגלידה שלו."
+      ],
+      [
+        "Ask about breakfast",
+        "יש לו ארוחה בבוקר? — יש לו לחם וגבינה."
+      ]
+    ]
+  },
+  {
+    "id": "REPAIR-CONVERSATION-A2",
+    "position": 26,
+    "blocks": [
+      [
+        "Ask for a slower repetition",
+        "אני לא מבינה. אפשר לדבר שוב, לאט, בבקשה?"
+      ],
+      [
+        "Check an answer",
+        "נכון? — כן, נכון."
+      ],
+      [
+        "Start a brief social exchange",
+        "מה שלומך? — בסדר, תודה."
+      ],
+      [
+        "Ask for help in a shared language",
+        "אפשר עזרה? אני מדבר אנגלית."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-ONE-TEN-A2",
+    "position": 27,
+    "blocks": [
+      [
+        "Identify a numbered room",
+        "מה המספר של החדר? — חמש."
+      ],
+      [
+        "Correct a number you heard",
+        "שלוש? — לא, ארבע."
+      ],
+      [
+        "Count visible words",
+        "כמה מילים? — שש."
+      ]
+    ]
+  },
+  {
+    "id": "ADJECTIVE-PREDICATES-A2",
+    "position": 28,
+    "blocks": [
+      [
+        "Make a request because of hunger",
+        "אני רעבה מאוד. אני רוצה אוכל."
+      ],
+      [
+        "Respond to a drink that is too cold",
+        "המיץ קר מדי. אני רוצה תה. התה חם."
+      ],
+      [
+        "Compare a pictured book and bag",
+        "הספר ישן. התיק קטן."
+      ],
+      [
+        "Describe someone after a long day",
+        "הוא עייף. היא עייפה."
+      ]
+    ]
+  },
+  {
+    "id": "PRESENT-BA-SAM-OLE-ROTZE-A2",
+    "position": 29,
+    "blocks": [
+      [
+        "Compare individual and group actions",
+        "אני עולה. הם עולים."
+      ],
+      [
+        "Find the doctor",
+        "איפה הרופא? — בקומה שלוש."
+      ],
+      [
+        "Put a book away",
+        "היא שמה ספר בחדר. הם שמים ספר בחדר."
+      ],
+      [
+        "Find out what a group wants",
+        "הם רוצים מים. הן רוצות קפה."
+      ]
+    ]
+  },
+  {
+    "id": "PRONUNCIATION-KH-R-A2",
+    "position": 30,
+    "blocks": [
+      [
+        "Plan a visit to the lake",
+        "אני רוצה ללכת לאגם. החבר גם רוצה ללכת."
+      ],
+      [
+        "Look out of the window",
+        "החלון גדול. יש רוח."
+      ],
+      [
+        "Locate a path",
+        "איפה הדרך? — ליד האגם."
+      ]
+    ]
+  },
+  {
+    "id": "PREP-SUFFIXES-YOU-SG-A2",
+    "position": 31,
+    "blocks": [
+      [
+        "Ask about someone’s food",
+        "יש לך פלאפל? — יש לי קצת."
+      ],
+      [
+        "Give a reason for staying",
+        "למה אתה כאן? — כי אני רוצה ללמוד."
+      ],
+      [
+        "Correct a preference",
+        "אני לא רוצה תה, אלא מים."
+      ],
+      [
+        "Check ownership",
+        "האם הכפפה שלך?"
+      ]
+    ]
+  },
+  {
+    "id": "ROOTS-A2",
+    "position": 32,
+    "blocks": [
+      [
+        "Connect known people and actions",
+        "אמן → אמנות; לומד → תלמיד."
+      ],
+      [
+        "Ask about a sentence",
+        "מה המשמעות של המשפט?"
+      ],
+      [
+        "Identify an example in a story",
+        "זאת דוגמה. הדוגמה מהסיפור."
+      ]
+    ]
+  },
+  {
+    "id": "NOUN-ADJECTIVE-A2",
+    "position": 33,
+    "blocks": [
+      [
+        "Put belongings in place",
+        "שים שם מזוודה גדולה. הכרית בתוך התיק."
+      ],
+      [
+        "Choose a book",
+        "איזה ספר? — הספר האדום."
+      ],
+      [
+        "Compare shelf heights",
+        "המדף נמוך. זה מדף גבוה."
+      ],
+      [
+        "Identify the next learner",
+        "התלמידה הבאה כאן."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-ONE-SHOPPING-A2",
+    "position": 34,
+    "blocks": [
+      [
+        "Buy a book",
+        "מה המחיר? — שקל אחד. אני קונה ספר."
+      ],
+      [
+        "Choose a payment method",
+        "אני משלם במזומן. יש לך עודף?"
+      ],
+      [
+        "Find the checkout",
+        "איפה הקופה? — בתוך החנות."
+      ],
+      [
+        "Compare prices",
+        "הספר יקר. התיק זול."
+      ]
+    ]
+  },
+  {
+    "id": "VAV-YOD-SPELLING-A2",
+    "position": 35,
+    "blocks": [
+      [
+        "Locate a message",
+        "האימייל כאן."
+      ],
+      [
+        "Identify a tool from a label",
+        "מה המילה על התווית? — מברג."
+      ],
+      [
+        "Locate tools in a picture",
+        "המשאבה ליד הבית. המברג בתוך הבית."
+      ]
+    ]
+  },
+  {
+    "id": "PREP-SUFFIXES-US-THEM-A2",
+    "position": 36,
+    "blocks": [
+      [
+        "Welcome someone",
+        "ברוכה הבאה! אנחנו כאן יחד."
+      ],
+      [
+        "Ask on behalf of a group",
+        "יש לנו ארוחה. תן לנו לחם, בבקשה."
+      ],
+      [
+        "Identify two groups’ belongings",
+        "הבית שלהם. הדירה שלהן."
+      ],
+      [
+        "Offer congratulations",
+        "מזל טוב ובהצלחה!"
+      ]
+    ]
+  },
+  {
+    "id": "PATTERNS-A2",
+    "position": 37,
+    "blocks": [
+      [
+        "Discuss a question and answer",
+        "מה התשובה? — זאת התשובה. אני לא מבין."
+      ],
+      [
+        "Discuss what a text is about",
+        "מה הנושא של הסיפור?"
+      ],
+      [
+        "Identify a change",
+        "זה שינוי. יש קשר לשאלה."
+      ]
+    ]
+  },
+  {
+    "id": "BEGED-KEFET-A2",
+    "position": 38,
+    "blocks": [
+      [
+        "Choose a manageable bag",
+        "התיק כבד מדי. אני רוצה תיק יותר קל."
+      ],
+      [
+        "Compare open and closed places",
+        "הבית פתוח. החדר סגור."
+      ],
+      [
+        "React to an explanation",
+        "ברור. רק עוד שאלה, בבקשה."
+      ]
+    ]
+  },
+  {
+    "id": "DEMONSTRATIVE-PHRASES-A2",
+    "position": 39,
+    "blocks": [
+      [
+        "Choose a table",
+        "השולחן החדש הזה יפה."
+      ],
+      [
+        "Choose clothing",
+        "השמלה הזאת יפה. אני רוצה שמלה."
+      ],
+      [
+        "Arrange a meal",
+        "בצהריים יש בשר. בערב יש לחם וגבינה."
+      ]
+    ]
+  },
+  {
+    "id": "PAAL-A2",
+    "position": 40,
+    "blocks": [
+      [
+        "Describe study activities",
+        "אני כותב במחברת. הוא קורא ספר."
+      ],
+      [
+        "Ask for school materials",
+        "אפשר עט ודף, בבקשה?"
+      ],
+      [
+        "Follow a lesson",
+        "אני שומע שיר בשיעור."
+      ],
+      [
+        "Express an intention",
+        "אני רוצה לקרוא ספר ולכתוב במחברת."
+      ]
+    ]
+  },
+  {
+    "id": "PREP-SUFFIXES-YOU-PL-A2",
+    "position": 41,
+    "blocks": [
+      [
+        "Offer fruit to a group",
+        "יש לכם תפוזים. יש לכן גם מנגו."
+      ],
+      [
+        "Return something to its owners",
+        "המזלג שלכם כאן."
+      ],
+      [
+        "Check a shared source",
+        "התבלין מכן? — התבלין מאיתנו."
+      ]
+    ]
+  },
+  {
+    "id": "GERESH-LETTERS-A2",
+    "position": 42,
+    "blocks": [
+      [
+        "Plan a journey",
+        "סעי למלון. הג׳יפ ליד הבית."
+      ],
+      [
+        "Choose food",
+        "אני רוצה צ׳יפס, בבקשה."
+      ],
+      [
+        "Choose clothing",
+        "אני רוצה ג׳ינס וג׳קט."
+      ]
+    ]
+  },
+  {
+    "id": "TOOL-PATTERNS-A2",
+    "position": 43,
+    "blocks": [
+      [
+        "Get online",
+        "איפה הסיסמה? — ליד המחשב. הקישור על המסך."
+      ],
+      [
+        "Find a charger",
+        "המטען ליד המצלמה."
+      ],
+      [
+        "Put a label on a device",
+        "המדבקה על המכשיר."
+      ]
+    ]
+  },
+  {
+    "id": "DIRECT-OBJECT-ET-A2",
+    "position": 44,
+    "blocks": [
+      [
+        "Read and check a message",
+        "אני קורא את ההודעה ובודק את המסמך."
+      ],
+      [
+        "Discuss something you watched",
+        "אני רואה את הסרט. אני אוהב את הסרט הזה."
+      ],
+      [
+        "Contrast indefinite and definite objects",
+        "הוא אוכל לחם. הוא אוכל את הלחם."
+      ]
+    ]
+  },
+  {
+    "id": "ALPHABET-ORDER-A2",
+    "position": 45,
+    "blocks": [
+      [
+        "Ask for a destination",
+        "מה הכתובת? — הבית ליד הגשר."
+      ],
+      [
+        "Find the bus stop",
+        "התחנה בפינה, ליד הצומת."
+      ],
+      [
+        "Give a familiar direction",
+        "צא מהבית. אני עוזר לך."
+      ]
+    ]
+  },
+  {
+    "id": "MODALS-CAN-NEED-MUST-A2",
+    "position": 46,
+    "blocks": [
+      [
+        "Ask for help with reading",
+        "את יכולה לקרוא את ההודעה? — אני יכולה."
+      ],
+      [
+        "Explain a need",
+        "אני צריך להתחיל ללמוד."
+      ],
+      [
+        "Compare a need and a requirement",
+        "אנחנו צריכים ללמוד. אנחנו חייבים ללמוד."
+      ],
+      [
+        "Arrange a meal",
+        "אני רוצה ללכת למסעדה. יש זמן?"
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-FEMININE-A2",
+    "position": 47,
+    "blocks": [
+      [
+        "Ask how much time remains",
+        "יש לנו רבע שעה. זה מספיק?"
+      ],
+      [
+        "Pack a meal",
+        "אני רוצה צלחת אחת ושקית אחת."
+      ],
+      [
+        "Estimate a duration",
+        "בערך חצי שעה. — לא, בדיוק עשר דקות."
+      ]
+    ]
+  },
+  {
+    "id": "ETZEL-DIRECTIONS-A2",
+    "position": 48,
+    "blocks": [
+      [
+        "Look for a key",
+        "איפה המפתח? — אצל אמא. אני מוצא את המפתח בארון."
+      ],
+      [
+        "Give directions",
+        "ימינה. אחר כך שמאלה."
+      ],
+      [
+        "Locate someone",
+        "אמא למעלה, מול החלון."
+      ]
+    ]
+  },
+  {
+    "id": "PAST-HE-SHE-THEY-A2",
+    "position": 49,
+    "blocks": [
+      [
+        "Report what happened yesterday",
+        "היא קראה את המכתב אתמול. הם למדו בלילה."
+      ],
+      [
+        "Contrast a completed visit with a coming one",
+        "הוא בא שלשום. הוא בא שוב בקרוב."
+      ],
+      [
+        "Place events in time",
+        "הם למדו לפני חודש. היא למדה לפני שבוע."
+      ]
+    ]
+  },
+  {
+    "id": "PLACE-PATTERNS-A2",
+    "position": 50,
+    "blocks": [
+      [
+        "Ask about a visit",
+        "הוא בא למוזיאון אתמול."
+      ],
+      [
+        "Find care",
+        "איפה המרפאה? — ליד המגדל."
+      ],
+      [
+        "Describe a workday",
+        "הוא עבד במפעל. הוא בא למגרש אחר כך."
+      ]
+    ]
+  },
+  {
+    "id": "IM-WITH-A2",
+    "position": 51,
+    "blocks": [
+      [
+        "Describe a family visit",
+        "אני עם ההורים. סבא וסבתא איתנו."
+      ],
+      [
+        "Replace a named companion",
+        "אני עם אמא. אני איתה."
+      ],
+      [
+        "Describe a friendly relative",
+        "סבא נחמד. יש לי עניין בסיפור שלו."
+      ]
+    ]
+  },
+  {
+    "id": "FEELING-HOT-COLD-A2",
+    "position": 52,
+    "blocks": [
+      [
+        "Ask for water",
+        "אני צמא. אפשר מים, בבקשה?"
+      ],
+      [
+        "Explain discomfort",
+        "קר לי. כואב לי הגב."
+      ],
+      [
+        "Describe the weather",
+        "מזג האוויר רע. יש גשם."
+      ],
+      [
+        "Respond to a meal",
+        "האוכל טעים, אבל אני צמאה."
+      ]
+    ]
+  },
+  {
+    "id": "PAST-I-A2",
+    "position": 53,
+    "blocks": [
+      [
+        "Report finishing a task",
+        "גמרתי מוקדם וסגרתי את הדלת."
+      ],
+      [
+        "Describe what you collected",
+        "אספתי ספרים. אחר כך ספרתי את הספרים."
+      ],
+      [
+        "Compare arrival times",
+        "באתי מוקדם. הוא בא מאוחר."
+      ]
+    ]
+  },
+  {
+    "id": "DUAL-A2",
+    "position": 54,
+    "blocks": [
+      [
+        "Find personal belongings",
+        "איפה המשקפיים שלי? — ליד הנעליים."
+      ],
+      [
+        "Ask for tools",
+        "אפשר לקחת את המספריים?"
+      ],
+      [
+        "Describe a physical problem",
+        "כואב לי באוזן."
+      ]
+    ]
+  },
+  {
+    "id": "HOME-VISIT-A2",
+    "position": 55,
+    "blocks": [
+      [
+        "Visit someone at home",
+        "שלום, כולם! אני גר פה. אמא נחה בפנים."
+      ],
+      [
+        "Explain where someone is resting",
+        "אמא נחה בפנים. הוא נח בחוץ."
+      ],
+      [
+        "Offer something to a guest",
+        "קחי בלון. — תודה."
+      ],
+      [
+        "Correct a mistaken address",
+        "מצטער, אני לא גר פה."
+      ]
+    ]
+  },
+  {
+    "id": "PRESENT-FOUR-FORMS-A2",
+    "position": 56,
+    "blocks": [
+      [
+        "Describe people getting ready",
+        "היא לובשת מעיל. הם פותחים את הדלת."
+      ],
+      [
+        "Describe an action shared by two women",
+        "הן פותחות את הדלת."
+      ],
+      [
+        "Explain an ongoing task",
+        "אני עדיין סוחב את התיק."
+      ],
+      [
+        "Describe a routine",
+        "בדרך כלל אני לובש חולצה. לפעמים אני לובש מעיל."
+      ]
+    ]
+  },
+  {
+    "id": "OBJECT-AND-RECIPIENT-A2",
+    "position": 57,
+    "blocks": [
+      [
+        "Send a letter",
+        "אני שולח את המכתב לילד. אני שולח לו אותו."
+      ],
+      [
+        "Choose something for another person",
+        "אני בוחר שוקולד. אני שומר אותו לאמא."
+      ],
+      [
+        "Explain a missing item",
+        "שכחתי את הבול. המעטפה כאן."
+      ],
+      [
+        "Receive a parcel",
+        "אני מקבל יוגורט ושוקולד."
+      ]
+    ]
+  },
+  {
+    "id": "CONSTRUCT-CHAINS-A2",
+    "position": 58,
+    "blocks": [
+      [
+        "Arrange a family meal",
+        "ארוחת הבוקר על השולחן. ארוחת הערב בבית של סבתא."
+      ],
+      [
+        "Find a destination",
+        "בית הספר ליד תחנת האוטובוס."
+      ],
+      [
+        "Show identification",
+        "זאת תעודת הזהות שלי."
+      ],
+      [
+        "Plan a weekend",
+        "בסוף השבוע יש לי יום הולדת."
+      ]
+    ]
+  },
+  {
+    "id": "PAST-I-WE-YOU-A2",
+    "position": 59,
+    "blocks": [
+      [
+        "Ask about yesterday",
+        "היית במלון? — לא, הייתי בבית."
+      ],
+      [
+        "Describe a shared visit",
+        "היינו בבית של המשפחה."
+      ],
+      [
+        "Complete a personal-information form",
+        "מה כתובת המגורים? מה המצב המשפחתי?"
+      ],
+      [
+        "Compare two people on a form",
+        "הוא צעיר ורווק. זה איש מבוגר ונשוי."
+      ]
+    ]
+  },
+  {
+    "id": "MISSING-BOOK-A2",
+    "position": 60,
+    "blocks": [
+      [
+        "Look for a missing book",
+        "אני מחפש את הספר. הספר כבר לא בכיתה."
+      ],
+      [
+        "Request help",
+        "אני עסוק. אני מבקש עזרה."
+      ],
+      [
+        "Find it and get ready",
+        "הספר על המדף בחדר של התלמיד. עכשיו אני מוכן."
+      ]
+    ]
+  },
+  {
+    "id": "SEGOLATE-NOUNS-A2",
+    "position": 61,
+    "blocks": [
+      [
+        "Deal with a vehicle problem",
+        "אין דלק ברכב. יש לי רק כסף קטן."
+      ],
+      [
+        "Discuss a book",
+        "אני חושב על הפרק הזה. זה חלק חשוב מהסיפור."
+      ],
+      [
+        "Describe a damaged object",
+        "יש נזק לרכב."
+      ]
+    ]
+  },
+  {
+    "id": "WEEK-PLANS-A2",
+    "position": 62,
+    "blocks": [
+      [
+        "Arrange study around work",
+        "ביום שני אני צריך לעבוד. ביום שישי אנחנו רוצים ללמוד יחד."
+      ],
+      [
+        "Choose a day",
+        "יום ראשון או יום שלישי? — יום שלישי."
+      ],
+      [
+        "Check the calendar",
+        "החג ביום חמישי. בשבת אנחנו בחופשה."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-ELEVEN-NINETEEN-A2",
+    "position": 63,
+    "blocks": [
+      [
+        "Buy food by weight",
+        "אני רוצה חצי קילו גבינה וקילו אורז."
+      ],
+      [
+        "Check a drink quantity",
+        "ליטר או חצי ליטר? — חצי ליטר."
+      ],
+      [
+        "Ask about portions",
+        "מה הכמות במנה העיקרית?"
+      ],
+      [
+        "Compare timing",
+        "שתים עשרה דקות. — לא, שלוש עשרה דקות."
+      ]
+    ]
+  },
+  {
+    "id": "PIEL-A2",
+    "position": 64,
+    "blocks": [
+      [
+        "Describe a teacher’s work",
+        "המורה מלמד עברית ומספר סיפור."
+      ],
+      [
+        "Describe your completed work",
+        "סיפרתי את הסיפור וסידרתי את הכיתה."
+      ],
+      [
+        "Pay for a purchase",
+        "יש הנחה? — כן. אני משלם בקופה. אפשר קבלה?"
+      ]
+    ]
+  },
+  {
+    "id": "ADJECTIVES-YOD-A2",
+    "position": 65,
+    "blocks": [
+      [
+        "Discuss languages",
+        "אני מדבר עברית ואנגלית. היא מדברת ערבית וצרפתית."
+      ],
+      [
+        "Describe a film",
+        "זה סרט ישראלי. הסרט הזה באנגלית."
+      ],
+      [
+        "Introduce a person from England",
+        "הוא מאנגליה. הוא אנגלי."
+      ]
+    ]
+  },
+  {
+    "id": "CLASSROOM-PROBLEM-A2",
+    "position": 66,
+    "blocks": [
+      [
+        "Identify a problem and propose a solution",
+        "הסיפור קשה לתלמידים. יש לי רעיון: המורה מספר את הסיפור שוב, לאט."
+      ],
+      [
+        "Use someone’s suggestion",
+        "זאת העצה של התלמידה. זה פתרון טוב."
+      ],
+      [
+        "Continue the lesson",
+        "אני זוכר את הסיפור. אני ממשיך בשיעור."
+      ]
+    ]
+  },
+  {
+    "id": "FOUR-ROOT-CONSONANTS-A2",
+    "position": 67,
+    "blocks": [
+      [
+        "Plan a lesson",
+        "אני מתכנן את השיעור ומארגן את החדר."
+      ],
+      [
+        "Update a plan",
+        "אני מעדכן את התוכנית ומפרסם הודעה."
+      ],
+      [
+        "Ask for help",
+        "אני מטלפן למורה. הוא מתרגם את המשפט."
+      ],
+      [
+        "Describe a problem",
+        "המחשב לא מתפקד."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-TENS-A2",
+    "position": 68,
+    "blocks": [
+      [
+        "Order food",
+        "אני רוצה פרוסה של לחם וקינוח."
+      ],
+      [
+        "Check a price",
+        "המחיר עשרים שקל, לא שלושים."
+      ],
+      [
+        "Estimate a duration",
+        "בערך חמישים דקות. — כמעט שעה."
+      ]
+    ]
+  },
+  {
+    "id": "CLASSROOM-PREPARATION-A2",
+    "position": 69,
+    "blocks": [
+      [
+        "Respond to a request",
+        "המורה ביקש שולחן נקי. התלמיד קיבל שולחן מלוכלך וניקה אותו."
+      ],
+      [
+        "Prepare the room",
+        "אני מתקן את המחשב. הסל ליד הספה."
+      ],
+      [
+        "Describe a lesson",
+        "השיעור מעניין. זה לא שיעור רגיל."
+      ],
+      [
+        "Prepare a meal after class",
+        "אני חופשי עכשיו. אני מבשל ארוחה."
+      ]
+    ]
+  },
+  {
+    "id": "NIFAL-A2",
+    "position": 70,
+    "blocks": [
+      [
+        "Meet someone",
+        "נפגשנו במסעדה. אחר כך היא נשארה בבית."
+      ],
+      [
+        "Join a class",
+        "אני נרשם לשיעור."
+      ],
+      [
+        "Describe an unexpected event",
+        "הספר נפתח. המחשב נשבר."
+      ],
+      [
+        "Remember an item",
+        "אני נזכר במילה."
+      ]
+    ]
+  },
+  {
+    "id": "QATOL-ADJECTIVES-A2",
+    "position": 71,
+    "blocks": [
+      [
+        "Describe a route",
+        "הבית רחוק. הרחוב ארוך."
+      ],
+      [
+        "Choose a bag by colour",
+        "אני רוצה תיק כחול, לא שחור."
+      ],
+      [
+        "Describe scenery",
+        "העץ ירוק. הפרח צהוב. האגם עמוק."
+      ],
+      [
+        "Describe a table",
+        "השולחן עגול."
+      ]
+    ]
+  },
+  {
+    "id": "GUTTURAL-VERBS-A2",
+    "position": 72,
+    "blocks": [
+      [
+        "Wait for a conversation",
+        "אני עומד ליד הדלת ומחכה למורה."
+      ],
+      [
+        "Ask a question",
+        "אני שואל שאלה. המורה מחייך."
+      ],
+      [
+        "Report hearing something",
+        "שמעתי את השיחה."
+      ]
+    ]
+  },
+  {
+    "id": "FINAL-HE-VERBS-A2",
+    "position": 73,
+    "blocks": [
+      [
+        "Discuss a purchase",
+        "היא קנתה ספר. הספר עולה עשרה שקלים."
+      ],
+      [
+        "Respond to a question",
+        "אני עונה על השאלה."
+      ],
+      [
+        "Describe a project",
+        "הוא בונה בית."
+      ],
+      [
+        "React to an event",
+        "מה קרה?"
+      ]
+    ]
+  },
+  {
+    "id": "PROFESSIONS-PATTERNS-A2",
+    "position": 74,
+    "blocks": [
+      [
+        "Describe work and hobbies",
+        "הנהג עובד בלילה. הוא גם זמר."
+      ],
+      [
+        "Identify people at an event",
+        "היא צלמת. הוא שחקן."
+      ],
+      [
+        "Ask about a familiar person",
+        "הוא גנן או דייג? — הוא גנן."
+      ]
+    ]
+  },
+  {
+    "id": "SAME-DIFFERENT-A2",
+    "position": 75,
+    "blocks": [
+      [
+        "Compare two products",
+        "זה אותו דגם, אבל הצבע שונה."
+      ],
+      [
+        "Choose a suitable item",
+        "הדגם הזה מתאים לי. זאת הבחירה שלי."
+      ],
+      [
+        "Ask for the relevant difference",
+        "מה ההבדל באיכות?"
+      ]
+    ]
+  },
+  {
+    "id": "HITPAEL-A2",
+    "position": 76,
+    "blocks": [
+      [
+        "Describe getting ready",
+        "היא התלבשה בבוקר. עכשיו היא משתמשת במחשב."
+      ],
+      [
+        "Get in touch",
+        "אני מתקשר לרופא."
+      ],
+      [
+        "Use a tool",
+        "אני משתמש במחשב."
+      ],
+      [
+        "Describe interest",
+        "אני מתעניין בספר הזה."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-MASCULINE-A2",
+    "position": 77,
+    "blocks": [
+      [
+        "Prepare for guests",
+        "יש שלושה אורחים וחמישה כיסאות."
+      ],
+      [
+        "Buy fruit",
+        "אני רוצה חמישה תפוחים ושלושה גזרים."
+      ],
+      [
+        "Choose a toy",
+        "שני כדורים או שלושה צעצועים?"
+      ]
+    ]
+  },
+  {
+    "id": "PREPOSITIONS-PLURAL-SUFFIXES-A2",
+    "position": 78,
+    "blocks": [
+      [
+        "Find belongings",
+        "התיק מתחת לכיסא. המפתח מאחורי הספר."
+      ],
+      [
+        "Choose an alternative",
+        "אני רוצה מים במקום קפה."
+      ],
+      [
+        "Explain a change of plan",
+        "אני בבית בגלל הגשם."
+      ],
+      [
+        "Identify a recipient",
+        "המתנה בשביל אמא."
+      ]
+    ]
+  },
+  {
+    "id": "HOLLOW-VERBS-A2",
+    "position": 79,
+    "blocks": [
+      [
+        "Describe travel",
+        "היא טסה אתמול. הטיסה הייתה בלילה."
+      ],
+      [
+        "Describe where you lived",
+        "גרתי בעיר. עכשיו אני גר בבית עם חצר."
+      ],
+      [
+        "Describe an activity",
+        "הוא רץ בחצר. הוא שר שיר."
+      ]
+    ]
+  },
+  {
+    "id": "QATIL-ADJECTIVES-A2",
+    "position": 80,
+    "blocks": [
+      [
+        "Describe someone after resting",
+        "אני בריא ורגוע."
+      ],
+      [
+        "Compare ways of acting",
+        "הוא מהיר, אבל זהיר."
+      ],
+      [
+        "Describe a difficult task",
+        "אני חלש עכשיו. זה קשה לי."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-MASCULINE-CONSTRUCT-A2",
+    "position": 81,
+    "blocks": [
+      [
+        "Find transport",
+        "שלושת הכרטיסים בתיק. שני המושבים ליד החלון."
+      ],
+      [
+        "Ask where to wait",
+        "איפה הרציף? — ליד היציאה."
+      ],
+      [
+        "Check a route",
+        "זה הקו שלנו?"
+      ]
+    ]
+  },
+  {
+    "id": "HIFIL-A2",
+    "position": 82,
+    "blocks": [
+      [
+        "Solve a problem",
+        "היא הסבירה לי את הבעיה. אני מציע פתרון."
+      ],
+      [
+        "Order a meal",
+        "הזמנתי אוכל במסעדה."
+      ],
+      [
+        "Put something away",
+        "אני מכניס את הספר לתיק."
+      ],
+      [
+        "Decide to stop",
+        "אני מרגיש רע. אני מפסיק ללמוד."
+      ]
+    ]
+  },
+  {
+    "id": "CONSTRUCT-CHAINS-RETURN-A2",
+    "position": 83,
+    "blocks": [
+      [
+        "Prepare for a journey",
+        "הדרכון בתיק. הבקבוק במכונית."
+      ],
+      [
+        "Find transport",
+        "תחנות הרכבת ליד בית הקפה."
+      ],
+      [
+        "Describe arrival",
+        "אני מביא את התיק לשדה התעופה."
+      ],
+      [
+        "Find parking",
+        "איפה החניון? אין כאן חניה."
+      ]
+    ]
+  },
+  {
+    "id": "ASSIMILATION-NUN-MEM-A2",
+    "position": 84,
+    "blocks": [
+      [
+        "Find a missing object",
+        "אני מוציא את המברשת מהמגירה."
+      ],
+      [
+        "Describe an accident",
+        "המראה נפלה."
+      ],
+      [
+        "Identify the source of a letter",
+        "זה מכתב מאת המורה."
+      ],
+      [
+        "Describe an attempt",
+        "אני מנסה לפתוח את הדלת."
+      ]
+    ]
+  },
+  {
+    "id": "PERMISSION-IMMINENCE-A2",
+    "position": 85,
+    "blocks": [
+      [
+        "Check a rule",
+        "מותר לשבת פה? — לא, אסור לשבת פה."
+      ],
+      [
+        "Describe an imminent action",
+        "היא עומדת לקרוא את ההודעה."
+      ],
+      [
+        "Explain an intention",
+        "יש לי כוונה לצאת לטיול."
+      ],
+      [
+        "Ask for permission",
+        "אפשר לשים את התיק פה?"
+      ]
+    ]
+  },
+  {
+    "id": "FINDING-SOMEONE-A2",
+    "position": 86,
+    "blocks": [
+      [
+        "Find an unidentified person",
+        "יש פה מישהו. מי? — אני לא יודע."
+      ],
+      [
+        "Look for something misplaced",
+        "המפתח איפשהו בחדר. אני צריך אותו."
+      ],
+      [
+        "Express an unspecified preference",
+        "היא רוצה לשתות משהו."
+      ],
+      [
+        "Plan an outing without choosing a destination",
+        "אני רוצה ללכת לאנשהו."
+      ]
+    ]
+  },
+  {
+    "id": "STATES-HEALTH-A2",
+    "position": 87,
+    "blocks": [
+      [
+        "Ask for medicine",
+        "אני חולה. אני צריכה תרופה. איפה בית המרקחת?"
+      ],
+      [
+        "Identify someone’s role",
+        "היא אחות במרפאה."
+      ],
+      [
+        "Describe a feeling",
+        "אני עצוב. אני רוצה קצת שלווה."
+      ]
+    ]
+  },
+  {
+    "id": "PAST-HABIT-A2",
+    "position": 88,
+    "blocks": [
+      [
+        "Describe a former routine",
+        "בעבר הייתי קורא כל ערב."
+      ],
+      [
+        "Recall childhood",
+        "בילדות היינו לומדים יחד. זה זיכרון נעים."
+      ],
+      [
+        "Describe a childhood routine",
+        "בילדות הייתי קורא בכל יום. זה היה הרגל."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-MASCULINE-TEENS-A2",
+    "position": 89,
+    "blocks": [
+      [
+        "Check a clothing order",
+        "יש פה שלושה עשר כובעים? — יש ארבעה עשר כובעים."
+      ],
+      [
+        "Choose a scarf",
+        "אני רוצה את הצעיף הכחול."
+      ],
+      [
+        "Prepare for a shift",
+        "השעון שלי בבית. התורנות בערב."
+      ]
+    ]
+  },
+  {
+    "id": "ACTION-NOUNS-PIEL-A2",
+    "position": 90,
+    "blocks": [
+      [
+        "Arrange a repair",
+        "המחשב לא עובד. אני צריך תיקון."
+      ],
+      [
+        "Plan a lesson",
+        "התכנון חשוב. סיום השיעור בשעה שלוש."
+      ],
+      [
+        "Discuss activities",
+        "אני אוהב בישול וצילום."
+      ]
+    ]
+  },
+  {
+    "id": "FUTURE-I-WE-HE-A2",
+    "position": 91,
+    "blocks": [
+      [
+        "Compare plans",
+        "מחר אלמד בבית. מחרתיים נלמד יחד."
+      ],
+      [
+        "Make a promise",
+        "אבוא מחר. זאת הבטחה."
+      ],
+      [
+        "Express a possibility",
+        "אולי הוא ילמד איתנו. יש סיכוי."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-HUNDREDS-A2",
+    "position": 92,
+    "blocks": [
+      [
+        "Read a bill",
+        "החשבון מאתיים שקלים. יש עמלה?"
+      ],
+      [
+        "Plan spending",
+        "התקציב שלוש מאות שקלים. ההוצאה מאה שקלים."
+      ],
+      [
+        "Discuss income",
+        "המשכורת בבנק. יש לי חיסכון."
+      ]
+    ]
+  },
+  {
+    "id": "EMBEDDED-CLAUSES-A2",
+    "position": 93,
+    "blocks": [
+      [
+        "Explain a decision",
+        "אני עייף, לכן אני בבית."
+      ],
+      [
+        "Correct an assumption",
+        "אני יודע שהוא בבית. בעצם, זאת טעות."
+      ],
+      [
+        "Give an example",
+        "יש כאן אוכל, למשל לחם וגבינה."
+      ]
+    ]
+  },
+  {
+    "id": "FUTURE-YOU-COMMANDS-A2",
+    "position": 94,
+    "blocks": [
+      [
+        "Warn someone",
+        "אל תיכנס. יש סכנה."
+      ],
+      [
+        "Give a safe instruction",
+        "עצרי פה. לכי בזהירות."
+      ],
+      [
+        "Ask for urgent help",
+        "הצילו! זה מצב חירום."
+      ]
+    ]
+  },
+  {
+    "id": "ACTION-NOUNS-HIFIL-A2",
+    "position": 95,
+    "blocks": [
+      [
+        "Respond to a difficult explanation",
+        "ההסבר לא ברור. אפשר דוגמה?"
+      ],
+      [
+        "Plan attendance",
+        "יש לי הזמנה להדרכה."
+      ],
+      [
+        "Pause an activity",
+        "אחרי ההגעה יש הפסקה."
+      ],
+      [
+        "Give a recommendation",
+        "זאת המלצה על המורה."
+      ]
+    ]
+  },
+  {
+    "id": "RELATIVE-CLAUSES-A2",
+    "position": 96,
+    "blocks": [
+      [
+        "Identify the person who helped",
+        "זה הפקיד שעזר לי."
+      ],
+      [
+        "Identify a waiting customer",
+        "הלקוח שמחכה רוצה שירות."
+      ],
+      [
+        "Identify a representative",
+        "זה הנציג שהסביר לי את הבעיה."
+      ]
+    ]
+  },
+  {
+    "id": "FUTURE-SHE-THEY-A2",
+    "position": 97,
+    "blocks": [
+      [
+        "Agree on a condition",
+        "אם הם יגיעו בזמן, נתחיל."
+      ],
+      [
+        "Arrange two future events",
+        "כשהיא תבוא, נלמד."
+      ],
+      [
+        "Ask for a prompt arrival",
+        "היא תבוא בהקדם."
+      ],
+      [
+        "Compare arrangements",
+        "לפני שהיא תבוא, נלמד. אחרי שהיא תבוא, נלמד יחד."
+      ]
+    ]
+  },
+  {
+    "id": "ACTION-NOUNS-PAAL-A2",
+    "position": 98,
+    "blocks": [
+      [
+        "Arrange an appointment",
+        "יש לי פגישה מחר. אחרי הפגישה יש בדיקה."
+      ],
+      [
+        "Explain a learning choice",
+        "קריאה עוזרת ללמידה."
+      ],
+      [
+        "Describe a routine",
+        "אני אוהב הליכה וריצה."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTERFACTUAL-A2",
+    "position": 99,
+    "blocks": [
+      [
+        "Imagine a different situation",
+        "אילו היה לי זמן, הייתי קורא את הספר."
+      ],
+      [
+        "Respond to a missed opportunity",
+        "חבל, זאת הזדמנות. זה פספוס."
+      ],
+      [
+        "Explain a necessary choice",
+        "אין לי ברירה. אני צריך ללמוד, אחרת לא אדע."
+      ]
+    ]
+  },
+  {
+    "id": "GENERIC-THEY-PASSIVE-A2",
+    "position": 100,
+    "blocks": [
+      [
+        "Report a theft",
+        "גנבו לי את התיק. אני מדווח למשטרה."
+      ],
+      [
+        "Pass on information without naming the speaker",
+        "אמרו לי שהדרכון במשטרה."
+      ],
+      [
+        "Give contact details",
+        "זה מספר הטלפון שלי. יש לי ביטוח."
+      ]
+    ]
+  },
+  {
+    "id": "ACTION-NOUN-FAMILIES-A2",
+    "position": 101,
+    "blocks": [
+      [
+        "Process a request",
+        "הביטול אפשרי. צריך חתימה על המסמך."
+      ],
+      [
+        "Describe a return",
+        "אני מחזיר את הספר."
+      ],
+      [
+        "Choose an administrative task",
+        "החלפה או ביטול? — החלפה."
+      ]
+    ]
+  },
+  {
+    "id": "PURPOSE-CLAUSES-A2",
+    "position": 102,
+    "blocks": [
+      [
+        "Explain why you study",
+        "אני לומד כדי להצליח במבחן הקבלה."
+      ],
+      [
+        "Describe an effort",
+        "אני משתדל ללמוד כל יום. אני מתאמץ."
+      ],
+      [
+        "Explain the purpose of a message",
+        "שלחתי לה את המסמך כדי שהיא תלמד."
+      ]
+    ]
+  },
+  {
+    "id": "INITIAL-ALEPH-FUTURE-A2",
+    "position": 103,
+    "blocks": [
+      [
+        "Plan food for tomorrow",
+        "אוכל לחם מחר. היא תאפה עוגה."
+      ],
+      [
+        "Describe a website",
+        "זה אתר על האזור הזה."
+      ],
+      [
+        "Add a point",
+        "בנוסף, יש לי טענה."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-THOUSANDS-A2",
+    "position": 104,
+    "blocks": [
+      [
+        "Compare distances",
+        "המרחק שלושת אלפים מטרים."
+      ],
+      [
+        "Read a measurement",
+        "הגובה אלף מטר. הרוחב עשרים מטר."
+      ],
+      [
+        "Ask about weather",
+        "מה הטמפרטורה? — עשרים מעלות."
+      ]
+    ]
+  },
+  {
+    "id": "RELATIVE-PREPOSITIONS-A2",
+    "position": 105,
+    "blocks": [
+      [
+        "Identify a workplace",
+        "זאת החברה שאני עובד בה."
+      ],
+      [
+        "Identify a person already discussed",
+        "זה האדם שדיברתי עליו."
+      ],
+      [
+        "Explain representation",
+        "אני כאן מטעם העמותה."
+      ],
+      [
+        "Explain how you learned",
+        "אני לומד בעזרת הקהילה."
+      ]
+    ]
+  },
+  {
+    "id": "PASSIVE-NIFAL-A2",
+    "position": 106,
+    "blocks": [
+      [
+        "Report a document’s status",
+        "המכתב נכתב. ההודעה נשלחה."
+      ],
+      [
+        "Identify a formal message",
+        "זאת הודעה לעיתונות. זה מסמך רשמי."
+      ],
+      [
+        "Describe a problem",
+        "יש תקלה. הנהלים כאן."
+      ]
+    ]
+  },
+  {
+    "id": "COUNTING-MILLIONS-A2",
+    "position": 107,
+    "blocks": [
+      [
+        "Read a business estimate",
+        "העלות שני מיליון שקלים."
+      ],
+      [
+        "Compare outcomes",
+        "יש רווח, אבל יש גם מס."
+      ],
+      [
+        "Check the total",
+        "סך הכול מאה שקלים. אפשר בתשלומים?"
+      ]
+    ]
+  },
+  {
+    "id": "REDUCED-NIKKUD-A2",
+    "position": 108,
+    "blocks": [
+      [
+        "Follow a digital message",
+        "הקובץ באתר. העדכון ביישומון."
+      ],
+      [
+        "Report a login problem",
+        "שכחתי את הסיסמה."
+      ],
+      [
+        "Identify tools",
+        "המקלדת ליד המחשב. המקדחה ליד המסמר."
+      ]
+    ]
+  },
+  {
+    "id": "PASSIVE-PUAL-A2",
+    "position": 109,
+    "blocks": [
+      [
+        "Report preparations",
+        "האירוע פורסם. החשבון שולם."
+      ],
+      [
+        "Report a repair",
+        "המחשב תוקן."
+      ],
+      [
+        "Find an event",
+        "התערוכה ליד האולם. ההופעה בערב."
+      ]
+    ]
+  },
+  {
+    "id": "QUANTITIES-IN-CONTEXT-A2",
+    "position": 110,
+    "blocks": [
+      [
+        "Place an order",
+        "אני רוצה שני קילו תפוחי אדמה, קילו עוף וחצי קילו קמח."
+      ],
+      [
+        "Add items to a delivery",
+        "אני רוצה גם שמנת ודבש. יש משלוח?"
+      ],
+      [
+        "Report a previous order",
+        "הזמנתי שלושה בקבוקי חלב."
+      ]
+    ]
+  },
+  {
+    "id": "SPOKEN-REGISTER-A2",
+    "position": 111,
+    "blocks": [
+      [
+        "Greet a friend",
+        "מה נשמע? — סבבה."
+      ],
+      [
+        "Agree to a plan",
+        "יאללה, בוא! — אחלה."
+      ],
+      [
+        "Respond to a cancellation",
+        "הפגישה לא מחר. איזו באסה."
+      ],
+      [
+        "Reassure a friend about a task",
+        "קטן עליי."
+      ]
+    ]
+  },
+  {
+    "id": "PASSIVE-HUFAL-A2",
+    "position": 112,
+    "blocks": [
+      [
+        "Report an invitation",
+        "האורחים הוזמנו."
+      ],
+      [
+        "Report preparations",
+        "הכיסאות הוכנסו לאולם."
+      ],
+      [
+        "Record an agreement",
+        "אני מסכים לסעיף הזה. יש אישור."
+      ]
+    ]
+  },
+  {
+    "id": "GEMATRIA-A2",
+    "position": 113,
+    "blocks": [
+      [
+        "Read a section label",
+        "סעיף ט״ז."
+      ],
+      [
+        "Discuss a custom",
+        "זה מנהג של המשפחה בפסח."
+      ],
+      [
+        "Plan a holiday visit",
+        "בראש השנה אני בבית הכנסת."
+      ],
+      [
+        "Describe a tradition",
+        "זאת מסורת. זאת ברכה לחנוכה."
+      ]
+    ]
+  },
+  {
+    "id": "FORMAL-REGISTER-A2",
+    "position": 114,
+    "blocks": [
+      [
+        "Request a document",
+        "נא לשלוח את המסמך."
+      ],
+      [
+        "Describe study formally",
+        "אנו לומדים בהתאם לתוכנית."
+      ],
+      [
+        "Explain a delay formally",
+        "עקב התקלה, אנו בבית."
+      ],
+      [
+        "Close a message",
+        "בברכה, מתן."
+      ]
+    ]
+  },
+  {
+    "id": "SPECIAL-VERB-PRACTICE-A2",
+    "position": 115,
+    "blocks": [
+      [
+        "Describe a move",
+        "שכרתי דירה. אני מוכר את המכונית."
+      ],
+      [
+        "Describe an accident",
+        "הוא שבר כוס. היא בכתה."
+      ],
+      [
+        "Describe a game",
+        "אני זורק כדור. הוא תופס אותו."
+      ]
+    ]
+  },
+  {
+    "id": "CHANGED-APPOINTMENT-A2",
+    "position": 116,
+    "blocks": [
+      [
+        "Correct a misunderstanding",
+        "לא ביטלנו את הפגישה. אנחנו משנים את השעה."
+      ],
+      [
+        "Explain the reason",
+        "אני מאחר לפגישה."
+      ],
+      [
+        "Respond and apologise",
+        "אני מתנצל. אני מבטיח לבוא."
+      ]
+    ]
+  }
+]

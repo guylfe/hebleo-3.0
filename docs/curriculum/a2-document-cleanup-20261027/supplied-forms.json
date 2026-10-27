@@ -1,0 +1,8 @@
+[
+ {"key":"PIEL","word":"סידרתי","reason":"Explicit F model סידר→סידרתי; Pi'el past is the current topic, first-person endings already taught at 53."},
+ {"key":"COUNTING-MASCULINE","word":"גזרים","reason":"Explicit F plural supplied for current noun גזר before counting; noun plurals taught at 22."},
+ {"key":"ASSIMILATION-NUN-MEM","word":"נפלה","reason":"Explicit F feminine past model for current נפל; feminine past taught at 49."},
+ {"key":"COUNTING-THOUSANDS","word":"מעלות","reason":"Explicit F plural supplied for current מעלה before temperature exchange."},
+ {"key":"PASSIVE-PUAL","word":"פורסם","reason":"Explicit F active-passive model for familiar פרסם, current Pu'al topic."},
+ {"key":"SPECIAL-VERB-PRACTICE","word":"בכתה","reason":"Explicit F final-he feminine past model for current בכה, reusing lesson73 pattern."}
+]
