@@ -1,0 +1,16 @@
+{
+  "comments": {
+    "count": 59,
+    "beforeSha256": "5c36701dd240a4185591c2c3a02bf0745332fe0daf6e249f706c5fa5c285174e",
+    "afterSha256": "5c36701dd240a4185591c2c3a02bf0745332fe0daf6e249f706c5fa5c285174e",
+    "equal": true,
+    "paginationComplete": true
+  },
+  "originalAUnchanged": true,
+  "numberRowsUnchanged": true,
+  "otherSheetsMetadataUnchanged": true,
+  "sourceLinks": 113,
+  "fullReadbackSha256": "f59939c32161103b81b682696d3f1a926bbc069c3c348b91bbaf087d6eb02c78",
+  "localEvidenceDirectory": ".curriculum-apply70-20261028/",
+  "visualInspection": "Browser inspection refused; no foreground or alternate browser-control bypass. Saved cell formats, wrapping, frozen rows/columns and topic rules verified; actual rendered fit not established."
+}

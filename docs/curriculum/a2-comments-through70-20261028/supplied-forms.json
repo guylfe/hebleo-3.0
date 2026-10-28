@@ -1,0 +1,47 @@
+[
+  [
+    "VOWELS-OU-READING",
+    "מו מ",
+    "Reading syllables, not lexical entries."
+  ],
+  [
+    "VAV-YOD-SPELLING",
+    "הווילון",
+    "Article + initial vav spelling is explicitly compared."
+  ],
+  [
+    "PRESENT-BA-SAM-OLE-ROTZE",
+    "לומדים לומדות מדברים מדברות",
+    "Green and present plurals explicitly modelled in F/D."
+  ],
+  [
+    "PIEL",
+    "מלמד מלמדת מלמדים מלמדות מספר מספרת מספרים מספרות מסדר מסדרת מסדרים מסדרות משחק משחקת משחקים משחקות משלמת",
+    "Present Pi’el and existing agreement applied; past forms deferred."
+  ],
+  [
+    "PAST-HE-SHE-THEY",
+    "דיבר דיברה דיברו",
+    "F explicitly supplies familiar Pi’el past and Green."
+  ],
+  [
+    "PAST-I",
+    "כתבתי כתבנו למדתי למדנו דיברתי דיברנו דִּבַּרְתִּי דִּבַּרְנוּ סגרנו",
+    "F explicitly models I/we with Blue; E supplies task forms. Fully pointed and ordinary full spelling are separate supplied representations."
+  ],
+  [
+    "PAST-I-WE-YOU",
+    "למדת למדתם למדתן דיברתן דִּבַּרְתֶּן כתבת כתבתם כתבתן דיברת דיברתם",
+    "F teaches full singular/plural you models. Fully pointed representation also supplied."
+  ],
+  [
+    "PAST-BE-PROFILE",
+    "היה הייתה היו הייתי היינו היית הייתם הייתן",
+    "All past היה forms explicitly staged in F."
+  ],
+  [
+    "FOUR-ROOT-CONSONANTS",
+    "התארגן מתארגן",
+    "Approved derived meaning taught explicitly in D/F."
+  ]
+]

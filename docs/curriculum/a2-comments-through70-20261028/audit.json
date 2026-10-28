@@ -1,0 +1,57 @@
+{
+  "lessons": 119,
+  "retainedIds": 116,
+  "sourceVocabularyEntries": 1088,
+  "addedDerivedMeanings": 1,
+  "numberLessons": 13,
+  "relocations": 24,
+  "errors": {
+    "preservation": [],
+    "numbers": [],
+    "letters": [],
+    "unknown": [],
+    "prerequisites": [],
+    "grammar": [],
+    "requirements": [],
+    "boilerplate": []
+  },
+  "letterGaps": [
+    {
+      "from": "MNT",
+      "to": "AHY",
+      "intervening": 2
+    },
+    {
+      "from": "AHY",
+      "to": "VAV",
+      "intervening": 2
+    },
+    {
+      "from": "VAV",
+      "to": "LSHZ",
+      "intervening": 4
+    },
+    {
+      "from": "LSHZ",
+      "to": "BGD",
+      "intervening": 2
+    },
+    {
+      "from": "BGD",
+      "to": "KPTZ",
+      "intervening": 2
+    },
+    {
+      "from": "KPTZ",
+      "to": "HET-AYIN-RESH",
+      "intervening": 2
+    },
+    {
+      "from": "HET-AYIN-RESH",
+      "to": "QST",
+      "intervening": 2
+    }
+  ],
+  "passed": true,
+  "limits": "Bounded vocabulary/form, letters, selected grammar, prerequisites and preservation checks; not human linguistic/audio approval or a rendered-layout check."
+}

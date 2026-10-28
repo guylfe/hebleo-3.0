@@ -1,0 +1,835 @@
+[
+  {
+    "id": "MEMORY-A2",
+    "previousPosition": 1,
+    "currentPosition": 1,
+    "title": "How memory works",
+    "newLesson": false
+  },
+  {
+    "id": "MNTL-A2",
+    "previousPosition": 2,
+    "currentPosition": 2,
+    "title": "Letters 1: מנתל — four consonants",
+    "newLesson": false
+  },
+  {
+    "id": "WRITING-BASICS-A2",
+    "previousPosition": 3,
+    "currentPosition": 3,
+    "title": "Writing 1: right-to-left and final forms ם/ן",
+    "newLesson": false
+  },
+  {
+    "id": "VOWELS-AEIO-A2",
+    "previousPosition": 4,
+    "currentPosition": 4,
+    "title": "Vowels 1: a/e/i",
+    "newLesson": false
+  },
+  {
+    "id": "AHY-A2",
+    "previousPosition": 5,
+    "currentPosition": 5,
+    "title": "Letters 2: אהי",
+    "newLesson": false
+  },
+  {
+    "id": "NOMINAL-A2",
+    "previousPosition": 6,
+    "currentPosition": 6,
+    "title": "Introduce yourself: nominal sentences and אני",
+    "newLesson": false
+  },
+  {
+    "id": "QUESTIONS-BASIC-A2",
+    "previousPosition": 7,
+    "currentPosition": 7,
+    "title": "Questions: intonation, question word first, and you",
+    "newLesson": false
+  },
+  {
+    "id": "VAV-A2",
+    "previousPosition": 8,
+    "currentPosition": 8,
+    "title": "Letters 3: ו: sound roles and third-person pronouns",
+    "newLesson": false
+  },
+  {
+    "id": "VOWELS-OU-READING-A2",
+    "previousPosition": null,
+    "currentPosition": 9,
+    "title": "Vowels 2: o/u signs, sheva and לא",
+    "newLesson": true
+  },
+  {
+    "id": "PREFIXES-MHV-A2",
+    "previousPosition": 9,
+    "currentPosition": 10,
+    "title": "Prepositions and prefixes 1: מ־/ה־/ו־",
+    "newLesson": false
+  },
+  {
+    "id": "INTRODUCTIONS-INTEGRATION-A2",
+    "previousPosition": 10,
+    "currentPosition": 11,
+    "title": "Vocabulary 1: Introductions, travel pictures and choices",
+    "newLesson": false
+  },
+  {
+    "id": "VAV-YOD-SPELLING-A2",
+    "previousPosition": 35,
+    "currentPosition": 12,
+    "title": "Writing 2: ו/י roles and doubled spellings",
+    "newLesson": false
+  },
+  {
+    "id": "SHZD-A2",
+    "previousPosition": 11,
+    "currentPosition": 13,
+    "title": "Letters 4: שזד: greetings, names and familiar objects",
+    "newLesson": false
+  },
+  {
+    "id": "DEMONSTRATIVES-SG-A2",
+    "previousPosition": 12,
+    "currentPosition": 14,
+    "title": "Nouns 1: זה/זאת: identifying an item",
+    "newLesson": false
+  },
+  {
+    "id": "NOUN-GENDER-A2",
+    "previousPosition": 13,
+    "currentPosition": 15,
+    "title": "Nouns 2: gender and person-word pairs",
+    "newLesson": false
+  },
+  {
+    "id": "BRTZ-A2",
+    "previousPosition": 14,
+    "currentPosition": 16,
+    "title": "Letters 5: ברצ: home, family and greetings",
+    "newLesson": false
+  },
+  {
+    "id": "PRESENT-SG-A2",
+    "previousPosition": 15,
+    "currentPosition": 17,
+    "title": "Verbs 1: present singular",
+    "newLesson": false
+  },
+  {
+    "id": "PREFIXES-BL-SHEL-A2",
+    "previousPosition": 16,
+    "currentPosition": 18,
+    "title": "Prepositions and prefixes 2: ב־/ל־/של; לי and שלי",
+    "newLesson": false
+  },
+  {
+    "id": "KPG-A2",
+    "previousPosition": 17,
+    "currentPosition": 19,
+    "title": "Letters 6: כפג: objects, הולך/הולכת and איפה",
+    "newLesson": false
+  },
+  {
+    "id": "COMMANDS-GIVE-SIT-GO-A2",
+    "previousPosition": 18,
+    "currentPosition": 20,
+    "title": "Commands 1: come, go, sit and give",
+    "newLesson": false
+  },
+  {
+    "id": "EXISTENCE-POSSESSION-A2",
+    "previousPosition": 19,
+    "currentPosition": 21,
+    "title": "Possession: availability and X has/does not have",
+    "newLesson": false
+  },
+  {
+    "id": "HET-AYIN-A2",
+    "previousPosition": 20,
+    "currentPosition": 22,
+    "title": "Letters 7: חע: food, places and עברית",
+    "newLesson": false
+  },
+  {
+    "id": "INFINITIVE-WANT-A2",
+    "previousPosition": 21,
+    "currentPosition": 23,
+    "title": "Infinitives 1: wanted actions",
+    "newLesson": false
+  },
+  {
+    "id": "NOUN-PLURALS-A2",
+    "previousPosition": 22,
+    "currentPosition": 24,
+    "title": "Nouns 3: plurals and אלה",
+    "newLesson": false
+  },
+  {
+    "id": "QST-A2",
+    "previousPosition": 23,
+    "currentPosition": 25,
+    "title": "Letters 8: קסט: polite requests and everyday replies",
+    "newLesson": false
+  },
+  {
+    "id": "PERMISSION-REQUESTS-A2",
+    "previousPosition": 24,
+    "currentPosition": 26,
+    "title": "Infinitives 2: permission, taking and giving",
+    "newLesson": false
+  },
+  {
+    "id": "PREP-SUFFIXES-ME-HIM-HER-A2",
+    "previousPosition": 25,
+    "currentPosition": 27,
+    "title": "Preposition suffixes 1: me/him/her",
+    "newLesson": false
+  },
+  {
+    "id": "REPAIR-CONVERSATION-A2",
+    "previousPosition": 26,
+    "currentPosition": 28,
+    "title": "Vocabulary 2: Keep a conversation going",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-ONE-TEN-A2",
+    "previousPosition": 27,
+    "currentPosition": 29,
+    "title": "Recognise and say numbers 1–10",
+    "newLesson": false
+  },
+  {
+    "id": "ADJECTIVE-PREDICATES-A2",
+    "previousPosition": 28,
+    "currentPosition": 30,
+    "title": "Adjectives 1: states and gender/number agreement",
+    "newLesson": false
+  },
+  {
+    "id": "PRESENT-BA-SAM-OLE-ROTZE-A2",
+    "previousPosition": 29,
+    "currentPosition": 31,
+    "title": "Verbs 2: present plurals, agreement and Green",
+    "newLesson": false
+  },
+  {
+    "id": "PRONUNCIATION-KH-R-A2",
+    "previousPosition": 30,
+    "currentPosition": 32,
+    "title": "Pronunciation 1: producing ח/כ and ר",
+    "newLesson": false
+  },
+  {
+    "id": "PREP-SUFFIXES-YOU-SG-A2",
+    "previousPosition": 31,
+    "currentPosition": 33,
+    "title": "Preposition suffixes 2: you, singular",
+    "newLesson": false
+  },
+  {
+    "id": "ROOTS-A2",
+    "previousPosition": 32,
+    "currentPosition": 34,
+    "title": "Roots and patterns 1: roots in familiar words",
+    "newLesson": false
+  },
+  {
+    "id": "BODY-SURROUNDINGS-A2",
+    "previousPosition": null,
+    "currentPosition": 35,
+    "title": "Vocabulary 3: the body and outdoors",
+    "newLesson": true
+  },
+  {
+    "id": "NOUN-ADJECTIVE-A2",
+    "previousPosition": 33,
+    "currentPosition": 36,
+    "title": "Adjectives 2: noun–adjective phrases",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-ONE-SHOPPING-A2",
+    "previousPosition": 34,
+    "currentPosition": 37,
+    "title": "Numbers: counting 1",
+    "newLesson": false
+  },
+  {
+    "id": "PREP-SUFFIXES-US-THEM-A2",
+    "previousPosition": 36,
+    "currentPosition": 38,
+    "title": "Preposition suffixes 3: us/them",
+    "newLesson": false
+  },
+  {
+    "id": "PATTERNS-A2",
+    "previousPosition": 37,
+    "currentPosition": 39,
+    "title": "Roots and patterns 2: patterns through familiar meanings",
+    "newLesson": false
+  },
+  {
+    "id": "BEGED-KEFET-A2",
+    "previousPosition": 38,
+    "currentPosition": 40,
+    "title": "Writing 3: בג״ד כפ״ת readings",
+    "newLesson": false
+  },
+  {
+    "id": "DEMONSTRATIVE-PHRASES-A2",
+    "previousPosition": 39,
+    "currentPosition": 41,
+    "title": "Adjectives 3: demonstratives in noun phrases",
+    "newLesson": false
+  },
+  {
+    "id": "PAAL-A2",
+    "previousPosition": 40,
+    "currentPosition": 42,
+    "title": "Binyanim 1: Pa’al: familiar present actions",
+    "newLesson": false
+  },
+  {
+    "id": "PREP-SUFFIXES-YOU-PL-A2",
+    "previousPosition": 41,
+    "currentPosition": 43,
+    "title": "Preposition suffixes 4: you, plural",
+    "newLesson": false
+  },
+  {
+    "id": "GERESH-LETTERS-A2",
+    "previousPosition": 42,
+    "currentPosition": 44,
+    "title": "Writing 4: letters with geresh",
+    "newLesson": false
+  },
+  {
+    "id": "PIEL-A2",
+    "previousPosition": 64,
+    "currentPosition": 45,
+    "title": "Binyanim 2: Pi’el: present pattern",
+    "newLesson": false
+  },
+  {
+    "id": "TOOL-PATTERNS-A2",
+    "previousPosition": 43,
+    "currentPosition": 46,
+    "title": "Roots and patterns 3: tool patterns מַקְטֵל/מַקְטֵלָה",
+    "newLesson": false
+  },
+  {
+    "id": "DIRECT-OBJECT-ET-A2",
+    "previousPosition": 44,
+    "currentPosition": 47,
+    "title": "Object pronouns 1: definite direct-object marker את",
+    "newLesson": false
+  },
+  {
+    "id": "ALPHABET-ORDER-A2",
+    "previousPosition": 45,
+    "currentPosition": 48,
+    "title": "Writing 5: alphabetical order",
+    "newLesson": false
+  },
+  {
+    "id": "MODALS-CAN-NEED-MUST-A2",
+    "previousPosition": 46,
+    "currentPosition": 49,
+    "title": "Infinitives 3: can, need and must",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-FEMININE-A2",
+    "previousPosition": 47,
+    "currentPosition": 50,
+    "title": "Numbers: counting 2-10 feminine",
+    "newLesson": false
+  },
+  {
+    "id": "ETZEL-DIRECTIONS-A2",
+    "previousPosition": 48,
+    "currentPosition": 51,
+    "title": "Prepositions 1: אצל and destinations",
+    "newLesson": false
+  },
+  {
+    "id": "PAST-HE-SHE-THEY-A2",
+    "previousPosition": 49,
+    "currentPosition": 52,
+    "title": "Past tense 1: he/she/they; reuse Green",
+    "newLesson": false
+  },
+  {
+    "id": "PLACE-PATTERNS-A2",
+    "previousPosition": 50,
+    "currentPosition": 53,
+    "title": "Roots and patterns 4: place patterns מִקְטָל/מִקְטָלָה",
+    "newLesson": false
+  },
+  {
+    "id": "IM-WITH-A2",
+    "previousPosition": 51,
+    "currentPosition": 54,
+    "title": "Prepositions 2: עם and companions",
+    "newLesson": false
+  },
+  {
+    "id": "FEELING-HOT-COLD-A2",
+    "previousPosition": 52,
+    "currentPosition": 55,
+    "title": "States: physical sensations with ל־",
+    "newLesson": false
+  },
+  {
+    "id": "PAST-I-A2",
+    "previousPosition": 53,
+    "currentPosition": 56,
+    "title": "Past tense 2: I/we and Blue",
+    "newLesson": false
+  },
+  {
+    "id": "DUAL-A2",
+    "previousPosition": 54,
+    "currentPosition": 57,
+    "title": "Nouns 4: dual forms",
+    "newLesson": false
+  },
+  {
+    "id": "HOME-VISIT-A2",
+    "previousPosition": 55,
+    "currentPosition": 58,
+    "title": "Vocabulary 4: At home: guests, sleep and rest",
+    "newLesson": false
+  },
+  {
+    "id": "PRESENT-FOUR-FORMS-A2",
+    "previousPosition": 56,
+    "currentPosition": 59,
+    "title": "Vocabulary 5: Clothing and routines: apply known present agreement",
+    "newLesson": false
+  },
+  {
+    "id": "OBJECT-AND-RECIPIENT-A2",
+    "previousPosition": 57,
+    "currentPosition": 60,
+    "title": "Object pronouns 2: object versus recipient",
+    "newLesson": false
+  },
+  {
+    "id": "CONSTRUCT-CHAINS-A2",
+    "previousPosition": 58,
+    "currentPosition": 61,
+    "title": "Nouns 5: construct chains",
+    "newLesson": false
+  },
+  {
+    "id": "PAST-I-WE-YOU-A2",
+    "previousPosition": 59,
+    "currentPosition": 62,
+    "title": "Past tense 3: you: singular, then plural",
+    "newLesson": false
+  },
+  {
+    "id": "MISSING-BOOK-A2",
+    "previousPosition": 60,
+    "currentPosition": 63,
+    "title": "Vocabulary 6: Finding a missing book and requesting help",
+    "newLesson": false
+  },
+  {
+    "id": "SEGOLATE-NOUNS-A2",
+    "previousPosition": 61,
+    "currentPosition": 64,
+    "title": "Roots and patterns 5: segolate singular/plural forms",
+    "newLesson": false
+  },
+  {
+    "id": "PAST-BE-PROFILE-A2",
+    "previousPosition": null,
+    "currentPosition": 65,
+    "title": "Past tense 4: היה and personal profiles",
+    "newLesson": true
+  },
+  {
+    "id": "WEEK-PLANS-A2",
+    "previousPosition": 62,
+    "currentPosition": 66,
+    "title": "Vocabulary 7: Calendar words and weekly plans",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-ELEVEN-NINETEEN-A2",
+    "previousPosition": 63,
+    "currentPosition": 67,
+    "title": "Numbers: counting 11-19",
+    "newLesson": false
+  },
+  {
+    "id": "ADJECTIVES-YOD-A2",
+    "previousPosition": 65,
+    "currentPosition": 68,
+    "title": "Adjectives 4: relational י, nationality and language",
+    "newLesson": false
+  },
+  {
+    "id": "CLASSROOM-PROBLEM-A2",
+    "previousPosition": 66,
+    "currentPosition": 69,
+    "title": "Vocabulary 8: Problems, suggestions and solutions",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-TENS-A2",
+    "previousPosition": 68,
+    "currentPosition": 70,
+    "title": "Numbers: counting 20-99",
+    "newLesson": false
+  },
+  {
+    "id": "CLASSROOM-PREPARATION-A2",
+    "previousPosition": 69,
+    "currentPosition": 71,
+    "title": "Vocabulary 9: Classroom tasks and descriptions",
+    "newLesson": false
+  },
+  {
+    "id": "NIFAL-A2",
+    "previousPosition": 70,
+    "currentPosition": 72,
+    "title": "Binyanim 3: Nif’al",
+    "newLesson": false
+  },
+  {
+    "id": "QATOL-ADJECTIVES-A2",
+    "previousPosition": 71,
+    "currentPosition": 73,
+    "title": "Roots and patterns 6: קָטוֹל adjective forms",
+    "newLesson": false
+  },
+  {
+    "id": "GUTTURAL-VERBS-A2",
+    "previousPosition": 72,
+    "currentPosition": 74,
+    "title": "Pronunciation 2: gutturals in familiar verb forms",
+    "newLesson": false
+  },
+  {
+    "id": "FINAL-HE-VERBS-A2",
+    "previousPosition": 73,
+    "currentPosition": 75,
+    "title": "Verb groups 1: final-ה/י",
+    "newLesson": false
+  },
+  {
+    "id": "PROFESSIONS-PATTERNS-A2",
+    "previousPosition": 74,
+    "currentPosition": 76,
+    "title": "Roots and patterns 7: profession patterns",
+    "newLesson": false
+  },
+  {
+    "id": "SAME-DIFFERENT-A2",
+    "previousPosition": 75,
+    "currentPosition": 77,
+    "title": "Reference: same and different",
+    "newLesson": false
+  },
+  {
+    "id": "HITPAEL-A2",
+    "previousPosition": 76,
+    "currentPosition": 78,
+    "title": "Binyanim 4: Hitpa’el",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-MASCULINE-A2",
+    "previousPosition": 77,
+    "currentPosition": 79,
+    "title": "Numbers: masculine independent (1-10)",
+    "newLesson": false
+  },
+  {
+    "id": "PREPOSITIONS-PLURAL-SUFFIXES-A2",
+    "previousPosition": 78,
+    "currentPosition": 80,
+    "title": "Prepositions 3: plural-style suffixes",
+    "newLesson": false
+  },
+  {
+    "id": "HOLLOW-VERBS-A2",
+    "previousPosition": 79,
+    "currentPosition": 81,
+    "title": "Verb groups 2: middle ו/י",
+    "newLesson": false
+  },
+  {
+    "id": "QATIL-ADJECTIVES-A2",
+    "previousPosition": 80,
+    "currentPosition": 82,
+    "title": "Roots and patterns 8: קָטִיל adjective forms",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-MASCULINE-CONSTRUCT-A2",
+    "previousPosition": 81,
+    "currentPosition": 83,
+    "title": "Numbers: masculine construct (1-10)",
+    "newLesson": false
+  },
+  {
+    "id": "HIFIL-A2",
+    "previousPosition": 82,
+    "currentPosition": 84,
+    "title": "Binyanim 5: Hif’il",
+    "newLesson": false
+  },
+  {
+    "id": "CONSTRUCT-CHAINS-RETURN-A2",
+    "previousPosition": 83,
+    "currentPosition": 85,
+    "title": "Nouns 6: construct plurals and definiteness",
+    "newLesson": false
+  },
+  {
+    "id": "ASSIMILATION-NUN-MEM-A2",
+    "previousPosition": 84,
+    "currentPosition": 86,
+    "title": "Pronunciation 3: assimilation in supplied נ/מ forms",
+    "newLesson": false
+  },
+  {
+    "id": "FOUR-ROOT-CONSONANTS-A2",
+    "previousPosition": 67,
+    "currentPosition": 87,
+    "title": "Roots and patterns 9: four-consonant roots in Pi’el and Hitpa’el",
+    "newLesson": false
+  },
+  {
+    "id": "PERMISSION-IMMINENCE-A2",
+    "previousPosition": 85,
+    "currentPosition": 88,
+    "title": "Infinitives 4: permission, prohibition and imminence",
+    "newLesson": false
+  },
+  {
+    "id": "FINDING-SOMEONE-A2",
+    "previousPosition": 86,
+    "currentPosition": 89,
+    "title": "Integration: finding someone and something",
+    "newLesson": false
+  },
+  {
+    "id": "STATES-HEALTH-A2",
+    "previousPosition": 87,
+    "currentPosition": 90,
+    "title": "Roots and patterns 10: קָטֵל forms and health",
+    "newLesson": false
+  },
+  {
+    "id": "PAST-HABIT-A2",
+    "previousPosition": 88,
+    "currentPosition": 91,
+    "title": "Past tense 5: repeated activity with היה + present",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-MASCULINE-TEENS-A2",
+    "previousPosition": 89,
+    "currentPosition": 92,
+    "title": "Numbers: masculine 11-19",
+    "newLesson": false
+  },
+  {
+    "id": "ACTION-NOUNS-PIEL-A2",
+    "previousPosition": 90,
+    "currentPosition": 93,
+    "title": "Action nouns 1: Pi’el",
+    "newLesson": false
+  },
+  {
+    "id": "FUTURE-I-WE-HE-A2",
+    "previousPosition": 91,
+    "currentPosition": 94,
+    "title": "Future 1: I/we/he",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-HUNDREDS-A2",
+    "previousPosition": 92,
+    "currentPosition": 95,
+    "title": "Numbers: counting 100-999",
+    "newLesson": false
+  },
+  {
+    "id": "EMBEDDED-CLAUSES-A2",
+    "previousPosition": 93,
+    "currentPosition": 96,
+    "title": "Clauses 1: linking and embedding",
+    "newLesson": false
+  },
+  {
+    "id": "FUTURE-YOU-COMMANDS-A2",
+    "previousPosition": 94,
+    "currentPosition": 97,
+    "title": "Future 2: you, commands and prohibition",
+    "newLesson": false
+  },
+  {
+    "id": "ACTION-NOUNS-HIFIL-A2",
+    "previousPosition": 95,
+    "currentPosition": 98,
+    "title": "Action nouns 2: Hif’il",
+    "newLesson": false
+  },
+  {
+    "id": "RELATIVE-CLAUSES-A2",
+    "previousPosition": 96,
+    "currentPosition": 99,
+    "title": "Clauses 2: relative clauses",
+    "newLesson": false
+  },
+  {
+    "id": "FUTURE-SHE-THEY-A2",
+    "previousPosition": 97,
+    "currentPosition": 100,
+    "title": "Future 3: she/they",
+    "newLesson": false
+  },
+  {
+    "id": "ACTION-NOUNS-PAAL-A2",
+    "previousPosition": 98,
+    "currentPosition": 101,
+    "title": "Action nouns 3: Pa’al",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTERFACTUAL-A2",
+    "previousPosition": 99,
+    "currentPosition": 102,
+    "title": "Clauses 3: counterfactual conditions",
+    "newLesson": false
+  },
+  {
+    "id": "GENERIC-THEY-PASSIVE-A2",
+    "previousPosition": 100,
+    "currentPosition": 103,
+    "title": "Passive 1: generic they in אמרו לי",
+    "newLesson": false
+  },
+  {
+    "id": "ACTION-NOUN-FAMILIES-A2",
+    "previousPosition": 101,
+    "currentPosition": 104,
+    "title": "Integration: known action-noun families",
+    "newLesson": false
+  },
+  {
+    "id": "PURPOSE-CLAUSES-A2",
+    "previousPosition": 102,
+    "currentPosition": 105,
+    "title": "Clauses 4: purpose",
+    "newLesson": false
+  },
+  {
+    "id": "INITIAL-ALEPH-FUTURE-A2",
+    "previousPosition": 103,
+    "currentPosition": 106,
+    "title": "Future 4: initial-א verbs",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-THOUSANDS-A2",
+    "previousPosition": 104,
+    "currentPosition": 107,
+    "title": "Numbers: 1000-999,999",
+    "newLesson": false
+  },
+  {
+    "id": "RELATIVE-PREPOSITIONS-A2",
+    "previousPosition": 105,
+    "currentPosition": 108,
+    "title": "Clauses 5: relative clauses with prepositions",
+    "newLesson": false
+  },
+  {
+    "id": "PASSIVE-NIFAL-A2",
+    "previousPosition": 106,
+    "currentPosition": 109,
+    "title": "Passive 2: Nif’al with familiar active verbs",
+    "newLesson": false
+  },
+  {
+    "id": "COUNTING-MILLIONS-A2",
+    "previousPosition": 107,
+    "currentPosition": 110,
+    "title": "Numbers: million+",
+    "newLesson": false
+  },
+  {
+    "id": "REDUCED-NIKKUD-A2",
+    "previousPosition": 108,
+    "currentPosition": 111,
+    "title": "Writing 6: reading with reduced Nikkud",
+    "newLesson": false
+  },
+  {
+    "id": "PASSIVE-PUAL-A2",
+    "previousPosition": 109,
+    "currentPosition": 112,
+    "title": "Passive 3: Pu’al from familiar Pi’el",
+    "newLesson": false
+  },
+  {
+    "id": "QUANTITIES-IN-CONTEXT-A2",
+    "previousPosition": 110,
+    "currentPosition": 113,
+    "title": "Return: quantities in connected sentences",
+    "newLesson": false
+  },
+  {
+    "id": "SPOKEN-REGISTER-A2",
+    "previousPosition": 111,
+    "currentPosition": 114,
+    "title": "Register 1: spoken meaning and tone",
+    "newLesson": false
+  },
+  {
+    "id": "PASSIVE-HUFAL-A2",
+    "previousPosition": 112,
+    "currentPosition": 115,
+    "title": "Passive 4: Huf’al from familiar Hif’il",
+    "newLesson": false
+  },
+  {
+    "id": "GEMATRIA-A2",
+    "previousPosition": 113,
+    "currentPosition": 116,
+    "title": "גימטריה",
+    "newLesson": false
+  },
+  {
+    "id": "FORMAL-REGISTER-A2",
+    "previousPosition": 114,
+    "currentPosition": 117,
+    "title": "Register 2: formal notices and correspondence",
+    "newLesson": false
+  },
+  {
+    "id": "SPECIAL-VERB-PRACTICE-A2",
+    "previousPosition": 115,
+    "currentPosition": 118,
+    "title": "Verb groups 3: special forms in use",
+    "newLesson": false
+  },
+  {
+    "id": "CHANGED-APPOINTMENT-A2",
+    "previousPosition": 116,
+    "currentPosition": 119,
+    "title": "Integration: changing the meeting time",
+    "newLesson": false
+  }
+]

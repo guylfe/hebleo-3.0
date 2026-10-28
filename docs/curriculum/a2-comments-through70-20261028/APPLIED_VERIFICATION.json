@@ -1,0 +1,26 @@
+{
+  "verifiedAt": "2026-10-28T00:48:12.573Z",
+  "spreadsheetId": "1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc",
+  "sheetId": 102626001,
+  "url": "https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001",
+  "lessons": 119,
+  "retainedIds": 116,
+  "sourceVocabularyEntries": 1088,
+  "addedDerivedMeanings": 1,
+  "sourceLinks": 113,
+  "comments": 59,
+  "commentsUnchanged": true,
+  "numberRowsUnchanged": true,
+  "originalAUnchanged": true,
+  "otherSheetsMetadataUnchanged": true,
+  "rulesMatch": true,
+  "freeze": {
+    "rowCount": 141,
+    "columnCount": 13,
+    "frozenRowCount": 3,
+    "frozenColumnCount": 1
+  },
+  "cellMismatches": [],
+  "readbackSha256": "f59939c32161103b81b682696d3f1a926bbc069c3c348b91bbaf087d6eb02c78",
+  "passed": true
+}

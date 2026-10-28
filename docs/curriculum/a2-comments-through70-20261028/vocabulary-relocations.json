@@ -1,0 +1,146 @@
+[
+  {
+    "token": "PRONUNCIATION-KH-R:5",
+    "he": "דרך",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "PRONUNCIATION-KH-R:6",
+    "he": "אוויר",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "NOUN-PLURALS:5",
+    "he": "גוף",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "NOUN-PLURALS:6",
+    "he": "גב",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "HET-AYIN-RESH:8",
+    "he": "ראש",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "HET-AYIN-RESH:9",
+    "he": "רוח",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "KPTZ:7",
+    "he": "אף",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "PREFIXES-BL-SHEL:6",
+    "he": "אדמה",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "PREFIXES-BL-SHEL:7",
+    "he": "אגם",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "HET-AYIN-RESH:7",
+    "he": "רגל",
+    "from": "PRONUNCIATION-KH-R-A2",
+    "to": "BODY-SURROUNDINGS-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:0",
+    "he": "היה",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:1",
+    "he": "נשוי",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:2",
+    "he": "רווק",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:3",
+    "he": "גרוש",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:4",
+    "he": "צעיר",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:5",
+    "he": "מבוגר",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:6",
+    "he": "גיל",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:7",
+    "he": "תאריך",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:8",
+    "he": "כתובת מגורים",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "PAST-I-WE-YOU:9",
+    "he": "מצב משפחתי",
+    "from": "PAST-I-WE-YOU-A2",
+    "to": "PAST-BE-PROFILE-A2"
+  },
+  {
+    "token": "VOWELS-OU:0",
+    "he": "לא",
+    "from": "NOMINAL-A2",
+    "to": "VOWELS-OU-READING-A2"
+  },
+  {
+    "token": "LSHZ:5",
+    "he": "השנה",
+    "from": "VAV-YOD-SPELLING-A2",
+    "to": "EXISTENCE-POSSESSION-A2"
+  },
+  {
+    "token": "REDUCED-NIKKUD:8",
+    "he": "מברג",
+    "from": "VAV-YOD-SPELLING-A2",
+    "to": "ROOTS-A2"
+  },
+  {
+    "token": "REDUCED-NIKKUD:11",
+    "he": "משאבה",
+    "from": "VAV-YOD-SPELLING-A2",
+    "to": "ROOTS-A2"
+  }
+]
