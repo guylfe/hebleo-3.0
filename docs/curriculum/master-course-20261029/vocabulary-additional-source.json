@@ -1,0 +1,4436 @@
+[
+  {
+    "sheet": "Masterfile",
+    "row": 1,
+    "values": [
+      "Ordinals",
+      "Lesson",
+      "Part",
+      "Type",
+      "No_Vocab",
+      "No_Card",
+      "Hebrew",
+      "English",
+      "Notes",
+      "Gender",
+      "Plural",
+      "Root",
+      "Pattern",
+      "Feminine",
+      "Plural Feminine",
+      "Audio",
+      "Pl. Audio",
+      "Fem. Audio",
+      "Pl.Fem. Audio",
+      "Infinitive",
+      "I",
+      "he",
+      "she",
+      "אתה",
+      "את",
+      "אתם",
+      "אתן",
+      "הם",
+      "הן",
+      "אנחנו",
+      "ID"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "stringValue": "Ordinals"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Lesson"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Part"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Type"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "No_Vocab"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "No_Card"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Hebrew"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "English"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Notes"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Gender"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Plural"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Root"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Pattern"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Feminine"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Plural Feminine"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Audio"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Pl. Audio"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Fem. Audio"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Pl.Fem. Audio"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Infinitive"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "I"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "he"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "she"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אתה"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "את"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אתם"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אתן"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "הם"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "הן"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אנחנו"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "ID"
+        },
+        "note": "Permanent entry ID for Hebleo import. Keep this ID with the same entry when sorting, moving rows, or correcting content. New or copied entries need a new, never-used mf-NNNNNN ID. Never renumber, reuse deleted IDs, or use formulas. Initial assignment on 2026-10-12: mf-000001 through mf-001058."
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 2,
+    "values": [
+      1,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "יָם",
+      "Sea",
+      "",
+      "M",
+      "יָמִים",
+      "יממ",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000001"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 1
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "יָם"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Sea"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "יָמִים"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "יממ"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000001"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 3,
+    "values": [
+      2,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "יַיִן",
+      "Wine",
+      "The similarity to English is not a coincidence; \n[The plural form in Hebrew, like “wines” in English, is rare.]",
+      "M",
+      "יֶיְנוֹת",
+      "יינ",
+      "קָיִל",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000002"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 2
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "יַיִן"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 18,
+              "bold": false
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Wine"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "The similarity to English is not a coincidence; \n[The plural form in Hebrew, like “wines” in English, is rare.]"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "יֶיְנוֹת"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 4,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 16,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "יינ"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "קָיִל"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": false
+            }
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000002"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 4,
+    "values": [
+      3,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "מַיִם",
+      "Water",
+      "Treated as plural.",
+      "M",
+      "",
+      "מימ",
+      "קָיִל",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000003"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 3
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "מַיִם"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 18,
+              "bold": false
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Water"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Treated as plural."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "מימ"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "קָיִל"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": false
+            }
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000003"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 5,
+    "values": [
+      4,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "מֶאָה",
+      "Hundred",
+      "",
+      "F",
+      "מֶאוֹת",
+      "מאה",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000004"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 4
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "מֶאָה"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 18,
+              "bold": false
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Hundred"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "מֶאוֹת"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "מאה"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000004"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 6,
+    "values": [
+      5,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "אָמָּן",
+      "Artist",
+      "",
+      "M",
+      "אַמָּנִים",
+      "אמנ",
+      "קָטָּל",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000005"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 5
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אָמָּן"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 19,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Artist"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אַמָּנִים"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 5,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אמנ"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "קָטָּל"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000005"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 7,
+    "values": [
+      6,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "מַתָּנָה",
+      "Gift, present",
+      "",
+      "F",
+      "מַתָּנוֹת",
+      "נתנ",
+      "מָקְטָלָה",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000006"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 6
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "מַתָּנָה"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 5,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 19,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Gift, present"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "מַתָּנוֹת"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 5,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "נתנ"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "מָקְטָלָה"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000006"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 8,
+    "values": [
+      7,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "אִמָא",
+      "Mom, mother",
+      "Like English, people sometimes use “mom” to mean “my/our mother\" – especially when talking to siblings.",
+      "F",
+      "אִמָהוֹת",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000007"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 7
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אִמָא"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 19,
+              "bold": false
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Mom, mother"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Like English, people sometimes use “mom” to mean “my/our mother\" – especially when talking to siblings."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אִמָהוֹת"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 4,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000007"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 9,
+    "values": [
+      8,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "אִי",
+      "Island",
+      "",
+      "M",
+      "אִיִים",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000008"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 8
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אִי"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Island"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אִיִים"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000008"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 10,
+    "values": [
+      9,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "מָנָה",
+      "Dish",
+      "",
+      "F",
+      "מָנוֹת",
+      "מנה",
+      "קָטָה",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000009"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 9
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "מָנָה"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 19,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Dish"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "מָנוֹת"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 16,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "מנה"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "קָטָה"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000009"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 11,
+    "values": [
+      10,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "אֱמֶת",
+      "Truth",
+      "",
+      "F",
+      "אָמִיתוֹת",
+      "אמת",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000010"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 10
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אֱמֶת"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 19,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Truth"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אָמִיתוֹת"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 5,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אמת"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000010"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 12,
+    "values": [
+      11,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "תֵימָן",
+      "Yemen",
+      "Name of a country.",
+      "F",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000011"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 11
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "תֵימָן"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 3,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 19,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Yemen"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Name of a country."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000011"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 13,
+    "values": [
+      12,
+      1.3,
+      "",
+      "Noun",
+      "",
+      "",
+      "נָתַנְיָה",
+      "Natanya",
+      "Name of a city.",
+      "F",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000012"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 12
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.3
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "נָתַנְיָה"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 19,
+              "bold": true
+            }
+          },
+          {
+            "startIndex": 6,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 19
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Natanya"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Name of a city."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000012"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 14,
+    "values": [
+      13,
+      "1.3.5",
+      "",
+      "Pronoun",
+      "",
+      "",
+      "אֲנִי",
+      "I",
+      "(1st person singular pronoun). Can be used for both males and females.",
+      "Both",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000013"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 13
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "1.3.5"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Pronoun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אֲנִי"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 18,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "I"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "(1st person singular pronoun). Can be used for both males and females."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Both"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000013"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 15,
+    "values": [
+      14,
+      "1.3.5",
+      "",
+      "Pronoun",
+      "",
+      "",
+      "אַתְ",
+      "You (singular female)",
+      "Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F). You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not.",
+      "F",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000014"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 14
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "1.3.5"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Pronoun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אַתְ"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "You (singular female)"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F). You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000014"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 16,
+    "values": [
+      15,
+      "1.3.5",
+      "",
+      "Pronoun",
+      "",
+      "",
+      "אַתָּה",
+      "You (singular male)",
+      "Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F). You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not.",
+      "M",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000015"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 15
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "1.3.5"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Pronoun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אַתָּה"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 18,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "You (singular male)"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F). You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000015"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 17,
+    "values": [
+      16,
+      "1.3.5",
+      "",
+      "Pronoun",
+      "",
+      "",
+      "אַתֶּם",
+      "You (plural)",
+      "1. Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F).  You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not.\n\n2. Remember: This is the neutral plural, meaning it applies to mixed groups and all-male groups, ",
+      "M/Mixed",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000016"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 16
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "1.3.5"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Pronoun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אַתֶּם"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 18,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "You (plural)"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "1. Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F).  You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not.\n\n2. Remember: This is the neutral plural, meaning it applies to mixed groups and all-male groups, "
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 205,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 10,
+              "bold": true
+            }
+          },
+          {
+            "startIndex": 213,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 10
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "M/Mixed"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000016"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 18,
+    "values": [
+      17,
+      "1.3.5",
+      "",
+      "Pronoun",
+      "",
+      "",
+      "אַתֶּן",
+      "You (plural, only female)",
+      "Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F).  You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not.",
+      "F",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000017"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 17
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "1.3.5"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Pronoun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אַתֶּן"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 18,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "You (plural, only female)"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Hebrew separates the 2nd person into 4 pronouns, divided based on number (single/plural) and gender (M/F).  You can remember them as a group since all 4 begin with “אַת”, and other pronouns do not."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000017"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 19,
+    "values": [
+      18,
+      "1.3.5",
+      "",
+      "Pronoun",
+      "",
+      "",
+      "הִיא",
+      "She",
+      "",
+      "F",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000018"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 18
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "1.3.5"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Pronoun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "הִיא"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "She"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000018"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 20,
+    "values": [
+      19,
+      "1.3.5",
+      "",
+      "Pronoun",
+      "",
+      "",
+      "הֵם",
+      "They",
+      "",
+      "M/Mixed",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000019"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 19
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "1.3.5"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Pronoun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "הֵם"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "They"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "M/Mixed"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000019"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 21,
+    "values": [
+      20,
+      "1.3.5",
+      "",
+      "Pronoun",
+      "",
+      "",
+      "הֵן",
+      "They (only female)",
+      "",
+      "F",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000020"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 20
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "1.3.5"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Pronoun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "הֵן"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "They (only female)"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 17,
+            "format": {
+              "fontFamily": "Aptos",
+              "fontSize": 12,
+              "foregroundColorStyle": {
+                "themeColor": "TEXT"
+              }
+            }
+          }
+        ]
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000020"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 22,
+    "values": [
+      21,
+      1.4,
+      "",
+      "Grammar",
+      "",
+      "",
+      "הַ",
+      "The",
+      "Attaches to the following word as a prefix.",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000021"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 21
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Grammar"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "הַ"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "The"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Attaches to the following word as a prefix."
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000021"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 23,
+    "values": [
+      22,
+      1.4,
+      "",
+      "Grammar",
+      "",
+      "",
+      "מִ",
+      "From",
+      "Attaches to the following word as a prefix.\nWhen it's followed by הַ, it becomes \"me\" (מֵ). This is for ease of pronunciation, but you can use either version.",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000022"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 22
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Grammar"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "מִ"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "From"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Attaches to the following word as a prefix.\nWhen it's followed by הַ, it becomes \"me\" (מֵ). This is for ease of pronunciation, but you can use either version."
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000022"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 24,
+    "values": [
+      23,
+      1.4,
+      "",
+      "Grammar",
+      "",
+      "",
+      "מִי",
+      "who?",
+      "The question word, not the relative pronoun:\n\"who are you?\" (question), not \"This is who did this.\" (relative pronoun)",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000023"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 23
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Grammar"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "מִי"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "who?"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "The question word, not the relative pronoun:\n\"who are you?\" (question), not \"This is who did this.\" (relative pronoun)"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 46,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 10,
+              "bold": true
+            }
+          },
+          {
+            "startIndex": 50,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 10
+            }
+          },
+          {
+            "startIndex": 85,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 10,
+              "bold": true
+            }
+          },
+          {
+            "startIndex": 89,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 10
+            }
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000023"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 25,
+    "values": [
+      24,
+      1.4,
+      "",
+      "Grammar",
+      "",
+      "",
+      "מָה",
+      "what?",
+      "The question word, not the relative pronoun:\n\"what did you do?\" (question), not \"this is not what you think!\" (relative pronoun)",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000024"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 24
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Grammar"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "מָה"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "what?"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "The question word, not the relative pronoun:\n\"what did you do?\" (question), not \"this is not what you think!\" (relative pronoun)"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 46,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 9,
+              "bold": true,
+              "foregroundColorStyle": {
+                "themeColor": "TEXT"
+              }
+            }
+          },
+          {
+            "startIndex": 50,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 9,
+              "foregroundColorStyle": {
+                "themeColor": "TEXT"
+              }
+            }
+          },
+          {
+            "startIndex": 93,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 9,
+              "bold": true,
+              "foregroundColorStyle": {
+                "themeColor": "TEXT"
+              }
+            }
+          },
+          {
+            "startIndex": 98,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 9,
+              "foregroundColorStyle": {
+                "themeColor": "TEXT"
+              }
+            }
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000024"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 26,
+    "values": [
+      25,
+      1.4,
+      "",
+      "Grammar",
+      "",
+      "",
+      "מָתַי",
+      "When?",
+      "The question word, not the relative pronoun:\n\"when did you arrive?\" (question), not \"I was there when you arrived.\" (relative pronoun)",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000025"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 25
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Grammar"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "מָתַי"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 18,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "When?"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "The question word, not the relative pronoun:\n\"when did you arrive?\" (question), not \"I was there when you arrived.\" (relative pronoun)"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 46,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 9,
+              "bold": true,
+              "foregroundColorStyle": {
+                "themeColor": "TEXT"
+              }
+            }
+          },
+          {
+            "startIndex": 51,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 9,
+              "foregroundColorStyle": {
+                "themeColor": "TEXT"
+              }
+            }
+          },
+          {
+            "startIndex": 97,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 9,
+              "bold": true,
+              "foregroundColorStyle": {
+                "themeColor": "TEXT"
+              }
+            }
+          },
+          {
+            "startIndex": 102,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 9,
+              "foregroundColorStyle": {
+                "themeColor": "TEXT"
+              }
+            }
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000025"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 27,
+    "values": [
+      26,
+      1.4,
+      "",
+      "Grammar",
+      "",
+      "",
+      "הַאִם",
+      "is/does…?\nIs it the case that…?",
+      "Question word where the answer is going to be either “yes” or “no”. The word is often omitted, and the question is understood by voice intonation or through the use of a question mark.\nExamples for possible questions that would start with הַאִם: \n\nAre you Tammy? – אָת תָמִי?/הַאִם אָת תָמִי?\nIs Matan from Yemen? – מָתָן מִתֶימָן?/הַאִם מָתָן מִתֶימָן?",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000026"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 26
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Grammar"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "הַאִם"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "is/does…?\nIs it the case that…?"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Question word where the answer is going to be either “yes” or “no”. The word is often omitted, and the question is understood by voice intonation or through the use of a question mark.\nExamples for possible questions that would start with הַאִם: \n\nAre you Tammy? – אָת תָמִי?/הַאִם אָת תָמִי?\nIs Matan from Yemen? – מָתָן מִתֶימָן?/הַאִם מָתָן מִתֶימָן?"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000026"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 28,
+    "values": [
+      27,
+      1.4,
+      "",
+      "Other",
+      "",
+      "",
+      "הַיי",
+      "Hi",
+      "Loan word from English, pronounced the same.",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000027"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 27
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Other"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "הַיי"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Hi"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Loan word from English, pronounced the same."
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000027"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 29,
+    "values": [
+      28,
+      1.4,
+      "",
+      "Verb",
+      "",
+      "",
+      "נָתַן",
+      "(he) gave",
+      "Follows a 3rd person single male (he) noun. \nFor example: “Matan Gave”, “the boy gave” or “he gave”, but not “Tammy gave” (because Tammy is female) or “I gave” (because I is 1st person, not 3rd person).\nMatan Gave = מָתָן נָתַן\n\n[This is also the first name “Nathan”. It's short for Nathanel, whose Hebrew equivalent is \"God gave\" or \"given by God\"]",
+      "",
+      "",
+      "נתנ",
+      "פָּעַל",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000028"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 28
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Verb"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "נָתַן"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Aptos Narrow",
+              "fontSize": 18,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "(he) gave"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Follows a 3rd person single male (he) noun. \nFor example: “Matan Gave”, “the boy gave” or “he gave”, but not “Tammy gave” (because Tammy is female) or “I gave” (because I is 1st person, not 3rd person).\nMatan Gave = מָתָן נָתַן\n\n[This is also the first name “Nathan”. It's short for Nathanel, whose Hebrew equivalent is \"God gave\" or \"given by God\"]"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "נתנ"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "פָּעַל"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000028"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 30,
+    "values": [
+      29,
+      1.4,
+      "",
+      "Verb",
+      "",
+      "",
+      "הָיָה",
+      "(he) was",
+      "",
+      "",
+      "",
+      "היה",
+      "פָּעַל",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000029"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 29
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 1.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Verb"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "הָיָה"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Aptos Narrow",
+              "fontSize": 18,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "(he) was"
+        }
+      },
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "היה"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "פָּעַל"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000029"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 31,
+    "values": [
+      30,
+      2.1,
+      "",
+      "Noun",
+      "",
+      "",
+      "יֶלֶד",
+      "child, \nlittle boy",
+      "This refers to a male boy.",
+      "M",
+      "יֶלָדִים",
+      "ילד",
+      "קֶטֶל",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000030"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 30
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 2.1
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "יֶלֶד"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": false
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "child, \nlittle boy"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "This refers to a male boy."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "יֶלָדִים"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 3,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "ילד"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "קֶטֶל"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000030"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 32,
+    "values": [
+      31,
+      2.1,
+      "",
+      "Noun",
+      "",
+      "",
+      "אָדָם",
+      "person, man",
+      "[“Adam” in the bible was the first person. This is the reason the word also means “person”.]",
+      "M",
+      "אָנָשִׁים",
+      "אדמ",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000031"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 31
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 2.1
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "אָדָם"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "person, man"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "[“Adam” in the bible was the first person. This is the reason the word also means “person”.]"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אָנָשִׁים"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 4,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אדמ"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000031"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 33,
+    "values": [
+      32,
+      2.1,
+      "",
+      "Noun",
+      "",
+      "",
+      "יָד",
+      "hand, arm",
+      "This word, like most body organs that come in pairs, is feminine. (Such words also have the “ayim” ending for the plural.)",
+      "F",
+      "יָדָיִים",
+      "ידד",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000032"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 32
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 2.1
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "יָד"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "hand, arm"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "This word, like most body organs that come in pairs, is feminine. (Such words also have the “ayim” ending for the plural.)"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "F"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "יָדָיִים"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          },
+          {
+            "startIndex": 4,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "ידד"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000032"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 34,
+    "values": [
+      33,
+      2.1,
+      "",
+      "Noun",
+      "",
+      "",
+      "גָל",
+      "wave",
+      "",
+      "M",
+      "גָלִים",
+      "גיל",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000033"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 33
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 2.1
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "גָל"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "wave"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "גָלִים"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "גיל"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000033"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Masterfile",
+    "row": 35,
+    "values": [
+      34,
+      2.1,
+      "",
+      "Noun",
+      "",
+      "",
+      "דָג",
+      "fish",
+      "",
+      "M",
+      "דָגִים",
+      "דוג",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000034"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 34
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 2.1
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Noun"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "דָג"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "fish"
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "M"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "דָגִים"
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 2,
+            "format": {
+              "fontFamily": "Arial",
+              "fontSize": 15,
+              "bold": true
+            }
+          }
+        ]
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "דוג"
+        }
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000034"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Missing Vocab",
+    "row": 346,
+    "values": [
+      2,
+      "אוֹת",
+      "sign, signal",
+      "Irregular plural: G4 one-syllable nouns with ‑וֹ‑ → ־וֹת",
+      "Owner-supplied list (vocabulary to add.docx)",
+      "Owner-requested; no master or tab entry found",
+      "vocabulary to add.docx, Irregular plural/gender table, col 2, block 3; as written: אות – אותות",
+      "TBD",
+      "Plural: אוֹתוֹת. Owner gave אוֹתוֹת; contrast אוֹת (letter) → אוֹתִיּוֹת.",
+      "Owner-requested item. Nikkud, gloss, priority and grouping proposed by curriculum bot 2026-10-05; owner review required. P3 = advanced/literary enrichment. Pattern label inferred from docx grouping (implied, no heading in source)."
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 2
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אוֹת"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "sign, signal"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Irregular plural: G4 one-syllable nouns with ‑וֹ‑ → ־וֹת"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Owner-supplied list (vocabulary to add.docx)"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Owner-requested; no master or tab entry found"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "vocabulary to add.docx, Irregular plural/gender table, col 2, block 3; as written: אות – אותות"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "TBD"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Plural: אוֹתוֹת. Owner gave אוֹתוֹת; contrast אוֹת (letter) → אוֹתִיּוֹת."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Owner-requested item. Nikkud, gloss, priority and grouping proposed by curriculum bot 2026-10-05; owner review required. P3 = advanced/literary enrichment. Pattern label inferred from docx grouping (implied, no heading in source)."
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "Missing Vocab",
+    "row": 400,
+    "values": [
+      2,
+      "אוּלָם",
+      "hall, auditorium",
+      "Irregular plural: G9b rhyming pair ‑וּלָם → ־וֹת",
+      "Owner-supplied list (vocabulary to add.docx)",
+      "Owner-requested; no master or tab entry found",
+      "vocabulary to add.docx, Irregular plural/gender table, col 3, block 5 (pairs); as written: אולם",
+      "TBD",
+      "Plural: אוּלָמוֹת.",
+      "Owner-requested item. Nikkud, gloss, priority and grouping proposed by curriculum bot 2026-10-05; owner review required. P3 = advanced/literary enrichment. Pattern label inferred from docx grouping (implied, no heading in source)."
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 2
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "אוּלָם"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "hall, auditorium"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Irregular plural: G9b rhyming pair ‑וּלָם → ־וֹת"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Owner-supplied list (vocabulary to add.docx)"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Owner-requested; no master or tab entry found"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "vocabulary to add.docx, Irregular plural/gender table, col 3, block 5 (pairs); as written: אולם"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "TBD"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Plural: אוּלָמוֹת."
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Owner-requested item. Nikkud, gloss, priority and grouping proposed by curriculum bot 2026-10-05; owner review required. P3 = advanced/literary enrichment. Pattern label inferred from docx grouping (implied, no heading in source)."
+        }
+      }
+    ]
+  }
+]

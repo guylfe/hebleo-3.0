@@ -1,0 +1,796 @@
+[
+  {
+    "lesson": "MEMORY-A2",
+    "component": "MEMORY-A2.learn.picture-round",
+    "specification": "IMAGE MEMORY-OBJECTS: three separate, equally clear pictures: a plain drinking cup, a door key, and an apple. No printed labels while visible. Provide equivalent spoken descriptions for nonvisual use.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "MEMORY-A2",
+    "component": "MEMORY-A2.learn.picture-round",
+    "specification": "CONTROL: Show pictures → Hide pictures → spoken or typed attempt → Reveal pictures. No timer. Reveal is also available after “I cannot recall yet”.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "MEMORY-A2",
+    "component": "MEMORY-A2.learn.intervening-task",
+    "specification": "IMAGE MEMORY-SHAPES: unlabelled triangle outline; response shapes circle, triangle, square. Accessible labels identify the three shapes. For nonvisual use, prompt “Which of these shapes has three sides?”",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "MNTL-A2",
+    "component": "MNTL-A2.learn.mem-nun",
+    "specification": "AUDIO MNTL-M: isolated /m/; AUDIO MNTL-N: isolated /n/. Play on request, without adding a vowel.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "MNTL-A2",
+    "component": "MNTL-A2.learn.mem-nun",
+    "specification": "IMAGE MNTL-M and MNTL-N: Guy’s original mountain-climber and nose mnemonic drawings, paired with the exact block letters.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "MNTL-A2",
+    "component": "MNTL-A2.learn.tav-lamed",
+    "specification": "AUDIO MNTL-T: isolated /t/; AUDIO MNTL-L: isolated /l/.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "MNTL-A2",
+    "component": "MNTL-A2.learn.tav-lamed",
+    "specification": "IMAGE MNTL-T and MNTL-L: Guy’s original tripping and ladle drawings. Preserve the source drawing rather than substituting a new mnemonic.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "MNTL-A2",
+    "component": "MNTL-A2.learn.typing",
+    "specification": "KEYBOARD: highlight the matching key only during copying. Hide the highlight for recall questions.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "WRITING-BASICS-A2",
+    "component": "WRITING-BASICS-A2.learn.direction",
+    "specification": "HIGHLIGHT WRITING-DIRECTION: mark the rightmost מ first, then נ, ת and ל. Step through on taps; retain an arrow pointing left. Treat מנתל as a practice string with no assigned meaning.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "WRITING-BASICS-A2",
+    "component": "WRITING-BASICS-A2.learn.final-mem",
+    "specification": "POSITION DIAGRAM: show מ in the first slot of a three-slot RTL word, then ם in the final slot. The slots are boxes, not additional letters.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "WRITING-BASICS-A2",
+    "component": "WRITING-BASICS-A2.learn.print",
+    "specification": "OPTIONAL DOWNLOAD WRITING-SCRIPT: Guy’s handwriting sheet for the taught letters only; link pending. Do not display a broken download button before the asset is supplied.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-AEIO-A2",
+    "component": "VOWELS-AEIO-A2.learn.vowels",
+    "specification": "AUDIO VOWELS-MA, VOWELS-ME, VOWELS-MI: /ma/, /me/, /mi/, one separate recording each. The English sound labels are approximations; the native model is the target.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-AEIO-A2",
+    "component": "VOWELS-AEIO-A2.learn.a",
+    "specification": "AUDIO VOWELS-A-PAIR: מַ, מָ, each /ma/. Display both pointed forms.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-AEIO-A2",
+    "component": "VOWELS-AEIO-A2.learn.i",
+    "specification": "AUDIO VOWELS-N-SET: separate /na/, /ne/, /ni/ recordings.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-AEIO-A2",
+    "component": "VOWELS-AEIO-A2.learn.combine",
+    "specification": "AUDIO VOWELS-STRING: /ma-ni-la/. Reveal only after the learner’s first spoken attempt.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.learn.alef",
+    "specification": "IMAGE AHY-ALEF: Guy’s original albatross/eagle mnemonic paired with א.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.learn.alef",
+    "specification": "AUDIO AHY-IMA: אמא, mother. IMAGE AHY-MOTHER: a clearly captioned English scenario “a child’s mother”; do not expect appearance alone to establish the relationship.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.learn.heh",
+    "specification": "IMAGE AHY-HEH: original throat mnemonic. AUDIO AHY-H: isolated /h/. AUDIO AHY-MATANA: מתנה.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.learn.heh",
+    "specification": "IMAGE AHY-GIFT: wrapped present being offered; alt description “a gift”.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.learn.yod",
+    "specification": "IMAGE AHY-YOD: original itsy-bitsy mnemonic. AUDIO AHY-YAM, AHY-MAYIM, AHY-YAYIN: sea, water and wine, separately.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.learn.yod",
+    "specification": "IMAGES AHY-SEA, AHY-WATER, AHY-WINE: coastline; water being poured into a glass; clearly labelled wine bottle beside a glass. Wine must not be identifiable merely by liquid colour.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.learn.portion",
+    "specification": "IMAGE AHY-PORTION: one plated serving of food. AUDIO AHY-MANA: מנה.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.vocab.mother",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אמא",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.vocab.sea",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "ים",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.vocab.water",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מים",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.vocab.gift",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מתנה",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.vocab.wine",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "יין",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "AHY-A2",
+    "component": "AHY-A2.vocab.portion",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מנה",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.learn.i",
+    "specification": "AUDIO NOMINAL-ANI: אני. AUDIO NOMINAL-MATAN: היי, אני מתן. Native recording with a natural pause after the greeting.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.learn.i",
+    "specification": "Example names: מתן / Matan and תמי / Tami. These are supplied names, not vocabulary targets.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.learn.artist",
+    "specification": "AUDIO NOMINAL-ARTIST-M and NOMINAL-ARTIST-F: אמן; אמנית. AUDIO NOMINAL-ARTIST-SENTENCES: אני אמן; אני אמנית.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.learn.artist",
+    "specification": "IMAGE NOMINAL-ARTISTS: two separate character cards explicitly described as an artist using the masculine/feminine form; avoid inferring occupation from appearance.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.learn.manager",
+    "specification": "AUDIO NOMINAL-MANAGER-M and NOMINAL-MANAGER-F: מנהל; מנהלת, with the intended initial /e/. AUDIO NOMINAL-MANAGER-SENTENCES: אני מנהל; אני מנהלת.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.learn.whole-introduction",
+    "specification": "AUDIO NOMINAL-TAMI-INTRO: היי, אני תמי. אני מנהלת.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.vocab.hi",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "היי",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.vocab.artist",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אמן",
+      "alternateScripts": [
+        "אמנית"
+      ]
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.vocab.manager",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מנהל",
+      "alternateScripts": [
+        "מנהלת"
+      ]
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "NOMINAL-A2",
+    "component": "NOMINAL-A2.vocab.i",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אני",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.learn.you-singular",
+    "specification": "AUDIO QUESTIONS-ATA and QUESTIONS-AT: אתה; את. AUDIO QUESTIONS-STATEMENTS: אתה מתן; את תמי.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.learn.you-singular",
+    "specification": "CHARACTERS: identify the addressee explicitly as one man named Matan or one woman named Tami.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.learn.who",
+    "specification": "AUDIO QUESTIONS-WHO: מי אתה? מי את? מי את? — אני תמי. Use distinct speakers for the exchange.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.learn.you-plural",
+    "specification": "AUDIO QUESTIONS-ATEM and QUESTIONS-ATEN; AUDIO QUESTIONS-GROUP: מי אתם? — אני מתן. — אני תמי.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.learn.you-plural",
+    "specification": "IMAGE QUESTIONS-GROUPS: explicitly described all-female group and mixed group; show an arrow from speaker to the group being addressed.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.learn.what",
+    "specification": "AUDIO QUESTIONS-CLARIFY: אני תמי. — מה? — תמי. A brief, friendly clarification exchange.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.learn.word-contexts",
+    "specification": "IMAGES QUESTIONS-ISLAND, QUESTIONS-COMPARTMENT, QUESTIONS-TEA, QUESTIONS-FIG: island surrounded by sea; labelled compartment within a larger space; cup explicitly labelled tea in the English scenario; cut fig with identifying caption.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.truth",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אמת",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.island",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אי",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.tea",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "תה",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.fig",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "תאנה",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.word",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מילה",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.compartment",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "תא",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.who",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מי",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.what",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מה",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.you-m",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אתה",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.you-f",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "את",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.you-mp",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אתם",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "QUESTIONS-BASIC-A2",
+    "component": "QUESTIONS-BASIC-A2.vocab.you-fp",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אתן",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.vav",
+    "specification": "AUDIO VAV-VA, VAV-O, VAV-U: /va/, /o/, /u/. וַ is a decoding syllable, not a vocabulary item.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.vav",
+    "specification": "DIAGRAM VAV-DOTS: show וַ, וֹ, וּ separately; highlight the top dot for /o/ and the middle dot for /u/.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.offer-choice",
+    "specification": "AUDIO VAV-FRUIT: תאנה או תות? — תות. Model the whole exchange.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.offer-choice",
+    "specification": "IMAGE VAV-FRUIT: a fig and a strawberry, each independently selectable; response has one chosen fruit.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.he-she",
+    "specification": "AUDIO VAV-HE-SHE: הוא; היא; מי הוא? — הוא מתן; מי היא? — היא תמי.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.he-she",
+    "specification": "DIAGRAM VAV-REFERENCE: labelled speaker and listener, with Matan/Tami as the third person discussed. Do not infer pronouns merely from an unlabelled picture.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.they",
+    "specification": "AUDIO VAV-HEM and VAV-HEN: הם; הן.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.word-contrasts",
+    "specification": "AUDIO VAV-MONIT, VAV-MILON, VAV-TAV, VAV-OT: מונית, מילון, תו, אות.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.word-contrasts",
+    "specification": "IMAGES VAV-TAXI and VAV-DICTIONARY: identifiable taxi; reference book explicitly labelled dictionary in the English prompt.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.learn.word-contrasts",
+    "specification": "SOUND VAV-MUSICAL-NOTE: one pitched note. IMAGE VAV-LETTER: printed מ. The musical note must not be confused with a recording of spoken Hebrew.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.or",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "או",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.strawberry",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "תות",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.taxi",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מונית",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.note",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "תו",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.letter",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אות",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.dictionary",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מילון",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.he",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "הוא",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.she",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "היא",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.they-mp",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "הם",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VAV-A2",
+    "component": "VAV-A2.vocab.they-fp",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "הן",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-OU-READING-A2",
+    "component": "VOWELS-OU-READING-A2.learn.o",
+    "specification": "AUDIO VOWELS2-O-PAIR: מוֹ; מֹ, both /mo/. Display the dot precisely above the appropriate character.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-OU-READING-A2",
+    "component": "VOWELS-OU-READING-A2.learn.u",
+    "specification": "AUDIO VOWELS2-U-PAIR: מוּ; מֻ, both /mu/.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-OU-READING-A2",
+    "component": "VOWELS-OU-READING-A2.learn.sheva",
+    "specification": "AUDIO VOWELS2-SHEVA-AT and VOWELS2-SHEVA-MANAGER: את and מנהל. Play separately; provide an optional replay of the beginning of מנהל, cut from the same native recording after author review.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-OU-READING-A2",
+    "component": "VOWELS-OU-READING-A2.learn.no",
+    "specification": "AUDIO VOWELS2-LO: לא. AUDIO VOWELS2-CORRECT-M and VOWELS2-CORRECT-F: the two complete correction models.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-OU-READING-A2",
+    "component": "VOWELS-OU-READING-A2.learn.no",
+    "specification": "CONTEXT VOWELS2-CORRECTION: make the asserted identity explicitly false in an English character card. Do not expect learners to infer a stranger’s name or occupation from appearance.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "VOWELS-OU-READING-A2",
+    "component": "VOWELS-OU-READING-A2.vocab.no",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "לא",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.the",
+    "specification": "AUDIO PREFIX-THE-GIFT: מתנה; המתנה. IMAGE PREFIX-GIFT: first a gift, then the same gift clearly referred to by both speakers.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.from",
+    "specification": "AUDIO PREFIX-FROM-MOTHER, PREFIX-FROM-TAMI, PREFIX-GIFT-MOTHER: מאמא; מתמי; המתנה מאמא.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.from",
+    "specification": "PREFIX animation: attach מ to אמא and תמי without inserting a space. Retain the supplied whole-word readings.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.combine-prefixes",
+    "specification": "AUDIO PREFIX-WATER-SEA and PREFIX-GIFT-CHOICE: the two complete models.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.combine-prefixes",
+    "specification": "CONTEXT PREFIX-WATER: sample water collected from the sea; the visual makes its origin explicit.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.and",
+    "specification": "AUDIO PREFIX-AND and PREFIX-OR: מים ותה; מים או תה?",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.time",
+    "specification": "AUDIO PREFIX-TIMES: יום; היום; לילה; הלילה; מתי. AUDIO PREFIX-WHEN: the three-turn exchange.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.time",
+    "specification": "CONTEXT PREFIX-MEETING: two people are arranging a meeting, stated in English; no untaught Hebrew word for meeting is required.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.quantity-place",
+    "specification": "AUDIO PREFIX-HAMON, PREFIX-ULAM, PREFIX-MUCH-WATER: המון; אולם; המון מים.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.learn.quantity-place",
+    "specification": "IMAGE PREFIX-HALL: an indoor auditorium or large hall; English prompt identifies it as a hall. IMAGE PREFIX-WATER-AMOUNT: clearly large amount of water, not a counted set of bottles.",
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.day",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "יום",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.today",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "היום",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.night",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "לילה",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.tonight",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "הלילה",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.lots",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "המון",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.hall",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "אולם",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.when",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מתי",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.from",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "מ־",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.the",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "ה־",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  },
+  {
+    "lesson": "PREFIXES-MHV-A2",
+    "component": "PREFIXES-MHV-A2.vocab.and",
+    "specification": {
+      "status": "Required placeholder; no verified recording attached",
+      "script": "ו־",
+      "alternateScripts": []
+    },
+    "status": "placeholder"
+  }
+]

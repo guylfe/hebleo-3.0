@@ -1,0 +1,110 @@
+[
+  {
+    "sheet": "Masterfile",
+    "row": 121,
+    "values": [
+      120,
+      2.4,
+      "",
+      "Grammar",
+      "",
+      "",
+      "וֶ",
+      "and",
+      "Attaches to the following word as a prefix. ",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mf-000120"
+    ],
+    "cells": [
+      {
+        "userEnteredValue": {
+          "numberValue": 120
+        }
+      },
+      {
+        "userEnteredValue": {
+          "numberValue": 2.4
+        }
+      },
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "Grammar"
+        }
+      },
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "וֶ"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "and"
+        }
+      },
+      {
+        "userEnteredValue": {
+          "stringValue": "Attaches to the following word as a prefix. "
+        },
+        "textFormatRuns": [
+          {},
+          {
+            "startIndex": 43,
+            "format": {
+              "fontFamily": "Calibri",
+              "fontSize": 91
+            }
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "userEnteredValue": {
+          "stringValue": "mf-000120"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,138 @@
+{
+  "status": "PASS",
+  "errors": [],
+  "coverage": [
+    {
+      "lesson": 1,
+      "id": "MEMORY-A2",
+      "screens": 5,
+      "vocabulary": 0,
+      "exercises": 5,
+      "vocabCoverage": []
+    },
+    {
+      "lesson": 2,
+      "id": "MNTL-A2",
+      "screens": 4,
+      "vocabulary": 0,
+      "exercises": 7,
+      "vocabCoverage": []
+    },
+    {
+      "lesson": 3,
+      "id": "WRITING-BASICS-A2",
+      "screens": 4,
+      "vocabulary": 0,
+      "exercises": 6,
+      "vocabCoverage": []
+    },
+    {
+      "lesson": 4,
+      "id": "VOWELS-AEIO-A2",
+      "screens": 5,
+      "vocabulary": 0,
+      "exercises": 6,
+      "vocabCoverage": []
+    },
+    {
+      "lesson": 5,
+      "id": "AHY-A2",
+      "screens": 5,
+      "vocabulary": 6,
+      "exercises": 7,
+      "vocabCoverage": [
+        "אמא",
+        "יין",
+        "ים",
+        "מים",
+        "מנה",
+        "מתנה"
+      ]
+    },
+    {
+      "lesson": 6,
+      "id": "NOMINAL-A2",
+      "screens": 5,
+      "vocabulary": 4,
+      "exercises": 7,
+      "vocabCoverage": [
+        "אמן",
+        "אני",
+        "היי",
+        "מנהל"
+      ]
+    },
+    {
+      "lesson": 7,
+      "id": "QUESTIONS-BASIC-A2",
+      "screens": 6,
+      "vocabulary": 12,
+      "exercises": 8,
+      "vocabCoverage": [
+        "אי",
+        "אמת",
+        "את",
+        "אתה",
+        "אתם",
+        "אתן",
+        "מה",
+        "מי",
+        "מילה",
+        "תא",
+        "תאנה",
+        "תה"
+      ]
+    },
+    {
+      "lesson": 8,
+      "id": "VAV-A2",
+      "screens": 5,
+      "vocabulary": 10,
+      "exercises": 8,
+      "vocabCoverage": [
+        "או",
+        "אות",
+        "הוא",
+        "היא",
+        "הם",
+        "הן",
+        "מונית",
+        "מילון",
+        "תו",
+        "תות"
+      ]
+    },
+    {
+      "lesson": 9,
+      "id": "VOWELS-OU-READING-A2",
+      "screens": 4,
+      "vocabulary": 1,
+      "exercises": 7,
+      "vocabCoverage": [
+        "לא"
+      ]
+    },
+    {
+      "lesson": 10,
+      "id": "PREFIXES-MHV-A2",
+      "screens": 6,
+      "vocabulary": 10,
+      "exercises": 10,
+      "vocabCoverage": [
+        "אולם",
+        "ה־",
+        "היום",
+        "הלילה",
+        "המון",
+        "ו־",
+        "יום",
+        "לילה",
+        "מ־",
+        "מתי"
+      ]
+    }
+  ],
+  "uniqueContentIds": 173,
+  "planSha256": "7850a810c3e82270243f80c0552d9c3ee1b4380ed5a474ed60b8988cad6e1ee2",
+  "scope": "Structural, coverage and bounded learner-letter checks. Hebrew word/form inventory requires manual review; no claim of human linguistic approval or native course testing."
+}

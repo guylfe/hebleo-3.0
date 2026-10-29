@@ -1,0 +1,31 @@
+{
+  "documentId": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+  "url": "https://docs.google.com/document/d/1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY/edit",
+  "revisionId": "AHj4eMQ3uB9PgJF9z9eriZ8p5fwfWi3_CeAAHKuyWs7exjWatEPokCCEchudNIubZd6SUqTvwgQQzFaJupVtjlcHhYgZ7vDT1lhploZ5hA",
+  "textCharacters": 198164,
+  "paragraphs": 2319,
+  "indexLinks": 119,
+  "lessonSections": 119,
+  "detailedLessons": 10,
+  "errors": [],
+  "headingIdentitiesPreservedAfterCondensing": true,
+  "visualReview": {
+    "nativePdfPages": 116,
+    "representativePagesViewed": [
+      1,
+      12,
+      27,
+      33,
+      65
+    ],
+    "pageBoundsCheck": "No text bounding boxes outside any of the 116 pages.",
+    "scope": "Representative visual check; no claim of every-page or native course verification."
+  },
+  "contentAudit": {
+    "screens": 49,
+    "exercises": 71,
+    "vocabularyAndStructuralEntries": 43,
+    "derivedCurrentForms": 2,
+    "status": "PASS"
+  }
+}
