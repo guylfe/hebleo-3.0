@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "checks": {
+    "exact_reviewed_replacements": true,
+    "three_suggestions_accepted": true,
+    "outside_lesson_text_and_styles_unchanged": true,
+    "all_119_lesson_ids_and_heading_links_preserved": true,
+    "in_lesson_heading_identities_preserved": true,
+    "six_guy_paragraphs_verbatim": true,
+    "both_comment_threads_preserved": true,
+    "six_screens_numbered_in_order": true,
+    "both_number_answers_preserve_leading_zero": true,
+    "timing_and_accessibility_specified": true,
+    "old_picture_and_shape_tasks_removed": true,
+    "five_exercises_with_answers": true,
+    "options_and_feedback_What changed when we recognised the two dates?": true,
+    "options_and_feedback_When you use this idea to learn something new, what should you look for?": true
+  },
+  "documentId": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+  "revisionId": "AHj4eMSFJJ4kP3osI2W4F9R34eF6Lfp8hClvH0A9D3E5oxba2peVeP6eZU7YuLfSwvIou0qPfY9KDpNe8JDPehbIG9PHQFrphFpDcB20PA",
+  "changedParagraphs": 51,
+  "screens": [
+    "Screen 1: Welcome to Hebleo · MEMORY-A2.learn.try-first",
+    "Screen 2: Adam · MEMORY-A2.learn.adam-study",
+    "Screen 3: A quick memory experiment · MEMORY-A2.learn.number-round",
+    "Screen 4: Give the number meaning · MEMORY-A2.learn.connection",
+    "Screen 5: What made the difference? · MEMORY-A2.learn.meaning",
+    "Screen 6: Try the connection for yourself · MEMORY-A2.learn.return"
+  ],
+  "scope": "MEMORY-A2 only; no application, publication or source-workbook mutation"
+}

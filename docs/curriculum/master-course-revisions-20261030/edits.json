@@ -1,0 +1,359 @@
+[
+  {
+    "start": 16981,
+    "end": 17088,
+    "oldText": "Content: Draft · Approval: Pending · Built version: — · Verified version: — · Revision: 1 (29 October 2026)",
+    "newText": "Content: Revised draft · Approval: Guy’s opening edits accepted; revised remainder pending review · Built version: — · Verified version: — · Revision: 2 (30 October 2026)",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 17089,
+    "end": 17178,
+    "oldText": "OUTCOME: Try recall before reveal, compare with the model, and return after another task.",
+    "newText": "OUTCOME: Experience how a familiar meaning can make new information easier to remember, then apply the same idea to learning Hebrew.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 17179,
+    "end": 17262,
+    "oldText": "CONNECT TO: Use a familiar image or meaningful connection to recover something new.",
+    "newText": "CONNECT TO: Familiar dates and events provide meaning for a number that initially looks random.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 17405,
+    "end": 17541,
+    "oldText": "SOURCES / ADAPTATION: Original presentation slides 7–10; current A2 row 4. Earlier first20 memory draft used as an adaptation reference.",
+    "newText": "SOURCES / ADAPTATION: Guy’s original presentation, slides 7–9 (0704177609112001, ten seconds, familiar dates and associative memory), with the letter connection on slide 10. Source: https://drive.google.com/file/d/1ImMGqVDWT8BMN63xay1-DT7ug3Z1W9mr/view. Guy’s opening and Adam text were accepted verbatim on 30 October 2026. New transitions, exercise wording and interaction specifications below adapt his demonstration.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 17542,
+    "end": 17733,
+    "oldText": "DESIGN DECISIONS: The current plan uses familiar pictures and delayed recall. The old timed number/date demonstration is not inserted into this route; no learning-speed claim is carried over.",
+    "newText": "DESIGN DECISIONS: Guy’s 30 October correction supersedes the picture exercise in the earlier A2 draft. Preserve his established number-and-dates demonstration and personal teaching voice. Explain the experience before naming the principle, then connect it to Hebrew and everyday learning. This introductory demonstration does not change the deferred Hebrew numbers sequence.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 17779,
+    "end": 17835,
+    "oldText": "Screen 1: Try before looking · MEMORY-A2.learn.try-first",
+    "newText": "Screen 1: Welcome to Hebleo · MEMORY-A2.learn.try-first",
+    "style": "HEADING_3"
+  },
+  {
+    "start": 18449,
+    "end": 18491,
+    "oldText": "Screen 2: Adam· MEMORY-A2.learn.adam-study",
+    "newText": "Screen 2: Adam · MEMORY-A2.learn.adam-study",
+    "style": "HEADING_3"
+  },
+  {
+    "start": 19292,
+    "end": 19354,
+    "oldText": "Screen 3: Look, hide, remember · MEMORY-A2.learn.picture-round",
+    "newText": "Screen 3: A quick memory experiment · MEMORY-A2.learn.number-round",
+    "style": "HEADING_3"
+  },
+  {
+    "start": 19369,
+    "end": 19504,
+    "oldText": "Press Show pictures. Name each object in a language you know. When you are ready, press Hide pictures and tell yourself what was there.",
+    "newText": "Let’s try a quick experiment. I’m going to show you a number for ten seconds. Try to remember as much of it as you can without writing it down. When it disappears, type what you remember.\nReady? Press Play to begin.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 19505,
+    "end": 19740,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] IMAGE MEMORY-OBJECTS: three separate, equally clear pictures: a plain drinking cup, a door key, and an apple. No printed labels while visible. Provide equivalent spoken descriptions for nonvisual use.",
+    "newText": "[PLACEHOLDER / AUTHOR INSTRUCTION] TIMED DISPLAY MEMORY-NUMBER: show the exact string 0704177609112001 for 10,000 ms after Play, then hide it before enabling recall. Keep the leading zero. Display digits left to right; do not show dates, event labels, grouping or the answer before the first attempt. Never autoplay.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 19741,
+    "end": 19923,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] CONTROL: Show pictures → Hide pictures → spoken or typed attempt → Reveal pictures. No timer. Reveal is also available after “I cannot recall yet”.",
+    "newText": "[PLACEHOLDER / AUTHOR INSTRUCTION] CONTROL: Play → ten-second display → hidden-number recall → submit attempt or “I can’t remember yet” → Continue to the explanation. Replay starts a fresh attempt. An untimed study option is available. For nonvisual access, provide an on-demand spoken digit sequence and hide the accessible number before recall; this is an alternative experience, not a comparable timed score. Leaving the page cancels the timer. No pass threshold or speed comparison.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 19924,
+    "end": 19969,
+    "oldText": "MEMORY-A2.embedded.objects-first — self-check",
+    "newText": "MEMORY-A2.embedded.number-first — typed recall",
+    "style": "HEADING_3"
+  },
+  {
+    "start": 19970,
+    "end": 20036,
+    "oldText": "LEARNER PROMPT: After hiding the pictures, name the three objects.",
+    "newText": "LEARNER PROMPT: What was the number? Type as much as you remember, then continue.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 20037,
+    "end": 20079,
+    "oldText": "ANSWER / ACCEPTED MODEL: cup | key | apple",
+    "newText": "ANSWER / ACCEPTED MODEL: 0704177609112001. Store and compare as a string, never as a numeric value; leading zeroes matter. Ignore spaces between digit groups. This first attempt is ungraded; reveal the number only on the next screen.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 20080,
+    "end": 20226,
+    "oldText": "FEEDBACK: Compare object identities, in any order. Synonyms and any language are fine. Missing an object is a reason to look again, not a failure.",
+    "newText": "FEEDBACK: Keep your attempt for comparison. In a moment, I’ll show you a different way to think about the same number.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 20266,
+    "end": 20322,
+    "oldText": "Screen 3: Make a connection · MEMORY-A2.learn.connection",
+    "newText": "Screen 4: Give the number meaning · MEMORY-A2.learn.connection",
+    "style": "HEADING_3"
+  },
+  {
+    "start": 20337,
+    "end": 20500,
+    "oldText": "Now give the objects a familiar setting. Imagine an apple beside your usual cup, with your key between them. If that setting is unfamiliar, choose one of your own.",
+    "newText": "That was quite a lot of digits to remember! Now let’s look at the same number in a different way:\n07/04/1776 · 09/11/2001\nThese dates use American month–day–year order: July 4, 1776, and September 11, 2001.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 20501,
+    "end": 20707,
+    "oldText": "The useful part is the connection you can bring back to mind. It does not have to be clever or the same as someone else’s. When we learn letters, a familiar image can help you recover a shape and its sound.",
+    "newText": "The first is the date of the American Declaration of Independence; the second is the date of the September 11 attacks. If you already know those events, the digits now connect to something familiar.\nWe haven’t changed the number. We’ve changed what it means to you: instead of sixteen unrelated digits, you can think of two dates you already know. If those dates are unfamiliar, the connection will be less helpful. The useful starting point is something you already know.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 20747,
+    "end": 20817,
+    "oldText": "Screen 4: Do something else briefly · MEMORY-A2.learn.intervening-task",
+    "newText": "Screen 5: What made the difference? · MEMORY-A2.learn.meaning",
+    "style": "HEADING_3"
+  },
+  {
+    "start": 20832,
+    "end": 20985,
+    "oldText": "Leave the three objects for a moment. Look at the shapes below and choose the one that matches the outline. Then continue without reopening the pictures.",
+    "newText": "This is the idea we’ll use throughout Hebleo: connect new information to established old information. You already have a great deal of knowledge to build on. A useful connection gives the new information a place in that knowledge.\nLet’s check what changed in our experiment before you try the number again.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 20986,
+    "end": 21224,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] IMAGE MEMORY-SHAPES: unlabelled triangle outline; response shapes circle, triangle, square. Accessible labels identify the three shapes. For nonvisual use, prompt “Which of these shapes has three sides?”",
+    "newText": "[PLACEHOLDER / AUTHOR INSTRUCTION] PAGE BREAK: keep the number, dates and first attempt on earlier screens. This screen asks about the method without displaying the recall answer. No new image asset is required.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21225,
+    "end": 21273,
+    "oldText": "MEMORY-A2.embedded.shape-break — multiple choice",
+    "newText": "MEMORY-A2.embedded.what-changed — multiple choice",
+    "style": "HEADING_3"
+  },
+  {
+    "start": 21274,
+    "end": 21333,
+    "oldText": "LEARNER PROMPT: Which shape matches the triangular outline?",
+    "newText": "LEARNER PROMPT: What changed when we recognised the two dates?",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21356,
+    "end": 21365,
+    "oldText": "A. circle",
+    "newText": "A. Some of the digits were removed.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21366,
+    "end": 21377,
+    "oldText": "B. triangle",
+    "newText": "B. The same digits connected to familiar events.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21378,
+    "end": 21387,
+    "oldText": "C. square",
+    "newText": "C. The digits were rearranged into a different number.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21388,
+    "end": 21421,
+    "oldText": "ANSWER / ACCEPTED MODEL: triangle",
+    "newText": "ANSWER / ACCEPTED MODEL: The same digits connected to familiar events.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21422,
+    "end": 21496,
+    "oldText": "FEEDBACK after “circle”: A circle has a curved edge. Look for three sides.",
+    "newText": "FEEDBACK after “Some of the digits were removed.”: All sixteen digits are still there. The dates give us a meaningful way to organise them.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21497,
+    "end": 21557,
+    "oldText": "FEEDBACK after “triangle”: Yes. The outline has three sides.",
+    "newText": "FEEDBACK after “The same digits connected to familiar events.”: Exactly. We kept the information and connected it to something already familiar.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21558,
+    "end": 21623,
+    "oldText": "FEEDBACK after “square”: A square has four sides. Look for three.",
+    "newText": "FEEDBACK after “The digits were rearranged into a different number.”: The order stayed the same. We recognised a meaning within it.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21663,
+    "end": 21719,
+    "oldText": "Screen 5: Try again after a gap · MEMORY-A2.learn.return",
+    "newText": "Screen 6: Try the connection for yourself · MEMORY-A2.learn.return",
+    "style": "HEADING_3"
+  },
+  {
+    "start": 21734,
+    "end": 21859,
+    "oldText": "Before looking back, name the objects once more. If it helps, revisit the scene you imagined. Then compare with the pictures.",
+    "newText": "Let’s try again. Press Play to see the same number for ten seconds, this time with the two dates in mind. When it disappears, type what you remember. Think back to the events and see whether they help you recover the digits.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21860,
+    "end": 21995,
+    "oldText": "We will use this rhythm in the course: meet something new, connect it to something familiar, try to recall it, and meet it again later.",
+    "newText": "After checking your attempt, notice what helped you. Did you recall the dates, picture the events, or find a different connection? We’ll take this idea into the next lesson, where familiar images will help us connect Hebrew letter shapes to their sounds.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 21996,
+    "end": 22042,
+    "oldText": "MEMORY-A2.embedded.objects-return — self-check",
+    "newText": "MEMORY-A2.embedded.number-return — typed recall",
+    "style": "HEADING_3"
+  },
+  {
+    "start": 22043,
+    "end": 22110,
+    "oldText": "LEARNER PROMPT: Name the three objects again before revealing them.",
+    "newText": "LEARNER PROMPT: After the number disappears, type it again using the connection you have just made.\n[PLACEHOLDER / AUTHOR INSTRUCTION] REUSE MEMORY-NUMBER: the same ungrouped string, ten-second Play/Replay behavior, untimed and nonvisual alternatives. Earlier dates and answers stay hidden during recall. After submission or “I can’t remember yet”, Check reveals the exact number, the two date groups and the learner’s two attempts. Recall remains ungraded.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22111,
+    "end": 22153,
+    "oldText": "ANSWER / ACCEPTED MODEL: cup | key | apple",
+    "newText": "ANSWER / ACCEPTED MODEL: 0704177609112001. Accept spacing between digit groups; retain every digit in the original order, including the first zero.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22154,
+    "end": 22289,
+    "oldText": "FEEDBACK: Compare with the same three pictures. Notice which connection helped you; neither improvement nor perfect recall is required.",
+    "newText": "FEEDBACK: Compare your attempt with 0704177609112001, or 07041776 · 09112001. If the dates helped, notice how the familiar events brought the digits back. If they didn’t, ask whether those events were already familiar enough to help you. You can replay or continue after comparing.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22399,
+    "end": 22448,
+    "oldText": "LEARNER PROMPT: What makes an association useful?",
+    "newText": "LEARNER PROMPT: When you use this idea to learn something new, what should you look for?",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22471,
+    "end": 22528,
+    "oldText": "A. It connects the new item to something familiar to you.",
+    "newText": "A. A connection to something you already know.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22529,
+    "end": 22555,
+    "oldText": "B. It must be complicated.",
+    "newText": "B. The most complicated story you can invent.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22556,
+    "end": 22600,
+    "oldText": "C. It guarantees that you will never forget.",
+    "newText": "C. A way to avoid ever practising it again.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22601,
+    "end": 22680,
+    "oldText": "ANSWER / ACCEPTED MODEL: It connects the new item to something familiar to you.",
+    "newText": "ANSWER / ACCEPTED MODEL: A connection to something you already know.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22681,
+    "end": 22818,
+    "oldText": "FEEDBACK after “It connects the new item to something familiar to you.”: Yes. A familiar connection gives you a way back to the new item.",
+    "newText": "FEEDBACK after “A connection to something you already know.”: Yes. Start with what’s familiar and use it to make sense of the new information.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22819,
+    "end": 22917,
+    "oldText": "FEEDBACK after “It must be complicated.”: A simple connection can work. Complexity is not the aim.",
+    "newText": "FEEDBACK after “The most complicated story you can invent.”: Your connection can be simple. What matters is whether it helps you bring the new information back to mind.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 22918,
+    "end": 23050,
+    "oldText": "FEEDBACK after “It guarantees that you will never forget.”: You may still forget. Recall and later practice remain part of learning.",
+    "newText": "FEEDBACK after “A way to avoid ever practising it again.”: A connection gives you a useful starting point. We’ll also practise retrieving what you learn and return to it later in the course.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 23352,
+    "end": 23475,
+    "oldText": "LEARNER PROMPT: Choose one of the three objects. Describe a familiar place, experience or image that helps you remember it.",
+    "newText": "LEARNER PROMPT: Think of a date you already know. How would knowing its meaning help you remember the digits? You can keep your example private and explain it to yourself.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 23476,
+    "end": 23578,
+    "oldText": "ANSWER / ACCEPTED MODEL: Any connection the learner can explain, such as “the cup I use at breakfast”.",
+    "newText": "ANSWER / ACCEPTED MODEL: Any familiar date with an explanation linking its meaning to its digits. Example: “New Year’s Day is January 1, so I can recover 01/01 by thinking of the start of the year.” This is a self-check with no single required date or wording.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 23579,
+    "end": 23706,
+    "oldText": "FEEDBACK: Self-check: is the connection familiar, and does it lead back to the chosen object? There is no single correct scene.",
+    "newText": "FEEDBACK: Ask yourself: did I already know the event, and can thinking of it bring the date back to mind? The same idea can help with a new word, a name or something else you want to learn.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 23731,
+    "end": 23860,
+    "oldText": "You have tried connecting, recalling and returning after a gap. Next, we will use those moves to learn four Hebrew letter shapes.",
+    "newText": "You’ve now tried one of the ideas behind Hebleo for yourself: connecting new information to something you already know. Next, we’ll use familiar images to help you learn your first four Hebrew letters. Let’s begin!",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 23901,
+    "end": 24035,
+    "oldText": "Review the new cup/key/apple scene and the nonvisual alternative; the older number/date demonstration is not in this plan-based draft.",
+    "newText": "AUTHOR REVIEW: Guy’s accepted opening and Adam account remain verbatim. The original presentation’s slide 4 names B1, while his new text says B2; this discrepancy is flagged in chat for his decision. The 500/70-hour comparison is Guy’s supplied account, not independently verified evidence or a promised learner outcome. Review the newly adapted transitions and exercises; verify the ten-second display, leading zero, hidden answers, replay, nonvisual/untimed alternatives and all choice feedback during implementation.",
+    "style": "NORMAL_TEXT"
+  },
+  {
+    "start": 24036,
+    "end": 24115,
+    "oldText": "Approval revision/date: — · Course lesson/version: — · Verification evidence: —",
+    "newText": "Approval revision/date: Guy’s tracked opening edits accepted 30 October 2026; adapted remainder pending review · Course lesson/version: — · Verification evidence: document readback; no course implementation or publication.",
+    "style": "NORMAL_TEXT"
+  }
+]

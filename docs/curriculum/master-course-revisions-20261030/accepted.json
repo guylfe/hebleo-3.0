@@ -1,0 +1,2975 @@
+{
+  "documentId": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+  "revisionId": "AHj4eMQxmYMTjrg1S_qbf5VtJtloAqEqLAW9_Pxx_42LkpFtJsRw9t5aabfVw9DraOCehI8AxNw9dY1LhI5Rgb_5W0HCAXGe1Y-bu-EPRg",
+  "tabId": "t.0",
+  "fullTextSha256": "cc05226e3d00899a0e2ec5253c86ba12cad2c8c44a84309082c8c14691c06622",
+  "fullCharacterCount": 199274,
+  "prefixSha256": "a5a8a65159b725cc375bb27b52ff92fa95aa4d1edf9fde6bbbb93f3d38589aa9",
+  "suffixSha256": "2cc322defa687048c1d7b0134c48bd6b522b8ff57585bc04b61807430e2f4e54",
+  "lessonHeadings": [
+    [
+      "h.ioagjd75m9j5",
+      "Course index\n"
+    ],
+    [
+      "h.x1dpreha20p7",
+      "Shared authoring and build conventions\n"
+    ],
+    [
+      "h.2qq5anby7ggr",
+      "001 · How memory works — MEMORY-A2\n"
+    ],
+    [
+      "h.ic84dj13r8pc",
+      "002 · Letters 1: מנתל — four consonants — MNTL-A2\n"
+    ],
+    [
+      "h.qzqt76rrngpd",
+      "003 · Writing 1: right-to-left and final forms ם/ן — WRITING-BASICS-A2\n"
+    ],
+    [
+      "h.9vqm8z81w1",
+      "004 · Vowels 1: a/e/i — VOWELS-AEIO-A2\n"
+    ],
+    [
+      "h.j68olc46b7y9",
+      "005 · Letters 2: אהי — AHY-A2\n"
+    ],
+    [
+      "h.ekyqf59roprd",
+      "006 · Introduce yourself: nominal sentences and אני — NOMINAL-A2\n"
+    ],
+    [
+      "h.jy3rp7n3fi7l",
+      "007 · Questions: intonation, question word first, and you — QUESTIONS-BASIC-A2\n"
+    ],
+    [
+      "h.5grtp3jgbyp6",
+      "008 · Letters 3: ו: sound roles and third-person pronouns — VAV-A2\n"
+    ],
+    [
+      "h.m0n87vlorcyn",
+      "009 · Vowels 2: o/u signs, sheva and לא — VOWELS-OU-READING-A2\n"
+    ],
+    [
+      "h.h6imjm873uez",
+      "010 · Prepositions and prefixes 1: מ־/ה־/ו־ — PREFIXES-MHV-A2\n"
+    ],
+    [
+      "h.7u2kjfj1dpzw",
+      "Remaining planned lessons — expand these entries in place\n"
+    ],
+    [
+      "h.hdv849yigtp5",
+      "011 · Vocabulary 1: Introductions, travel pictures and choices — INTRODUCTIONS-INTEGRATION-A2\n"
+    ],
+    [
+      "h.11a1vzav4q4b",
+      "012 · Writing 2: ו/י roles and doubled spellings — VAV-YOD-SPELLING-A2\n"
+    ],
+    [
+      "h.w98mpto3g3k5",
+      "013 · Letters 4: שזד: greetings, names and familiar objects — SHZD-A2\n"
+    ],
+    [
+      "h.4a6rj41mwo1l",
+      "014 · Nouns 1: זה/זאת: identifying an item — DEMONSTRATIVES-SG-A2\n"
+    ],
+    [
+      "h.jemhicg1ncys",
+      "015 · Nouns 2: gender and person-word pairs — NOUN-GENDER-A2\n"
+    ],
+    [
+      "h.4ij2c6kirqnm",
+      "016 · Letters 5: ברצ: home, family and greetings — BRTZ-A2\n"
+    ],
+    [
+      "h.netubp6vn08",
+      "017 · Verbs 1: present singular — PRESENT-SG-A2\n"
+    ],
+    [
+      "h.aun8vffxha1n",
+      "018 · Prepositions and prefixes 2: ב־/ל־/של; לי and שלי — PREFIXES-BL-SHEL-A2\n"
+    ],
+    [
+      "h.q07eoyu4nswy",
+      "019 · Letters 6: כפג: objects, הולך/הולכת and איפה — KPG-A2\n"
+    ],
+    [
+      "h.9yipvt886r9q",
+      "020 · Commands 1: come, go, sit and give — COMMANDS-GIVE-SIT-GO-A2\n"
+    ],
+    [
+      "h.x9o5tbnp035p",
+      "021 · Possession: availability and X has/does not have — EXISTENCE-POSSESSION-A2\n"
+    ],
+    [
+      "h.9xs22qbej805",
+      "022 · Letters 7: חע: food, places and עברית — HET-AYIN-A2\n"
+    ],
+    [
+      "h.67cqc8q3ekgz",
+      "023 · Infinitives 1: wanted actions — INFINITIVE-WANT-A2\n"
+    ],
+    [
+      "h.cad9xsmew770",
+      "024 · Nouns 3: plurals and אלה — NOUN-PLURALS-A2\n"
+    ],
+    [
+      "h.ve8bkay52mys",
+      "025 · Letters 8: קסט: polite requests and everyday replies — QST-A2\n"
+    ],
+    [
+      "h.hl7fc6lx1q75",
+      "026 · Infinitives 2: permission, taking and giving — PERMISSION-REQUESTS-A2\n"
+    ],
+    [
+      "h.5k6peqss7l3p",
+      "027 · Preposition suffixes 1: me/him/her — PREP-SUFFIXES-ME-HIM-HER-A2\n"
+    ],
+    [
+      "h.kld367ckpnah",
+      "028 · Vocabulary 2: Keep a conversation going — REPAIR-CONVERSATION-A2\n"
+    ],
+    [
+      "h.w0wvewtq1oh6",
+      "029 · Recognise and say numbers 1–10 — COUNTING-ONE-TEN-A2\n"
+    ],
+    [
+      "h.lwvi27lynr8y",
+      "030 · Adjectives 1: states and gender/number agreement — ADJECTIVE-PREDICATES-A2\n"
+    ],
+    [
+      "h.s3y3d0kfuusw",
+      "031 · Verbs 2: present plurals, agreement and Green — PRESENT-BA-SAM-OLE-ROTZE-A2\n"
+    ],
+    [
+      "h.l9lbpumthawq",
+      "032 · Pronunciation 1: producing ח/כ and ר — PRONUNCIATION-KH-R-A2\n"
+    ],
+    [
+      "h.t45360n04nus",
+      "033 · Preposition suffixes 2: you, singular — PREP-SUFFIXES-YOU-SG-A2\n"
+    ],
+    [
+      "h.yxpmy0q7h633",
+      "034 · Roots and patterns 1: roots in familiar words — ROOTS-A2\n"
+    ],
+    [
+      "h.on0ohp22ki16",
+      "035 · Vocabulary 3: the body and outdoors — BODY-SURROUNDINGS-A2\n"
+    ],
+    [
+      "h.hzk4q1ml6t6a",
+      "036 · Adjectives 2: noun–adjective phrases — NOUN-ADJECTIVE-A2\n"
+    ],
+    [
+      "h.o80n2gab3rmg",
+      "037 · Numbers: counting 1 — COUNTING-ONE-SHOPPING-A2\n"
+    ],
+    [
+      "h.lv5udmufjb4v",
+      "038 · Preposition suffixes 3: us/them — PREP-SUFFIXES-US-THEM-A2\n"
+    ],
+    [
+      "h.q2hsqvyy0i1k",
+      "039 · Roots and patterns 2: patterns through familiar meanings — PATTERNS-A2\n"
+    ],
+    [
+      "h.shkfhwek12lz",
+      "040 · Writing 3: בג״ד כפ״ת readings — BEGED-KEFET-A2\n"
+    ],
+    [
+      "h.n7vfwftwwgga",
+      "041 · Adjectives 3: demonstratives in noun phrases — DEMONSTRATIVE-PHRASES-A2\n"
+    ],
+    [
+      "h.b9zmxp2pqrgh",
+      "042 · Binyanim 1: Pa’al: familiar present actions — PAAL-A2\n"
+    ],
+    [
+      "h.umpur6z36ptf",
+      "043 · Preposition suffixes 4: you, plural — PREP-SUFFIXES-YOU-PL-A2\n"
+    ],
+    [
+      "h.al65rdqpisyy",
+      "044 · Writing 4: letters with geresh — GERESH-LETTERS-A2\n"
+    ],
+    [
+      "h.t0b47q3nf79o",
+      "045 · Binyanim 2: Pi’el: present pattern — PIEL-A2\n"
+    ],
+    [
+      "h.3sul0w7f43f5",
+      "046 · Roots and patterns 3: tool patterns מַקְטֵל/מַקְטֵלָה — TOOL-PATTERNS-A2\n"
+    ],
+    [
+      "h.gfk6bqoep18x",
+      "047 · Object pronouns 1: definite direct-object marker את — DIRECT-OBJECT-ET-A2\n"
+    ],
+    [
+      "h.ryyi9wkv8rcc",
+      "048 · Writing 5: alphabetical order — ALPHABET-ORDER-A2\n"
+    ],
+    [
+      "h.73o1o3j3wsup",
+      "049 · Infinitives 3: can, need and must — MODALS-CAN-NEED-MUST-A2\n"
+    ],
+    [
+      "h.v9bhaiqh0uw6",
+      "050 · Numbers: counting 2-10 feminine — COUNTING-FEMININE-A2\n"
+    ],
+    [
+      "h.p5ml1hv58yyx",
+      "051 · Prepositions 1: אצל and destinations — ETZEL-DIRECTIONS-A2\n"
+    ],
+    [
+      "h.hnlt41njpunc",
+      "052 · Past tense 1: he/she/they; reuse Green — PAST-HE-SHE-THEY-A2\n"
+    ],
+    [
+      "h.mtv0h29b9q3m",
+      "053 · Roots and patterns 4: place patterns מִקְטָל/מִקְטָלָה — PLACE-PATTERNS-A2\n"
+    ],
+    [
+      "h.gslkjychqn55",
+      "054 · Prepositions 2: עם and companions — IM-WITH-A2\n"
+    ],
+    [
+      "h.mxcv7odu56zv",
+      "055 · States: physical sensations with ל־ — FEELING-HOT-COLD-A2\n"
+    ],
+    [
+      "h.lo4yqj7lnb9o",
+      "056 · Past tense 2: I/we and Blue — PAST-I-A2\n"
+    ],
+    [
+      "h.c2ezz3jry7sl",
+      "057 · Nouns 4: dual forms — DUAL-A2\n"
+    ],
+    [
+      "h.it6xcfqu762m",
+      "058 · Vocabulary 4: At home: guests, sleep and rest — HOME-VISIT-A2\n"
+    ],
+    [
+      "h.yktyjd48sx1c",
+      "059 · Vocabulary 5: Clothing and routines: apply known present agreement — PRESENT-FOUR-FORMS-A2\n"
+    ],
+    [
+      "h.e1pvcykwanlm",
+      "060 · Object pronouns 2: object versus recipient — OBJECT-AND-RECIPIENT-A2\n"
+    ],
+    [
+      "h.5senj58p9w35",
+      "061 · Nouns 5: construct chains — CONSTRUCT-CHAINS-A2\n"
+    ],
+    [
+      "h.ts90ja4wn5qb",
+      "062 · Past tense 3: you: singular, then plural — PAST-I-WE-YOU-A2\n"
+    ],
+    [
+      "h.qimv1nb0zqrk",
+      "063 · Vocabulary 6: Finding a missing book and requesting help — MISSING-BOOK-A2\n"
+    ],
+    [
+      "h.pteklrboesp4",
+      "064 · Roots and patterns 5: segolate singular/plural forms — SEGOLATE-NOUNS-A2\n"
+    ],
+    [
+      "h.3xyrijf399aq",
+      "065 · Past tense 4: היה and personal profiles — PAST-BE-PROFILE-A2\n"
+    ],
+    [
+      "h.1kanjznxj6qb",
+      "066 · Vocabulary 7: Calendar words and weekly plans — WEEK-PLANS-A2\n"
+    ],
+    [
+      "h.gnb2mjswpfk8",
+      "067 · Numbers: counting 11-19 — COUNTING-ELEVEN-NINETEEN-A2\n"
+    ],
+    [
+      "h.zwvk3g3mj48",
+      "068 · Adjectives 4: relational י, nationality and language — ADJECTIVES-YOD-A2\n"
+    ],
+    [
+      "h.h3b0yyknbn7z",
+      "069 · Vocabulary 8: Problems, suggestions and solutions — CLASSROOM-PROBLEM-A2\n"
+    ],
+    [
+      "h.vsyyxlnieok9",
+      "070 · Numbers: counting 20-99 — COUNTING-TENS-A2\n"
+    ],
+    [
+      "h.auonhcjq54nm",
+      "071 · Vocabulary 9: Classroom tasks and descriptions — CLASSROOM-PREPARATION-A2\n"
+    ],
+    [
+      "h.x003y9jfbu2t",
+      "072 · Binyanim 3: Nif’al — NIFAL-A2\n"
+    ],
+    [
+      "h.lskuryp1t7fy",
+      "073 · Roots and patterns 6: קָטוֹל adjective forms — QATOL-ADJECTIVES-A2\n"
+    ],
+    [
+      "h.ft3htralrb7p",
+      "074 · Pronunciation 2: gutturals in familiar verb forms — GUTTURAL-VERBS-A2\n"
+    ],
+    [
+      "h.do1j9v6h1jx7",
+      "075 · Verb groups 1: final-ה/י — FINAL-HE-VERBS-A2\n"
+    ],
+    [
+      "h.604evpkeh6mq",
+      "076 · Roots and patterns 7: profession patterns — PROFESSIONS-PATTERNS-A2\n"
+    ],
+    [
+      "h.as7aatw9jeok",
+      "077 · Reference: same and different — SAME-DIFFERENT-A2\n"
+    ],
+    [
+      "h.u8k1n24f6abn",
+      "078 · Binyanim 4: Hitpa’el — HITPAEL-A2\n"
+    ],
+    [
+      "h.ei2fn7k6yu0a",
+      "079 · Numbers: masculine independent (1-10) — COUNTING-MASCULINE-A2\n"
+    ],
+    [
+      "h.isbu844vazjq",
+      "080 · Prepositions 3: plural-style suffixes — PREPOSITIONS-PLURAL-SUFFIXES-A2\n"
+    ],
+    [
+      "h.87xt5cwyzj2d",
+      "081 · Verb groups 2: middle ו/י — HOLLOW-VERBS-A2\n"
+    ],
+    [
+      "h.owvz6myc1enx",
+      "082 · Roots and patterns 8: קָטִיל adjective forms — QATIL-ADJECTIVES-A2\n"
+    ],
+    [
+      "h.1pislyn2hhy0",
+      "083 · Numbers: masculine construct (1-10) — COUNTING-MASCULINE-CONSTRUCT-A2\n"
+    ],
+    [
+      "h.tky74ehe8wq3",
+      "084 · Binyanim 5: Hif’il — HIFIL-A2\n"
+    ],
+    [
+      "h.7qzr0oue2wz",
+      "085 · Nouns 6: construct plurals and definiteness — CONSTRUCT-CHAINS-RETURN-A2\n"
+    ],
+    [
+      "h.dpd2c3xdaqs",
+      "086 · Pronunciation 3: assimilation in supplied נ/מ forms — ASSIMILATION-NUN-MEM-A2\n"
+    ],
+    [
+      "h.7e9wy4vlqi56",
+      "087 · Roots and patterns 9: four-consonant roots in Pi’el and Hitpa’el — FOUR-ROOT-CONSONANTS-A2\n"
+    ],
+    [
+      "h.u9l312haybn4",
+      "088 · Infinitives 4: permission, prohibition and imminence — PERMISSION-IMMINENCE-A2\n"
+    ],
+    [
+      "h.d2k8gba6fo8l",
+      "089 · Integration: finding someone and something — FINDING-SOMEONE-A2\n"
+    ],
+    [
+      "h.kkq5mco1uhgv",
+      "090 · Roots and patterns 10: קָטֵל forms and health — STATES-HEALTH-A2\n"
+    ],
+    [
+      "h.ofjnyvuidm43",
+      "091 · Past tense 5: repeated activity with היה + present — PAST-HABIT-A2\n"
+    ],
+    [
+      "h.o8pjo2w5c03r",
+      "092 · Numbers: masculine 11-19 — COUNTING-MASCULINE-TEENS-A2\n"
+    ],
+    [
+      "h.a9823x90ibsk",
+      "093 · Action nouns 1: Pi’el — ACTION-NOUNS-PIEL-A2\n"
+    ],
+    [
+      "h.hwge32b4dijz",
+      "094 · Future 1: I/we/he — FUTURE-I-WE-HE-A2\n"
+    ],
+    [
+      "h.ti8nn8tjn8wt",
+      "095 · Numbers: counting 100-999 — COUNTING-HUNDREDS-A2\n"
+    ],
+    [
+      "h.vbfjs7ze2ocf",
+      "096 · Clauses 1: linking and embedding — EMBEDDED-CLAUSES-A2\n"
+    ],
+    [
+      "h.izrmstmjb0xu",
+      "097 · Future 2: you, commands and prohibition — FUTURE-YOU-COMMANDS-A2\n"
+    ],
+    [
+      "h.lnwfoglrfqmp",
+      "098 · Action nouns 2: Hif’il — ACTION-NOUNS-HIFIL-A2\n"
+    ],
+    [
+      "h.7sn143pt6i0c",
+      "099 · Clauses 2: relative clauses — RELATIVE-CLAUSES-A2\n"
+    ],
+    [
+      "h.wz74jsnj0pt6",
+      "100 · Future 3: she/they — FUTURE-SHE-THEY-A2\n"
+    ],
+    [
+      "h.k6f6fu6thkk",
+      "101 · Action nouns 3: Pa’al — ACTION-NOUNS-PAAL-A2\n"
+    ],
+    [
+      "h.fixzhvap2wu4",
+      "102 · Clauses 3: counterfactual conditions — COUNTERFACTUAL-A2\n"
+    ],
+    [
+      "h.yj3rdht6dwrb",
+      "103 · Passive 1: generic they in אמרו לי — GENERIC-THEY-PASSIVE-A2\n"
+    ],
+    [
+      "h.q2riu9qw7qza",
+      "104 · Integration: known action-noun families — ACTION-NOUN-FAMILIES-A2\n"
+    ],
+    [
+      "h.bdf0k147r3ab",
+      "105 · Clauses 4: purpose — PURPOSE-CLAUSES-A2\n"
+    ],
+    [
+      "h.83k1xy7mfkhs",
+      "106 · Future 4: initial-א verbs — INITIAL-ALEPH-FUTURE-A2\n"
+    ],
+    [
+      "h.wju9k8ihp0u5",
+      "107 · Numbers: 1000-999,999 — COUNTING-THOUSANDS-A2\n"
+    ],
+    [
+      "h.t3l1qdj8rbbn",
+      "108 · Clauses 5: relative clauses with prepositions — RELATIVE-PREPOSITIONS-A2\n"
+    ],
+    [
+      "h.n2bbb5y9pqf4",
+      "109 · Passive 2: Nif’al with familiar active verbs — PASSIVE-NIFAL-A2\n"
+    ],
+    [
+      "h.2dgr6g97k4pb",
+      "110 · Numbers: million+ — COUNTING-MILLIONS-A2\n"
+    ],
+    [
+      "h.cato4lu1qgux",
+      "111 · Writing 6: reading with reduced Nikkud — REDUCED-NIKKUD-A2\n"
+    ],
+    [
+      "h.4o6r6lcqcqt7",
+      "112 · Passive 3: Pu’al from familiar Pi’el — PASSIVE-PUAL-A2\n"
+    ],
+    [
+      "h.1rokdqcazvvw",
+      "113 · Return: quantities in connected sentences — QUANTITIES-IN-CONTEXT-A2\n"
+    ],
+    [
+      "h.7v24gic4k6q0",
+      "114 · Register 1: spoken meaning and tone — SPOKEN-REGISTER-A2\n"
+    ],
+    [
+      "h.ecwwq8jqqv6g",
+      "115 · Passive 4: Huf’al from familiar Hif’il — PASSIVE-HUFAL-A2\n"
+    ],
+    [
+      "h.386uspjlmrml",
+      "116 · גימטריה — GEMATRIA-A2\n"
+    ],
+    [
+      "h.5iuqh5vw1p5q",
+      "117 · Register 2: formal notices and correspondence — FORMAL-REGISTER-A2\n"
+    ],
+    [
+      "h.8ou7yzfys0v",
+      "118 · Verb groups 3: special forms in use — SPECIAL-VERB-PRACTICE-A2\n"
+    ],
+    [
+      "h.5xe5uoht5dbg",
+      "119 · Integration: changing the meeting time — CHANGED-APPOINTMENT-A2\n"
+    ],
+    [
+      "h.k5jas6c1pcai",
+      "Revision and unresolved-item register\n"
+    ]
+  ],
+  "suggestions": [],
+  "section": [
+    {
+      "startIndex": 16946,
+      "endIndex": 16981,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 16946,
+            "endIndex": 16981,
+            "textRun": {
+              "content": "001 · How memory works — MEMORY-A2\n",
+              "textStyle": {
+                "fontSize": {
+                  "magnitude": 18,
+                  "unit": "PT"
+                }
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.2qq5anby7ggr",
+          "namedStyleType": "HEADING_1",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 16981,
+      "endIndex": 17089,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 16981,
+            "endIndex": 17089,
+            "textRun": {
+              "content": "Content: Draft · Approval: Pending · Built version: — · Verified version: — · Revision: 1 (29 October 2026)\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17089,
+      "endIndex": 17179,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17089,
+            "endIndex": 17097,
+            "textRun": {
+              "content": "OUTCOME:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 17097,
+            "endIndex": 17179,
+            "textRun": {
+              "content": " Try recall before reveal, compare with the model, and return after another task.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17179,
+      "endIndex": 17263,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17179,
+            "endIndex": 17190,
+            "textRun": {
+              "content": "CONNECT TO:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 17190,
+            "endIndex": 17263,
+            "textRun": {
+              "content": " Use a familiar image or meaningful connection to recover something new.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17263,
+      "endIndex": 17284,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17263,
+            "endIndex": 17277,
+            "textRun": {
+              "content": "PREREQUISITES:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 17277,
+            "endIndex": 17284,
+            "textRun": {
+              "content": " None.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17284,
+      "endIndex": 17405,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17284,
+            "endIndex": 17290,
+            "textRun": {
+              "content": "PLAN: ",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 17290,
+            "endIndex": 17404,
+            "textRun": {
+              "content": "https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001&range=A4:M4",
+              "textStyle": {
+                "underline": true,
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.06666667,
+                      "green": 0.33333334,
+                      "blue": 0.8
+                    }
+                  }
+                },
+                "link": {
+                  "url": "https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001&range=A4:M4"
+                }
+              }
+            }
+          },
+          {
+            "startIndex": 17404,
+            "endIndex": 17405,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17405,
+      "endIndex": 17542,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17405,
+            "endIndex": 17542,
+            "textRun": {
+              "content": "SOURCES / ADAPTATION: Original presentation slides 7–10; current A2 row 4. Earlier first20 memory draft used as an adaptation reference.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17542,
+      "endIndex": 17734,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17542,
+            "endIndex": 17734,
+            "textRun": {
+              "content": "DESIGN DECISIONS: The current plan uses familiar pictures and delayed recall. The old timed number/date demonstration is not inserted into this route; no learning-speed claim is carried over.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17734,
+      "endIndex": 17779,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17734,
+            "endIndex": 17779,
+            "textRun": {
+              "content": "Learn — exact text and embedded interactions\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.kfzbymom0yij",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17779,
+      "endIndex": 17836,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17779,
+            "endIndex": 17836,
+            "textRun": {
+              "content": "Screen 1: Try before looking · MEMORY-A2.learn.try-first\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.ppnpzgr4mugm",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17836,
+      "endIndex": 17850,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17836,
+            "endIndex": 17850,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17850,
+      "endIndex": 17851,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17850,
+            "endIndex": 17851,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17851,
+      "endIndex": 17994,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17851,
+            "endIndex": 17994,
+            "textRun": {
+              "content": "Welcome to Hebleo, the smart way to learn Hebrew. This course is the result of a 10+ year long journey, combining many years of experience in:\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17994,
+      "endIndex": 18101,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17994,
+            "endIndex": 18101,
+            "textRun": {
+              "content": "Learning languages independently on a self-paced basis and seeing what works and what doesn’t first-hand, \n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          },
+          "indentFirstLine": {
+            "magnitude": 18,
+            "unit": "PT"
+          },
+          "indentStart": {
+            "magnitude": 36,
+            "unit": "PT"
+          }
+        },
+        "bullet": {
+          "listId": "kix.n1ufmme6a49g",
+          "textStyle": {
+            "underline": false
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18101,
+      "endIndex": 18270,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18101,
+            "endIndex": 18270,
+            "textRun": {
+              "content": "Teaching Hebrew as a tutor and developing materials along the way, optimizing them with each new student with different approaches, and seeing what works well long-term\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          },
+          "indentFirstLine": {
+            "magnitude": 18,
+            "unit": "PT"
+          },
+          "indentStart": {
+            "magnitude": 36,
+            "unit": "PT"
+          }
+        },
+        "bullet": {
+          "listId": "kix.n1ufmme6a49g",
+          "textStyle": {
+            "underline": false
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18270,
+      "endIndex": 18410,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18270,
+            "endIndex": 18281,
+            "textRun": {
+              "content": "Getting an ",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 18281,
+            "endIndex": 18285,
+            "textRun": {
+              "content": "M.Sc",
+              "textStyle": {
+                "underline": true,
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.06666667,
+                      "green": 0.33333334,
+                      "blue": 0.8
+                    }
+                  }
+                },
+                "link": {
+                  "url": "http://M.Sc"
+                }
+              }
+            }
+          },
+          {
+            "startIndex": 18285,
+            "endIndex": 18410,
+            "textRun": {
+              "content": ". in Cognitive Science. It has helped me understand how to optimize learning in general and language learning in particular.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          },
+          "indentFirstLine": {
+            "magnitude": 18,
+            "unit": "PT"
+          },
+          "indentStart": {
+            "magnitude": 36,
+            "unit": "PT"
+          }
+        },
+        "bullet": {
+          "listId": "kix.n1ufmme6a49g",
+          "textStyle": {
+            "underline": false
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18410,
+      "endIndex": 18449,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18410,
+            "endIndex": 18449,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18449,
+      "endIndex": 18492,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18449,
+            "endIndex": 18492,
+            "textRun": {
+              "content": "Screen 2: Adam· MEMORY-A2.learn.adam-study\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.2ug4lsayx22z",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18492,
+      "endIndex": 19063,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18492,
+            "endIndex": 18993,
+            "textRun": {
+              "content": "This led to a case study I did with a student named Adam. He came to me with Zero Hebrew knowledge, but similar scientific background. After I explained the method to him, he became intrigued and we decided to test how long it would take him to get to a level where we would be able to generally hold Hebrew conversations together (called “B2”). For an English speaker learning Hebrew, this usually takes around 500 hours. For Adam, using the methodology that is at the core of Hebleo, it took around ",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 18993,
+            "endIndex": 19001,
+            "textRun": {
+              "content": "70 hours",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 19001,
+            "endIndex": 19063,
+            "textRun": {
+              "content": ". This means that his pace was over 7x higher than the norm. \n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19063,
+      "endIndex": 19252,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19063,
+            "endIndex": 19252,
+            "textRun": {
+              "content": "Let’s briefly demonstrate some of the underlying concepts used in the course that improve your learning and memory. Understanding them can help you use them in your personal life as well! \n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19252,
+      "endIndex": 19253,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19252,
+            "endIndex": 19253,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19253,
+      "endIndex": 19292,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19253,
+            "endIndex": 19292,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19292,
+      "endIndex": 19355,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19292,
+            "endIndex": 19355,
+            "textRun": {
+              "content": "Screen 3: Look, hide, remember · MEMORY-A2.learn.picture-round\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.5ivvjfycmbw8",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19355,
+      "endIndex": 19369,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19355,
+            "endIndex": 19369,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19369,
+      "endIndex": 19505,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19369,
+            "endIndex": 19505,
+            "textRun": {
+              "content": "Press Show pictures. Name each object in a language you know. When you are ready, press Hide pictures and tell yourself what was there.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19505,
+      "endIndex": 19741,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19505,
+            "endIndex": 19741,
+            "textRun": {
+              "content": "[PLACEHOLDER / AUTHOR INSTRUCTION] IMAGE MEMORY-OBJECTS: three separate, equally clear pictures: a plain drinking cup, a door key, and an apple. No printed labels while visible. Provide equivalent spoken descriptions for nonvisual use.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19741,
+      "endIndex": 19924,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19741,
+            "endIndex": 19924,
+            "textRun": {
+              "content": "[PLACEHOLDER / AUTHOR INSTRUCTION] CONTROL: Show pictures → Hide pictures → spoken or typed attempt → Reveal pictures. No timer. Reveal is also available after “I cannot recall yet”.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19924,
+      "endIndex": 19970,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19924,
+            "endIndex": 19970,
+            "textRun": {
+              "content": "MEMORY-A2.embedded.objects-first — self-check\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.nrssl8sbqhl7",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19970,
+      "endIndex": 20037,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19970,
+            "endIndex": 19985,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 19985,
+            "endIndex": 20037,
+            "textRun": {
+              "content": " After hiding the pictures, name the three objects.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20037,
+      "endIndex": 20080,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20037,
+            "endIndex": 20061,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 20061,
+            "endIndex": 20080,
+            "textRun": {
+              "content": " cup | key | apple\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20080,
+      "endIndex": 20227,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20080,
+            "endIndex": 20227,
+            "textRun": {
+              "content": "FEEDBACK: Compare object identities, in any order. Synonyms and any language are fine. Missing an object is a reason to look again, not a failure.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20227,
+      "endIndex": 20266,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20227,
+            "endIndex": 20266,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20266,
+      "endIndex": 20323,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20266,
+            "endIndex": 20323,
+            "textRun": {
+              "content": "Screen 3: Make a connection · MEMORY-A2.learn.connection\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.ik4ktc6t0rb5",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20323,
+      "endIndex": 20337,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20323,
+            "endIndex": 20337,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20337,
+      "endIndex": 20501,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20337,
+            "endIndex": 20501,
+            "textRun": {
+              "content": "Now give the objects a familiar setting. Imagine an apple beside your usual cup, with your key between them. If that setting is unfamiliar, choose one of your own.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20501,
+      "endIndex": 20708,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20501,
+            "endIndex": 20708,
+            "textRun": {
+              "content": "The useful part is the connection you can bring back to mind. It does not have to be clever or the same as someone else’s. When we learn letters, a familiar image can help you recover a shape and its sound.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20708,
+      "endIndex": 20747,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20708,
+            "endIndex": 20747,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20747,
+      "endIndex": 20818,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20747,
+            "endIndex": 20818,
+            "textRun": {
+              "content": "Screen 4: Do something else briefly · MEMORY-A2.learn.intervening-task\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.2mkp5kt1pl5d",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20818,
+      "endIndex": 20832,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20818,
+            "endIndex": 20832,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20832,
+      "endIndex": 20986,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20832,
+            "endIndex": 20986,
+            "textRun": {
+              "content": "Leave the three objects for a moment. Look at the shapes below and choose the one that matches the outline. Then continue without reopening the pictures.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20986,
+      "endIndex": 21225,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20986,
+            "endIndex": 21225,
+            "textRun": {
+              "content": "[PLACEHOLDER / AUTHOR INSTRUCTION] IMAGE MEMORY-SHAPES: unlabelled triangle outline; response shapes circle, triangle, square. Accessible labels identify the three shapes. For nonvisual use, prompt “Which of these shapes has three sides?”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21225,
+      "endIndex": 21274,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21225,
+            "endIndex": 21274,
+            "textRun": {
+              "content": "MEMORY-A2.embedded.shape-break — multiple choice\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.u7o1eqwg6jr5",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21274,
+      "endIndex": 21334,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21274,
+            "endIndex": 21289,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 21289,
+            "endIndex": 21334,
+            "textRun": {
+              "content": " Which shape matches the triangular outline?\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21334,
+      "endIndex": 21356,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21334,
+            "endIndex": 21356,
+            "textRun": {
+              "content": "OPTIONS / TOKEN POOL:\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21356,
+      "endIndex": 21366,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21356,
+            "endIndex": 21366,
+            "textRun": {
+              "content": "A. circle\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21366,
+      "endIndex": 21378,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21366,
+            "endIndex": 21378,
+            "textRun": {
+              "content": "B. triangle\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21378,
+      "endIndex": 21388,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21378,
+            "endIndex": 21388,
+            "textRun": {
+              "content": "C. square\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21388,
+      "endIndex": 21422,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21388,
+            "endIndex": 21412,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 21412,
+            "endIndex": 21422,
+            "textRun": {
+              "content": " triangle\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21422,
+      "endIndex": 21497,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21422,
+            "endIndex": 21497,
+            "textRun": {
+              "content": "FEEDBACK after “circle”: A circle has a curved edge. Look for three sides.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21497,
+      "endIndex": 21558,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21497,
+            "endIndex": 21558,
+            "textRun": {
+              "content": "FEEDBACK after “triangle”: Yes. The outline has three sides.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21558,
+      "endIndex": 21624,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21558,
+            "endIndex": 21624,
+            "textRun": {
+              "content": "FEEDBACK after “square”: A square has four sides. Look for three.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21624,
+      "endIndex": 21663,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21624,
+            "endIndex": 21663,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21663,
+      "endIndex": 21720,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21663,
+            "endIndex": 21720,
+            "textRun": {
+              "content": "Screen 5: Try again after a gap · MEMORY-A2.learn.return\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.wjryxoncl9oh",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21720,
+      "endIndex": 21734,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21720,
+            "endIndex": 21734,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21734,
+      "endIndex": 21860,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21734,
+            "endIndex": 21860,
+            "textRun": {
+              "content": "Before looking back, name the objects once more. If it helps, revisit the scene you imagined. Then compare with the pictures.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21860,
+      "endIndex": 21996,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21860,
+            "endIndex": 21996,
+            "textRun": {
+              "content": "We will use this rhythm in the course: meet something new, connect it to something familiar, try to recall it, and meet it again later.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21996,
+      "endIndex": 22043,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21996,
+            "endIndex": 22043,
+            "textRun": {
+              "content": "MEMORY-A2.embedded.objects-return — self-check\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.gswchvac38wl",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22043,
+      "endIndex": 22111,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22043,
+            "endIndex": 22058,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 22058,
+            "endIndex": 22111,
+            "textRun": {
+              "content": " Name the three objects again before revealing them.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22111,
+      "endIndex": 22154,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22111,
+            "endIndex": 22135,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 22135,
+            "endIndex": 22154,
+            "textRun": {
+              "content": " cup | key | apple\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22154,
+      "endIndex": 22290,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22154,
+            "endIndex": 22290,
+            "textRun": {
+              "content": "FEEDBACK: Compare with the same three pictures. Notice which connection helped you; neither improvement nor perfect recall is required.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22290,
+      "endIndex": 22329,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22290,
+            "endIndex": 22329,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22329,
+      "endIndex": 22351,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22329,
+            "endIndex": 22351,
+            "textRun": {
+              "content": "Check — understanding\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.vcp7ky6ii7ti",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22351,
+      "endIndex": 22399,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22351,
+            "endIndex": 22399,
+            "textRun": {
+              "content": "MEMORY-A2.check.useful-anchor — multiple choice\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.ptj1ab1ze7jz",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22399,
+      "endIndex": 22449,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22399,
+            "endIndex": 22414,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 22414,
+            "endIndex": 22449,
+            "textRun": {
+              "content": " What makes an association useful?\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22449,
+      "endIndex": 22471,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22449,
+            "endIndex": 22471,
+            "textRun": {
+              "content": "OPTIONS / TOKEN POOL:\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22471,
+      "endIndex": 22529,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22471,
+            "endIndex": 22529,
+            "textRun": {
+              "content": "A. It connects the new item to something familiar to you.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22529,
+      "endIndex": 22556,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22529,
+            "endIndex": 22556,
+            "textRun": {
+              "content": "B. It must be complicated.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22556,
+      "endIndex": 22601,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22556,
+            "endIndex": 22601,
+            "textRun": {
+              "content": "C. It guarantees that you will never forget.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22601,
+      "endIndex": 22681,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22601,
+            "endIndex": 22625,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 22625,
+            "endIndex": 22681,
+            "textRun": {
+              "content": " It connects the new item to something familiar to you.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22681,
+      "endIndex": 22819,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22681,
+            "endIndex": 22819,
+            "textRun": {
+              "content": "FEEDBACK after “It connects the new item to something familiar to you.”: Yes. A familiar connection gives you a way back to the new item.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22819,
+      "endIndex": 22918,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22819,
+            "endIndex": 22918,
+            "textRun": {
+              "content": "FEEDBACK after “It must be complicated.”: A simple connection can work. Complexity is not the aim.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22918,
+      "endIndex": 23051,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22918,
+            "endIndex": 23051,
+            "textRun": {
+              "content": "FEEDBACK after “It guarantees that you will never forget.”: You may still forget. Recall and later practice remain part of learning.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23051,
+      "endIndex": 23109,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23051,
+            "endIndex": 23109,
+            "textRun": {
+              "content": "Vocabulary — current learner display and author reference\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.ciqt6f801p4o",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23109,
+      "endIndex": 23273,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23109,
+            "endIndex": 23273,
+            "textRun": {
+              "content": "No new vocabulary entries in this lesson. Letter shapes, sounds or memory materials are taught in Learn and practised in the exercises; do not add a lexical quota.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23273,
+      "endIndex": 23303,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23273,
+            "endIndex": 23303,
+            "textRun": {
+              "content": "Apply — complete exercise set\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.cdv9d9qhq7lr",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23303,
+      "endIndex": 23352,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23303,
+            "endIndex": 23352,
+            "textRun": {
+              "content": "MEMORY-A2.apply.personal-connection — self-check\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.2fklimomc7zn",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23352,
+      "endIndex": 23476,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23352,
+            "endIndex": 23367,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 23367,
+            "endIndex": 23476,
+            "textRun": {
+              "content": " Choose one of the three objects. Describe a familiar place, experience or image that helps you remember it.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23476,
+      "endIndex": 23579,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23476,
+            "endIndex": 23500,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 23500,
+            "endIndex": 23579,
+            "textRun": {
+              "content": " Any connection the learner can explain, such as “the cup I use at breakfast”.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23579,
+      "endIndex": 23707,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23579,
+            "endIndex": 23707,
+            "textRun": {
+              "content": "FEEDBACK: Self-check: is the connection familiar, and does it lead back to the chosen object? There is no single correct scene.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23707,
+      "endIndex": 23731,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23707,
+            "endIndex": 23731,
+            "textRun": {
+              "content": "Continue — learner text\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.6f3ndgn2z984",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23731,
+      "endIndex": 23861,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23731,
+            "endIndex": 23861,
+            "textRun": {
+              "content": "You have tried connecting, recalling and returning after a gap. Next, we will use those moves to learn four Hebrew letter shapes.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23861,
+      "endIndex": 23901,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23861,
+            "endIndex": 23901,
+            "textRun": {
+              "content": "Author review and implementation record\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.4cfxhty2rs59",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23901,
+      "endIndex": 24036,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23901,
+            "endIndex": 24036,
+            "textRun": {
+              "content": "Review the new cup/key/apple scene and the nonvisual alternative; the older number/date demonstration is not in this plan-based draft.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT"
+        }
+      }
+    },
+    {
+      "startIndex": 24036,
+      "endIndex": 24116,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 24036,
+            "endIndex": 24116,
+            "textRun": {
+              "content": "Approval revision/date: — · Course lesson/version: — · Verification evidence: —\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT"
+        }
+      }
+    }
+  ],
+  "comments": []
+}
