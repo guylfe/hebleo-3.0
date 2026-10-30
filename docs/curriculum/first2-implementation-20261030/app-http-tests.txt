@@ -1,0 +1,10 @@
+✔ FIRST2 actual HTTP learner completes skip/empty paths and navigates to the real second lesson with saved responses (2695.8615ms)
+✔ FIRST2 actual Studio selects both installed source lessons, edits activity settings and previews the same interactions without learner writes (806.0471ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7151.7586

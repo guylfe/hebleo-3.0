@@ -1,0 +1,20 @@
+✔ source text, bold 70-hour emphasis, stable page and activity identities; no template vocabulary (3.0125ms)
+✔ user-started exact ten seconds, leading zero, hidden before input, one attempt, honest complete feedback (140.9678ms)
+✔ empty/skip/interrupted first recall all continue; restored started timer never replays (148.8775ms)
+✔ three exact date stages, delayed labels, deliberate three reveals, retained bold titles and reduced-motion steps (65.3494ms)
+✔ application question gives every authored option feedback and B explanation without mastery gate (119.2152ms)
+✔ comparison entry and opened Skip are optional; only actual raw attempts appear; no hidden model leaks (109.5052ms)
+✔ comparison identifies known combined differences and rejects arbitrary strings as dates (0.7621ms)
+✔ four original mnemonic references precede four-option retrieval; recall has no model or copy highlight (185.2449ms)
+✔ all four matching pairs are independently checked and optional self-check reveals individual models (79.3484ms)
+✔ source response validation rejects malformed state; saving failure retains input and retries (40.9497ms)
+✔ bounded replacement uses new identities, retains history/unrelated content/draft and only resets fictional progress (32.2833ms)
+✔ Studio saves exact authored activity settings without changing stable identities (36.2398ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4395.6153

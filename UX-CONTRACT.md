@@ -127,3 +127,7 @@ Owner evidence and open native limits are in docs/EXERCISE_ACTIONS.md. Guy accep
 
 
 Oct22 review corrections retain matching-family feedback through a shared in-place updater across learner and Preview, including each bank and target status. Primary-slot replacement preserves keyboard focus in the stable result container, including repeated failures. A single pending status announces Checking / Saving position / Continuing; the answer input is busy only while its grade is unresolved. Generic control cleanup honors the frozen pending attempt so immediate-choice answers stay read-only until recovery. Reviewer probes and matching parity remain part of the candidate suite.
+
+## Source-authored first two activities — 30 October 2026
+
+The bounded current request in docs/curriculum/first2-implementation-20261030/IMPLEMENTATION_BRIEF.md authorizes active LOCAL replacement of two synthetic slots, superseding only their former draft-only limit. source-activities.js owns these native paginated interactions for learner and Studio; text-contract.js owns response bounds and continuation gates. Source activity IDs are retained separately from page placement. The existing action dock, rich renderer and Hebrew keyboard stay canonical. Optional recall and self-check may be skipped; the memory experiment has no mastery/retry gate. Only copying highlights its key. Real missing audio remains unavailable. Refer to docs/FIRST2_ACTUAL_LOCAL.md for the migration and verification evidence.

@@ -647,3 +647,10 @@ TXT-01 / TXT-NATIVE-01 independent QA of exact `1198948eaefdd404f47d6fe43ebe3055
 ## TXT-PICKER-01 — Studio draft lesson access (26 October)
 
 Choose lesson previously only selected the already-active lesson task. Corrected and preservation-installed83abf40: all23 draft lessons listed with readable IDs/titles/search/current state; MEMORY/MNT select the existing paginated editor and exact saved Preview target. Unsaved lesson/page/sibling edits retained; invalid/pending saves refuse visibly; Cancel/Escape focus return.870 candidate and4 real-app/HTTP probes pass, baseline reproduces installed failure. All110 source/59 asset hashes and whole DB5627eb01 conserved, active4 and20 drafts remain unpublished. Native Studio/physical/accessibility/Guy acceptance Pending; fresh UIA exposes browser chrome only. [Current delivery and user steps](STUDIO_LESSON_PICKER_DELIVERY.md). No Sheets/WP/publication.
+
+## Actual first two lessons — 30 October 2026
+
+| ID | Feature | Bounded state and evidence | Guy test |
+|---|---|---|---|
+| F2-MEM | MEMORY-A2 native memory lesson | Implemented in shared learner/Studio activity renderer: full author prose, one-shot recall, staged connection, click reveals, application check, optional comparison. 884 candidate tests pass; exact source and real-app HTTP completion/restore checked. Local installation receipt in FIRST2_ACTUAL_LOCAL.md; final Guy acceptance pending. | Pending |
+| F2-MNT | MNTL-A2 four-letter lesson | Three Learn pages and all seven stable activities implemented; original mnemonic render hashes retained; copying-only key highlight, final ם rejection, matching and normal completion tested. Genuine four consonant recordings remain pending acquisition through Leo/Feature. Sound-dependent completion and native acceptance are unfinished. | Pending |

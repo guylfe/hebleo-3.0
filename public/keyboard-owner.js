@@ -934,6 +934,8 @@
       if(!root)return;
       pinned=Boolean(preferences.keyboardPinned);
       var scope=root.closest('dialog')||document,answer=scope.querySelector('#answer:not([disabled]):not([readonly])');
+      var sourcePage=scope.querySelector('[data-text-reader] .source-activity');
+      if(sourcePage){var copyTarget=sourcePage.querySelector('[data-copy-letter]:not([readonly])');config=Object.assign({},config,{knownKeys:'',newKeys:copyTarget?copyTarget.dataset.copyLetter:''});}
       var typing=Boolean(answer&&isEditable(answer)),contextChanged=context!==lessonContext;
       var courseContext=String(context).split('|').slice(0,-1).join('|'),previousCourseContext=String(lessonContext).split('|').slice(0,-1).join('|');
       // Keep open crosses valid questions in one typing portion, never routes,

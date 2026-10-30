@@ -175,3 +175,15 @@ dialog.rehearsal-dialog{scroll-padding-block-end:var(--exercise-dock-reserve,100
 .text-reader .button{min-block-size:44px;white-space:normal;max-inline-size:100%}
 .text-reader :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media(max-width:420px){.text-reader-pagination{gap:8px}.text-reader-pagination .button{flex:1}.text-reader-pagination>span{flex-basis:100%;text-align:center;order:3}.text-reader .word-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* Source-authored first lessons: existing reading measure, controls and palette. */
+.source-letter-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--card-gap,16px)}
+.source-letter-gallery figure{margin:0;min-width:0}.source-letter-gallery figcaption{padding:12px 0}.source-activity .source-letter{font-size:48px;display:block;line-height:1.4}
+.source-mnemonic{background:var(--ink,#0A2457);height:220px;display:flex;align-items:center;justify-content:center;border-radius:8px}
+.source-mnemonic img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;padding:12px}
+.source-number{font-variant-numeric:tabular-nums;font-size:clamp(19px,4vw,36px);line-height:1.8;overflow-wrap:anywhere;text-align:center;margin:24px 0}
+.source-date-demo{min-height:140px}.source-choice{display:flex;align-items:center;gap:12px;padding:12px 0;cursor:pointer}.source-choice input{width:auto}
+.source-match{display:flex;align-items:center;gap:12px;margin:12px 0;flex-wrap:wrap}.source-match select{min-width:110px;max-width:100%}
+.source-comparison dd{margin:8px 0 20px;white-space:pre-wrap;overflow-wrap:anywhere}.source-activity textarea{width:100%;resize:none;min-height:80px}
+.source-activity .button-row{flex-wrap:wrap}.source-activity fieldset{border:0;padding:0;min-width:0}
+@media(max-width:520px){.source-letter-gallery{grid-template-columns:1fr}.source-mnemonic{height:230px}}

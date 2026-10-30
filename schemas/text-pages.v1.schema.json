@@ -128,6 +128,28 @@
               "maxLength": 120,
               "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
             }
+          },
+          "activity": {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "memory-first",
+                  "date-connection",
+                  "memory-comparison",
+                  "letter-gallery",
+                  "letter-input",
+                  "letter-matching",
+                  "self-check",
+                  "letter-choice",
+                  "application-choice"
+                ]
+              }
+            },
+            "additionalProperties": true
           }
         },
         "allOf": [
@@ -192,6 +214,9 @@
         ],
         "additionalProperties": true
       }
+    },
+    "activityVersion": {
+      "const": 1
     }
   },
   "additionalProperties": true

@@ -1144,3 +1144,31 @@ test('first20 integrated learner uses real HTTP text projection and persistence 
  assert.deepEqual(s.learner('learner-demo').completed,before.completed);assert.deepEqual(s.learner('learner-demo').attempts,before.attempts);assert.ok(calls.includes('/api/text-progress'));
  const reload=await app(t,{page:'lesson/lesson-1/learn',store:s,realHTTP:true,width:360});reload.doc.querySelector('[data-action=medium][data-value=read]')?.click();await settled(()=>reload.doc.querySelector('.text-reader-model'));assert.equal(reload.doc.querySelector('[data-reader-attempt]').value,'תּוֹדָה');
 });
+
+// Actual app + server integration for the current human-authored lesson replacement.
+const actualFirst2=JSON.parse(readFileSync(new URL('../content/first2/lessons.json',import.meta.url)));
+const {installFirstTwo}=await import('../scripts/install-first2.mjs');
+function installFirst2Fixture(store){const fixture=structuredClone(actualFirst2);for(const p of fixture.lessons.flatMap(l=>l.blocks[0].textPages.pages)){if(p.activity)delete p.activity.image;for(const i of p.activity?.items||[])delete i.image;}store.set('draft',{baseRevisionId:store.get('active'),content:store.snapshot(),stagedAt:'first2-test'});installFirstTwo(store,{pack:fixture,build:'first2-actual-http',mediaRoot:'.'});}
+
+test('FIRST2 actual HTTP learner completes skip/empty paths and navigates to the real second lesson with saved responses',async t=>{
+ const {store,w,doc}=await app(t,{page:'lesson/MEMORY-A2',realHTTP:true,prepare:installFirst2Fixture,reduceMotion:true,ownerKeyboard:true});
+ const source=a=>{const e=doc.querySelector('[data-source-action="'+a+'"]');assert.ok(e,a);assert.equal(e.disabled,false,a);e.click();};
+ source('next');source('next');source('skip');source('next');source('animate');source('animation-next');source('animation-next');source('principle');source('principle');source('principle');source('next');
+ const option=doc.querySelector('[name="source-choice"]');option.checked=true;option.dispatchEvent(new w.Event('change',{bubbles:true}));source('check-choice');source('next');source('open');source('compare');assert.match(doc.querySelector('#practice').textContent,/Here are the two dates/);source('next');
+ const finish=doc.querySelector('.lesson-footer [data-value="complete"]');assert.equal(finish.disabled,false);finish.click();await settled(()=>store.learner('learner-demo').completed.includes('MEMORY-A2'));
+ const record=store.learner('learner-demo').textPages.find(r=>r.lessonId==='MEMORY-A2');assert.equal(record.responses['MEMORY-A2.learn.number-round'].skipped,true);assert.equal(record.responses['MEMORY-A2.learn.return'].attempted,false);assert.equal(store.learner('learner-demo').attempts.length,0);
+ await settled(()=>doc.querySelector('[data-action="lesson"][data-value="MNTL-A2"]'));doc.querySelector('[data-action="lesson"][data-value="MNTL-A2"]').click();await settled(()=>doc.querySelector('h1')?.textContent.includes('four consonants'));assert.equal(doc.querySelectorAll('figure').length,4);source('next');
+ const n=doc.querySelectorAll('[name="source-choice"]')[1];n.checked=true;n.dispatchEvent(new w.Event('change',{bubbles:true}));source('check-choice');source('next');assert.equal(doc.querySelector('[data-copy-letter]').dataset.copyLetter,'ל');source('keyboard');const key=doc.querySelector('#hebleo-keyboard-root [data-insert="ל"]');key.click();assert.equal(doc.querySelector('[data-source-input]').value,'ל');source('check-input');source('next');
+ const tav=doc.querySelectorAll('[name="source-choice"]')[1];tav.checked=true;tav.dispatchEvent(new w.Event('change',{bubbles:true}));source('check-choice');source('next');
+ for(const [id,letter]of [['m','מ'],['n','נ'],['t','ת'],['l','ל']]){const el=doc.querySelector('[data-source-match="'+id+'"]');el.value=letter;el.dispatchEvent(new w.Event('change',{bubbles:true}));}source('check-match');source('next');
+ for(const letter of ['מ','ל']){assert.equal(doc.querySelector('[data-copy-letter]'),null);assert.equal(doc.querySelectorAll('#hebleo-keyboard-root .new-key').length,0);const field=doc.querySelector('[data-source-input]');field.value=letter;field.dispatchEvent(new w.Event('input',{bubbles:true}));source('check-input');source('next');}source('skip');source('next');doc.querySelector('.lesson-footer [data-value="complete"]').click();await settled(()=>store.learner('learner-demo').completed.includes('MNTL-A2'));await settled(()=>doc.querySelector('[data-action="lesson"][data-value="lesson-3"]'));
+ const restored=new Store();t.after(()=>restored.close());restored.restore(store.backup());assert.deepEqual(restored.learner('learner-demo').completed,['MEMORY-A2','MNTL-A2']);
+});
+
+test('FIRST2 actual Studio selects both installed source lessons, edits activity settings and previews the same interactions without learner writes',async t=>{
+ const {store,w,doc}=await app(t,{page:'studio',author:true,realHTTP:true,prepare:installFirst2Fixture});await settled(()=>doc.querySelector('[data-current-lesson]'));const before=JSON.stringify(store.learner('author-demo'));
+ for(const id of ['MEMORY-A2','MNTL-A2']){
+  doc.querySelector('.studio-context button').click();doc.querySelector('[data-pick-lesson="'+id+'"]').click();assert.equal(doc.querySelector('[data-selected-lesson]').textContent,id);assert.equal(doc.querySelector('[data-page-select]').options.length,id==='MEMORY-A2'?7:9);doc.querySelector('[data-action="rehearse"]').click();await settled(()=>doc.querySelector('[data-preview-root] [data-source-action="next"]'));assert.equal(doc.querySelector('[data-preview-root] h3').textContent,id==='MEMORY-A2'?'Welcome to Hebleo':'Four shapes, four sounds');doc.querySelector('[data-preview-root] [data-source-action="next"]').click();assert.ok(doc.querySelector('[data-preview-root] h3').textContent.includes(id==='MEMORY-A2'?'Adam':'Try without'));doc.querySelector('[data-preview-exit]').click();await settled(()=>!doc.querySelector('[data-preview-root]'));
+ }
+ assert.equal(JSON.stringify(store.learner('author-demo')),before);
+});

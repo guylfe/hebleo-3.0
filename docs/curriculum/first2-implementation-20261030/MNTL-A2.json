@@ -1,0 +1,2732 @@
+{
+  "lessonId": "MNTL-A2",
+  "sourceRevision": "AHj4eMQbs4AvKUsSFH4nKDDgob7uHGFqMEUYjrcLSJusbw9BDL-hbD4SS5aoSdFhnQ9Nw7MTG6VSJHoCNSbZcQ5Nl-UzglgR3ddjxE0pGA",
+  "paragraphs": [
+    {
+      "startIndex": 31778,
+      "endIndex": 31828,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 31778,
+            "endIndex": 31828,
+            "textRun": {
+              "content": "002 · Letters 1: מנתל — four consonants — MNTL-A2\n",
+              "textStyle": {
+                "fontSize": {
+                  "magnitude": 18,
+                  "unit": "PT"
+                }
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.ic84dj13r8pc",
+          "namedStyleType": "HEADING_1",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 31828,
+      "endIndex": 32041,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 31828,
+            "endIndex": 32040,
+            "textRun": {
+              "content": "Content: Revised draft · Approval: Guy authorised local software implementation for testing; adapted wording remains reviewable · Built version: pending · Verified version: pending · Revision: 2 (30 October 2026)",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 32040,
+            "endIndex": 32041,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32041,
+      "endIndex": 32102,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32041,
+            "endIndex": 32049,
+            "textRun": {
+              "content": "OUTCOME:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 32049,
+            "endIndex": 32102,
+            "textRun": {
+              "content": " Recognise and type מ, נ, ת and ל from their sounds.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32102,
+      "endIndex": 32201,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32102,
+            "endIndex": 32113,
+            "textRun": {
+              "content": "CONNECT TO:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 32113,
+            "endIndex": 32201,
+            "textRun": {
+              "content": " Recover the shape through a familiar image, then retrieve the sound without the image.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32201,
+      "endIndex": 32252,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32201,
+            "endIndex": 32215,
+            "textRun": {
+              "content": "PREREQUISITES:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 32215,
+            "endIndex": 32252,
+            "textRun": {
+              "content": " MEMORY-A2 — retrieve before reveal.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32252,
+      "endIndex": 32373,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32252,
+            "endIndex": 32258,
+            "textRun": {
+              "content": "PLAN: ",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 32258,
+            "endIndex": 32372,
+            "textRun": {
+              "content": "https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001&range=A5:M5",
+              "textStyle": {
+                "underline": true,
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.06666667,
+                      "green": 0.33333334,
+                      "blue": 0.8
+                    }
+                  }
+                },
+                "link": {
+                  "url": "https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001&range=A5:M5"
+                }
+              }
+            }
+          },
+          {
+            "startIndex": 32372,
+            "endIndex": 32373,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32373,
+      "endIndex": 32549,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32373,
+            "endIndex": 32549,
+            "textRun": {
+              "content": "SOURCES / ADAPTATION: Presentation slides 6 and 10; Hebleo Mnemonics slides 2 and 6; current A2 row 5. Earlier first20 MNT prose adapted, with ל added and final forms removed.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32549,
+      "endIndex": 32846,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32549,
+            "endIndex": 32846,
+            "textRun": {
+              "content": "DESIGN DECISIONS: Preserve Guy’s mountain-climber, nose, tripping and ladle anchors. Introduce all four letters together before mixed retrieval; the earlier two-pair split is removed. Use the original drawings and human sound recordings. No final-form teaching or extra vocabulary in this lesson.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32846,
+      "endIndex": 32891,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32846,
+            "endIndex": 32891,
+            "textRun": {
+              "content": "Learn — exact text and embedded interactions\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.7t0bdckq25md",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32891,
+      "endIndex": 32950,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32891,
+            "endIndex": 32950,
+            "textRun": {
+              "content": "Screen 1: Four shapes, four sounds · MNTL-A2.learn.mem-nun\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.qpjq22iwag86",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32950,
+      "endIndex": 32964,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32950,
+            "endIndex": 32964,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 32964,
+      "endIndex": 33035,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 32964,
+            "endIndex": 33008,
+            "textRun": {
+              "content": "מ represents /m/, the sound at the start of ",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 33008,
+            "endIndex": 33009,
+            "textRun": {
+              "content": "m",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 33009,
+            "endIndex": 33035,
+            "textRun": {
+              "content": "ountain. Its name is Mem.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 33035,
+      "endIndex": 33102,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 33035,
+            "endIndex": 33079,
+            "textRun": {
+              "content": "נ represents /n/, the sound at the start of ",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 33079,
+            "endIndex": 33080,
+            "textRun": {
+              "content": "n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 33080,
+            "endIndex": 33102,
+            "textRun": {
+              "content": "ose. Its name is Nun.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 33102,
+      "endIndex": 33166,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 33102,
+            "endIndex": 33166,
+            "textRun": {
+              "content": "ת represents /t/, as at the start of tripping. Its name is Tav.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 33166,
+      "endIndex": 33229,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 33166,
+            "endIndex": 33229,
+            "textRun": {
+              "content": "ל represents /l/, as at the start of ladle. Its name is Lamed.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 33229,
+      "endIndex": 33454,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 33229,
+            "endIndex": 33454,
+            "textRun": {
+              "content": "Listen to each sound and look at its letter. The mountain-climber, nose, tripping and ladle pictures connect each printed shape to a familiar word that begins with its sound. You do not need to memorise the letter names yet.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 33454,
+      "endIndex": 33644,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 33454,
+            "endIndex": 33644,
+            "textRun": {
+              "content": "[AUTHOR INSTRUCTION] AUDIO MNTL-M, MNTL-N, MNTL-T and MNTL-L: human recordings of /m/, /n/, /t/ and /l/. Play individually on request, without an added vowel. Present all four on this page.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 33644,
+      "endIndex": 33930,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 33644,
+            "endIndex": 33930,
+            "textRun": {
+              "content": "[AUTHOR INSTRUCTION] IMAGE MNTL-M, MNTL-N, MNTL-T and MNTL-L: Guy’s original mountain-climber, nose, tripping and ladle drawings, each paired with the exact block letter. Preserve the original drawings. Show all four together; let the learner inspect and replay each at their own pace.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 33930,
+      "endIndex": 33969,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 33930,
+            "endIndex": 33969,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 33969,
+      "endIndex": 34034,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 33969,
+            "endIndex": 34034,
+            "textRun": {
+              "content": "Screen 2: Try without the pictures · MNTL-A2.learn.pair-retrieve\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.sbnwwkq5we2o",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34034,
+      "endIndex": 34048,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34034,
+            "endIndex": 34048,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34048,
+      "endIndex": 34155,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34048,
+            "endIndex": 34154,
+            "textRun": {
+              "content": "Now try recognising a letter without its picture. If you need help, bring the familiar image back to mind.",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 34154,
+            "endIndex": 34155,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34155,
+      "endIndex": 34194,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34155,
+            "endIndex": 34194,
+            "textRun": {
+              "content": "MNTL-A2.embedded.nun — multiple choice\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.53kpuy7qr5rw",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34194,
+      "endIndex": 34242,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34194,
+            "endIndex": 34209,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 34209,
+            "endIndex": 34242,
+            "textRun": {
+              "content": " Listen, then choose the letter.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34242,
+      "endIndex": 34289,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34242,
+            "endIndex": 34289,
+            "textRun": {
+              "content": "SUPPLIED MATERIAL: AUDIO MNTL-N: isolated /n/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34289,
+      "endIndex": 34311,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34289,
+            "endIndex": 34311,
+            "textRun": {
+              "content": "OPTIONS / TOKEN POOL:\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34311,
+      "endIndex": 34316,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34311,
+            "endIndex": 34316,
+            "textRun": {
+              "content": "A. מ\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34316,
+      "endIndex": 34321,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34316,
+            "endIndex": 34321,
+            "textRun": {
+              "content": "B. נ\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34321,
+      "endIndex": 34326,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34321,
+            "endIndex": 34326,
+            "textRun": {
+              "content": "C. ת\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34326,
+      "endIndex": 34331,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34326,
+            "endIndex": 34331,
+            "textRun": {
+              "content": "D. ל\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34331,
+      "endIndex": 34358,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34331,
+            "endIndex": 34355,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 34355,
+            "endIndex": 34358,
+            "textRun": {
+              "content": " נ\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34358,
+      "endIndex": 34425,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34358,
+            "endIndex": 34425,
+            "textRun": {
+              "content": "FEEDBACK after “מ”: מ represents /m/. The sound you heard was /n/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34425,
+      "endIndex": 34480,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34425,
+            "endIndex": 34480,
+            "textRun": {
+              "content": "FEEDBACK after “נ”: Yes: נ represents /n/, as in nose.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34480,
+      "endIndex": 34707,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34480,
+            "endIndex": 34707,
+            "textRun": {
+              "content": "[AUTHOR INSTRUCTION] Add option-specific feedback for ת and ל: “ת represents /t/. The sound you heard was /n/.” / “ל represents /l/. The sound you heard was /n/.” The four-letter teaching page comes before this first question.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34707,
+      "endIndex": 34746,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34707,
+            "endIndex": 34746,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34746,
+      "endIndex": 34803,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34746,
+            "endIndex": 34803,
+            "textRun": {
+              "content": "Screen 3: Make the shape yourself · MNTL-A2.learn.typing\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.d4n0szfq740h",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34803,
+      "endIndex": 34817,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34803,
+            "endIndex": 34817,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34817,
+      "endIndex": 34912,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34817,
+            "endIndex": 34912,
+            "textRun": {
+              "content": "Choose the matching printed letter on the Hebrew keyboard. You may use the on-screen keyboard.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 34912,
+      "endIndex": 35043,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 34912,
+            "endIndex": 35043,
+            "textRun": {
+              "content": "Copying a visible shape helps you locate its key. In the next exercise, the shape will be hidden so that you can try to recall it.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35043,
+      "endIndex": 35177,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35043,
+            "endIndex": 35177,
+            "textRun": {
+              "content": "[PLACEHOLDER / AUTHOR INSTRUCTION] KEYBOARD: highlight the matching key only during copying. Hide the highlight for recall questions.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35177,
+      "endIndex": 35213,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35177,
+            "endIndex": 35213,
+            "textRun": {
+              "content": "MNTL-A2.embedded.copy-lamed — typed\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.cl06xnuswi4u",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35213,
+      "endIndex": 35249,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35213,
+            "endIndex": 35228,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 35228,
+            "endIndex": 35249,
+            "textRun": {
+              "content": " Copy this letter: ל\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35249,
+      "endIndex": 35276,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35249,
+            "endIndex": 35273,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 35273,
+            "endIndex": 35276,
+            "textRun": {
+              "content": " ל\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35276,
+      "endIndex": 35354,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35276,
+            "endIndex": 35354,
+            "textRun": {
+              "content": "FEEDBACK: Correct: ל. Use the same printed form; handwriting is not required.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35354,
+      "endIndex": 35393,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35354,
+            "endIndex": 35393,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35393,
+      "endIndex": 35415,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35393,
+            "endIndex": 35415,
+            "textRun": {
+              "content": "Check — understanding\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.agq09w2q1qbz",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35415,
+      "endIndex": 35451,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35415,
+            "endIndex": 35451,
+            "textRun": {
+              "content": "MNTL-A2.check.tav — multiple choice\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.4wduje8fd59c",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35451,
+      "endIndex": 35496,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35451,
+            "endIndex": 35466,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 35466,
+            "endIndex": 35496,
+            "textRun": {
+              "content": " Which letter represents /t/?\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35496,
+      "endIndex": 35518,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35496,
+            "endIndex": 35518,
+            "textRun": {
+              "content": "OPTIONS / TOKEN POOL:\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35518,
+      "endIndex": 35523,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35518,
+            "endIndex": 35523,
+            "textRun": {
+              "content": "A. נ\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35523,
+      "endIndex": 35528,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35523,
+            "endIndex": 35528,
+            "textRun": {
+              "content": "B. ת\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35528,
+      "endIndex": 35533,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35528,
+            "endIndex": 35533,
+            "textRun": {
+              "content": "C. מ\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35533,
+      "endIndex": 35538,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35533,
+            "endIndex": 35538,
+            "textRun": {
+              "content": "D. ל\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35538,
+      "endIndex": 35565,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35538,
+            "endIndex": 35562,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 35562,
+            "endIndex": 35565,
+            "textRun": {
+              "content": " ת\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35565,
+      "endIndex": 35622,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35565,
+            "endIndex": 35622,
+            "textRun": {
+              "content": "FEEDBACK after “נ”: נ is /n/. Think of tripping for /t/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35622,
+      "endIndex": 35657,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35622,
+            "endIndex": 35657,
+            "textRun": {
+              "content": "FEEDBACK after “ת”: Yes: ת is /t/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35657,
+      "endIndex": 35714,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35657,
+            "endIndex": 35714,
+            "textRun": {
+              "content": "FEEDBACK after “מ”: מ is /m/. Think of tripping for /t/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35714,
+      "endIndex": 35771,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35714,
+            "endIndex": 35771,
+            "textRun": {
+              "content": "FEEDBACK after “ל”: ל is /l/. Think of tripping for /t/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35771,
+      "endIndex": 35829,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35771,
+            "endIndex": 35829,
+            "textRun": {
+              "content": "Vocabulary — current learner display and author reference\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.ilbx02b0f784",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35829,
+      "endIndex": 35993,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35829,
+            "endIndex": 35993,
+            "textRun": {
+              "content": "No new vocabulary entries in this lesson. Letter shapes, sounds or memory materials are taught in Learn and practised in the exercises; do not add a lexical quota.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 35993,
+      "endIndex": 36023,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 35993,
+            "endIndex": 36023,
+            "textRun": {
+              "content": "Apply — complete exercise set\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.wjs6khai0a3g",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36023,
+      "endIndex": 36060,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36023,
+            "endIndex": 36060,
+            "textRun": {
+              "content": "MNTL-A2.apply.four-sounds — matching\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.wem14vkq0gnf",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36060,
+      "endIndex": 36116,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36060,
+            "endIndex": 36075,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 36075,
+            "endIndex": 36116,
+            "textRun": {
+              "content": " Match each sound to its printed letter.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36116,
+      "endIndex": 36173,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36116,
+            "endIndex": 36173,
+            "textRun": {
+              "content": "SUPPLIED MATERIAL: Left-hand prompts: /m/; /n/; /t/; /l/\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36173,
+      "endIndex": 36195,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36173,
+            "endIndex": 36195,
+            "textRun": {
+              "content": "OPTIONS / TOKEN POOL:\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36195,
+      "endIndex": 36200,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36195,
+            "endIndex": 36200,
+            "textRun": {
+              "content": "A. ת\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36200,
+      "endIndex": 36205,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36200,
+            "endIndex": 36205,
+            "textRun": {
+              "content": "B. ל\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36205,
+      "endIndex": 36210,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36205,
+            "endIndex": 36210,
+            "textRun": {
+              "content": "C. מ\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36210,
+      "endIndex": 36215,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36210,
+            "endIndex": 36215,
+            "textRun": {
+              "content": "D. נ\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36215,
+      "endIndex": 36278,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36215,
+            "endIndex": 36239,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 36239,
+            "endIndex": 36278,
+            "textRun": {
+              "content": " /m/ → מ | /n/ → נ | /t/ → ת | /l/ → ל\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36278,
+      "endIndex": 36383,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36278,
+            "endIndex": 36383,
+            "textRun": {
+              "content": "FEEDBACK: מ = /m/, נ = /n/, ת = /t/, ל = /l/. Replay a missed sound, then retry it without the mnemonic.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36383,
+      "endIndex": 36403,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36383,
+            "endIndex": 36403,
+            "textRun": {
+              "content": "TARGETS: מ; נ; ת; ל\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36403,
+      "endIndex": 36429,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36403,
+            "endIndex": 36429,
+            "textRun": {
+              "content": "MNTL-A2.apply.mem — typed\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.3zjpmqmeu1pt",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36429,
+      "endIndex": 36481,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36429,
+            "endIndex": 36444,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 36444,
+            "endIndex": 36481,
+            "textRun": {
+              "content": " Listen and type the printed letter.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36481,
+      "endIndex": 36530,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36481,
+            "endIndex": 36530,
+            "textRun": {
+              "content": "SUPPLIED MATERIAL: AUDIO MNTL-MEM: isolated /m/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36530,
+      "endIndex": 36557,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36530,
+            "endIndex": 36554,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 36554,
+            "endIndex": 36557,
+            "textRun": {
+              "content": " מ\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36557,
+      "endIndex": 36611,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36557,
+            "endIndex": 36611,
+            "textRun": {
+              "content": "FEEDBACK: The matching letter is מ; its sound is /m/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36611,
+      "endIndex": 36622,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36611,
+            "endIndex": 36622,
+            "textRun": {
+              "content": "TARGETS: מ\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36622,
+      "endIndex": 36650,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36622,
+            "endIndex": 36650,
+            "textRun": {
+              "content": "MNTL-A2.apply.lamed — typed\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.kn364pe2u0l0",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36650,
+      "endIndex": 36702,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36650,
+            "endIndex": 36665,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 36665,
+            "endIndex": 36702,
+            "textRun": {
+              "content": " Listen and type the printed letter.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36702,
+      "endIndex": 36753,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36702,
+            "endIndex": 36753,
+            "textRun": {
+              "content": "SUPPLIED MATERIAL: AUDIO MNTL-LAMED: isolated /l/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36753,
+      "endIndex": 36780,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36753,
+            "endIndex": 36777,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 36777,
+            "endIndex": 36780,
+            "textRun": {
+              "content": " ל\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36780,
+      "endIndex": 36834,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36780,
+            "endIndex": 36834,
+            "textRun": {
+              "content": "FEEDBACK: The matching letter is ל; its sound is /l/.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36834,
+      "endIndex": 36845,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36834,
+            "endIndex": 36845,
+            "textRun": {
+              "content": "TARGETS: ל\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36845,
+      "endIndex": 36892,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36845,
+            "endIndex": 36892,
+            "textRun": {
+              "content": "MNTL-A2.apply.say-four — self-check (optional)\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.tmffia9bjcu1",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36892,
+      "endIndex": 36960,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36892,
+            "endIndex": 36907,
+            "textRun": {
+              "content": "LEARNER PROMPT:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 36907,
+            "endIndex": 36960,
+            "textRun": {
+              "content": " Read the sounds of these letters aloud: ל  מ  ת  נ.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 36960,
+      "endIndex": 37030,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 36960,
+            "endIndex": 36984,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 36984,
+            "endIndex": 37030,
+            "textRun": {
+              "content": " /l/; /m/; /t/; /n/ in the displayed sequence\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 37030,
+      "endIndex": 37165,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 37030,
+            "endIndex": 37165,
+            "textRun": {
+              "content": "FEEDBACK: Reveal the four individual sound buttons and compare one at a time. This is self-check, not automatic pronunciation scoring.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 37165,
+      "endIndex": 37189,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 37165,
+            "endIndex": 37189,
+            "textRun": {
+              "content": "Continue — learner text\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.xy2yt1288wz8",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 37189,
+      "endIndex": 37341,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 37189,
+            "endIndex": 37341,
+            "textRun": {
+              "content": "You can now connect four printed letters to their sounds. Next, you will see how Hebrew arranges them and what happens to מ and נ at the end of a word.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 37341,
+      "endIndex": 37381,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 37341,
+            "endIndex": 37381,
+            "textRun": {
+              "content": "Author review and implementation record\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.55sbskqgqgy0",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 37381,
+      "endIndex": 37504,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 37381,
+            "endIndex": 37504,
+            "textRun": {
+              "content": "Supply the four original mnemonic drawings and isolated consonant recordings, avoiding an added vowel after the consonant.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT"
+        }
+      }
+    },
+    {
+      "startIndex": 37504,
+      "endIndex": 37584,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 37504,
+            "endIndex": 37584,
+            "textRun": {
+              "content": "Approval revision/date: — · Course lesson/version: — · Verification evidence: —\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT"
+        }
+      }
+    }
+  ]
+}
