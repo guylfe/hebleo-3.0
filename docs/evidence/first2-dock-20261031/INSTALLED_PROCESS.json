@@ -1,0 +1,14 @@
+{
+  "preservationMode": true,
+  "unrelatedListenersMissing": 0,
+  "database": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\b1d5e7a0-1d13-4e9e-b544-06d3b889fb9e\\hebleo-consolidated\\data\\lexical-private-demo.sqlite",
+  "installedAt": "2026-10-30T22:59:05.9452941Z",
+  "runtimeSha256": "b8c7a3ddd0136b6d15fcbe9da3436592fe82719d1c41345f1ec2d7dd67f657e6",
+  "pid": 8852,
+  "previousPid": 68008,
+  "configVaultAndMediaExact": true,
+  "revision": "5946342f3221c9c4d842e62ee11dabdbba4b559c",
+  "port": 63358,
+  "checkout": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\3f5dff25-a1fa-4bda-b947-bd733b040b0a\\hebleo-first2",
+  "refreshedBackupAfterGuardedStateDrift": true
+}
