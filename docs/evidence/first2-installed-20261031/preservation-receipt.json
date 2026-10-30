@@ -1,0 +1,113 @@
+{
+  "mode": "installed",
+  "database": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\b1d5e7a0-1d13-4e9e-b544-06d3b889fb9e\\hebleo-consolidated\\data\\lexical-private-demo.sqlite",
+  "before": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 6,
+        "sha256": "1682f009c438482dbc5a2ae11be606818ceb63c4c2184d9fc0b9d6dd51362e66"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "2588d1519a5c3301e88492d494b38654f1cf21bb003d51f8ca23c33222eeb093"
+      },
+      "media_aliases": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "media_blobs": {
+        "rows": 1,
+        "sha256": "9342c954c2f006cd734a41a4c434d95562c9ab8baf981951a855d72404ce077d"
+      },
+      "revisions": {
+        "rows": 4,
+        "sha256": "6088e682b3031a07267658db0c88a9fdfbef9fddcaa4f54bb2080caf72324ae5"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "0f509631177ffa29be06ad43580a0570a91d1eb6ddf6f54ad724a10835b5f6ab"
+      }
+    },
+    "sha256": "d7fc75abb050e4169be17650ff36b122181b896c1e48e6dcbf680fb06d36ecf5"
+  },
+  "after": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 7,
+        "sha256": "f52d68f762abe4c4aa718727710c24a0d05df445ad4baeddccd6e56317d8d83e"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "958c02036fcbece4eae42e093a406d79ba62c1ace6ef1d70e6a896245edb660b"
+      },
+      "media_aliases": {
+        "rows": 4,
+        "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+      },
+      "media_blobs": {
+        "rows": 5,
+        "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+      },
+      "revisions": {
+        "rows": 5,
+        "sha256": "27d6a4ef232c0920229fcdbc96da8b8bee40e28af61877ad2e163683ef043c53"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "b538a8e27dbe2a48ea5ea4fd90d7fceb4c9bacf39c03a5ca362ab138a487e99c"
+      }
+    },
+    "sha256": "0422a2682cac76a055688923e6937229a94d45ea3c8faa7abbc7f4f791d7df5f"
+  },
+  "preservation": {
+    "schemaUnchanged": true,
+    "allPriorRevisionsExact": true,
+    "existingMediaBytesAndAliasesExact": true,
+    "eventsExact": true,
+    "nonProgressLearnerFieldsExact": true,
+    "unrelatedDraftLessonsExact": true
+  },
+  "exportRestoreRehearsal": true,
+  "previousRevisionId": 4,
+  "revisionId": 5,
+  "build": "d48824dc4b673af94eba6a25552728cf875d3ebba3b33fab181910c6a2984efe",
+  "sourceRevision": "AHj4eMQbs4AvKUsSFH4nKDDgob7uHGFqMEUYjrcLSJusbw9BDL-hbD4SS5aoSdFhnQ9Nw7MTG6VSJHoCNSbZcQ5Nl-UzglgR3ddjxE0pGA",
+  "mapping": [
+    {
+      "retiredPlaceholderId": "lesson-1",
+      "newLessonId": "MEMORY-A2",
+      "progressRemapped": false
+    },
+    {
+      "retiredPlaceholderId": "lesson-2",
+      "newLessonId": "MNTL-A2",
+      "progressRemapped": false
+    }
+  ],
+  "retiredExerciseIds": [
+    "ex-1-recognize",
+    "ex-1-type",
+    "ex-1-match",
+    "ex-2-order",
+    "ex-2-cloze",
+    "ex-2-transform"
+  ],
+  "retiredUnpublishedPageIds": [
+    "MNTL-A2.learn.tav-lamed"
+  ],
+  "fictionalProgressReset": true,
+  "realRecordsChanged": false,
+  "priorRevisionsRetained": true,
+  "unrelatedLessonsRetained": true,
+  "draftLessons": 23
+}
