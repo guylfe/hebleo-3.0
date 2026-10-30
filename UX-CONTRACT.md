@@ -131,3 +131,8 @@ Oct22 review corrections retain matching-family feedback through a shared in-pla
 ## Source-authored first two activities — 30 October 2026
 
 The bounded current request in docs/curriculum/first2-implementation-20261030/IMPLEMENTATION_BRIEF.md authorizes active LOCAL replacement of two synthetic slots, superseding only their former draft-only limit. source-activities.js owns these native paginated interactions for learner and Studio; text-contract.js owns response bounds and continuation gates. Source activity IDs are retained separately from page placement. The existing action dock, rich renderer and Hebrew keyboard stay canonical. Optional recall and self-check may be skipped; the memory experiment has no mastery/retry gate. Only copying highlights its key. Real missing audio remains unavailable. Refer to docs/FIRST2_ACTUAL_LOCAL.md for the migration and verification evidence.
+
+
+## QA-FIRST2-01 — reading scroll and embedded controls (31 October 2026)
+
+The shared exercise-actions.js owner reveals an intentional page-heading focus once, and interactive controls on focus entry or a changed usable viewport boundary. Ordinary document/dialog reading scroll updates dock geometry without re-centering the focused heading or answer. Measured dock/keyboard reserve, textarea constraints and exact style/caret cleanup remain shared by learner and saved-draft Preview. source-activities.js explicitly labels absent listening stimuli as unavailable and unfinished, without adding a textual target substitute. Authored prose, options, activity/page IDs and active content revision are unchanged. Physical-device and Guy acceptance remain separate.

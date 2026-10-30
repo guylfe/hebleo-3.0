@@ -10,7 +10,7 @@ export function mountExerciseDock(scope) {
   const doc=scope.ownerDocument, win=doc.defaultView, dialog=scope.closest('dialog');
   const controller=new win.AbortController(), {signal}=controller;
   const requestFrame=win.requestAnimationFrame?.bind(win)||(fn=>win.setTimeout(fn,0)),cancelFrame=win.cancelAnimationFrame?.bind(win)||win.clearTimeout.bind(win);
-  let frame=null, destroyed=false, reserve=0;
+  let frame=null, destroyed=false, reserve=0, lastBoundary='';
   const keyboardNodes=new Set(), transitions=new Map(), constrainedAnswers=new Map();
   const keyboardSelector='.hebleo-keyboard__panel, .hebleo-keyboard__launcher';
   const set=(el,key,value)=>{if(el.style.getPropertyValue(key)!==value)el.style.setProperty(key,value);};
@@ -19,9 +19,12 @@ export function mountExerciseDock(scope) {
     for(const [key,{value,priority}]of Object.entries(saved.styles))value?el.style.setProperty(key,value,priority):el.style.removeProperty(key);
     constrainedAnswers.delete(el);
   }
-  function revealFocusedAnswer(el){
+  function revealFocusedAnswer(el, entering=false){
     for(const target of constrainedAnswers.keys())if(target!==el)restoreAnswer(target);
-    if(!el||!scope.contains(el)||dock.contains(el)||el.closest('.vocabulary-reminder')||dock.hidden)return;
+    // Reading headings receive programmatic focus on page changes. They must be
+    // free to leave the viewport when the learner scrolls to the controls below.
+    const headingEntry=entering&&el?.matches?.('h1[tabindex],h2[tabindex],h3[tabindex],h4[tabindex],h5[tabindex],h6[tabindex]');
+    if(!(headingEntry||el?.matches?.('input:not([type=hidden]),textarea,select,button,a[href],[contenteditable=true]'))||!scope.contains(el)||dock.contains(el)||el.closest('.vocabulary-reminder')||dock.hidden)return;
     const vv=win.visualViewport,bounds=dialog?.getBoundingClientRect(),gap=Number.parseFloat(win.getComputedStyle(dock).gap)||8;
     let scroller=dialog||win,clip=bounds;
     for(let parent=el.parentElement;parent&&parent!==dialog&&parent!==doc.body;parent=parent.parentElement){
@@ -80,7 +83,14 @@ export function mountExerciseDock(scope) {
     reserve=Math.max(height+Math.max(0,(bounds?.bottom??viewportBottom)-bottom)+16,reserve);
     set(scope,'--exercise-dock-reserve',reserve+'px');
     scope.dataset.exerciseDockHost='';
-    if(!suspended)revealFocusedAnswer(doc.activeElement);
+    // Scrolling updates horizontal dock placement without pinning a focused
+    // answer in place. Recover it only when the usable viewport actually changes
+    // (keyboard, resize, dialog or sticky-header reflow), or on a new focusin.
+    const box=dock.getBoundingClientRect();
+    const headers=dialog?[]:[...doc.querySelectorAll('.app-header')].filter(el=>['sticky','fixed'].includes(win.getComputedStyle(el).position)).map(el=>el.getBoundingClientRect().bottom);
+    const boundary=[box.top,box.left,box.right,top,bounds?.top,bounds?.bottom,...headers].join('|');
+    const changed=boundary!==lastBoundary;lastBoundary=boundary;
+    if(!suspended&&changed)revealFocusedAnswer(doc.activeElement);
     for(const [node,deadline]of transitions)if(!node.isConnected||win.performance.now()>=deadline)transitions.delete(node);
     if(transitions.size)schedule();
   }
@@ -104,7 +114,7 @@ export function mountExerciseDock(scope) {
     schedule();
   },{signal,capture:true});
   doc.addEventListener('focusin',event=>{
-    revealFocusedAnswer(event.target);
+    revealFocusedAnswer(event.target,true);
   },{signal});
   // Blur can leave no subsequent focusin event. Wait for focus to settle before
   // restoring an abandoned field; keyboard pointer handlers retain answer focus.
