@@ -1,6 +1,6 @@
 // Shared interactive, source-authored lesson pages. Learner and Studio use this owner.
 import {exerciseActionDock,mountExerciseDock} from './exercise-actions.js';
-import {textGatesPassed,textPageGatePassed} from './text-contract.js';
+import {textGatesPassed,textPageGatePassed,SOURCE_MEMORY_VALUE} from './text-contract.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const btn=(a,label,disabled=false,primary=false)=>'<button type="button" class="button '+(primary?'primary':'secondary')+'" data-source-action="'+a+'" '+(disabled?'disabled':'')+'>'+esc(label)+'</button>';
 const normalized=v=>String(v).normalize('NFD').replace(/[\u0591-\u05c7]/g,'').trim();
@@ -9,7 +9,7 @@ const normalized=v=>String(v).normalize('NFD').replace(/[\u0591-\u05c7]/g,'').tr
 export function memoryComparison(raw,feedback){
  const digits=String(raw).replace(/[\s/.·,;:–—-]/g,'');
  if(!raw.trim())return [feedback.empty];
- if(digits==='0704177609112001')return [feedback.exact];
+ if(digits===SOURCE_MEMORY_VALUE)return [feedback.exact];
  const dates=[{month:'07',day:'04',year:'1776'},{month:'09',day:'11',year:'2001'}];
  for(const reverse of [false,true])for(const dayFirst of [false,true])for(let zeros=0;zeros<16;zeros++){
   const list=(reverse?[...dates].reverse():dates).map((d,i)=>{
