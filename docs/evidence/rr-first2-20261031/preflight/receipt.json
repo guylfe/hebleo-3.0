@@ -1,0 +1,87 @@
+{
+  "mode": "rehearse",
+  "database": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\b1d5e7a0-1d13-4e9e-b544-06d3b889fb9e\\hebleo-consolidated\\data\\lexical-private-demo.sqlite",
+  "revision": "abf3cca1d8b9c3380de2e512f8fca665fa475f41",
+  "runtimeSha256": "f1db7ba5d565aad47a0a65afb237c6ea5401be9444105315d32f6f46110361c1",
+  "before": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 7,
+        "sha256": "a20ab5ae53ddafda362d9534ca2bc1a0ebc87ea6fbf49c33241f128e0e510724"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "f6849b2346eb2282271a8b409a1138909c379115b8e4d48fa87375a8143ad752"
+      },
+      "media_aliases": {
+        "rows": 4,
+        "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+      },
+      "media_blobs": {
+        "rows": 5,
+        "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+      },
+      "revisions": {
+        "rows": 5,
+        "sha256": "27d6a4ef232c0920229fcdbc96da8b8bee40e28af61877ad2e163683ef043c53"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "b538a8e27dbe2a48ea5ea4fd90d7fceb4c9bacf39c03a5ca362ab138a487e99c"
+      }
+    },
+    "sha256": "b23c55ce4545b9e8aa6de48960bab60d1104c2585e60ffd330f3c3203ebe67a9"
+  },
+  "after": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 7,
+        "sha256": "ffc89516ee85e41210fc8fdbb31ac88347d659542c4ba7ba28efda8cfaa2439b"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "958c02036fcbece4eae42e093a406d79ba62c1ace6ef1d70e6a896245edb660b"
+      },
+      "media_aliases": {
+        "rows": 4,
+        "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+      },
+      "media_blobs": {
+        "rows": 5,
+        "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+      },
+      "revisions": {
+        "rows": 5,
+        "sha256": "27d6a4ef232c0920229fcdbc96da8b8bee40e28af61877ad2e163683ef043c53"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "b538a8e27dbe2a48ea5ea4fd90d7fceb4c9bacf39c03a5ca362ab138a487e99c"
+      }
+    },
+    "sha256": "078ecc2d5ea3c90934c24e18b507d4e02ab30f0bfc0beb9876b9ab82e0b73dc1"
+  },
+  "preservation": {
+    "schemaExact": true,
+    "allRevisionsExact": true,
+    "activeRevision5Exact": true,
+    "entireDraftExact": true,
+    "mediaTablesExact": true,
+    "eventsExact": true,
+    "nonProgressLearnerFieldsExact": true,
+    "onlyThreeFictionalProfilesReset": true
+  },
+  "applicationExportRestoreRehearsal": true,
+  "integrity": "ok",
+  "sourceContentChanged": false
+}

@@ -1,0 +1,139 @@
+{
+  "verifiedAt": "2026-10-30T23:36:06.460Z",
+  "url": "http://127.0.0.1:63358",
+  "revision": "abf3cca1d8b9c3380de2e512f8fca665fa475f41",
+  "runtimeSha256": "f1db7ba5d565aad47a0a65afb237c6ea5401be9444105315d32f6f46110361c1",
+  "backendSha256": "c5f13d8d3e9190bb620874e9a239a454a96d90074dc711ead64aa7f54a38edc1",
+  "activeRevision": 5,
+  "sourceLessonsExact": true,
+  "savedDraftLessons": 23,
+  "lessons": [
+    {
+      "id": "MEMORY-A2",
+      "component": "MEMORY-A2-interactive",
+      "pages": 7
+    },
+    {
+      "id": "MNTL-A2",
+      "component": "MNTL-A2-interactive",
+      "pages": 9
+    }
+  ],
+  "profiles": [
+    {
+      "id": "author-demo",
+      "completed": 0,
+      "attempts": 0,
+      "resumes": 0
+    },
+    {
+      "id": "learner-core",
+      "completed": 0,
+      "attempts": 0,
+      "resumes": 0
+    },
+    {
+      "id": "learner-demo",
+      "completed": 0,
+      "attempts": 0,
+      "resumes": 0
+    }
+  ],
+  "servedPublicAssetsVerified": 58,
+  "served": [
+    "/answer-policy.js",
+    "/app.js",
+    "/assets/hebleo-wide-navy.png",
+    "/content-identity.js",
+    "/content.js",
+    "/course.js",
+    "/exercise-actions.js",
+    "/exercise-bindings.js",
+    "/google-setup.html",
+    "/google-setup.js",
+    "/hebleo-lion-mark.svg",
+    "/",
+    "/interactions.js",
+    "/keyboard-owner.css",
+    "/keyboard-owner.js",
+    "/learner-view.js",
+    "/lexical-contract.js",
+    "/lexical-runtime.js",
+    "/lexical-vocabulary.css",
+    "/lexical-vocabulary.js",
+    "/media.js",
+    "/post-answer-vocabulary.js",
+    "/preview/learner-renderer.js",
+    "/preview/lesson-preview.js",
+    "/refinement.css",
+    "/review-schedule.js",
+    "/rich-browser.js",
+    "/rich.js",
+    "/source-activities.js",
+    "/source-vocabulary.js",
+    "/studio/curriculum-editor.js",
+    "/studio/editor-fields.js",
+    "/studio/exercise-bindings-editor.js",
+    "/studio/exercise-editor.js",
+    "/studio/import-review.js",
+    "/studio/import-workflow.js",
+    "/studio/lesson-editor.js",
+    "/studio/lexical-settings.js",
+    "/studio/markdown-editor.js",
+    "/studio/media-library.css",
+    "/studio/media-library.js",
+    "/studio/selector-editor.js",
+    "/studio/sources-editor.js",
+    "/studio/sources.css",
+    "/studio/studio.css",
+    "/studio/text-import.js",
+    "/studio/text-pages-editor.js",
+    "/studio/unified-studio.js",
+    "/studio/vendor/easymde.min.css",
+    "/studio/vendor/easymde.min.js",
+    "/studio/vocabulary-browser.js",
+    "/styles.css",
+    "/text-contract.js",
+    "/text-reader.js",
+    "/ux.js",
+    "/vocabulary-import.js",
+    "/vocabulary-reminder.css",
+    "/vocabulary-reminder.js"
+  ],
+  "sourceMediaExact": [
+    {
+      "path": "/media/first2/first2-m.png",
+      "sha256": "d1e0fef1c13fd03714cc2e9d6ff5c6a3313eb955b7af54e451177a1e4cabdb90",
+      "bytes": 31009
+    },
+    {
+      "path": "/media/first2/first2-n.png",
+      "sha256": "15ed70105706f28fa69f800e771694bbe3b8df4a0ae0ff4c7632b63e6fca2f63",
+      "bytes": 125839
+    },
+    {
+      "path": "/media/first2/first2-t.png",
+      "sha256": "cfdee0b8de8342dde59319765b09c4de5fe992e9b4a898e5fff43a5b1e72bbd1",
+      "bytes": 332867
+    },
+    {
+      "path": "/media/first2/first2-l.png",
+      "sha256": "0df69d3c4491f2869cbac224e1a79631490ed195e97bc3538e671e717896c2e7",
+      "bytes": 86531
+    }
+  ],
+  "preservation": {
+    "schemaExact": true,
+    "allRevisionsExact": true,
+    "activeRevision5Exact": true,
+    "entireDraftExact": true,
+    "mediaTablesExact": true,
+    "eventsExact": true,
+    "nonProgressLearnerFieldsExact": true,
+    "onlyThreeFictionalProfilesReset": true
+  },
+  "applicationExportRestoreRehearsal": true,
+  "readsWroteNothing": true,
+  "installedDatabaseSha256": "4955b8caee76aeb6cc68067d6c8ce4d11b714a9af9b20adbd9ec37c36230d79b",
+  "audio": "unavailable; no isolated clips installed; listening functionality unfinished"
+}
