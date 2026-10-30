@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "checks": {
+    "exact_requested_replacements": true,
+    "all_nine_latest_suggestions_accepted": true,
+    "outside_lesson_content_and_styles_unchanged": true,
+    "119_lesson_headings_and_index_links_preserved": true,
+    "retained_section_heading_identities_preserved": true,
+    "six_opening_paragraphs_preserved": true,
+    "guy_focus_paragraph_preserved_apart_from_duplicate_colon": true,
+    "six_threads_and_reply_preserved": true,
+    "six_screens_in_order": true,
+    "exactly_two_demonstration_attempts_and_one_matching_check": true,
+    "redundant_questions_removed": true,
+    "three_principles_explained": true,
+    "matching_answers_and_all_three_feedbacks": true,
+    "animation_preserves_original_digits": true,
+    "optional_explanation_is_not_required": true,
+    "no_mastery_or_retry_requirement": true,
+    "specific_response_feedback_defined": true,
+    "proficiency_reference_removed": true,
+    "roots_patterns_connection_present": true
+  },
+  "documentId": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+  "revisionId": "AHj4eMR05AR2pZBtcCtXc0yqF94KzzujHLeEaooHP1GeJ-Lm-k4J1DBMOAgMEBV8HLKBepPKvyDedgyqF3pNm0X7qiy2p8x8ISTydsaOkg",
+  "edits": 38,
+  "screens": [
+    "Screen 1: Welcome to Hebleo · MEMORY-A2.learn.try-first",
+    "Screen 2: Adam · MEMORY-A2.learn.adam-study",
+    "Screen 3: A quick memory experiment · MEMORY-A2.learn.number-round",
+    "Screen 4: Give the number meaning · MEMORY-A2.learn.connection",
+    "Screen 5: What made the difference? · MEMORY-A2.learn.meaning",
+    "Screen 6: Notice the difference · MEMORY-A2.learn.return"
+  ],
+  "exercises": [
+    "MEMORY-A2.embedded.number-first — typed recall",
+    "MEMORY-A2.embedded.what-changed — matching",
+    "MEMORY-A2.embedded.number-return — typed recall"
+  ],
+  "scope": "Authoring document only; interaction specifications are not installed features."
+}

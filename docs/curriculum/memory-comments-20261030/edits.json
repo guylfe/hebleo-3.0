@@ -1,0 +1,270 @@
+[
+  {
+    "start": 16981,
+    "end": 17151,
+    "oldText": "Content: Revised draft · Approval: Guy’s opening edits accepted; revised remainder pending review · Built version: — · Verified version: — · Revision: 2 (30 October 2026)",
+    "newText": "Content: Revised draft · Approval: Guy’s edits and comments applied; adapted wording pending review · Built version: — · Verified version: — · Revision: 3 (30 October 2026)",
+    "kind": "replace"
+  },
+  {
+    "start": 17152,
+    "end": 17284,
+    "oldText": "OUTCOME: Experience how a familiar meaning can make new information easier to remember, then apply the same idea to learning Hebrew.",
+    "newText": "OUTCOME: Experience the contrast between an unstructured number and meaningful dates; distinguish chunking, logical constraints and connections to established knowledge.",
+    "kind": "replace"
+  },
+  {
+    "start": 17285,
+    "end": 17380,
+    "oldText": "CONNECT TO: Familiar dates and events provide meaning for a number that initially looks random.",
+    "newText": "CONNECT TO: Familiar dates illustrate three useful principles. All three will return with Hebrew roots and patterns; the immediate focus is connecting new information to established old information.",
+    "kind": "replace"
+  },
+  {
+    "start": 17523,
+    "end": 17943,
+    "oldText": "SOURCES / ADAPTATION: Guy’s original presentation, slides 7–9 (0704177609112001, ten seconds, familiar dates and associative memory), with the letter connection on slide 10. Source: https://drive.google.com/file/d/1ImMGqVDWT8BMN63xay1-DT7ug3Z1W9mr/view. Guy’s opening and Adam text were accepted verbatim on 30 October 2026. New transitions, exercise wording and interaction specifications below adapt his demonstration.",
+    "newText": "SOURCES / ADAPTATION: Guy’s original presentation, slides 7–9 (0704177609112001, ten seconds and date associations), with the letter connection on slide 10: https://drive.google.com/file/d/1ImMGqVDWT8BMN63xay1-DT7ug3Z1W9mr/view. Guy’s 30 October comments define the demonstration’s purpose, three principles, animation, optional explanation and question scope. His latest tracked prose edits are accepted. The optional network explanation is a plain-language adaptation of Collins & Loftus (1975), A Spreading-Activation Theory of Semantic Processing: https://doi.org/10.1037/0033-295X.82.6.407.",
+    "kind": "replace"
+  },
+  {
+    "start": 17944,
+    "end": 18318,
+    "oldText": "DESIGN DECISIONS: Guy’s 30 October correction supersedes the picture exercise in the earlier A2 draft. Preserve his established number-and-dates demonstration and personal teaching voice. Explain the experience before naming the principle, then connect it to Hebrew and everyday learning. This introductory demonstration does not change the deferred Hebrew numbers sequence.",
+    "newText": "DESIGN DECISIONS: One initial attempt lets learners experience the difficulty; the date reveal then shows how the task becomes easier. This is a demonstration, not a number-memorisation goal. One later comparison attempt is enough; neither attempt has a retry loop, pass threshold or mastery requirement. One brief matching check distinguishes the three principles. The duplicate check and personal-date application are removed. The animation and optional slide-down explanation below are authoring specifications, not implemented course features.",
+    "kind": "replace"
+  },
+  {
+    "start": 20454,
+    "end": 20940,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] CONTROL: Play → ten-second display → hidden-number recall → submit attempt or “I can’t remember yet” → Continue to the explanation. Replay starts a fresh attempt. An untimed study option is available. For nonvisual access, provide an on-demand spoken digit sequence and hide the accessible number before recall; this is an alternative experience, not a comparable timed score. Leaving the page cancels the timer. No pass threshold or speed comparison.",
+    "newText": "[PLACEHOLDER / AUTHOR INSTRUCTION] CONTROL: Play once → ten-second display → one ungraded attempt or “Show me how” → explanation. Do not offer replay, hints or repeated attempts to get the number right. Do not require a complete or correct answer to continue. The intended contrast is difficulty first, then a helpful way to organise the same information. If a learner remembers it, acknowledge that honestly. For nonvisual access, present the digits once through an on-demand spoken sequence, then offer the same explanation. A learner may skip the timed attempt and go straight to the explanation. If navigation interrupts the display, allow continuing to the reveal without a restart requirement.",
+    "kind": "replace"
+  },
+  {
+    "start": 20988,
+    "end": 21069,
+    "oldText": "LEARNER PROMPT: What was the number? Type as much as you remember, then continue.",
+    "newText": "LEARNER PROMPT: How much of the number can you remember? Enter whatever comes to mind, or select Show me how.",
+    "kind": "replace"
+  },
+  {
+    "start": 21070,
+    "end": 21303,
+    "oldText": "ANSWER / ACCEPTED MODEL: 0704177609112001. Store and compare as a string, never as a numeric value; leading zeroes matter. Ignore spaces between digit groups. This first attempt is ungraded; reveal the number only on the next screen.",
+    "newText": "ANSWER / AUTHOR REFERENCE: 0704177609112001. Keep this as a string. Store the learner’s attempt for the later comparison, but do not score it, show correction messages, or ask for another attempt here. The reveal on the next screen supplies the answer.",
+    "kind": "replace"
+  },
+  {
+    "start": 21304,
+    "end": 21422,
+    "oldText": "FEEDBACK: Keep your attempt for comparison. In a moment, I’ll show you a different way to think about the same number.",
+    "newText": "FEEDBACK after a partial or empty attempt: “That was a lot of digits to hold in mind! Let me show you a way to make sense of them.”\nFEEDBACK after the complete number: “You remembered it. Now let me show you a way to organise the same information.”\n[AUTHOR INSTRUCTION] Both responses proceed directly to the date reveal.",
+    "kind": "replace"
+  },
+  {
+    "start": 21539,
+    "end": 21636,
+    "oldText": "That was quite a lot of digits to remember! Now let’s look at the same number in a different way:",
+    "newText": "That was quite a lot of digits to remember! Now watch what happens when we organise the same number differently.",
+    "kind": "replace"
+  },
+  {
+    "start": 21637,
+    "end": 21660,
+    "oldText": "07/04/1776 · 09/11/2001",
+    "newText": "[PLACEHOLDER / AUTHOR INSTRUCTION] ANIMATION MEMORY-NUMBER-TO-DATES: on Show the connection, start with 0704177609112001. Keep all sixteen digits in the same order and separate them into 07041776 · 09112001. Then insert slashes to produce 07/04/1776 · 09/11/2001. Only spacing and separators change; no digits appear, disappear or swap places. Reveal the event labels after the transformation. Reduced-motion and nonvisual alternatives present the same three stages with a Next step control and a short spoken/text description. Replaying this explanatory animation is allowed; it does not restart the recall task.\n07/04/1776 · 09/11/2001",
+    "kind": "replace"
+  },
+  {
+    "start": 21746,
+    "end": 21944,
+    "oldText": "The first is the date of the American Declaration of Independence; the second is the date of the September 11 attacks. If you already know those events, the digits now connect to something familiar.",
+    "newText": "The first is the date of the American Declaration of Independence; the second is the date of the September 11 attacks. We haven’t changed any of the digits. We’ve changed how we understand them, using three different principles.",
+    "kind": "replace"
+  },
+  {
+    "start": 21945,
+    "end": 22218,
+    "oldText": "We haven’t changed the number. We’ve changed what it means to you: instead of sixteen unrelated digits, you can think of two dates you already know. If those dates are unfamiliar, the connection will be less helpful. The useful starting point is something you already know.",
+    "newText": "Chunking: instead of trying to hold sixteen separate digits in mind, we can think of two meaningful units—the two dates. Each date still contains several digits, but we can treat it as one item.\nLogical constraints: a date has a structure, and that structure limits the possibilities. A month must be between 01 and 12, so 19 cannot be the month. A day cannot be 47. Knowing the format helps us rule out possibilities instead of treating every digit as completely open.\nConnecting new information to established old information: if you already know these events and their dates, the number connects to knowledge you already have. If the events are unfamiliar, this particular connection will be less useful to you, even though the grouping and date structure may still help.",
+    "kind": "replace"
+  },
+  {
+    "start": 22334,
+    "end": 22864,
+    "oldText": "While we’ll use all 3 principles to enhance our learning, right now I want to focus on the third one:: connect new information to established old information. You already have a great deal of knowledge to build on from your life experience. A useful connection gives the new information a place in that knowledge. At first we’ll connect brand new Hebrew concepts to things you’re already familiar with from English, and as we move forward we’ll connect new Hebrew concepts to older Hebrew concepts you’re already comfortable with.",
+    "newText": "While we’ll use all 3 principles to enhance our learning, right now I want to focus on the third one: connect new information to established old information. You already have a great deal of knowledge to build on from your life experience. A useful connection gives the new information a place in that knowledge. At first we’ll connect brand new Hebrew concepts to things you’re already familiar with from English, and as we move forward we’ll connect new Hebrew concepts to older Hebrew concepts you’re already comfortable with.",
+    "kind": "replace"
+  },
+  {
+    "start": 22865,
+    "end": 22940,
+    "oldText": "Let’s check what changed in our experiment before you try the number again.",
+    "newText": "All three principles will come back when we explore Hebrew roots and patterns. For now, let’s make sure we can tell what each one contributed to this example.",
+    "kind": "replace"
+  },
+  {
+    "start": 22941,
+    "end": 23377,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] PAGE BREAK: keep the number, dates and first attempt on earlier screens. This screen asks about the method without displaying the recall answer. No new image asset is required. If they answer in reverse order, have a message prepared for it. If they answer without zeros or otherwise right numbers but wrong format (including wrong order) - have messages pointing out specifically what they got wrong.",
+    "newText": "[PLACEHOLDER / AUTHOR INSTRUCTION] OPTIONAL SLIDE-DOWN MEMORY-ASSOCIATIVE-NETWORK: collapsed by default, labelled “How does the associative network memory model explain this?” Open and close on request; opening it is not required for progress and adds no quiz. Keep focus on the control, expose its expanded/collapsed state, and respect reduced motion.\nOPTIONAL LEARNER TEXT: One useful way to think about memory is as a network of connected ideas. Bringing one idea to mind can make related ideas easier to reach. For example, thinking about American Independence Day may bring July 4 to mind, which then helps you recover part of the number. In an associative network model, those links help explain how one idea can lead to another. We’ll use connections like these to give new Hebrew material a familiar starting point.",
+    "kind": "replace"
+  },
+  {
+    "start": 23378,
+    "end": 23427,
+    "oldText": "MEMORY-A2.embedded.what-changed — multiple choice",
+    "newText": "MEMORY-A2.embedded.what-changed — matching",
+    "kind": "replace"
+  },
+  {
+    "start": 23428,
+    "end": 23490,
+    "oldText": "LEARNER PROMPT: What changed when we recognised the two dates?",
+    "newText": "LEARNER PROMPT: Match each observation to the principle that explains it.",
+    "kind": "replace"
+  },
+  {
+    "start": 23491,
+    "end": 23512,
+    "oldText": "OPTIONS / TOKEN POOL:",
+    "newText": "OBSERVATIONS:\n1. Thinking of two dates instead of sixteen separate digits.\n2. Ruling out 19 as the month because a year has only twelve months.\n3. Using your existing knowledge of American Independence Day to recover July 4.\nRESPONSE OPTIONS (each used once):",
+    "kind": "replace"
+  },
+  {
+    "start": 23513,
+    "end": 23548,
+    "oldText": "A. Some of the digits were removed.",
+    "newText": "A. Logical constraints",
+    "kind": "replace"
+  },
+  {
+    "start": 23549,
+    "end": 23597,
+    "oldText": "B. The same digits connected to familiar events.",
+    "newText": "B. Connecting new information to established old information",
+    "kind": "replace"
+  },
+  {
+    "start": 23598,
+    "end": 23652,
+    "oldText": "C. The digits were rearranged into a different number.",
+    "newText": "C. Chunking",
+    "kind": "replace"
+  },
+  {
+    "start": 23653,
+    "end": 23723,
+    "oldText": "ANSWER / ACCEPTED MODEL: The same digits connected to familiar events.",
+    "newText": "ANSWER / ACCEPTED MODEL: 1 → C (Chunking); 2 → A (Logical constraints); 3 → B (Connecting new information to established old information).",
+    "kind": "replace"
+  },
+  {
+    "start": 23724,
+    "end": 23863,
+    "oldText": "FEEDBACK after “Some of the digits were removed.”: All sixteen digits are still there. The dates give us a meaningful way to organise them.",
+    "newText": "FEEDBACK for observation 1: “Chunking. You’re grouping the digits into two larger units.”",
+    "kind": "replace"
+  },
+  {
+    "start": 23864,
+    "end": 24008,
+    "oldText": "FEEDBACK after “The same digits connected to familiar events.”: Exactly. We kept the information and connected it to something already familiar.",
+    "newText": "FEEDBACK for observation 2: “Logical constraints. Knowing how months work rules out an impossible value.”",
+    "kind": "replace"
+  },
+  {
+    "start": 24009,
+    "end": 24140,
+    "oldText": "FEEDBACK after “The digits were rearranged into a different number.”: The order stayed the same. We recognised a meaning within it.",
+    "newText": "FEEDBACK for observation 3: “Connecting new information to established old information. Something you already know helps you recover the date.”\n[AUTHOR INSTRUCTION] This is the only comprehension question in the lesson. After submission, show the relevant explanation beside each match; keep correct matches and explain any mismatch. No extra questions or compulsory repeat round follow it.",
+    "kind": "replace"
+  },
+  {
+    "start": 24180,
+    "end": 24246,
+    "oldText": "Screen 6: Try the connection for yourself · MEMORY-A2.learn.return",
+    "newText": "Screen 6: Notice the difference · MEMORY-A2.learn.return",
+    "kind": "replace"
+  },
+  {
+    "start": 24261,
+    "end": 24485,
+    "oldText": "Let’s try again. Press Play to see the same number for ten seconds, this time with the two dates in mind. When it disappears, type what you remember. Think back to the events and see whether they help you recover the digits.",
+    "newText": "Now that the number has a structure and a meaning, try bringing it back to mind once more. Think of the two dates and enter what you remember, without looking back. We’re comparing the two ways of thinking about the number—you don’t need to master the number itself.",
+    "kind": "replace"
+  },
+  {
+    "start": 24486,
+    "end": 24740,
+    "oldText": "After checking your attempt, notice what helped you. Did you recall the dates, picture the events, or find a different connection? We’ll take this idea into the next lesson, where familiar images will help us connect Hebrew letter shapes to their sounds.",
+    "newText": "Compare your attempts and notice whether grouping, the date format, or the familiar events helped. We’ll use the same ideas throughout the course, starting with familiar images that help us remember Hebrew letter shapes and sounds.",
+    "kind": "replace"
+  },
+  {
+    "start": 24789,
+    "end": 24888,
+    "oldText": "LEARNER PROMPT: After the number disappears, type it again using the connection you have just made.",
+    "newText": "LEARNER PROMPT: With the two dates in mind, what can you now recall? Enter your attempt, or select Show the comparison.",
+    "kind": "replace"
+  },
+  {
+    "start": 24889,
+    "end": 25246,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] REUSE MEMORY-NUMBER: the same ungrouped string, ten-second Play/Replay behavior, untimed and nonvisual alternatives. Earlier dates and answers stay hidden during recall. After submission or “I can’t remember yet”, Check reveals the exact number, the two date groups and the learner’s two attempts. Recall remains ungraded.",
+    "newText": "[PLACEHOLDER / AUTHOR INSTRUCTION] COMPARISON: no second timed display and no recall Replay/Try again button. Keep earlier dates hidden until the learner submits this one attempt or chooses Show the comparison. Then show the original number, the formatted dates and both attempts. Give specific feedback below when the input supports it, followed by Continue for every outcome. The exact number is an author comparison model, not a passing requirement.",
+    "kind": "replace"
+  },
+  {
+    "start": 25247,
+    "end": 25394,
+    "oldText": "ANSWER / ACCEPTED MODEL: 0704177609112001. Accept spacing between digit groups; retain every digit in the original order, including the first zero.",
+    "newText": "ANSWER / AUTHOR REFERENCE: 0704177609112001; grouped display 07041776 · 09112001; date display 07/04/1776 · 09/11/2001. Spaces and date separators alone do not change the answer. Preserve the raw response so formatting can be explained without losing the learner’s input.",
+    "kind": "replace"
+  },
+  {
+    "start": 25395,
+    "end": 25676,
+    "oldText": "FEEDBACK: Compare your attempt with 0704177609112001, or 07041776 · 09112001. If the dates helped, notice how the familiar events brought the digits back. If they didn’t, ask whether those events were already familiar enough to help you. You can replay or continue after comparing.",
+    "newText": "FEEDBACK — exact digit sequence, with or without separators: “That’s the original sequence. Notice which part of the connection helped you bring it back.”\nFEEDBACK — dates in reverse order, e.g. 09112001 · 07041776: “You recalled both dates, but swapped their order. The original starts with July 4, 1776, then September 11, 2001.”\nFEEDBACK — omitted month/day zeroes, e.g. 7/4/1776 · 9/11/2001 or 7417769112001: “You recalled the dates. In the original display, months and days use two digits: 07/04 and 09/11. Those zeroes are part of the original sequence.”\nFEEDBACK — day/month order, e.g. 04/07/1776 · 11/09/2001: “You used day–month–year. These are the same dates; the demonstration uses month–day–year, so its sequence begins 07/04/1776.”\nFEEDBACK — other partial or different response: “Here’s the original number alongside your attempt. Compare the two date groups and notice which parts came back to you.”\nFEEDBACK — no attempt: “Here are the two dates within the original number. Notice how the grouping, format and familiar events can help you make sense of it.”\n[AUTHOR INSTRUCTION] Explain every clearly identifiable difference, including combined reversed-date/omitted-zero cases. Only label a response as the right dates when it matches a known equivalent form of those dates; do not guess from an arbitrary digit string. If the order of individual digits differs, highlight the differing groups against the model. No feedback asks for correction or another attempt; all paths continue.",
+    "kind": "replace"
+  },
+  {
+    "start": 27554,
+    "end": 27768,
+    "oldText": "You’ve now tried one of the ideas behind Hebleo for yourself: connecting new information to something you already know. Next, we’ll use familiar images to help you learn your first four Hebrew letters. Let’s begin!",
+    "newText": "You’ve seen how grouping, logical constraints and familiar knowledge can make the same information easier to work with. Next, we’ll start with that third idea: using familiar images to help you learn your first four Hebrew letters. Let’s begin!",
+    "kind": "replace"
+  },
+  {
+    "start": 27809,
+    "end": 28328,
+    "oldText": "AUTHOR REVIEW: Guy’s accepted opening and Adam account remain verbatim. The original presentation’s slide 4 names B1, while his new text says B2; this discrepancy is flagged in chat for his decision. The 500/70-hour comparison is Guy’s supplied account, not independently verified evidence or a promised learner outcome. Review the newly adapted transitions and exercises; verify the ten-second display, leading zero, hidden answers, replay, nonvisual/untimed alternatives and all choice feedback during implementation.",
+    "newText": "AUTHOR REVIEW: Guy’s latest tracked edits are accepted, including removal of the proficiency-level parenthesis and his English-to-known-Hebrew progression. The duplicate colon left by overlapping suggestions was repaired. The first recall is a demonstration of difficulty; the one later attempt illustrates the contrast, without a memorisation requirement. Review the adapted three-principle explanation, optional network text, single matching check and targeted response feedback. Verify the animation, hidden answers, accessibility alternatives and unconditional Continue during implementation. Guy’s 500/70-hour account remains supplied author content; this task does not independently validate it.",
+    "kind": "replace"
+  },
+  {
+    "start": 28329,
+    "end": 28551,
+    "oldText": "Approval revision/date: Guy’s tracked opening edits accepted 30 October 2026; adapted remainder pending review · Course lesson/version: — · Verification evidence: document readback; no course implementation or publication.",
+    "newText": "Approval revision/date: Guy’s tracked edits and new comments applied 30 October 2026; adapted wording pending review · Course lesson/version: — · Verification evidence: document readback; animation and slide-down interaction specified, not implemented.",
+    "kind": "replace"
+  },
+  {
+    "start": 25716,
+    "end": 26606,
+    "oldText": "Check — understanding\nMEMORY-A2.check.useful-anchor — multiple choice\nLEARNER PROMPT: When you use this idea to learn something new, what should you look for?\nOPTIONS / TOKEN POOL:\nA. A connection to something you already know.\nB. The most complicated story you can invent.\nC. A way to avoid ever practising it again.\nANSWER / ACCEPTED MODEL: A connection to something you already know.\nFEEDBACK after “A connection to something you already know.”: Yes. Start with what’s familiar and use it to make sense of the new information.\nFEEDBACK after “The most complicated story you can invent.”: Your connection can be simple. What matters is whether it helps you bring the new information back to mind.\nFEEDBACK after “A way to avoid ever practising it again.”: A connection gives you a useful starting point. We’ll also practise retrieving what you learn and return to it later in the course.\n",
+    "newText": "",
+    "kind": "delete-section",
+    "reason": "Remove duplicate comprehension check"
+  },
+  {
+    "start": 26828,
+    "end": 27530,
+    "oldText": "Apply — complete exercise set\nMEMORY-A2.apply.personal-connection — self-check\nLEARNER PROMPT: Think of a date you already know. How would knowing its meaning help you remember the digits? You can keep your example private and explain it to yourself.\nANSWER / ACCEPTED MODEL: Any familiar date with an explanation linking its meaning to its digits. Example: “New Year’s Day is January 1, so I can recover 01/01 by thinking of the start of the year.” This is a self-check with no single required date or wording.\nFEEDBACK: Ask yourself: did I already know the event, and can thinking of it bring the date back to mind? The same idea can help with a new word, a name or something else you want to learn.\n",
+    "newText": "",
+    "kind": "delete-section",
+    "reason": "Remove personal-date Apply exercise"
+  }
+]
