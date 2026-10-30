@@ -1,0 +1,10 @@
+✔ independent exhaustive known-date permutations retain every identifiable difference (6.8775ms)
+✔ QA-FIRST2-01 regression: manual scrolling must not pull a focused lesson heading back into view (289.6245ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3053.7584

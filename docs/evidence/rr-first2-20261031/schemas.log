@@ -1,0 +1,39 @@
+
+> test
+> node --test checks/*.check.mjs
+
+✔ seed and synthetic interchange are valid without mutation; seed is private-demo only (79.982ms)
+✔ required explicit Hebrew forms cannot be inferred by validation (2.3846ms)
+✔ unknown values, rich formatting, themes and explicit forms survive JSON unchanged (12.5495ms)
+✔ stable IDs and dependency/selector references reject ambiguity (6.6449ms)
+✔ same-snapshot row lookup works; reorder in a new snapshot never auto-assigns identity (3.1398ms)
+✔ duplicate row hashes stay ambiguous; duplicate frozen locators are invalid (2.8472ms)
+✔ source omissions retain work; simultaneous source and Studio edits require resolution (1.3253ms)
+✔ media pins must resolve exact asset, revision and hash; legacy URLs remain unpinned (11.8234ms)
+✔ pending source objects cannot inherit synthetic or verified pack approval (4.6844ms)
+✔ pending fields veto the private synthetic compatibility exception (2.6958ms)
+✔ changed content or dependency invalidates approval digests (28.8374ms)
+✔ pending fields, unpinned media and missing approval dependencies stay ineligible (39.859ms)
+✔ wire fixtures validate by named definitions and missing CAS token is invalid (61.4818ms)
+✔ media approval binds asset identity and revision metadata; no bytes are fetched (5.858ms)
+✔ preview response schemas reject learner writes and answer-key leakage (25.669ms)
+✔ additive v2 schemas accept repeated text, optional mixed chapters and keyed preview; malformed typed selectors fail without rewriting legacy (28.7772ms)
+✔ RR-F18-01 learner schema forbids author import records and retains other source fields (19.7312ms)
+✔ RR-F18-04 structural and semantic source validation rejects malformed records without changing source (21.9252ms)
+✔ bindings are structurally additive; shared semantics enforce surfaces/unique targets without mutation (94.2842ms)
+✔ author schema rejects invalid shape and learner schema forbids answer bindings before feedback (52.3427ms)
+✔ schema dependency audit follows binding-only references and rejects missing or ambiguous words (5.6135ms)
+✔ actual saved-draft grade satisfies the strict wire schema with answer-only feedback bindings (62.2102ms)
+✔ lexical JSON schema compiles strictly and matches exact runtime slot enumeration (8.289ms)
+✔ author schema retains metadata while refusing malformed structure and unsupported versions (0.8772ms)
+✔ semantic validator adds complete inventories and scoped references after structure (0.7403ms)
+✔ QA-NEW7-01 schema semantics reject empty-effective authored keys without rewriting source (53.8661ms)
+✔ optional v2 text-only course validates author and learner schemas without invented registry objects (37.8374ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9195.0616
