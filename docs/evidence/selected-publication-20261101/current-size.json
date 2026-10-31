@@ -1,0 +1,29 @@
+{
+  "scope": "disposable-copy-only",
+  "sourceAccess": "readOnly VACUUM INTO",
+  "lessonId": "MEMORY-A2",
+  "baseRevisionId": 6,
+  "draftLessons": 23,
+  "publishedLessons": 3,
+  "draftJSONBytes": 26632089,
+  "draftHash": "b2e0d15322c077ffbef86911a9de520bee1fc723b525e0d90428a4061cb50036",
+  "reviewMilliseconds": 7174,
+  "canPublish": true,
+  "noChanges": false,
+  "blockers": [],
+  "requiredDependencies": [],
+  "affectedPublishedLessons": [
+    "MEMORY-A2"
+  ],
+  "commitMilliseconds": 8906,
+  "disposablePublication": true,
+  "revisionId": 7,
+  "draftHashPreserved": true,
+  "stagedAtPreserved": true,
+  "rawDraftPreserved": true,
+  "nonpublicationStatePreserved": true,
+  "historicalSnapshotPreserved": true,
+  "otherPublishedLessonsPreserved": true,
+  "remainingLessonChanges": 20,
+  "duplicateDidNotAppend": true
+}

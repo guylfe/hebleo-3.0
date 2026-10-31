@@ -1,0 +1,37 @@
+{
+  "baseCommit": "4433f2e0e8bcd319edd3189ba9016f8d9fa7ff12",
+  "candidate": {
+    "tests": 984,
+    "pass": 984,
+    "fail": 0,
+    "skipped": 0
+  },
+  "focused": {
+    "tests": 21,
+    "pass": 21,
+    "fail": 0,
+    "skipped": 0
+  },
+  "schemas": {
+    "tests": 27,
+    "pass": 27,
+    "fail": 0,
+    "skipped": 0
+  },
+  "runtime": {
+    "runtimeCommit": "4433f2e0e8bcd319edd3189ba9016f8d9fa7ff12",
+    "passed": 9,
+    "database": ":memory:",
+    "transport": "ephemeral loopback HTTP; closed on exit",
+    "limits": "Contract and backend checks only; no app renderer, browser or independent release acceptance."
+  },
+  "files": {
+    "src/lesson-publication.js": "a28182751a1937b53c7ada0356e7d520c1bf9ae149987e4921df2ebfb92ce616",
+    "src/store.js": "aceca4c063cebce152cad1eef83c7499ff381b83398aac66dde75c295aa3cb0b",
+    "src/server.js": "f691fe43dcda2fcbf4e610198c1b9f0b4d348d2144529928df22a7cf8b490a7a",
+    "test/lesson-publication.test.js": "3b0858791e67055a273998a4fa0706d946b8ea451308fddf8b5eaf58ef4db9c7",
+    "scripts/verify-selected-publication-copy.mjs": "27e2d8331de26486b6b0078afe2ab8aa80a7ae075e6d3cb5109c740956d3721c",
+    "scripts/verify-selected-recovery-copy.mjs": "5d4ee9faab353547fdf884e6bb67c11e800ed3aa90a52ad4bb65b9b85b3b5517"
+  },
+  "limits": "Automated owner checks; configured candidate exclusions apply. No frontend adoption, installation or independent review."
+}

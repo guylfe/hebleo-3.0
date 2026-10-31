@@ -105,6 +105,8 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           if (url.pathname === '/api/studio/impact') return json(200,store.workspaceImpact(input));
           if (url.pathname === '/api/studio/dependencies') return json(200,store.exerciseDependencies(input));
           if (url.pathname === '/api/studio/draft') return json(200, store.stage(input));
+          if (url.pathname === '/api/studio/publish-lesson/review') return json(200, store.reviewLessonPublication(input));
+          if (url.pathname === '/api/studio/publish-lesson') return json(200, store.publishLesson(input));
           if (url.pathname === '/api/studio/publish') return json(200, store.publish(input.baseRevisionId, input.draftToken));
           if (url.pathname === '/api/studio/rollback') return json(200, store.rollback(input.revisionId, input.baseRevisionId, input.expectedDraftToken));
           // Author rehearsal: read-only against one exact draft token; no learner record is touched.

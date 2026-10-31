@@ -1,5 +1,6 @@
 import {AuthorReview,validateAuthorReview,relinkAuthorReview,mergeAuthorReview,authorReviewContents} from './author-review.js';
 import {canonicalJSON,contextHash} from './immutable-context.js';
+import {publicationScope,planLessonPublication,lessonReviewToken,rebaseDraftJSON,remainingLessonChanges} from './lesson-publication.js';
 import {serializeBackup} from '../public/backup-contract.js';
 import {projectSourceVocabulary} from '../public/source-vocabulary.js';
 import {projectExerciseVocabulary} from './exercise-vocabulary.js';
@@ -618,6 +619,71 @@ export class Store {
   assertTextPublicationEligible(content){
     const issues=textPublicationIssues(content);
     if(issues.length)throw new DomainError('Adapted text drafts require human wording, vocabulary and source review before publication or release activation.',409,'TEXT_DRAFT_REVIEW_REQUIRED',{issues});
+  }
+  // Called only inside the transaction used by review/commit. All mutable pins,
+  // eligibility and dependency scope are read again, never trusted from the client.
+  planSavedLessonPublication(scope) {
+    this.expectBase(scope.baseRevisionId);this.expectDraft(scope.expectedDraftToken);
+    const draft=this.currentDraft();
+    if(!draft || draft.baseRevisionId!==scope.baseRevisionId)throw this.draftConflict('A current saved draft is required.','STALE_BASE');
+    const active=this.snapshot(),plan=planLessonPublication(active,draft.content,scope),candidate=plan.candidate;
+    for(const dependency of plan.requiredDependencies){
+      const ids=new Set();
+      for(const content of [active,draft.content]){
+        if(dependency.kind==='exercises'){
+          for(const lesson of content.lessons)if(exerciseInLesson(content,lesson.id,dependency.id))ids.add(lesson.id);
+        }else{
+          for(const id of this.dependencies(dependency.id,content).lessons)ids.add(id);
+          // Prepared ordering trays also consume preceding lessons' taught words.
+          const ordered=orderedLessons(content);
+          for(let i=0;i<ordered.length;i++)if(ordered.slice(Math.max(0,i-2),i+1).some(l=>l.wordIds.includes(dependency.id))&&content.exercises.some(e=>e.type==='ordering'&&exerciseInLesson(content,ordered[i].id,e.id)))ids.add(ordered[i].id);
+        }
+      }
+      dependency.potentiallyAffectedPublishedLessons=active.lessons.filter(l=>ids.has(l.id)).map(l=>l.id);
+    }
+    const sourceState=this.get('source-state'),mediaState=this.get('media-state');
+    if(sourceState?.draftBinding || sourceState?.authorBundle || Object.keys(sourceState?.sources||{}).length)plan.blockers.push({code:'SOURCE_PUBLICATION_REQUIRED',id:scope.lessonId,path:'source-state',reason:'Source-bound work requires the exact source freshness and approval publication path.',action:'Use the reviewed source publication workflow.'});
+    const check=(path,fn,code)=>{try{return fn();}catch(error){if(!(error instanceof DomainError)&&!code)throw error;plan.blockers.push({code:code||error.code,id:scope.lessonId,path,reason:error.message,action:'Resolve the publication blocker before reviewing again.'});return null;}};
+    check('content',()=>validateContent(candidate));
+    check('identity',()=>assertContentIdentityTransition(active,candidate),'CONTENT_IDENTITY_CONFLICT');
+    check('lexical',()=>assertLexicalTransition(active,candidate));
+    check('lessons',()=>this.assertTextPublicationEligible(candidate));
+    check('media',()=>this.media.checkPublication(candidate));
+    const mediaPlan=check('media',()=>this.media.plan(candidate,{strict:true}));
+    let changes=[],affectedLessons=[];
+    // Impact projection needs a valid candidate. Invalid candidates remain reviewable
+    // through typed blockers and requiredDependencies without partial writes.
+    if(!plan.blockers.length){({changes,affectedLessons}=this.preview({content:candidate}));}
+    const remaining=remainingLessonChanges(candidate,draft.content);
+    const publishedContentHash=contextHash(candidate);
+    const eligibility={sourceState:contextHash(sourceState),mediaState:contextHash(mediaState),media:(mediaPlan?.entries||[]).map(({path,sha256,mimeType,byteLength})=>({path,sha256,mimeType,byteLength}))};
+    const review={scope:'lesson',lessonId:scope.lessonId,baseRevisionId:scope.baseRevisionId,expectedDraftToken:scope.expectedDraftToken,canPublish:plan.blockers.length===0,noChanges:plan.blockers.length===0&&changes.length===0,blockers:plan.blockers,requiredDependencies:plan.requiredDependencies,includedDependencies:plan.includedDependencies,changes,affectedPublishedLessons:affectedLessons.filter(id=>active.lessons.some(l=>l.id===id)),remainingSavedChanges:remaining,publishedContentHash};
+    review.reviewToken=lessonReviewToken({...review,eligibility});
+    return {review,candidate,mediaPlan,draft};
+  }
+  reviewLessonPublication(input) {
+    const scope=publicationScope(input);
+    return this.transaction(()=>this.planSavedLessonPublication(scope).review);
+  }
+  rebaseSavedDraft(baseRevisionId,revisionId) {
+    const raw=this.db.prepare("SELECT value FROM kv WHERE key='draft'").get()?.value;
+    this.db.prepare("UPDATE kv SET value=? WHERE key='draft'").run(rebaseDraftJSON(raw,baseRevisionId,revisionId));
+  }
+  publishLesson(input) {
+    const scope=publicationScope(input,{commit:true});
+    return this.transaction(()=>{
+      const {review,candidate,mediaPlan}=this.planSavedLessonPublication(scope);
+      if(review.reviewToken!==input.reviewToken)throw this.draftConflict('Publication scope or eligibility changed. Review again.','LESSON_REVIEW_CHANGED');
+      if(!review.canPublish)throw new DomainError('Selected lesson publication is blocked.',409,'LESSON_PUBLICATION_BLOCKED',{blockers:review.blockers});
+      let revisionId=scope.baseRevisionId;
+      if(!review.noChanges){
+        this.media.persistPlan(mediaPlan);
+        revisionId=this.addRevision(candidate,'Published lesson '+scope.lessonId+'; dependencies '+(scope.includeDependencies.map(d=>d.kind+'/'+d.id).join(', ')||'none'));
+        this.set('active',revisionId);
+        this.rebaseSavedDraft(scope.baseRevisionId,revisionId);
+      }
+      return {revisionId,noChanges:review.noChanges,publication:{scope:'lesson',lessonId:scope.lessonId,fromBaseRevisionId:scope.baseRevisionId,consumedDraftToken:scope.expectedDraftToken,reviewToken:review.reviewToken,publishedContentHash:review.publishedContentHash,includedDependencies:review.includedDependencies,includedChanges:review.changes,affectedPublishedLessons:review.affectedPublishedLessons},workspace:{revisionId,content:candidate,draft:this.currentDraft()},remainingSavedChanges:review.remainingSavedChanges};
+    });
   }
   publish(baseRevisionId, draftToken,sourcePermit) {
     if(this.get('source-state')?.draftBinding && sourcePermit!==this.sourcePermit)throw new DomainError('Source-backed drafts publish only through the reviewed source freshness and approval path.',409,'SOURCE_PUBLICATION_REQUIRED');
