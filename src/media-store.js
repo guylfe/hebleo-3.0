@@ -113,6 +113,30 @@ export class MediaStore {
   const refs=new Set();for(const content of packs){validatePins(content,bundle.state);for(const url of mediaReferences(content).local){refs.add(url);const path=mediaPath(url),managed=/^blobs\/([a-f0-9]{64})\.[a-z0-9]+$/.exec(path),hash=managed?.[1]||aliases.get(path),item=blobs.get(hash);if(!item||item.mimeType!==MEDIA_TYPES[extname(path).toLowerCase()])fail('MEDIA_MISSING','A carried content reference has no matching recovered bytes: '+url);}}if(!equal([...refs].sort(),bundle.localReferences))fail('MEDIA_BACKUP_INVALID','Declared local media references disagree with carried content.');
   return {legacy:false,blobs:[...blobs.values()],aliases:[...aliases].map(([path,sha256])=>({path,sha256})),state:copy(bundle.state)};
  }
+ // Restore retains local revision/comment history. Its immutable media must
+ // survive too, even when absent from an older incoming backup. Validate the
+ // incoming package independently first; local bytes cannot conceal omissions.
+ preserveForRestore(incoming,retainedPacks){
+  const retained=this.validateBackup(this.backup(retainedPacks),retainedPacks,{required:true});
+  const conflict=()=>fail('MEDIA_RESTORE_CONFLICT','Incoming media conflicts with retained immutable media history.');
+  const blobs=new Map(retained.blobs.map(item=>[item.sha256,item]));
+  for(const item of incoming.blobs){const old=blobs.get(item.sha256);if(old&&(old.mimeType!==item.mimeType||!old.bytes.equals(item.bytes)))conflict();blobs.set(item.sha256,item);}
+  if([...blobs.values()].reduce((n,item)=>n+item.byteLength,0)>MEDIA_LIMITS.backupBytes)fail('MEDIA_BACKUP_LIMIT','Retained and incoming media exceed the recovery package limit; no data has been discarded.');
+  const aliases=new Map(retained.aliases.map(a=>[a.path,a.sha256]));
+  for(const a of incoming.aliases){if(aliases.has(a.path)&&aliases.get(a.path)!==a.sha256)conflict();aliases.set(a.path,a.sha256);}
+  const state=copy(retained.state),assets=new Map(state.assets.map(a=>[a.assetId,a]));
+  for(const asset of incoming.state.assets){
+   const old=assets.get(asset.assetId);
+   if(!old){state.assets.push(copy(asset));assets.set(asset.assetId,asset);continue;}
+   const shared=Math.min(old.revisions.length,asset.revisions.length);
+   if(old.kind!==asset.kind||!equal(old.revisions.slice(0,shared),asset.revisions.slice(0,shared)))conflict();
+   if(asset.revisions.length>=old.revisions.length){const replacement=copy(asset);state.assets[state.assets.findIndex(a=>a.assetId===asset.assetId)]=replacement;assets.set(asset.assetId,replacement);}
+  }
+  for(const [key,receipt] of Object.entries(incoming.state.operations)){if(Object.hasOwn(state.operations,key)&&!equal(state.operations[key],receipt))conflict();state.operations[key]=copy(receipt);}
+  safeMetadata(state);validateLibrary(state,hash=>blobs.get(hash),id=>this.store.requireAuthor(id));
+  const aliasRows=[...aliases].map(([path,sha256])=>({path,sha256}));validateAliases(aliasRows,hash=>blobs.get(hash));
+  return {legacy:false,blobs:[...blobs.values()],aliases:aliasRows,state};
+ }
  restore(plan){this.db.exec('DELETE FROM media_aliases; DELETE FROM media_blobs;');for(const item of plan.blobs)this.putBlob(item);for(const a of plan.aliases)this.db.prepare('INSERT INTO media_aliases(path,sha256) VALUES(?,?)').run(a.path,a.sha256);this.store.set('media-state',plan.state);}
  validatePersistent(packs){const bundle=this.backup(packs);return this.validateBackup(bundle,packs,{required:true});}
 }

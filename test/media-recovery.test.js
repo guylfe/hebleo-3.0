@@ -2,6 +2,7 @@ import {demoSignalSHA256,demoSignalReference} from '../src/demo-signal.js';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {mkdtempSync,mkdirSync,writeFileSync,rmSync,readFileSync}from'node:fs';import{tmpdir}from'node:os';import{join}from'node:path';
 import {Store,STORE_SCHEMA_VERSION}from'../src/store.js';import{createServer}from'../src/server.js';import{GoogleAuth}from'../src/google-auth.js';
+import {randomUUID} from 'node:crypto';
 import{fixture,author}from'../test-support/source-fixture.js';import{copy}from'../src/source-utils.js';
 const wave=sample=>{const bytes=Buffer.alloc(46);bytes.write('RIFF');bytes.writeUInt32LE(38,4);bytes.write('WAVEfmt ',8);bytes.writeUInt32LE(16,16);bytes.writeUInt16LE(1,20);bytes.writeUInt16LE(1,22);bytes.writeUInt32LE(8000,24);bytes.writeUInt32LE(16000,28);bytes.writeUInt16LE(2,32);bytes.writeUInt16LE(16,34);bytes.write('data',36);bytes.writeUInt32LE(2,40);bytes.writeInt16LE(sample,44);return bytes;};
 const syntheticPDF=Buffer.from('%PDF-1.4\n% Synthetic disposable recovery fixture; not authored lesson material.\n%%EOF');
@@ -29,6 +30,36 @@ test('legacy v1/v2 backups are explicitly unbound; media state cannot masquerade
 test('media failure inside restore transaction rolls back source/content/library together',t=>{const {store}=setup(t),asset=store.media.importAsset(author,input(wave(11)));stage(store,c=>c.words[0].audio=asset.url);const backup=store.backup(),dest=new Store(':memory:');try{dest.media.importAsset(author,input(wave(22),{assetId:'existing-synthetic'}));dest.db.exec("CREATE TRIGGER synthetic_blob_failure BEFORE INSERT ON media_blobs BEGIN SELECT RAISE(ABORT,'synthetic disk failure'); END;");const before=dump(dest);assert.throws(()=>dest.restore(backup),/synthetic disk failure/);assert.equal(dump(dest),before);}finally{dest.close();}});
 
 test('remote media remains explicitly reference-only and is never fetched or claimed recovered',t=>{const {store}=setup(t);stage(store,c=>c.words[0].audio='https://example.invalid/synthetic-remote.mp3');const backup=store.backup();assert(backup.mediaRecovery.remoteReferences.includes('https://example.invalid/synthetic-remote.mp3'));assert.match(backup.mediaRecovery.remoteRecovery,/no remote bytes/);assert.equal(backup.mediaRecovery.blobs.filter(blob=>blob.sha256!==demoSignalSHA256).length,0);});
+
+test('older backup restore preserves historical-only media and private immutable draft media through repeated HTTP recovery',async t=>{
+ const {store}=setup(t),old=store.backup();
+ const asset=store.media.importAsset(author,{...op(),assetId:'synthetic-history-document',title:'SYNTHETIC retained history',kind:'document',mimeType:'application/pdf',dataBase64:syntheticPDF.toString('base64'),provenance});
+ const historical=store.snapshot();historical.lessons[0].explanation='[SYNTHETIC retained history]('+asset.url+')';
+ const historicalId=store.addRevision(historical,'SYNTHETIC historical media regression'),historicalRow=store.db.prepare('SELECT * FROM revisions WHERE id=?').get(historicalId);
+ const draft=stage(store,c=>{c.lessons[0].explanation='[SYNTHETIC private context]('+asset.url+')';});
+ const request={requestId:randomUUID(),lessonId:historical.lessons[0].id,componentId:null,pageId:null,activityId:null,fieldPath:'explanation',baseRevisionId:draft.baseRevisionId,draftToken:draft.draftToken,selection:null,body:'SYNTHETIC retained draft-media comment'};
+ const comment=store.authorReview.create(author,request),contexts=store.authorReview.contexts(),media=store.media.state();
+ const server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(()=>{server.closeAllConnections();return new Promise(r=>server.close(r));});const origin='http://127.0.0.1:'+server.address().port;
+ for(let i=0;i<3;i++){
+  const backup=i===0?old:store.backup(),response=await fetch(origin+'/api/restore',{method:'POST',headers:{'x-demo-user':author,'content-type':'application/json'},body:JSON.stringify(backup)});
+  assert.equal(response.status,200,await response.text());
+  assert.deepEqual(store.db.prepare('SELECT * FROM revisions WHERE id=?').get(historicalId),historicalRow);
+  assert.deepEqual(store.authorReview.contexts(),contexts);assert.deepEqual(store.authorReview.create(author,request),comment);assert.deepEqual(store.media.state(),media);
+  const served=await fetch(origin+asset.url);assert.equal(served.status,200);assert.deepEqual(Buffer.from(await served.arrayBuffer()),syntheticPDF);
+  assert.ok(store.backup().mediaRecovery.localReferences.includes(asset.url));
+ }
+});
+
+test('conflicting recovered aliases reject before any retained history or media write',t=>{
+ const left=setup(t).store,right=setup(t).store;
+ for(const [store,sample] of [[left,31],[right,32]]){
+  const asset=store.media.importAsset(author,input(wave(sample),{assetId:'synthetic-alias-'+sample}));
+  store.db.prepare('INSERT INTO media_aliases(path,sha256) VALUES(?,?)').run('synthetic-conflict.wav',asset.sha256);
+  const content=store.snapshot();content.words[0].audio='/media/synthetic-conflict.wav';store.set('active',store.addRevision(content,'SYNTHETIC alias conflict'));
+ }
+ const incoming=right.backup(),before=fingerprint(left);
+ assert.throws(()=>left.restore(incoming),e=>e.code==='MEDIA_RESTORE_CONFLICT');assert.deepEqual(fingerprint(left),before);
+});
 
 test('real media import remains pending and cannot supply canonical approval through a legacy Publish',t=>{const {store}=setup(t),asset=store.media.importAsset(author,input(wave(9),{provenance:{kind:'verified-source',label:'UNAPPROVED synthetic stand-in for received source'}}));const draft=stage(store,c=>c.words[0].audio=asset.url),before=fingerprint(store);assert.throws(()=>store.publish(draft.baseRevisionId,draft.draftToken),e=>e.code==='MEDIA_APPROVAL_REQUIRED');assert.deepEqual(fingerprint(store),before);});
 

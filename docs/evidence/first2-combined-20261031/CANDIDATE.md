@@ -29,7 +29,7 @@ The requested new-build policy resets only the three fictional profiles during i
 
 ## Preservation/install path
 
-`update-first2-feedback.mjs` is a separate bounded updater; initial installer guards are retained. It validates the exact old Memory baseline, unchanged MNTL, known fictional profiles, base/token and absent update receipt. Draft Memory uses explicit three-way merging, refusing conflicting edits before writes. Every other draft lesson survives exactly. Migration from reader 8 to 9 is rehearsed and checked to change only its marker; the preservation startup still refuses implicit migration. The update appends one revision, preserves original rows/media, and rehearses the actual author backup/restore twice before any apply.
+`update-first2-feedback.mjs` is a separate bounded updater; initial installer guards are retained. It validates the exact old Memory baseline, unchanged MNTL, known fictional profiles, base/token and absent update receipt. Draft Memory uses explicit three-way merging, refusing conflicting edits before writes. Every other draft lesson survives exactly. Migration from reader 8 to 10 without private review changes only its marker. Existing reader-9 namespace-1 review compacts losslessly to namespace 2; preservation startup still refuses implicit migration. The update appends one revision, preserves original rows/media, and rehearses the actual author backup/restore twice before any apply.
 
 The source master receipt was read once and is PASS. `verify-first2-parity.mjs` checks all thirty exact authored fields against source hashes and adapted runtime fields. No Google Doc/Sheets/WordPress call was made by Lead.
 

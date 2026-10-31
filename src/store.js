@@ -711,7 +711,7 @@ export class Store {
     mergeAuthorReview(this.authorReview.state(),restoredAuthorReview);
     const restoredSource=validateSourceState(input.sourceAuthoring??null,carried,input.draft,input.content);
     if(input.mediaRecovery!==undefined&&!(Number.isInteger(input.storeSchemaVersion)&&input.storeSchemaVersion>=7))throw new DomainError('Media-bearing backups require Store/backup reader 7.',409,'MEDIA_READER_MISMATCH');
-    const restoredMedia=this.media.validateBackup(input.mediaRecovery??null,[...incoming,...existingContexts],{required:input.storeSchemaVersion>=7});
+    const restoredMedia=this.media.preserveForRestore(this.media.validateBackup(input.mediaRecovery??null,incoming,{required:input.storeSchemaVersion>=7}),[...known,...existingContexts]);
     // A link holds only if its exact carried revision agrees with every reference, as normal writes require: the lesson exists, the exercise belongs to that lesson, an optional word exists.
     // v2 must carry every link and rejects any disagreement. v1 history that does not hold becomes an explicit legacy link with its grade; nothing is repaired or regraded.
     const linked = record => { const c = carried.get(record.revisionId); return Boolean(c) && c.lessons.some(l => l.id === record.lessonId) && (!record.exerciseId || c.exercises.some(e => e.id === record.exerciseId && (e.lessonId===record.lessonId || exerciseInLesson(c,record.lessonId,e.id)))) && (!record.wordId || c.words.some(w => w.id === record.wordId)); };
