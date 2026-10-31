@@ -1,0 +1,13 @@
+✔ RR-FIRST2-01 supported source pack and all versionless legacy pages remain exact (848.1133ms)
+✔ RR-FIRST2-01 malformed shapes, models and references fail runtime and schema semantics without mutation (166.4498ms)
+✔ RR-FIRST2-01 actual HTTP save, defensive publish and restore reject every malformed activity atomically (5807.4614ms)
+✔ RR-FIRST2-01 distinct child and scalar parent media dispatch uses the exact requested URL (92.4722ms)
+✔ RR-FIRST2-01 reader rejects unsupported dispatch and retains legacy/source readers (22.4957ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10168.4615

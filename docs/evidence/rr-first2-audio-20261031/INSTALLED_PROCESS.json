@@ -1,0 +1,13 @@
+{
+  "revision": "73e242e717c630976fd2d040396d4d8d5fcd3127",
+  "installedAt": "2026-10-31T00:05:40.2019887Z",
+  "pid": 59284,
+  "port": 63358,
+  "checkout": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\489864a5-e240-4cef-a6fc-8cc6d0df25fa\\hebleo-audio-contract",
+  "previousPid": 39372,
+  "configVaultAndMediaExact": true,
+  "unrelatedListenersMissing": 0,
+  "database": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\b1d5e7a0-1d13-4e9e-b544-06d3b889fb9e\\hebleo-consolidated\\data\\lexical-private-demo.sqlite",
+  "preservationMode": true,
+  "runtimeSha256": "08e689b369f2129b94e6d6d0016c4a0c6dadc4936b680cd30d26b69a20bb2249"
+}
