@@ -5,6 +5,7 @@ import createDOMPurify from 'dompurify';
 import {marked} from 'marked';
 import {createLessonRenderer} from '../public/rich.js';
 import {DomainError} from './errors.js';
+import {compactContext,reconstructContext,validateContextChunks} from './immutable-context.js';
 
 const dom = new JSDOM('');
 const render = createLessonRenderer(marked, createDOMPurify(dom.window), dom.window.document);
@@ -18,7 +19,14 @@ const uuid = value => typeof value === 'string' && /^[a-f0-9]{8}-[a-f0-9]{4}-4[a
 const at = value => typeof value === 'string' && Number.isFinite(Date.parse(value));
 const hash = value => createHash('sha256').update(value).digest('hex');
 const keys = (value,allowed) => {if(!object(value)||Object.keys(value).some(k=>!allowed.includes(k)))fail('Unexpected author review fields.');};
-export const emptyAuthorReview = () => ({schemaVersion:1, comments:[], drafts:{}});
+export const emptyAuthorReview = () => ({schemaVersion:2, comments:[], drafts:{}, chunks:{}});
+export function authorReviewContents(state,snapshotFor,draftTokenFor) {
+  return Object.entries(state.drafts).map(([token,draft])=>{
+    const content=reconstructContext(draft,snapshotFor(draft.baseRevisionId),state.chunks);
+    if(draftTokenFor(draft.baseRevisionId,content)!==token)fail('Author draft snapshot token differs.');
+    return content;
+  });
+}
 
 // v1 projection is the textContent of the SAME sanitized Markdown/HTML renderer
 // used by the learner. No whitespace folding or Unicode normalization. Offsets are
@@ -61,8 +69,9 @@ function anchorFor(content,input) {
 }
 function bodyOK(body){return str(body,8000)&&body.trim().length>0;}
 export class AuthorReview {
-  constructor(store){this.store=store;}
+  constructor(store,draftTokenFor){this.store=store;this.draftTokenFor=draftTokenFor;}
   state(){return this.store.get('author-review')||emptyAuthorReview();}
+  contexts(){return authorReviewContents(this.state(),id=>this.store.snapshot(id),this.draftTokenFor);}
   context(input){
     if(!Number.isInteger(input.baseRevisionId)||input.baseRevisionId<1)fail('An exact saved base revision is required.');
     if(input.draftToken===null)return this.store.snapshot(input.baseRevisionId);
@@ -86,7 +95,7 @@ export class AuthorReview {
       if(state.comments.length>=20000)fail('Private review contains 20000 comments. Export and review this workspace before adding more.');
       const content=this.context(input),anchor=anchorFor(content,input),now=new Date().toISOString();
       const comment={id:randomUUID(),requestId:input.requestId,request:copy(input),visibility:'author',body:input.body,createdBy:userId,createdAt:now,updatedBy:userId,updatedAt:now,status:'open',version:1,anchor,audit:[{requestId:input.requestId,action:'create',status:'open',version:1,by:userId,at:now}]};
-      if(input.draftToken!==null)state.drafts[input.draftToken]={baseRevisionId:input.baseRevisionId,content:copy(content)};
+      if(input.draftToken!==null)state.drafts[input.draftToken]=compactContext(input.baseRevisionId,this.store.snapshot(input.baseRevisionId),content,state.chunks);
       state.comments.push(comment);this.store.set('author-review',state);return copy(comment);
     });
   }
@@ -127,14 +136,20 @@ export function anchorState(anchor,content,historical=false) {
 // Validate the entire namespace BEFORE restore starts a transaction or writes media.
 export function validateAuthorReview(value,{carried,validateContent,draftTokenFor,authorIds}) {
   if(value==null)return emptyAuthorReview();
-  keys(value,['schemaVersion','comments','drafts']);
-  if(value.schemaVersion!==1||!Array.isArray(value.comments)||value.comments.length>20000||!object(value.drafts))fail('Invalid author review backup.');
-  const state=copy(value),ids=new Set(),requests=new Set();
+  keys(value,value.schemaVersion===1?['schemaVersion','comments','drafts']:['schemaVersion','comments','drafts','chunks']);
+  if(![1,2].includes(value.schemaVersion)||!Array.isArray(value.comments)||value.comments.length>20000||!object(value.drafts))fail('Invalid author review backup.');
+  const state=copy(value),ids=new Set(),requests=new Set(),contents=new Map();
+  if(value.schemaVersion===1)state.chunks={};else validateContextChunks(state.chunks);
   for(const [token,draft] of Object.entries(state.drafts)){
-    keys(draft,['baseRevisionId','content']);
-    if(!carried.has(draft.baseRevisionId))fail('Missing author draft base revision.');validateContent(draft.content);
-    if(draftTokenFor(draft.baseRevisionId,draft.content)!==token)fail('Author draft snapshot token differs.');
+    keys(draft,value.schemaVersion===1?['baseRevisionId','content']:['baseRevisionId','baseHash','delta']);
+    if(!Number.isInteger(draft.baseRevisionId)||draft.baseRevisionId<1||!carried.has(draft.baseRevisionId))fail('Missing author draft base revision.');
+    const base=carried.get(draft.baseRevisionId),content=value.schemaVersion===1?draft.content:reconstructContext(draft,base,state.chunks);
+    validateContent(content);
+    if(draftTokenFor(draft.baseRevisionId,content)!==token)fail('Author draft snapshot token differs.');
+    contents.set(token,content);
+    if(value.schemaVersion===1)state.drafts[token]=compactContext(draft.baseRevisionId,base,content,state.chunks);
   }
+  state.schemaVersion=2;
   for(const c of state.comments){
     keys(c,['id','requestId','request','visibility','body','createdBy','createdAt','updatedBy','updatedAt','status','version','anchor','audit']);
     if(!uuid(c.id)||ids.has(c.id)||!uuid(c.requestId)||requests.has(c.createdBy+'|'+c.requestId)||!bodyOK(c.body)||c.visibility!=='author'||!authorIds.includes(c.createdBy)||!authorIds.includes(c.updatedBy)||!at(c.createdAt)||!at(c.updatedAt)||!['open','resolved'].includes(c.status)||!Number.isInteger(c.version)||c.version<1)fail('Invalid private author comment.');
@@ -143,7 +158,7 @@ export function validateAuthorReview(value,{carried,validateContent,draftTokenFo
     keys(c.anchor,['projectionVersion','lessonId','componentId','pageId','activityId','fieldPath','revisionId','draftToken','selection','sourceText','contentHash']);
     if(c.request.requestId!==c.requestId||c.request.body!==c.body)fail('Author comment receipt differs.');
     if(!Number.isInteger(c.request.baseRevisionId)||c.request.baseRevisionId<1||!(c.request.draftToken===null||str(c.request.draftToken,80)))fail('Invalid original author receipt pins.');
-    const source=c.anchor.draftToken===null?carried.get(c.anchor.revisionId):state.drafts[c.anchor.draftToken]?.content;
+    const source=c.anchor.draftToken===null?carried.get(c.anchor.revisionId):contents.get(c.anchor.draftToken);
     const linkedRequest={...c.request,baseRevisionId:c.anchor.revisionId,draftToken:c.anchor.draftToken};
     if(!source||c.anchor.draftToken!==null&&state.drafts[c.anchor.draftToken].baseRevisionId!==c.anchor.revisionId||!equal(anchorFor(source,linkedRequest),c.anchor))fail('Author anchor snapshot differs.');
     if(!Array.isArray(c.audit)||c.audit.length!==c.version)fail('Invalid author comment audit length.');
@@ -157,9 +172,9 @@ export function validateAuthorReview(value,{carried,validateContent,draftTokenFo
   }
   return state;
 }
-export function relinkAuthorReview(state,ids,draftTokenFor) {
+export function relinkAuthorReview(state,ids,draftTokenFor,snapshotFor) {
   const result=copy(state),tokens=new Map();
-  result.drafts=Object.fromEntries(Object.entries(result.drafts).map(([old,d])=>{d.baseRevisionId=ids.get(d.baseRevisionId);const token=draftTokenFor(d.baseRevisionId,d.content);tokens.set(old,token);return [token,d];}));
+  result.drafts=Object.fromEntries(Object.entries(result.drafts).map(([old,d])=>{const content=reconstructContext(d,snapshotFor(d.baseRevisionId),result.chunks);d.baseRevisionId=ids.get(d.baseRevisionId);const token=draftTokenFor(d.baseRevisionId,content);tokens.set(old,token);return [token,d];}));
   // Client receipts are immutable, so an interrupted create can retry after restore.
   // Only navigable anchor pins and retained draft contexts are relinked.
   for(const c of result.comments){c.anchor.revisionId=ids.get(c.anchor.revisionId);if(c.anchor.draftToken!==null)c.anchor.draftToken=tokens.get(c.anchor.draftToken);}
@@ -178,5 +193,6 @@ export function mergeAuthorReview(existing,incoming){
   if(c.version>old.version){result.comments[result.comments.findIndex(n=>n.id===c.id)]=copy(c);notes.set(c.id,c);}
  }
  for(const [token,draft] of Object.entries(incoming.drafts)){if(result.drafts[token]&&!equal(result.drafts[token],draft))fail('Restored author draft context conflicts.');result.drafts[token]=copy(draft);}
+ for(const [key,node] of Object.entries(incoming.chunks)){if(Object.hasOwn(result.chunks,key)&&!equal(result.chunks[key],node))fail('Restored immutable author chunk conflicts.');Object.defineProperty(result.chunks,key,{value:copy(node),enumerable:true,writable:true,configurable:true});}
  return result;
 }

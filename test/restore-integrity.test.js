@@ -31,7 +31,7 @@ function destination(t){
   const d=setup(t);d.attempt('learner-core',{requestId:'destination-answer',revisionId:d.get('active'),exerciseId:'ex-1-type',answer:'אני'});
   d.stage({baseRevisionId:d.get('active'),expectedDraftToken:null,word:{id:'w-mi',notes:'Destination draft'}});return d;
 }
-const v1From=(backup,first)=>{const v1=structuredClone(backup);v1.format='hebleo-demo-backup-v1';v1.sessionSnapshots=v1.revisionSnapshots.filter(r=>r.revisionId===first);for(const key of ['revisionSnapshots','activeRevisionId','draft','storeSchemaVersion','mediaRecovery'])delete v1[key];return v1;};
+const v1From=(backup,first)=>{const v1=structuredClone(backup);v1.format='hebleo-demo-backup-v1';v1.sessionSnapshots=v1.revisionSnapshots.filter(r=>r.revisionId===first);for(const key of ['revisionSnapshots','activeRevisionId','draft','storeSchemaVersion','mediaRecovery','authorReview'])delete v1[key];return v1;};
 
 test('valid v2 backup restores consistent links with unchanged grades, resumed feedback, legacy records and replay',t=>{
   const {s,first,backup}=source(t),d=destination(t);
@@ -75,7 +75,7 @@ test('v2 restore rejects nonexistent or existing-but-wrong historical lesson, ex
 
 test('restore refuses missing, malformed or unsupported store schema declarations atomically',t=>{
   const {first,backup}=source(t);
-  assert.deepEqual(RESTORABLE_SCHEMA_VERSIONS['hebleo-demo-backup-v2'],[2,3,4,5,6,7,8,STORE_SCHEMA_VERSION]);assert.equal(backup.storeSchemaVersion,STORE_SCHEMA_VERSION);
+  assert.deepEqual(RESTORABLE_SCHEMA_VERSIONS['hebleo-demo-backup-v2'],[2,3,4,5,6,7,8,9,STORE_SCHEMA_VERSION]);assert.equal(backup.storeSchemaVersion,STORE_SCHEMA_VERSION);
   const v2Cases={future:999,next:STORE_SCHEMA_VERSION+1,older:1,zero:0,negative:-1,fraction:2.5,string:'2',null:null,missing:undefined};
   const v1Cases={future:999,next:STORE_SCHEMA_VERSION+1,string:'1',null:null};
   for(const [format,base,cases] of [['v2',backup,v2Cases],['v1',v1From(backup,first),v1Cases]])for(const [name,version] of Object.entries(cases)){

@@ -1,5 +1,6 @@
 import {createStudioWorkspace} from './studio/workspace.js';
 import {mountInlineAuthor} from './author/inline-author.js';
+import {BACKUP_BYTE_LIMIT,serializeBackup} from './backup-contract.js';
 import { resolveBlock, importVocabularyCSV } from './content.js';
 import { lessonSteps, stepLabels, stepExercises, followingLesson, lessonQuestionProgress, defaultMedium, audioURL, wordFields, fieldLabel, searchableWord, lessonPortions, portionKind, portionExercises, portionLesson, portionLabel, libraryWords } from './ux.js';
 import {orderedLessons,courseOutline,keyboardForLesson,resolveComponent,projectLesson} from './course.js';
@@ -642,7 +643,7 @@ async function act(action,value,source) {
   if(action==='studio-reload'){if(!await guardStudioDeparture('Reload the saved draft'))return;await settledDraftToken();await load();disposeStudioMounts();authorContext=null;inlineAuthorStates.clear();render();toast('Saved draft reloaded. Unsaved form edits were discarded.');return;}
   if(action==='rehearse'){await startRehearsal(value);return;}
   if(action==='export-content'||action==='export-backup'){download(action==='export-content'?'hebleo-content.json':'hebleo-demo-backup.json',await api(action==='export-content'?'content':'export'));return;}
-  if(action==='restore'){const file=document.querySelector('#restore-file').files[0];if(!file)throw new Error('Choose a demo backup first.');if(file.size>200000000)throw new Error('Backup exceeds the 200 MB restore limit.');if(!await askConfirmation('Restore fictional demo profiles and published content from this backup?','Restore backup'))return;await api('restore',JSON.parse(await file.text()));await load();toast('Local backup restored.');render();return;}
+  if(action==='restore'){const file=document.querySelector('#restore-file').files[0];if(!file)throw new Error('Choose a demo backup first.');if(file.size>BACKUP_BYTE_LIMIT)throw new Error('Backup exceeds the 200 MB restore limit.');if(!await askConfirmation('Restore fictional demo profiles and published content from this backup?','Restore backup'))return;await api('restore',JSON.parse(await file.text()));await load();toast('Local backup restored.');render();return;}
   if(action==='save-goal'){await api('preferences',{goal:Number(document.querySelector('#goal').value)});await load();toast('Goal saved.');return;}
   if(action==='event'){await api('demo/event',{eventId:uid(),type:value});await load();render();return;}
 }
@@ -650,7 +651,7 @@ function askConfirmation(message,action){
  window.HebleoKeyboard?.close();const previous=document.activeElement,dialog=document.createElement('dialog');dialog.className='confirmation-dialog';dialog.setAttribute('aria-labelledby','confirmation-title');dialog.innerHTML='<h2 id="confirmation-title">'+esc(action)+'</h2><p>'+esc(message)+'</p><div class="button-row"><button type="button" class="button outline" data-confirm-cancel>Cancel</button><button type="button" class="button danger" data-confirm-accept>'+esc(action)+'</button></div>';document.body.append(dialog);
  return new Promise(resolve=>{const finish=value=>{dialog.close();dialog.remove();previous?.focus?.({preventScroll:true});resolve(value);};dialog.querySelector('[data-confirm-cancel]').onclick=()=>finish(false);dialog.querySelector('[data-confirm-accept]').onclick=()=>finish(true);dialog.addEventListener('cancel',event=>{event.preventDefault();finish(false);});dialog.showModal();dialog.querySelector('[data-confirm-cancel]').focus();});
 }
-function download(name,value){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function download(name,value){const serialized=name==='hebleo-demo-backup.json'?serializeBackup(value):JSON.stringify(value,null,2);const url=URL.createObjectURL(new Blob([serialized],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function bind(scope=root) {
   if(scope===root)mountExerciseReminders(scope.querySelector('#practice'));
   if(scope===root){lexicalBinding?.destroy();lexicalBinding=scope.querySelector('.lexical-vocabulary')?bindLexicalVocabulary(scope,{encounters:{has:token=>{try{return localStorage.getItem('hebleo-note-seen:'+state.user+':'+token)==='1';}catch{return false;}},mark:token=>{try{localStorage.setItem('hebleo-note-seen:'+state.user+':'+token,'1');}catch{}}}}):null;}
