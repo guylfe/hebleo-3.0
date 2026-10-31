@@ -130,7 +130,9 @@ export function validateSourceActivity(page){
  }
  if(['letter-gallery','letter-matching','self-check'].includes(a.kind)){
   if(!Array.isArray(a.items)||a.items.length<1||a.items.length>200||a.kind==='letter-matching'&&a.items.length!==4)fail('Invalid activity items.');
-  const ids=new Set();for(const item of a.items){
+  // Parent and items use the same page-local audio action lookup. Reserve the
+  // parent identity even without a clip, so attaching media cannot shadow an item.
+  const ids=new Set(a.id===undefined?[]:[a.id]);for(const item of a.items){
    if(!plain(item)||!validPageID(item.id)||ids.has(item.id))fail('Invalid or duplicate activity item identity.');ids.add(item.id);
    letter(item.letter);text(item.sound,'item sound');media(item);
    if(a.kind==='letter-gallery'){text(item.text,'gallery text',100000);if(item.image!==undefined)text(item.alt,'image alternative');}

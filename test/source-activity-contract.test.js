@@ -79,6 +79,18 @@ const cases={
  'media reference object':c=>activity(c,'letter-input').audio={url:'/media/fixture.wav'},
  'audio without action identity':c=>{const a=activity(c,'letter-input');a.audio='/media/fixture.wav';delete a.id;}
 };
+// IDs share one audio-action namespace on the current page, even before clips
+// are attached. Test every item family, both parent-audio states and later items.
+for(const kind of ['letter-gallery','letter-matching','self-check']){
+ for(const mode of ['no clips','child clip','child and parent clips','last item']){
+  cases[kind+' parent/item collision '+mode]=c=>{
+   const a=activity(c,kind),item=a.items[mode==='last item'?a.items.length-1:0];
+   a.id=item.id;
+   if(mode.includes('clip'))item.audio='/media/child-fixture.wav';
+   if(mode==='child and parent clips')a.audio='/media/parent-fixture.wav';
+  };
+ }
+}
 
 test('RR-FIRST2-01 supported source pack and all versionless legacy pages remain exact',t=>{
  const s=new Store();t.after(()=>s.close());const c=replaceFirstTwo(s.snapshot(),pack).content,before=JSON.stringify(c);
@@ -93,6 +105,7 @@ test('RR-FIRST2-01 malformed shapes, models and references fail runtime and sche
  for(const [name,change]of Object.entries(cases)){
   const bad=structuredClone(c);change(bad);const before=JSON.stringify(bad);
   assert.throws(()=>validateContent(bad),undefined,name);
+  if(name.includes('parent/item collision'))assert.throws(()=>validateContent(bad),/activity item identity/,name+' identity guard');
   const structural=validateSchema('content-pack',bad);assert.ok(structural.length||semanticErrors(bad).length,name+' rejected by schema/semantic contract');
   assert.equal(JSON.stringify(bad),before,name+' no coercion or mutation');
  }
@@ -102,6 +115,9 @@ test('RR-FIRST2-01 actual HTTP save, defensive publish and restore reject every 
  const s=new Store(),dir=mkdtempSync(join(tmpdir(),'hebleo-activity-contract-'));
  const server=createServer(s,{mediaRoot:dir});await new Promise(r=>server.listen(0,'127.0.0.1',r));
  t.after(async()=>{await new Promise(r=>server.close(r));s.close();rmSync(dir,{recursive:true,force:true});});
+ // Resolvable synthetic clips ensure ID rejection is not a missing-media error.
+ const blob=s.db.prepare("SELECT sha256 FROM media_blobs WHERE mime_type='audio/wav' LIMIT 1").get();assert.ok(blob);
+ for(const alias of ['child-fixture.wav','parent-fixture.wav'])s.db.prepare('INSERT INTO media_aliases(path,sha256) VALUES (?,?)').run(alias,blob.sha256);
  installFirstTwo(s,{pack:fixture,build:'activity-contract-synthetic',mediaRoot:dir});
  const current=s.snapshot(),base=s.get('active');
  const p=pages(current).pages.find(p=>p.activity?.kind==='memory-first');
@@ -109,7 +125,7 @@ test('RR-FIRST2-01 actual HTTP save, defensive publish and restore reject every 
  s.stage({baseRevisionId:base,expectedDraftToken:s.currentDraft()?.draftToken??null,content:current});
  const validDraft=s.get('draft'),validBackup=s.backup();
  const post=async(route,body)=>{const r=await fetch('http://127.0.0.1:'+server.address().port+'/api/'+route,{method:'POST',headers:{'x-demo-user':'author-demo','content-type':'application/json'},body:JSON.stringify(body)});const value=await r.json();return {status:r.status,value};};
- const rejects=async(route,body,name)=>{const before=dump(s),r=await post(route,body);assert.equal(r.status,400,name+': '+JSON.stringify(r));assert.ok(r.value.error);assert.deepEqual(dump(s),before,name+': all tables, history, draft and revision sequence exact');};
+ const rejects=async(route,body,name)=>{const before=dump(s),r=await post(route,body);assert.equal(r.status,400,name+': '+JSON.stringify(r));assert.ok(r.value.error);if(name.includes('parent/item collision'))assert.match(r.value.error,/activity item identity/,name+' identity guard');assert.deepEqual(dump(s),before,name+': all tables, history, draft and revision sequence exact');};
  for(const [name,change]of Object.entries(cases)){
   const bad=structuredClone(current);change(bad);
   await rejects('studio/draft',{baseRevisionId:base,expectedDraftToken:s.currentDraft().draftToken,content:bad},name+' save');
@@ -133,6 +149,34 @@ test('RR-FIRST2-01 actual HTTP save, defensive publish and restore reject every 
  assert.equal((await post('studio/publish',{baseRevisionId:base,draftToken:s.currentDraft().draftToken})).status,200);
  assert.equal((await post('restore',s.backup())).status,200);
  assert.deepEqual(s.snapshot(),current);
+});
+
+test('RR-FIRST2-01 distinct child and scalar parent media dispatch uses the exact requested URL',async t=>{
+ const dom=new JSDOM('<main></main>'),host=dom.window.document.querySelector('main');t.after(()=>dom.window.close());
+ let played=[],paused=0;
+ dom.window.Audio=class{constructor(url){this.url=url;}play(){played.push(this.url);return Promise.resolve();}pause(){paused++;}};
+ const sourcePages=fixture.lessons.flatMap(l=>l.blocks[0].textPages.pages);
+ for(const kind of ['letter-gallery','letter-matching','self-check','letter-input','letter-choice','application-choice']){
+  const p=structuredClone(sourcePages.find(p=>p.activity?.kind===kind)),a=p.activity;
+  a.id='parent-'+kind;a.audio='/media/parent-fixture.wav';
+  for(const [i,item]of (a.items||[]).entries())item.audio='/media/child-'+i+'.wav';
+  const v={version:1,activityVersion:1,pages:[p],order:[p.id]};validateTextPages(v);
+  assert.deepEqual(validateSchema('text-pages',v),[]);
+  const reader=mountTextReader(host,{textPages:v,dock:false});played=[];
+  try{
+   if(kind==='self-check')host.querySelector('[data-source-action="model"]').click();
+   const requested=a.items||[a];
+   for(const item of requested){
+    const button=host.querySelector('[data-source-action="audio:'+item.id+'"]');assert.ok(button,kind+' play button');button.click();
+   }
+   await Promise.resolve();assert.deepEqual(played,requested.map(item=>item.audio),kind+' exact media dispatch');
+  }finally{reader.destroy();}
+ }
+ assert.ok(paused>0,'existing players are stopped');
+ // The namespace is page scoped: item IDs can be reused on another page.
+ const gallery=structuredClone(sourcePages.find(p=>p.activity?.kind==='letter-gallery'));
+ const other=structuredClone(gallery);other.id='another-gallery';other.activity.id='another-parent';
+ validateTextPages({version:1,activityVersion:1,pages:[gallery,other],order:[gallery.id,other.id]});
 });
 
 test('RR-FIRST2-01 reader rejects unsupported dispatch and retains legacy/source readers',t=>{
