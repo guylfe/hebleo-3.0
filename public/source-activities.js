@@ -125,7 +125,11 @@ export function mountSourceActivities(host,{textPages,renderLesson,initialState=
   host.innerHTML='<header><p class="tag">'+esc(p.stage||'Learn')+' · Page '+(index+1)+' of '+pages.length+'</p><h3 tabindex="-1" data-source-heading>'+esc(p.title)+'</h3></header><div class="text-reader-body source-activity">'+content+'</div><p class="sr-only" role="status" aria-live="polite">'+esc(live)+'</p><div class="text-reader-actions">'+nav+'</div><p role="status" data-source-save>'+esc(message)+'</p><button type="button" class="button secondary small" data-source-action="retry" '+(!failed.size?'hidden':'')+' '+(pending.size?'disabled':'')+'>Retry saving</button>';
   if(p.activity?.principleInteraction==='expandable'){host.dataset.sourceDatePage=p.id;syncDate();}
   if(dock)dockBinding=mountExerciseDock(host);keyboard();onGateChange(textGatesPassed(textPages,snap()),snap());
-  if(focus)host.querySelector('[data-source-heading]')?.focus({preventScroll:true});else if(focused)host.querySelector('[data-source-action="'+focused+'"]')?.focus({preventScroll:true});
+  if(focus){host.querySelector('[data-source-heading]')?.focus({preventScroll:true});
+   // On returning to the optional comparison, its genuine summary must clear
+   // the fixed actions before hit testing, without opening it or gating Continue.
+   const summary=host.querySelector('[data-source-comparison] > summary');if(summary)dockBinding?.reveal(summary);
+  }else if(focused)host.querySelector('[data-source-action="'+focused+'"]')?.focus({preventScroll:true});
  }
  function animate(){const replay=r().stage>=0;stop();const modern=page().activity.principleInteraction==='expandable';datesSettled=!modern;update(modern?{stage:0}:{stage:0,revealCount:0,checked:false});const token=generation;
   if(view.matchMedia?.('(prefers-reduced-motion: reduce)').matches||host.closest('.reduce-motion'))return;

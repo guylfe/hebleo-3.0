@@ -502,7 +502,7 @@ test('Learner keyboard shortcuts never activate or handle controls inside a rehe
 const learnerIds=['learner-demo','learner-core','author-demo'];
 const tables=store=>Object.fromEntries(store.db.prepare("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name").all().map(({name})=>[name,store.db.prepare('SELECT * FROM "'+name+'" ORDER BY rowid').all().map(row=>({...row}))]));
 const learnerRecords=store=>learnerIds.map(id=>store.learner(id));
-const edit=(w,el,value)=>{el.value=value;el.dispatchEvent(new w.Event('input',{bubbles:true}));};
+const edit=(w,el,value)=>{if(el.hasAttribute('contenteditable'))el.textContent=value;else el.value=value;el.dispatchEvent(new w.Event('input',{bubbles:true}));};
 const submit=(w,form)=>form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
 const stageDraft=(s,change)=>{const c=structuredClone(s.currentDraft()?.content||s.snapshot());change(c);return s.stage({baseRevisionId:s.get('active'),expectedDraftToken:s.currentDraft()?.draftToken??null,content:c});};
 const draftPrompt='Synthetic draft prompt: choose the meaning.';
@@ -1208,7 +1208,7 @@ test('F14 real app inline → shared draft → saved Preview → Studio review �
  assert.ok(Object.keys(w.inlineState().raw).length,JSON.stringify(w.inlineState()));doc.querySelector('[data-author-action=save]').click();await settled(()=>store.currentDraft()&&!doc.querySelector('[data-author-action=preview]').disabled);
  assert.equal(store.get('active'),revision);assert.equal(store.currentDraft().content.lessons[1].blocks.find(b=>b.textPages).textPages.pages[0].html,html);
  doc.querySelector('[data-author-action=preview]').click();await settled(()=>doc.querySelector('#rehearsal-panel [data-text-reader]'));assert.match(doc.querySelector('#rehearsal-panel').textContent,/synthetic edited/);doc.querySelector('[data-preview-exit]').click();await settled(()=>!doc.querySelector('#rehearsal-panel'));assert.equal(doc.activeElement,doc.querySelector('[data-author-action=preview]'));
- doc.querySelector('[data-author-action=comment]').click();await settled(()=>doc.querySelector('[data-author-anchor]').textContent.includes('whole source'));
+ doc.querySelector('[data-author-action=comment]').click();await settled(()=>doc.querySelector('[data-author-anchor]').textContent.includes('Whole block:'));
  edit(w,doc.querySelector('[data-author-body]'),'SYNTHETIC F14 PRIVATE NOTE');doc.querySelector('[data-author-composer]').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>doc.querySelector('[data-author-note]'));
  doc.querySelector('[data-author-action=apply]').click();await settled(()=>doc.querySelector('#studio-pane-versions')&&!doc.querySelector('#studio-pane-versions').hidden);assert.equal(store.get('active'),revision);assert.ok(doc.querySelector('.studio-preview').textContent.includes('unpublished'));
  click(doc,'publish');await settled(()=>store.get('active')!==revision);assert.equal(store.snapshot().lessons[1].blocks.find(b=>b.textPages).textPages.pages[0].html,html);

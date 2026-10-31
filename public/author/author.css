@@ -17,3 +17,14 @@
 .inline-author [hidden] {display:none}
 
 .inline-author [data-author-canvas],.author-review-panel {scroll-margin-block-start:calc(var(--header-height,88px) + 16px)}
+
+/* Rendered prose keeps learner typography and dimensions. Selection uses the
+   established blue token; only the current leaf gets an editing affordance. */
+.inline-author [contenteditable] {outline:1px solid transparent;outline-offset:4px;border-radius:var(--radius,8px);cursor:text;overflow-wrap:anywhere}
+.inline-author [contenteditable=true]:hover {outline-color:var(--line)}
+.inline-author [contenteditable=true]:focus {outline:2px solid var(--primary);background:var(--selection,#EAF5FC)}
+.inline-author [contenteditable=false] {cursor:default}
+.author-context-tools {display:flex;gap:8px;margin-block:8px;min-height:32px}
+.inline-author .author-context-tools[hidden] {display:flex!important;visibility:hidden}
+.inline-author [data-author-anchor] {white-space:pre-wrap;max-height:12em;overflow:auto}
+.inline-author [data-author-advanced] {margin-block:20px}

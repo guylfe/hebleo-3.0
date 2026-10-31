@@ -24,7 +24,7 @@ export function mountExerciseDock(scope) {
     // Reading headings receive programmatic focus on page changes. They must be
     // free to leave the viewport when the learner scrolls to the controls below.
     const headingEntry=entering&&el?.matches?.('h1[tabindex],h2[tabindex],h3[tabindex],h4[tabindex],h5[tabindex],h6[tabindex]');
-    if(!(headingEntry||el?.matches?.('input:not([type=hidden]),textarea,select,button,a[href],[contenteditable=true]'))||!scope.contains(el)||dock.contains(el)||el.closest('.vocabulary-reminder')||dock.hidden)return;
+    if(!(headingEntry||el?.matches?.('input:not([type=hidden]),textarea,select,button,summary,a[href],[contenteditable=true]'))||!scope.contains(el)||dock.contains(el)||el.closest('.vocabulary-reminder')||dock.hidden)return;
     const vv=win.visualViewport,bounds=dialog?.getBoundingClientRect(),gap=Number.parseFloat(win.getComputedStyle(dock).gap)||8;
     let scroller=dialog||win,clip=bounds;
     for(let parent=el.parentElement;parent&&parent!==dialog&&parent!==doc.body;parent=parent.parentElement){
@@ -37,7 +37,7 @@ export function mountExerciseDock(scope) {
       const style=win.getComputedStyle(header),h=header.getBoundingClientRect(),r=el.getBoundingClientRect();
       if(['sticky','fixed'].includes(style.position)&&style.display!=='none'&&style.visibility!=='hidden'&&h.left<r.right&&h.right>r.left&&h.top<=top&&h.bottom>top)top=h.bottom+gap;
     }
-    const bottom=Math.min(dock.getBoundingClientRect().top-gap,clip?.bottom??Infinity);
+    const bottom=Math.min(dock.getBoundingClientRect().top-gap,clip?.bottom??Infinity,(vv?.offsetTop||0)+(vv?.height??win.innerHeight));
     if(bottom<=top)return;
     const available=bottom-top,saved=constrainedAnswers.get(el);
     if(saved&&available>=saved.height)restoreAnswer(el);
@@ -116,6 +116,12 @@ export function mountExerciseDock(scope) {
   doc.addEventListener('focusin',event=>{
     revealFocusedAnswer(event.target,true);
   },{signal});
+  // Pointer activation can arrive before focusin (and summary focus differs
+  // across engines). Clear the whole target before its native toggle/action.
+  scope.addEventListener('pointerdown',event=>revealFocusedAnswer(event.target.closest?.('summary,input,textarea,select,button'),true),{signal,capture:true});
+  scope.addEventListener('toggle',event=>{
+    if(event.target.matches?.('details'))revealFocusedAnswer(event.target.querySelector('summary'),true);
+  },{signal,capture:true});
   // Blur can leave no subsequent focusin event. Wait for focus to settle before
   // restoring an abandoned field; keyboard pointer handlers retain answer focus.
   doc.addEventListener('focusout',()=>{
@@ -125,5 +131,5 @@ export function mountExerciseDock(scope) {
     });
   },{signal});
   measure();
-  return {refresh:measure,destroy(){if(destroyed)return;destroyed=true;controller.abort();resize?.disconnect();mutation.disconnect();transitions.clear();keyboardNodes.clear();for(const el of constrainedAnswers.keys())restoreAnswer(el);if(frame!==null)cancelFrame(frame);scope.style.removeProperty('--exercise-dock-reserve');delete scope.dataset.exerciseDockHost;}};
+  return {refresh:measure,reveal:el=>revealFocusedAnswer(el,true),destroy(){if(destroyed)return;destroyed=true;controller.abort();resize?.disconnect();mutation.disconnect();transitions.clear();keyboardNodes.clear();for(const el of constrainedAnswers.keys())restoreAnswer(el);if(frame!==null)cancelFrame(frame);scope.style.removeProperty('--exercise-dock-reserve');delete scope.dataset.exerciseDockHost;}};
 }

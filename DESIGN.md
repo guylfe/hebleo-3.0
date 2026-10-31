@@ -133,7 +133,7 @@ The result displays Correct/Incorrect and a conditional existing Explanation tri
 
 ## Oct31 inline author review
 
-FIRST2-F14 uses the existing 760px learner reading measure, native selects/dialogs, source Markdown/HTML editor and current refinement tokens. Private review panels stay in document flow; narrow author controls wrap without overlaying learner navigation. `public/author/author.css` owns only this bounded author variant. Shared palette, typography, headers and keyboard remain canonical. See docs/INLINE_AUTHOR_REVIEW.md for the coordinator, permission and state contract.
+FIRST2-F14 uses the existing 760px learner reading measure, native selects/dialogs and current refinement tokens. The rendered heading and verified paragraph/list leaves are the default edit canvas; raw HTML/Markdown and technical context are collapsed in Advanced source. A stable contextual Bold/Italic slot and quiet focus outline retain the established typography and source emphasis. Save draft is primary; saved Preview is secondary; Review changes opens existing Studio review. This supersedes the earlier separate-source-form interaction following Guy’s direct feedback. Private review panels stay in document flow; narrow author controls wrap without overlaying learner navigation. `public/author/author.css` owns only this bounded author variant. Shared palette, typography, headers and keyboard remain canonical. See docs/INLINE_AUTHOR_REVIEW.md for the coordinator, permission and state contract.
 
 ## Combined first-two feedback — 31 October 2026
 
