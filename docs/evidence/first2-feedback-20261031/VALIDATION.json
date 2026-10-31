@@ -1,0 +1,53 @@
+{
+  "codeCommit": "17605c1eb118266a05b92c39eb51bbfd6e645653",
+  "runtimeSha256": "b2a360bbb4f96b8e049ce287a10f8ca299b2796402d2fb850b70648978c0b41e",
+  "configuredCandidate": {
+    "passed": 910,
+    "failed": 0,
+    "files": 78,
+    "excludes": "existing audio filenames and audio/speed/playback test names"
+  },
+  "schemas": {
+    "passed": 27
+  },
+  "runtime": {
+    "passed": 9
+  },
+  "feedbackFocused": {
+    "passed": 10
+  },
+  "priorDockAndFirst2": {
+    "passed": 23
+  },
+  "helpLifecycle": {
+    "passed": 27
+  },
+  "live": {
+    "runtimeUnchanged": true,
+    "contentRevision": 5,
+    "unchangedTables": [
+      "events",
+      "kv",
+      "media_aliases",
+      "media_blobs",
+      "revisions",
+      "sqlite_sequence"
+    ],
+    "changedTables": [
+      "learners"
+    ],
+    "allTablesUnchanged": false,
+    "limit": "Initial normal Browser inspection and its unload can save fictional lesson position; no full learner-table equality claim. No live installation, reset, curriculum or source write."
+  },
+  "browser": {
+    "stagingURL": "http://127.0.0.1:50312/",
+    "stagingPID": 29936,
+    "sourceBackupReadOnly": true,
+    "timer": "actual pointer-started exposure at 8 seconds captured; recall after hide verified",
+    "exactRecall": "all16 digits with leading0 submitted; authored exact feedback observed",
+    "extras": "native shared component with labeled synthetic DOM fixture; Escape returned exact focus; fixture removed"
+  },
+  "premiumStaticAudit": "not run: Python launcher could not start installed Python3.13",
+  "independentReview": false,
+  "guyAcceptance": "Pending"
+}

@@ -1,0 +1,36 @@
+✔ QA-UXI13-01 stale concurrent draft refuses departure Save and retains raw Unicode title (1341.8878ms)
+✔ QA-UXI13-02 failed post-save reload does not silently publish or discard unsaved workspace (1129.5541ms)
+✔ QA-UXI13-03 word and general comment contexts retain independent drafts with late failure (696.6963ms)
+✔ QA-UXI13-04 pending private Save close-reopen permits newer draft without late success losing it (229.52ms)
+✔ QA-UXI13-05 pending private Save failure after owner switch retains both owners exact selections (444.7957ms)
+✔ QA-UXI13-06 prefilled typing answer and direct submit never grade through drawer or modal (1119.339ms)
+✔ QA-UXI13-07 mounted malformed input survives complete task and real-route navigation Stay cycle (1136.3112ms)
+✔ QA-UXI13-08 installed static routes original logo hash and source boundary preserve actual destinations (1448.7725ms)
+SYNTHETIC late-help observation {"route":"#home","profile":"learner-core"}
+✔ QA-UXI13-09 late help callback after profile departure does not reopen old context on new owner (346.2179ms)
+✔ UXI13 Help success ignores same-profile route departure (333.1949ms)
+✔ UXI13 Help success stays obsolete after returning to the same route and profile (406.2576ms)
+✔ UXI13 Help success preserves a newer word panel and private draft (269.9761ms)
+✔ UXI13 Help success cannot replace a newer Help request and comment draft (313.0783ms)
+✔ UXI13 Help success cannot resurrect a dismissed and reopened word panel (215.6459ms)
+✔ UXI13 Help success ignores departure to a different lesson portion (411.4062ms)
+✔ UXI13 Help success ignores replacement of the lesson session on the same route (421.5474ms)
+✔ UXI13 Help success cannot interrupt another profile new panel or draft (467.9665ms)
+✔ UXI13 Help error ignores same-profile route departure (337.6183ms)
+✔ UXI13 Help error stays obsolete after returning to the same route and profile (412.4095ms)
+✔ UXI13 Help error preserves a newer word panel and private draft (239.3346ms)
+✔ UXI13 Help error cannot replace a newer Help request and comment draft (326.4956ms)
+✔ UXI13 Help error cannot resurrect a dismissed and reopened word panel (218.0562ms)
+✔ UXI13 Help error ignores departure to a different lesson portion (294.0213ms)
+✔ UXI13 Help error ignores replacement of the lesson session on the same route (377.925ms)
+✔ UXI13 Help error cannot interrupt another profile new panel or draft (390.3933ms)
+✔ UXI13 Help valid same-context success keeps owner/context and retained comment draft (310.5072ms)
+✔ UXI13 Help valid same-context error retains the current word panel and draft (172.6658ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17204.2769

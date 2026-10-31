@@ -73,6 +73,13 @@ test('final Continue requires every page gate and one in-flight handoff',async t
  h.click('back');h.click('skip');h.click('next');h.click('next');assert.equal(continues,1);h.click('next');assert.equal(continues,1);release();await flush();assert.equal(h.host.querySelectorAll('.primary').length,1);
 });
 
+test('each source activity keeps its current commitment in one primary action slot',t=>{
+ for(const page of pack.lessons.flatMap(lesson=>lesson.blocks[0].textPages.pages)){
+  const h=harness(t,single(page));assert.equal(h.host.querySelectorAll('.primary').length,1,page.id);
+  if(page.activity?.kind==='memory-comparison'){h.click('open');assert.equal(h.host.querySelectorAll('.primary').length,1);assert.ok(h.host.querySelector('nav [data-source-action="compare"]'));}
+ }
+});
+
 test('authored extras alone produce a shared accessible dialog, Escape/Close restore exact focus, cleanup removes it',t=>{
  const dom=new JSDOM('<main></main>',{pretendToBeVisual:true}),w=dom.window,doc=w.document,host=doc.querySelector('main');t.after(()=>w.close());
  w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};

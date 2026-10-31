@@ -66,7 +66,7 @@ export function mountSourceActivities(host,{textPages,renderLesson,initialState=
   if(kind==='memory-comparison'){
    if(!rr.opened&&!rr.checked)return safe(p.html)+'<div class="button-row">'+btn('open','Try the comparison')+btn('skip','Continue without it')+'</div>';
    if(rr.skipped)return safe(p.html)+'<p>You can continue to the next lesson.</p>';
-   if(!rr.checked)return safe(p.html)+field(p,rr)+'<div class="button-row">'+btn('compare','Show the comparison',false,true)+btn('skip','Skip')+'</div>';
+   if(!rr.checked)return safe(p.html)+field(p,rr)+'<div class="button-row">'+commit(btn('compare','Show the comparison',false,true))+btn('skip','Skip')+'</div>';
    const first=Object.entries(responses).find(([id])=>pages.find(p=>p.id===id)?.activity?.kind==='memory-first')?.[1];
    const feedback=memoryComparison(rr.attempted?rr.text:'',a.feedback),digits=String(rr.text||'').replace(/[\s/.·,;:–—-]/g,''),partial=feedback.includes(a.feedback.partial)&&/^\d+$/.test(digits);
    const groups=partial?'<p>Compare the digit groups:</p><div class="source-comparison" dir="ltr">'+[0,8].map(start=>{const expected=a.value.slice(start,start+8),actual=digits.slice(start,start+8);return '<p>'+esc(expected)+' → '+(expected===actual?esc(actual):'<mark aria-label="Different digit group">'+esc(actual||'(empty)')+'</mark>')+'</p>';}).join('')+'</div>':'';
