@@ -4,7 +4,7 @@ import {mkdtempSync,rmSync,existsSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {DatabaseSync} from 'node:sqlite';
-import {Store} from '../src/store.js';
+import {Store,STORE_SCHEMA_VERSION} from '../src/store.js';
 import {createServer} from '../src/server.js';
 import {databaseReceipt,openPreservedStore} from '../scripts/runtime-state.mjs';
 
@@ -32,7 +32,7 @@ test('preserved startup refuses missing files, old schemas and fixture replay be
   const missing=join(dir,'missing.sqlite');assert.throws(()=>openPreservedStore(missing));assert.equal(existsSync(missing),false);
   const database=join(dir,'demo.sqlite'),store=new Store(database);store.set('schema-version',6);store.close();
   let before=databaseReceipt(database);assert.throws(()=>openPreservedStore(database),/schema migration/);assert.deepEqual(databaseReceipt(database),before);
-  const db=new DatabaseSync(database);db.prepare("UPDATE kv SET value='8' WHERE key='schema-version'").run();
+  const db=new DatabaseSync(database);db.prepare("UPDATE kv SET value=? WHERE key='schema-version'").run(String(STORE_SCHEMA_VERSION));
   const active=JSON.parse(db.prepare("SELECT value FROM kv WHERE key='active'").get().value),row=db.prepare('SELECT snapshot FROM revisions WHERE id=?').get(active),content=JSON.parse(row.snapshot);delete content.uxVersion;
   db.prepare('UPDATE revisions SET snapshot=? WHERE id=?').run(JSON.stringify(content),active);db.close();
   before=databaseReceipt(database);assert.throws(()=>openPreservedStore(database),/fixture upgrade replay/);assert.deepEqual(databaseReceipt(database),before);

@@ -1,3 +1,4 @@
+import {AuthorReview,validateAuthorReview,relinkAuthorReview,mergeAuthorReview} from './author-review.js';
 import {projectSourceVocabulary} from '../public/source-vocabulary.js';
 import {projectExerciseVocabulary} from './exercise-vocabulary.js';
 import {validateExerciseVocabularyBindings, exerciseVocabularyReferenceIds, projectExerciseVocabularyBindings, withAnswerVocabularyBindings} from '../public/exercise-bindings.js';
@@ -22,11 +23,11 @@ import {prepareTextDraftImport} from './text-import.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
 
 // v2: revision-mapped backups; v3: component cursors; v4: shared discussions; v5: authored typing/context; v6: retained source authoring bundles.
-export const STORE_SCHEMA_VERSION = 8;
+export const STORE_SCHEMA_VERSION = 9;
 const backupFormats = ['hebleo-demo-backup-v1', 'hebleo-demo-backup-v2'];
 // Supported backup markers are checked before any restore write.
 // v1 predates the marker; v2 backups retain each supported historical contract.
-export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3,4,5,6,7,8] };
+export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3,4,5,6,7,8,9] };
 export { DomainError, normalizeHebrew };
 const clone = value => JSON.parse(JSON.stringify(value));
 // Sorted-key JSON, so the same content always yields the same token whatever key order an import used.
@@ -135,6 +136,8 @@ export function validateContent(content) {
       try{validateTextMetadata(l.draftTargets);}catch(error){throw new DomainError(error.message);}
       for(const target of l.draftTargets){if(typeof target.id!=='string'||target.wordId!==undefined&&!words.has(target.wordId))throw new DomainError('Invalid canonical target mapping.');}
     }
+    const extra=(v)=>{if(v!==undefined&&(typeof v!=='string'||v.length>100000))throw new DomainError('Invalid authored extra information; use text up to 100000 characters.');};
+    extra(l.extraInformation);for(const b of l.blocks||[]){extra(b.options?.extraInformation);for(const p of b.textPages?.pages||[])extra(p.extraInformation);}
     text(l.title, 'lesson title'); if (l.compositionVersion!==2 && (!l.video || l.explanation)) text(l.explanation, 'lesson explanation',100000);
     if(l.textDirection && !['auto','ltr','rtl'].includes(l.textDirection))throw new DomainError('Invalid lesson direction.');
     if(l.keyboard){for(const k of ['knownKeys','newKeys'])if(typeof l.keyboard[k]!=='string'||l.keyboard[k].length>100)throw new DomainError('Invalid keyboard highlights.');if([...l.keyboard.newKeys].some(k=>l.keyboard.knownKeys.includes(k)))throw new DomainError('Known and new key groups must be distinct.');for(const k of ['knownColor','newColor'])if(l.keyboard[k]&&!/^#[0-9a-f]{6}$/i.test(l.keyboard[k]))throw new DomainError('Invalid highlight color.');}
@@ -209,6 +212,8 @@ export class Store {
     if(version<7)this.transaction(()=>this.set('schema-version',7));
     // v8 adds separately keyed text-page responses. Existing records/snapshots are untouched.
     if(version<8)this.transaction(()=>this.set('schema-version',8));
+    if(version<9)this.transaction(()=>this.set('schema-version',9));
+    this.authorReview=new AuthorReview(this);
     this.media=new MediaStore(this);
     this.sourcePermit=Symbol('internal-source-commit');
   }
@@ -662,7 +667,7 @@ export class Store {
     const sourceAuthoring=this.get('source-state');
     const referenced = [...this.db.prepare('SELECT id FROM revisions').all().map(r=>r.id),...Object.keys(sourceAuthoring?.revisions||{}).map(Number),activeRevisionId, draft?.baseRevisionId, ...learners.flatMap(({ state }) => [...state.attempts.map(a => a.revisionId), ...Object.values(state.resumes).map(p => p.revisionId),...(state.textPages||[]).map(p=>p.revisionId)]), ...questions.map(q => q.value.revisionId), ...reports.map(r => r.value.attempt?.revisionId)];
     const revisionSnapshots = [...new Set(referenced.filter(Number.isInteger))].sort((a, b) => a - b).map(revisionId => ({ revisionId, content: this.snapshot(revisionId) }));
-    return { format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),mediaRecovery:this.media.backup([...revisionSnapshots.map(r=>r.content),...(draft?[draft.content]:[])]),...(sourceAuthoring?{sourceAuthoring}: {}) };
+    return { format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),authorReview:this.authorReview.state(),mediaRecovery:this.media.backup([...revisionSnapshots.map(r=>r.content),...(draft?[draft.content]:[]),...Object.values(this.authorReview.state().drafts).map(d=>d.content)]),...(sourceAuthoring?{sourceAuthoring}: {}) };
   }
   restore(input) {
     if (!backupFormats.includes(input?.format) || !Array.isArray(input.learners) || ![2,3].includes(input.learners.length) || new Set(input.learners.map(x => x?.id)).size !== input.learners.length || !['learner-demo','learner-core'].every(id=>input.learners.some(row=>row.id===id))) throw new DomainError('Invalid demo backup.');
@@ -682,9 +687,13 @@ export class Store {
     }
     try{assertKnownTextIdentityRestore([...this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot)),this.currentDraft()?.content],[input.content,...sessions.map(s=>s.content),input.draft?.content]);}catch(error){throw new DomainError(error.message,409,'TEXT_IMPORT_IDENTITY_REQUIRED');}
     assertKnownLexicalRestore(this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot)),[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[])]);
+    if(input.authorReview!==undefined&&input.storeSchemaVersion<9)throw new DomainError('Author review backups require Store reader 9.',409,'AUTHOR_REVIEW_READER_MISMATCH');
+    if(input.storeSchemaVersion>=9&&input.authorReview==null)throw new DomainError('Backup is missing its private author review namespace.');
+    const restoredAuthorReview=validateAuthorReview(input.authorReview,{carried,validateContent,draftTokenFor,authorIds:users.filter(u=>u.canAuthor).map(u=>u.id)});
+    mergeAuthorReview(this.authorReview.state(),restoredAuthorReview);
     const restoredSource=validateSourceState(input.sourceAuthoring??null,carried,input.draft,input.content);
     if(input.mediaRecovery!==undefined&&!(Number.isInteger(input.storeSchemaVersion)&&input.storeSchemaVersion>=7))throw new DomainError('Media-bearing backups require Store/backup reader 7.',409,'MEDIA_READER_MISMATCH');
-    const restoredMedia=this.media.validateBackup(input.mediaRecovery??null,[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[])],{required:input.storeSchemaVersion>=7});
+    const restoredMedia=this.media.validateBackup(input.mediaRecovery??null,[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[]),...Object.values(restoredAuthorReview.drafts).map(d=>d.content),...Object.values(this.authorReview.state().drafts).map(d=>d.content)],{required:input.storeSchemaVersion>=7});
     // A link holds only if its exact carried revision agrees with every reference, as normal writes require: the lesson exists, the exercise belongs to that lesson, an optional word exists.
     // v2 must carry every link and rejects any disagreement. v1 history that does not hold becomes an explicit legacy link with its grade; nothing is repaired or regraded.
     const linked = record => { const c = carried.get(record.revisionId); return Boolean(c) && c.lessons.some(l => l.id === record.lessonId) && (!record.exerciseId || c.exercises.some(e => e.id === record.exerciseId && (e.lessonId===record.lessonId || exerciseInLesson(c,record.lessonId,e.id)))) && (!record.wordId || c.words.some(w => w.id === record.wordId)); };
@@ -743,6 +752,7 @@ export class Store {
       else { revisionId = this.addRevision(input.content, 'Restored local demo backup'); for (const s of sessions) ids.set(s.revisionId, this.addRevision(s.content, 'Restored pinned lesson session')); }
       // Attempts, resumes, questions and reports move together, so a resumed result still points at the attempt graded in that same revision.
       const relink = record => { if (!record || record.revisionId == null) return; if (linked(record)) record.revisionId = ids.get(record.revisionId); else { record.legacyRevisionId = record.revisionId; record.revisionId = null; } };
+      this.set('author-review',mergeAuthorReview(this.authorReview.state(),relinkAuthorReview(restoredAuthorReview,ids,draftTokenFor)));
       this.media.restore(restoredMedia);
       this.set('active', revisionId); this.set('draft', v2 && input.draft ? { ...clone(input.draft), baseRevisionId: revisionId } : null);
       for (const row of input.learners) { const state = clone(row.state); state.attempts.forEach(relink); Object.values(state.resumes || {}).forEach(relink);(state.textPages||[]).forEach(relink); this.saveLearner(row.id, state); }

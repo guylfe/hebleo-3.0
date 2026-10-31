@@ -9,11 +9,8 @@ import {mountCurriculumEditor} from './curriculum-editor.js';
 import {validateContentIdentities} from '../content-identity.js';
 import {mountTextPagesEditor} from './text-pages-editor.js';
 
-export function prepareStudioContent(content){
- const next=structuredClone(content);
- next.lessons=next.lessons.map(l=>deriveLessonIndices(next,l));
- validateContentIdentities(next);validateCurriculum(next);for(const l of next.lessons)validateLessonComposition(next,l);return next;
-}
+export {prepareStudioContent} from './workspace.js';
+import {prepareStudioContent} from './workspace.js';
 export function moveComponent(lesson,id,target){
  const next=structuredClone(lesson),i=next.blocks.findIndex(b=>b.id===id);if(i<0)throw new Error('Component not found.');
  const [block]=next.blocks.splice(i,1);next.blocks.splice(Math.max(0,Math.min(next.blocks.length,target)),0,block);return next;
@@ -30,13 +27,13 @@ export function mountComponentDrag(host,{onMove,onStart=()=>{}}){
 }
 
 // One content snapshot, one CAS save. All sibling editors contribute patches before any save.
-export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expectedDraftToken=null,saveDraft,onSaved=()=>{},onLessonSelect=()=>{},onChanged=()=>{},getExerciseDependencies,getWorkspaceImpact,importWorkbook,newId=prefix=>prefix+'-'+crypto.randomUUID(),markdownDependencies}){
- let workspace=structuredClone(content),selected=lessonId||workspace.lessons[0]?.id,disposed=false,saving=false,dirty=false,children=[],exerciseMounts=[],wordId=workspace.words[0]?.id,wordOriginal=null,layout=false;
+export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expectedDraftToken=null,saveDraft,onSaved=()=>{},onLessonSelect=()=>{},onChanged=()=>{},getExerciseDependencies,getWorkspaceImpact,importWorkbook,newId=prefix=>prefix+'-'+crypto.randomUUID(),markdownDependencies,coordinator}){
+ let workspace=structuredClone(coordinator?.getContent()||content),selected=lessonId||workspace.lessons[0]?.id,disposed=false,saving=false,dirty=false,children=[],exerciseMounts=[],wordId=workspace.words[0]?.id,wordOriginal=null,layout=false;
  const dependencyRequests=new WeakMap(),saveWaiters=[];
  let textPageMounts=[];
  const ctl=new host.ownerDocument.defaultView.AbortController(),doc=host.ownerDocument;
  const status=message=>{const el=host.querySelector('[data-unified-status]');if(el)el.textContent=message;};
- const touch=()=>{dirty=true;onChanged();host.querySelector('[data-unsaved-status]').textContent='Unsaved workspace edits. Save includes lesson, component, exercise and vocabulary edits.';};
+ const touch=()=>{dirty=true;coordinator?.touch();onChanged();host.querySelector('[data-unsaved-status]').textContent='Unsaved workspace edits. Save includes lesson, component, exercise and vocabulary edits.';};
  const clearChildren=()=>{children.splice(0).forEach(x=>typeof x==='function'?x():x.dispose());exerciseMounts=[];textPageMounts=[];};
  function lesson(){return workspace.lessons.find(l=>l.id===selected);}
  function collect(){
@@ -143,7 +140,8 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
   try{if(getExerciseDependencies)await Promise.all(exerciseMounts.filter(({mount})=>Object.keys(mount.getEdits()).length).map(({id,container})=>dependencyNotice(container.parentElement.querySelector('[data-exercise-dependencies]'),id)));let reviewedDraftToken;
    if(getWorkspaceImpact){const impact=await getWorkspaceImpact({baseRevisionId,expectedDraftToken,content:next});const notice=host.querySelector('[data-workspace-impact]');notice.textContent='Server-checked impact: '+impact.affectedLessons.map(l=>l.title+' ('+l.id+')').join(', ')+'. Shared edits apply to all listed references after deliberate publication.';notice.hidden=false;reviewedDraftToken=impact.candidateDraftToken;}
 
-   const result=await saveDraft({baseRevisionId,expectedDraftToken,content:next,...(reviewedDraftToken?{reviewedDraftToken}:{})});if(disposed)return result;
+   if(coordinator)coordinator.replace(next,{changed:false});
+   const result=coordinator?await coordinator.save():await saveDraft({baseRevisionId,expectedDraftToken,content:next,...(reviewedDraftToken?{reviewedDraftToken}:{})});if(disposed)return result;
    workspace=structuredClone(next);expectedDraftToken=result?.draftToken??expectedDraftToken;dirty=false;status('Draft saved. Publish separately.');await onSaved(result,next);if(!disposed){renderLesson();renderWord();curriculum.refresh();host.querySelector('[data-unsaved-status]').textContent='All workspace edits saved to the private draft.';status('Draft saved. Publish separately.');}return result;
   }catch(err){if(!disposed)status(draftSaveError(err)+' · All entered values retained.');throw err;}
   finally{saving=false;if(!disposed)lock(false);saveWaiters.splice(0).forEach(resolve=>resolve());}
@@ -168,5 +166,6 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
  const block=type==='explanation'?{id,type,source:'inline',renderer:'text',text:'',options:{textDirection:'auto'}}:type==='vocabulary'?{id,type,source:'words',renderer:'vocabulary-table',selector:{mode:'lesson',lessonId:selected}}:{id,type,source:'exercises',renderer:'practice',role:b.matches('[data-add-check]')?'check':'apply',selector:{mode:'ids',ids:[]}};
  const index=b.matches('[data-add-check]')?next.blocks.findIndex(x=>x.id===b.dataset.addCheck)+1:next.blocks.length;next.blocks.splice(index,0,block);return next;});
  },{signal:ctl.signal});
- return {getContent:collectAll,save:stage,openLessonPicker:opener=>curriculum.openPicker(opener,()=>host.querySelector('[data-lesson-metadata] [name="title"]')?.focus()),whenIdle:()=>saving?new Promise(resolve=>saveWaiters.push(resolve)):Promise.resolve(),isDirty:()=>dirty||exerciseMounts.some(({mount})=>Object.keys(mount.getEdits()).length>0),dispose(){disposed=true;ctl.abort();clearChildren();curriculum.dispose();browser.dispose();host.replaceChildren();}};
+ const unregister=coordinator?.registerCollector(()=>{coordinator.replace(collectAll(),{changed:false});});
+ return {getContent:collectAll,save:stage,openLessonPicker:opener=>curriculum.openPicker(opener,()=>host.querySelector('[data-lesson-metadata] [name="title"]')?.focus()),whenIdle:()=>saving?new Promise(resolve=>saveWaiters.push(resolve)):Promise.resolve(),isDirty:()=>Boolean(coordinator?.dirty)||dirty||exerciseMounts.some(({mount})=>Object.keys(mount.getEdits()).length>0),dispose(){unregister?.();disposed=true;ctl.abort();clearChildren();curriculum.dispose();browser.dispose();host.replaceChildren();}};
 }
