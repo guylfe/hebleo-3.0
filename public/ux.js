@@ -83,7 +83,7 @@ export function portionLesson(lesson,key) {
   if(lesson.compositionVersion!==2)return lesson;
   const index=lesson.blocks.findIndex(b=>b.id===key);
   const block=lesson.blocks[index]?.type==='explanation'?lesson.blocks[index]:lesson.blocks.slice(0,Math.max(0,index)).findLast(b=>b.type==='explanation')||lesson.blocks.find(b=>b.type==='explanation');
-  return block?{...lesson,explanation:block.text||'',textPages:block.textPages,textComponentId:block.id,video:block.video,interactions:block.interactions||[],textDirection:block.options?.textDirection||'auto'}:lesson;
+  return block?{...lesson,explanation:block.text||'',textPages:block.textPages,textComponentId:block.id,extraInformation:block.options?.extraInformation,video:block.video,interactions:block.interactions||[],textDirection:block.options?.textDirection||'auto'}:lesson;
 }
 export function portionLabel(lesson,key) {
   const kind=portionKind(lesson,key),label=stepLabels[kind]||key;

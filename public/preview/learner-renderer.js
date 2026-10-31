@@ -7,7 +7,7 @@ import {resolveBlock} from '../content.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../post-answer-vocabulary.js';
 import {hasTextPages,mountTextReader} from '../text-reader.js';
-import {textGatesPassed,syncTextContinue,textGateNotice} from '../learner-view.js';
+import {textGatesPassed,syncTextContinue,textGateNotice,ownsTextNavigation,extraInformationControl,bindExtraInformation} from '../learner-view.js';
 import {textPageMedia} from '../learner-view.js';
 import {bindMatching, matchWord} from '../interactions.js';
 import {esc, button, wordText, fieldText, cellAttribute, audioControls, syncAudioControls, richFields, wordCard, vocabularyTable, learnMedia, exerciseInput, exerciseSurface, exerciseFeedback, wireAnswer,bindResultExplanations,syncReferenceControls,applyMatchingResult,exerciseActionDock,mountExerciseDock} from '../learner-view.js';
@@ -88,11 +88,11 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const context=lessonId+'|'+(componentId||step);if(context!==mediumKey){medium=null;mediumKey=context;}
       const word = id => content.words.find(w => w.id === id);
       const exercise = exerciseId ? content.exercises.find(x => x.id === exerciseId) : null;
-      let lexicalBinding,reminderBinding,dockBinding,textBinding;
+      let lexicalBinding,reminderBinding,dockBinding,textBinding,extraBinding;
       const mountText=()=>{
         const host=root.querySelector('[data-text-reader]');if(!host||!hasTextPages(presentation))return;
         textBinding?.destroy();
-        textBinding=mountTextReader(host,{textPages:presentation.textPages,renderLesson,word,renderWord:w=>wordCard(w),renderMedia:textPageMedia,dock:step==='learn',initialState:textStates.get(context),onState:saved=>textStates.set(context,saved),onGateChange:(_ready,saved)=>{textStates.set(context,saved);syncTextContinue(root,textGatesPassed(presentation.textPages,saved));},isCurrent:active});
+        textBinding=mountTextReader(host,{textPages:presentation.textPages,renderLesson,word,renderWord:w=>wordCard(w),renderMedia:textPageMedia,dock:step==='learn',onContinue:()=>{if(active()&&!busy&&textGatesPassed(presentation.textPages,textStates.get(context)||{}))return actions.next();},initialState:textStates.get(context),onState:saved=>textStates.set(context,saved),onGateChange:(_ready,saved)=>{textStates.set(context,saved);syncTextContinue(root,textGatesPassed(presentation.textPages,saved));},isCurrent:active});
       };
       let draft = draftOf(props.answer), message = '', conceptOpen = false, answerSelection = null;
       const root = doc.createElement('div');
@@ -143,7 +143,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       const continueRow = () => '<div class="lesson-footer">' + button('Continue →', 'next-step', 'primary').replace('<button','<button data-text-gated-continue') + textGateNotice() + '</div>';
       function learn() {
         const hasText = Boolean(presentation.explanation?.trim())||hasTextPages(presentation), video = Boolean(audioURL(presentation.video)), mode = video && hasText ? (medium || 'watch') : video ? 'watch' : 'read';
-        return (video && hasText ? '<div class="mode-bar"><h2>Your explanation</h2><div class="segmented" role="group" aria-label="Lesson format">' + [['watch','Watch'],['read','Read']].map(([v, t]) => '<button type="button" data-preview-medium="' + v + '" aria-pressed="' + (mode === v) + '">' + t + '</button>').join('') + '</div></div>' : '') + learnMedia(presentation, mode, renderLesson) + continueRow();
+        return (video && hasText ? '<div class="mode-bar"><h2>Your explanation</h2><div class="segmented" role="group" aria-label="Lesson format">' + [['watch','Watch'],['read','Read']].map(([v, t]) => '<button type="button" data-preview-medium="' + v + '" aria-pressed="' + (mode === v) + '">' + t + '</button>').join('') + '</div></div>' : '') + learnMedia(presentation, mode, renderLesson) + extraInformationControl(presentation) + (ownsTextNavigation(presentation)?'':continueRow());
       }
       function vocabulary() {
         if(content.lexicalView)return '<h2>Your building blocks</h2>'+renderLexicalVocabulary(content.lexicalView.rows,{idPrefix:'rehearsal-'+lessonId})+continueRow();
@@ -166,7 +166,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       let mounted = false;
       function render() {
         if (!active()) return;
-        dockBinding?.destroy();reminderBinding?.destroy();lexicalBinding?.destroy();textBinding?.destroy();
+        extraBinding?.destroy();dockBinding?.destroy();reminderBinding?.destroy();lexicalBinding?.destroy();textBinding?.destroy();
         if (mounted) captureFocus();
         mounted = true;
         const body = !lesson ? '<p>This lesson is not in the draft.</p>'
@@ -175,7 +175,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           : step === 'complete' ? '<div class="empty"><h2>Rehearsal finished.</h2><p>Nothing in this rehearsal was saved to a learner profile.</p><div class="button-row centered">' + button('Exit rehearsal', 'exit', 'primary') + '</div></div>'
           : practice();
         root.innerHTML = settings() + (exercise ? '' : note()) + '<section class="card lesson-section">' + body + '</section>' + lookupCard();
-        mountText();syncTextContinue(root,step!=='learn'||textGatesPassed(presentation.textPages,textStates.get(context)||{}));lexicalBinding=bindLexicalVocabulary(root);
+        mountText();extraBinding=bindExtraInformation(root,presentation,renderLesson);syncTextContinue(root,step!=='learn'||textGatesPassed(presentation.textPages,textStates.get(context)||{}));lexicalBinding=bindLexicalVocabulary(root);
         syncAudioControls(root,Number(preferences.audioSpeed)||1,getPlaybackState());bindResultExplanations(root);
         if(exercise&&result&&!busy)reminderBinding=mountAnsweredVocabulary(root,{content,exercise,result,mode:exercise.nikkudOverride||preferences.nikkud||'full',isCurrent:()=>active(),playAudio,stopMedia,getPlaybackState});
         if (busy) { root.setAttribute('aria-busy', 'true'); root.querySelectorAll('button,input,select,textarea').forEach(el => { el.disabled = true; }); }
@@ -264,6 +264,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       function dispose() {
         if (!active()) return;
         captureFocus();
+        extraBinding?.destroy();
         dockBinding?.destroy();
         lexicalBinding?.destroy();
         reminderBinding?.destroy();

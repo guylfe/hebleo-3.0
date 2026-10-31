@@ -188,6 +188,10 @@
         "options": {
           "type": "object",
           "properties": {
+            "extraInformation": {
+              "type": "string",
+              "maxLength": 100000
+            },
             "textDirection": {
               "enum": [
                 "auto",

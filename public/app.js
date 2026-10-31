@@ -4,7 +4,7 @@ import {orderedLessons,courseOutline,keyboardForLesson,resolveComponent} from '.
 import {richCell,cellCSS} from './rich.js';
 import {renderLesson} from './rich-browser.js';
 import {hasTextPages,mountTextReader} from './text-reader.js';
-import {textPageMedia,textGatesPassed,syncTextContinue,textGateNotice} from './learner-view.js';
+import {textPageMedia,textGatesPassed,syncTextContinue,textGateNotice,ownsTextNavigation,extraInformationControl,bindExtraInformation} from './learner-view.js';
 import {composeSentence,bindMatching,matchWord} from './interactions.js';
 import {reviewNikkud} from './ux.js';
 import {scheduleReview,reviewIntervalLabel} from './review-schedule.js';
@@ -28,7 +28,7 @@ const uid = () => crypto.randomUUID();
 const pref = () => state.data.learner.preferences;
 let navigationHideTimer;const navigationMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
 let exerciseDockBinding, pendingAttempt=null, answerPhase="ready", continueTarget=null;
-let textReaderBindings=[];
+let textReaderBindings=[];let extraInformationBinding;
 let textReaderGeneration=0;
 const textReaderStates=new Map();
 const textSaveQueues=new Map();
@@ -55,7 +55,7 @@ async function settleTextSaves(){
  await Promise.all(bindings.map(binding=>binding.settled()));
  await Promise.all([...textSaveQueues].filter(([key])=>key.startsWith(prefix)).map(([,promise])=>promise));
 }
-function disposeTextReaders(){textReaderGeneration++;textReaderBindings.splice(0).forEach(binding=>binding.destroy());}
+function disposeTextReaders(){extraInformationBinding?.destroy();extraInformationBinding=null;textReaderGeneration++;textReaderBindings.splice(0).forEach(binding=>binding.destroy());}
 function mountLessonTextReaders(scope=root){
  if(state.page!=='lesson'||!state.session)return;
  const lesson=portionLesson(lessonObject(),state.step);if(!hasTextPages(lesson))return;
@@ -64,7 +64,7 @@ function mountLessonTextReaders(scope=root){
  for(const host of scope.querySelectorAll('[data-text-reader]')){
   const current=()=>state.user===owner&&state.page==='lesson'&&state.session?.revisionId===revisionId&&state.lessonId===lessonId&&portionLesson(lessonObject(),state.step).textComponentId===lesson.textComponentId;
   const binding=mountTextReader(host,{textPages:lesson.textPages,renderLesson,word,renderWord:w=>wordCard(w),renderMedia:textPageMedia,dock:currentKind()==='learn',
-   initialState:textReaderStates.get(key),isCurrent:current,onState:saved=>textReaderStates.set(key,saved),onGateChange:(_ready,saved)=>{textReaderStates.set(key,saved);syncLessonTextGates();},
+   initialState:textReaderStates.get(key),isCurrent:current,onContinue:()=>act('step',portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1],host),onState:saved=>textReaderStates.set(key,saved),onGateChange:(_ready,saved)=>{textReaderStates.set(key,saved);syncLessonTextGates();},
    loadProgress:textReaderStates.has(key)?undefined:()=>api('text-progress?'+new URLSearchParams({lessonId,revisionId,componentId}),undefined,owner),
    saveProgress:record=>{
     const pending=(textSaveQueues.get(key)||Promise.resolve()).catch(()=>{}).then(()=>{
@@ -199,7 +199,7 @@ function render() {
   const hasCourse=['lesson','course'].includes(state.page),courseLesson=hasCourse?(content().lessons.find(l=>l.id===state.lessonId)||orderedLessons(content())[0]):null;
   root.innerHTML='<a class="skip-link" href="#main-content" data-action="skip-content">Skip to content</a><header class="app-header" aria-label="Hebleo navigation">'+(hasCourse?navigationToggle():'')+'<a class="brand" href="#home" data-action="page" data-value="home" aria-label="Hebleo home"><span class="brand-logo-slot" aria-hidden="true"><img src="/assets/hebleo-wide-navy.png" alt="" width="3693" height="1198"></span></a><nav id="main-menu" class="nav main-navigation" aria-label="Main navigation">'+nav()+'</nav><div class="profile"><span class="demo-pill">DEMO CONTENT</span><label class="profile-control"><span>Demo profile</span><select id="demo-user" aria-label="Demo profile">'+state.data.users.map(x=>'<option value="'+x.id+'" '+(x.id===state.user?'selected':'')+'>'+esc(x.name)+' · '+esc(x.role)+'</option>').join('')+'</select></label></div></header><div class="shell nav-shell page-'+state.page+' '+(hasCourse?'has-course ':'')+(!pref().animations?'reduce-motion':'')+'">'+(hasCourse?courseNavigation(courseLesson):'')+'<main class="main" id="main-content" tabindex="-1"><div class="topbar"><div class="breadcrumb">Your Hebrew / '+esc({home:'Your path',course:'Foundations',lesson:label(state.step),review:'Review',library:'My Hebrew',studio:'Author workspace',settings:'Settings'}[state.page])+'</div></div><div class="content">'+pages[state.page]()+'</div></main><button type="button" class="nav-backdrop" data-action="navigation-close" aria-label="Close course outline" hidden></button></div>';
 
-  applyNavigation();bind();mountLessonTextReaders();syncLessonTextGates();exerciseDockBinding=state.page==='lesson'&&currentKind()==='learn'&&root.querySelector('[data-text-reader]')?null:mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio')pageStudioLists();syncKeyboard();if(state.panel)showPanel();
+  applyNavigation();bind();mountLessonTextReaders();if(state.page==='lesson')extraInformationBinding=bindExtraInformation(root,portionLesson(lessonObject(),state.step),renderLesson);syncLessonTextGates();exerciseDockBinding=state.page==='lesson'&&currentKind()==='learn'&&root.querySelector('[data-text-reader]')?null:mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio')pageStudioLists();syncKeyboard();if(state.panel)showPanel();
 }
 function lessonStarted(id) { const l=state.data.learner; return Boolean(l.resumes[id] || l.attempts.some(a=>a.lessonId===id)); }
 function lessonCards() {
@@ -229,7 +229,7 @@ function vocabularyView(words,notes=true) {
 function learnBody(l,conceptTime) {
   l=portionLesson(l,state.step);
   const hasText=Boolean(l.explanation?.trim())||hasTextPages(l),video=audioURL(l.video),mode=video&&hasText?state.medium:video?'watch':'read';
-  return (video&&hasText?'<div class="mode-bar"><h2>Your explanation</h2>'+segmented([['watch','Watch'],['read','Read']],mode,'medium','Lesson format')+'</div>':'')+learnMedia(l,mode,renderLesson,conceptTime)+'<div class="button-row">'+button('Lesson help & comments','help','outline small',l.id)+'</div>';
+  return (video&&hasText?'<div class="mode-bar"><h2>Your explanation</h2>'+segmented([['watch','Watch'],['read','Read']],mode,'medium','Lesson format')+'</div>':'')+learnMedia(l,mode,renderLesson,conceptTime)+extraInformationControl(l);
 }
 function courseNavigation(l) {
  const item=x=>'<details '+(x.id===l.id?'open':'')+'><summary>'+esc(x.title)+(state.data.learner.completed.includes(x.id)?' ✓':'')+'</summary>'+lessonPortions(content(),x).map(p=>'<button data-action="outline" data-value="'+x.id+'|'+p.key+'" class="outline-step '+(x.id===l.id&&state.step===p.key?'active':'')+'" '+(x.id===l.id&&state.step===p.key?'aria-current="step"':'')+'>'+esc(portionLabel(x,p.key))+'</button>').join('')+'</details>';
@@ -244,7 +244,7 @@ function lesson() {
   else body=exercisePanel(l);
   const index=steps.indexOf(state.step),isExercise=['check','apply'].includes(currentKind());
   if(state.session.revisionId!==state.data.revisionId)body='<div class="hint">This saved session uses an earlier lesson. Starting the updated lesson resets this lesson’s current answers; your graded attempts and review progress remain. '+button('Start updated lesson','latest-lesson','small secondary')+'</div>'+body;
-  return '<div class="intro-row"><div><div class="eyebrow">'+esc(l.chapter)+'</div><h1 tabindex="-1">'+esc(l.title)+'</h1><p>'+esc(label(state.step))+' · Step '+(index+1)+' of '+steps.length+'</p></div>'+button('← Course','page','outline small','course')+'</div><div class="lesson-layout lesson-content-region"><div class="lesson-content"><nav class="step-strip" aria-label="Lesson portions">'+steps.map(s=>'<button data-action="step" data-value="'+s+'" class="'+(s===state.step?'active':'')+'" '+(s===state.step?'aria-current="step"':'')+'>'+esc(portionLabel(l,s))+'</button>').join('')+'</nav>'+lessonProgressBar(l)+'<section class="card lesson-section" data-portion-kind="'+esc(currentKind())+'" id="practice">'+body+'</section>'+(!isExercise&&state.step!=='complete'?'<div class="lesson-footer">'+button('← Back','step','outline',steps[index-1]||'',index===0)+button('Continue →','step','primary',steps[index+1]).replace('<button','<button data-text-gated-continue')+textGateNotice()+'</div>':'')+'</div></div><section class="lesson-comments card" id="lesson-comments"><header><h2>Discussion under this lesson</h2><p>Share a question or comment. Author replies appear here.</p></header>'+commentComposer({lessonId:l.id,revisionId:state.session.revisionId})+'<div data-comment-feed>'+questionList(state.data.canAuthor,l.id)+'</div></section>';
+  return '<div class="intro-row"><div><div class="eyebrow">'+esc(l.chapter)+'</div><h1 tabindex="-1">'+esc(l.title)+'</h1><p>'+esc(label(state.step))+' · Step '+(index+1)+' of '+steps.length+'</p></div>'+button('← Course','page','outline small','course')+'</div><div class="lesson-layout lesson-content-region"><div class="lesson-content"><nav class="step-strip" aria-label="Lesson portions">'+steps.map(s=>'<button data-action="step" data-value="'+s+'" class="'+(s===state.step?'active':'')+'" '+(s===state.step?'aria-current="step"':'')+'>'+esc(portionLabel(l,s))+'</button>').join('')+'</nav>'+lessonProgressBar(l)+'<section class="card lesson-section" data-portion-kind="'+esc(currentKind())+'" id="practice">'+body+'</section>'+(!isExercise&&state.step!=='complete'&&!(currentKind()==='learn'&&ownsTextNavigation(portionLesson(l,state.step)))?'<div class="lesson-footer">'+button('← Back','step','outline',steps[index-1]||'',index===0)+button('Continue →','step','primary',steps[index+1]).replace('<button','<button data-text-gated-continue')+textGateNotice()+'</div>':'')+'</div></div><section class="lesson-comments card" id="lesson-comments"><header><h2>Discussion under this lesson</h2><p>Share a question or comment. Author replies appear here.</p></header>'+commentComposer({lessonId:l.id,revisionId:state.session.revisionId})+'<div data-comment-feed>'+questionList(state.data.canAuthor,l.id)+'</div></section>';
 }
 function completion(l) {
   const completed=state.data.learner.completed.includes(l.id),next=followingLesson(content(),l.id),missed=questionProgress(l).missedIds;
@@ -520,19 +520,20 @@ async function act(action,value,source) {
   if(action==='outline'){closeNavigation();const [id,step]=value.split('|');if(id!==state.lessonId){await openLesson(id,step);return;}action='step';value=step;}
   if(action==='step'){if(value===state.step || !portionKeys(lessonObject()).includes(value))return;
   const forward=portionKeys(lessonObject()).indexOf(value)>portionKeys(lessonObject()).indexOf(state.step);
-  const gated=()=>(value==='complete'&&!lessonTextReady())||(forward&&source?.closest('.lesson-footer')&&currentKind()==='learn'&&!lessonTextReady(state.step));
+  const gated=()=>(value==='complete'&&!lessonTextReady())||(forward&&(source?.closest('.lesson-footer')||source?.matches('[data-text-reader]'))&&currentKind()==='learn'&&!lessonTextReady(state.step));
   const refuse=()=>{toast('Complete the required text-page activities before continuing.');root.querySelector('[data-reader-heading]')?.focus();};
   if(gated()){refuse();return;}
   // A later portion request supersedes an earlier continuation even while both wait for the same save.
   textReaderGeneration++;
   let isCurrent=captureTextDestination();
+  const previous={step:state.step,medium:state.medium,question:state.question,answer:state.answer,matching:state.matching,selectedTokens:state.selectedTokens,result:state.result,practiceIds:state.practiceIds};
   try{
    if(forward)await settleTextSaves();
    if(!isCurrent())return;
    if(gated()){refuse();return;}
-   disposeTextReaders();closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(portionLesson(lessonObject(),state.step));stopMedia();setRoute();isCurrent=captureTextDestination();
-   await queueSave();if(!isCurrent())return;render();focusHeading();
-  }catch(error){if(isCurrent())throw error;}return;}
+   closePanel();resetQuestion();state.practiceIds=[];state.step=value;state.medium=defaultMedium(portionLesson(lessonObject(),state.step));stopMedia();setRoute();isCurrent=captureTextDestination();
+   await queueSave();if(!isCurrent())return;disposeTextReaders();render();focusHeading();
+  }catch(error){if(isCurrent()){Object.assign(state,previous);setRoute(true);syncLessonTextGates();throw error;}}return;}
   if(action==='mode'||action==='vocab-view'){await updatePreference(action==='mode'?'nikkud':'vocabularyView',value);render();return;}
   if(action==='keyboard-open'){window.HebleoKeyboard?.open(document.querySelector('#answer'));return;}
   if(action==='inline-choice'){const [i,j]=value.split('|').map(Number),item=portionLesson(lessonObject(),state.step).interactions[i];document.querySelector('#inline-feedback-'+i).textContent=(item.correctIndex===j?'Correct. ':'Try again. ')+item.feedback;return;}

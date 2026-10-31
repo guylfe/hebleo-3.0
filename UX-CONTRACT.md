@@ -1,5 +1,17 @@
 # Hebleo application UX contract
 
+## First-two feedback — staged engineering, 31 October 2026
+
+Guy's direct feedback #2/#3/#6/#7 supersedes the earlier duplicate outer-Continue/help arrangement for source activities. `source-activities.js` owns the single primary action slot for `activityVersion:1`: the current commitment, then page Continue, then a final handoff through the existing portion-navigation/save owner. Forward movement waits for queued responses and retains retry after failure. A failed portion-position write retains the mounted page and restores its route. Required authored gates and backend completion checks remain; earlier/course navigation stays available. Versionless pages retain the existing legacy reader and outer portion continuation.
+
+Cursor saves show pending/failure when relevant, and no answer-success message. Only actual answer changes receive a short server-confirmed success message. Failures retain responses and Retry; stale completions do not replace newer pending/failure status.
+
+`learner-view.js` owns the shared conditional Extra information control and native read-only dialog for learner and saved-draft Preview. For v2 explanation components, explicitly authored Markdown/HTML lives in `block.options.extraInformation`; `portionLesson` projects only that component's field. Legacy lessons can carry `lesson.extraInformation`. The optional string is bounded and validated; absence or empty content produces no control. The dialog has a native modal boundary, a visible Close, Escape dismissal, accessible title, and exact-trigger focus restoration. Main explanation text, comments and AI fallback are never used to invent extras. Public lesson discussion and word-linked discussion remain separate existing surfaces. No extra teaching text is supplied by this change.
+
+The source initial memory display uses one monotonic deadline for both the value and remaining-time bar. The value appears only after Play, remains a 16-character string including its leading zero, and is hidden before recall. Hidden-page, navigation, destruction and restored-started state cancel exposure without another memorisation round. The bar uses measured remaining time with no independent CSS animation, including reduced motion. Selection/drag prevention and copy filtering apply only to the currently exposed number; other course text and recall paste remain available. This is ordinary browser behavior, not system-wide copy protection.
+
+This is a staged engineering branch, not an installed combined revision or Guy acceptance. See `docs/evidence/first2-feedback-20261031/DELIVERY.md`.
+
 ## Interactive text gates — 25 October 2026
 
 ENGINEERING_BRIEF.md in docs/curriculum/first20-20261025 owns the authored page-gate requirement. public/text-contract.js owns the shared gate predicate; public/text-reader.js owns reader state and cancellation; learner-view.js owns the disabled outer Continue and inline reason across learner and Preview. Outer Continue waits for every required activity in the explanation, and Finish additionally requires all authored text gates in the lesson. Earlier portions and course navigation remain available. Store applies the same predicate before completion, including grading-driven completion. Page responses alone never complete a lesson. A forward continuation waits for pending response saves; failed saves retain answers and the existing Retry path. Preview keeps all of this disposable. No visual tokens change.

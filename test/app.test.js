@@ -345,8 +345,8 @@ test('FB8 saved-draft Preview swaps controls, preserves typed answer through con
 });
 
 test('FB8 actual lesson comments post anonymously, render to another learner without identity and disappear after Author Remove',async t=>{
-  const {store,w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true});click(doc,'help');await settled(()=>doc.querySelector('#author-question-form'));
-  const form=doc.querySelector('#author-question-form');form.elements.question.value='SYNTHETIC anonymous discussion';form.elements.anonymous.checked=true;form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.questions('author-demo').length===1&&doc.querySelector('#context-panel .question-item'));
+  const {store,w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true});
+  const form=doc.querySelector('[data-lesson-comment]');form.elements.question.value='SYNTHETIC anonymous discussion';form.elements.anonymous.checked=true;form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.questions('author-demo').length===1&&doc.querySelector('#lesson-comments .question-item'));
   const q=store.questions('author-demo')[0];assert.equal(q.anonymous,true);assert.equal(q.revisionId,1);
   const sam=await app(t,{page:'lesson/lesson-1/learn',store,realHTTP:true});sam.doc.querySelector('#demo-user').value='learner-core';sam.doc.querySelector('#demo-user').dispatchEvent(new sam.w.Event('change',{bubbles:true}));await settled(()=>sam.doc.querySelector('h1').textContent.includes('Sam'));
   sam.doc.querySelector('[data-action="lesson"][data-value="lesson-1"]').click();await settled(()=>sam.doc.querySelector('.question-item'));
@@ -462,9 +462,9 @@ test('Actual app launcher focuses the native answer field and saves pinning thro
   doc.querySelector('[data-action="pin"]').click();await settled(()=>!store.learner('learner-demo').preferences.keyboardPinned);
   doc.querySelector('h1').dispatchEvent(new w.Event('pointerdown',{bubbles:true}));doc.querySelector('h1').click();assert.equal(doc.querySelector('.hebleo-keyboard--open'),null);
 });
-test('Lesson help exposes an actual question form and saves it to the author inbox',async t=>{
-  const {store,w,doc}=await app(t);click(doc,'help');await settled(()=>doc.querySelector('#author-question-form'));
-  const form=doc.querySelector('#author-question-form');form.elements.question.value='Why is this prefix used?';form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.questions('author-demo').length===1);assert.equal(store.questions('author-demo')[0].lessonId,'lesson-2');
+test('Lesson discussion exposes an actual question form and saves it to the author inbox',async t=>{
+  const {store,w,doc}=await app(t);
+  const form=doc.querySelector('[data-lesson-comment]');form.elements.question.value='Why is this prefix used?';form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>store.questions('author-demo').length===1);assert.equal(store.questions('author-demo')[0].lessonId,'lesson-2');
 });
 
 test('Learner keyboard shortcuts never activate or handle controls inside a rehearsal root',async t=>{
@@ -1152,16 +1152,21 @@ function installFirst2Fixture(store){const fixture=structuredClone(actualFirst2)
 
 test('FIRST2 actual HTTP learner completes skip/empty paths and navigates to the real second lesson with saved responses',async t=>{
  const {store,w,doc}=await app(t,{page:'lesson/MEMORY-A2',realHTTP:true,prepare:installFirst2Fixture,reduceMotion:true,ownerKeyboard:true});
+ assert.equal(doc.querySelector('.lesson-footer'),null);assert.equal(doc.querySelectorAll('#practice .primary').length,1);assert.equal(doc.querySelector('[data-action=help]'),null);assert.ok(doc.querySelector('#lesson-comments'));
  const source=a=>{const e=doc.querySelector('[data-source-action="'+a+'"]');assert.ok(e,a);assert.equal(e.disabled,false,a);e.click();};
- source('next');source('next');source('skip');source('next');source('animate');source('animation-next');source('animation-next');source('principle');source('principle');source('principle');source('next');
- const option=doc.querySelector('[name="source-choice"]');option.checked=true;option.dispatchEvent(new w.Event('change',{bubbles:true}));source('check-choice');source('next');source('open');source('compare');assert.match(doc.querySelector('#practice').textContent,/Here are the two dates/);source('next');
- const finish=doc.querySelector('.lesson-footer [data-value="complete"]');assert.equal(finish.disabled,false);finish.click();await settled(()=>store.learner('learner-demo').completed.includes('MEMORY-A2'));
+ const next=async()=>{const heading=doc.querySelector('[data-source-heading]')?.textContent;source('next');await settled(()=>doc.querySelector('[data-source-heading]')?.textContent!==heading);};
+ await next();await next();source('skip');await next();source('animate');source('animation-next');source('animation-next');source('principle');source('principle');source('principle');await next();
+ const option=doc.querySelector('[name="source-choice"]');option.checked=true;option.dispatchEvent(new w.Event('change',{bubbles:true}));source('check-choice');await next();source('open');source('compare');assert.match(doc.querySelector('#practice').textContent,/Here are the two dates/);await next();
+ // A failed position save must leave the last page and its retryable Continue intact.
+ const fetch=w.fetch;let refuseFinish=true;w.fetch=(url,options)=>{if(refuseFinish&&url==='/api/progress'&&options?.method==='POST'){refuseFinish=false;return Promise.resolve({ok:false,status:503,json:async()=>({error:'Synthetic failed position save'})});}return fetch(url,options);};
+ source('next');await settled(()=>doc.querySelector('[data-source-save]')?.textContent.includes('Could not continue'));assert.equal(store.learner('learner-demo').completed.includes('MEMORY-A2'),false);assert.ok(doc.querySelector('[data-source-heading]'));assert.equal(doc.querySelector('[data-source-action=next]').disabled,false);
+ await next();await settled(()=>store.learner('learner-demo').completed.includes('MEMORY-A2'));
  const record=store.learner('learner-demo').textPages.find(r=>r.lessonId==='MEMORY-A2');assert.equal(record.responses['MEMORY-A2.learn.number-round'].skipped,true);assert.equal(record.responses['MEMORY-A2.learn.return'].attempted,false);assert.equal(store.learner('learner-demo').attempts.length,0);
- await settled(()=>doc.querySelector('[data-action="lesson"][data-value="MNTL-A2"]'));doc.querySelector('[data-action="lesson"][data-value="MNTL-A2"]').click();await settled(()=>doc.querySelector('h1')?.textContent.includes('four consonants'));assert.equal(doc.querySelectorAll('figure').length,4);source('next');
- const n=doc.querySelectorAll('[name="source-choice"]')[1];n.checked=true;n.dispatchEvent(new w.Event('change',{bubbles:true}));source('check-choice');source('next');assert.equal(doc.querySelector('[data-copy-letter]').dataset.copyLetter,'ל');source('keyboard');const key=doc.querySelector('#hebleo-keyboard-root [data-insert="ל"]');key.click();assert.equal(doc.querySelector('[data-source-input]').value,'ל');source('check-input');source('next');
- const tav=doc.querySelectorAll('[name="source-choice"]')[1];tav.checked=true;tav.dispatchEvent(new w.Event('change',{bubbles:true}));source('check-choice');source('next');
- for(const [id,letter]of [['m','מ'],['n','נ'],['t','ת'],['l','ל']]){const el=doc.querySelector('[data-source-match="'+id+'"]');el.value=letter;el.dispatchEvent(new w.Event('change',{bubbles:true}));}source('check-match');source('next');
- for(const letter of ['מ','ל']){assert.equal(doc.querySelector('[data-copy-letter]'),null);assert.equal(doc.querySelectorAll('#hebleo-keyboard-root .new-key').length,0);const field=doc.querySelector('[data-source-input]');field.value=letter;field.dispatchEvent(new w.Event('input',{bubbles:true}));source('check-input');source('next');}source('skip');source('next');doc.querySelector('.lesson-footer [data-value="complete"]').click();await settled(()=>store.learner('learner-demo').completed.includes('MNTL-A2'));await settled(()=>doc.querySelector('[data-action="lesson"][data-value="lesson-3"]'));
+ await settled(()=>doc.querySelector('[data-action="lesson"][data-value="MNTL-A2"]'));doc.querySelector('[data-action="lesson"][data-value="MNTL-A2"]').click();await settled(()=>doc.querySelector('h1')?.textContent.includes('four consonants'));assert.equal(doc.querySelectorAll('figure').length,4);await next();
+ const n=doc.querySelectorAll('[name="source-choice"]')[1];n.checked=true;n.dispatchEvent(new w.Event('change',{bubbles:true}));source('check-choice');await next();assert.equal(doc.querySelector('[data-copy-letter]').dataset.copyLetter,'ל');source('keyboard');const key=doc.querySelector('#hebleo-keyboard-root [data-insert="ל"]');key.click();assert.equal(doc.querySelector('[data-source-input]').value,'ל');source('check-input');await next();
+ const tav=doc.querySelectorAll('[name="source-choice"]')[1];tav.checked=true;tav.dispatchEvent(new w.Event('change',{bubbles:true}));source('check-choice');await next();
+ for(const [id,letter]of [['m','מ'],['n','נ'],['t','ת'],['l','ל']]){const el=doc.querySelector('[data-source-match="'+id+'"]');el.value=letter;el.dispatchEvent(new w.Event('change',{bubbles:true}));}source('check-match');await next();
+ for(const letter of ['מ','ל']){assert.equal(doc.querySelector('[data-copy-letter]'),null);assert.equal(doc.querySelectorAll('#hebleo-keyboard-root .new-key').length,0);const field=doc.querySelector('[data-source-input]');field.value=letter;field.dispatchEvent(new w.Event('input',{bubbles:true}));source('check-input');await next();}source('skip');await next();await next();await settled(()=>store.learner('learner-demo').completed.includes('MNTL-A2'));await settled(()=>doc.querySelector('[data-action="lesson"][data-value="lesson-3"]'));
  const restored=new Store();t.after(()=>restored.close());restored.restore(store.backup());assert.deepEqual(restored.learner('learner-demo').completed,['MEMORY-A2','MNTL-A2']);
 });
 

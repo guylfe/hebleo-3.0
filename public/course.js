@@ -136,6 +136,7 @@ export function keyboardForLesson(content, lessonId) {
   return {...lesson.keyboard,knownKeys:prior.join(''),newKeys,availableKeys:unique([...prior,...introduced]).join(''),missingIntroductionLessonIds:lessons.slice(0,index).filter(l=>l.introducedLetters===undefined&&typeof l.keyboard?.newKeys!=='string').map(l=>l.id)};
 }
 export function validateLessonComposition(content,lesson) {
+  if(lesson.extraInformation!==undefined&&(typeof lesson.extraInformation!=='string'||lesson.extraInformation.length>100000))fail('Invalid authored extra information.');
   if(lesson.introducedLetters!==undefined && (typeof lesson.introducedLetters!=='string'||!/^[א-ת]*$/.test(lesson.introducedLetters)||unique([...lesson.introducedLetters]).length!==[...lesson.introducedLetters].length))fail('Introduced letters need unique Hebrew base letters.');
   if(lesson.compositionVersion!==undefined&&lesson.compositionVersion!==2)fail('Unsupported composition version.');
   if(lesson.vocabularySelector) {
@@ -153,6 +154,7 @@ export function validateLessonComposition(content,lesson) {
       if(block.source!=='inline'||block.renderer!=='text'||typeof block.text!=='string'||block.text.length>100000||(!block.text.trim()&&!block.video&&!block.textPages?.pages?.length))fail('Text components need inline authored text, pages or video.');
       if(block.textPages!==undefined)validateTextPages(block.textPages,{wordIds:content.words.map(w=>w.id),targetIds:(lesson.draftTargets||[]).map(t=>t.id)});
       if(block.options?.textDirection&&!['auto','ltr','rtl'].includes(block.options.textDirection))fail('Invalid component text direction.');
+      if(block.options?.extraInformation!==undefined&&(typeof block.options.extraInformation!=='string'||block.options.extraInformation.length>100000))fail('Invalid authored extra information.');
     } else if(['vocabulary','exercise-set'].includes(block.type)) {
       if(block.source!==(block.type==='vocabulary'?'words':'exercises')||block.renderer!==(block.type==='vocabulary'?'vocabulary-table':'practice'))fail('Invalid component source or renderer.');
       if(block.options?.showNotes!==undefined&&typeof block.options.showNotes!=='boolean')fail('Invalid component options.');

@@ -187,3 +187,8 @@ dialog.rehearsal-dialog{scroll-padding-block-end:var(--exercise-dock-reserve,100
 .source-comparison dd{margin:8px 0 20px;white-space:pre-wrap;overflow-wrap:anywhere}.source-activity textarea{width:100%;resize:none;min-height:80px}
 .source-activity .button-row{flex-wrap:wrap}.source-activity fieldset{border:0;padding:0;min-width:0}
 @media(max-width:520px){.source-letter-gallery{grid-template-columns:1fr}.source-mnemonic{height:230px}}
+
+/* The exposure clock owns the value and remaining bar; no CSS animation clock. */
+[data-source-exposure]{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.source-exposure-timer{display:block;width:100%;height:12px;accent-color:var(--accent);transition:none;animation:none}
+dialog.lesson-extra-information{border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);background:var(--paper);width:min(760px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto}
