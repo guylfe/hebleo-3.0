@@ -1,0 +1,10 @@
+✔ DESIGN13 single course rail reclaims width without remount, data writes or losing caret (1052.932ms)
+✔ F14 unsaved inline edits and sibling Studio edits survive view changes; stale save retains input until explicit reconciliation (2553.0901ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7082.7104
