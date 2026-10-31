@@ -1,0 +1,50 @@
+
+> hebleo-3-local-demo@0.1.0 test:editor
+> node --test test/mature-editor.test.js test/rendered-author.test.js test/author-review.test.js test/workspace-save-regression.test.js
+
+✔ author HTTP create/list/status is persistent, idempotent, versioned and completely absent from learner APIs (645.6508ms)
+✔ server canonical rich projection checks exact UTF-16/Nikkud and rejects forged paths, actors, offsets or draft tokens without writes (137.2976ms)
+✔ exact draft anchors survive save/publish/rollback, author backup relinks all revisions/drafts and retains audit, learners and metadata (238.3589ms)
+✔ unique exact quote can relocate, repeated or absent quotes change, missing and retired identities never attach by position (36.2381ms)
+✔ malformed private namespace, anchors, hashes, audit or retained draft backup rejects atomically including sqlite_sequence (267.4942ms)
+✔ actual on-disk reload retains author-readable private note (88.0857ms)
+✔ shared coordinator includes Studio sibling edits in inline draft; errors retain rich source, JSON and comment body; saved preview and deliberate release are separate (690.5094ms)
+✔ coordinator CAS/network/403/validation failures retain full local values and never auto-retry using another token (21.9665ms)
+✔ activity anchors pin existing IDs and all settings; malformed settings retain the local JSON and current source (19.6054ms)
+✔ restore retains newer notes/status history and immutable create receipts, and schema-8 migration changes no authored or learner state (151.6072ms)
+✔ keyboard quote selection creates a server-validated Hebrew/emoji anchor; interrupted comment response cannot clear a newer composer (188.9704ms)
+✔ HTML/Markdown/CRLF/opaque source: mount is exact, rich-run text patch is minimal, untouched entities/wrappers stay exact, undo returns original bytes (395.5399ms)
+✔ existing HTML span metadata, character entities, UTF16 emoji and Nikkud survive a text patch and paragraph direction change (54.7854ms)
+✔ HTML text patches preserve authored CRLF and repeated whitespace inside a changed paragraph (33.6425ms)
+✔ normal Enter, list continuation/empty exit, multiline paste, formatting and history operate on a contiguous document (43.7351ms)
+✔ opaque source cannot be deleted or crossed; adjacent current prose remains editable (32.5007ms)
+✔ mature toolbar selection/history survives save status, paste strips active/external content, IME commits once and save waits for composition (143.1951ms)
+✔ physical sidebar edge determines glyph/title/aria for both states, including hidden restored state and RTL content (34.4385ms)
+✔ actual EasyMDE edits genuine Markdown with history and exact no-op CRLF retention (412.3282ms)
+✔ rich paste inserts multiple paragraphs/lists with mature history; image insertion only selects approved local media and requires alt text (127.5169ms)
+✔ checklist is a real list with editable checked state, conventional Enter and exact Undo restoration (64.167ms)
+✔ long rich source inputs never reparse/sanitize or compile source; collection retains every untouched entity (612.8688ms)
+ℹ {"syntheticSourceCodeUnits":114020,"operations":60,"sanitizesDuringInput":0,"transactionMs":{"p50":0.39249999999992724,"p95":0.7745999999997366,"max":1.1068999999997686},"measurement":"JSDOM only, not native input-to-paint"}
+✔ rendered heading/sentence save through full draft/CAS; saved Preview reads exact rich source; quote and whole-block notes are readable, persistent and learner-excluded (1218.1541ms)
+✔ rendered edits and unsent comment survive failed save 400 (247.2193ms)
+✔ rendered edits and unsent comment survive failed save 403 (3246.0845ms)
+✔ rendered edits and unsent comment survive failed save 409 (209.6602ms)
+✔ rendered edits and unsent comment survive failed save 503 (3206.3404ms)
+✔ pending shared save acknowledges sent rendered edits only; newer raw edits and unsent comments survive (232.3617ms)
+✔ input, selection and direction do zero workspace clones/reads/validation/rendering on a 23-lesson synthetic workspace; notifications coalesce (3281.9112ms)
+ℹ {"syntheticLessons":23,"operations":120,"workspaceReads":0,"workspaceClones":0,"notifications":1,"transactionMs":{"p50":0.23219999999855645,"p95":0.676500000001397,"max":2.274599999998827},"measurement":"JSDOM transaction+selection, not native input-to-paint"}
+✔ Undo to initial source clears only its buffer; title work survives, and in-app page switching retains prose history (342.4246ms)
+✔ shared save waits for IME and delayed receipt retains newer mature model plus unsent comment (234.5048ms)
+✔ optional summary focus and active input clear fixed dock in learner; reading scroll remains free (55.009ms)
+✔ optional summary focus and active input clear fixed dock in 1280x720 Preview; reading scroll remains free (44.4908ms)
+✔ actual six-page reader 6 → Back → 5 reveals optional summary before hit testing, without opening or gating Continue (53.3906ms)
+✔ shared save receipts acknowledge only sent buffers; pending edits, detached collectors and failures retain exact state (67.733ms)
+✔ QA-F14-META-02: nested own reserved JSON keys, deletions, nulls and arrays survive reconcile and Store save/readback (46.4911ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16046.9991
