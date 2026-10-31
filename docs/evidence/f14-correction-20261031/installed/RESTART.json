@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "revision": "0e874af56765ce16b929b1aa55974f121a86f8c3",
+  "runtimeSha256": "524058a51ac9600a294e6642d5eefa1e8e76538287e0a4bb0c5ff859388d190a",
+  "previousPID": 74200,
+  "allTablesAndSequencesExact": true,
+  "nonemptyNativeSamPage2ProgressPreserved": true,
+  "noAdditionalReset": true,
+  "beforeSHA": "4b7b39c070a8902b77b76a5b1b7af20c9b76f02d670c45e6cd26d066beeadfcb",
+  "afterSHA": "4b7b39c070a8902b77b76a5b1b7af20c9b76f02d670c45e6cd26d066beeadfcb",
+  "pid": 74716
+}

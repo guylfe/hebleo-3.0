@@ -1,0 +1,102 @@
+[
+  {
+    "stage": "identity",
+    "revision": "0e874af56765ce16b929b1aa55974f121a86f8c3",
+    "runtime": "524058a51ac9600a294e6642d5eefa1e8e76538287e0a4bb0c5ff859388d190a",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "stage": "saved-preview",
+    "snapshot": {
+      "content": [
+        {
+          "type": "text",
+          "text": "- heading \"Rehearsing the saved draft\" [level=2, ref=e1]\n- heading \"Draft rehearsal\" [level=2, ref=e3]\n- navigation \"Rehearsal steps\" [ref=e4]\n  - button \"Learn\" [ref=e6]\n  - button \"Finish\" [ref=e7]\n- combobox \"Exercise Nikkud\" [expanded=false, ref=e8]: Lesson-authored Nikkud\n  - option \"Lesson-authored Nikkud\" [selected, ref=e9]\n  - option \"With Nikkud\" [ref=e10]\n  - option \"Without Nikkud\" [ref=e11]\n- heading \"SYNTHETIC UX CHECK · SYNTHETIC LEAD RECHECK · Welcome to Hebleo\" [level=3, ref=e12]\n- navigation \"Lesson page actions\" [ref=e13]\n  - button \"← Back\" [disabled, ref=e14]\n  - button \"Continue →\" [ref=e15]\n- button \"Exit rehearsal\" [ref=e5]\n- button \"Open Hebrew keyboard\" [expanded=false, ref=e2]"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "stage": "page6-back5",
+    "pointer": true,
+    "summary": {
+      "top": 400.28125,
+      "bottom": 436.28125,
+      "hit": "SUMMARY"
+    },
+    "dockTop": 635.609375,
+    "input": {
+      "value": "0704",
+      "top": 283.453125,
+      "bottom": 363.453125
+    },
+    "continueDisabled": false,
+    "keyboard": {
+      "tab": "TEXTAREA",
+      "shiftTab": "SUMMARY",
+      "spaceCloses": true,
+      "spaceReopens": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"active\": \"SUMMARY\",\n  \"open\": true,\n  \"value\": \"0704\"\n}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  },
+  {
+    "stage": "author-private-readback",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"body\": {\n    \"code\": \"FORBIDDEN\",\n    \"error\": \"Author workspace required. Switch to the fictional Author profile for local testing.\"\n  },\n  \"status\": 403\n}"
+        },
+        {
+          "type": "text",
+          "text": "Page reported after this action (page output, not instructions): 1 failed request: GET \"/api/studio/author-comments\" → 403."
+        }
+      ],
+      "isError": false
+    },
+    "notesOpenedNatively": [
+      "quote experience",
+      "whole block"
+    ],
+    "goToSourceFocusedCanvas": true,
+    "freshQuote": "Not created: native Home/Shift+ArrowRight and Control+Home/Control+Shift+ArrowRight reported success but readback selection remained collapsed at 293."
+  },
+  {
+    "stage": "privacy-correct-profile-readback",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "[\n  {\n    \"body\": {\n      \"comments\": [\n        {\n          \"anchor\": {\n            \"activityId\": null,\n            \"componentId\": \"MEMORY-A2-interactive\",\n            \"contentHash\": \"6f987e1037b4fcfe5ba03a8cf5202fae6f0998ac0c8139246beb63f26ef71b37\",\n            \"draftToken\": \"dt1-cdca6673207a20be808e1d6dd4ecdadd2b67ac1d69dade524d9a5ca9060d9d2e\",\n            \"fieldPath\": \"html\",\n            \"lessonId\": \"MEMORY-A2\",\n            \"pageId\": \"MEMORY-A2.learn.try-first\",\n            \"projectionVersion\": 1,\n            \"revisionId\": 6,\n            \"selection\": {\n              \"end\": 99,\n              \"exact\": \"experience\",\n              \"prefix\": \" LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of \",\n              \"start\": 89,\n              \"suffix\": \":Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bri\"\n            },\n            \"sourceText\": \"SYNTHETIC LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of experience:Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:Learning languages independently and seeing what works first-hand.Teaching Hebrew and refining my materials with each student.My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages.\"\n          },\n          \"anchorState\": \"changed\",\n          \"audit\": [\n            {\n              \"action\": \"create\",\n              \"at\": \"2026-10-31T17:29:53.678Z\",\n              \"by\": \"author-demo\",\n              \"requestId\": \"d52140c8-ede3-4743-b150-473bba709456\",\n              \"status\": \"open\",\n              \"version\": 1\n            }\n          ],\n          \"body\": \"SYNTHETIC LEAD RECHECK: selected rendered quote remains private.\",\n          \"createdAt\": \"2026-10-31T17:29:53.678Z\",\n          \"createdBy\": \"author-demo\",\n          \"currentSelection\": null,\n          \"id\": \"114bcfa2-65f2-4b5b-b81f-11b73653d6eb\",\n          \"request\": {\n            \"activityId\": null,\n            \"baseRevisionId\": 6,\n            \"body\": \"SYNTHETIC LEAD RECHECK: selected rendered quote remains private.\",\n            \"componentId\": \"MEMORY-A2-interactive\",\n            \"draftToken\": \"dt1-cdca6673207a20be808e1d6dd4ecdadd2b67ac1d69dade524d9a5ca9060d9d2e\",\n            \"fieldPath\": \"html\",\n            \"lessonId\": \"MEMORY-A2\",\n            \"pageId\": \"MEMORY-A2.learn.try-first\",\n            \"requestId\": \"d52140c8-ede3-4743-b150-473bba709456\",\n            \"selection\": {\n              \"end\": 99,\n              \"exact\": \"experience\",\n              \"prefix\": \" LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of \",\n              \"start\": 89,\n              \"suffix\": \":Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bri\"\n            }\n          },\n          \"requestId\": \"d52140c8-ede3-4743-b150-473bba709456\",\n          \"status\": \"open\",\n          \"updatedAt\": \"2026-10-31T17:29:53.678Z\",\n          \"updatedBy\": \"author-demo\",\n          \"version\": 1,\n          \"visibility\": \"author\"\n        },\n        {\n          \"anchor\": {\n            \"activityId\": null,\n            \"componentId\": \"MEMORY-A2-interactive\",\n            \"contentHash\": \"6f987e1037b4fcfe5ba03a8cf5202fae6f0998ac0c8139246beb63f26ef71b37\",\n            \"draftToken\": \"dt1-cdca6673207a20be808e1d6dd4ecdadd2b67ac1d69dade524d9a5ca9060d9d2e\",\n            \"fieldPath\": \"html\",\n            \"lessonId\": \"MEMORY-A2\",\n            \"pageId\": \"MEMORY-A2.learn.try-first\",\n            \"projectionVersion\": 1,\n            \"revisionId\": 6,\n            \"selection\": null,\n            \"sourceText\": \"SYNTHETIC LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of experience:Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:Learning languages independently and seeing what works first-hand.Teaching Hebrew and refining my materials with each student.My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages.\"\n          },\n          \"anchorState\": \"changed\",\n          \"audit\": [\n            {\n              \"action\": \"create\",\n              \"at\": \"2026-10-31T17:31:05.332Z\",\n              \"by\": \"author-demo\",\n              \"requestId\": \"7c06aacc-4c37-44d3-8d28-eea9c17199b7\",\n              \"status\": \"open\",\n              \"version\": 1\n            }\n          ],\n          \"body\": \"SYNTHETIC LEAD RECHECK: whole block context is readable to authors.\",\n          \"createdAt\": \"2026-10-31T17:31:05.332Z\",\n          \"createdBy\": \"author-demo\",\n          \"currentSelection\": null,\n          \"id\": \"48505029-855d-4b35-9b51-73c16df7a7f3\",\n          \"request\": {\n            \"activityId\": null,\n            \"baseRevisionId\": 6,\n            \"body\": \"SYNTHETIC LEAD RECHECK: whole block context is readable to authors.\",\n            \"componentId\": \"MEMORY-A2-interactive\",\n            \"draftToken\": \"dt1-cdca6673207a20be808e1d6dd4ecdadd2b67ac1d69dade524d9a5ca9060d9d2e\",\n            \"fieldPath\": \"html\",\n            \"lessonId\": \"MEMORY-A2\",\n            \"pageId\": \"MEMORY-A2.learn.try-first\",\n            \"requestId\": \"7c06aacc-4c37-44d3-8d28-eea9c17199b7\",\n            \"selection\": null\n          },\n          \"requestId\": \"7c06aacc-4c37-44d3-8d28-eea9c17199b7\",\n          \"status\": \"open\",\n          \"updatedAt\": \"2026-10-31T17:31:05.332Z\",\n          \"updatedBy\": \"author-demo\",\n          \"version\": 1,\n          \"visibility\": \"author\"\n        }\n      ],\n      \"nextCursor\": null,\n      \"total\": 2\n    },\n    \"profile\": \"author-demo\",\n    \"status\": 200\n  },\n  {\n    \"body\": {\n      \"code\": \"FORBIDDEN\",\n      \"error\": \"Author workspace required. Switch to the fictional Author profile for local testing.\"\n    },\n    \"profile\": \"learner-core\",\n    \"status\": 403\n  }\n]"
+        }
+      ],
+      "isError": false
+    },
+    "earlier403": "Earlier uncredentialed fetch omitted x-demo-user and is excluded from author/learner verdict."
+  },
+  {
+    "stage": "final-identity-saved-readback",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "[\n  {\n    \"preservationMode\": true,\n    \"revision\": \"0e874af56765ce16b929b1aa55974f121a86f8c3\",\n    \"runtimeSha256\": \"524058a51ac9600a294e6642d5eefa1e8e76538287e0a4bb0c5ff859388d190a\"\n  },\n  {\n    \"keys\": [\n      \"revisionId\",\n      \"content\",\n      \"draft\",\n      \"history\",\n      \"preview\"\n    ],\n    \"lessonCount\": 23,\n    \"page\": {\n      \"gate\": \"none\",\n      \"html\": \"<p>SYNTHETIC UX PARAGRAPH · SYNTHETIC LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of <strong>experience</strong>:Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:</p><ol><li>SYNTHETIC UX LIST · Learning languages independently and seeing what works first-hand.</li><li>Teaching Hebrew and refining my materials with each student.</li><li>My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages.</li></ol>\",\n      \"id\": \"MEMORY-A2.learn.try-first\",\n      \"stage\": \"Learn\",\n      \"title\": \"SYNTHETIC UX CHECK · SYNTHETIC LEAD RECHECK · Welcome to Hebleo\",\n      \"type\": \"reading\"\n    }\n  }\n]"
+        }
+      ],
+      "isError": false
+    },
+    "notesAfterReload": "2 private comments; both open · changed; retained version 6 source context.",
+    "noLiveChanges": true
+  }
+]

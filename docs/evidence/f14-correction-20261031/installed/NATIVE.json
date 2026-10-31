@@ -1,0 +1,56 @@
+{
+  "evidenceLevel": "Lead narrow installed mounted Browser verification",
+  "entry": {
+    "advancedOpen": false,
+    "headingEditable": true,
+    "listEditable": true,
+    "origin": "http://127.0.0.1:63358",
+    "paragraphEditable": true,
+    "reviewLabel": "Review changes",
+    "revision": "0e874af56765ce16b929b1aa55974f121a86f8c3",
+    "runtime": "524058a51ac9600a294e6642d5eefa1e8e76538287e0a4bb0c5ff859388d190a",
+    "scope": "Private author workspace · comments are visible only to authors.",
+    "source": "<p>Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:</p><ol><li>Learning languages independently and seeing what works first-hand.</li><li>Teaching Hebrew and refining my materials with each student.</li><li>My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages.</li></ol>",
+    "status": "Saved workspace · publication is a separate action.",
+    "title": "Welcome to Hebleo"
+  },
+  "backGeometry": {
+    "dock": {
+      "bottom": 707,
+      "top": 635.609375
+    },
+    "hit": "SUMMARY",
+    "hitBelongsToSummary": true,
+    "nextDisabled": false,
+    "open": false,
+    "summary": {
+      "bottom": 436.28125,
+      "top": 400.28125
+    },
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "inputGeometry": {
+    "active": true,
+    "dockTop": 635.609375,
+    "input": {
+      "bottom": 363.453125,
+      "top": 283.453125
+    },
+    "nextDisabled": false,
+    "value": "0704"
+  },
+  "keyboard": {
+    "focus": "SUMMARY",
+    "open": true,
+    "value": "0704"
+  },
+  "sourceDraftSavePerformed": false,
+  "livePrivateCommentCreated": false,
+  "rehearsalTemporaryOnly": true,
+  "focusReturnedToPreview": true,
+  "normalSamCursorAdvancedToPage2": true,
+  "AlexLeftFresh": true
+}

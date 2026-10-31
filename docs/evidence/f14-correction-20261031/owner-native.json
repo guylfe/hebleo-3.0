@@ -1,0 +1,109 @@
+{
+  "candidate": "0e874af56765ce16b929b1aa55974f121a86f8c3",
+  "origin": "http://127.0.0.1:63472",
+  "evidenceLevel": "Lead mounted Browser completion; independent UX verdict still pending",
+  "before": {
+    "advancedOpen": false,
+    "blocks": [
+      {
+        "tag": "P",
+        "text": "Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:"
+      },
+      {
+        "tag": "LI",
+        "text": "Learning languages independently and seeing what works first-hand."
+      },
+      {
+        "tag": "LI",
+        "text": "Teaching Hebrew and refining my materials with each student."
+      },
+      {
+        "tag": "LI",
+        "text": "My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages."
+      }
+    ],
+    "source": "<p>Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:</p><ol><li>Learning languages independently and seeing what works first-hand.</li><li>Teaching Hebrew and refining my materials with each student.</li><li>My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages.</li></ol>",
+    "title": "Welcome to Hebleo",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "edited": {
+    "advancedOpen": false,
+    "html": "<p>SYNTHETIC LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of <strong>experience</strong>:Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:</p><ol><li>Learning languages independently and seeing what works first-hand.</li><li>Teaching Hebrew and refining my materials with each student.</li><li>My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages.</li></ol>",
+    "lists": [
+      "Learning languages independently and seeing what works first-hand.",
+      "Teaching Hebrew and refining my materials with each student.",
+      "My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages."
+    ],
+    "paragraph": "SYNTHETIC LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of <strong>experience</strong>:Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:",
+    "status": "Unsaved workspace edits.",
+    "title": "SYNTHETIC LEAD RECHECK · Welcome to Hebleo"
+  },
+  "untouchedListSourceExact": true,
+  "savedPreviewObserved": {
+    "title": "SYNTHETIC LEAD RECHECK · Welcome to Hebleo",
+    "bold": "experience",
+    "listItems": 3
+  },
+  "backGeometry": {
+    "dock": {
+      "bottom": 707,
+      "top": 635.609375
+    },
+    "hit": "SUMMARY",
+    "hitBelongsToSummary": true,
+    "nextDisabled": false,
+    "open": false,
+    "summary": {
+      "bottom": 436.28125,
+      "top": 400.28125
+    },
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "inputGeometry": {
+    "active": true,
+    "dockTop": 635.609375,
+    "input": {
+      "bottom": 363.453125,
+      "top": 283.453125
+    },
+    "nextDisabled": false,
+    "value": "0704"
+  },
+  "privateComments": {
+    "authorStatus": 200,
+    "learnerStatus": 403,
+    "notes": [
+      {
+        "anchorState": "current",
+        "body": "SYNTHETIC LEAD RECHECK: selected rendered quote remains private.",
+        "selection": {
+          "end": 99,
+          "exact": "experience",
+          "prefix": " LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of ",
+          "start": 89,
+          "suffix": ":Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bri"
+        },
+        "sourceText": "SYNTHETIC LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of experience:Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:Learning languages independently and seeing what works first-hand.Teaching Hebrew and refining my materials with each student.My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages."
+      },
+      {
+        "anchorState": "current",
+        "body": "SYNTHETIC LEAD RECHECK: whole block context is readable to authors.",
+        "selection": null,
+        "sourceText": "SYNTHETIC LEAD RECHECK. Welcome to Hebleo, the smart way to learn Hebrew. Three kinds of experience:Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:Learning languages independently and seeing what works first-hand.Teaching Hebrew and refining my materials with each student.My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages."
+      }
+    ],
+    "total": 2
+  },
+  "notes": [
+    "One native type call returned connection10060; a new snapshot proved the exact heading edit occurred before further actions.",
+    "Native fill inserted a synthetic paragraph prefix instead of replacing existing text; retained and saved only in disposable review copy.",
+    "Actual Bold command, Save, saved Preview, pointer summary, keyboard Tab/Space, input0704 and quote/block note submission executed.",
+    "No live draft or live comment mutation; no fake DOM selection or synthetic browser input events."
+  ]
+}

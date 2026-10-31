@@ -1,3 +1,5 @@
+> Historical checkpoint. The later independent QA/UX review found authoring defects; those corrections and the current installed identity are recorded in [the final correction delivery](../f14-correction-20261031/DELIVERY.md). Earlier completion wording below is not current general acceptance.
+
 # Fourteen feedback items installed — 31 October 2026
 
 All fourteen reconciled feedback items are integrated and installed in the existing local app at **http://127.0.0.1:63358/**. Active content revision **6**, Store reader **10**, current PID **27368**. Native UX acceptance and Guy acceptance remain separate, pending Leo's final QA/UX review.

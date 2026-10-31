@@ -1,0 +1,12 @@
+✔ independent HTTP CAS: disjoint reconcile preserves full source; overlapping reconcile rejects with all local values retained (216.913ms)
+✔ independent actual app dirty guard retains unsent private comment; Stay and failed save leave all inputs (622.4543ms)
+✔ REGRESSION: departure Save must retire inline raw buffers so later Studio changes survive inline reentry (2959.1072ms)
+✔ REGRESSION: unknown JSON metadata including an own __proto__ field survives disjoint reconciliation (23.8966ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6059.0165

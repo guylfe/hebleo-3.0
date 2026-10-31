@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "origin": "http://127.0.0.1:63358",
+  "revision": "0e874af56765ce16b929b1aa55974f121a86f8c3",
+  "runtimeSha256": "524058a51ac9600a294e6642d5eefa1e8e76538287e0a4bb0c5ff859388d190a",
+  "backendSha256": "1a2c09e61d8c5c2c5dae553655b800a5ab2ed8f330f81c7d196721716ce583c2",
+  "manifestEntries": 125,
+  "assetsExact": [
+    "index.html",
+    "app.js",
+    "source-activities.js",
+    "exercise-actions.js",
+    "text-contract.js",
+    "text-reader.js",
+    "refinement.css",
+    "styles.css",
+    "rich.js",
+    "rich-browser.js",
+    "author/inline-author.js",
+    "author/rendered-source.js",
+    "author/author.css",
+    "studio/workspace.js",
+    "studio/unified-studio.js",
+    "preview/learner-renderer.js",
+    "preview/lesson-preview.js",
+    "backup-contract.js"
+  ],
+  "imagesExact": 4,
+  "contentRevision": 6,
+  "reader": 10,
+  "canonicalFirstTwoExact": true,
+  "MNTLExact": true,
+  "fullDraftLessons": 23,
+  "legacyDrafts": 20,
+  "legacyPages": 154,
+  "unchangedDraftSha256": "ebee577b7acbc5779476b8374639fa5e00758d52e959da378c79c2dceb1363d5",
+  "fresh": [
+    {
+      "user": "learner-demo",
+      "completed": 0,
+      "attempts": 0,
+      "cards": 0,
+      "resumes": 0,
+      "textProgress": 0
+    },
+    {
+      "user": "learner-core",
+      "completed": 0,
+      "attempts": 0,
+      "cards": 0,
+      "resumes": 0,
+      "textProgress": 0
+    },
+    {
+      "user": "author-demo",
+      "completed": 0,
+      "attempts": 0,
+      "cards": 0,
+      "resumes": 0,
+      "textProgress": 0
+    }
+  ],
+  "authorPrivateGET": 200,
+  "learnerPrivateGET": 403,
+  "syntheticPrivateComments": 0,
+  "allTablesAndSequencesUnchangedByStartupAndReadback": true,
+  "beforeSHA": "3508a80770f511a73b167669b8712d4d0511d21016bdb4df4282c9667584d8dc",
+  "afterSHA": "3508a80770f511a73b167669b8712d4d0511d21016bdb4df4282c9667584d8dc"
+}
