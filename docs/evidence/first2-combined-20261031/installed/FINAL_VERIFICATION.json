@@ -1,0 +1,29 @@
+{
+  "status": "INSTALLED_VERIFIED",
+  "codeCommit": "6b90bcfb26045cfa8d8bbe167fbfeffe9b6dbffe",
+  "reviewedCommit": "021dc19ae0e9f7cb3b5cfb4afcc6984a5c7600b3",
+  "installedCommit": "8f4de675363e2ac49dafeba7eb8b803ac79d2001",
+  "runtimeSha256": "3105779faa90e6ba5f6a51c13387f5c53f35547b3b68cbb7b6956af283727bc4",
+  "sourcePackSHA256": "f168205e2d2c30875103672d36bdf9c5766436c14d5144c4ed184c8860b7b6e8",
+  "sourceRevision": "AHj4eMRxQhMluC04Gm0-aMjeII8LLcqZjsm8oJk1OkkA5amjOLeQAnPd9EsQCsqwb-g8t4yM7BkmHezGXxsy5iGHeaOFaR4xNRtcd0d6RQ",
+  "url": "http://127.0.0.1:63358/",
+  "pid": 27368,
+  "contentRevision": 6,
+  "reader": 10,
+  "tests": {
+    "candidate": 948,
+    "focused": 63,
+    "schema": 27,
+    "runtime": 9,
+    "sourceFields": 30
+  },
+  "ci": [
+    41211175477,
+    41211707664,
+    41214358461
+  ],
+  "independentRecovery": "RR-FIRST2-F14-01 CLOSED/PREINSTALL_PASS",
+  "native": "DELIVERY.md",
+  "guyAcceptance": "Pending",
+  "nextOwner": "Leo 3.0: final actual-product QA/UX and Guy acceptance"
+}
