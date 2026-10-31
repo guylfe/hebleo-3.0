@@ -1,4 +1,5 @@
 import {createStudioWorkspace} from '../public/studio/workspace.js';
+import {BACKUP_BYTE_LIMIT,serializeBackup} from '../public/backup-contract.js';
 import {mountInlineAuthor} from '../public/author/inline-author.js';
 import {hasTextPages,mountTextReader} from '../public/text-reader.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../public/lexical-vocabulary.js';
@@ -40,6 +41,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   Object.defineProperty(w,'innerWidth',{value:width,writable:true});let server,origin;
   if(realHTTP){server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
   t.after(async()=>{w.close();if(server)await new Promise(r=>server.close(r));if(!providedStore)store.close();});w.matchMedia=()=>({matches:reduceMotion});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
+  Object.assign(w,{BACKUP_BYTE_LIMIT,serializeBackup});
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
@@ -74,6 +76,23 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+
+test('F14 actual app backup download and confirmed HTTP restore retain exact comments, saved token and revision counts through three roundtrips',async t=>{
+ const {w,doc,store,calls}=await app(t,{author:true,page:'settings',realHTTP:true});
+ const base=store.get('active'),c=store.snapshot();c.lessons[0].explanation+='<p>SYNTHETIC 😀 שָׁלוֹם recovery fixture.</p>';
+ store.stage({baseRevisionId:base,expectedDraftToken:null,content:c});
+ store.authorReview.create('author-demo',{requestId:randomUUID(),lessonId:c.lessons[0].id,componentId:null,pageId:null,activityId:null,fieldPath:'explanation',baseRevisionId:base,draftToken:store.currentDraft().draftToken,selection:null,body:'SYNTHETIC app recovery comment'});
+ const token=store.currentDraft().draftToken,review=store.authorReview.state(),revisions=store.db.prepare('SELECT * FROM revisions ORDER BY id').all(),downloads=[];
+ w.Blob=Blob;w.URL.createObjectURL=blob=>{downloads.push(blob);return 'blob:synthetic-download';};w.URL.revokeObjectURL=()=>{};w.HTMLAnchorElement.prototype.click=function(){assert.equal(this.download,'hebleo-demo-backup.json');};
+ for(let i=0;i<3;i++){
+  click(doc,'export-backup');await settled(()=>downloads.length===i+1);const text=await downloads[i].text(),payload=JSON.parse(text);assert.equal(text,serializeBackup(payload));assert.ok(downloads[i].size<=BACKUP_BYTE_LIMIT);
+  Object.defineProperty(doc.querySelector('#restore-file'),'files',{configurable:true,value:[{size:downloads[i].size,text:async()=>text}]});
+  const previous=calls.filter(p=>p==='/api/restore').length;doc.querySelector('#toast').textContent='';click(doc,'restore');await settled(()=>doc.querySelector('[data-confirm-accept]')||doc.querySelector('#toast').textContent);assert.ok(doc.querySelector('[data-confirm-accept]'),doc.querySelector('#toast').textContent);doc.querySelector('[data-confirm-accept]').click();
+  await settled(()=>calls.filter(p=>p==='/api/restore').length===previous+1&&doc.querySelector('#toast').textContent==='Local backup restored.');
+  assert.deepEqual(store.authorReview.state(),review);assert.equal(store.currentDraft().draftToken,token);assert.deepEqual(store.db.prepare('SELECT * FROM revisions ORDER BY id').all(),revisions);
+ }
+ const before=calls.length;Object.defineProperty(doc.querySelector('#restore-file'),'files',{configurable:true,value:[{size:BACKUP_BYTE_LIMIT+1}]});click(doc,'restore');await settled(()=>doc.querySelector('#toast').textContent.includes('200 MB restore limit'));assert.equal(calls.length,before);
+});
 
 function first20Draft(store){store.importTextDraft({baseRevisionId:store.get('active'),expectedDraftToken:null,pack:JSON.parse(readFileSync(new URL('../docs/curriculum/first20-20261025/content.json',import.meta.url)))});}
 const pickerDump=store=>JSON.stringify(store.db.prepare("SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name").all().map(({name})=>[name,store.db.prepare('SELECT * FROM "'+name+'" ORDER BY 1').all()]));

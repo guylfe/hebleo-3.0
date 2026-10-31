@@ -13,6 +13,7 @@ import {adaptConsolidatedWorkbook} from './lexical-adapter.js';
 import {projectLexicalRows} from '../public/lexical-runtime.js';
 import { help } from './tutor.js';
 import { demoBuildFingerprint } from './demo-build.js';
+import {BACKUP_BYTE_LIMIT} from '../public/backup-contract.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png' };
@@ -55,7 +56,10 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           if (url.pathname === '/api/reports') return json(200,store.reports(userId));
           if (['/api/studio','/api/export','/api/content'].includes(url.pathname)) store.requireAuthor(userId);
           if (url.pathname === '/api/studio') return json(200, { ...store.active(), preview: store.preview() });
-          if (url.pathname === '/api/export') return json(200, store.backup());
+          if (url.pathname === '/api/export') {
+            const body=store.serializeBackup(store.backup());
+            res.writeHead(200,{...headers,'Content-Type':'application/json; charset=utf-8'});return res.end(body);
+          }
           if (url.pathname === '/api/content') return json(200, store.snapshot());
         }
         if (req.method === 'POST') {
@@ -63,7 +67,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           // Backups carry every referenced revision, so restore gets a larger bound than ordinary edits.
           // The preserved 23-lesson source workspace exceeds 26 MB. Full-workspace
           // CAS/impact must accept it without weakening the smaller import bounds.
-          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? 200000000 : ['/api/studio/draft','/api/studio/impact'].includes(url.pathname)?50000000:url.pathname==='/api/studio/media/import'?30000000:url.pathname.startsWith('/api/studio/sources/')||['/api/studio/lexical/import-preview','/api/studio/text/import-preview','/api/studio/text/import'].includes(url.pathname)?20000000:750000;
+          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? BACKUP_BYTE_LIMIT : ['/api/studio/draft','/api/studio/impact'].includes(url.pathname)?50000000:url.pathname==='/api/studio/media/import'?30000000:url.pathname.startsWith('/api/studio/sources/')||['/api/studio/lexical/import-preview','/api/studio/text/import-preview','/api/studio/text/import'].includes(url.pathname)?20000000:750000;
           for await (const chunk of req.iterator({destroyOnReturn:false})) { bytes += chunk.length; if (bytes > limit){req.resume();throw new DomainError('Request exceeds the local import limit.', 413);} chunks.push(chunk); }
           let input; try { input = parseStrictJSON(Buffer.concat(chunks).toString()); } catch { throw new DomainError('Malformed JSON.'); }
           if (!input || typeof input !== 'object' || Array.isArray(input)) throw new DomainError('Expected a JSON object.');
@@ -135,6 +139,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
       if (req.method !== 'GET') return json(405, { error: 'Method not allowed.', code: 'METHOD_NOT_ALLOWED' });
       const allowed = { '/assets/hebleo-wide-navy.png':'assets/hebleo-wide-navy.png', '/': 'index.html','/google-setup':'google-setup.html','/google-setup.html':'google-setup.html','/google-setup.js':'google-setup.js','/studio/media-library.js':'studio/media-library.js','/studio/media-library.css':'studio/media-library.css', '/app.js': 'app.js', '/content.js': 'content.js', '/course.js':'course.js', '/vocabulary-import.js':'vocabulary-import.js', '/studio/markdown-editor.js':'studio/markdown-editor.js', '/studio/vocabulary-browser.js':'studio/vocabulary-browser.js', '/studio/vendor/easymde.min.js':'studio/vendor/easymde.min.js', '/studio/vendor/easymde.min.css':'studio/vendor/easymde.min.css', '/answer-policy.js':'answer-policy.js', '/review-schedule.js':'review-schedule.js', '/ux.js': 'ux.js', '/media.js': 'media.js', '/styles.css': 'styles.css', '/refinement.css':'refinement.css', '/rich.js':'rich.js', '/rich-browser.js':'rich-browser.js', '/interactions.js':'interactions.js', '/learner-view.js':'learner-view.js', '/preview/learner-renderer.js':'preview/learner-renderer.js', '/preview/lesson-preview.js':'preview/lesson-preview.js', '/studio/unified-studio.js':'studio/unified-studio.js', '/studio/selector-editor.js':'studio/selector-editor.js', '/studio/curriculum-editor.js':'studio/curriculum-editor.js', '/studio/import-workflow.js':'studio/import-workflow.js', '/studio/editor-fields.js':'studio/editor-fields.js', '/studio/lesson-editor.js':'studio/lesson-editor.js', '/studio/exercise-editor.js':'studio/exercise-editor.js', '/studio/import-review.js':'studio/import-review.js', '/studio/studio.css':'studio/studio.css','/studio/sources-editor.js':'studio/sources-editor.js','/studio/sources.css':'studio/sources.css', '/keyboard-owner.js':'keyboard-owner.js', '/keyboard-owner.css':'keyboard-owner.css', '/hebleo-lion-mark.svg':'hebleo-lion-mark.svg', '/vendor/marked.js':'../node_modules/marked/lib/marked.esm.js', '/vendor/purify.js':'../node_modules/dompurify/dist/purify.es.mjs' };
       for(const asset of ['author/inline-author.js','author/author.css','studio/workspace.js','source-activities.js','studio/text-import.js','text-contract.js','content-identity.js','text-reader.js','studio/text-pages-editor.js','exercise-actions.js','exercise-bindings.js','studio/exercise-bindings-editor.js','post-answer-vocabulary.js','vocabulary-reminder.js','vocabulary-reminder.css','source-vocabulary.js','lexical-contract.js','lexical-runtime.js','lexical-vocabulary.js','lexical-vocabulary.css','studio/lexical-settings.js'])allowed['/'+asset]=asset;
+      allowed['/backup-contract.js']='backup-contract.js';
       if (!allowed[url.pathname]) return json(404, { error: 'Page not found.', code: 'NOT_FOUND' });
       const file = allowed[url.pathname]; const ext = url.pathname.startsWith('/vendor/') ? '.js' : '.' + file.split('.').pop();
       const body = await readFile(resolve(root, 'public', file));

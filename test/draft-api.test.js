@@ -114,14 +114,17 @@ test('preview is stale after re-stage, publish or rollback and has no no-draft m
   rejects(()=>s.previewSession({lessonId:'lesson-1',draftToken:edited.draftToken}),409,'DRAFT_CONFLICT');
 });
 
-test('a restored draft is re-based onto the new revision, so its old token is stale',t=>{
+test('a restored draft keeps its token on a reused revision and changes it when its base must move',t=>{
   const s=setup(t),staged=draftWithWho(s,'who (carried)'),backup=s.backup();
   const target=setup(t);target.restore(JSON.parse(JSON.stringify(backup)));
   const carried=target.currentDraft();
   assert.equal(carried.baseRevisionId,target.get('active'));assert.equal(carried.content.words.find(w=>w.id==='w-mi').english,'who (carried)');
-  assert.notEqual(carried.draftToken,staged.draftToken);
-  rejects(()=>target.previewSession({lessonId:'lesson-1',draftToken:staged.draftToken}),409,'DRAFT_CONFLICT');
+  assert.equal(carried.draftToken,staged.draftToken);
   assert.equal(target.previewSession({lessonId:'lesson-1',draftToken:carried.draftToken}).baseRevisionId,target.get('active'));
+  const conflicting=setup(t),other=conflicting.snapshot();other.lessons[0].title='Synthetic occupied base';
+  conflicting.db.prepare('UPDATE revisions SET snapshot=? WHERE id=?').run(JSON.stringify(other),backup.activeRevisionId);
+  conflicting.restore(backup);assert.notEqual(conflicting.currentDraft().draftToken,staged.draftToken);
+  rejects(()=>conflicting.previewSession({lessonId:'lesson-1',draftToken:staged.draftToken}),409,'DRAFT_CONFLICT');
 });
 
 test('unapproved source candidates stay blocked at stage, including when relabelled as verified',t=>{

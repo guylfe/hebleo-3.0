@@ -5,6 +5,7 @@ import {mkdtempSync,rmSync,readFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {Store,draftTokenFor} from '../src/store.js';
+import {reconstructContext} from '../src/immutable-context.js';
 import {authorProjection} from '../src/author-review.js';
 import {createServer} from '../src/server.js';
 import {replaceFirstTwo} from '../scripts/install-first2.mjs';
@@ -71,7 +72,7 @@ test('exact draft anchors survive save/publish/rollback, author backup relinks a
  const backup=s.backup(),d=new Store();t.after(()=>d.close());d.set('active',d.addRevision(d.snapshot(),'Offset destination revision IDs'));
  const restored=d.restore(backup),carried=d.authorReview.state().comments[0];
  assert.equal(carried.id,note.id);assert.deepEqual(carried.audit,note.audit);assert.equal(carried.anchor.revisionId,restored.revisions[first]);assert.notEqual(carried.anchor.draftToken,note.anchor.draftToken);
- assert.equal(carried.anchor.draftToken,draftTokenFor(carried.anchor.revisionId,d.authorReview.state().drafts[carried.anchor.draftToken].content));
+ assert.equal(carried.anchor.draftToken,draftTokenFor(carried.anchor.revisionId,reconstructContext(d.authorReview.state().drafts[carried.anchor.draftToken],d.snapshot(carried.anchor.revisionId))));
  assert.deepEqual(d.currentDraft().content,second);assert.deepEqual(d.backup().learners,backup.learners);
  d.rollback(restored.revisions[first],d.get('active'),d.currentDraft().draftToken);assert.equal(d.authorReview.list(author,{lessonId:req.lessonId}).comments[0].anchorState,'changed');assert.equal(d.authorReview.state().comments[0].id,note.id);
  const roundtrip=new Store();t.after(()=>roundtrip.close());roundtrip.restore(d.backup());assert.equal(roundtrip.authorReview.state().comments[0].body,body);
@@ -89,7 +90,7 @@ test('unique exact quote can relocate, repeated or absent quotes change, missing
 
 test('malformed private namespace, anchors, hashes, audit or retained draft backup rejects atomically including sqlite_sequence',t=>{
  const s=setup(t),saved=s.stage({baseRevisionId:s.get('active'),expectedDraftToken:null,content:s.snapshot()});s.authorReview.create(author,input(s,{draftToken:saved.draftToken}));const backup=s.backup();
- const cases=[b=>delete b.authorReview,b=>b.authorReview.schemaVersion=2,b=>b.authorReview.comments.push(structuredClone(b.authorReview.comments[0])),b=>b.authorReview.comments[0].createdBy='learner-demo',b=>b.authorReview.comments[0].anchor.contentHash='0'.repeat(64),b=>b.authorReview.comments[0].anchor.pageId='missing',b=>b.authorReview.comments[0].audit[0].by='learner-demo',b=>b.authorReview.comments[0].version=2,b=>b.authorReview.comments[0].body='modified',b=>b.authorReview.drafts={},b=>b.authorReview.comments[0].request.fieldPath='not-allowed'];
+ const cases=[b=>delete b.authorReview,b=>b.authorReview.schemaVersion=3,b=>b.authorReview.comments.push(structuredClone(b.authorReview.comments[0])),b=>b.authorReview.comments[0].createdBy='learner-demo',b=>b.authorReview.comments[0].anchor.contentHash='0'.repeat(64),b=>b.authorReview.comments[0].anchor.pageId='missing',b=>b.authorReview.comments[0].audit[0].by='learner-demo',b=>b.authorReview.comments[0].version=2,b=>b.authorReview.comments[0].body='modified',b=>b.authorReview.drafts={},b=>b.authorReview.comments[0].request.fieldPath='not-allowed'];
  for(const mutate of cases){const candidate=structuredClone(backup);mutate(candidate);const before=dump(s);assert.throws(()=>s.restore(candidate));assert.equal(dump(s),before);}
  const before=dump(s),restoreMedia=s.media.restore;s.media.restore=()=>{throw new Error('Synthetic transaction failure');};assert.throws(()=>s.restore(backup),/Synthetic transaction failure/);assert.equal(dump(s),before);s.media.restore=restoreMedia;
 });
@@ -140,7 +141,7 @@ test('restore retains newer notes/status history and immutable create receipts, 
  s.restore(old);assert.equal(s.authorReview.state().comments[0].status,'resolved');assert.equal(s.authorReview.state().comments[0].audit.length,2);
  assert.equal(s.authorReview.create(author,req).id,note.id);
  const d=new Store();t.after(()=>d.close());d.set('active',d.addRevision(d.snapshot(),'Synthetic offset'));d.restore(s.backup());assert.equal(d.authorReview.create(author,req).id,note.id);
- const dir=mkdtempSync(join(tmpdir(),'hebleo-reader9-')),file=join(dir,'migration.db');t.after(()=>rmSync(dir,{recursive:true,force:true}));let m=new Store(file);fixture(m);m.stage({baseRevisionId:m.get('active'),expectedDraftToken:null,content:m.snapshot()});m.updateLearner('learner-core',{note:{wordId:m.snapshot().words[0].id,text:'Synthetic saved learner note'}});const before=m.backup();m.set('schema-version',8);m.close();m=new Store(file);try{assert.equal(m.get('schema-version'),9);assert.deepEqual(m.snapshot(),before.content);assert.deepEqual(m.currentDraft().content,before.draft.content);assert.deepEqual(m.backup().learners,before.learners);}finally{m.close();}
+ const dir=mkdtempSync(join(tmpdir(),'hebleo-reader9-')),file=join(dir,'migration.db');t.after(()=>rmSync(dir,{recursive:true,force:true}));let m=new Store(file);fixture(m);m.stage({baseRevisionId:m.get('active'),expectedDraftToken:null,content:m.snapshot()});m.updateLearner('learner-core',{note:{wordId:m.snapshot().words[0].id,text:'Synthetic saved learner note'}});const before=m.backup();m.set('schema-version',8);m.close();m=new Store(file);try{assert.equal(m.get('schema-version'),10);assert.deepEqual(m.snapshot(),before.content);assert.deepEqual(m.currentDraft().content,before.draft.content);assert.deepEqual(m.backup().learners,before.learners);}finally{m.close();}
 });
 
 test('keyboard quote selection creates a server-validated Hebrew/emoji anchor; interrupted comment response cannot clear a newer composer',async t=>{
