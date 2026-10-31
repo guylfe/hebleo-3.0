@@ -122,6 +122,7 @@ test('coordinator CAS/network/403/validation failures retain full local values a
  const s=setup(t),c=s.snapshot();for(const status of [409,503,403,400]){let attempts=0;const workspace=createStudioWorkspace({content:c,baseRevisionId:s.get('active'),saveDraft:async()=>{attempts++;throw Object.assign(new Error('Fixture failure'),{status});}});const next=structuredClone(c);next.lessons[0].title='Retain '+status;workspace.replace(next);await assert.rejects(workspace.save());assert.equal(workspace.dirty,true);assert.equal(workspace.getContent().lessons[0].title,'Retain '+status);assert.equal(workspace.expectedDraftToken,null);assert.equal(attempts,1);if(status===403)assert.equal(workspace.revoked,true);}
  const req=input(s),activity=c.lessons[0].blocks[0].textPages.pages.find(p=>p.activity)?.activity;
  if(activity)assert.throws(()=>patchAuthorField(c,{...req,pageId:c.lessons[0].blocks[0].textPages.pages.find(p=>p.activity).id},'activity',JSON.stringify({...activity,id:'forged'})),/ID/);
+ const synchronous=createStudioWorkspace({content:c,baseRevisionId:s.get('active'),saveDraft:()=>{throw new Error('Synchronous validation fixture');}});synchronous.touch();await assert.rejects(synchronous.save(),/Synchronous validation/);assert.equal(synchronous.pending,null);assert.equal(synchronous.dirty,true);
 });
 
 test('activity anchors pin existing IDs and all settings; malformed settings retain the local JSON and current source',t=>{
