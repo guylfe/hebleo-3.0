@@ -18,7 +18,7 @@ Branch `feature/inline-author-review-20261031`, based exactly on `12ca8ff2eaa7d0
 
 ## Executed automated verification
 
-The final exact implementation revision, command results and counts are recorded in `VERIFICATION.json` after the final checks. The following were actually executed during implementation:
+Final implementation revision **d260123c2840c7ec9cc72ca4c5041c38339e58e2** (commits `92b5a3c` + `d260123`) passed **924/924 candidate tests**, **27/27 schema checks**, and **9/9 runtime contract scenarios**. Exact command results, files and executable hashes are recorded in `VERIFICATION.json`; `CHECKS.txt` contains concise check receipts. The following were actually executed during implementation:
 
 | Command | Actual result |
 |---|---|
