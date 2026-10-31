@@ -32,6 +32,19 @@ async function author(t,{failStatus=0,pending=false}={}){
  let renderCalls=0;const countedRender=value=>{renderCalls++;return renderLesson(value);};const ui=mountInlineAuthor(host,{workspace,lessonId:l.id,componentId:b.id,pageId:p.id,state,api,renderLesson:countedRender,markdownDependencies:{marked,purifier:purify(w)},onPreview:async id=>calls.push(await api('studio/preview/session',{lessonId:id,draftToken:workspace.expectedDraftToken})),onApply:()=>calls.push('Review changes')});
  await until(()=>Boolean(ui.editor?.view));return {w,doc,host,s,ui,state,workspace,api,calls,p,get renderCalls(){return renderCalls;},release:()=>release?.()};
 }
+
+test('departure Save acknowledges rich model; later collection/disposal cannot resurrect A over a newer Studio B',async t=>{
+ const a=await author(t),{workspace,state,host,w,api}=a;
+ a.ui.editor.view.dispatch(a.ui.editor.view.state.tr.insertText('Synthetic A ',2));await workspace.save();assert.deepEqual(state.raw,{});
+ workspace.getContent();assert.deepEqual(state.raw,{},'reading a saved editor must not recreate an acknowledged patch');a.ui.dispose();assert.deepEqual(state.raw,{});
+ const c=workspace.getContent();c.lessons[0].blocks[0].textPages.pages[0].html='<p>Synthetic newer Studio B.</p>';workspace.replace(c);await workspace.save();
+ const ui=mountInlineAuthor(host,{workspace,lessonId:c.lessons[0].id,componentId:c.lessons[0].blocks[0].id,pageId:c.lessons[0].blocks[0].textPages.pages[0].id,state,api,renderLesson:createLessonRenderer(marked,purify(w),w.document),markdownDependencies:{marked,purifier:purify(w)},onPreview:()=>{},onApply:()=>{}});t.after(()=>ui.dispose());await until(()=>Boolean(ui.editor?.view));
+ assert.equal(ui.editor.getValue(),'<p>Synthetic newer Studio B.</p>');await ui.save();assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,'<p>Synthetic newer Studio B.</p>');
+});
+
+test('collection followed by exact Undo removes only its materialized prose patch',async t=>{
+ const a=await author(t),view=a.ui.editor.view;view.dispatch(view.state.tr.insertText('Synthetic transient ',2));a.workspace.getContent();assert.ok(Object.keys(a.state.raw).length);undo(view.state,tr=>view.dispatch(tr));assert.equal(a.workspace.dirty,false);assert.deepEqual(a.state.raw,{});await a.ui.save();assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,source);
+});
 test('rendered heading/sentence save through full draft/CAS; saved Preview reads exact rich source; quote and whole-block notes are readable, persistent and learner-excluded',async t=>{
  const a=await author(t),{w,host,workspace,s,p,api,state,calls}=a,revision=s.get('active'),learners=s.backup().learners;
  assert.equal(host.querySelector('[data-author-advanced]').open,false);assert.equal(host.querySelector('[data-author-action=save]').classList.contains('primary'),true);assert.equal(host.querySelector('[data-author-action=apply]').textContent,'Review changes');

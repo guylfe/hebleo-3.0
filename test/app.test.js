@@ -2,6 +2,7 @@ import {createStudioWorkspace} from '../public/studio/workspace.js';
 import {courseRailEdge,updateCourseToggle} from '../public/sidebar-toggle.js';
 import {BACKUP_BYTE_LIMIT,serializeBackup} from '../public/backup-contract.js';
 import {mountInlineAuthor} from '../public/author/inline-author.js';
+import {openLessonPublication} from '../public/studio/lesson-publication.js';
 import {hasTextPages,mountTextReader} from '../public/text-reader.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../public/lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../public/post-answer-vocabulary.js';
@@ -42,7 +43,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   Object.defineProperty(w,'innerWidth',{value:width,writable:true});let server,origin;
   if(realHTTP){server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
   t.after(async()=>{w.close();if(server)await new Promise(r=>server.close(r));if(!providedStore)store.close();});w.matchMedia=()=>({matches:reduceMotion});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
-  Object.assign(w,{BACKUP_BYTE_LIMIT,serializeBackup,courseRailEdge,updateCourseToggle});
+  Object.assign(w,{BACKUP_BYTE_LIMIT,serializeBackup,courseRailEdge,updateCourseToggle,openLessonPublication});
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
@@ -66,6 +67,8 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else if(url.pathname==='/api/studio/dependencies'){store.requireAuthor(user);value=store.exerciseDependencies(input);}
     else if(url.pathname==='/api/studio/draft'){store.requireAuthor(user);value=store.stage(input);}
     else if(url.pathname==='/api/studio/publish'){store.requireAuthor(user);value=store.publish(input.baseRevisionId,input.draftToken);}
+    else if(url.pathname==='/api/studio/publish-lesson/review'){store.requireAuthor(user);value=store.reviewLessonPublication(input);}
+    else if(url.pathname==='/api/studio/publish-lesson'){store.requireAuthor(user);value=store.publishLesson(input);}
     else if(url.pathname==='/api/studio/rollback'){store.requireAuthor(user);value=store.rollback(input.revisionId,input.baseRevisionId,input.expectedDraftToken);}
     else if(url.pathname==='/api/studio/preview/session'){store.requireAuthor(user);value=store.previewSession(input);}
     else if(url.pathname==='/api/studio/preview/evaluate'){store.requireAuthor(user);value=store.previewEvaluate(input);}
@@ -465,10 +468,10 @@ test('App sentence tiles submit attached prefixes, and source-rich cards/table o
   assert.equal(doc.querySelector('.assembled-sentence').textContent,'אני בבית');assert.equal(doc.querySelector('.prefix-token'),null);assert.equal(doc.querySelector('[data-action="token"] small'),null);const groups=[...doc.querySelectorAll('.sentence-tile-group')];assert.deepEqual(groups.map(g=>g.textContent),['אני','בבית']);assert.equal(groups[1].querySelectorAll('button').length,2);click(doc,'check');await settled(()=>doc.querySelector('.feedback'));await settled(()=>doc.querySelector('[data-action=next-question]'));assert.equal(store.learner('learner-demo').attempts[0].correct,true);
   doc.querySelector('[data-action="step"][data-value="vocabulary"]').click();await settled(()=>doc.querySelector('.word-grid'));assert.equal(doc.querySelectorAll('.word-card').length,6);assert.ok(doc.querySelector('.word-details dd'));
 });
-test('Studio edits author card policy and cumulative introductions while retaining legacy keyboard metadata',async t=>{
+test('Studio saves author card policy privately; selected lesson publication excludes it and keyboard metadata stays intact',async t=>{
  const {store,w,doc}=await app(t,{page:'studio',author:true});await settled(()=>doc.querySelector('[data-review-policy-form]'));
  const initial=structuredClone(store.snapshot().lessons[0].keyboard),form=doc.querySelector('[data-review-policy-form]');edit(w,form.querySelector('select'),'none');submit(w,form);await settled(()=>store.currentDraft()?.content.reviewPolicy.defaultNikkud==='none'&&doc.querySelector('[data-action="publish"]'));
- click(doc,'publish');await settled(()=>store.snapshot().reviewPolicy.defaultNikkud==='none'&&doc.body.textContent.includes('PUBLISHED VERSION 2'));
+ const active=store.get('active'),policy=structuredClone(store.snapshot().reviewPolicy);click(doc,'publish');await confirmSelectedPublication(doc);assert.deepEqual(store.snapshot().reviewPolicy,policy);assert.equal(store.get('active'),active+1,'only the saved selected lesson composition is published');assert.equal(store.currentDraft().content.reviewPolicy.defaultNikkud,'none');
  const lesson=doc.querySelector('[data-lesson-metadata]');edit(w,lesson.elements.introducedLetters,'ב');edit(w,doc.querySelector('[data-keyboard-color]'),'#abcdef');submit(w,lesson);await settled(()=>store.currentDraft()?.content.lessons[0].introducedLetters==='ב');
  assert.equal(doc.querySelector('[name="knownKeys"]'),null);assert.equal(store.currentDraft().content.lessons[0].keyboard.newKeys,initial.newKeys);assert.equal(store.currentDraft().content.lessons[0].keyboard.knownKeys,initial.knownKeys);assert.equal(store.currentDraft().content.lessons[0].keyboard.newColor,'#abcdef');
 });
@@ -611,7 +614,7 @@ test('Studio guided exercise and lesson forms save private drafts, reload discar
   assert.equal(store.currentDraft().content.exercises.find(e=>e.id==='ex-1-recognize').prompt,draftPrompt);
   assert.ok(doc.querySelector('[data-owned-exercise="ex-1-type"] form'),'typing editor is already below its component');
   assert.deepEqual(store.snapshot(),published);assert.deepEqual(learnerRecords(store),learners);
-  click(doc,'publish');await settled(()=>store.get('active')===revision+1&&store.currentDraft()===null);
+  click(doc,'publish');await confirmSelectedPublication(doc);await settled(()=>store.get('active')===revision+1);assert.ok(store.currentDraft());
   assert.equal(store.snapshot().lessons[0].title,'Synthetic lesson title');assert.equal(store.snapshot().exercises.find(e=>e.id==='ex-1-recognize').prompt,draftPrompt);
   assert.deepEqual(learnerRecords(store),learners);
 });
@@ -747,7 +750,16 @@ function holdStudioReload(w){
   w.fetch=async(path,options={})=>{const pathname=new URL(path,w.location.href).pathname;if(options.body&&pathname.startsWith('/api/studio/'))bodies.push({path:pathname,body:JSON.parse(options.body)});if(gate&&pathname==='/api/studio'){const held=gate;held.waiting=true;await held.promise;}return original(path,options);};
   return {bodies,hold(){let release;const promise=new Promise(r=>release=r);gate={promise,release,waiting:false};},release(){const held=gate;gate=null;held?.release();},get waiting(){return Boolean(gate?.waiting);}};
 }
-const publishBody=reload=>reload.bodies.filter(b=>b.path==='/api/studio/publish').at(-1)?.body;
+const publishBody=reload=>reload.bodies.filter(b=>b.path==='/api/studio/publish-lesson').at(-1)?.body;
+async function confirmSelectedPublication(doc){
+ await settled(()=>doc.querySelector('[data-publication-review] h3')&&!doc.querySelector('[data-publication-refresh]').disabled);
+ for(let i=0;i<20;i++){
+  const input=doc.querySelector('[data-publication-dependency]:not(:checked)');if(!input)break;input.click();
+  await settled(()=>!doc.querySelector('[data-publication-refresh]').disabled);
+ }
+ const confirm=doc.querySelector('[data-publication-confirm]');assert.equal(confirm.disabled,false,doc.querySelector('.lesson-publication-dialog').textContent);confirm.click();
+ await settled(()=>doc.querySelector('[data-publication-confirm]').hidden);doc.querySelector('[data-publication-cancel]').click();
+}
 
 test('A pending unified save locks every sibling and lesson switch; subsequent save and queued Publish name the saved token',async t=>{
  const {store,w,doc}=await app(t,{page:'studio',author:true,prepare(s){stageDraft(s,c=>{c.exercises[0].prompt=draftPrompt;});}});
@@ -759,7 +771,7 @@ test('A pending unified save locks every sibling and lesson switch; subsequent s
  reload.release();await settled(()=>exercise()&&!exercise().elements.prompt.disabled&&lesson().elements.title.value==='Synthetic lesson title');
  const mounted=exercise();edit(w,mounted.elements.prompt,'Synthetic typing prompt');submit(w,mounted);await settled(()=>store.currentDraft()?.content.exercises.find(e=>e.id==='ex-1-type').prompt==='Synthetic typing prompt'&&exercise()!==mounted);assert.equal(store.currentDraft().content.lessons[0].title,'Synthetic lesson title');
  reload.hold();edit(w,lesson().elements.estimatedMinutes,'8');submit(w,lesson());await settled(()=>store.currentDraft()?.content.lessons[0].estimatedMinutes===8&&reload.waiting);const latest=store.currentDraft().draftToken;
- click(doc,'publish');await new Promise(r=>setTimeout(r,20));assert.equal(store.get('active'),revision);assert.equal(publishBody(reload),undefined);reload.release();await settled(()=>store.get('active')===revision+1&&store.currentDraft()===null&&/Published locally/.test(doc.querySelector('#toast').textContent));assert.equal(publishBody(reload).draftToken,latest);assert.equal(store.snapshot().lessons[0].estimatedMinutes,8);assert.equal(store.snapshot().exercises.find(e=>e.id==='ex-1-type').prompt,'Synthetic typing prompt');assert.deepEqual(learnerRecords(store),learners);
+ click(doc,'publish');await new Promise(r=>setTimeout(r,20));assert.equal(store.get('active'),revision);assert.equal(publishBody(reload),undefined);reload.release();await confirmSelectedPublication(doc);await settled(()=>store.get('active')===revision+1);assert.equal(publishBody(reload).expectedDraftToken,latest);assert.ok(store.currentDraft(),'complete rebased draft is retained');assert.equal(store.snapshot().lessons[0].estimatedMinutes,8);assert.equal(store.snapshot().exercises.find(e=>e.id==='ex-1-type').prompt,'Synthetic typing prompt');assert.deepEqual(learnerRecords(store),learners);
 });
 
 test('Publishing behind a pending guided save still rejects a newer draft from another tab and publishes nothing',async t=>{
@@ -772,8 +784,8 @@ test('Publishing behind a pending guided save still rejects a newer draft from a
   const saved=store.currentDraft().draftToken;
   stageDraft(store,c=>{c.lessons[0].chapter='Synthetic chapter from another tab';});const other=store.currentDraft().draftToken;
   click(doc,'publish');await new Promise(r=>setTimeout(r,20));reload.release();
-  await settled(()=>/draft changed elsewhere/i.test(doc.querySelector('#toast').textContent));
-  assert.equal(publishBody(reload).draftToken,saved,'the token this tab saved, not the reloaded one');
+  await settled(()=>/draft changed elsewhere/i.test(doc.querySelector('[data-publication-status]')?.textContent||''));
+  assert.equal(publishBody(reload),undefined,'a stale review never sends a publication');
   assert.equal(store.get('active'),revision);assert.deepEqual(store.snapshot(),published);assert.equal(store.currentDraft().draftToken,other);
   assert.deepEqual(learnerRecords(store),learners);
 });
@@ -962,7 +974,7 @@ test('UXI13-01 failed save cancel profile and browser-history departure retain e
 });
 
 test('UXI13-01 dirty publication and rollback require a workspace decision while preserving deliberate publishing',async t=>{
- const {w,doc,store}=await app(t,{page:'studio',author:true,realHTTP:true,prepare(s){stageDraft(s,c=>c.lessons[0].title='SYNTHETIC staged first');}});const before=store.get('active');edit(w,doc.querySelector('[data-lesson-metadata] [name=title]'),'SYNTHETIC publish with explicit save');click(doc,'publish');await departure(doc,'stay');await settled(()=>!doc.querySelector('#studio-departure'));assert.equal(store.get('active'),before);await settled(()=>!doc.querySelector('[data-action=publish]').disabled);click(doc,'publish');await departure(doc,'save');await settled(()=>store.get('active')===before+1&&store.currentDraft()===null&&doc.querySelector('[data-action=rollback]'));assert.equal(store.snapshot().lessons[0].title,'SYNTHETIC publish with explicit save');
+ const {w,doc,store}=await app(t,{page:'studio',author:true,realHTTP:true,prepare(s){stageDraft(s,c=>c.lessons[0].title='SYNTHETIC staged first');}});const before=store.get('active');edit(w,doc.querySelector('[data-lesson-metadata] [name=title]'),'SYNTHETIC publish with explicit save');click(doc,'publish');await departure(doc,'stay');await settled(()=>!doc.querySelector('#studio-departure'));assert.equal(store.get('active'),before);await settled(()=>!doc.querySelector('[data-action=publish]').disabled);click(doc,'publish');await departure(doc,'save');await confirmSelectedPublication(doc);await settled(()=>store.get('active')===before+1&&store.currentDraft()&&doc.querySelector('[data-action=rollback]'));assert.equal(store.snapshot().lessons[0].title,'SYNTHETIC publish with explicit save');
  edit(w,doc.querySelector('[data-lesson-metadata] [name=title]'),'SYNTHETIC uncommitted rollback sibling');click(doc,'rollback');await departure(doc,'stay');await settled(()=>!doc.querySelector('#studio-departure'));assert.equal(doc.querySelector('[data-lesson-metadata] [name=title]').value,'SYNTHETIC uncommitted rollback sibling');assert.equal(store.get('active'),before+1);await settled(()=>!doc.querySelector('[data-action=rollback]').disabled);click(doc,'rollback');await departure(doc,'discard');await settled(()=>store.get('active')===before+2);assert.notEqual(store.snapshot().lessons[0].title,'SYNTHETIC uncommitted rollback sibling');
 });
 
@@ -1211,10 +1223,10 @@ test('F14 real app inline → shared draft → saved Preview → Studio review �
  doc.querySelector('[data-author-action=preview]').click();await settled(()=>doc.querySelector('#rehearsal-panel [data-text-reader]'));assert.match(doc.querySelector('#rehearsal-panel').textContent,/synthetic edited/);doc.querySelector('[data-preview-exit]').click();await settled(()=>!doc.querySelector('#rehearsal-panel'));assert.equal(doc.activeElement,doc.querySelector('[data-author-action=preview]'));
  doc.querySelector('[data-author-action=comment]').click();await settled(()=>doc.querySelector('[data-author-anchor]').textContent.includes('Whole block:'));
  edit(w,doc.querySelector('[data-author-body]'),'SYNTHETIC F14 PRIVATE NOTE');doc.querySelector('[data-author-composer]').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>doc.querySelector('[data-author-note]'));
- doc.querySelector('[data-author-action=apply]').click();await settled(()=>doc.querySelector('#studio-pane-versions')&&!doc.querySelector('#studio-pane-versions').hidden);assert.equal(store.get('active'),revision);assert.ok(doc.querySelector('.studio-preview').textContent.includes('unpublished'));
- click(doc,'publish');await settled(()=>store.get('active')!==revision);assert.equal(store.snapshot().lessons[1].blocks.find(b=>b.textPages).textPages.pages[0].html,html);
+ doc.querySelector('[data-author-action=apply]').click();await settled(()=>doc.querySelector('.lesson-publication-dialog'));assert.equal(store.get('active'),revision);
+ await confirmSelectedPublication(doc);await settled(()=>store.get('active')!==revision);assert.equal(store.snapshot().lessons[1].blocks.find(b=>b.textPages).textPages.pages[0].html,html);
  assert.equal(JSON.stringify(store.learner('author-demo')),before);assert.equal(store.authorReview.list('author-demo',{lessonId:'lesson-2'}).comments[0].body,'SYNTHETIC F14 PRIVATE NOTE');
- doc.querySelector('[data-action=studio-task][data-value=comments]').click();await settled(()=>doc.querySelector('#studio-author-comments-mount [data-author-note]'));assert.match(doc.querySelector('#studio-author-comments-mount').textContent,/SYNTHETIC F14 PRIVATE NOTE/);
+ pageButton(doc,'studio').click();await settled(()=>doc.querySelector('[data-action=studio-task][data-value=comments]'));doc.querySelector('[data-action=studio-task][data-value=comments]').click();await settled(()=>doc.querySelector('#studio-author-comments-mount [data-author-note]'));assert.match(doc.querySelector('#studio-author-comments-mount').textContent,/SYNTHETIC F14 PRIVATE NOTE/);
  const select=doc.querySelector('#demo-user');select.value='learner-core';select.dispatchEvent(new w.Event('change',{bubbles:true}));await settled(()=>doc.querySelector('#demo-user')?.value==='learner-core');
  assert.equal(JSON.stringify(store.bootstrap('learner-core')).includes('SYNTHETIC F14 PRIVATE NOTE'),false);assert.equal(doc.querySelector('[data-author-note]'),null);assert.equal(doc.querySelector('[data-action=author-inline]'),null);
  assert.ok(calls.includes('/api/studio/author-comments'));

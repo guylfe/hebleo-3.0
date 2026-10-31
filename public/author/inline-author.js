@@ -33,25 +33,26 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  const rawKey=(field,t=target())=>JSON.stringify([t.componentId,t.pageId,field]);
  const current=()=>!disposed&&host.isConnected;
  function materialize(){if(editorTouched&&editorKey){state.raw[editorKey]=editor.getValue();}}
+ function retireCleanSource(){if(editorTouched&&!editorChanged&&!dirtyRaw.has(editorKey)){delete state.raw[editorKey];editorTouched=false;}}
  function retainSession(){if(editor&&editorKey){materialize();sessions.set(editorKey,editor.snapshot?.());}}
  function applyRaw(next){materialize();next=structuredClone(next);for(const [key,value] of Object.entries(state.raw)){const [componentId,pageId,field]=JSON.parse(key);try{next=patchAuthorField(next,{lessonId,componentId,pageId},field,value,{clone:false});}catch(error){throw Object.assign(error,{authorField:field,authorTarget:{componentId,pageId}});}}return next;}
- function flush(){materialize();const next=applyRaw(contentWithoutCollect());workspace.replace(next,{changed:false});snapshot=next;return next;}
+ function flush(){materialize();const next=applyRaw(contentWithoutCollect());workspace.replace(next,{changed:false});retireCleanSource();snapshot=next;return next;}
  // Avoid recursively invoking our own collector.
  let collecting=false;
  function contentWithoutCollect(){if(collecting)return snapshot;collecting=true;try{return workspace.getContent();}finally{collecting=false;}}
  let snapshot=workspace.getContent();
  const unregisterSettler=workspace.registerSettler?.(()=>editor?.whenSettled?.());
  const unregister=reviewOnly?()=>{}:workspace.registerCollector(()=>{if(collecting)return;collecting=true;try{
-  const next=applyRaw(workspace.peekContent()),savedEntries=Object.entries(state.raw),submittedEditor=editor,submittedModel=editor?.model;workspace.replace(next,{changed:false});snapshot=next;
+  const next=applyRaw(workspace.peekContent()),savedEntries=Object.entries(state.raw),submittedEditor=editor,submittedModel=editor?.model;workspace.replace(next,{changed:false});retireCleanSource();snapshot=next;
   // A successful shared save (including departure/Studio) retires only values
   // it actually sent. Newer inputs, failures and private comment drafts survive.
-  return ()=>{for(const [key,value] of savedEntries)if(Object.hasOwn(state.raw,key)&&state.raw[key]===value){delete state.raw[key];dirtyRaw.delete(key);}submittedEditor?.acceptSaved?.(submittedModel);if(editor===submittedEditor){editorChanged=!editor?.isClean?.();if(editorChanged)materialize();}workspace.touchBuffer?.(bufferOwner,dirtyRaw.size>0||editorChanged);};
+  return ()=>{for(const [key,value] of savedEntries)if(Object.hasOwn(state.raw,key)&&state.raw[key]===value){delete state.raw[key];dirtyRaw.delete(key);}submittedEditor?.acceptSaved?.(submittedModel);if(editor===submittedEditor){editorChanged=!editor?.isClean?.();if(editorChanged)materialize();else editorTouched=false;}workspace.touchBuffer?.(bufferOwner,dirtyRaw.size>0||editorChanged);};
  }finally{collecting=false;}});
  function write(field,value,t=editorTarget||target()){const key=rawKey(field,t);state.raw[key]=value;dirtyRaw.add(key);message='';workspace.touchBuffer?workspace.touchBuffer(bufferOwner,true):workspace.touch();}
  function sourceValue(field){const key=rawKey(field);if(Object.hasOwn(state.raw,key))return state.raw[key];if(field==='options.extraInformation')return block()?.options?.extraInformation||'';const owner=page()||block()||lesson();if(field==='pageSettings')return JSON.stringify(Object.fromEntries(['prompt','options','answer','explanation','durationMs','value','media','gate'].filter(k=>Object.hasOwn(owner,k)).map(k=>[k,owner[k]])),null,2);return field==='activity'?JSON.stringify(owner.activity,null,2):owner?.[field]||'';}
- function refreshStatus(){if(!current()||!host.querySelector('[data-author-status]'))return;const locked=busy||Boolean(workspace.pending)||workspace.revoked;host.querySelector('[data-author-status]').textContent=message|| (workspace.dirty?'Unsaved workspace edits.':'Saved workspace · publication is a separate action.');
+ function refreshStatus(){if(!current()||!host.querySelector('[data-author-status]'))return;const locked=busy||Boolean(workspace.pending)||workspace.revoked;host.querySelector('[data-author-status]').textContent=message||workspace.publicationState?.(lessonId)|| (workspace.dirty?'Unsaved workspace edits.':'Saved workspace · publication is a separate action.');
   host.querySelectorAll('[data-author-action="preview"],[data-author-action="apply"]').forEach(b=>b.disabled=locked||workspace.dirty||!workspace.expectedDraftToken);
-  host.querySelector('[data-author-action="save"]').disabled=locked;
+  host.querySelector('[data-author-action="save"]').disabled=locked||Boolean(workspace.writeBlock);
   host.querySelectorAll('[data-author-field],[data-author-page],[data-author-component],[name=author-source],[data-author-action="edit"]').forEach(el=>el.disabled=locked);
   if(!editor?.composing)editor?.setLocked(locked);host.querySelectorAll('[data-author-field][contenteditable]').forEach(el=>el.setAttribute('contenteditable',String(!busy&&!workspace.pending&&!workspace.revoked)));
  }
@@ -67,7 +68,7 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  }
  async function save(){
   if(busy)return;await editor?.whenSettled?.();busy=true;message='Saving complete workspace draft…';refreshStatus();
-  try{const result=await workspace.save();snapshot=workspace.peekContent();if(!workspace.dirty){const quote=host.querySelector('[data-author-quote]');if(quote){const box=doc.createElement('div');box.innerHTML=renderLesson(editor.getValue());quote.value=box.textContent;}}message=workspace.dirty?'Saved the submitted draft. Newer edits remain unsaved.':'Draft saved. Preview it, then review publication separately.';return result;}
+  try{const result=await workspace.save();snapshot=workspace.peekContent();if(!workspace.dirty){const quote=host.querySelector('[data-author-quote]');if(quote){const box=doc.createElement('div');box.innerHTML=renderLesson(editor.getValue());quote.value=box.textContent;}}message=workspace.dirty?'Saved the submitted draft. Newer edits remain unsaved.':'';return result;}
   catch(error){message=error.status===409?'Draft changed elsewhere. Your edits remain here. Compare with the latest saved draft before reconciling.':error.status===403?'Author access ended. Your edits remain here; restore author access to save.':(error.authorField?'Correct '+error.authorField+': ':'')+error.message+' Your edits remain here.';
    if(error.authorField||error.status===400){const field=host.querySelector('[data-author-field="'+(error.authorField||'activity')+'"]');if(field){field.disabled=false;field.setAttribute('aria-invalid','true');field.setAttribute('aria-describedby',statusId);field.focus({preventScroll:true});}}
    throw error;}
@@ -90,7 +91,7 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
    canvas.querySelector('[data-author-technical]').textContent=[l.id,b?.id,p?.id].filter(Boolean).join(' · ');
    canvas.querySelector('[data-author-advanced-actions]').innerHTML=button('latest','Compare latest saved draft')+button('reconcile','Reconcile nonconflicting changes');
    editorKey=rawKey(field,t);editorTarget=t;
-   const mountSource=()=>{editor?.dispose();editorChanged=false;editor=mountRenderedSource(projection,{source:renderedValue,renderLesson,dependencies:markdownDependencies,api,session:sessions.get(editorKey),onError:error,onChange:()=>{editorTouched=true;editorChanged=!editor.isClean?.();if(editorChanged)dirtyRaw.add(editorKey);else dirtyRaw.delete(editorKey);state.selection=null;message='';workspace.touchBuffer?.(bufferOwner,editorChanged||dirtyRaw.size>0);}});editor.setLocked(busy||Boolean(workspace.pending)||workspace.revoked);};
+   const mountSource=()=>{editor?.dispose();editorChanged=false;editorTouched=false;editor=mountRenderedSource(projection,{source:renderedValue,renderLesson,dependencies:markdownDependencies,api,session:sessions.get(editorKey),onError:error,onChange:()=>{editorTouched=true;editorChanged=!editor.isClean?.();if(editorChanged)dirtyRaw.add(editorKey);else{dirtyRaw.delete(editorKey);delete state.raw[editorKey];}state.selection=null;message='';workspace.touchBuffer?.(bufferOwner,editorChanged||dirtyRaw.size>0);}});editor.setLocked(busy||Boolean(workspace.pending)||workspace.revoked);};
    mountSource();
    canvas.querySelector('[data-author-advanced]').addEventListener('toggle',event=>{if(event.target.open){materialize();raw.value=editor.getValue();}},{signal:ctl.signal});
    raw.addEventListener('input',()=>{renderedValue=raw.value;state.selection=null;write(field,renderedValue,editorTarget);sessions.delete(editorKey);mountSource();},{signal:ctl.signal});

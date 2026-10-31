@@ -1,0 +1,76 @@
+{
+  "status": "Integrated candidate; independent/native/install still pending",
+  "date": "2026-10-31T23:14:07.830Z",
+  "sourceBase": "4433f2e0e8bcd319edd3189ba9016f8d9fa7ff12",
+  "imports": {
+    "backend": "c94c2c4328cd47fa1949fc03b3b0da35ecf1cce9",
+    "editor": "00325085c0cd6b5dc25af0e07aa63081a1b3d634"
+  },
+  "focused": {
+    "clientAndRendered": {
+      "passed": 21,
+      "failed": 0
+    },
+    "laterSaveAndAppPublicationFlows": {
+      "passed": 5,
+      "failed": 0
+    },
+    "initialMatureBackendWorkspace": {
+      "passed": 34,
+      "failed": 0
+    }
+  },
+  "schema": {
+    "passed": 27,
+    "failed": 0
+  },
+  "runtime": {
+    "passed": 9,
+    "failed": 0
+  },
+  "nativeBefore": {
+    "source": "Independent QA report qa-editor-before-20261101/REPORT.md",
+    "memoryInputs": 12,
+    "inputSyncMs": {
+      "p50": 1081.1,
+      "p95": 1280.1,
+      "max": 1280.1
+    },
+    "memoryKeyCrossCheckInputs": 8,
+    "keyInputSyncMs": {
+      "p50": 1165.2,
+      "p95": 1477.4,
+      "max": 1477.4
+    },
+    "beforeInputToRAFMs": {
+      "p50": 1083.6,
+      "p95": 1293.1,
+      "max": 1293.1
+    },
+    "limits": "Page-local trusted input; not automation overhead; longest inactive draft inline and IME unmeasured"
+  },
+  "reviewData": {
+    "activeRevision": 6,
+    "reader": 10,
+    "draftLessons": 23,
+    "draftContentBytes": 26632089,
+    "receipt": "f71259b6ba84e81f24373218a031b7e69a5abbef8936143babea2edfe2cb444f",
+    "disposable": true,
+    "neverInstall": true
+  },
+  "staticAudit": {
+    "knownFindings": 3,
+    "files": [
+      "public/studio/lesson-editor.js",
+      "public/studio/media-picker.js"
+    ],
+    "limit": "Existing delegated-button detector findings; working actions covered by tests. Not a clean repository-wide static audit."
+  },
+  "configuredCandidate": {
+    "passed": 1004,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 102912.9495,
+    "exclusions": "Existing audio filenames and Audio/Speed/Playback test-name exclusions in scripts/verify-candidate.mjs; not an unfiltered all-tests claim."
+  }
+}

@@ -52,3 +52,8 @@
 .author-editor-fullscreen .author-standard {max-width:760px;margin-inline:auto}
 .inline-author [data-prose-insert] {padding-block:12px}
 .inline-author [data-prose-insert] form {display:grid;gap:8px}
+.lesson-publication-dialog{max-width:min(760px,calc(100vw - 32px));width:100%;max-height:calc(100dvh - 32px);overflow:auto;border:1px solid var(--line,#ccd5df);border-radius:16px;padding:24px;color:var(--ink,#152c45);background:var(--paper,#fff)}
+.lesson-publication-dialog::backdrop{background:rgb(12 28 48 / .4)}
+.lesson-publication-dialog .button-row{position:sticky;bottom:-24px;padding:16px 0;background:var(--paper,#fff);flex-wrap:wrap;border-top:1px solid var(--line,#ccd5df)}
+.lesson-publication-dialog .publication-token{overflow-wrap:anywhere;font-size:12px}
+.lesson-publication-dialog input[type=checkbox]{width:auto;margin-inline-end:8px}

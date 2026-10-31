@@ -33,6 +33,7 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
  let textPageMounts=[];
  const ctl=new host.ownerDocument.defaultView.AbortController(),doc=host.ownerDocument;
  const status=message=>{const el=host.querySelector('[data-unified-status]');if(el)el.textContent=message;};
+ const syncOwnerPins=()=>{if(coordinator){baseRevisionId=coordinator.baseRevisionId;expectedDraftToken=coordinator.expectedDraftToken;}};
  const touch=()=>{dirty=true;coordinator?.touch();onChanged();host.querySelector('[data-unsaved-status]').textContent='Unsaved workspace edits. Save includes lesson, component, exercise and vocabulary edits.';};
  const clearChildren=()=>{children.splice(0).forEach(x=>typeof x==='function'?x():x.dispose());exerciseMounts=[];textPageMounts=[];};
  function lesson(){return workspace.lessons.find(l=>l.id===selected);}
@@ -70,7 +71,7 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
  async function dependencyNotice(el,id){
   const request=(dependencyRequests.get(el)||0)+1;dependencyRequests.set(el,request);const local=affectedLessons(id);el.textContent='Shared canonical exercise '+id+' · current workspace affected lessons: '+local.map(l=>l.title+' ('+l.id+')').join(', ')+'. Edits apply to every reference after deliberate publication.';
   if(!getExerciseDependencies){el.textContent+=' Server dependency counts are unavailable in this mount.';return;}
-  try{const result=await getExerciseDependencies({exerciseId:id,baseRevisionId,expectedDraftToken,signal:ctl.signal});if(disposed||!el.isConnected||dependencyRequests.get(el)!==request)return;
+  try{syncOwnerPins();const result=await getExerciseDependencies({exerciseId:id,baseRevisionId,expectedDraftToken,signal:ctl.signal});if(disposed||!el.isConnected||dependencyRequests.get(el)!==request)return;
    if(result?.exerciseId!==id||!Array.isArray(result.lessons)||result.lessons.some(l=>typeof l.id!=='string'||typeof l.title!=='string')||!Number.isInteger(result.lessonCount)||result.lessonCount!==result.lessons.length||!Number.isInteger(result.componentCount)||result.componentCount<0)throw new Error('Invalid dependency callback result.');
    el.textContent+=' Server scope: '+result.lessonCount+' lessons, '+result.componentCount+' component references: '+result.lessons.map(l=>l.title+' ('+l.id+')').join(', ')+' · active revision '+result.activeRevisionId+' · draft token '+(result.draftToken??'none')+'.';
   }catch(err){if(!disposed&&el.isConnected&&dependencyRequests.get(el)===request)el.textContent+=' Server dependencies could not be refreshed: '+err.message;}
@@ -138,6 +139,7 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
   if(saving)throw new Error('The previous workspace save is still reloading.');
   let next;try{const collected=collectAll();for(const exercise of collected.exercises)validateExerciseDraft(exercise,collected);next=prepareStudioContent(collected);}catch(err){if(err.exerciseId)focusExercise(err.exerciseId);status(err.message+' · All entered values retained.');throw err;}saving=true;lock(true);status('Saving every workspace edit and reloading the saved draft…');
   try{if(getExerciseDependencies)await Promise.all(exerciseMounts.filter(({mount})=>Object.keys(mount.getEdits()).length).map(({id,container})=>dependencyNotice(container.parentElement.querySelector('[data-exercise-dependencies]'),id)));let reviewedDraftToken;
+   syncOwnerPins();
    if(getWorkspaceImpact){const impact=await getWorkspaceImpact({baseRevisionId,expectedDraftToken,content:next});const notice=host.querySelector('[data-workspace-impact]');notice.textContent='Server-checked impact: '+impact.affectedLessons.map(l=>l.title+' ('+l.id+')').join(', ')+'. Shared edits apply to all listed references after deliberate publication.';notice.hidden=false;reviewedDraftToken=impact.candidateDraftToken;}
 
    if(coordinator)coordinator.replace(next,{changed:false});
