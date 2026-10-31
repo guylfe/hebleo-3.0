@@ -1,0 +1,58 @@
+{
+  "codeCommit": "fae1c6111e38cb48eb49f0b41547a5c28055b08c",
+  "candidate": {
+    "passed": 946,
+    "failed": 0,
+    "exclusions": "Documented audio filenames and audio/speed/playback test names"
+  },
+  "schema": {
+    "passed": 27,
+    "failed": 0
+  },
+  "runtime": {
+    "passed": 9,
+    "failed": 0
+  },
+  "focused": {
+    "passed": 61,
+    "failed": 0
+  },
+  "actualAppDOMHTTP": {
+    "passed": 1,
+    "failed": 0,
+    "roundtrips": 3
+  },
+  "fullData": {
+    "status": "PASS",
+    "newContextRoundtrips": 4,
+    "legacyRoundtrips": 3,
+    "malformedFullDataNoMutationCases": 5,
+    "sourceDatabasesUnchanged": true
+  },
+  "logs": {
+    "candidate": {
+      "path": "candidate-delivery.log",
+      "sha256": "3de23fb10f13a642b9fd13f5778d95c32f32b9b135cfbc3a6612f84314db6a58"
+    },
+    "schemas": {
+      "path": "schema-delivery.log",
+      "sha256": "aa605affa3c420119730de2bd6db83697a81ae3cca2e2ea9ec28f7690a6c766a"
+    },
+    "runtime": {
+      "path": "runtime-code-commit.log",
+      "sha256": "be91a4bdca9c59ab30fe1df04476b4bcbed213acd5b8b67666fa1b9e399a199c"
+    },
+    "focused": {
+      "path": "focused-delivery.log",
+      "sha256": "6e2504e41b0113ceb854bace0ea01c6f8aaad1179f2d517e26174d6cbd2b4a3e"
+    },
+    "app": {
+      "path": "app-recovery2.log",
+      "sha256": "33e7e8dd5a41639d874dcff0f7acada1f3180ba437657c348d7f1857fc8a2e43"
+    },
+    "fullData": {
+      "path": "recovery-full-3.log",
+      "sha256": "06140aa2c1c8a03f8fb991c172c4be661bebf057f5d4154f0ae86204bb667b5c"
+    }
+  }
+}
