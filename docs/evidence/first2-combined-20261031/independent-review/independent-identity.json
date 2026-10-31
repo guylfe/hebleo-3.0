@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "name": "cross-database colliding IDs and duplicate content retain distinct revisions, remap only anchors, preserve original Unicode quotes/requests/audit and both retries across eight additional restores",
+      "status": "PASS",
+      "mapping": {
+        "1": 1,
+        "2": 3,
+        "3": 4
+      },
+      "revisionRows": 4,
+      "contexts": 1,
+      "contextHash": "b78341be714a041f2afa799dfc163f8bed3a326e7a62dad7be604abc19c6e5c2"
+    }
+  ]
+}

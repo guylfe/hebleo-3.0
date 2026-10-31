@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "name": "three actual HTTP restores preserve distinct historical-only, private-only, alias-only bytes, two asset revisions and original replay receipts",
+      "status": "PASS"
+    },
+    {
+      "name": "incoming private-only blob omission rejects despite identical local blob",
+      "status": 409,
+      "code": "MEDIA_MISSING",
+      "allTablesSequenceAndTotalChangesUnchanged": true
+    },
+    {
+      "name": "valid-shaped conflicting operation receipt rejects before writes",
+      "status": 409,
+      "code": "MEDIA_RESTORE_CONFLICT",
+      "allTablesSequenceAndTotalChangesUnchanged": true
+    },
+    {
+      "name": "independently valid divergent same-asset history rejects before writes",
+      "status": 409,
+      "code": "MEDIA_RESTORE_CONFLICT",
+      "allTablesSequenceAndTotalChangesUnchanged": true
+    },
+    {
+      "name": "independently valid conflicting alias rejects before writes",
+      "status": 409,
+      "code": "MEDIA_RESTORE_CONFLICT",
+      "allTablesSequenceAndTotalChangesUnchanged": true
+    },
+    {
+      "name": "individually valid 26 MB media packages reject combined 52 MB recovery atomically",
+      "status": 409,
+      "code": "MEDIA_BACKUP_LIMIT",
+      "allTablesSequenceAndTotalChangesUnchanged": true
+    }
+  ]
+}

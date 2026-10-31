@@ -1,0 +1,128 @@
+{
+  "status": "PREINSTALL_PASS",
+  "finding": "RR-FIRST2-F14-01",
+  "findingStatus": "CLOSED",
+  "reviewedCommit": "021dc19ae0e9f7cb3b5cfb4afcc6984a5c7600b3",
+  "runtimeCodeCommit": "6b90bcfb26045cfa8d8bbe167fbfeffe9b6dbffe",
+  "leadRuntime": "3105779faa90e6ba5f6a51c13387f5c53f35547b3b68cbb7b6956af283727bc4",
+  "reviewerRuntime": "4ac6c267b9c393aac27b42a71d2a81c0725e391df207099870159c8c3f99cbbd",
+  "lineEndingOnlyDifferences": [
+    "public/refinement.css",
+    "scripts/revise-first2-feedback.mjs",
+    "scripts/verify-first2-parity.mjs"
+  ],
+  "tests": {
+    "candidate": 948,
+    "focused": 63,
+    "schema": 27,
+    "runtime": 9,
+    "sourceFields": 30,
+    "fullDataGroups": 5,
+    "independentMediaGroups": 6
+  },
+  "fullDataBytes": 85510917,
+  "legacyBytes": 85507402,
+  "originalSourcesUnchanged": true,
+  "liveWrites": false,
+  "productionReadiness": false,
+  "nativeUiAcceptance": false,
+  "nonblockingFindings": [
+    {
+      "file": "docs/INLINE_AUTHOR_REVIEW.md",
+      "line": 55,
+      "description": "Stale statement about missing retained private-context media; update to validated incoming package plus retained local media union."
+    }
+  ],
+  "nextOwner": "Hebleo Lead Engineer",
+  "nextAction": "Guarded exact-candidate local install from fresh original snapshot, then served readback and preservation verification",
+  "files": {
+    "REPORT.md": {
+      "bytes": 11026,
+      "sha256": "6ca75d3c1ca9dc921f913197047af4640e2f13346a137da6305e46ce6077fc05"
+    },
+    "BUILD.json": {
+      "bytes": 12937,
+      "sha256": "36ac531be8a8ef5f15f2ef06f88406b087a980f0a820b00e65262bff78087b4f"
+    },
+    "LEAD_BUILD.json": {
+      "bytes": 12937,
+      "sha256": "820bf3adb53e2f12a19d751479863f09753ce297360e7ee8d5ca87067e8557ef"
+    },
+    "IDENTITY_COMPARISON.json": {
+      "bytes": 403,
+      "sha256": "f356659670d8f58c5291526e7a57253c97e8f9d62909ec7bd2f940bff654e212"
+    },
+    "RUNTIME_PARITY.json": {
+      "bytes": 5278,
+      "sha256": "a17521a6f29cb242c08e7b45e9e88ea3d551f5b3218d3ccac19944767bf78e94"
+    },
+    "PERFORMANCE_OBSERVATIONS.json": {
+      "bytes": 1091,
+      "sha256": "1278055dda961531fd0cc27473b52cdd79a692bcaf54dbe7649d68a11e6db0f4"
+    },
+    "full-data/receipt.json": {
+      "bytes": 5361,
+      "sha256": "3216e677f00ccc8e9583751513b28dc5af562219d5c8c29d8a83c1ba9776d605"
+    },
+    "full-data.log": {
+      "bytes": 950,
+      "sha256": "06140aa2c1c8a03f8fb991c172c4be661bebf057f5d4154f0ae86204bb667b5c"
+    },
+    "focused.log": {
+      "bytes": 8047,
+      "sha256": "006145cfb432b681a6438b2a9d3a3fc04b7fddb3ca42a8de5769c2e0b6180725"
+    },
+    "candidate-retry.log": {
+      "bytes": 114832,
+      "sha256": "cbda3cbe97409b2cf008a60f350c4bf0349ec424633012815a3551cd3c18b008"
+    },
+    "schemas-retry.log": {
+      "bytes": 2903,
+      "sha256": "8fed3c87a816123b09add2d915d66102128433bfea54fad7793a9e5ec837719c"
+    },
+    "runtime-retry.log": {
+      "bytes": 1010,
+      "sha256": "7ea7b38c27e735c04dbf2549cb1b7c12f6328a6ecc962357ef5f08a82cac7561"
+    },
+    "parity.log": {
+      "bytes": 157,
+      "sha256": "a71542a98b56b80eddc25df7b89710bf2fc01f5a0489bb01e411b62fbfdd8765"
+    },
+    "independent-media.mjs": {
+      "bytes": 6275,
+      "sha256": "455734d2f2540c502718265b47ccbb6457bf0e49725de4cf8421f44ed91de025"
+    },
+    "independent-media.json": {
+      "bytes": 1311,
+      "sha256": "cd0ed04f27dbd530b9270a7a9f5a76f4d08fd99079958098c2497f09f30d42ff"
+    },
+    "independent-media.log": {
+      "bytes": 29,
+      "sha256": "9298a75d39d63f72cb50fdb38b5bdb09ef059c84ba853fbe6d974f8ab06b647c"
+    },
+    "independent-identity.mjs": {
+      "bytes": 4034,
+      "sha256": "cc384b182d142f0a52cb35881f0001ef6a39d14e59f7b733ff2e8078f58f6966"
+    },
+    "independent-identity.json": {
+      "bytes": 501,
+      "sha256": "31c8d3427563f763187eebd9a80c917b9ea34cd8af5b151ae3de80bdceac6d5c"
+    },
+    "independent-identity.log": {
+      "bytes": 472,
+      "sha256": "7d1a50040165977867200c2deba4f2ce9a3ab90b4877b701fc471bef7e4cfc7e"
+    },
+    "older-reader.mjs": {
+      "bytes": 1310,
+      "sha256": "4151f547823d9434b2c05956821a48f09fc72fdd0061010c9d76f8c913f06b69"
+    },
+    "older-reader.json": {
+      "bytes": 248,
+      "sha256": "78e5c6e27f1e0e9f468eaccac2466aa3f11e23ddad17f2299f36599d460c9c66"
+    },
+    "older-reader.log": {
+      "bytes": 220,
+      "sha256": "cf58a35050f76a2490df6e26e869fc0322c1ec40cd485983cb8bfdb30c9b1c72"
+    }
+  }
+}
