@@ -1,3 +1,4 @@
+import {courseRailEdge,updateCourseToggle} from '../public/sidebar-toggle.js';
 // Independent QA for frozen d912e746. Synthetic fixtures only; no owner database.
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -41,7 +42,7 @@ async function actualApp(t,s,origin,{beforeFetch}={}){
   const exports=await import(new URL('../public/'+match[2].replace(/^\.\//,''),import.meta.url));
   for(const name of match[1].split(',').map(x=>x.trim())){const [original,alias]=name.split(/\s+as\s+/);w[alias||original]=exports[original];}
  }
- Object.assign(w,{structuredClone,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),playAudio:async()=>{},stopMedia:()=>{},clearRecording:()=>{},feedbackSound:()=>{}});
+ Object.assign(w,{courseRailEdge,updateCourseToggle,structuredClone,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),playAudio:async()=>{},stopMedia:()=>{},clearRecording:()=>{},feedbackSound:()=>{}});
  const calls=[];w.fetch=async(path,options)=>{calls.push({path,...options});await beforeFetch?.(path,options);return fetch(new URL(path,origin),options);};
  w.eval(source.replace(/^import .*;\r?\n/gm,''));await until(()=>w.document.querySelector('[data-reader-heading]'));return {w,doc:w.document,calls};
 }

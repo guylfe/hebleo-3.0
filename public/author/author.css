@@ -28,3 +28,27 @@
 .inline-author .author-context-tools[hidden] {display:flex!important;visibility:hidden}
 .inline-author [data-author-anchor] {white-space:pre-wrap;max-height:12em;overflow:auto}
 .inline-author [data-author-advanced] {margin-block:20px}
+
+/* One prose document retains the existing reading measure and palette. */
+.author-format-tools {display:flex;flex-wrap:wrap;gap:6px;margin-block:12px;align-items:center}
+.author-format-tools select {max-width:100%;width:auto;min-height:34px}
+.author-format-tools button:focus-visible,.author-format-tools select:focus-visible {outline:2px solid var(--primary);outline-offset:2px}
+.inline-author .ProseMirror {min-height:220px;position:relative;white-space:pre-wrap;overflow-wrap:anywhere;padding:12px;outline:1px solid var(--line);border-radius:var(--radius,8px)}
+.inline-author .ProseMirror:focus {outline:2px solid var(--primary)}
+.ProseMirror li {position:relative}
+.ProseMirror li[data-task-item] {list-style:none;display:flex;gap:8px}
+.ProseMirror li[data-task-item]>div {flex:1;min-width:0}
+.ProseMirror pre {white-space:pre-wrap}
+.ProseMirror-hideselection *::selection {background:transparent}
+.ProseMirror-hideselection {caret-color:transparent}
+.ProseMirror-selectednode {outline:2px solid var(--primary)}
+.ProseMirror table {border-collapse:collapse;table-layout:fixed;width:100%}
+.ProseMirror td,.ProseMirror th {border:1px solid var(--line);padding:8px;vertical-align:top;position:relative;min-width:36px}
+.ProseMirror .selectedCell::after {content:'';position:absolute;inset:0;pointer-events:none;background:var(--selection);opacity:.6}
+.author-opaque {padding-block:8px;color:var(--muted);font-size:.85em;border-block:1px dashed var(--line);user-select:none}
+.author-title-label {font-size:.85em;color:var(--muted)}
+.inline-author input.author-title {font-size:1.6rem;font-weight:700;color:var(--ink);border:0;border-bottom:1px solid var(--line);width:100%;background:transparent}
+.author-editor-fullscreen {position:fixed;inset:0;background:var(--paper,#fff);z-index:120;overflow:auto;padding:24px}
+.author-editor-fullscreen .author-standard {max-width:760px;margin-inline:auto}
+.inline-author [data-prose-insert] {padding-block:12px}
+.inline-author [data-prose-insert] form {display:grid;gap:8px}

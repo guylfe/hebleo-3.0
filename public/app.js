@@ -1,4 +1,5 @@
 import {createStudioWorkspace} from './studio/workspace.js';
+import {courseRailEdge,updateCourseToggle} from './sidebar-toggle.js';
 import {mountInlineAuthor} from './author/inline-author.js';
 import {BACKUP_BYTE_LIMIT,serializeBackup} from './backup-contract.js';
 import { resolveBlock, importVocabularyCSV } from './content.js';
@@ -179,13 +180,14 @@ function nav(){const items=[['home','Your path'],['course','Course'],['review','
 function navigationChoices(){
  const width=window.innerWidth||1280;if(!state.navigation[state.user]){let saved={};try{saved=JSON.parse(localStorage.getItem('hebleo-navigation-'+state.user)||'{}');}catch{}state.navigation[state.user]={main:typeof saved.main==='boolean'?saved.main:width<1280,course:typeof saved.course==='boolean'?saved.course:width<1024};}return state.navigation[state.user];
 }
-function navigationToggle(){return '<button type="button" class="nav-toggle" data-action="navigation-toggle" data-value="course" aria-controls="course-navigation" aria-label="Toggle course outline" title="Course outline"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M7 3v14 M11 7l3 3-3 3"/></svg></button>';}
+function navigationToggle(){return '<button type="button" class="nav-toggle" data-action="navigation-toggle" data-value="course" aria-controls="course-navigation" aria-label="Course outline" title="Course outline"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M7 3v14"/><path data-course-arrow d="M13 6l-4 4 4 4"/></svg></button>';}
 function applyNavigation(){
  const shell=root.querySelector('.nav-shell');if(!shell)return;const wasReady=shell.dataset.navigationReady==='true';shell.dataset.navigationReady='true';const prefs=navigationChoices(),width=window.innerWidth||1280,hasCourse=shell.classList.contains('has-course'),mobile=width<960,overlay=hasCourse&&mobile&&state.navDrawer==='course',expanded=hasCourse&&(mobile?overlay:!prefs.course),header=root.querySelector('.app-header');
  const openingRail=root.querySelector('#course-navigation');if(expanded&&openingRail?.hidden){openingRail.hidden=false;void openingRail.offsetWidth;}
   root.style.setProperty('--header-height',(header?.getBoundingClientRect().height||88)+'px');shell.style.setProperty('--course-track',hasCourse&&!mobile&&!prefs.course?'248px':'0px');shell.dataset.mainOverlay='false';shell.dataset.courseCollapsed=String(!expanded);shell.dataset.courseOverlay=String(overlay);shell.dataset.mobile=String(mobile);
  clearTimeout(navigationHideTimer);const rail=root.querySelector('#course-navigation');if(rail){if(expanded&&rail.hidden){rail.hidden=false;void rail.offsetWidth;}rail.inert=!expanded;rail.toggleAttribute('inert',!expanded);rail.setAttribute('aria-hidden',String(!expanded));if(!expanded){if(rail.contains(document.activeElement)){const toggle=root.querySelector('[data-action="navigation-toggle"]');if(toggle){toggle.disabled=false;toggle.focus({preventScroll:true});}}const reduced=!wasReady||navigationMotion?.matches||!pref().animations;if(reduced)rail.hidden=true;else navigationHideTimer=setTimeout(()=>{if(rail.isConnected&&root.querySelector('.nav-shell')?.dataset.courseCollapsed==='true')rail.hidden=true;},210);}}root.querySelector('#main-content')?.toggleAttribute('inert',overlay);
- root.querySelectorAll('[data-action="navigation-toggle"]').forEach(b=>{b.setAttribute('aria-expanded',String(expanded));b.setAttribute('aria-label',(expanded?'Collapse ':'Expand ')+'course outline');});
+ const edge=courseRailEdge(rail,shell);shell.dataset.courseRailEdge=edge;
+ root.querySelectorAll('[data-action="navigation-toggle"]').forEach(b=>updateCourseToggle(b,{expanded,edge}));
  const backdrop=root.querySelector('[data-action="navigation-close"]');if(backdrop)backdrop.hidden=!overlay;
 }
 function persistNavigationChoices(prefs){try{localStorage.setItem('hebleo-navigation-'+state.user,JSON.stringify(prefs));}catch{}}

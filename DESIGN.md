@@ -47,6 +47,10 @@ components:
 ---
 # Hebleo selected application design
 
+## In-lesson prose editor candidate, 1 November 2026
+
+The existing lesson measure, blue tokens, UI fonts and natural document flow remain the visual owners. `author/standard-editor.js` supplies one ProseMirror document at the prose's lesson position, with a wrapping visible formatting band and ordinary single-line page title. Genuine Markdown reuses Studio EasyMDE. Native paragraph/heading/direction selects accept platform-owned popups. Unsupported source has a safely rendered, noneditable boundary; specialized activities retain their existing controls. No new paragraph cards or duplicate read-only lesson are introduced. Sidebar glyph/title/name follow actual rail edge and next action without remounting the editor. Source/automated candidate only; native layout, keyboard/IME, 200% zoom and screen-reader acceptance remain open. See `docs/EDITOR_PERFORMANCE_DELIVERY_20261101.md` for evidence and required server integration.
+
 Oct20 source browsing extends the existing lexical category tables, typography, rich renderer and Note/Examples treatment. Original provenance uses a native full-width disclosure with every exact authored field available. Collection buttons distinguish source from learned vocabulary. Palette, fonts, token ownership, contained horizontal scrolling and natural document height remain as specified below.
 
 ## Overview
