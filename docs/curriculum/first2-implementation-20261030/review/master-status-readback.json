@@ -1,0 +1,8 @@
+{
+  "revision": "AHj4eMTR0by31evGX4iMrrQ5teAxK8OEph12_9zREo_9rIR1JYy5kabefa8bSn5U2DREhRWCGZT48dE31mu0lXU9GpylFMT0-6SE-k08GQ",
+  "checks": {
+    "exactFourStatusEdits": true,
+    "allHeadingsPreserved": true,
+    "lesson2ExplicitlyUnfinished": true
+  }
+}

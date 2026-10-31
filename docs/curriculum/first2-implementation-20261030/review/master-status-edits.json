@@ -1,0 +1,33 @@
+{
+  "previousRevision": "AHj4eMQbs4AvKUsSFH4nKDDgob7uHGFqMEUYjrcLSJusbw9BDL-hbD4SS5aoSdFhnQ9Nw7MTG6VSJHoCNSbZcQ5Nl-UzglgR3ddjxE0pGA",
+  "edits": [
+    {
+      "id": "MNTL-A2",
+      "start": 37504,
+      "end": 37583,
+      "oldText": "Approval revision/date: — · Course lesson/version: — · Verification evidence: —",
+      "newText": "Implementation record, 31 October 2026: installed in the local software as MNTL-A2, content revision 5, code 73e242e717c630976fd2d040396d4d8d5fcd3127. Curriculum verified exact installed content against the source pack and read the served build. Team learner-control checks and preservation review recorded separately. Four original mnemonic images are installed and visually checked; all seven activity definitions are present. Isolated consonant recordings have not been auditioned or installed; listening activities remain unfinished. Guy acceptance remains pending."
+    },
+    {
+      "id": "MNTL-A2",
+      "start": 31828,
+      "end": 32040,
+      "oldText": "Content: Revised draft · Approval: Guy authorised local software implementation for testing; adapted wording remains reviewable · Built version: pending · Verified version: pending · Revision: 2 (30 October 2026)",
+      "newText": "Content: Installed local test draft · Approval: Guy testing pending · Built version: 73e242e / content revision 5 · Verified: current source/content readback; team learner-control checks; consonant audio unfinished · Revision: 2 (30 October 2026)"
+    },
+    {
+      "id": "MEMORY-A2",
+      "start": 31514,
+      "end": 31777,
+      "oldText": "Approval revision/date: Guy authorised local implementation for testing on 30 October 2026; comments applied; adapted wording remains reviewable · Course lesson/version: pending · Verification evidence: document readback complete; software implementation pending.",
+      "newText": "Implementation record, 31 October 2026: installed in the local software as MEMORY-A2, content revision 5, code 73e242e717c630976fd2d040396d4d8d5fcd3127. Curriculum verified exact installed content against the source pack and read the served build. Team learner-control checks and preservation review recorded separately. Timed recall, date transformation, three deliberate reveals, application question and optional comparison are implemented; direct device/accessibility acceptance remains pending. Guy acceptance remains pending."
+    },
+    {
+      "id": "MEMORY-A2",
+      "start": 16981,
+      "end": 17193,
+      "oldText": "Content: Revised draft · Approval: Guy authorised local software implementation for testing; adapted wording remains reviewable · Built version: pending · Verified version: pending · Revision: 4 (30 October 2026)",
+      "newText": "Content: Installed local test draft · Approval: Guy testing pending · Built version: 73e242e / content revision 5 · Verified: current source/content readback; team learner-control checks · Revision: 4 (30 October 2026)"
+    }
+  ]
+}

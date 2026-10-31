@@ -1,0 +1,36 @@
+{
+  "status": "PARTIAL_DELIVERY",
+  "checks": {
+    "active_revision_5": true,
+    "exact_installed_lesson_objects": true,
+    "pack_hash_matches_handoff": true,
+    "seven_memory_pages_nine_letter_pages": true,
+    "application_question_and_answer_preserved": true,
+    "principles_in_source_order": true,
+    "all_seven_letter_activities_retained": true,
+    "guy_intro_and_adam_unchanged": true
+  },
+  "contentChecksPass": true,
+  "installedCode": "73e242e717c630976fd2d040396d4d8d5fcd3127",
+  "runtimeSha256": "08e689b369f2129b94e6d6d0016c4a0c6dadc4936b680cd30d26b69a20bb2249",
+  "artwork": {
+    "httpFetchedAndVisuallyInspected": true,
+    "sha256": {
+      "m": "d1e0fef1c13fd03714cc2e9d6ff5c6a3313eb955b7af54e451177a1e4cabdb90",
+      "n": "15ed70105706f28fa69f800e771694bbe3b8df4a0ae0ff4c7632b63e6fca2f63",
+      "t": "cfdee0b8de8342dde59319765b09c4de5fe992e9b4a898e5fff43a5b1e72bbd1",
+      "l": "0df69d3c4491f2869cbac224e1a79631490ed195e97bc3538e671e717896c2e7"
+    }
+  },
+  "audio": {
+    "approvedClips": 0,
+    "installedClips": 0,
+    "audition": "not possible with current model/tool output; file-output audio was attempted but no audible content became available for phonetic inspection",
+    "required": "Human-verified vowel-free m n t l recordings or exact approved spans from originals"
+  },
+  "evidenceSeparation": {
+    "curriculum": "Current read-only API/build, source-object equivalence, original prose/activities, actual served artwork inspection; no new native browser walk",
+    "team": "QA/Leo native learner and preview controls checked on earlier renderer-identical builds; final code diff reviewed and confined to validator plus tests/docs",
+    "notVerified": "Physical device, screen reader, native reduced motion, audio playback/phonetic correctness, Guy acceptance"
+  }
+}
