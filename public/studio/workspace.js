@@ -27,14 +27,14 @@ export function createStudioWorkspace({content,baseRevisionId,expectedDraftToken
    if(revoked)throw new Error('Author access ended. Your work is retained; restore author access before saving.');
    if(pending)return pending;
    const next=prepareStudioContent(collect()),serial=version;
-   pending=(async()=>{
+   pending=Promise.resolve().then(async()=>{
     try{
      const impact=getWorkspaceImpact?await getWorkspaceImpact({baseRevisionId,expectedDraftToken:token,content:next}):null;
      const result=await saveDraft({baseRevisionId,expectedDraftToken:token,content:next,...(impact?.candidateDraftToken?{reviewedDraftToken:impact.candidateDraftToken}:{})});
      baseline=next;if(version===serial){value=next;dirty=false;}token=result.draftToken;notify();return result;
     }catch(error){if(error.status===403)revoked=true;throw error;}
     finally{pending=null;notify();}
-   })();notify();return pending;
+   });notify();return pending;
   }
  };return api;
 }
