@@ -1,0 +1,26 @@
+{
+  "scope": "disposable-copy-only",
+  "roundtrips": [
+    {
+      "cycle": 1,
+      "originalAndReexportRestore": "PASS",
+      "revisionRows": 7,
+      "contexts": 1,
+      "allPinsAndContextsExact": true,
+      "bytes": 93309447
+    },
+    {
+      "cycle": 2,
+      "originalAndReexportRestore": "PASS",
+      "revisionRows": 7,
+      "contexts": 1,
+      "allPinsAndContextsExact": true,
+      "bytes": 93309447
+    }
+  ],
+  "oldContexts": 0,
+  "oldComments": 0,
+  "compactBytes": 93309447,
+  "atomicMalformedRestores": 3,
+  "status": "PASS"
+}
