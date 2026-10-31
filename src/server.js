@@ -61,8 +61,10 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
         if (req.method === 'POST') {
           if (!String(req.headers['content-type']).startsWith('application/json')) throw new DomainError('JSON content type required.', 415);
           // Backups carry every referenced revision, so restore gets a larger bound than ordinary edits.
-          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? 200000000 : url.pathname==='/api/studio/media/import'?30000000:url.pathname.startsWith('/api/studio/sources/')||['/api/studio/draft','/api/studio/impact','/api/studio/lexical/import-preview','/api/studio/text/import-preview','/api/studio/text/import'].includes(url.pathname)?20000000:750000;
-          for await (const chunk of req) { bytes += chunk.length; if (bytes > limit) throw new DomainError('Request exceeds the local import limit.', 413); chunks.push(chunk); }
+          // The preserved 23-lesson source workspace exceeds 26 MB. Full-workspace
+          // CAS/impact must accept it without weakening the smaller import bounds.
+          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? 200000000 : ['/api/studio/draft','/api/studio/impact'].includes(url.pathname)?50000000:url.pathname==='/api/studio/media/import'?30000000:url.pathname.startsWith('/api/studio/sources/')||['/api/studio/lexical/import-preview','/api/studio/text/import-preview','/api/studio/text/import'].includes(url.pathname)?20000000:750000;
+          for await (const chunk of req.iterator({destroyOnReturn:false})) { bytes += chunk.length; if (bytes > limit){req.resume();throw new DomainError('Request exceeds the local import limit.', 413);} chunks.push(chunk); }
           let input; try { input = parseStrictJSON(Buffer.concat(chunks).toString()); } catch { throw new DomainError('Malformed JSON.'); }
           if (!input || typeof input !== 'object' || Array.isArray(input)) throw new DomainError('Expected a JSON object.');
           if (url.pathname.startsWith('/api/studio/') || ['/api/restore','/api/reports/resolve','/api/questions/answer','/api/questions/moderate'].includes(url.pathname)) store.requireAuthor(userId);
