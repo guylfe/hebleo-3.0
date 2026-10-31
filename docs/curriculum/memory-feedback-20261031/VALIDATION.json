@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "checks": {
+    "baselinePackMatchesPreviouslyInstalledHash": true,
+    "allFourteenFeedbackItemsMapped": true,
+    "sixUniqueTopLevelPageIds": true,
+    "optionalPageRemovedFromTopLevelOrder": true,
+    "originalComparisonActivityIdRetained": true,
+    "comparisonFeedbackUnchanged": true,
+    "initialAttemptFeedbackUnchanged": true,
+    "initialStringAndDurationExact": true,
+    "allAnimationStagesPreserveExactDigits": true,
+    "thirdPrincipleNamed": true,
+    "thirdPrincipleExplainsEstablishedKnowledge": true,
+    "sourceHistoryIncludesCompleteRemovedQuiz": true,
+    "noNewQuizInActiveCopy": true,
+    "personalAccountPreserved": true,
+    "threeExperienceVectorsNumbered": true,
+    "noNetworkParagraphReintroduced": true,
+    "oldSourceFileUnchanged": true,
+    "leadContentPackUnchanged": true,
+    "feedbackFileUnchanged": true
+  },
+  "concision": {
+    "beforeWelcomeAndAdamWords": 224,
+    "afterWelcomeAndAdamWords": 125,
+    "countScope": "Body text only, excluding headings and controls; whitespace token count."
+  },
+  "notVerified": [
+    "Rendered UI, actual timer/animation/copy prevention/navigation and accessibility",
+    "Authoring master current live state (not read or changed)",
+    "Runtime schema adaptation, state migration, install, CI and Guy acceptance"
+  ]
+}

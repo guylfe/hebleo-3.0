@@ -1,0 +1,85 @@
+{
+  "dateIsrael": "2026-10-31",
+  "origin": "Guy's direct feedback after testing the installed first two lessons; supersedes prior exact UI/content requirements where it conflicts.",
+  "request": [
+    {
+      "id": 1,
+      "text": "Image 1: These 3 vectors of expreience should be numbered, or otherwise interactive so it doesn't look like a plain block of text."
+    },
+    {
+      "id": 2,
+      "text": "\"Answers saved.\" on every page for some reason, with \"Continue\" being greyed out."
+    },
+    {
+      "id": 3,
+      "text": "\"Lesson help & comments\" shouldn't appear if it's empty. Comments can be left below the lesson anyway. It should just be \"extra information\" with a pop-up with said extra information, and only appear when there's extra information to show like in the page with the extra explanation about the associative network memory model (if it's still there)."
+    },
+    {
+      "id": 4,
+      "text": "The heading doesn't necessarily have to change on every page. \"Adam\" as a heading is a bit awkward. The text is also too long there, but that's my fault. In general, if it can be made succinct for user-friendliness, it should. Tell this to the curriculum designer."
+    },
+    {
+      "id": 5,
+      "text": "Page 3 - \"Hear the digits once\"? Why did you think this was a relevant feature to add?"
+    },
+    {
+      "id": 6,
+      "text": "Put a timer bar when showing the 10-second number so they know when it runs out."
+    },
+    {
+      "id": 7,
+      "text": "Make sure the number isn't copy-pasteable while it appears."
+    },
+    {
+      "id": 8,
+      "text": "The animation for the number transforming sucks. It's not really an animation, it's just numbers switching in a way that's hard to track because their positioning changes by virtue of the line length changing with every modification."
+    },
+    {
+      "id": 9,
+      "text": "Image 2: Unnecessary repetition."
+    },
+    {
+      "id": 10,
+      "text": "Right now the \"show the next idea\" button is a bit cumbersome. The UX doesn't feel good, but I'm not sure what to do about it."
+    },
+    {
+      "id": 11,
+      "text": "Page 5 - the 3rd principle is \"memory hooks\". Then explain that it means connecting new information to established all information."
+    },
+    {
+      "id": 12,
+      "text": "What does the question on page 5 add? It's a difficult question that would only serve to demoralize the user."
+    },
+    {
+      "id": 13,
+      "text": "The \"optional\" part should not have its own page. It means everyone has to go through it. If it's optional, make it part of the previous page."
+    },
+    {
+      "id": 14,
+      "text": "When I'm the editor/admin/author, give me an option to edit lessons within the lesson so that everything looks the same but is editable, with text blocks etc. Also add the option to comment on things as the admin such that you would be able to see the comments instead of me writing all of them here."
+    }
+  ],
+  "imageObservations": {
+    "image1": "Welcome to Hebleo heading; intro and three long experience paragraphs appear as a prose block, with persistent Answers saved below.",
+    "image2": "Animation annotation 'Slashes show the month, day and year within each group.' then Replay connection then another American month–day–year explanation. User flags redundant explanation."
+  },
+  "leoInterpretationsForReview": {
+    "content": "Number the three experience points. Shorten introduction/Adam without inventing facts or losing supplied personal claims. Stable/reused headings are allowed. Memory hooks explicitly means connecting new information to established old knowledge.",
+    "quiz": "Recommend removing the page-5 application question; it intended an application check but adds pressure/friction at this stage. This is a recommendation drawn from feedback, not a quotation of a new exact replacement text.",
+    "optionalComparison": "Fold optional comparison into the preceding explanation page; collapsed and genuinely skippable while normal Continue remains available. Preserve historical IDs/revisions explicitly when retiring the separate page.",
+    "speech": "Hear digits once was implemented because the prior brief requested an on-demand nonvisual equivalent. Recommend removing it from default visible controls; retain an appropriate accessible path without leaking answers or adding unnecessary steps.",
+    "principleInteraction": "UX Owner should recommend and demonstrate a simpler progressive reveal; no automatic claim that a particular alternative has Guy's acceptance.",
+    "inlineAuthoring": "Author-only edit mode in the same lesson layout, editable source blocks, save to the existing draft/revision system, concrete anchored author comments visible to assistants; keep draft save versus applying content deliberate and enforce permissions server-side."
+  },
+  "inspectedBaseline": {
+    "receipt": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\71c71389-5334-4e0c-9ca8-d80dd28223d1\\fa5b73cd-180c-40ed-bf11-469defe4a57f\\FIRST2_FINAL_HANDOFF.json",
+    "checkout": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\489864a5-e240-4cef-a6fc-8cc6d0df25fa\\hebleo-audio-contract",
+    "knownCode": "73e242e717c630976fd2d040396d4d8d5fcd3127",
+    "localUrl": "http://127.0.0.1:63358/",
+    "canonicalDoc": "https://docs.google.com/document/d/1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY/edit",
+    "sourceBrief": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\71c71389-5334-4e0c-9ca8-d80dd28223d1\\653fb433-7485-48b1-9f7c-cb22711bda02\\hebleo-3\\docs\\curriculum\\first2-implementation-20261030\\IMPLEMENTATION_BRIEF.md",
+    "observedNow": "Mounted Browser welcome shows an enabled inner Continue plus disabled outer Continue, and empty Lesson help & comments while 0 comments remain below. Code persists 'Answers saved.' after cursor-only navigation.",
+    "unrelatedOpenGap": "Four isolated genuine consonant recordings remain unverified/uninstalled. Do not turn this UX revision into another audio search or synthesize replacements."
+  },
+  "preservation": "Use Lead's CURRENT implementation checkout, protect dirty work and backups; retain source identities, prior releases/drafts/media/settings/nonprogress data, and comments. No WordPress, main or production publication. Apply existing fresh-fictional-progress startup policy only at an authorized new build."
+}
