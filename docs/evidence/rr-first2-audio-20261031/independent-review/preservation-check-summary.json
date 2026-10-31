@@ -1,0 +1,66 @@
+{
+  "source": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\71c71389-5334-4e0c-9ca8-d80dd28223d1\\653fb433-7485-48b1-9f7c-cb22711bda02\\hebleo-3\\tmp\\release-first2-audio-73e242e\\preservation.json",
+  "checks": [
+    {
+      "name": "exact one executable delta, clean evidence HEAD, all 113 build hashes recomputed",
+      "pass": true
+    },
+    {
+      "name": "original baseline matches retained backup and previous reviewed protected state",
+      "pass": true
+    },
+    {
+      "name": "initial preflight and actual before snapshots and receipts match",
+      "pass": true
+    },
+    {
+      "name": "initial reset rehearsal preserves all protected tables and resets only fictional progress",
+      "pass": true
+    },
+    {
+      "name": "initial both retained application restore artifacts preserve content, history, learner and media rows",
+      "pass": true
+    },
+    {
+      "name": "final preflight and actual before snapshots and receipts match",
+      "pass": true
+    },
+    {
+      "name": "final reset rehearsal preserves all protected tables and resets only fictional progress",
+      "pass": true
+    },
+    {
+      "name": "final both retained application restore artifacts preserve content, history, learner and media rows",
+      "pass": true
+    },
+    {
+      "name": "two installation chain: only reset timestamp separates saved rehearsal from actual after digest",
+      "pass": false
+    },
+    {
+      "name": "original baseline to live retains every nonprogress field, source, media and historical revision",
+      "pass": true
+    },
+    {
+      "name": "active revision 5, 23 exact saved drafts, and 7 plus 9 page source lessons preserved",
+      "pass": true
+    },
+    {
+      "name": "live build and exact validator plus unchanged reader bytes verified",
+      "pass": true
+    },
+    {
+      "name": "live source lesson and draft GETs retain exact source content",
+      "pass": true
+    },
+    {
+      "name": "all review GETs leave live database digest unchanged",
+      "pass": true
+    }
+  ],
+  "initialPassed": 13,
+  "total": 14,
+  "correctedChain": "chain-recheck.json",
+  "correctedChainPass": true,
+  "report": "REVIEW.md"
+}

@@ -1,0 +1,627 @@
+{
+  "startedAt": "2026-10-31T00:10:58.458Z",
+  "collisions": [
+    {
+      "kind": "letter-gallery",
+      "mode": "no-clips",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "letter-gallery",
+      "mode": "child-only",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "letter-gallery",
+      "mode": "different-parent-and-child",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "letter-gallery",
+      "mode": "last-child",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "letter-matching",
+      "mode": "no-clips",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "letter-matching",
+      "mode": "child-only",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "letter-matching",
+      "mode": "different-parent-and-child",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "letter-matching",
+      "mode": "last-child",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "self-check",
+      "mode": "no-clips",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "self-check",
+      "mode": "child-only",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "self-check",
+      "mode": "different-parent-and-child",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    },
+    {
+      "kind": "self-check",
+      "mode": "last-child",
+      "runtimeRejected": true,
+      "semanticRejected": true,
+      "validationInputUnchanged": true,
+      "boundaries": [
+        {
+          "route": "studio/draft",
+          "label": "save",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "studio/publish",
+          "label": "defensive-publish",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-active",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-history",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        },
+        {
+          "route": "restore",
+          "label": "restore-draft",
+          "status": 400,
+          "error": "Invalid or duplicate activity item identity.",
+          "allTablesUnchanged": true
+        }
+      ]
+    }
+  ],
+  "positiveRoutes": [
+    {
+      "route": "studio/draft",
+      "status": 200
+    },
+    {
+      "route": "studio/publish",
+      "status": 200
+    },
+    {
+      "route": "restore",
+      "status": 200
+    }
+  ],
+  "dispatch": [
+    {
+      "kind": "letter-gallery",
+      "expected": [
+        "/media/letter-gallery-child-0.wav",
+        "/media/letter-gallery-child-1.wav",
+        "/media/letter-gallery-child-2.wav",
+        "/media/letter-gallery-child-3.wav"
+      ],
+      "played": [
+        "/media/letter-gallery-child-0.wav",
+        "/media/letter-gallery-child-1.wav",
+        "/media/letter-gallery-child-2.wav",
+        "/media/letter-gallery-child-3.wav"
+      ]
+    },
+    {
+      "kind": "letter-matching",
+      "expected": [
+        "/media/letter-matching-child-0.wav",
+        "/media/letter-matching-child-1.wav",
+        "/media/letter-matching-child-2.wav",
+        "/media/letter-matching-child-3.wav"
+      ],
+      "played": [
+        "/media/letter-matching-child-0.wav",
+        "/media/letter-matching-child-1.wav",
+        "/media/letter-matching-child-2.wav",
+        "/media/letter-matching-child-3.wav"
+      ]
+    },
+    {
+      "kind": "self-check",
+      "expected": [
+        "/media/self-check-child-0.wav",
+        "/media/self-check-child-1.wav",
+        "/media/self-check-child-2.wav",
+        "/media/self-check-child-3.wav"
+      ],
+      "played": [
+        "/media/self-check-child-0.wav",
+        "/media/self-check-child-1.wav",
+        "/media/self-check-child-2.wav",
+        "/media/self-check-child-3.wav"
+      ]
+    },
+    {
+      "kind": "letter-input",
+      "expected": [
+        "/media/parent-letter-input.wav"
+      ],
+      "played": [
+        "/media/parent-letter-input.wav"
+      ]
+    },
+    {
+      "kind": "letter-choice",
+      "expected": [
+        "/media/parent-letter-choice.wav"
+      ],
+      "played": [
+        "/media/parent-letter-choice.wav"
+      ]
+    },
+    {
+      "kind": "application-choice",
+      "expected": [
+        "/media/parent-application-choice.wav"
+      ],
+      "played": [
+        "/media/parent-application-choice.wav"
+      ]
+    }
+  ],
+  "syntheticAudio": true,
+  "auditoryVerification": false,
+  "repeatedChildIdsOnDistinctPagesAccepted": true,
+  "pass": true,
+  "atomicHttpRejections": 60,
+  "finishedAt": "2026-10-31T00:10:59.788Z"
+}

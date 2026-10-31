@@ -1,6 +1,6 @@
 # RR-FIRST2-01 final parent/item collision correction
 
-Installed and owner-verified at http://127.0.0.1:63358/ on 31 October 2026. Independent installed closure is pending Release Reviewer. Audio remains unfinished; no isolated consonant clips have been verified or installed. Guy acceptance remains Pending.
+Installed and owner-verified at http://127.0.0.1:63358/ on 31 October 2026. RR-FIRST2-01 is independently CLOSED by Release Reviewer; preservation PASS. Audio remains unfinished; no isolated consonant clips have been verified or installed. Guy acceptance remains Pending.
 
 ## Exact identity
 
@@ -52,6 +52,6 @@ Active and saved-draft MEMORY-A2 (seven pages) and MNTL-A2 (nine pages) exactly 
 
 ## Independent and native scope
 
-Release Reviewer's prior actual audit at the shared repository tmp/release-first2-contract-abf3cca/REVIEW.md is reused for unchanged paths. Request only the installed collision correction and preservation delta, with an explicit RR-FIRST2-01 CLOSED/OPEN verdict. No new native walkthrough is claimed. Leo's abf3cca Sam comparison/normal finish/next-lesson native evidence remains separately attributed; the final delta changes only validation and leaves those UI bytes exact.
+Release Reviewer independently CLOSED RR-FIRST2-01 and returned preservation PASS on the exact installed code/runtime. The prior actual abf3cca audit was reused for unchanged paths. The narrow recheck confirms 12 collision variants / 60 atomic HTTP400 refusals, valid save/publish/restore, 15 exact requested audio URLs across six families and all 113 executable hashes. Both installation preservation steps and the live unchanged digest were checked. Thirteen of fourteen initial preservation checks passed; the remaining chain assertion failed only because SQLite row prototypes differed in the test comparison. The corrected narrow chain check passed; the full script was not rerun wholesale. See independent-review/REVIEW.md, copied with probes, results and provenance; a terminal blank line is normalized for Git and the byte-exact original remains in external RELEASE_REVIEW.md. PID59284 exists; the review could not independently associate it to the port because Windows denied its listener lookup. Configuration/vault/filesystem-media and unrelated-listener preservation remain Lead installation evidence. No new native walkthrough is claimed. Leo's abf3cca Sam comparison/normal finish/next-lesson native evidence remains separately attributed; the final delta changes only validation and leaves those UI bytes exact.
 
 Audio remains explicitly unfinished: zero verified isolated /m/, /n/, /t/, /l/ clips. No raw whole-source recordings or synthesis were installed. No WordPress, production, main, external source or curriculum change was made.
