@@ -1,0 +1,30 @@
+{
+  "codeCommit": "699e9951202e6368647ce77dbba7cfb895579810",
+  "fixture": "Synthetic only; no live content",
+  "before": "<h2 data-owner=\"keep\">Synthetic heading</h2>\r\n\r\n<p class=\"authored\" data-owner=\"keep\" style=\"color:navy\">A <strong>bold 😀 שָׁלוֹם</strong> sentence &amp; exact.</p>\r\n\r\n<!-- untouched -->\r\nA **mixed Markdown** paragraph.\r\n\r\n- **Markdown** item\r\n- untouched Markdown sibling\r\n\r\n<ol start=\"3\"><li><em>HTML</em> item</li><li data-owner=\"keep\">Untouched &nbsp; HTML sibling</li></ol>\r\n",
+  "after": "<h2 data-owner=\"keep\">Synthetic edited heading</h2>\r\n\r\n<p class=\"authored\" data-owner=\"keep\" style=\"color:navy\">A <strong>bold 😀 שָׁלוֹם</strong> revised sentence &amp; exact.</p>\r\n\r\n<!-- untouched -->\r\nA **mixed Markdown** paragraph.\r\n\r\n- **Markdown** item\r\n- untouched Markdown sibling\r\n\r\n<ol start=\"3\"><li><em>HTML</em> revised item</li><li data-owner=\"keep\">Untouched &nbsp; HTML sibling</li></ol>\r\n",
+  "beforeSha256": "9b24794d69bee9d40e0bcb18092fb2172a1e34bfd04cdc984eb0453feb9e4fa6",
+  "afterSha256": "df3ff24b7066e049c541c48df6a5ecdb56cfea125c9ace6de04ebbad2ae047fd",
+  "exactExpectedPatch": true,
+  "untouched": [
+    {
+      "source": "<!-- untouched -->\r\nA **mixed Markdown** paragraph.\r\n\r\n- **Markdown** item\r\n- untouched Markdown sibling\r\n",
+      "sha256": "f05a95905a1f76a8094189756399503db8d49d181241e8b6b4c4d2e3f4a42fd3",
+      "byteExact": true
+    },
+    {
+      "source": "<li data-owner=\"keep\">Untouched &nbsp; HTML sibling</li>",
+      "sha256": "743e562c3153960302913df1774b67d184301198b98b12bfdd2dc00608f3ff4d",
+      "byteExact": true
+    }
+  ],
+  "headingAttributesRetained": true,
+  "boldAndNikkudRetained": true,
+  "listStructureRetained": true,
+  "originalCRLFCount": 11,
+  "savedCRLFCount": 11,
+  "fullStoreDraftRoundtrip": true,
+  "previewSessionExactSource": true,
+  "unknownMetadataRetained": true,
+  "limits": "Helper DOM and Store roundtrip receipt. Real HTTP save/quote/failure/learner-exclusion cases are in the executed focused tests."
+}
