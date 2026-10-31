@@ -28,7 +28,8 @@
   },
   "notVerified": [
     "Rendered UI, actual timer/animation/copy prevention/navigation and accessibility",
-    "Authoring master current live state (not read or changed)",
     "Runtime schema adaptation, state migration, install, CI and Guy acceptance"
-  ]
+  ],
+  "evidenceScope": "Original proposal validation at 15fc734; canonical master verification supersedes the earlier source-readback limitation",
+  "masterVerification": "MASTER_UPDATE_VERIFIED.json"
 }

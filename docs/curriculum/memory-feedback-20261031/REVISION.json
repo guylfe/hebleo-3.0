@@ -1,10 +1,10 @@
 {
   "deliveryKind": "Editorial integration specification; NOT an importable runtime lesson pack",
-  "status": "Ready for Leo to reconcile with UX; not installed, published or written to the authoring master",
+  "status": "Reconciled for local testing by Leo; exact copy saved/read back in canonical authoring master. Guy final copy/design acceptance pending. No software installation.",
   "date": "2026-10-31",
   "lessonId": "MEMORY-A2",
   "componentId": "MEMORY-A2-interactive",
-  "authorship": "Guy-authored source with proposed concise editorial adaptations by Curriculum. New wording is not a quotation or a claim of final acceptance.",
+  "authorship": "Guy-authored source with concise editorial adaptation by Curriculum, reconciled by Leo for local testing. Exact learner wording remains the source copy at 15fc734cc1b0a25492a81ca5e96052de5f1d9e62. No final Guy acceptance claimed.",
   "baseline": {
     "contentPackPath": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\489864a5-e240-4cef-a6fc-8cc6d0df25fa\\hebleo-audio-contract\\content\\first2\\lessons.json",
     "contentPackSha256": "1b9df3021485e37c5c01af7a0eb573a482ba7329c797dc1dad55aaa2e9fb9e3a",
@@ -97,7 +97,18 @@
           "Show me how"
         ]
       },
-      "progressLabel": "Time remaining"
+      "progressLabel": "Time remaining",
+      "accessibleStudyAlternative": {
+        "collapsedByDefault": true,
+        "exactDigits": "0704177609112001",
+        "controls": [
+          "Hide-and-recall",
+          "Skip"
+        ],
+        "timedPerformanceEquivalent": false,
+        "newAudioOrTtsRequired": false,
+        "defaultHearDigitsOnceControl": false
+      }
     },
     {
       "id": "MEMORY-A2.learn.connection",
@@ -148,7 +159,18 @@
         "Show the connection",
         "Replay connection",
         "Continue"
-      ]
+      ],
+      "principleInteraction": {
+        "kind": "numbered expandable rows",
+        "allRowsDirectlyAvailable": true,
+        "firstMayOpenAfterDemonstration": true,
+        "keepEarlierOpenedContent": true,
+        "boldTitles": true,
+        "continueRequiresOpeningAll": false,
+        "lockedRows": false,
+        "timedAutoAdvance": false,
+        "keepFocusOnActivatedRow": true
+      }
     },
     {
       "id": "MEMORY-A2.learn.meaning",
@@ -195,7 +217,8 @@
         ],
         "partialComparisonLabel": "Compare the digit groups:",
         "differingGroupAccessibleLabel": "Different digit group",
-        "emptyGroupLabel": "(empty)"
+        "emptyGroupLabel": "(empty)",
+        "completionRequired": false
       },
       "controls": [
         "Continue"
@@ -256,7 +279,7 @@
       "id": 5,
       "label": "Reconsider",
       "scope": "UX + engineering; prior content requirement superseded",
-      "resolution": "Remove Hear the digits once from default visible controls. Do not require a new audio asset or speech-synthesis feature. Preserve a usable nonvisual route and Show me how; UX must settle and verify accessibility without leaking answers. No audio search."
+      "resolution": "Remove Hear the digits once from default controls. Use a collapsed accessible/untimed study alternative with exact digits and Hide-and-recall/skip, explicitly not equivalent timed performance; no new audio asset or speech synthesis. Lead verifies assistive behavior."
     },
     {
       "id": 6,
@@ -286,7 +309,7 @@
       "id": 10,
       "label": "Improve",
       "scope": "UX-owned interaction; copy supplied",
-      "resolution": "Keep three short, separately named principles. Retire the repeated generic Show the next idea control in the proposed integration; UX chooses a simpler reveal consistent with deliberate, readable pacing. Do not add timed automatic advance or require more clicks as an unapproved teaching decision. Final interaction reconciled by Leo."
+      "resolution": "Reconciled by Leo: numbered expandable rows with bold titles, all directly available; keep earlier opened content and keyboard focus. Continue never requires opening all three. No locked row, completion gate or timed auto-advance."
     },
     {
       "id": 11,
@@ -298,7 +321,7 @@
       "id": 12,
       "label": "Reconsider",
       "scope": "Assessment removal recommendation",
-      "resolution": "Remove MEMORY-A2.embedded.what-changed and its question, options, answer, feedback and quiz lead-in from the active lesson. Keep its full original object in baseline/history. Adds no replacement quiz. Removes the explicit scored/answered comprehension observation; the demonstration and optional comparison remain, with no mastery claim. Recommendation follows Guy’s concern; Leo reconciles it with UX before integration."
+      "resolution": "Reconciled by Leo for local testing: remove MEMORY-A2.embedded.what-changed and all active quiz dependencies. Preserve original question/options/answer/feedback in inactive master history, baseline and historical revisions. Add no replacement assessment or mastery claim."
     },
     {
       "id": 13,
@@ -329,5 +352,13 @@
     ],
     "newTeachingClaims": [],
     "noNewGuyDecisionRequiredForThisEditorialHandoff": true
+  },
+  "reconciliation": {
+    "decisionSource": "FIRST2_INTEGRATION_DECISIONS_20261031.json",
+    "decisionDate": "2026-10-31",
+    "sourceCopyCommit": "15fc734cc1b0a25492a81ca5e96052de5f1d9e62",
+    "masterReceipt": "MASTER_UPDATE_VERIFIED.json",
+    "runtimeOwner": "Lead Engineer",
+    "guyFinalAcceptance": "Pending"
   }
 }

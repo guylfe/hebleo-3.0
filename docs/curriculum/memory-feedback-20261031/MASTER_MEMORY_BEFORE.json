@@ -1,0 +1,2776 @@
+{
+  "documentId": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+  "sourceRevision": "AHj4eMTR0by31evGX4iMrrQ5teAxK8OEph12_9zREo_9rIR1JYy5kabefa8bSn5U2DREhRWCGZT48dE31mu0lXU9GpylFMT0-6SE-k08GQ",
+  "tabId": "t.0",
+  "paragraphs": [
+    {
+      "startIndex": 16946,
+      "endIndex": 16981,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 16946,
+            "endIndex": 16981,
+            "textRun": {
+              "content": "001 · How memory works — MEMORY-A2\n",
+              "textStyle": {
+                "fontSize": {
+                  "magnitude": 18,
+                  "unit": "PT"
+                }
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.2qq5anby7ggr",
+          "namedStyleType": "HEADING_1",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 16981,
+      "endIndex": 17200,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 16981,
+            "endIndex": 17199,
+            "textRun": {
+              "content": "Content: Installed local test draft · Approval: Guy testing pending · Built version: 73e242e / content revision 5 · Verified: current source/content readback; team learner-control checks · Revision: 4 (30 October 2026)",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 17199,
+            "endIndex": 17200,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17200,
+      "endIndex": 17370,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17200,
+            "endIndex": 17369,
+            "textRun": {
+              "content": "OUTCOME: Experience the contrast between an unstructured number and meaningful dates; distinguish chunking, logical constraints and connections to established knowledge.",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 17369,
+            "endIndex": 17370,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17370,
+      "endIndex": 17569,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17370,
+            "endIndex": 17568,
+            "textRun": {
+              "content": "CONNECT TO: Familiar dates illustrate three useful principles. All three will return with Hebrew roots and patterns; the immediate focus is connecting new information to established old information.",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 17568,
+            "endIndex": 17569,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17569,
+      "endIndex": 17590,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17569,
+            "endIndex": 17583,
+            "textRun": {
+              "content": "PREREQUISITES:",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 17583,
+            "endIndex": 17590,
+            "textRun": {
+              "content": " None.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17590,
+      "endIndex": 17711,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17590,
+            "endIndex": 17596,
+            "textRun": {
+              "content": "PLAN: ",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 17596,
+            "endIndex": 17710,
+            "textRun": {
+              "content": "https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001&range=A4:M4",
+              "textStyle": {
+                "underline": true,
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.06666667,
+                      "green": 0.33333334,
+                      "blue": 0.8
+                    }
+                  }
+                },
+                "link": {
+                  "url": "https://docs.google.com/spreadsheets/d/1jlSH8qDBt3nwv90J_2IKkL-pzbRx3USW522KqtXR0Nc/edit#gid=102626001&range=A4:M4"
+                }
+              }
+            }
+          },
+          {
+            "startIndex": 17710,
+            "endIndex": 17711,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 17711,
+      "endIndex": 18276,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 17711,
+            "endIndex": 18276,
+            "textRun": {
+              "content": "SOURCES / ADAPTATION: Guy’s original presentation, slides 7–9 (0704177609112001, ten seconds and date associations), with the letter connection on slide 10: https://drive.google.com/file/d/1ImMGqVDWT8BMN63xay1-DT7ug3Z1W9mr/view. Guy’s 30 October comments define the demonstration, click-revealed principles, optional comparison and application-based check. Preserve his latest directly edited introduction and Adam account. The redundant optional network explanation has been removed. “Memory hooks” and the replacement question are adapted wording for his review.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18276,
+      "endIndex": 18855,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18276,
+            "endIndex": 18855,
+            "textRun": {
+              "content": "DESIGN DECISIONS: One initial attempt demonstrates the difficulty; the date reveal then offers a helpful way to organise the same digits. Reveal the three principles individually on clicks, with bold titles. One comprehension question tests their use rather than their names. A later recall/comparison is entirely optional. Neither attempt has a retry loop, pass threshold or mastery requirement. No extra vocabulary or application exercise is needed. Implement these interactions in the local software for Guy to test; document readback alone is not evidence of implementation.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18855,
+      "endIndex": 18900,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18855,
+            "endIndex": 18900,
+            "textRun": {
+              "content": "Learn — exact text and embedded interactions\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.kfzbymom0yij",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18900,
+      "endIndex": 18956,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18900,
+            "endIndex": 18956,
+            "textRun": {
+              "content": "Screen 1: Welcome to Hebleo · MEMORY-A2.learn.try-first\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.ppnpzgr4mugm",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18956,
+      "endIndex": 18970,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18956,
+            "endIndex": 18970,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18970,
+      "endIndex": 18971,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18970,
+            "endIndex": 18971,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 18971,
+      "endIndex": 19114,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 18971,
+            "endIndex": 19114,
+            "textRun": {
+              "content": "Welcome to Hebleo, the smart way to learn Hebrew. This course is the result of a 10+ year long journey, combining many years of experience in:\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19114,
+      "endIndex": 19221,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19114,
+            "endIndex": 19221,
+            "textRun": {
+              "content": "Learning languages independently on a self-paced basis and seeing what works and what doesn’t first-hand, \n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          },
+          "indentFirstLine": {
+            "magnitude": 18,
+            "unit": "PT"
+          },
+          "indentStart": {
+            "magnitude": 36,
+            "unit": "PT"
+          }
+        },
+        "bullet": {
+          "listId": "kix.n1ufmme6a49g",
+          "textStyle": {
+            "underline": false
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19221,
+      "endIndex": 19390,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19221,
+            "endIndex": 19390,
+            "textRun": {
+              "content": "Teaching Hebrew as a tutor and developing materials along the way, optimizing them with each new student with different approaches, and seeing what works well long-term\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          },
+          "indentFirstLine": {
+            "magnitude": 18,
+            "unit": "PT"
+          },
+          "indentStart": {
+            "magnitude": 36,
+            "unit": "PT"
+          }
+        },
+        "bullet": {
+          "listId": "kix.n1ufmme6a49g",
+          "textStyle": {
+            "underline": false
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19390,
+      "endIndex": 19530,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19390,
+            "endIndex": 19401,
+            "textRun": {
+              "content": "Getting an ",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 19401,
+            "endIndex": 19405,
+            "textRun": {
+              "content": "M.Sc",
+              "textStyle": {
+                "underline": true,
+                "foregroundColor": {
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.06666667,
+                      "green": 0.33333334,
+                      "blue": 0.8
+                    }
+                  }
+                },
+                "link": {
+                  "url": "http://M.Sc"
+                }
+              }
+            }
+          },
+          {
+            "startIndex": 19405,
+            "endIndex": 19530,
+            "textRun": {
+              "content": ". in Cognitive Science. It has helped me understand how to optimize learning in general and language learning in particular.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          },
+          "indentFirstLine": {
+            "magnitude": 18,
+            "unit": "PT"
+          },
+          "indentStart": {
+            "magnitude": 36,
+            "unit": "PT"
+          }
+        },
+        "bullet": {
+          "listId": "kix.n1ufmme6a49g",
+          "textStyle": {
+            "underline": false
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19530,
+      "endIndex": 19569,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19530,
+            "endIndex": 19569,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19569,
+      "endIndex": 19613,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19569,
+            "endIndex": 19613,
+            "textRun": {
+              "content": "Screen 2: Adam · MEMORY-A2.learn.adam-study\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.2ug4lsayx22z",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 19613,
+      "endIndex": 20170,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 19613,
+            "endIndex": 20100,
+            "textRun": {
+              "content": "This led to a case study I did with a student named Adam. He came to me with Zero Hebrew knowledge, but similar scientific background. After I explained the method to him, he became intrigued and we decided to test how long it would take him to get to a level where we would be able to generally hold Hebrew conversations together. For an English speaker learning Hebrew, this usually takes around 500 hours. For Adam, using the methodology that is at the core of Hebleo, it took around ",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 20100,
+            "endIndex": 20108,
+            "textRun": {
+              "content": "70 hours",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 20108,
+            "endIndex": 20170,
+            "textRun": {
+              "content": ". This means that his pace was over 7x higher than the norm. \n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20170,
+      "endIndex": 20359,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20170,
+            "endIndex": 20359,
+            "textRun": {
+              "content": "Let’s briefly demonstrate some of the underlying concepts used in the course that improve your learning and memory. Understanding them can help you use them in your personal life as well! \n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20359,
+      "endIndex": 20360,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20359,
+            "endIndex": 20360,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20360,
+      "endIndex": 20399,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20360,
+            "endIndex": 20399,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20399,
+      "endIndex": 20466,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20399,
+            "endIndex": 20466,
+            "textRun": {
+              "content": "Screen 3: A quick memory experiment · MEMORY-A2.learn.number-round\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.5ivvjfycmbw8",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20466,
+      "endIndex": 20480,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20466,
+            "endIndex": 20480,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20480,
+      "endIndex": 20668,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20480,
+            "endIndex": 20668,
+            "textRun": {
+              "content": "Let’s try a quick experiment. I’m going to show you a number for ten seconds. Try to remember as much of it as you can without writing it down. When it disappears, type what you remember.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20668,
+      "endIndex": 20696,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20668,
+            "endIndex": 20695,
+            "textRun": {
+              "content": "Ready? Press Play to begin.",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 20695,
+            "endIndex": 20696,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20696,
+      "endIndex": 20990,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20696,
+            "endIndex": 20990,
+            "textRun": {
+              "content": "[PLACEHOLDER / AUTHOR INSTRUCTION] TIMED DISPLAY MEMORY-NUMBER: show the exact string 0704177609112001 for 10,000 ms after Play, then hide it before enabling recall. Display digits left to right; do not show dates, event labels, grouping or the answer before the first attempt. Never autoplay.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 20990,
+      "endIndex": 21690,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 20990,
+            "endIndex": 21690,
+            "textRun": {
+              "content": "[PLACEHOLDER / AUTHOR INSTRUCTION] CONTROL: Play once → ten-second display → one ungraded attempt or “Show me how” → explanation. Do not offer replay, hints or repeated attempts to get the number right. Do not require a complete or correct answer to continue. The intended contrast is difficulty first, then a helpful way to organise the same information. If a learner remembers it, acknowledge that honestly. For nonvisual access, present the digits once through an on-demand spoken sequence, then offer the same explanation. A learner may skip the timed attempt and go straight to the explanation. If navigation interrupts the display, allow continuing to the reveal without a restart requirement.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21690,
+      "endIndex": 21737,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21690,
+            "endIndex": 21737,
+            "textRun": {
+              "content": "MEMORY-A2.embedded.number-first — typed recall\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.nrssl8sbqhl7",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21737,
+      "endIndex": 21847,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21737,
+            "endIndex": 21846,
+            "textRun": {
+              "content": "LEARNER PROMPT: How much of the number can you remember? Enter whatever comes to mind, or select Show me how.",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 21846,
+            "endIndex": 21847,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 21847,
+      "endIndex": 22100,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 21847,
+            "endIndex": 22099,
+            "textRun": {
+              "content": "ANSWER / AUTHOR REFERENCE: 0704177609112001. Keep this as a string. Store the learner’s attempt for the later comparison, but do not score it, show correction messages, or ask for another attempt here. The reveal on the next screen supplies the answer.",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 22099,
+            "endIndex": 22100,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22100,
+      "endIndex": 22232,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22100,
+            "endIndex": 22232,
+            "textRun": {
+              "content": "FEEDBACK after a partial or empty attempt: “That was a lot of digits to hold in mind! Let me show you a way to make sense of them.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22232,
+      "endIndex": 22349,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22232,
+            "endIndex": 22349,
+            "textRun": {
+              "content": "FEEDBACK after the complete number: “You remembered it. Now let me show you a way to organise the same information.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22349,
+      "endIndex": 22422,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22349,
+            "endIndex": 22422,
+            "textRun": {
+              "content": "[AUTHOR INSTRUCTION] Both responses proceed directly to the date reveal.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22422,
+      "endIndex": 22461,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22422,
+            "endIndex": 22461,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22461,
+      "endIndex": 22524,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22461,
+            "endIndex": 22524,
+            "textRun": {
+              "content": "Screen 4: Give the number meaning · MEMORY-A2.learn.connection\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.ik4ktc6t0rb5",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22524,
+      "endIndex": 22538,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22524,
+            "endIndex": 22538,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22538,
+      "endIndex": 22739,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22538,
+            "endIndex": 22739,
+            "textRun": {
+              "content": "That was quite a lot of digits to remember! Most people can get up to half of it, and certainly wouldn’t remember it in 1 month. Now watch what happens when we think about the same number differently.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 22739,
+      "endIndex": 23353,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 22739,
+            "endIndex": 23353,
+            "textRun": {
+              "content": "[PLACEHOLDER / AUTHOR INSTRUCTION] ANIMATION MEMORY-NUMBER-TO-DATES: on Show the connection, start with 0704177609112001. Keep all sixteen digits in the same order and separate them into 07041776 · 09112001. Then insert slashes to produce 07/04/1776 · 09/11/2001. Only spacing and separators change; no digits appear, disappear or swap places. Reveal the event labels after the transformation. Reduced-motion and nonvisual alternatives present the same three stages with a Next step control and a short spoken/text description. Replaying this explanatory animation is allowed; it does not restart the recall task.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23353,
+      "endIndex": 23377,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23353,
+            "endIndex": 23377,
+            "textRun": {
+              "content": "07/04/1776 · 09/11/2001\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23377,
+      "endIndex": 23462,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23377,
+            "endIndex": 23461,
+            "textRun": {
+              "content": "These dates use American month–day–year order: July 4, 1776, and September 11, 2001.",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 23461,
+            "endIndex": 23462,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23462,
+      "endIndex": 23749,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23462,
+            "endIndex": 23749,
+            "textRun": {
+              "content": "The first is the date of the American Declaration of Independence; the second is the date of the September 11 attacks. For most people, assuming these dates are familiar to you, not only would you easily remember them now, but would probably be able to recite them in order in a month. \n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23749,
+      "endIndex": 23811,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23749,
+            "endIndex": 23811,
+            "textRun": {
+              "content": "We haven’t changed any of the digits though, so what changed?\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23811,
+      "endIndex": 23932,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23811,
+            "endIndex": 23932,
+            "textRun": {
+              "content": "What changed is our interpretation, or framing, of the information, which makes it easier to remember due to 3 concepts:\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 23932,
+      "endIndex": 24397,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 23932,
+            "endIndex": 24397,
+            "textRun": {
+              "content": "[AUTHOR INSTRUCTION] REVEAL MEMORY-PRINCIPLES: start with all three principles hidden. Each learner click on “Show the next idea” reveals one complete principle in order: Chunking, Logical constraints, Memory hooks. Bold each title. Keep earlier principles visible; after the third, remove the reveal control and offer Continue. No automatic advance or animation timer. Use a native button, announce each new item, retain keyboard focus and respect reduced motion.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 24397,
+      "endIndex": 24592,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 24397,
+            "endIndex": 24407,
+            "textRun": {
+              "content": "Chunking: ",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 24407,
+            "endIndex": 24592,
+            "textRun": {
+              "content": "instead of trying to hold sixteen separate digits in mind, we can think of two meaningful units—the two dates. Each date still contains several digits, but we can treat it as one item.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 24592,
+      "endIndex": 24867,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 24592,
+            "endIndex": 24613,
+            "textRun": {
+              "content": "Logical constraints: ",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 24613,
+            "endIndex": 24867,
+            "textRun": {
+              "content": "a date has a structure, and that structure limits the possibilities. A month must be between 01 and 12, so 19 cannot be the month. A day cannot be 47. Knowing the format helps us rule out possibilities instead of treating every digit as completely open.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 24867,
+      "endIndex": 25127,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 24867,
+            "endIndex": 25126,
+            "textRun": {
+              "content": "Memory hooks: if you already know these events and their dates, the number connects to knowledge you already have. If the events are unfamiliar, this particular connection will be less useful to you, even though the grouping and date structure may still help.",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 25126,
+            "endIndex": 25127,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 25127,
+      "endIndex": 25166,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 25127,
+            "endIndex": 25166,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 25166,
+      "endIndex": 25228,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 25166,
+            "endIndex": 25228,
+            "textRun": {
+              "content": "Screen 5: What made the difference? · MEMORY-A2.learn.meaning\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.2mkp5kt1pl5d",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 25228,
+      "endIndex": 25242,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 25228,
+            "endIndex": 25242,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 25242,
+      "endIndex": 25775,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 25242,
+            "endIndex": 25775,
+            "textRun": {
+              "content": "While we’ll use all 3 principles to enhance our learning, right now I want to focus on the third one: connecting new information to established old information. You already have a great deal of knowledge to build on from your life experience. A useful connection gives the new information a place in that knowledge. At first we’ll connect brand new Hebrew concepts to things you’re already familiar with from English, and as we move forward we’ll connect new Hebrew concepts to older Hebrew concepts you’re already comfortable with.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 25775,
+      "endIndex": 25874,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 25775,
+            "endIndex": 25873,
+            "textRun": {
+              "content": "All three principles will come back throughout the course. Let’s check what they mean in practice.",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 25873,
+            "endIndex": 25874,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 25874,
+      "endIndex": 25924,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 25874,
+            "endIndex": 25924,
+            "textRun": {
+              "content": "MEMORY-A2.embedded.what-changed — multiple choice\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.u7o1eqwg6jr5",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 25924,
+      "endIndex": 26064,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 25924,
+            "endIndex": 26063,
+            "textRun": {
+              "content": "LEARNER PROMPT: Imagine you recognise the number as two dates, but neither event is familiar to you. What could still help you remember it?",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 26063,
+            "endIndex": 26064,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 26064,
+      "endIndex": 26073,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 26064,
+            "endIndex": 26073,
+            "textRun": {
+              "content": "OPTIONS:\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 26073,
+      "endIndex": 26127,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 26073,
+            "endIndex": 26127,
+            "textRun": {
+              "content": "A. Memorise the names of the three memory principles.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 26127,
+      "endIndex": 26194,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 26127,
+            "endIndex": 26194,
+            "textRun": {
+              "content": "B. Use the two date groups and what you know about how dates work.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 26194,
+      "endIndex": 26277,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 26194,
+            "endIndex": 26277,
+            "textRun": {
+              "content": "C. Attach an event name to each date, even if neither event means anything to you.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 26277,
+      "endIndex": 26369,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 26277,
+            "endIndex": 26368,
+            "textRun": {
+              "content": "ANSWER / ACCEPTED MODEL: B. Use the two date groups and what you know about how dates work.",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 26368,
+            "endIndex": 26369,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 26369,
+      "endIndex": 26497,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 26369,
+            "endIndex": 26497,
+            "textRun": {
+              "content": "FEEDBACK after A: “Knowing the names doesn’t help you recover these digits. Try using the grouping and date structure instead.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 26497,
+      "endIndex": 26678,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 26497,
+            "endIndex": 26678,
+            "textRun": {
+              "content": "FEEDBACK after B: “Yes. Two date groups give you larger units to work with, and the date format limits the possibilities. Those can still help even when the events are unfamiliar.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 26678,
+      "endIndex": 26837,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 26678,
+            "endIndex": 26837,
+            "textRun": {
+              "content": "FEEDBACK after C: “An unfamiliar event name adds something else to remember. A useful memory hook connects the new information to something you already know.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 26837,
+      "endIndex": 27116,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 26837,
+            "endIndex": 27116,
+            "textRun": {
+              "content": "[AUTHOR INSTRUCTION] This is the only comprehension question in the lesson. It checks how the ideas work, not recall of their names. Show the authored feedback for the selected option and the explanation for B after submission. Permit Continue without a compulsory repeat round.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 27116,
+      "endIndex": 27155,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 27116,
+            "endIndex": 27155,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 27155,
+      "endIndex": 27223,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 27155,
+            "endIndex": 27223,
+            "textRun": {
+              "content": "Screen 6: Notice the difference (optional) · MEMORY-A2.learn.return\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.wjryxoncl9oh",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 27223,
+      "endIndex": 27237,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 27223,
+            "endIndex": 27237,
+            "textRun": {
+              "content": "LEARNER TEXT:\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 27237,
+      "endIndex": 27450,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 27237,
+            "endIndex": 27449,
+            "textRun": {
+              "content": "If you’d like to try the comparison, bring the number back to mind once more. Think of the two dates and enter what you remember, without looking back. You can also skip this step and continue to the next lesson.",
+              "textStyle": {}
+            }
+          },
+          {
+            "startIndex": 27449,
+            "endIndex": 27450,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 27450,
+      "endIndex": 27697,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 27450,
+            "endIndex": 27697,
+            "textRun": {
+              "content": "If you try it, compare your attempts and notice whether grouping, the date format, or the familiar events helped. We’ll use the same ideas throughout the course, starting with familiar images that help us remember Hebrew letter shapes and sounds.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 27697,
+      "endIndex": 27756,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 27697,
+            "endIndex": 27756,
+            "textRun": {
+              "content": "MEMORY-A2.embedded.number-return — typed recall (optional)\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.gswchvac38wl",
+          "namedStyleType": "HEADING_3",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 27756,
+      "endIndex": 27890,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 27756,
+            "endIndex": 27890,
+            "textRun": {
+              "content": "LEARNER PROMPT: With the two dates in mind, what can you now recall? Enter an attempt, select Show the comparison, or skip this step.\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 27890,
+      "endIndex": 28544,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 27890,
+            "endIndex": 28544,
+            "textRun": {
+              "content": "[AUTHOR INSTRUCTION] OPTIONAL COMPARISON: offer “Try the comparison” and “Continue without it” before showing the activity. Both paths permit completion; no response, reveal or comparison is required. Keep Skip available after opening it. If opened, do not add a second timed display or recall Replay/Try again button. Hide earlier dates until submission or Show the comparison, then show the original number, the dates and any attempts actually made. Never invent an attempt. Give the specific feedback below when supported by the input, followed by Continue for every outcome. The exact number is an author comparison model, not a passing requirement.\n",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 28544,
+      "endIndex": 28816,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 28544,
+            "endIndex": 28815,
+            "textRun": {
+              "content": "ANSWER / AUTHOR REFERENCE: 0704177609112001; grouped display 07041776 · 09112001; date display 07/04/1776 · 09/11/2001. Spaces and date separators alone do not change the answer. Preserve the raw response so formatting can be explained without losing the learner’s input.",
+              "textStyle": {
+                "bold": true
+              }
+            }
+          },
+          {
+            "startIndex": 28815,
+            "endIndex": 28816,
+            "textRun": {
+              "content": "\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 28816,
+      "endIndex": 28971,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 28816,
+            "endIndex": 28971,
+            "textRun": {
+              "content": "FEEDBACK — exact digit sequence, with or without separators: “That’s the original sequence. Notice which part of the connection helped you bring it back.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 28971,
+      "endIndex": 29148,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 28971,
+            "endIndex": 29148,
+            "textRun": {
+              "content": "FEEDBACK — dates in reverse order, e.g. 09112001 · 07041776: “You recalled both dates, but swapped their order. The original starts with July 4, 1776, then September 11, 2001.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 29148,
+      "endIndex": 29377,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 29148,
+            "endIndex": 29377,
+            "textRun": {
+              "content": "FEEDBACK — omitted month/day zeroes, e.g. 7/4/1776 · 9/11/2001 or 7417769112001: “You recalled the dates. In the original display, months and days use two digits: 07/04 and 09/11. Those zeroes are part of the original sequence.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 29377,
+      "endIndex": 29562,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 29377,
+            "endIndex": 29562,
+            "textRun": {
+              "content": "FEEDBACK — day/month order, e.g. 04/07/1776 · 11/09/2001: “You used day–month–year. These are the same dates; the demonstration uses month–day–year, so its sequence begins 07/04/1776.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 29562,
+      "endIndex": 29732,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 29562,
+            "endIndex": 29732,
+            "textRun": {
+              "content": "FEEDBACK — other partial or different response: “Here’s the original number alongside your attempt. Compare the two date groups and notice which parts came back to you.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 29732,
+      "endIndex": 29891,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 29732,
+            "endIndex": 29891,
+            "textRun": {
+              "content": "FEEDBACK — no attempt: “Here are the two dates within the original number. Notice how the grouping, format and familiar events can help you make sense of it.”\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 29891,
+      "endIndex": 30319,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 29891,
+            "endIndex": 30319,
+            "textRun": {
+              "content": "[AUTHOR INSTRUCTION] Explain every clearly identifiable difference, including combined reversed-date/omitted-zero cases. Only label a response as the right dates when it matches a known equivalent form of those dates; do not guess from an arbitrary digit string. If the order of individual digits differs, highlight the differing groups against the model. No feedback asks for correction or another attempt; all paths continue.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 30319,
+      "endIndex": 30358,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 30319,
+            "endIndex": 30358,
+            "textRun": {
+              "content": "[NEXT PAGE — learner selects Continue]\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 30358,
+      "endIndex": 30416,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 30358,
+            "endIndex": 30416,
+            "textRun": {
+              "content": "Vocabulary — current learner display and author reference\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.ciqt6f801p4o",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 30416,
+      "endIndex": 30580,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 30416,
+            "endIndex": 30580,
+            "textRun": {
+              "content": "No new vocabulary entries in this lesson. Letter shapes, sounds or memory materials are taught in Learn and practised in the exercises; do not add a lexical quota.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 30580,
+      "endIndex": 30604,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 30580,
+            "endIndex": 30604,
+            "textRun": {
+              "content": "Continue — learner text\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.6f3ndgn2z984",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 30604,
+      "endIndex": 30879,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 30604,
+            "endIndex": 30879,
+            "textRun": {
+              "content": "You’ve seen how grouping, logical constraints and familiar knowledge can make the same information easier to work with. Next, we’ll start with that third idea: using familiar concepts from English to help you learn your first four Hebrew letters. See you in the next lesson!\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceAbove": {
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 30879,
+      "endIndex": 30919,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 30879,
+            "endIndex": 30919,
+            "textRun": {
+              "content": "Author review and implementation record\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "headingId": "h.4cfxhty2rs59",
+          "namedStyleType": "HEADING_2",
+          "direction": "LEFT_TO_RIGHT",
+          "spaceBelow": {
+            "magnitude": 6,
+            "unit": "PT"
+          }
+        }
+      }
+    },
+    {
+      "startIndex": 30919,
+      "endIndex": 31520,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 30919,
+            "endIndex": 31520,
+            "textRun": {
+              "content": "AUTHOR REVIEW: Guy’s direct prose edits are retained, including removal of the proficiency-level parenthesis and his English-to-known-Hebrew progression. The first recall demonstrates difficulty; a later optional attempt offers comparison without a memorisation requirement. Review the adapted label “Memory hooks”, the application question and targeted response feedback. Verify click-by-click principle reveal, animation, hidden answers, skip paths and accessibility in the installed software. Guy’s 500/70-hour account remains supplied author content; this task does not independently validate it.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT"
+        }
+      }
+    },
+    {
+      "startIndex": 31520,
+      "endIndex": 32052,
+      "paragraph": {
+        "elements": [
+          {
+            "startIndex": 31520,
+            "endIndex": 32052,
+            "textRun": {
+              "content": "Implementation record, 31 October 2026: installed in the local software as MEMORY-A2, content revision 5, code 73e242e717c630976fd2d040396d4d8d5fcd3127. Curriculum verified exact installed content against the source pack and read the served build. Team learner-control checks and preservation review recorded separately. Timed recall, date transformation, three deliberate reveals, application question and optional comparison are implemented; direct device/accessibility acceptance remains pending. Guy acceptance remains pending.\n",
+              "textStyle": {}
+            }
+          }
+        ],
+        "paragraphStyle": {
+          "namedStyleType": "NORMAL_TEXT",
+          "direction": "LEFT_TO_RIGHT"
+        }
+      }
+    }
+  ],
+  "lists": {
+    "kix.n1ufmme6a49g": {
+      "listProperties": {
+        "nestingLevels": [
+          {
+            "bulletAlignment": "START",
+            "glyphType": "DECIMAL",
+            "glyphFormat": "%0.",
+            "indentFirstLine": {
+              "magnitude": 18,
+              "unit": "PT"
+            },
+            "indentStart": {
+              "magnitude": 36,
+              "unit": "PT"
+            },
+            "textStyle": {
+              "underline": false
+            },
+            "startNumber": 1
+          },
+          {
+            "bulletAlignment": "START",
+            "glyphType": "ALPHA",
+            "glyphFormat": "%1.",
+            "indentFirstLine": {
+              "magnitude": 54,
+              "unit": "PT"
+            },
+            "indentStart": {
+              "magnitude": 72,
+              "unit": "PT"
+            },
+            "textStyle": {
+              "underline": false
+            },
+            "startNumber": 1
+          },
+          {
+            "bulletAlignment": "END",
+            "glyphType": "ROMAN",
+            "glyphFormat": "%2.",
+            "indentFirstLine": {
+              "magnitude": 90,
+              "unit": "PT"
+            },
+            "indentStart": {
+              "magnitude": 108,
+              "unit": "PT"
+            },
+            "textStyle": {
+              "underline": false
+            },
+            "startNumber": 1
+          },
+          {
+            "bulletAlignment": "START",
+            "glyphType": "DECIMAL",
+            "glyphFormat": "%3.",
+            "indentFirstLine": {
+              "magnitude": 126,
+              "unit": "PT"
+            },
+            "indentStart": {
+              "magnitude": 144,
+              "unit": "PT"
+            },
+            "textStyle": {
+              "underline": false
+            },
+            "startNumber": 1
+          },
+          {
+            "bulletAlignment": "START",
+            "glyphType": "ALPHA",
+            "glyphFormat": "%4.",
+            "indentFirstLine": {
+              "magnitude": 162,
+              "unit": "PT"
+            },
+            "indentStart": {
+              "magnitude": 180,
+              "unit": "PT"
+            },
+            "textStyle": {
+              "underline": false
+            },
+            "startNumber": 1
+          },
+          {
+            "bulletAlignment": "END",
+            "glyphType": "ROMAN",
+            "glyphFormat": "%5.",
+            "indentFirstLine": {
+              "magnitude": 198,
+              "unit": "PT"
+            },
+            "indentStart": {
+              "magnitude": 216,
+              "unit": "PT"
+            },
+            "textStyle": {
+              "underline": false
+            },
+            "startNumber": 1
+          },
+          {
+            "bulletAlignment": "START",
+            "glyphType": "DECIMAL",
+            "glyphFormat": "%6.",
+            "indentFirstLine": {
+              "magnitude": 234,
+              "unit": "PT"
+            },
+            "indentStart": {
+              "magnitude": 252,
+              "unit": "PT"
+            },
+            "textStyle": {
+              "underline": false
+            },
+            "startNumber": 1
+          },
+          {
+            "bulletAlignment": "START",
+            "glyphType": "ALPHA",
+            "glyphFormat": "%7.",
+            "indentFirstLine": {
+              "magnitude": 270,
+              "unit": "PT"
+            },
+            "indentStart": {
+              "magnitude": 288,
+              "unit": "PT"
+            },
+            "textStyle": {
+              "underline": false
+            },
+            "startNumber": 1
+          },
+          {
+            "bulletAlignment": "END",
+            "glyphType": "ROMAN",
+            "glyphFormat": "%8.",
+            "indentFirstLine": {
+              "magnitude": 306,
+              "unit": "PT"
+            },
+            "indentStart": {
+              "magnitude": 324,
+              "unit": "PT"
+            },
+            "textStyle": {
+              "underline": false
+            },
+            "startNumber": 1
+          }
+        ]
+      }
+    }
+  }
+}
