@@ -1,4 +1,5 @@
 import {createStudioWorkspace} from '../public/studio/workspace.js';
+import {courseRailEdge,updateCourseToggle} from '../public/sidebar-toggle.js';
 import {BACKUP_BYTE_LIMIT,serializeBackup} from '../public/backup-contract.js';
 import {mountInlineAuthor} from '../public/author/inline-author.js';
 import {hasTextPages,mountTextReader} from '../public/text-reader.js';
@@ -41,7 +42,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   Object.defineProperty(w,'innerWidth',{value:width,writable:true});let server,origin;
   if(realHTTP){server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
   t.after(async()=>{w.close();if(server)await new Promise(r=>server.close(r));if(!providedStore)store.close();});w.matchMedia=()=>({matches:reduceMotion});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
-  Object.assign(w,{BACKUP_BYTE_LIMIT,serializeBackup});
+  Object.assign(w,{BACKUP_BYTE_LIMIT,serializeBackup,courseRailEdge,updateCourseToggle});
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
@@ -249,7 +250,7 @@ test('DESIGN13 persistent header exposes all entitled destinations at wide and n
 });
 test('DESIGN13 single course rail reclaims width without remount, data writes or losing caret',async t=>{
  const {w,doc,calls,store}=await app(t,{page:'lesson/lesson-1/apply',width:1400});const shell=doc.querySelector('.nav-shell'),rail=doc.querySelector('#course-navigation'),answer=doc.querySelector('#answer'),toggle=doc.querySelector('[data-action=navigation-toggle]'),before=structuredClone(store.learner('learner-demo')),count=calls.length;assert.equal(rail.parentElement,doc.querySelector('#main-content').parentElement);assert.equal(doc.querySelector('#main-content').contains(rail),false);answer.value='SYNTHETIC unchanged';answer.focus();answer.setSelectionRange(1,4);
- for(const closed of [true,false,true]){toggle.click();await settled(()=>!toggle.disabled&&rail.hidden===closed);assert.equal(shell.style.getPropertyValue('--course-track'),closed?'0px':'248px');assert.equal(rail.hidden,closed);assert.equal(toggle.getAttribute('aria-expanded'),String(!closed));assert.equal(doc.querySelector('#answer'),answer);assert.equal(answer.value,'SYNTHETIC unchanged');assert.equal(answer.selectionStart,1);assert.equal(answer.selectionEnd,4);}
+ for(const closed of [true,false,true]){toggle.click();await settled(()=>!toggle.disabled&&rail.hidden===closed);assert.equal(shell.style.getPropertyValue('--course-track'),closed?'0px':'248px');assert.equal(rail.hidden,closed);assert.equal(toggle.getAttribute('aria-expanded'),String(!closed));assert.equal(toggle.title,(closed?'Expand':'Collapse')+' course outline');assert.equal(toggle.getAttribute('aria-label'),toggle.title);assert.equal(toggle.querySelector('[data-course-arrow]').getAttribute('d'),closed?'M9 6l4 4-4 4':'M13 6l-4 4 4 4');assert.equal(doc.querySelector('#answer'),answer);assert.equal(answer.value,'SYNTHETIC unchanged');assert.equal(answer.selectionStart,1);assert.equal(answer.selectionEnd,4);}
  assert.equal(calls.length,count);assert.deepEqual(store.learner('learner-demo'),before);const saved=JSON.parse(w.localStorage.getItem('hebleo-navigation-learner-demo'));assert.equal(saved.course,true);const reloaded=await app(t,{width:1400,navigationPrefs:saved});assert.equal(reloaded.doc.querySelector('.nav-shell').style.getPropertyValue('--course-track'),'0px');
 });
 test('DESIGN13 outline dismisses narrow drawer for current and different same-lesson portions',async t=>{

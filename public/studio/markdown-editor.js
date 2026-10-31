@@ -2,6 +2,9 @@ import {escapeHTML as e} from './editor-fields.js';
 import {createLessonRenderer} from '../rich.js';
 
 const loaders = new WeakMap();
+const normalized=value=>value.replace(/\r\n?/g,'\n');
+function rawPosition(value,{line,ch}){let at=0;for(let i=0;i<line;i++){const next=/\r\n?|\n/g;next.lastIndex=at;const m=next.exec(value);if(!m)return value.length;at=m.index+m[0].length;}return at+ch;}
+function retainEndings(before,after){const a=normalized(before),b=normalized(after);if(a===b)return before;let start=0,end=a.length,nextEnd=b.length;while(start<end&&start<nextEnd&&a[start]===b[start])start++;while(end>start&&nextEnd>start&&a[end-1]===b[nextEnd-1]){end--;nextEnd--;}const pos=index=>{let raw=0,n=0;while(n<index){if(before[raw]==='\r'&&before[raw+1]==='\n')raw++;raw++;n++;}return raw;};return before.slice(0,pos(start))+b.slice(start,nextEnd).replace(/\n/g,before.includes('\r\n')?'\r\n':'\n')+before.slice(pos(end));}
 function loadLocalDependencies(doc) {
   if (loaders.has(doc)) return loaders.get(doc);
   const pending = (async () => {
@@ -28,7 +31,8 @@ export function createMarkdownPreview(doc, marked, purifier) {
   const safePurifier = {sanitize(markup, options) {
     const template = doc.createElement('template'); template.innerHTML = purifier.sanitize(markup, options);
     // Template contents are inert: remove remote sources before active-document insertion.
-    template.content.querySelectorAll('img').forEach(img => {if (!/^\/media\//.test(img.getAttribute('src') || '')) img.replaceWith(doc.createTextNode(img.alt || 'External image'));});
+    template.content.querySelectorAll('[style]').forEach(el=>{if(/url\s*\(|@import|expression\s*\(/i.test(el.getAttribute('style')))el.removeAttribute('style');});
+    template.content.querySelectorAll('img').forEach(img => {img.removeAttribute('srcset');if (!/^\/media\//.test(img.getAttribute('src') || '')) img.replaceWith(doc.createTextNode(img.alt || 'External image'));});
     return template.innerHTML;
   }};
   return createLessonRenderer(marked, safePurifier, doc);
@@ -44,14 +48,14 @@ const actions = [
 
 // Returns immediately. Await handle.ready before accessing handle.editor.
 // dependencies is a trusted test/embedding seam, never content-pack data.
-export function mountMarkdownEditor(host, {value = '', onChange = () => {}, direction = 'auto', onDirectionChange = () => {}, label = 'Authored Markdown', name = 'explanation', dependencies} = {}) {
+export function mountMarkdownEditor(host, {value = '', onChange = () => {}, direction = 'auto', onDirectionChange = () => {}, label = 'Authored Markdown', name = 'explanation', dependencies,onImage} = {}) {
   if (!['auto','rtl','ltr'].includes(direction)) throw new Error('Invalid Markdown direction.');
   const doc = host.ownerDocument, controller = new doc.defaultView.AbortController();
-  let editor, disposed = false, muted = false, currentDirection = direction, current = String(value);
+  let editor, disposed = false, muted = false, currentDirection = direction, current = String(value),original=String(value);
   host.innerHTML = `<section class="studio-markdown"><label class="studio-field"><span>${e(label)}</span><textarea rows="8" name="${e(name)}" dir="${direction}" aria-label="${e(label)}"></textarea></label><label class="studio-markdown-direction">Text direction<select aria-label="Markdown text direction"><option value="auto">Automatic</option><option value="rtl">Right to left</option><option value="ltr">Left to right</option></select></label><p data-markdown-status role="status"></p></section>`;
   const textarea = host.querySelector('textarea'), select = host.querySelector('select'), status = host.querySelector('[data-markdown-status]');
   textarea.value = current; select.value = direction;
-  const notify = () => {if (!disposed && !muted) {current = editor ? editor.value() : textarea.value; onChange(current);}};
+  const notify = () => {if (!disposed && !muted) {if(!editor)current=retainEndings(current,textarea.value);if(normalized(current)===normalized(original))current=original;onChange(current);}};
   textarea.addEventListener('input', notify, {signal:controller.signal});
   function setDirection(next) {
     if (!['auto','rtl','ltr'].includes(next)) throw new Error('Invalid Markdown direction.');
@@ -62,8 +66,8 @@ export function mountMarkdownEditor(host, {value = '', onChange = () => {}, dire
   }
   select.addEventListener('change', () => {setDirection(select.value); onDirectionChange(currentDirection);}, {signal:controller.signal});
   const handle = {
-    get editor() {return editor;}, getValue: () => editor ? editor.value() : textarea.value,
-    setValue(next) {if (disposed) return; muted = true; current = String(next); textarea.value = current; editor?.value(current); muted = false; setDirection(currentDirection);},
+    get editor() {return editor;}, getValue: () => current,
+    setValue(next) {if (disposed) return; muted = true; original=current=String(next); textarea.value = current; editor?.value(current); muted = false; setDirection(currentDirection);},
     setDirection, focus() {if (!disposed) editor ? editor.codemirror.focus() : textarea.focus();},
     dispose() {if (disposed) return; disposed = true; controller.abort(); if (editor) {
       editor.codemirror.off('change', changed);
@@ -72,7 +76,7 @@ export function mountMarkdownEditor(host, {value = '', onChange = () => {}, dire
       editor.toTextArea(); editor.cleanup();
     } host.replaceChildren();}
   };
-  function changed() {setDirection(currentDirection); notify();}
+  function changed(_instance,change) {if(disposed||muted)return;if(change?.from&&change?.to&&Array.isArray(change.text)){const start=rawPosition(current,change.from),end=rawPosition(current,change.to);current=current.slice(0,start)+change.text.join(current.includes('\r\n')?'\r\n':'\n')+current.slice(end);}else current=retainEndings(current,editor.value());setDirection(currentDirection);notify();}
   handle.ready = (async () => {
     try {
       const deps = await (dependencies || loadLocalDependencies(doc));
@@ -82,7 +86,7 @@ export function mountMarkdownEditor(host, {value = '', onChange = () => {}, dire
         autosave:{enabled:false}, autoRefresh:false, autofocus:false, forceSync:true, nativeSpellcheck:false, sideBySideFullscreen:false,
         previewImagesInEditor:false, uploadImage:false, status:false, minHeight:'220px', maxHeight:'520px',
         previewRender:preview, renderingConfig:{sanitizerFunction:html => purifier.sanitize(html)},
-        toolbar:actions.map(([name,title,method]) => ({name,title,className:'studio-md-icon',text:title,action:instance => {if (!disposed) EasyMDE[method](instance);}})),
+        toolbar:actions.map(([name,title,method]) => ({name,title,className:'studio-md-icon',text:title,action:instance => {if (!disposed){if(name==='image'&&onImage)onImage(({url,alt})=>instance.codemirror.replaceSelection('!['+alt.replace(/[\]\\]/g,'\\$&')+']('+url+')'));else EasyMDE[method](instance);}}})),
         shortcuts:{togglePreview:'Ctrl-P',toggleSideBySide:'F9',toggleFullScreen:'F11'}
       });
       editor.codemirror.getInputField().setAttribute('aria-label', label);
