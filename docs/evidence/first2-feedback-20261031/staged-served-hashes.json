@@ -1,0 +1,13 @@
+{
+  "codeCommit": "68c3b022cc9eae5cab2584a79b95e6fb514d9d63",
+  "files": {
+    "app.js": "dab5f75d08fed06b6cac37c70ecf05d466b4fabae4cabfb935588297165daff4",
+    "course.js": "db3efe007cf07e4c3254d38b5b435ea6845e7d468a51de6169737fced25d7c12",
+    "learner-view.js": "b723e388b1c79a69140a3f04063ec6bda74da5ba062479e9e61824cdd7ba0185",
+    "preview/learner-renderer.js": "0431431146b4a688d12d8f767b3f2224bd4bb84f6d8e899897bbc3198f3a29dc",
+    "refinement.css": "a3aa47e6907895a337e20e77c94d084c4b6ec924b781ac37b215336a72486a44",
+    "source-activities.js": "8c761faa3224c8166ba4102e77a457a92e82f9d666e2f6806aff164977061353",
+    "text-reader.js": "2bb76b7bcccde9c0aa0988ad377b1f29707d33d4570023fd2c80b6d573f060dd",
+    "ux.js": "9ead968a44575b7a362890ad6e8cb7f080b0a53b6063496684e952a13a2c0d00"
+  }
+}

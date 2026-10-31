@@ -1,0 +1,42 @@
+✔ source text, bold 70-hour emphasis, stable page and activity identities; no template vocabulary (3.2449ms)
+✔ user-started exact ten seconds, leading zero, hidden before input, one attempt, honest complete feedback (175.9201ms)
+✔ empty/skip/interrupted first recall all continue; restored started timer never replays (224.9324ms)
+✔ three exact date stages, delayed labels, deliberate three reveals, retained bold titles and reduced-motion steps (91.7586ms)
+✔ application question gives every authored option feedback and B explanation without mastery gate (172.5808ms)
+✔ comparison entry and opened Skip are optional; only actual raw attempts appear; no hidden model leaks (120.5657ms)
+✔ comparison identifies known combined differences and rejects arbitrary strings as dates (0.8257ms)
+✔ four original mnemonic references precede four-option retrieval; recall has no model or copy highlight (192.6697ms)
+✔ all four matching pairs are independently checked and optional self-check reveals individual models (107.1726ms)
+✔ source response validation rejects malformed state; saving failure retains input and retries (35.2704ms)
+✔ bounded replacement uses new identities, retains history/unrelated content/draft and only resets fictional progress (32.6646ms)
+✔ Studio saves exact authored activity settings without changing stable identities (34.7892ms)
+✔ QA-FIRST2-01 learner permits reading scroll with focused h3 (322.7081ms)
+✔ QA-FIRST2-01 learner permits reading scroll with focused textarea (55.415ms)
+✔ QA-FIRST2-01 learner permits reading scroll with focused select (46.4367ms)
+✔ QA-FIRST2-01 learner permits reading scroll with focused button (58.3381ms)
+✔ QA-FIRST2-01 Preview permits reading scroll with focused h3 (44.6654ms)
+✔ QA-FIRST2-01 Preview permits reading scroll with focused textarea (38.8859ms)
+✔ QA-FIRST2-01 Preview permits reading scroll with focused select (34.3464ms)
+✔ QA-FIRST2-01 Preview permits reading scroll with focused button (34.6755ms)
+✔ FIRST2 missing listening stimulus remains explicit without revealing target: MNTL-A2.learn.pair-retrieve (39.5953ms)
+✔ FIRST2 missing listening stimulus remains explicit without revealing target: MNTL-A2.apply.mem (31.1068ms)
+✔ FIRST2 missing listening stimulus remains explicit without revealing target: MNTL-A2.apply.lamed (28.0806ms)
+✔ feedback timer measures the exposure deadline, including delayed ticks and reduced motion false (112.3004ms)
+✔ feedback timer measures the exposure deadline, including delayed ticks and reduced motion true (51.1718ms)
+✔ exposure interruption cancels bar and cannot replay after visibility, back navigation or restored state (144.4943ms)
+✔ number selection/drag/copy is scoped to exposure; other course copy and recall paste stay available (62.1229ms)
+✔ cursor-only navigation has one Continue, waits for real saves, and never reports Answers saved (55.0627ms)
+✔ answer success is brief; failed saves retain text and block forward until a successful retry (44.1408ms)
+✔ latest save owns status; stale completion cannot hide a newer pending save or failure (41.2667ms)
+✔ final Continue requires every page gate and one in-flight handoff (37.9731ms)
+✔ each source activity keeps its current commitment in one primary action slot (319.283ms)
+✔ authored extras alone produce a shared accessible dialog, Escape/Close restore exact focus, cleanup removes it (27.4373ms)
+✔ authored extra options survive projection and reject malformed save/restore content (42.4085ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4307.277

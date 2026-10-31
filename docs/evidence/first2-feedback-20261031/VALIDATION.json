@@ -1,8 +1,8 @@
 {
-  "codeCommit": "17605c1eb118266a05b92c39eb51bbfd6e645653",
-  "runtimeSha256": "b2a360bbb4f96b8e049ce287a10f8ca299b2796402d2fb850b70648978c0b41e",
+  "codeCommit": "68c3b022cc9eae5cab2584a79b95e6fb514d9d63",
+  "runtimeSha256": "c726a86bd304db87c2062d1bb4350fd5c42f1988a44b46fdfa02ee6674ad0e58",
   "configuredCandidate": {
-    "passed": 910,
+    "passed": 911,
     "failed": 0,
     "files": 78,
     "excludes": "existing audio filenames and audio/speed/playback test names"
@@ -14,7 +14,7 @@
     "passed": 9
   },
   "feedbackFocused": {
-    "passed": 10
+    "passed": 11
   },
   "priorDockAndFirst2": {
     "passed": 23
@@ -45,9 +45,26 @@
     "sourceBackupReadOnly": true,
     "timer": "actual pointer-started exposure at 8 seconds captured; recall after hide verified",
     "exactRecall": "all16 digits with leading0 submitted; authored exact feedback observed",
-    "extras": "native shared component with labeled synthetic DOM fixture; Escape returned exact focus; fixture removed"
+    "extras": "native shared component with labeled synthetic DOM fixture; Escape returned exact focus; fixture removed",
+    "finalComparison": {
+      "codeCommit": "68c3b022cc9eae5cab2584a79b95e6fb514d9d63",
+      "primaryActions": 1,
+      "comparisonInDock": true,
+      "outerContinue": false,
+      "limit": "Opening entry initially overlapped fixed surfaces at the automation click point; ordinary upward scroll260px made the pointer action succeed. No synthetic activation used."
+    }
   },
   "premiumStaticAudit": "not run: Python launcher could not start installed Python3.13",
   "independentReview": false,
-  "guyAcceptance": "Pending"
+  "guyAcceptance": "Pending",
+  "combinedFocused": {
+    "passed": 34
+  },
+  "ci": {
+    "conclusion": "success",
+    "databaseId": 41196281226,
+    "headSha": "68c3b022cc9eae5cab2584a79b95e6fb514d9d63",
+    "status": "completed",
+    "url": "https://github.com/guylfe/hebleo-3.0/actions/runs/41196281226"
+  }
 }

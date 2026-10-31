@@ -4,9 +4,11 @@ Status: staged branch for Leo's combined integration. The installed demo on 6335
 
 Branch: `fix/first2-feedback-engineering-20261031`, based on `91403c54da9cab8cfcd7bbc12925415337a9bf70` (the final prior evidence checkpoint; executable baseline remains `73e242e717c630976fd2d040396d4d8d5fcd3127`).
 
-Code checkpoint: **`17605c1eb118266a05b92c39eb51bbfd6e645653`**, pushed and read back from the existing private `guylfe/hebleo-3.0` feature branch. Runtime digest of this checkout: `b2a360bbb4f96b8e049ce287a10f8ca299b2796402d2fb850b70648978c0b41e`. No main change. The GitHub run for that exact code is [41196011413](https://github.com/guylfe/hebleo-3.0/actions/runs/41196011413); final state is recorded in the accompanying CI receipt.
+Code checkpoint: **`68c3b022cc9eae5cab2584a79b95e6fb514d9d63`** (following the main implementation commit `17605c1eb118266a05b92c39eb51bbfd6e645653`), pushed and read back from the existing private `guylfe/hebleo-3.0` feature branch. Runtime digest of this checkout: `c726a86bd304db87c2062d1bb4350fd5c42f1988a44b46fdfa02ee6674ad0e58`. No main change. The GitHub run for that exact code is [41196281226](https://github.com/guylfe/hebleo-3.0/actions/runs/41196281226); **completed successfully** for that exact code; `CI_CODE.json` records the readback.
 
 Checkout: `C:\Users\Trans\.openmausbot\task-workspaces\8c900356-50f6-4d41-bbb9-50c8abe09233\ae43248e-4d28-4d56-9030-77ca7e390e85\hebleo-feedback`.
+
+Runtime/contract files: `public/app.js`, `public/course.js`, `public/learner-view.js`, `public/preview/learner-renderer.js`, `public/refinement.css`, `public/source-activities.js`, `public/text-reader.js`, `public/ux.js`, `schemas/course-model.v1.schema.json`. Tests: `test/app.test.js`, `test/first2-feedback.test.js`, `test/qa-uxi13-independent.test.js`. Maintained design/status: `DESIGN.md`, `UX-CONTRACT.md`, `docs/FEATURE_CHECKLIST.md`; remaining files under this evidence directory are receipts/logs and the native timer screenshot. No database migration or backend endpoint was added.
 
 ## Implemented scope
 
@@ -26,16 +28,17 @@ No curriculum copy was rewritten. #1/#4/#9/#11/#12 belong to Curriculum's accept
 | `npm ci --ignore-scripts --no-audit --no-fund` | 49 packages installed |
 | `npm run check` | Passed |
 | `node --test test/first2-actual.test.js test/first2-dock-regression.test.js` | 23 passed |
-| `node --test test/first2-feedback.test.js` | 10 passed: deadline/delayed ticks/reduced motion, interruptions/resume, selection/copy/paste scope, cursor saves, failures/retry, stale saves, final gating/duplicate handoff, extras/focus and content validation |
-| `node --test --test-name-pattern=FIRST2 test/app.test.js test/first2-feedback.test.js` | Actual app HTTP learner/Studio cases passed; the feedback file's cases were filtered by that command, so the separate 10-case run above is its evidence |
+| `node --test test/first2-feedback.test.js test/first2-actual.test.js test/first2-dock-regression.test.js` | Final combined run: 34 passed |
+| `node --test test/first2-feedback.test.js` (included in final combined 34-case run) | 11 passed: deadline/delayed ticks/reduced motion, interruptions/resume, selection/copy/paste scope, cursor saves, failures/retry, stale saves, final gating/duplicate handoff, extras/focus and content validation |
+| `node --test --test-name-pattern=FIRST2 test/app.test.js test/first2-feedback.test.js` | Actual app HTTP learner/Studio cases passed; the feedback file's cases were filtered by that command, so the separate focused run above is its evidence |
 | `node --test test/qa-uxi13-independent.test.js` | 27 passed after adapting obsolete Help-entry tests to the actual word-linked entry; all delayed-response/draft assertions remain |
-| `npm run verify:candidate` | Final run: **910 passed, 0 failed**, 78 test files with the repository's existing audio-filename/name exclusions; not a full audio/speed/playback claim |
+| `npm run verify:candidate` | Final run: **911 passed, 0 failed**, 78 test files with the repository's existing audio-filename/name exclusions; not a full audio/speed/playback claim |
 | `npm ci --ignore-scripts --no-audit --no-fund` in `schemas` | 5 packages installed |
 | `npm test` in `schemas` | 27 passed |
 | `npm run runtime -- --runtime ..` in `schemas` | 9 ephemeral HTTP runtime scenarios passed |
 | `git diff --check` | Passed |
 
-The first candidate run failed because schema dependencies were still being installed concurrently and tests still clicked the removed general Help control. Dependencies completed, comment tests now use the actual below-lesson form, and delayed-help tests use the supported word entry; final configured candidate verification passed. No tests were skipped to conceal those failures. An initial runtime command without its required `--runtime` argument failed; the corrected command above passed.
+The first candidate run failed because schema dependencies were still being installed concurrently and tests still clicked the removed general Help control. Dependencies completed, comment tests now use the actual below-lesson form, and delayed-help tests use the supported word entry; the 910-case configured run passed, followed by a final 911-case pass after the primary-slot comparison regression was added. No tests were skipped to conceal those failures. An initial runtime command without its required `--runtime` argument failed; the corrected command above passed.
 
 The optional Python premium static auditor could not start: the installed Windows Python launcher points at a missing/unlaunchable Python 3.13 executable. `premium-audit-attempt.log` records the attempt. No premium-audit PASS is claimed. This repository has no separate production build, formatter or typecheck command; it serves the checked modules directly.
 
@@ -45,12 +48,13 @@ Staging was created from a consistent read-only SQLite backup of the current dem
 
 Live readback retains runtime `73e242e` / `08e689b3…`, all five immutable revisions, the exact `kv` table including active revision/draft/settings/source metadata, media tables, events and sequence. The complete learner-table digest changed between the stage-copy baseline and final inspection. Initial normal Browser inspection and its unload can save fictional lesson position; concurrent activity was not isolated, so no all-table or exact live-progress equality is claimed. No reset or content installation was run on the live database. The full comparison, including `same:false`, is retained in `live-preservation.json` and bounded accurately in `VALIDATION.json`.
 
-Observed in the mounted Browser, with actual pointer/key actions:
+All eight changed served public assets match final code bytes (`staged-served-hashes.json`). Observed in the mounted Browser, with actual pointer/key actions:
 
 - Welcome: one enabled Continue, no outer Continue, no empty help/extra control; public discussion still below the lesson.
 - Page navigation and blank cursor-save success status, confirmed by mounted page readback.
 - Play: exact `0704177609112001`, decreasing bar and `8 seconds remaining` captured in `staged-timer.png`; after expiry only recall input is available, with a single primary Continue.
 - Filled all 16 digits, committed through the primary action, and received the authored exact-match feedback.
+- Reloaded the final code, followed the existing date/principle/application path, and opened optional comparison. Readback confirms one primary, comparison commitment in the dock, no outer Continue and blank settled save status. Its entry initially overlapped a fixed surface at the automation click point; ordinary upward scrolling made pointer activation succeed. No synthetic activation substituted for that pointer check.
 - Nonempty extras: a clearly labeled SYNTHETIC DOM fixture invoked the actual shared extra-information renderer/binder. Native dialog opened with Close focused; Escape removed it and restored its exact trigger. The fixture was removed afterwards; the actual lesson again has no Extra information control. This is a native component check, not a claim of authored extra teaching installed in the course.
 
 One intermediate Browser snapshot attempt returned connection refused; reopening the same staging URL succeeded and subsequent checks ran normally. One early Play attempt did not change state; pointer activation through the current reference was then observed and verified. No action success is inferred from dispatch alone.
@@ -69,6 +73,6 @@ Inspected actual implementation: `public/studio/unified-studio.js`, `curriculum-
 
 ## Integration handoff
 
-Cherry-pick the scoped code checkpoint from this branch into Leo's integration checkout, then merge accepted UX and Curriculum work before any installation. Likely shared-file conflicts are `source-activities.js`, `app.js`, `learner-view.js`, `ux.js`, `preview/learner-renderer.js` and `refinement.css`. Preserve the one primary action slot, `onContinue` handoff, deadline/cancellation ownership, response retry, safe conditional extras and existing page/activity IDs when reconciling #8/#10/#13.
+Cherry-pick the implementation commits `17605c1` then `68c3b02`, or merge this scoped branch into Leo's integration checkout, then merge accepted UX and Curriculum work before any installation. Likely shared-file conflicts are `source-activities.js`, `app.js`, `learner-view.js`, `ux.js`, `preview/learner-renderer.js` and `refinement.css`. Preserve the one primary action slot, `onContinue` handoff, deadline/cancellation ownership, response retry, safe conditional extras and existing page/activity IDs when reconciling #8/#10/#13.
 
 After the full combined revision is verified: use the existing fresh-fictional-progress/preservation installation policy, back up before any installation, preserve all immutable revisions/drafts/media/nonprogress data, and verify the destination/runtime hashes. This branch authorizes no partial live installation. Audio remains the separate previously reported human-recording gate.

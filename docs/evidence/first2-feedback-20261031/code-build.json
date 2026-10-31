@@ -1,6 +1,6 @@
 {
-  "revision": "17605c1eb118266a05b92c39eb51bbfd6e645653",
-  "runtimeSha256": "b2a360bbb4f96b8e049ce287a10f8ca299b2796402d2fb850b70648978c0b41e",
+  "revision": "68c3b022cc9eae5cab2584a79b95e6fb514d9d63",
+  "runtimeSha256": "c726a86bd304db87c2062d1bb4350fd5c42f1988a44b46fdfa02ee6674ad0e58",
   "backendSha256": "c5f13d8d3e9190bb620874e9a239a454a96d90074dc711ead64aa7f54a38edc1",
   "files": {
     "package-lock.json": "5516a9039c9514eeb602c361a57ac3f87d2ab685b53e8a82b8708127546068ca",
@@ -34,7 +34,7 @@
     "public/review-schedule.js": "685cc4028fbf16bdba93b58ea7f05735e542f6cadeadc76315bed4c33b84713c",
     "public/rich-browser.js": "b9ee02e3efd01a246f138a5795f8d3cb3455bb31a3d6d30164307a03f7a87963",
     "public/rich.js": "d378b8629ba817d653410fb18d6123e8410ce63a6fbd7d1ff4ca3b26838d90d4",
-    "public/source-activities.js": "c644b7b38d4b4891dd736daf3d4916e049766d691711cd7ce7110fb91314e48a",
+    "public/source-activities.js": "8c761faa3224c8166ba4102e77a457a92e82f9d666e2f6806aff164977061353",
     "public/source-vocabulary.js": "abd81bc2c5ee85a94481207d7615aa553562ff9edb4103b220e93ccf5253814f",
     "public/studio/curriculum-editor.js": "f73924eefd5a7e0e743b4fc25bdd205a944dba986cbb646526ddb0fabfefc5be",
     "public/studio/editor-fields.js": "45d32489e0d48a881c570298ac2adaca9c427f8a5f2fa190f63f3be53b371bb6",
