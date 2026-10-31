@@ -1,0 +1,156 @@
+{
+  "status": "PASS",
+  "masterRevision": "AHj4eMRxQhMluC04Gm0-aMjeII8LLcqZjsm8oJk1OkkA5amjOLeQAnPd9EsQCsqwb-g8t4yM7BkmHezGXxsy5iGHeaOFaR4xNRtcd0d6RQ",
+  "fields": [
+    {
+      "field": "pages[0].copy.paragraphs[0]",
+      "sha256": "6970a29a2410f78c73fe6823f5a94a52f887df631a3e064710eb25370196142a",
+      "exact": true
+    },
+    {
+      "field": "pages[0].copy.numberedList[0]",
+      "sha256": "eb5ef03eead7e4b1330c6cdc0de78fe46a1f408a706cfa55fe3c8e4b96fbac72",
+      "exact": true
+    },
+    {
+      "field": "pages[0].copy.numberedList[1]",
+      "sha256": "4b6378728beda5a30421278909e17e22b3a29e0ecc8986f83b998d675802290d",
+      "exact": true
+    },
+    {
+      "field": "pages[0].copy.numberedList[2]",
+      "sha256": "d6faaec1a8c3a007fcabc1534a8e06853cce6ecb1b778a8f567fbda3a9fe7a5e",
+      "exact": true
+    },
+    {
+      "field": "pages[1].copy.paragraphs[0]",
+      "sha256": "bae421fa6ed3a72d7d498fec6a233de524b1bd2910b5c3452299150adcf8d0e7",
+      "exact": true
+    },
+    {
+      "field": "pages[1].copy.paragraphs[1]",
+      "sha256": "0ab5250dc56092c4734f9328b2028354e7df9622cd8f320ef853806ae238d07b",
+      "exact": true
+    },
+    {
+      "field": "pages[1].copy.paragraphs[2]",
+      "sha256": "f500240486a4506aeac93550cce7d4a61bddfb83d2d61f6a3e0c8db8b66f573d",
+      "exact": true
+    },
+    {
+      "field": "pages[2].copy.paragraphs[0]",
+      "sha256": "aaa411f31dc8569c1a36c393225d3782243a97b8277797f6db76294ac496c4d3",
+      "exact": true
+    },
+    {
+      "field": "pages[2].prompt",
+      "sha256": "01c7a5f7b3201e9a5dbe6f1badeb2ae638840bfcfa7e222592bf76393130770b",
+      "exact": true
+    },
+    {
+      "field": "pages[2].activity.feedback.partial",
+      "sha256": "a226d5f950f52280b17cd89b6accde1b7374800f89eabe809ed6ce275289e4fa",
+      "exact": true
+    },
+    {
+      "field": "pages[2].activity.feedback.exact",
+      "sha256": "6a89f7d9507578ddaaa7ad787ac5b650c011275454c016eca05fdccfe3b30ed3",
+      "exact": true
+    },
+    {
+      "field": "pages[3].copy.paragraphs[0]",
+      "sha256": "774743c5bb75aa9ff58d58e60d7c46640ad67ab8343dbce67aa8b34d7b0492d9",
+      "exact": true
+    },
+    {
+      "field": "pages[3].activity.dateContext.introduction",
+      "sha256": "b0834779ae6b08572742835ffbf0a8ef38cd40f26ca89f9e27a5e238e43b6b3a",
+      "exact": true
+    },
+    {
+      "field": "pages[3].activity.dateContext.events[0]",
+      "sha256": "415e98cd6283cea92012427d611fe3aa4fc46688ac06ba36613eab0c544af234",
+      "exact": true
+    },
+    {
+      "field": "pages[3].activity.dateContext.events[1]",
+      "sha256": "b9cedd95a942658eb7886b062a69d25725b225d93b80ee96b9c312eddc8a7382",
+      "exact": true
+    },
+    {
+      "field": "pages[3].activity.dateContext.transition",
+      "sha256": "acf71d740fe9e9465980ffec05b35bc0b267ef2af5d262b2f6fdb503b8ddc784",
+      "exact": true
+    },
+    {
+      "field": "pages[3].activity.principles[0]",
+      "sha256": "fe0dd236534b819c85cc5ead52e7c3bd0dd182101a88f869f6b5d4eb203da50d",
+      "exact": true
+    },
+    {
+      "field": "pages[3].activity.principles[1]",
+      "sha256": "c28d6d7dc87311494b489be4cd8b240c7defbe510797ffb3965eb76a16bb0937",
+      "exact": true
+    },
+    {
+      "field": "pages[3].activity.principles[2]",
+      "sha256": "545b56d47c652325285ea9f36733b864be4358ed832d167a322b7b7c9908eed9",
+      "exact": true
+    },
+    {
+      "field": "pages[4].copy.paragraphs[0]",
+      "sha256": "5b1edb92292f42b81c54f6ea3c545a632f193ab3d019a3f36a713eb2b6589a6d",
+      "exact": true
+    },
+    {
+      "field": "pages[4].inlineOptional.label",
+      "sha256": "015e2421715f6ddeda5acee25a5cfff153ab5a0790ae5862f0491bf916af0524",
+      "exact": true
+    },
+    {
+      "field": "pages[4].inlineOptional.copy.paragraphs[0]",
+      "sha256": "71f2508773ba6dff443465d2738411377249d1e32290926f3cbfbd73f0098c8a",
+      "exact": true
+    },
+    {
+      "field": "pages[4].inlineOptional.prompt",
+      "sha256": "294a9f93829f800b385f2304cbe539ee5017dd6170cf7732d33215367a5f2074",
+      "exact": true
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.exact",
+      "sha256": "923a44148b4f83d49314253c020a73b694a6ba457a0b41243b3506270d7dbea4",
+      "exact": true
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.reverse",
+      "sha256": "4c2ee1f5b16ca65af20caa1ba715eb9ae20ec50f8f78f1be8f5682cdd1de2163",
+      "exact": true
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.zeros",
+      "sha256": "0a41cc72babf89acbf1f7c84cbc01467a190a3861e3eb2e74c814eba44030131",
+      "exact": true
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.dayMonth",
+      "sha256": "8b1626cbcadb9f2bc72596ee820875e65d16dd40ced3785cb987d71cfd74d1cf",
+      "exact": true
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.partial",
+      "sha256": "c096b74ad0109fd51f99d7ceb6c8ba58e6b4b10a47c1c043e3efc87fbe73d24a",
+      "exact": true
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.empty",
+      "sha256": "6bb65b1d6c34fb9fc6a9440b8a1ea5f58ccd0abc1938892255a4ec850966cca3",
+      "exact": true
+    },
+    {
+      "field": "pages[5].copy.paragraphs[0]",
+      "sha256": "86595c589e84b725f50222e351d28421bb706cec13069331f9b3b555ebb86a95",
+      "exact": true
+    }
+  ]
+}

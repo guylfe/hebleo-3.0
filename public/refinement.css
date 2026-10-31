@@ -192,3 +192,19 @@ dialog.rehearsal-dialog{scroll-padding-block-end:var(--exercise-dock-reserve,100
 [data-source-exposure]{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .source-exposure-timer{display:block;width:100%;height:12px;accent-color:var(--accent);transition:none;animation:none}
 dialog.lesson-extra-information{border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);background:var(--paper);width:min(760px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto}
+
+/* FIRST2 feedback: one fixed coordinate system, persistent digit nodes. */
+.source-date-frame { position:relative; width:27ch; max-width:100%; min-height:120px; margin:24px auto 0; font-family:Consolas,'Courier New',monospace; font-size:clamp(10px,3.1vw,26px); font-variant-numeric:tabular-nums; line-height:1.5; text-align:left; }
+.source-date-frame[hidden] { display:none; }
+.source-date-digit,.source-date-slash { position:absolute; top:20px; left:0; transition:transform 900ms ease; }
+.source-date-slash { opacity:0; transition:opacity 900ms ease; }
+.source-date-frame[data-stage="2"] .source-date-slash { opacity:1; }
+.source-principles details { border-bottom:1px solid var(--border,#D6D9DD); padding:12px 0; }
+.source-principles summary { cursor:pointer; min-height:36px; }
+.source-principles p { margin:8px 0; }
+.source-principles summary:focus-visible { outline:2px solid var(--primary,#0170B9); outline-offset:4px; }
+.source-activity details[data-source-comparison] { margin:24px 0; }
+.source-activity details[data-source-comparison] summary { cursor:pointer; min-height:36px; font-weight:600; }
+@media (prefers-reduced-motion:reduce) { .source-date-digit,.source-date-slash { transition:none; } }
+
+.reduce-motion .source-date-digit,.reduce-motion .source-date-slash { transition:none; }

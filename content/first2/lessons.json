@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sourceRevision": "AHj4eMQbs4AvKUsSFH4nKDDgob7uHGFqMEUYjrcLSJusbw9BDL-hbD4SS5aoSdFhnQ9Nw7MTG6VSJHoCNSbZcQ5Nl-UzglgR3ddjxE0pGA",
+  "sourceRevision": "AHj4eMRxQhMluC04Gm0-aMjeII8LLcqZjsm8oJk1OkkA5amjOLeQAnPd9EsQCsqwb-g8t4yM7BkmHezGXxsy5iGHeaOFaR4xNRtcd0d6RQ",
   "retiredUnpublishedPageIds": [
     "MNTL-A2.learn.tav-lamed"
   ],
@@ -21,9 +21,12 @@
         "kind": "human-authored",
         "label": "Guy’s course material, adapted for local testing",
         "sourceDocument": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
-        "sourceRevision": "AHj4eMQbs4AvKUsSFH4nKDDgob7uHGFqMEUYjrcLSJusbw9BDL-hbD4SS5aoSdFhnQ9Nw7MTG6VSJHoCNSbZcQ5Nl-UzglgR3ddjxE0pGA",
+        "sourceRevision": "AHj4eMRxQhMluC04Gm0-aMjeII8LLcqZjsm8oJk1OkkA5amjOLeQAnPd9EsQCsqwb-g8t4yM7BkmHezGXxsy5iGHeaOFaR4xNRtcd0d6RQ",
         "localTestingAuthorized": "2026-10-30",
-        "finalAcceptance": "pending"
+        "finalAcceptance": "pending",
+        "editorialSource": "docs/curriculum/memory-feedback-20261031/REVISION.json",
+        "editorialDate": "2026-10-31",
+        "masterReceipt": "docs/curriculum/memory-feedback-20261031/MASTER_UPDATE_VERIFIED.json"
       },
       "blocks": [
         {
@@ -42,15 +45,15 @@
                 "title": "Welcome to Hebleo",
                 "gate": "none",
                 "stage": "Learn",
-                "html": "<p>Welcome to Hebleo, the smart way to learn Hebrew. This course is the result of a 10+ year long journey, combining many years of experience in:</p><p>Learning languages independently on a self-paced basis and seeing what works and what doesn’t first-hand, </p><p>Teaching Hebrew as a tutor and developing materials along the way, optimizing them with each new student with different approaches, and seeing what works well long-term</p><p>Getting an M.Sc. in Cognitive Science. It has helped me understand how to optimize learning in general and language learning in particular.</p>"
+                "html": "<p>Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:</p><ol><li>Learning languages independently and seeing what works first-hand.</li><li>Teaching Hebrew and refining my materials with each student.</li><li>My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages.</li></ol>"
               },
               {
                 "id": "MEMORY-A2.learn.adam-study",
                 "type": "reading",
-                "title": "Adam",
+                "title": "Welcome to Hebleo",
                 "gate": "none",
                 "stage": "Learn",
-                "html": "<p>This led to a case study I did with a student named Adam. He came to me with Zero Hebrew knowledge, but similar scientific background. After I explained the method to him, he became intrigued and we decided to test how long it would take him to get to a level where we would be able to generally hold Hebrew conversations together. For an English speaker learning Hebrew, this usually takes around 500 hours. For Adam, using the methodology that is at the core of Hebleo, it took around <strong>70 hours</strong>. This means that his pace was over 7x higher than the norm. </p><p>Let’s briefly demonstrate some of the underlying concepts used in the course that improve your learning and memory. Understanding them can help you use them in your personal life as well! </p>"
+                "html": "<p>One of my students, Adam, started with no Hebrew and a similar scientific background. We tested how long it would take him to hold conversations with me in Hebrew.</p><p>For an English speaker, this usually takes around 500 hours. Using the method at the core of Hebleo, Adam took around <strong>70 hours</strong>—over seven times faster.</p><p>Let’s try a short demonstration. These ideas can help you learn beyond this course, too.</p>"
               },
               {
                 "id": "MEMORY-A2.learn.number-round",
@@ -58,8 +61,8 @@
                 "title": "A quick memory experiment",
                 "gate": "none",
                 "stage": "Learn",
-                "html": "<p>Let’s try a quick experiment. I’m going to show you a number for ten seconds. Try to remember as much of it as you can without writing it down. When it disappears, type what you remember.</p><p>Ready? Press Play to begin.</p>",
-                "prompt": "How much of the number can you remember? Enter whatever comes to mind, or select Show me how.",
+                "html": "<p>Press Play to see a number for ten seconds. Remember as much as you can without writing it down. When it disappears, type what you remember.</p>",
+                "prompt": "What do you remember? Enter an attempt, or select Show me how.",
                 "activity": {
                   "value": "0704177609112001",
                   "durationMs": 10000,
@@ -74,10 +77,10 @@
               {
                 "id": "MEMORY-A2.learn.connection",
                 "type": "reading",
-                "title": "Give the number meaning",
+                "title": "How memory works",
                 "gate": "none",
                 "stage": "Learn",
-                "html": "<p>That was quite a lot of digits to remember! Most people can get up to half of it, and certainly wouldn’t remember it in 1 month. Now watch what happens when we think about the same number differently.</p>",
+                "html": "<p>Let’s give the same digits some meaning.</p>",
                 "activity": {
                   "stages": [
                     "0704177609112001",
@@ -87,60 +90,36 @@
                   "descriptions": [
                     "The original sixteen digits.",
                     "The same digits, grouped into two sets of eight.",
-                    "Slashes show the month, day and year within each group."
+                    ""
                   ],
-                  "after": "<p>These dates use American month–day–year order: July 4, 1776, and September 11, 2001.</p><p>The first is the date of the American Declaration of Independence; the second is the date of the September 11 attacks. For most people, assuming these dates are familiar to you, not only would you easily remember them now, but would probably be able to recite them in order in a month. </p><p>We haven’t changed any of the digits though, so what changed?</p><p>What changed is our interpretation, or framing, of the information, which makes it easier to remember due to 3 concepts:</p>",
                   "principles": [
                     {
                       "title": "Chunking:",
-                      "text": "instead of trying to hold sixteen separate digits in mind, we can think of two meaningful units—the two dates. Each date still contains several digits, but we can treat it as one item."
+                      "text": "Think of two meaningful dates instead of sixteen separate digits."
                     },
                     {
                       "title": "Logical constraints:",
-                      "text": "a date has a structure, and that structure limits the possibilities. A month must be between 01 and 12, so 19 cannot be the month. A day cannot be 47. Knowing the format helps us rule out possibilities instead of treating every digit as completely open."
+                      "text": "A date limits the possibilities: months run from 01 to 12, and a day cannot be 47."
                     },
                     {
                       "title": "Memory hooks:",
-                      "text": "if you already know these events and their dates, the number connects to knowledge you already have. If the events are unfamiliar, this particular connection will be less useful to you, even though the grouping and date structure may still help."
+                      "text": "Connect new information to established old knowledge. If you know these events and their dates, they give the digits something familiar to connect to. If not, grouping and date structure can still help."
                     }
                   ],
                   "id": "MEMORY-NUMBER-TO-DATES",
-                  "kind": "date-connection"
+                  "kind": "date-connection",
+                  "after": "<p>American month–day–year order:</p><ul><li>July 4, 1776 — the American Declaration of Independence.</li><li>September 11, 2001 — the September 11 attacks.</li></ul><p>Same digits, different meaning. Three ideas help:</p>",
+                  "principleInteraction": "expandable"
                 }
               },
               {
                 "id": "MEMORY-A2.learn.meaning",
-                "type": "choice",
-                "title": "What made the difference?",
-                "gate": "none",
-                "stage": "Learn",
-                "html": "<p>While we’ll use all 3 principles to enhance our learning, right now I want to focus on the third one: connecting new information to established old information. You already have a great deal of knowledge to build on from your life experience. A useful connection gives the new information a place in that knowledge. At first we’ll connect brand new Hebrew concepts to things you’re already familiar with from English, and as we move forward we’ll connect new Hebrew concepts to older Hebrew concepts you’re already comfortable with.</p><p>All three principles will come back throughout the course. Let’s check what they mean in practice.</p>",
-                "prompt": "Imagine you recognise the number as two dates, but neither event is familiar to you. What could still help you remember it?",
-                "options": [
-                  "Memorise the names of the three memory principles.",
-                  "Use the two date groups and what you know about how dates work.",
-                  "Attach an event name to each date, even if neither event means anything to you."
-                ],
-                "answer": 1,
-                "activity": {
-                  "feedback": [
-                    "Knowing the names doesn’t help you recover these digits. Try using the grouping and date structure instead.",
-                    "Yes. Two date groups give you larger units to work with, and the date format limits the possibilities. Those can still help even when the events are unfamiliar.",
-                    "An unfamiliar event name adds something else to remember. A useful memory hook connects the new information to something you already know."
-                  ],
-                  "showCorrectFeedback": true,
-                  "id": "MEMORY-A2.embedded.what-changed",
-                  "kind": "application-choice"
-                }
-              },
-              {
-                "id": "MEMORY-A2.learn.return",
                 "type": "reading",
-                "title": "Notice the difference (optional)",
+                "title": "How memory works",
                 "gate": "none",
                 "stage": "Learn",
-                "html": "<p>If you’d like to try the comparison, bring the number back to mind once more. Think of the two dates and enter what you remember, without looking back. You can also skip this step and continue to the next lesson.</p><p>If you try it, compare your attempts and notice whether grouping, the date format, or the familiar events helped. We’ll use the same ideas throughout the course, starting with familiar images that help us remember Hebrew letter shapes and sounds.</p>",
-                "prompt": "With the two dates in mind, what can you now recall? Enter an attempt, select Show the comparison, or skip this step.",
+                "html": "<p>We’ll use all three principles, starting with memory hooks: connecting new information to established old knowledge. First, we’ll build on things you know from English. Later, we’ll connect new Hebrew concepts to Hebrew you’ve already learned.</p>",
+                "prompt": "With the two dates in mind, what do you remember?",
                 "activity": {
                   "value": "0704177609112001",
                   "dates": "07/04/1776 · 09/11/2001",
@@ -153,14 +132,17 @@
                     "empty": "Here are the two dates within the original number. Notice how the grouping, format and familiar events can help you make sense of it."
                   },
                   "id": "MEMORY-A2.embedded.number-return",
-                  "kind": "memory-comparison"
+                  "kind": "memory-comparison",
+                  "optional": true,
+                  "intro": "<p>Think of the two dates and type what you remember, without looking back. Then compare your attempts and notice what helped.</p>",
+                  "label": "Try the comparison (optional)"
                 }
               },
               {
                 "id": "MEMORY-A2.continue",
                 "type": "complete",
                 "title": "Continue",
-                "html": "<p>You’ve seen how grouping, logical constraints and familiar knowledge can make the same information easier to work with. Next, we’ll start with that third idea: using familiar concepts from English to help you learn your first four Hebrew letters. See you in the next lesson!</p>",
+                "html": "<p>Next, we’ll use familiar concepts from English to learn your first four Hebrew letters. See you in the next lesson!</p>",
                 "gate": "none",
                 "stage": "Continue"
               }
@@ -171,7 +153,6 @@
               "MEMORY-A2.learn.number-round",
               "MEMORY-A2.learn.connection",
               "MEMORY-A2.learn.meaning",
-              "MEMORY-A2.learn.return",
               "MEMORY-A2.continue"
             ]
           }
@@ -461,5 +442,22 @@
         }
       ]
     }
-  ]
+  ],
+  "memoryFeedbackTransition": {
+    "retiredActivityIds": [
+      "MEMORY-A2.embedded.what-changed"
+    ],
+    "retiredTopLevelPageIds": [
+      "MEMORY-A2.learn.return"
+    ],
+    "movedActivity": {
+      "id": "MEMORY-A2.embedded.number-return",
+      "fromPageId": "MEMORY-A2.learn.return",
+      "toPageId": "MEMORY-A2.learn.meaning",
+      "placement": "inline optional section"
+    },
+    "progressRemapped": false,
+    "history": "content/first2/history/revision5.json",
+    "strategy": "Revision-pinned records retained; no historical response rekeying."
+  }
 }

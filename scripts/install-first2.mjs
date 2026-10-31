@@ -15,6 +15,7 @@ export function replaceFirstTwo(content,pack){
  const old=orderedLessons(content).slice(0,2);assert.deepEqual(old.map(l=>l.id),['lesson-1','lesson-2'],'Refuse unexpected replacement slots.');
  assert.ok(old.every(l=>!l.draftImport),'Never replace source-imported identities.');
  const next=structuredClone(content),mapping=new Map(old.map((l,i)=>[l.id,pack.lessons[i].id]));
+ if(pack.memoryFeedbackTransition)next.first2FeedbackTransition=structuredClone(pack.memoryFeedbackTransition);
  for(const [i,l]of next.lessons.entries())if(mapping.has(l.id))next.lessons[i]=structuredClone(pack.lessons[[...mapping.keys()].indexOf(l.id)]);
  const removed=next.exercises.filter(e=>mapping.has(e.lessonId));
  for(const lesson of next.lessons.filter(l=>!pack.lessons.some(p=>p.id===l.id)))assert.ok(!lesson.exerciseIds.some(id=>removed.some(e=>e.id===id)),'A placeholder exercise is shared; resolve explicitly.');

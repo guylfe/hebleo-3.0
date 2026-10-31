@@ -46,6 +46,8 @@ export function validateTextPages(value,{wordIds=[],targetIds=[]}={}) {
 export function orderedTextPages(value){return value.order.map(id=>value.pages.find(p=>p.id===id));}
 export function textPageGatePassed(page,response={}){
  if(page.activity){
+  if(page.activity.kind==='memory-comparison'&&page.activity.optional===true)return true;
+  if(page.activity.kind==='date-connection'&&page.activity.principleInteraction==='expandable')return true;
   if(page.activity.kind==='date-connection')return response.stage===2&&response.revealCount===page.activity.principles.length;
   if(['memory-first','memory-comparison','letter-input','letter-matching','self-check'].includes(page.activity.kind)||page.type==='choice')return response.checked===true;
  }
@@ -98,6 +100,14 @@ export function validateSourceActivity(page){
  if(!plain(a)||!kinds.includes(a.kind))fail('Invalid authored activity.');
  if(page.type!==(choices.includes(a.kind)?'choice':'reading'))fail('Activity kind does not match page type.');
  if(a.id!==undefined&&!validPageID(a.id))fail('Invalid activity identity.');
+ if(a.optional!==undefined&&typeof a.optional!=='boolean')fail('Invalid optional activity flag.');
+ if(a.optional===true){
+  if(a.kind!=='memory-comparison'||page.type!=='reading'||page.gate!=='none'||!validPageID(a.id))fail('Only an identified reading comparison may be optional.');
+  string(a.intro,'optional comparison introduction',100000);
+  if(a.label!==undefined)string(a.label,'optional comparison label',1000);
+  if(['options','answer','explanation'].some(k=>page[k]!==undefined))fail('Optional comparison cannot retain quiz fields.');
+ }else if(a.intro!==undefined)fail('Comparison introduction requires optional activity.');
+ if(a.principleInteraction!==undefined&&(a.kind!=='date-connection'||a.principleInteraction!=='expandable'))fail('Invalid principle interaction.');
  const text=(v,label,max=12000)=>string(v,'activity '+label,max);
  const texts=(v,label,count)=>{if(!Array.isArray(v)||v.length!==count)fail('Invalid activity '+label+'.');v.forEach(x=>text(x,label));};
  const feedback=keys=>{if(!plain(a.feedback))fail('Invalid activity feedback.');for(const key of keys)text(a.feedback[key],'feedback '+key);};
@@ -116,7 +126,10 @@ export function validateSourceActivity(page){
   feedback(['exact','partial','empty','reverse','dayMonth','zeros']);
  }
  if(a.kind==='date-connection'){
-  texts(a.stages,'date stages',3);texts(a.descriptions,'date descriptions',3);
+  if(a.principleInteraction==='expandable'&&a.stages?.[0]!==SOURCE_MEMORY_VALUE)fail('Spatial date demonstration requires its exact sixteen-digit model.');
+  texts(a.stages,'date stages',3);
+  if(!Array.isArray(a.descriptions)||a.descriptions.length!==3)fail('Invalid activity date descriptions.');
+  a.descriptions.forEach((v,i)=>string(v,'date description',12000,i===2));
   if(!/^\d+$/.test(a.stages[0])||a.stages.some(s=>s.replace(/\D/g,'')!==a.stages[0]))fail('Date stages must preserve every digit.');
   text(a.after,'date explanation',100000);
   if(!Array.isArray(a.principles)||a.principles.length!==3)fail('Invalid activity principles.');
@@ -146,10 +159,12 @@ export function validateSourceActivity(page){
  }
 }
 export function validateSourceResponse(page,response){
- const allowed=['text','choice','checked','revealed','started','interrupted','skipped','attempted','opened','stage','revealCount','matches'];
+ const allowed=['text','choice','checked','revealed','started','interrupted','skipped','attempted','opened','stage','revealCount','matches','study','principlesOpen','principlesSeen'];
  if(!plain(response)||Object.keys(response).some(k=>!allowed.includes(k)))fail('Invalid activity response.');
  if(response.text!==undefined){string(response.text,'response',12000,true);if(!['memory-first','memory-comparison','letter-input'].includes(page.activity.kind))fail('Text on another activity.');}
  for(const key of ['checked','revealed','started','interrupted','skipped','attempted','opened'])if(response[key]!==undefined&&typeof response[key]!=='boolean')fail('Invalid activity flag.');
+ if(response.study!==undefined&&(page.activity.kind!=='memory-first'||typeof response.study!=='boolean'))fail('Invalid study mode.');
+ for(const key of ['principlesOpen','principlesSeen'])if(response[key]!==undefined&&(page.activity.kind!=='date-connection'||page.activity.principleInteraction!=='expandable'||!Array.isArray(response[key])||response[key].length>3||new Set(response[key]).size!==response[key].length||response[key].some(i=>!Number.isInteger(i)||i<0||i>2)))fail('Invalid principle state.');
  if(response.choice!==undefined&&(page.type!=='choice'||!Number.isInteger(response.choice)||response.choice<0||response.choice>=page.options.length))fail('Invalid activity choice.');
  if(page.type==='choice'&&response.checked&&!Number.isInteger(response.choice))fail('Choose before checking.');
  if(response.stage!==undefined&&(page.activity.kind!=='date-connection'||!Number.isInteger(response.stage)||response.stage<0||response.stage>2))fail('Invalid animation stage.');

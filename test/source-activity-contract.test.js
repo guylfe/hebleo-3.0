@@ -11,7 +11,7 @@ import {validateTextPages} from '../public/text-contract.js';
 import {mountTextReader} from '../public/text-reader.js';
 import {validateSchema,semanticErrors} from '../schemas/tools/contracts.mjs';
 
-const pack=JSON.parse(readFileSync(new URL('../content/first2/lessons.json',import.meta.url)));
+const pack=JSON.parse(readFileSync(new URL('../content/first2/history/revision5.json',import.meta.url)));
 const legacyPack=JSON.parse(readFileSync(new URL('../docs/curriculum/first20-20261025/content.json',import.meta.url)));
 const fixture=structuredClone(pack);
 // Disposable fixtures omit optional files; source pack is never rewritten.

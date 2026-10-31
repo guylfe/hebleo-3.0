@@ -193,6 +193,18 @@
               },
               "showCorrectFeedback": {
                 "type": "boolean"
+              },
+              "optional": {
+                "type": "boolean"
+              },
+              "intro": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100000,
+                "pattern": "\\S"
+              },
+              "principleInteraction": {
+                "const": "expandable"
               }
             },
             "required": [
@@ -362,12 +374,25 @@
                       "type": "array",
                       "minItems": 3,
                       "maxItems": 3,
-                      "items": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 12000,
-                        "pattern": "\\S"
-                      }
+                      "items": [
+                        {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 12000,
+                          "pattern": "\\S"
+                        },
+                        {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 12000,
+                          "pattern": "\\S"
+                        },
+                        {
+                          "type": "string",
+                          "maxLength": 12000
+                        }
+                      ],
+                      "additionalItems": false
                     },
                     "after": {
                       "type": "string",
@@ -817,6 +842,43 @@
                     "id"
                   ]
                 }
+              },
+              {
+                "if": {
+                  "required": [
+                    "optional"
+                  ],
+                  "properties": {
+                    "optional": {
+                      "const": true
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "id",
+                    "intro"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "const": "memory-comparison"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "required": [
+                    "principleInteraction"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "kind": {
+                      "const": "date-connection"
+                    }
+                  }
+                }
               }
             ]
           }
@@ -928,6 +990,57 @@
                   }
                 }
               ]
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "activity"
+              ],
+              "properties": {
+                "activity": {
+                  "required": [
+                    "optional"
+                  ],
+                  "properties": {
+                    "optional": {
+                      "const": true
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "gate"
+              ],
+              "properties": {
+                "type": {
+                  "const": "reading"
+                },
+                "gate": {
+                  "const": "none"
+                }
+              },
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "options"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "answer"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "explanation"
+                    ]
+                  }
+                ]
+              }
             }
           }
         ],

@@ -12,7 +12,7 @@ import {Store,validateContent} from '../src/store.js';
 import {seed} from '../src/seed.js';
 import {replaceFirstTwo,installFirstTwo} from '../scripts/install-first2.mjs';
 import {mountTextPagesEditor} from '../public/studio/text-pages-editor.js';
-const pack=JSON.parse(readFileSync(new URL('../content/first2/lessons.json',import.meta.url)));
+const pack=JSON.parse(readFileSync(new URL('../content/first2/history/revision5.json',import.meta.url)));
 const memory=pack.lessons[0].blocks[0].textPages,letters=pack.lessons[1].blocks[0].textPages;
 const page=(pages,kind)=>pages.pages.find(p=>p.activity?.kind===kind);
 function clock(){let now=0,id=0;const jobs=new Map();return {now:()=>now,schedule:(f,ms)=>{jobs.set(++id,{f,at:now+ms});return id;},cancel:id=>jobs.delete(id),advance(ms){now+=ms;for(const [id,j]of [...jobs])if(j.at<=now){jobs.delete(id);j.f();}},get count(){return jobs.size;}};}
@@ -23,7 +23,7 @@ function harness(t,textPages,options={}){
  return {w,host,binding,clock:fake,saves,click:a=>host.querySelector('[data-source-action="'+a+'"]')?.click(),input:text=>{const el=host.querySelector('[data-source-input]');assert.ok(el);el.value=text;el.dispatchEvent(new w.Event('input',{bubbles:true}));},choose:i=>{const el=host.querySelectorAll('[name="source-choice"]')[i];el.checked=true;el.dispatchEvent(new w.Event('change',{bubbles:true}));}};
 }
 const single=p=>({version:1,activityVersion:1,pages:[p],order:[p.id]});
-test('source text, bold 70-hour emphasis, stable page and activity identities; no template vocabulary',()=>{
+test('historical source text, bold 70-hour emphasis, stable page and activity identities; no template vocabulary',()=>{
  assert.deepEqual(pack.lessons.map(l=>l.id),['MEMORY-A2','MNTL-A2']);
  assert.ok(memory.pages[1].html.includes('70 hours'));assert.match(memory.pages[1].html,/<strong>[^<]*70[^<]*<\/strong>/);
  assert.equal(letters.pages.filter(p=>p.stage==='Learn').length,3);assert.equal(letters.pages[0].id,'MNTL-A2.learn.mem-nun');

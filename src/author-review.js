@@ -113,6 +113,7 @@ export class AuthorReview {
   }
 }
 export function anchorState(anchor,content,historical=false) {
+  if(content.first2FeedbackTransition?.retiredActivityIds?.includes(anchor.activityId)||content.first2FeedbackTransition?.retiredTopLevelPageIds?.includes(anchor.pageId))return {anchorState:'historical',currentSelection:null};
   let current;try{current=authorField(content,anchor);}catch{return {anchorState:'missing',currentSelection:null};}
   if(historical||current.retired)return {anchorState:'historical',currentSelection:null};
   if(hash(current.text)===anchor.contentHash)return {anchorState:'current',currentSelection:copy(anchor.selection)};

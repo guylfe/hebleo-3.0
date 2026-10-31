@@ -134,3 +134,7 @@ The result displays Correct/Incorrect and a conditional existing Explanation tri
 ## Oct31 inline author review
 
 FIRST2-F14 uses the existing 760px learner reading measure, native selects/dialogs, source Markdown/HTML editor and current refinement tokens. Private review panels stay in document flow; narrow author controls wrap without overlaying learner navigation. `public/author/author.css` owns only this bounded author variant. Shared palette, typography, headers and keyboard remain canonical. See docs/INLINE_AUTHOR_REVIEW.md for the coordinator, permission and state contract.
+
+## Combined first-two feedback — 31 October 2026
+
+The current integration retains the existing palette, 760px measure, typography, dock, native disclosures and rich renderer. The date demonstration uses sixteen persistent monospaced digit nodes in one reserved 27ch coordinate frame, with horizontal transforms, separate separators and delayed event labels. Numbered principle summaries stay in normal document flow and share existing focus styling. No global visual redesign or extra framework is introduced. Source lists and emphasis follow the reconciled curriculum pack. Exact identities, tests and remaining native/acceptance limits live in docs/evidence/first2-combined-20261031/CANDIDATE.md.

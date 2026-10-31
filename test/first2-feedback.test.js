@@ -76,7 +76,7 @@ test('final Continue requires every page gate and one in-flight handoff',async t
 test('each source activity keeps its current commitment in one primary action slot',t=>{
  for(const page of pack.lessons.flatMap(lesson=>lesson.blocks[0].textPages.pages)){
   const h=harness(t,single(page));assert.equal(h.host.querySelectorAll('.primary').length,1,page.id);
-  if(page.activity?.kind==='memory-comparison'){h.click('open');assert.equal(h.host.querySelectorAll('.primary').length,1);assert.ok(h.host.querySelector('nav [data-source-action="compare"]'));}
+  if(page.activity?.kind==='memory-comparison'){if(page.activity.optional){h.host.querySelector('details').open=true;assert.ok(h.host.querySelector('nav [data-source-action="next"]'));assert.ok(h.host.querySelector('details [data-source-action="compare"]'));}else{h.click('open');assert.ok(h.host.querySelector('nav [data-source-action="compare"]'));}assert.equal(h.host.querySelectorAll('.primary').length,1);}
  }
 });
 

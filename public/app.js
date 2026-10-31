@@ -82,7 +82,7 @@ async function settleTextSaves(){
  const prefix=JSON.stringify([state.user,state.session.revisionId,state.lessonId]).slice(0,-1)+',';
  const bindings=[...textReaderBindings];
  await Promise.all(bindings.map(binding=>binding.settled()));
- await Promise.all([...textSaveQueues].filter(([key])=>key.startsWith(prefix)).map(([,promise])=>promise));
+ await Promise.all([...textSaveQueues].filter(([key])=>key.startsWith(prefix)&&!key.endsWith('|optional')).map(([,promise])=>promise));
 }
 function disposeTextReaders(){extraInformationBinding?.destroy();extraInformationBinding=null;textReaderGeneration++;textReaderBindings.splice(0).forEach(binding=>binding.destroy());}
 function mountLessonTextReaders(scope=root){
@@ -96,10 +96,12 @@ function mountLessonTextReaders(scope=root){
    initialState:textReaderStates.get(key),isCurrent:current,onContinue:()=>act('step',portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1],host),onState:saved=>textReaderStates.set(key,saved),onGateChange:(_ready,saved)=>{textReaderStates.set(key,saved);syncLessonTextGates();},
    loadProgress:textReaderStates.has(key)?undefined:()=>api('text-progress?'+new URLSearchParams({lessonId,revisionId,componentId}),undefined,owner),
    saveProgress:record=>{
-    const pending=(textSaveQueues.get(key)||Promise.resolve()).catch(()=>{}).then(()=>{
+    const queueKey=record.optional?key+'|optional':key;
+    const pending=(textSaveQueues.get(queueKey)||Promise.resolve()).catch(()=>{}).then(()=>{
      const latest=textReaderStates.get(key);
-     return api('text-progress',{lessonId,revisionId,componentId,...record,response:latest?.responses[record.pageId]||record.response,cursorPageId:latest?.cursorPageId||record.cursorPageId},owner);
-    });textSaveQueues.set(key,pending);return pending;
+     const {optional,...wire}=record;
+     return api('text-progress',{lessonId,revisionId,componentId,...wire,response:latest?.responses[record.pageId]||record.response,cursorPageId:latest?.cursorPageId||record.cursorPageId},owner);
+    });textSaveQueues.set(queueKey,pending);return pending;
    }});
   textReaderBindings.push(binding);
  }
