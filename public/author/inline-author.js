@@ -37,7 +37,12 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  let collecting=false;
  function contentWithoutCollect(){if(collecting)return snapshot;collecting=true;try{return workspace.getContent();}finally{collecting=false;}}
  let snapshot=workspace.getContent();
- const unregister=reviewOnly?()=>{}:workspace.registerCollector(()=>{if(collecting)return;collecting=true;try{const next=applyRaw(snapshot);workspace.replace(next,{changed:false});snapshot=next;}finally{collecting=false;}});
+ const unregister=reviewOnly?()=>{}:workspace.registerCollector(()=>{if(collecting)return;collecting=true;try{
+  const savedEntries=Object.entries(state.raw),next=applyRaw(workspace.peekContent());workspace.replace(next,{changed:false});snapshot=next;
+  // A successful shared save (including departure/Studio) retires only values
+  // it actually sent. Newer inputs, failures and private comment drafts survive.
+  return ()=>{for(const [key,value] of savedEntries)if(Object.hasOwn(state.raw,key)&&state.raw[key]===value)delete state.raw[key];};
+ }finally{collecting=false;}});
  function write(field,value){state.raw[rawKey(field)]=value;workspace.touch();message='Unsaved workspace edits.';refreshStatus();}
  function sourceValue(field){const key=rawKey(field);if(Object.hasOwn(state.raw,key))return state.raw[key];if(field==='options.extraInformation')return block()?.options?.extraInformation||'';const owner=page()||block()||lesson();if(field==='pageSettings')return JSON.stringify(Object.fromEntries(['prompt','options','answer','explanation','durationMs','value','media','gate'].filter(k=>Object.hasOwn(owner,k)).map(k=>[k,owner[k]])),null,2);return field==='activity'?JSON.stringify(owner.activity,null,2):owner?.[field]||'';}
  function refreshStatus(){if(!current()||!host.querySelector('[data-author-status]'))return;host.querySelector('[data-author-status]').textContent=message|| (workspace.dirty?'Unsaved workspace edits.':'Saved workspace · published content changes only after Apply.');
@@ -58,7 +63,7 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  }
  async function save(){
   if(busy)return;busy=true;message='Saving complete workspace draft…';refreshStatus();
-  try{flush();const result=await workspace.save();state.raw={};snapshot=workspace.getContent();message='Draft saved. Preview it, then Apply separately.';return result;}
+  try{flush();const result=await workspace.save();snapshot=workspace.getContent();message=workspace.dirty?'Saved the submitted draft. Newer edits remain unsaved.':'Draft saved. Preview it, then Review changes separately.';return result;}
   catch(error){message=error.status===409?'Draft changed elsewhere. Your edits remain here. Compare with the latest saved draft before reconciling.':error.status===403?'Author access ended. Your edits remain here; restore author access to save.':(error.authorField?'Correct '+error.authorField+': ':'')+error.message+' Your edits remain here.';
    if(error.authorField||error.status===400){const field=host.querySelector('[data-author-field="'+(error.authorField||'activity')+'"]');if(field){field.disabled=false;field.setAttribute('aria-invalid','true');field.setAttribute('aria-describedby',statusId);field.focus({preventScroll:true});}}
    throw error;}

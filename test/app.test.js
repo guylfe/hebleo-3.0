@@ -1232,3 +1232,21 @@ test('F14 unsaved inline edits and sibling Studio edits survive view changes; st
  doc.querySelector('[data-author-action=reconcile]').click();await settled(()=>/reconciled/.test(doc.querySelector('[data-author-status]').textContent));assert.equal(w.ensureAuthorContext({}).getContent().words[0].notes,'SYNTHETIC sibling retained','Reconciliation retains the word');doc.querySelector('[data-author-action=save]').click();await settled(()=>/Draft saved/.test(doc.querySelector('[data-author-status]').textContent));
  assert.equal(store.currentDraft().content.words[0].notes,'SYNTHETIC sibling retained');assert.equal(store.currentDraft().content.lessons[0].title,'SYNTHETIC other tab title');assert.match(store.currentDraft().content.lessons[1].blocks.find(b=>b.textPages).textPages.pages[0].html,/unsaved inline/);
 });
+
+// QA-F14-STATE-01: original independent real-HTTP navigation roundtrip.
+const savedAuthorHTML=s=>s.currentDraft().content.lessons[1].blocks.find(b=>b.textPages).textPages.pages[0].html;
+const authorNavigate=(doc,id)=>doc.querySelector('[data-action=page][data-value="'+id+'"]').click();
+test('REGRESSION: departure Save must retire inline raw buffers so later Studio changes survive inline reentry',async t=>{
+ const {w,doc,store}=await app(t,{author:true,realHTTP:true,page:'lesson/lesson-2/learn',prepare:authorInlineFixture});doc.querySelector('[data-action=author-inline]').click();await settled(()=>doc.querySelector('[name=author-source]'));
+ const first='<p><b>SYNTHETIC first edit saved using departure</b></p>',second='<p><em>SYNTHETIC later Studio edit</em></p>';edit(w,doc.querySelector('[name=author-source]'),first);
+ authorNavigate(doc,'home');await settled(()=>doc.querySelector('#studio-departure'));doc.querySelector('[data-departure-save]').click();await settled(()=>w.location.hash==='#home');assert.equal(savedAuthorHTML(store),first);
+ authorNavigate(doc,'studio');await settled(()=>doc.querySelector('.studio-context button'));doc.querySelector('.studio-context button').click();await settled(()=>doc.querySelector('[data-pick-lesson="lesson-2"]'));doc.querySelector('[data-pick-lesson="lesson-2"]').click();await settled(()=>doc.querySelector('[data-page-field=html]'));
+ edit(w,doc.querySelector('[data-page-field=html]'),second);
+ authorNavigate(doc,'course');await settled(()=>doc.querySelector('#studio-departure'));doc.querySelector('[data-departure-save]').click();await settled(()=>w.location.hash==='#course');assert.equal(savedAuthorHTML(store),second,'Studio successfully saved the newer source');
+ doc.querySelector('[data-action=lesson][data-value="lesson-2"]').click();await settled(()=>doc.querySelector('[name=author-source]'));
+ const shown=doc.querySelector('[name=author-source]').value;
+ doc.querySelector('[data-author-action=save]').click();await settled(()=>/Draft saved/.test(doc.querySelector('[data-author-status]').textContent));
+
+ assert.equal(savedAuthorHTML(store),second,'An unchanged inline save must not overwrite the newer saved Studio source');assert.equal(shown,second,'Inline must display the newer saved Studio source');
+});
+
