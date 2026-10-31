@@ -1,0 +1,19 @@
+/* Shared refinement tokens remain authoritative; author tools stay in flow. */
+.inline-author {max-width:var(--reading-measure);margin-inline:auto;color:var(--ink)}
+.author-toolbar {display:flex;flex-wrap:wrap;gap:8px;margin-block:12px}
+.inline-author label {display:block;margin-block:12px}
+.inline-author input,.inline-author textarea,.inline-author select {max-width:100%;width:100%;box-sizing:border-box}
+.inline-author textarea {resize:none;min-height:6em}
+.inline-author .CodeMirror {max-width:100%}
+.author-scope {color:var(--muted);font-size:.9em}
+.author-review-panel {border-block-start:1px solid var(--line);margin-block-start:24px;padding-block-start:16px}
+.author-review-panel article {border-block-start:1px solid var(--line);padding-block:16px;overflow-wrap:anywhere}
+.author-review-panel .button {margin-inline-end:8px}
+.author-note-body {white-space:pre-wrap}
+.inline-author pre {white-space:pre-wrap;overflow-wrap:anywhere;max-height:30em;overflow:auto}
+.inline-author [data-author-status],.inline-author [data-author-comment-status] {min-height:1.5em}
+@media(max-width:480px){.author-toolbar .button{flex:1 1 45%}.inline-author .editor-toolbar{white-space:normal}}
+
+.inline-author [hidden] {display:none}
+
+.inline-author [data-author-canvas],.author-review-panel {scroll-margin-block-start:calc(var(--header-height,88px) + 16px)}

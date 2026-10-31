@@ -1,3 +1,5 @@
+import {createStudioWorkspace} from '../public/studio/workspace.js';
+import {mountInlineAuthor} from '../public/author/inline-author.js';
 import {hasTextPages,mountTextReader} from '../public/text-reader.js';
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../public/lexical-vocabulary.js';
 import {mountAnsweredVocabulary} from '../public/post-answer-vocabulary.js';
@@ -41,8 +43,8 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,{hasTextPages,mountTextReader,mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountTextImport,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
-  if(markdownDependencies)w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});
+  Object.assign(w,{createStudioWorkspace,mountInlineAuthor,hasTextPages,mountTextReader,mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountTextImport,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  if(markdownDependencies){w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});w.mountInlineAuthor=(host,options)=>mountInlineAuthor(host,{...options,markdownDependencies:markdownDependencies(w)});}
   const calls=[];
   w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
     if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
@@ -1176,4 +1178,38 @@ test('FIRST2 actual Studio selects both installed source lessons, edits activity
   doc.querySelector('.studio-context button').click();doc.querySelector('[data-pick-lesson="'+id+'"]').click();assert.equal(doc.querySelector('[data-selected-lesson]').textContent,id);assert.equal(doc.querySelector('[data-page-select]').options.length,id==='MEMORY-A2'?7:9);doc.querySelector('[data-action="rehearse"]').click();await settled(()=>doc.querySelector('[data-preview-root] [data-source-action="next"]'));assert.equal(doc.querySelector('[data-preview-root] h3').textContent,id==='MEMORY-A2'?'Welcome to Hebleo':'Four shapes, four sounds');doc.querySelector('[data-preview-root] [data-source-action="next"]').click();assert.ok(doc.querySelector('[data-preview-root] h3').textContent.includes(id==='MEMORY-A2'?'Adam':'Try without'));doc.querySelector('[data-preview-exit]').click();await settled(()=>!doc.querySelector('[data-preview-root]'));
  }
  assert.equal(JSON.stringify(store.learner('author-demo')),before);
+});
+
+function authorInlineFixture(s){const c=s.snapshot();c.lessons[1]=courseHelpers.projectLesson(c,c.lessons[1]);const l=c.lessons[1],b=l.blocks.find(b=>b.type==='explanation');b.textPages={version:1,order:['synthetic-author-page'],pages:[{id:'synthetic-author-page',type:'reading',title:'Synthetic author heading',html:'<p><strong>Exact 😀 שָׁלוֹם</strong> source.</p>',gate:'none',unknownMetadata:{retain:true}}]};s.set('active',s.addRevision(c,'Synthetic inline author fixture'));}
+test('F14 real app inline → shared draft → saved Preview → Studio review → deliberate disposable publish; private note survives reload and is excluded for learner',async t=>{
+ const {w,doc,store,calls}=await app(t,{author:true,page:'lesson/lesson-2/learn',realHTTP:true,prepare:authorInlineFixture});
+ click(doc,'author-inline');await settled(()=>doc.querySelector('[name=author-source]'));const revision=store.get('active'),before=JSON.stringify(store.learner('author-demo'));
+ const html='<p><strong>Exact 😀 שָׁלוֹם</strong> <em>synthetic edited</em> source.</p>';edit(w,doc.querySelector('[name=author-source]'),html);
+ assert.equal(doc.querySelector('[data-author-action=preview]').disabled,true);assert.equal(store.currentDraft(),null);
+ assert.ok(Object.keys(w.inlineState().raw).length,JSON.stringify(w.inlineState()));doc.querySelector('[data-author-action=save]').click();await settled(()=>store.currentDraft()&&!doc.querySelector('[data-author-action=preview]').disabled);
+ assert.equal(store.get('active'),revision);assert.equal(store.currentDraft().content.lessons[1].blocks.find(b=>b.textPages).textPages.pages[0].html,html);
+ doc.querySelector('[data-author-action=preview]').click();await settled(()=>doc.querySelector('#rehearsal-panel [data-text-reader]'));assert.match(doc.querySelector('#rehearsal-panel').textContent,/synthetic edited/);doc.querySelector('[data-preview-exit]').click();await settled(()=>!doc.querySelector('#rehearsal-panel'));assert.equal(doc.activeElement,doc.querySelector('[data-author-action=preview]'));
+ doc.querySelector('[data-author-action=comment]').click();await settled(()=>doc.querySelector('[data-author-anchor]').textContent.includes('whole source'));
+ edit(w,doc.querySelector('[data-author-body]'),'SYNTHETIC F14 PRIVATE NOTE');doc.querySelector('[data-author-composer]').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await settled(()=>doc.querySelector('[data-author-note]'));
+ doc.querySelector('[data-author-action=apply]').click();await settled(()=>doc.querySelector('#studio-pane-versions')&&!doc.querySelector('#studio-pane-versions').hidden);assert.equal(store.get('active'),revision);assert.ok(doc.querySelector('.studio-preview').textContent.includes('unpublished'));
+ click(doc,'publish');await settled(()=>store.get('active')!==revision);assert.equal(store.snapshot().lessons[1].blocks.find(b=>b.textPages).textPages.pages[0].html,html);
+ assert.equal(JSON.stringify(store.learner('author-demo')),before);assert.equal(store.authorReview.list('author-demo',{lessonId:'lesson-2'}).comments[0].body,'SYNTHETIC F14 PRIVATE NOTE');
+ doc.querySelector('[data-action=studio-task][data-value=comments]').click();await settled(()=>doc.querySelector('#studio-author-comments-mount [data-author-note]'));assert.match(doc.querySelector('#studio-author-comments-mount').textContent,/SYNTHETIC F14 PRIVATE NOTE/);
+ const select=doc.querySelector('#demo-user');select.value='learner-core';select.dispatchEvent(new w.Event('change',{bubbles:true}));await settled(()=>doc.querySelector('#demo-user')?.value==='learner-core');
+ assert.equal(JSON.stringify(store.bootstrap('learner-core')).includes('SYNTHETIC F14 PRIVATE NOTE'),false);assert.equal(doc.querySelector('[data-author-note]'),null);assert.equal(doc.querySelector('[data-action=author-inline]'),null);
+ assert.ok(calls.includes('/api/studio/author-comments'));
+});
+
+test('F14 unsaved inline edits and sibling Studio edits survive view changes; stale save retains input until explicit reconciliation',async t=>{
+ const {w,doc,store}=await app(t,{author:true,page:'lesson/lesson-2/learn',realHTTP:true,prepare:authorInlineFixture});click(doc,'author-inline');await settled(()=>doc.querySelector('[name=author-source]'));
+ edit(w,doc.querySelector('[name=author-source]'),'<p><b>SYNTHETIC unsaved inline source</b></p>');
+ doc.querySelector('[data-action=page][data-value=studio]').click();await settled(()=>doc.querySelector('[data-canonical-word]'));edit(w,doc.querySelector('[data-canonical-word] [name=notes]'),'SYNTHETIC sibling retained');
+ assert.equal(w.ensureAuthorContext({}).getContent().words[0].notes,'SYNTHETIC sibling retained','Studio collector captures the word');
+ // Return through the normal course flow through the shared Save draft departure action.
+ doc.querySelector('[data-action=page][data-value=course]').click();await departure(doc,'save');await settled(()=>doc.querySelector('[data-action=lesson][data-value=lesson-2]'));assert.equal(w.ensureAuthorContext({}).getContent().words[0].notes,'SYNTHETIC sibling retained','Course transition retains the word');doc.querySelector('[data-action=lesson][data-value=lesson-2]').click();await settled(()=>doc.querySelector('[name=author-source]'));
+ assert.equal(doc.querySelector('[name=author-source]').value,'<p><b>SYNTHETIC unsaved inline source</b></p>');
+ assert.equal(w.ensureAuthorContext({}).getContent().words[0].notes,'SYNTHETIC sibling retained','Inline re-entry retains the word');edit(w,doc.querySelector('[data-author-field=title]'),'SYNTHETIC local heading');const foreign=structuredClone(store.currentDraft()?.content||store.snapshot());foreign.lessons[0].title='SYNTHETIC other tab title';store.stage({baseRevisionId:store.get('active'),expectedDraftToken:store.currentDraft()?.draftToken??null,content:foreign});
+ doc.querySelector('[data-author-action=save]').click();await settled(()=>/changed elsewhere/.test(doc.querySelector('[data-author-status]').textContent));assert.match(doc.querySelector('[name=author-source]').value,/unsaved inline/);assert.equal(store.currentDraft().content.lessons[0].title,'SYNTHETIC other tab title');
+ doc.querySelector('[data-author-action=reconcile]').click();await settled(()=>/reconciled/.test(doc.querySelector('[data-author-status]').textContent));assert.equal(w.ensureAuthorContext({}).getContent().words[0].notes,'SYNTHETIC sibling retained','Reconciliation retains the word');doc.querySelector('[data-author-action=save]').click();await settled(()=>/Draft saved/.test(doc.querySelector('[data-author-status]').textContent));
+ assert.equal(store.currentDraft().content.words[0].notes,'SYNTHETIC sibling retained');assert.equal(store.currentDraft().content.lessons[0].title,'SYNTHETIC other tab title');assert.match(store.currentDraft().content.lessons[1].blocks.find(b=>b.textPages).textPages.pages[0].html,/unsaved inline/);
 });
