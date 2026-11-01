@@ -52,7 +52,7 @@ function ensureAuthorContext(studio){
  if(authorContext?.owner===state.user)return authorContext.workspace;
  const owner=state.user;
  const workspace=createStudioWorkspace({content:studio.draft?.content||studio.content,publishedContent:studio.content,baseRevisionId:studio.revisionId,expectedDraftToken:studio.draft?.draftToken??null,
-  saveDraft:async input=>{if(studioSave)throw new Error('The previous draft save is still reloading.');const result=await api('studio/draft',input,owner,{Prefer:'return=minimal'});if(state.user===owner){state.studio={...state.studio,revisionId:input.baseRevisionId,preview:null,draft:{baseRevisionId:input.baseRevisionId,content:structuredClone(input.content),draftToken:result.draftToken}};}return result;}});
+  saveDraft:async (input,prepared)=>{if(studioSave)throw new Error('The previous draft save is still reloading.');const result=await api('studio/draft',input,owner,{Prefer:'return=minimal'},prepared?.body);if(state.user===owner){state.studio={...state.studio,revisionId:input.baseRevisionId,preview:null,draft:{baseRevisionId:input.baseRevisionId,content:input.content,draftToken:result.draftToken}};}return result;}});
  authorContext={owner,workspace};return workspace;
 }
 async function openInlineAuthor(editing){
@@ -133,8 +133,8 @@ let studioSave=null;
 // The task calls done() once state.studio is reloaded, so the render that follows mounts current, enabled editors.
 function trackStudioSave(task){let run;const done=()=>{if(studioSave===run)studioSave=null;};run=task(done).finally(done);studioSave=run;return run;}
 async function settledDraftToken(){let token=draftToken();while(studioSave||authorContext?.workspace.pending){const pending=studioSave||authorContext.workspace.pending;try{token=(await pending)?.draftToken??token;}catch{}}return token;}
-async function api(path, body, user=state.user, headers={}) {
-  const response=await fetch('/api/'+path,{method:body===undefined?'GET':'POST',headers:{'x-demo-user':user,...(body===undefined?{}:{'content-type':'application/json'}),...headers},...(body===undefined?{}:{body:JSON.stringify(body)})});
+async function api(path, body, user=state.user, headers={},preparedBody) {
+  const response=await fetch('/api/'+path,{method:body===undefined?'GET':'POST',headers:{'x-demo-user':user,...(body===undefined?{}:{'content-type':'application/json'}),...headers},...(body===undefined?{}:{body:preparedBody??JSON.stringify(body)})});
   const value=await response.json(); if(!response.ok)throw Object.assign(new Error(value.error || 'Request failed'),{status:response.status,...value}); return value;
 }
 function toast(message) { const box=document.querySelector('#toast');box.textContent=message;box.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>box.classList.remove('visible'),5000); }

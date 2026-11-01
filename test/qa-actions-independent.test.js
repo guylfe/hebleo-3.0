@@ -45,7 +45,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   Object.assign(w,{courseRailEdge,updateCourseToggle,mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountTextImport,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   if(markdownDependencies)w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});
   const calls=[];
-  w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
+  w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(typeof options.body==='string'?options.body:new TextDecoder().decode(options.body)):null;calls.push(url.pathname);try{let value;
     if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
     if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
     else if(url.pathname==='/api/questions')value=input?store.askQuestion(user,input):store.questions(user);
@@ -91,7 +91,7 @@ test('QA-ACTIONS-04 real keyboard Pin during pending grade must not strand Check
 
 test('QA-ACTIONS-01 immediate choice remains locked after an uncertain HTTP response',async t=>{
  const {w,doc,store}=await app(t,{page:'lesson/lesson-1/check',realHTTP:true,prepare:s=>s.updateLearner('learner-demo',{immediateAnswers:true})});
- const transport=w.fetch,requests=[];let lose=true;w.fetch=async(url,options)=>{const r=await transport(url,options);if(url==='/api/attempt'){requests.push(JSON.parse(options.body));if(lose){lose=false;throw new Error('SYNTHETIC lost response after commit');}}return r;};
+ const transport=w.fetch,requests=[];let lose=true;w.fetch=async(url,options)=>{const r=await transport(url,options);if(url==='/api/attempt'){requests.push(JSON.parse(typeof options.body==='string'?options.body:new TextDecoder().decode(options.body)));if(lose){lose=false;throw new Error('SYNTHETIC lost response after commit');}}return r;};
  const selected=doc.querySelector('[data-action=choice]');selected.click();await settled(()=>doc.querySelector('[data-action=recover-attempt]'));await pause(15);
  assert.equal(store.learner('learner-demo').attempts.length,1);
  const locked=[...doc.querySelectorAll('[data-action=choice]')].every(el=>el.disabled);
@@ -104,7 +104,7 @@ test('QA-ACTIONS-01 immediate choice remains locked after an uncertain HTTP resp
 test('QA-ACTIONS-02 repeated lost HTTP responses preserve one frozen request through controlled departures',async t=>{
  const {w,doc,store}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});const field=doc.querySelector('#answer'),scope=doc.querySelector('#practice');typeAnswer(w,field,'אני');
  const transport=w.fetch,requests=[];let lost=2;
- w.fetch=async(url,options)=>{const r=await transport(url,options);if(url==='/api/attempt'){requests.push(JSON.parse(options.body));if(lost-->0)throw new Error('SYNTHETIC committed response lost');}return r;};
+ w.fetch=async(url,options)=>{const r=await transport(url,options);if(url==='/api/attempt'){requests.push(JSON.parse(typeof options.body==='string'?options.body:new TextDecoder().decode(options.body)));if(lost-->0)throw new Error('SYNTHETIC committed response lost');}return r;};
  click(doc,'check');await settled(()=>doc.querySelector('[data-action=recover-attempt]'));await pause(10);
  doc.querySelector('[data-action=page][data-value=library]').click();const profile=doc.querySelector('#demo-user');profile.value='learner-core';profile.dispatchEvent(new w.Event('change',{bubbles:true}));
  w.history.pushState({},'','#library');w.dispatchEvent(new w.PopStateEvent('popstate'));await pause(30);

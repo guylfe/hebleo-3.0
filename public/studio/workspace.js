@@ -1,39 +1,48 @@
 // One full workspace/base/CAS owner shared by Studio and inline authoring.
-import {deriveLessonIndices,validateCurriculum,validateLessonComposition} from '../course.js';
-import {validateContentIdentities} from '../content-identity.js';
-export function prepareStudioContent(content){
- return prepareCollectedContent(structuredClone(content));
+import {patchAuthorField} from '../author/field-patch.js';
+import {prepareStudioContent,publicationStates} from './save-task.js';
+import {runSaveTask,savePaintOpportunity} from './save-processor.js';
+export {prepareStudioContent};
+// Own immutable JSON graphs. Detached public reads and copy-on-write patches
+// keep submitted/baseline/published aliases safe without a second draft store.
+function own(value){if(value&&typeof value==='object'&&!Object.isFrozen(value)){for(const child of Object.values(value))own(child);Object.freeze(value);}return value;}
+const sameArray=(a,b)=>a===b||(Array.isArray(a)&&Array.isArray(b)&&a.length===b.length&&a.every((x,i)=>x===b[i]));
+function adoptIndices(content,indices){
+ const lessons=content.lessons.map((lesson,i)=>{const row=indices[i];if(!row||row.id!==lesson.id)throw new Error('Draft preparation returned stale lesson indices.');
+  const updates={};for(const key of ['wordIds','exerciseIds','checkExerciseIds'])if(!sameArray(lesson[key],row[key]))updates[key]=row[key];
+  return Object.keys(updates).length?own({...lesson,...updates}):lesson;
+ });return own({...content,lessons});
 }
-function prepareCollectedContent(next){
- next.lessons=next.lessons.map(l=>deriveLessonIndices(next,l));
- validateContentIdentities(next);validateCurriculum(next);for(const l of next.lessons)validateLessonComposition(next,l);return next;
-}
-export function createStudioWorkspace({content,publishedContent,baseRevisionId,expectedDraftToken=null,saveDraft,getWorkspaceImpact}){
- let value=structuredClone(content),baseline=structuredClone(content),published=publishedContent?structuredClone(publishedContent):null,token=expectedDraftToken,dirty=false,pending=null,version=0,revoked=false,writeBlock=null;
- const publicationCache=new Map();let pendingKind=null;
+export function createStudioWorkspace({content,publishedContent,baseRevisionId,expectedDraftToken=null,saveDraft,getWorkspaceImpact,processSave=runSaveTask,yieldSave=savePaintOpportunity}){
+ let value=own(structuredClone(content)),baseline=value,published=publishedContent?own(structuredClone(publishedContent)):null,token=expectedDraftToken,dirty=false,pending=null,version=0,revoked=false,writeBlock=null;
+ const publicationCache=new Map();let pendingKind=null,publicationRequest=null;
  const collectors=new Set(),listeners=new Set(),settlers=new Set(),buffers=new Set();let notificationQueued=false;
  const notify=()=>listeners.forEach(fn=>fn());
  const notifySoon=()=>{if(notificationQueued)return;notificationQueued=true;queueMicrotask(()=>{notificationQueued=false;notify();});};
  // Collectors may return a receipt callback for exactly the buffers collected.
  // Capture receipts only for a save; reads never acknowledge unsaved inputs.
  let collecting=false;
- const collect=(receipts)=>{collecting=true;try{for(const fn of collectors){const acknowledge=fn();if(receipts&&typeof acknowledge==='function')receipts.push(acknowledge);}return structuredClone(value);}finally{collecting=false;}};
+ const collect=(receipts,owned=false)=>{collecting=true;try{for(const fn of collectors){const acknowledge=fn();if(receipts&&typeof acknowledge==='function')receipts.push(acknowledge);}return owned?own(value):structuredClone(value);}finally{collecting=false;}};
  const api={
-  get baseRevisionId(){return baseRevisionId;},get expectedDraftToken(){return token;},get dirty(){return dirty||buffers.size>0;},get pending(){return pending;},get revoked(){return revoked;},get version(){return version;},get writeBlock(){return writeBlock;},
+  get baseRevisionId(){return baseRevisionId;},get expectedDraftToken(){return token;},get dirty(){return dirty||buffers.size>0;},get pending(){return pending;},get pendingOperation(){return pendingKind;},get revoked(){return revoked;},get version(){return version;},get writeBlock(){return writeBlock;},
   publicationState(lessonId){
    if(writeBlock)return writeBlock;
    if(api.dirty)return 'Unsaved edits. Save draft to preview or publish these edits.';
    if(!published)return 'Saved workspace · publication is a separate action.';
    if(!publicationCache.has(lessonId)){
-    const saved=baseline.lessons.find(l=>l.id===lessonId),active=published.lessons.find(l=>l.id===lessonId),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
-    const referencesEqual=['words','exercises'].every(kind=>{const ids=kind==='words'?saved?.wordIds:saved?.exerciseIds;return (ids||[]).every(id=>same(baseline[kind].find(x=>x.id===id),published[kind].find(x=>x.id===id)));});
-    const others=baseline.lessons.some(l=>l.id!==lessonId&&!same(l,published.lessons.find(a=>a.id===l.id)));
-    publicationCache.set(lessonId,same(saved,active)&&referencesEqual?'This lesson is published.'+(others?' Other workspace drafts remain private.':''):'Draft saved · not published.');
-   }return publicationCache.get(lessonId);
+    // Large exact comparisons run outside the browser UI thread. Each result
+    // is pinned to its immutable snapshots and ignored after a newer adoption.
+    if(typeof Worker==='undefined'){for(const [id,state] of publicationStates(baseline,published))publicationCache.set(id,state);}
+    else if(!publicationRequest){const saved=baseline,active=published;
+     publicationRequest=Promise.resolve().then(()=>processSave({kind:'publication',baseline:saved,published:active})).then(({states})=>{if(saved===baseline&&active===published){for(const [id,state] of states)publicationCache.set(id,state);notify();}}).catch(()=>{}).finally(()=>{publicationRequest=null;});
+    }
+   }return publicationCache.get(lessonId)||'Saved workspace · publication is a separate action.';
   },
-  getContent:collect,
+  getContent:()=>collect(),
+  getLesson:lessonId=>structuredClone(value.lessons.find(l=>l.id===lessonId)),
+  patchAuthorFields(lessonId,edits){if(pending&&!collecting)throw new Error('Wait for the workspace save.');let next=value;for(const {componentId,pageId,field,value:raw} of edits){try{next=patchAuthorField(next,{lessonId,componentId,pageId},field,raw,{clone:false,immutable:true});}catch(error){throw Object.assign(error,{authorField:field,authorTarget:{componentId,pageId}});}}value=own(next);},
   peekContent:()=>structuredClone(value),
-  replace(next,{changed=true}={}){if(pending&&!collecting)throw new Error('Wait for the workspace save.');value=structuredClone(next);if(changed){dirty=true;version++;}if(!collecting)notify();},
+  replace(next,{changed=true}={}){if(pending&&!collecting)throw new Error('Wait for the workspace save.');value=own(structuredClone(next));if(changed){dirty=true;version++;}if(!collecting)notify();},
   touch(){const changed=!api.dirty;dirty=true;version++;if(changed)notifySoon();},
   // A mounted editor owns only its small buffer. No content read or traversal.
   touchBuffer(key,changed=true){const wasDirty=api.dirty;if(changed)buffers.add(key);else buffers.delete(key);version++;if(wasDirty!==api.dirty)notifySoon();},
@@ -79,12 +88,14 @@ export function createStudioWorkspace({content,publishedContent,baseRevisionId,e
    pendingKind='save';
    pending=Promise.resolve().then(async()=>{
     try{
+     await yieldSave();
      for(const settle of settlers)await settle();
-     const receipts=[],next=prepareCollectedContent(collect(receipts)),serial=version;
+     const receipts=[],collected=collect(receipts,true),serial=version,input={baseRevisionId,expectedDraftToken:token,content:collected};
+     const prepared=await processSave({input,published}),next=adoptIndices(collected,prepared.indices);
      // Private Save validates the full D, but does not review publication impact.
      // Selected publication owns its own dependency/eligibility proof.
-     const result=await saveDraft({baseRevisionId,expectedDraftToken:token,content:next});
-     baseline=next;publicationCache.clear();if(version===serial){value=next;dirty=false;buffers.clear();}token=result.draftToken;for(const acknowledge of receipts)acknowledge();notify();return result;
+     const result=await saveDraft({...input,content:next},{body:prepared.body,timing:prepared.timing});
+     baseline=next;publicationCache.clear();for(const [id,state] of prepared.states)publicationCache.set(id,state);if(version===serial){value=next;dirty=false;buffers.clear();}token=result.draftToken;for(const acknowledge of receipts)acknowledge();notify();return result;
     }catch(error){if(error.status===403)revoked=true;throw error;}
     finally{pending=null;pendingKind=null;notify();}
    });notify();return pending;

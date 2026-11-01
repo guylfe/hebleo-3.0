@@ -3,27 +3,7 @@ import {mountRenderedSource} from './rendered-source.js';
 import {mountTextReader} from '../text-reader.js';
 import {textPageMedia} from '../learner-view.js';
 
-// IDs are immutable; settings replace only existing authored keys, preserving
-// unknown source metadata. The server still validates every full-workspace save.
-export function patchAuthorField(content,target,field,value,{clone=true}={}){
- const next=clone?structuredClone(content):content,l=next.lessons.find(x=>x.id===target.lessonId),b=l?.blocks?.find(x=>x.id===target.componentId),p=b?.textPages?.pages.find(x=>x.id===target.pageId),owner=p||b||l;
- if(!owner)throw new Error('This source block no longer exists.');
- if(field==='activity'){
-  const candidate=JSON.parse(value),original=owner.activity;
-  if(!candidate||Array.isArray(candidate)||typeof candidate!=='object'||!original||candidate.id!==original.id||candidate.kind!==original.kind)throw new Error('Keep the existing activity ID and kind.');
-  const checkIDs=(a,b)=>{if(!a||typeof a!=='object')return;if(a.id!==undefined&&a.id!==b?.id)throw new Error('Activity and item IDs are immutable.');if(Array.isArray(a)){if(!Array.isArray(b)||a.length!==b.length)throw new Error('Keep the existing activity items.');a.forEach((v,i)=>checkIDs(v,b[i]));}else for(const k of Object.keys(a))if(a[k]&&typeof a[k]==='object')checkIDs(a[k],b?.[k]);};checkIDs(original,candidate);
-  const merge=(old,edited)=>Array.isArray(old)?old.map((v,i)=>merge(v,edited[i])):old&&typeof old==='object'?Object.fromEntries(Object.keys(old).map(k=>[k,edited[k]===undefined?old[k]:merge(old[k],edited[k])])):edited;
-  owner.activity=merge(original,candidate);
- }else if(field==='pageSettings'){
-  const settings=JSON.parse(value),allowed=['prompt','options','answer','explanation','durationMs','value','media','gate'];
-  if(!settings||typeof settings!=='object'||Array.isArray(settings)||Object.keys(settings).some(k=>!allowed.includes(k)))throw new Error('Keep only the existing page settings fields; page IDs and types stay fixed.');
-  Object.assign(owner,settings);
- }else if(field==='options.extraInformation'){
-  if(!b)throw new Error('Extra information requires the current source component.');b.options={...b.options,extraInformation:value};
- }else if(['title','html','text','explanation','prompt','extraInformation'].includes(field))owner[field]=value;
- else throw new Error('This field is not editable here.');
- return next;
-}
+export {patchAuthorField} from './field-patch.js';
 const button=(name,label,disabled=false)=>'<button type="button" class="button small outline" data-author-action="'+name+'" '+(disabled?'disabled':'')+'>'+e(label)+'</button>';
 export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,api,renderLesson,onPreview,onApply,onReviewPublish,state={},markdownDependencies,onExit=()=>{},reviewOnly=false}){
  const doc=host.ownerDocument,ctl=new doc.defaultView.AbortController(),statusId='author-status-'+doc.defaultView.crypto.randomUUID();let disposed=false,editor,reader,requestGeneration=0,busy=false,commentBusy=false,comments=[],commentError='',message='',nextCursor=null,total=0;
@@ -36,26 +16,26 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  function retireCleanSource(){if(editorTouched&&!editorChanged&&!dirtyRaw.has(editorKey)){delete state.raw[editorKey];editorTouched=false;}}
  function retainSession(){if(editor&&editorKey){materialize();sessions.set(editorKey,editor.snapshot?.());}}
  // Callers supply a detached owner snapshot; patch it once.
- function applyRaw(next){materialize();for(const [key,value] of Object.entries(state.raw)){const [componentId,pageId,field]=JSON.parse(key);try{next=patchAuthorField(next,{lessonId,componentId,pageId},field,value,{clone:false});}catch(error){throw Object.assign(error,{authorField:field,authorTarget:{componentId,pageId}});}}return next;}
- function flush(){materialize();const next=applyRaw(contentWithoutCollect());workspace.replace(next,{changed:false});retireCleanSource();snapshot=next;return next;}
- // Avoid recursively invoking our own collector.
+ function applyRaw(){materialize();workspace.patchAuthorFields(lessonId,Object.entries(state.raw).map(([key,value])=>{const [componentId,pageId,field]=JSON.parse(key);return {componentId,pageId,field,value};}));snapshot=readSnapshot();return snapshot;}
+ function flush(){const next=applyRaw();retireCleanSource();return next;}
  let collecting=false;
- function contentWithoutCollect(){if(collecting)return snapshot;collecting=true;try{return workspace.getContent();}finally{collecting=false;}}
- let snapshot=workspace.getContent();
+ const readSnapshot=()=>({lessons:[workspace.getLesson(lessonId)]});
+ let snapshot=readSnapshot();
  const unregisterSettler=workspace.registerSettler?.(()=>editor?.whenSettled?.());
  const unregister=reviewOnly?()=>{}:workspace.registerCollector(()=>{if(collecting)return;collecting=true;try{
-  const next=applyRaw(workspace.peekContent()),savedEntries=Object.entries(state.raw),submittedEditor=editor,submittedModel=editor?.model;workspace.replace(next,{changed:false});retireCleanSource();snapshot=next;
+  applyRaw();const savedEntries=Object.entries(state.raw),submittedEditor=editor,submittedModel=editor?.model;retireCleanSource();
   // A successful shared save (including departure/Studio) retires only values
   // it actually sent. Newer inputs, failures and private comment drafts survive.
   return ()=>{for(const [key,value] of savedEntries)if(Object.hasOwn(state.raw,key)&&state.raw[key]===value){delete state.raw[key];dirtyRaw.delete(key);}submittedEditor?.acceptSaved?.(submittedModel);if(editor===submittedEditor){editorChanged=!editor?.isClean?.();if(editorChanged)materialize();else editorTouched=false;}workspace.touchBuffer?.(bufferOwner,dirtyRaw.size>0||editorChanged);};
  }finally{collecting=false;}});
  function write(field,value,t=editorTarget||target()){const key=rawKey(field,t);state.raw[key]=value;dirtyRaw.add(key);message='';workspace.touchBuffer?workspace.touchBuffer(bufferOwner,true):workspace.touch();}
  function sourceValue(field){const key=rawKey(field);if(Object.hasOwn(state.raw,key))return state.raw[key];if(field==='options.extraInformation')return block()?.options?.extraInformation||'';const owner=page()||block()||lesson();if(field==='pageSettings')return JSON.stringify(Object.fromEntries(['prompt','options','answer','explanation','durationMs','value','media','gate'].filter(k=>Object.hasOwn(owner,k)).map(k=>[k,owner[k]])),null,2);return field==='activity'?JSON.stringify(owner.activity,null,2):owner?.[field]||'';}
- function refreshStatus(){if(!current()||!host.querySelector('[data-author-status]'))return;const locked=busy||Boolean(workspace.pending)||workspace.revoked;host.querySelector('[data-author-status]').textContent=message||workspace.publicationState?.(lessonId)|| (workspace.dirty?'Unsaved workspace edits.':'Saved workspace · publication is a separate action.');
+ function refreshStatus(){if(!current()||!host.querySelector('[data-author-status]'))return;const locked=busy||Boolean(workspace.pending)||workspace.revoked,sourceLocked=workspace.revoked||workspace.pendingOperation==='publication';host.querySelector('[data-author-status]').textContent=message||(workspace.pendingOperation==='save'?'Saving submitted workspace draft… New edits stay unsaved.':workspace.publicationState?.(lessonId))|| (workspace.dirty?'Unsaved workspace edits.':'Saved workspace · publication is a separate action.');
   host.querySelectorAll('[data-author-action="preview"],[data-author-action="apply"]').forEach(b=>b.disabled=locked||workspace.dirty||!workspace.expectedDraftToken);
   host.querySelector('[data-author-action="save"]').disabled=locked||Boolean(workspace.writeBlock);
-  host.querySelectorAll('[data-author-field],[data-author-page],[data-author-component],[name=author-source],[data-author-action="edit"]').forEach(el=>el.disabled=locked);
-  if(!editor?.composing)editor?.setLocked(locked);host.querySelectorAll('[data-author-field][contenteditable]').forEach(el=>el.setAttribute('contenteditable',String(!busy&&!workspace.pending&&!workspace.revoked)));
+  host.querySelectorAll('[data-author-page],[data-author-component],[data-author-action="edit"]').forEach(el=>el.disabled=locked);
+  host.querySelectorAll('[data-author-field],[name=author-source]').forEach(el=>el.disabled=sourceLocked);
+  if(!editor?.composing)editor?.setLocked(sourceLocked);host.querySelectorAll('[data-author-field][contenteditable]').forEach(el=>el.setAttribute('contenteditable',String(!sourceLocked)));
  }
  function captureSelection(event){
   const quote=event.target.closest?.('[data-author-quote]');
@@ -68,8 +48,8 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
   state.selection={start,end,exact:range.toString()};
  }
  async function save(){
-  if(busy)return;await editor?.whenSettled?.();busy=true;message='Saving complete workspace draft…';refreshStatus();
-  try{const result=await workspace.save();snapshot=workspace.peekContent();if(!workspace.dirty){const source=editor.getValue(),raw=host.querySelector('[name=author-source]');if(raw&&raw.value!==source)raw.value=source;const quote=host.querySelector('[data-author-quote]');if(quote){const box=doc.createElement('div');box.innerHTML=renderLesson(source);quote.value=box.textContent;}}message=workspace.dirty?'Saved the submitted draft. Newer edits remain unsaved.':'';return result;}
+  if(busy)return;busy=true;message='Saving complete workspace draft…';refreshStatus();
+  try{const result=await workspace.save();snapshot=readSnapshot();if(!workspace.dirty){const source=editor.getValue(),raw=host.querySelector('[name=author-source]');if(raw&&raw.value!==source)raw.value=source;const quote=host.querySelector('[data-author-quote]');if(quote){const box=doc.createElement('div');box.innerHTML=renderLesson(source);quote.value=box.textContent;}}message=workspace.dirty?'Saved the submitted draft. Newer edits remain unsaved.':'';return result;}
   catch(error){message=error.status===409?'Draft changed elsewhere. Your edits remain here. Compare with the latest saved draft before reconciling.':error.status===403?'Author access ended. Your edits remain here; restore author access to save.':(error.authorField?'Correct '+error.authorField+': ':'')+error.message+' Your edits remain here.';
    if(error.authorField||error.status===400){const field=host.querySelector('[data-author-field="'+(error.authorField||'activity')+'"]');if(field){field.disabled=false;field.setAttribute('aria-invalid','true');field.setAttribute('aria-describedby',statusId);field.focus({preventScroll:true});}}
    throw error;}
@@ -92,7 +72,7 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
    canvas.querySelector('[data-author-technical]').textContent=[l.id,b?.id,p?.id].filter(Boolean).join(' · ');
    canvas.querySelector('[data-author-advanced-actions]').innerHTML=button('latest','Compare latest saved draft')+button('reconcile','Reconcile nonconflicting changes');
    editorKey=rawKey(field,t);editorTarget=t;
-   const mountSource=()=>{editor?.dispose();editorChanged=false;editorTouched=false;editor=mountRenderedSource(projection,{source:renderedValue,renderLesson,dependencies:markdownDependencies,api,session:sessions.get(editorKey),onError:error,onChange:()=>{editorTouched=true;editorChanged=!editor.isClean?.();if(editorChanged)dirtyRaw.add(editorKey);else{dirtyRaw.delete(editorKey);delete state.raw[editorKey];}state.selection=null;message='';workspace.touchBuffer?.(bufferOwner,editorChanged||dirtyRaw.size>0);}});editor.setLocked(busy||Boolean(workspace.pending)||workspace.revoked);};
+   const mountSource=()=>{editor?.dispose();editorChanged=false;editorTouched=false;editor=mountRenderedSource(projection,{source:renderedValue,renderLesson,dependencies:markdownDependencies,api,session:sessions.get(editorKey),onError:error,onChange:()=>{editorTouched=true;editorChanged=!editor.isClean?.();if(editorChanged)dirtyRaw.add(editorKey);else{dirtyRaw.delete(editorKey);delete state.raw[editorKey];}state.selection=null;message='';workspace.touchBuffer?.(bufferOwner,editorChanged||dirtyRaw.size>0);}});editor.setLocked(workspace.revoked||workspace.pendingOperation==='publication');};
    mountSource();
    const syncExactSource=()=>{if(editor.composing){raw.disabled=true;editor.whenSettled().then(()=>{if(current()&&raw.isConnected){raw.disabled=false;materialize();const value=editor.getValue();if(raw.value!==value)raw.value=value;raw.focus({preventScroll:true});}}).catch(error);return;}materialize();const value=editor.getValue();if(raw.value!==value)raw.value=value;};
    canvas.querySelector('[data-author-advanced]').addEventListener('toggle',event=>{if(event.target.open)syncExactSource();},{signal:ctl.signal});
@@ -136,12 +116,12 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  host.addEventListener('pointerup',captureSelection,{signal:ctl.signal});host.addEventListener('keyup',captureSelection,{signal:ctl.signal});host.addEventListener('select',captureSelection,{signal:ctl.signal});
  host.addEventListener('keydown',event=>{if(event.target.matches('[data-author-field=title]')&&event.key==='Enter')event.preventDefault();},{signal:ctl.signal});
  host.addEventListener('input',event=>{if(event.target.matches('[data-author-field]'))write(event.target.dataset.authorField,event.target.hasAttribute('contenteditable')?event.target.textContent:event.target.value);if(event.target.matches('[data-author-body]'))state.commentBody=event.target.value;},{signal:ctl.signal});
- host.addEventListener('change',event=>{try{if(event.target.matches('[data-author-page],[data-author-component]')){if(!reviewOnly)flush();snapshot=workspace.getContent();if(event.target.matches('[data-author-component]')){state.componentId=event.target.value;state.pageId=block()?.textPages?.order[0];}else state.pageId=event.target.value;state.selection=null;render();}if(event.target.matches('[data-author-filter]')){state.filter=event.target.value;state.commentCursor=null;state.commentCursors=[];loadComments();}}catch(err){error(err);event.target.value=event.target.matches('[data-author-page]')?state.pageId:state.componentId;}},{signal:ctl.signal});
+ host.addEventListener('change',event=>{try{if(event.target.matches('[data-author-page],[data-author-component]')){if(!reviewOnly)flush();snapshot=readSnapshot();if(event.target.matches('[data-author-component]')){state.componentId=event.target.value;state.pageId=block()?.textPages?.order[0];}else state.pageId=event.target.value;state.selection=null;render();}if(event.target.matches('[data-author-filter]')){state.filter=event.target.value;state.commentCursor=null;state.commentCursors=[];loadComments();}}catch(err){error(err);event.target.value=event.target.matches('[data-author-page]')?state.pageId:state.componentId;}},{signal:ctl.signal});
  host.addEventListener('submit',event=>{if(!event.target.matches('[data-author-composer]'))return;event.preventDefault();event.stopPropagation();submitComment().catch(error);},{signal:ctl.signal});
  host.addEventListener('click',event=>{
   const el=event.target.closest('[data-author-action]');if(!el||el.disabled)return;event.preventDefault();event.stopPropagation();const action=el.dataset.authorAction;
   (async()=>{
-   if(action==='edit'){flush();snapshot=workspace.getContent();state.editing=!state.editing;render();}
+   if(action==='edit'){flush();snapshot=readSnapshot();state.editing=!state.editing;render();}
    if(action==='save')await save();
    if(action==='preview'){workspace.savedContext();await onPreview(lessonId,el);}
    if(action==='apply'){workspace.savedContext();await (onReviewPublish||onApply)(lessonId);}
