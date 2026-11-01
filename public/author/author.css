@@ -69,3 +69,6 @@
 .inline-author .jodit-wysiwyg table {border-collapse:collapse}
 .inline-author .jodit-wysiwyg td,.inline-author .jodit-wysiwyg th {border:1px solid var(--line);min-width:24px;padding:6px}
 .inline-author .jodit-wysiwyg [data-retained] {user-select:none;white-space:normal}
+
+.author-classic-brush-tabs [role=tabpanel][hidden] {display:none!important}
+.author-classic-brush-tabs [role=tab]:focus-visible {outline:2px solid var(--primary);outline-offset:-2px}

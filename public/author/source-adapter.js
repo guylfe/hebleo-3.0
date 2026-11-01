@@ -8,7 +8,7 @@ const nodes=n=>(n.childNodes||[]).filter(c=>c.nodeName!=='#comment');
 function supportedTree(n){const attrs=Object.fromEntries((n.attrs||[]).map(a=>[a.name,a.value]));return (!n.tagName||supported.has(n.tagName))&&!(n.attrs||[]).some(a=>a.name.startsWith('data-activity')||a.name==='contenteditable')&&(n.tagName!=='input'||attrs.type==='checkbox')&&(n.tagName!=='img'||/^\/media\//.test(attrs.src||''))&&(n.tagName!=='a'||!attrs.href||/^(https?:\/\/|mailto:|\/(?!\/)|#)/i.test(attrs.href))&&nodes(n).every(supportedTree);}
 export const supportedHTML=html=>nodes(parseFragment(html)).every(supportedTree);
 function offsetsFor(source){const map=[];let text='';for(let i=0;i<source.length;i++){map.push(i);if(source[i]==='\r'){text+='\n';if(source[i+1]==='\n')i++;}else text+=source[i];}map.push(source.length);return {text,map};}
-export function sourceRegions(source,marked){
+export function sourceRegions(source,marked,{fullMarkdownTokens=false}={}){
  const out=[],{text,map}=offsetsFor(source);let cursor=0;
  for(const token of marked.lexer(text)){
   const at=text.indexOf(token.raw,cursor);if(at<0)throw Error('Cannot prove source range. Use exact source.');cursor=at+token.raw.length;
@@ -23,10 +23,17 @@ export function sourceRegions(source,marked){
    }
    if(pos<raw.length&&raw.slice(pos).trim())out.push({start:start+pos,end,kind:'opaque'});
   }else if(['paragraph','heading','list','blockquote','code','hr','table'].includes(token.type)){
-   const trimmed=raw.trimEnd();out.push({start,end:start+trimmed.length,kind:'markdown'});
+   const trimmed=fullMarkdownTokens?raw:raw.trimEnd();out.push({start,end:start+trimmed.length,kind:'markdown'});
   }else out.push({start,end,kind:'opaque'});
  }
  return out;
+}
+// Encode mapped top-level whitespace without reserializing any element,
+// attribute, entity or descendant source bytes.
+export function encodeBlockSeparators(html){
+ const tree=parseFragment(html,{sourceCodeLocationInfo:true}),edits=[];
+ for(const node of tree.childNodes)if(node.nodeName==='#text'&&!node.value.trim()&&node.sourceCodeLocation){const loc=node.sourceCodeLocation;edits.push([loc.startOffset,loc.endOffset,[...node.value].map(c=>'&#'+c.charCodeAt(0)+';').join('')]);}
+ return applyEdits(html,edits);
 }
 function htmlFor(node,doc){const box=doc.createElement('div');box.append(DOMSerializer.fromSchema(node.type.schema).serializeNode(node,{document:doc}));return box.innerHTML;}
 const meaningful=n=>(n.childNodes||[]).filter(c=>c.nodeName!=='#comment'&&!(c.nodeName==='#text'&&!c.value.trim()&&n.tagName&&/^(ul|ol|table|tbody|thead|tr|blockquote)$/.test(n.tagName)));
