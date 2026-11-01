@@ -82,6 +82,10 @@ test('structural Enter preserves authored wrapper attributes; metadata loss refu
 });
 test('approved local chooser retains pinned URL/alt; remote source, forged boundary paste and arbitrary image insertion are rejected',async t=>{
  const {host,deps,doc,w}=classicDOM(t),ui=mountStandardEditor(host,{source:'<p>Before image</p>',dependencies:deps,api:async()=>({assets:[{assetId:'synthetic',title:'Synthetic image',kind:'image',revisions:[{url:'/media/synthetic/pinned.png',revisionId:'r1',sha256:'a'.repeat(64),approval:{status:'approved'}},{url:'https://remote.invalid/img.png',revisionId:'r2',sha256:'b'.repeat(64),approval:{status:'approved'}}]}]})});t.after(()=>ui.dispose());assert.ok(await ui.ready);
+ // Jodit merges control defaults even when the image plugin is disabled. The
+ // inherited URL popup must be absent, including the split-button trigger.
+ assert.equal(ui.view.o.controls.image.popup,null);assert.equal(ui.view.o.controls.image.list,null);
+ assert.equal(host.querySelector('[data-ref="image"] .jodit-toolbar-button__trigger'),null);
  const range=doc.createRange();range.selectNodeContents(ui.view.editor.firstElementChild);range.collapse(false);w.getSelection().removeAllRanges();w.getSelection().addRange(range);
  host.querySelector('[data-ref="image"] .jodit-toolbar-button__button').click();await new Promise(r=>setTimeout(r,0));assert.equal(host.querySelectorAll('[data-select-media]').length,1);host.querySelector('[data-select-media]').click();
  const form=host.querySelector('[data-prose-insert] form');form.dispatchEvent(new w.Event('submit',{cancelable:true,bubbles:true}));assert.match(form.querySelector(':scope > p[role=status]').textContent,/alt text/);form.elements.alt.value='Synthetic description';form.dispatchEvent(new w.Event('submit',{cancelable:true,bubbles:true}));ui.view.setEditorValue();

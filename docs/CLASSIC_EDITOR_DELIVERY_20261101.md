@@ -91,3 +91,9 @@ New static routes: /safe-format.js, /author/classic-source.js, /author/legacy-ed
 ## Lead's next handoff
 
 Review the exact candidate, release the mounted Browser for trusted candidate checks, and obtain actual UX/QA/Release review on exact reviewed bytes. Resolve native findings before integration/guarded code-only installation. Preserve fresh live teaching/user state under Lead's existing rehearsal/backup guards; never install any tmp review database. This candidate is not an installed update or a completed native acceptance result.
+
+## Lead integration delta: image dropdown, 1 November 2026
+
+Actual mounted Browser on the matching 23-lesson copy confirmed Jodit4.18.12 mounts in MEMORY with the supplied two-row toolbar and visual canvas. The toolbar measured758x65px at1280x720. Native opening of the image split-button trigger revealed an inherited URL-image popup despite the approved chooser main action and disabled image plugin. No URL was submitted and no teaching edit, Save or publication was made. The review server was stopped before changing source.
+
+The image control now explicitly clears both inherited popup/list values. Actual bundled-component regression verifies the URL popup and split trigger are absent while approved local chooser insertion/alt checks still pass. All11classic-editor tests pass. Before this narrow delta, Lead independently ran40focused author/source/worker/anchor checks, all passed; copied npm JS/CSS match the pinned package exactly and full MIT notice is included. Native recheck and independent UX/QA/Release remain pending. The installed63358 source/data were untouched.
