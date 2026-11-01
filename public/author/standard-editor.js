@@ -1,64 +1,90 @@
-import {Schema,EditorState,Plugin,EditorView,basicSchema,addListNodes,baseKeymap,keymap,history,undo,redo,toggleMark,setBlockType,wrapIn,chainCommands,exitCode,splitListItem,liftListItem,sinkListItem,wrapInList,inputRules,wrappingInputRule,textblockTypeInputRule,tableNodes,tableEditing,goToNextCell,addRowAfter,addColumnAfter,deleteTable} from './vendor/prosemirror.js';
-import {createSourceAdapter} from './source-adapter.js';
+import {createClassicAdapter} from './classic-source.js';
+import {sanitizeProse,localImage} from '../safe-format.js';
 import {chooseLocalImage} from './image-chooser.js';
-
-let nodes=addListNodes(basicSchema.spec.nodes,'paragraph block*','block');
-nodes=nodes.update('list_item',{...nodes.get('list_item'),attrs:{checked:{default:null}},parseDOM:[{tag:'li',getAttrs:el=>{const box=el.querySelector(':scope > input[type=checkbox],:scope > span > input[type=checkbox]');return {checked:box?box.hasAttribute('checked'):null};}}],toDOM:node=>node.attrs.checked===null?['li',0]:['li',{'data-task-item':'true'},['span',{contenteditable:'false'},['input',{type:'checkbox','data-task-checkbox':'true','aria-label':'Checklist item',...(node.attrs.checked?{checked:''}:{})}]],['div',0]]});
-for(const name of ['paragraph','heading','blockquote']){
- const spec=nodes.get(name),toDOM=spec.toDOM;
- nodes=nodes.update(name,{...spec,attrs:{...spec.attrs,dir:{default:'auto'}},parseDOM:spec.parseDOM.map(rule=>({...rule,getAttrs:el=>({...((rule.getAttrs?rule.getAttrs(el):rule.attrs)||{}),dir:el.getAttribute('dir')||'auto'})})),toDOM:node=>{const result=toDOM(node);return [result[0],{dir:node.attrs.dir},...result.slice(1)];}});
+// Legacy source APIs remain available to source-range consumers, never to Jodit.
+export {proseSchema,createProseState} from './legacy-editor.js';
+let componentLoad;
+function load(doc){
+ if(!doc.querySelector('[data-jodit-css]')){const css=doc.createElement('link');css.rel='stylesheet';css.href='/author/vendor/jodit.min.css';css.dataset.joditCss='';doc.head.append(css);}
+ componentLoad??=new Promise((resolve,reject)=>{if(doc.defaultView.Jodit)return resolve(doc.defaultView.Jodit);const script=doc.createElement('script');script.src='/author/vendor/jodit.min.js';script.onload=()=>resolve(doc.defaultView.Jodit);script.onerror=()=>reject(Error('Local classic editor could not load. Exact source is retained.'));doc.head.append(script);});
+ return Promise.all([componentLoad,import('/vendor/marked.js'),import('/vendor/purify.js')]).then(([Jodit,m,p])=>({Jodit,marked:m.marked,purifier:p.default}));
 }
-nodes=nodes.append(tableNodes({tableGroup:'block',cellContent:'block+'})).append({opaque:{group:'block',atom:true,isolating:true,selectable:false,attrs:{raw:{}},toDOM:()=>['div',{'class':'author-opaque',contenteditable:'false'},'Retained source · edit prose on either side. Exact source is available below.']}});
-export const proseSchema=new Schema({nodes,marks:basicSchema.spec.marks.append({strike:{parseDOM:[{tag:'s'},{tag:'del'},{tag:'strike'}],toDOM:()=>['s',0]},span:{attrs:{attributes:{default:{}}},parseDOM:[{tag:'span',getAttrs:el=>({attributes:Object.fromEntries([...el.attributes].map(a=>[a.name,a.value]))})}],toDOM:mark=>['span',mark.attrs.attributes,0]}})});
-const opaque=doc=>{const out=[];doc.descendants((n,_pos,parent)=>{if(n.type.name==='opaque'){out.push([n.attrs.raw,parent.type.name]);return false;}});return out;};
-export function createProseState(doc,{onBoundary=()=>{}}={}){
- const s=proseSchema;
- return EditorState.create({doc,plugins:[
-  new Plugin({filterTransaction:tr=>{if(!tr.docChanged)return true;const valid=JSON.stringify(opaque(tr.before))===JSON.stringify(opaque(tr.doc));if(!valid)onBoundary(Error('This edit crosses retained source. Edit the prose on either side separately.'));return valid;}}),
-  inputRules({rules:[wrappingInputRule(/^\s*>\s$/,s.nodes.blockquote),wrappingInputRule(/^\s*([-+*])\s$/,s.nodes.bullet_list),wrappingInputRule(/^(\d+)\.\s$/,s.nodes.ordered_list,m=>({order:+m[1]})),textblockTypeInputRule(/^(#{1,6})\s$/,s.nodes.heading,m=>({level:m[1].length})),textblockTypeInputRule(/^```$/,s.nodes.code_block)]}),
-  history(),keymap({'Mod-z':undo,'Mod-y':redo,'Shift-Mod-z':redo,'Mod-b':toggleMark(s.marks.strong),'Mod-i':toggleMark(s.marks.em),'Enter':splitListItem(s.nodes.list_item),'Tab':chainCommands(goToNextCell(1),sinkListItem(s.nodes.list_item)),'Shift-Tab':chainCommands(goToNextCell(-1),liftListItem(s.nodes.list_item)),'Shift-Enter':chainCommands(exitCode,(state,dispatch)=>{dispatch?.(state.tr.replaceSelectionWith(s.nodes.hard_break.create()).scrollIntoView());return true;})}),keymap(baseKeymap),tableEditing()
- ]});
-}
-const load=()=>Promise.all([import('/vendor/marked.js'),import('/vendor/purify.js')]).then(([m,p])=>({marked:m.marked,purifier:p.default}));
+export const classicButtons=['bold','italic','underline','strikethrough','|','brush','fontsize','paragraph','|','left','center','right','justify','direction','|','ul','ol','outdent','indent','\n','link','image','table','hr','|','undo','redo','|','selectall','eraser','|','fullsize'];
 export function mountStandardEditor(host,{source,onChange=()=>{},onError=()=>{},dependencies,api,label='Edit teaching text',session}={}){
- const doc=host.ownerDocument,win=doc.defaultView,ctl=new win.AbortController();let view,adapter,savedDoc,disposed=false,locked=false,composing=false,compositionWaiters=[],dirtyDuringComposition=false,pickerDispose;
- host.innerHTML='<section class="author-standard"><div class="author-format-tools" role="toolbar" aria-label="Text formatting"></div><div data-prose-insert hidden></div><div data-prose-editor></div><p data-prose-status role="status">Loading text editor…</p></section>';
- const toolbar=host.querySelector('[role=toolbar]'),status=host.querySelector('[data-prose-status]'),panel=host.querySelector('[data-prose-insert]');
- const say=error=>{status.textContent=error.message||error;onError(error instanceof Error?error:Error(error));};
- const handle={get view(){return view;},get composing(){return composing||Boolean(view?.composing);},isClean:()=>!view||view.state.doc.eq(savedDoc),acceptSaved(model){savedDoc=model;},get model(){return view?.state.doc;},getValue(){view?.domObserver.flush();if(handle.composing)throw Error('Finish composing text before saving.');return adapter?adapter.compile(view.state.doc):source;},whenSettled(){view?.domObserver.flush();return handle.composing?new Promise(resolve=>compositionWaiters.push(resolve)):Promise.resolve();},setLocked(value){const changed=locked!==value;locked=value;if(changed)view?.setProps({editable:()=>!locked});toolbar.querySelectorAll('button,select').forEach(b=>b.disabled=locked);},focus(){view?.focus();},snapshot(){return view?{source,value:adapter.compile(view.state.doc),state:view.state,adapter,savedDoc}:null;},dispose(){disposed=true;ctl.abort();pickerDispose?.();view?.destroy();compositionWaiters.splice(0).forEach(r=>r());host.replaceChildren();}};
- const run=command=>{if(locked||handle.composing||!view)return false;const done=command(view.state,view.dispatch,view);if(!done)status.textContent='This command is unavailable at this selection. Choose a prose paragraph or table cell.';else{view.focus();status.textContent='';}return done;};
- function add(label,command){const b=doc.createElement('button');b.type='button';b.className='button small outline';b.textContent=label;b.title=label;b.setAttribute('aria-label',label);b.dataset.proseCommand=label;b.addEventListener('click',()=>run(command),{signal:ctl.signal});toolbar.append(b);}
- function insertForm(kind){
-  if(kind==='Image'){pickerDispose?.();pickerDispose=chooseLocalImage(panel,{api,onSelected:image=>run((state,dispatch)=>{dispatch?.(state.tr.replaceSelectionWith(proseSchema.nodes.image.create({src:image.url,alt:image.alt})).scrollIntoView());return true;}),onClose:()=>view.focus()});return true;}
-  panel.hidden=false;panel.innerHTML='<form novalidate><label>'+ (kind==='Link'?'Link address':'Image alt text')+'<input name="value" type="text"></label><button type="submit" class="button small outline">'+(kind==='Link'?'Insert link':'Insert selected image')+'</button><button type="button" data-insert-cancel class="button small outline">Cancel</button><div data-image-picker></div><p role="status"></p></form>';
-  const form=panel.querySelector('form');
-  panel.querySelector('[data-insert-cancel]').onclick=()=>{pickerDispose?.();panel.hidden=true;view.focus();};
-  form.onsubmit=event=>{event.preventDefault();if(locked)return;const value=form.elements.value.value;
-   if(kind==='Link'){if(!/^(https?:\/\/|mailto:|\/(?!\/)|#)/i.test(value)){form.querySelector('[role=status]').textContent='Use an https, mailto or local link.';return;}run(toggleMark(proseSchema.marks.link,{href:value}));}
-
-   pickerDispose?.();panel.hidden=true;
+ if(session?.value===source&&session.resume)return session.resume(host,{onChange,onError});
+ session?.release?.();
+ const doc=host.ownerDocument,win=doc.defaultView,ctl=new win.AbortController();
+ let view,adapter,savedModel,disposed=false,locked=false,composing=false,settling=false,waiters=[],picker,initializing=true,lastModel,retained=false;
+ host.innerHTML='<section class="author-standard"><textarea data-classic-source></textarea><div data-prose-insert hidden></div><p data-prose-status role="status">Loading classic editor…</p></section>';
+ const section=host.firstElementChild,status=host.querySelector('[data-prose-status]'),panel=host.querySelector('[data-prose-insert]');
+ const say=e=>{status.textContent=e.message||e;onError(e?.stack?e:Error(e));};
+ // Jodit adds FEFF caret scaffolding. Authored FEFF regions are retained boundaries.
+ const model=()=>view?.editor.innerHTML.replace(/<span\b[^>]*\bid="jodit-selection_marker_[^"]*"[^>]*>[\s\S]*?<\/span>/g,'').replace(/\uFEFF/g,'');
+ const changed=()=>{if(initializing||disposed)return;const next=model();if(next===lastModel)return;lastModel=next;if(!composing&&!settling)onChange();};
+ const handle={
+  get view(){return view;},get model(){return model();},get composing(){return composing||settling;},
+  isClean:()=>!view||model()===savedModel,
+  acceptSaved(submitted){savedModel=submitted;},
+  getValue(){if(handle.composing)throw Error('Finish composing text before saving.');return adapter?adapter.compile(model()):source;},
+  whenSettled(){return handle.composing?new Promise(r=>waiters.push(r)):Promise.resolve();},
+  setLocked(value){locked=value;if(view)view.setReadOnly(value);},
+  focus(){view?.s.focus();},
+  snapshot(){if(!view||disposed)return null;retained=true;return {owner:handle,value:adapter.compile(model()),resume(nextHost,hooks){host=nextHost;onChange=hooks.onChange;onError=hooks.onError;host.append(section);retained=false;return handle;},release(){retained=false;handle.dispose();}};},
+  dispose(){if(disposed)return;if(retained){section.remove();return;}disposed=true;ctl.abort();picker?.();view?.destruct();waiters.splice(0).forEach(r=>r());section.remove();}
+ };
+ handle.ready=Promise.resolve(dependencies).then(deps=>deps?.Jodit||deps&&win.Jodit?{...deps,Jodit:deps.Jodit||win.Jodit}:load(doc)).then(deps=>{
+  if(disposed)return null;
+  const Jodit=deps.Jodit||win.Jodit,{marked,purifier}=deps;
+  if(!Jodit||!marked?.lexer||!purifier?.sanitize)throw Error('Classic editor dependencies unavailable. Exact source is retained.');
+  const sanitize=html=>sanitizeProse(html,purifier,doc,{editor:true});
+  adapter=createClassicAdapter({source,marked,doc,sanitize});
+  const textarea=host.querySelector('textarea');textarea.value=adapter.initial;
+  const safeImage=editor=>{
+   if(locked||handle.composing||crossesBoundary()){say(Error('Select editable prose on one side of retained source.'));return;}
+   editor.s.save();picker?.();
+   picker=chooseLocalImage(panel,{api,onSelected:image=>{if(locked||!localImage(image.url))return;editor.s.restore();const img=doc.createElement('img');img.src=image.url;img.alt=image.alt;editor.s.insertNode(img);editor.synchronizeValues();},onClose:()=>editor.s.focus()});
   };
-  form.elements.value.focus();return true;
- }
- handle.ready=Promise.resolve(dependencies||load()).then(deps=>{
-  if(disposed)return;const {marked,purifier}=deps;if(!marked?.lexer||!purifier?.sanitize)throw Error('Local text editor dependencies are unavailable. Your exact source is retained.');
-  function sanitize(html){const t=doc.createElement('template');t.innerHTML=purifier.sanitize(html,{USE_PROFILES:{html:true},FORBID_TAGS:['style','form','button','iframe','audio','video','object','embed','link','meta'],FORBID_ATTR:['id','name','style'],ALLOW_DATA_ATTR:false,ADD_ATTR:['dir']});t.content.querySelectorAll('input').forEach(el=>{if(el.type!=='checkbox')el.remove();else el.disabled=true;});t.content.querySelectorAll('[style]').forEach(el=>{if(/url\s*\(|@import|expression\s*\(/i.test(el.getAttribute('style')))el.removeAttribute('style');});t.content.querySelectorAll('img').forEach(img=>{img.removeAttribute('srcset');if(!/^\/media\//.test(img.getAttribute('src')||''))img.replaceWith(doc.createTextNode(img.alt||'External image retained in source'));});return t.innerHTML;}
-  adapter=session?.value===source?session.adapter:createSourceAdapter({source,marked,schema:proseSchema,doc,sanitize});
-  const fresh=createProseState(adapter.initial,{onBoundary:say}),initial=session?.value===source?session.state.reconfigure({plugins:fresh.plugins}):fresh;
-  savedDoc=session?.savedDoc||initial.doc;
-  view=new EditorView(host.querySelector('[data-prose-editor]'),{state:initial,editable:()=>!locked,attributes:{role:'textbox','aria-label':label,'aria-multiline':'true'},nodeViews:{opaque(node){const dom=doc.createElement('div');dom.className='author-opaque';dom.contentEditable='false';const note=doc.createElement('p');note.className='author-opaque-note';note.textContent='Retained source boundary · edit prose on either side. Exact source is available below.';const preview=doc.createElement('div');preview.innerHTML=sanitize(marked.parse(node.attrs.raw));dom.append(note,preview);return {dom,stopEvent:()=>true,ignoreMutation:()=>true};}},transformPastedHTML:html=>{const safe=sanitize(html);if(safe!==html)status.textContent='Pasted content uses supported safe formatting. Scripts, external images and unsupported markup are excluded.';return safe;},handleDOMEvents:{compositionstart(){composing=true;return false;},compositionend(){win.setTimeout(()=>{if(disposed)return;composing=false;if(dirtyDuringComposition){dirtyDuringComposition=false;onChange();}compositionWaiters.splice(0).forEach(r=>r());},0);return false;}},dispatchTransaction(tr){const next=view.state.applyTransaction(tr);view.updateState(next.state);if(next.transactions.some(t=>t.docChanged)){if(handle.composing)dirtyDuringComposition=true;else onChange();}}});
-  for(const [name,mark] of [['Bold','strong'],['Italic','em'],['Strikethrough','strike']])add(name,toggleMark(proseSchema.marks[mark]));
-  const heading=doc.createElement('select');heading.setAttribute('aria-label','Paragraph or heading');for(const [label,value] of [['Paragraph',0],...Array.from({length:6},(_,i)=>['Heading '+(i+1),i+1])]){const o=doc.createElement('option');o.textContent=label;o.value=value;heading.append(o);}heading.onchange=()=>run(setBlockType(+heading.value?proseSchema.nodes.heading:proseSchema.nodes.paragraph,+heading.value?{level:+heading.value}:{}));toolbar.append(heading);
-  add('Quote',wrapIn(proseSchema.nodes.blockquote));add('Bullet list',wrapInList(proseSchema.nodes.bullet_list));add('Numbered list',wrapInList(proseSchema.nodes.ordered_list));
-  add('Checklist',(state,dispatch)=>{const mark=tr=>{tr.doc.nodesBetween(tr.selection.from,tr.selection.to,(node,pos)=>{if(node.type===proseSchema.nodes.list_item)tr.setNodeMarkup(pos,null,{...node.attrs,checked:false});});dispatch?.(tr);};if(wrapInList(proseSchema.nodes.bullet_list)(state,mark))return true;let pos;for(let d=state.selection.$from.depth;d>0;d--)if(state.selection.$from.node(d).type===proseSchema.nodes.list_item){pos=state.selection.$from.before(d);break;}if(pos===undefined)return false;dispatch?.(state.tr.setNodeMarkup(pos,null,{checked:false}));return true;});
-  add('Indent list',sinkListItem(proseSchema.nodes.list_item));add('Outdent list',liftListItem(proseSchema.nodes.list_item));add('Code',setBlockType(proseSchema.nodes.code_block));add('Inline code',toggleMark(proseSchema.marks.code));add('Link',()=>insertForm('Link'));add('Image',()=>insertForm('Image'));
-  add('Table',(state,dispatch)=>{const cell=()=>proseSchema.nodes.table_cell.createAndFill();const row=()=>proseSchema.nodes.table_row.create(null,[cell(),cell()]);dispatch?.(state.tr.replaceSelectionWith(proseSchema.nodes.table.create(null,[row(),row()])).scrollIntoView());return true;});add('Add row',addRowAfter);add('Add column',addColumnAfter);add('Delete table',deleteTable);
-  add('Rule',(state,dispatch)=>{dispatch?.(state.tr.replaceSelectionWith(proseSchema.nodes.horizontal_rule.create()).scrollIntoView());return true;});add('Undo',undo);add('Redo',redo);
-  const direction=doc.createElement('select');direction.setAttribute('aria-label','Paragraph text direction');for(const [name,value] of [['Automatic','auto'],['Right to left','rtl'],['Left to right','ltr']]){const o=doc.createElement('option');o.textContent=name;o.value=value;direction.append(o);}direction.onchange=()=>run((state,dispatch)=>{const tr=state.tr;let changed=false;state.doc.nodesBetween(state.selection.from,state.selection.to,(node,pos)=>{if(node.isTextblock&&'dir'in node.attrs){tr.setNodeMarkup(pos,null,{...node.attrs,dir:direction.value});changed=true;}});if(!changed){for(let depth=state.selection.$from.depth;depth>0;depth--){const node=state.selection.$from.node(depth);if(node.isTextblock&&'dir'in node.attrs){tr.setNodeMarkup(state.selection.$from.before(depth),null,{...node.attrs,dir:direction.value});changed=true;break;}}}if(changed)dispatch?.(tr);return changed;});toolbar.append(direction);
-  add('Full screen',()=>{host.classList.toggle('author-editor-fullscreen');return true;});
-  toolbar.addEventListener('mousedown',event=>{if(event.target.closest('button'))event.preventDefault();},{signal:ctl.signal});
-  view.dom.addEventListener('click',event=>{if(!event.target.matches('[data-task-checkbox]')||locked)return;const point=view.state.doc.resolve(view.posAtDOM(event.target,0));for(let d=point.depth;d>0;d--)if(point.node(d).type===proseSchema.nodes.list_item){event.preventDefault();view.dispatch(view.state.tr.setNodeMarkup(point.before(d),null,{checked:!point.node(d).attrs.checked}));break;}},{signal:ctl.signal});
-  host.querySelector('[data-prose-editor]').addEventListener('keydown',event=>{if(event.key==='Escape'&&host.classList.contains('author-editor-fullscreen')){event.stopPropagation();host.classList.remove('author-editor-fullscreen');}},{signal:ctl.signal});
-  status.textContent='';handle.setLocked(locked);return view;
- }).catch(error=>{if(!disposed)say(error);return null;});return handle;
+  view=Jodit.make(textarea,{
+   ownerWindow:win,ownerDocument:doc,theme:'default',language:'en',toolbar:true,toolbarAdaptive:false,toolbarSticky:false,toolbarButtonSize:'small',
+   buttons:classicButtons,buttonsMD:classicButtons,buttonsSM:classicButtons,buttonsXS:classicButtons,
+   height:'auto',minHeight:240,statusbar:false,showCharsCounter:false,showWordsCounter:false,showXPathInStatusbar:false,
+   enter:'p',spellcheck:true,defaultMode:1,useSearch:false,askBeforePasteHTML:false,askBeforePasteFromWord:false,
+   defaultActionOnPaste:'insert_as_html',processPasteHTML:false,
+   disablePlugins:['file','filebrowser','video','iframe','source','preview','print','about','powered-by-jodit','drag-and-drop','drag-and-drop-element','paste-from-word','paste-storage','image-properties','image-processor','image','add-new-line'],
+   uploader:{url:'',insertImageAsBase64URI:false},filebrowser:{ajax:{url:''}},link:{followOnDblClick:false,processVideoLink:false,processPastedLink:false,modeClassName:false},
+   cleanHTML:{fillEmptyParagraph:false,removeEmptyElements:false,replaceNBSP:false},
+   controls:{direction:{icon:'paragraph',tooltip:'Paragraph direction',list:{rtl:'Right to left',ltr:'Left to right',auto:'Automatic'},exec:(editor,_current,button)=>{if(locked||handle.composing||crossesBoundary()){say(Error('Select editable prose on one side of retained source.'));return;}const direction=button.control.args?.[0]||'rtl';editor.s.eachSelection(node=>{let el=node.nodeType===1?node:node.parentElement;while(el&&el.parentElement!==editor.editor&&!/^(P|H[1-6]|LI|TD|TH|BLOCKQUOTE)$/.test(el.tagName))el=el.parentElement;if(el&&el!==editor.editor)el.setAttribute('dir',direction);});editor.synchronizeValues();}},image:{icon:'image',tooltip:'Insert approved local image',exec:safeImage},fontsize:{list:[8,10,12,14,16,18,24,32,48,72,96]}},
+   events:{
+    beforeCommand(command,_ui,value){
+     if(locked||handle.composing)return false;
+     if(['insertimage'].includes(command.toLowerCase())&&!localImage(String(value)))return false;
+     if(crossesBoundary()){say(Error('This selection crosses retained source. Select prose on one side.'));return false;}
+    },
+    afterCommand(){changed();},
+    beforePasteInsert(html){if(/\uFEFF/.test(typeof html==='string'?html:html.textContent||'')){say(Error('This paste contains an invisible source character. Use Advanced source to preserve it exactly.'));return false;}if(locked||crossesBoundary())return false;return sanitize(typeof html==='string'?html:html.outerHTML||'');}
+   }
+  });
+  view.editor.setAttribute('aria-label',label);view.editor.setAttribute('aria-multiline','true');view.editor.setAttribute('role','textbox');view.editor.dir='auto';
+  // Jodit owns UI/selection/history. The baseline adopts only mount normalization.
+  adapter.adoptInitial(model());
+  savedModel=model();lastModel=model();
+  view.e.on('change',changed);
+  function crossesBoundary(event){
+   const selection=win.getSelection();if(!selection?.rangeCount)return false;const range=selection.getRangeAt(0);
+   if([...view.editor.querySelectorAll('[data-retained]')].some(n=>range.intersectsNode(n)))return true;
+   if(range.collapsed&&/^delete/.test(event?.inputType||'')){
+    let top=range.startContainer.nodeType===1?range.startContainer:range.startContainer.parentElement;
+    while(top&&top.parentElement!==view.editor)top=top.parentElement;
+    if(top){const backward=/Backward$/.test(event.inputType),probe=range.cloneRange();probe.selectNodeContents(top);if(backward)probe.setEnd(range.startContainer,range.startOffset);else probe.setStart(range.startContainer,range.startOffset);const adjacent=backward?top.previousElementSibling:top.nextElementSibling;if(!probe.toString().replace(/\uFEFF/g,'')&&adjacent?.hasAttribute('data-retained'))return true;}
+   }
+   return false;
+  }
+  view.editor.addEventListener('beforeinput',event=>{if(event.data?.includes('\uFEFF')){event.preventDefault();say(Error('Use Advanced source for this invisible source character.'));return;}if(crossesBoundary(event)){event.preventDefault();say(Error('This selection crosses retained source. Your prose is retained; select one side.'));}},{signal:ctl.signal});
+  view.editor.addEventListener('drop',event=>{event.preventDefault();say(Error('Use the approved local image chooser or paste safe prose.'));},{signal:ctl.signal});
+  view.editor.addEventListener('input',changed,{signal:ctl.signal});
+  view.editor.addEventListener('compositionstart',()=>{composing=true;},{signal:ctl.signal});
+  view.editor.addEventListener('compositionend',()=>{composing=false;settling=true;win.setTimeout(()=>{if(disposed)return;settling=false;lastModel=model();onChange();waiters.splice(0).forEach(r=>r());},0);},{signal:ctl.signal});
+  initializing=false;status.textContent='';handle.setLocked(locked);return view;
+ }).catch(error=>{if(!disposed)say(error);return null;});
+ return handle;
 }

@@ -41,11 +41,11 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
   const quote=event.target.closest?.('[data-author-quote]');
   if(quote){const start=quote.selectionStart,end=quote.selectionEnd;state.selection=end>start?{start,end,exact:quote.value.slice(start,end)}:null;return;}
   if(!event.target.closest?.('[data-author-projection]'))return;
-  const selection=doc.defaultView.getSelection(),field=host.querySelector('.ProseMirror')||host.querySelector('[data-author-projection]');state.selection=null;
+  const selection=doc.defaultView.getSelection(),field=host.querySelector('.jodit-wysiwyg')||host.querySelector('[data-author-projection]');state.selection=null;
   if(!selection?.rangeCount||selection.isCollapsed)return;
   const range=selection.getRangeAt(0);if(!field?.contains(range.commonAncestorContainer))return;
   const before=doc.createRange();before.selectNodeContents(field);before.setEnd(range.startContainer,range.startOffset);const start=before.toString().length,end=start+range.toString().length;
-  state.selection={start,end,exact:range.toString()};
+  state.selection={start,end,exact:range.toString(),canvas:true};
  }
  async function save(){
   if(busy)return;busy=true;message='Saving complete workspace draft…';refreshStatus();
@@ -77,7 +77,7 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
    const syncExactSource=()=>{if(editor.composing){raw.disabled=true;editor.whenSettled().then(()=>{if(current()&&raw.isConnected){raw.disabled=false;materialize();const value=editor.getValue();if(raw.value!==value)raw.value=value;raw.focus({preventScroll:true});}}).catch(error);return;}materialize();const value=editor.getValue();if(raw.value!==value)raw.value=value;};
    canvas.querySelector('[data-author-advanced]').addEventListener('toggle',event=>{if(event.target.open)syncExactSource();},{signal:ctl.signal});
    raw.addEventListener('focus',syncExactSource,{signal:ctl.signal});
-   raw.addEventListener('input',()=>{renderedValue=raw.value;state.selection=null;write(field,renderedValue,editorTarget);sessions.delete(editorKey);mountSource();},{signal:ctl.signal});
+   raw.addEventListener('input',()=>{renderedValue=raw.value;state.selection=null;write(field,renderedValue,editorTarget);sessions.get(editorKey)?.release?.();sessions.delete(editorKey);mountSource();},{signal:ctl.signal});
   }else{
    if(reviewOnly)canvas.innerHTML='<h3>'+e(p?.title||l.title)+'</h3><div class="rich-lesson" data-author-projection>'+renderLesson(p?.html||b?.text||l.explanation||'')+'</div>';
    else if(b?.textPages){reader=mountTextReader(canvas,{textPages:b.textPages,renderLesson,renderMedia:textPageMedia,dock:false,initialState:{cursorPageId:p?.id},onState:s=>{state.pageId=s.cursorPageId;},onContinue:()=>onExit()});}
@@ -95,7 +95,8 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  async function beginComment(activity=false){
   const pins=workspace.savedContext(),serial=workspace.version,contextKey=JSON.stringify(target());const t={...target(),activityId:activity?page()?.activity?.id:null},field=activity?'activity':page()?'html':block()?'text':'explanation';const projection=await api('studio/author-comments/projection?'+new URLSearchParams({...t,activityId:t.activityId||'',pageId:t.pageId||'',componentId:t.componentId||'',fieldPath:field,baseRevisionId:workspace.baseRevisionId,draftToken:workspace.expectedDraftToken||''}));
   if(!current())return;if(workspace.version!==serial||JSON.stringify(target())!==contextKey||workspace.expectedDraftToken!==pins.draftToken)throw new Error('Source changed while opening the comment. Choose the block again.');
-  const selected=state.selection,rendered=host.querySelector('[data-author-quote]');
+  let selected=state.selection;const rendered=host.querySelector('[data-author-quote]');
+  if(selected?.canvas){const at=projection.text.indexOf(selected.exact);selected=at>=0&&projection.text.indexOf(selected.exact,at+1)<0?{start:at,end:at+selected.exact.length,exact:selected.exact}:null;if(!selected)throw Error('Select this quote in the exact text projection below to distinguish repeated text. Your comment is retained.');}
   if(!activity&&selected&&(rendered?.value??host.querySelector('[data-author-projection]')?.textContent)===projection.text&&projection.text.slice(selected.start,selected.end)===selected.exact)state.pendingSelection={...selected,prefix:projection.text.slice(Math.max(0,selected.start-80),selected.start),suffix:projection.text.slice(selected.end,selected.end+80)};
   else state.pendingSelection=null;
   state.commentTarget={...t,fieldPath:field,...workspace.savedContext()};state.commentRequest=null;
@@ -130,7 +131,7 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
    if(action==='previous-comments'&&state.commentCursors?.length){state.commentCursor=state.commentCursors.pop();await loadComments();}
    if(action==='comment')await beginComment();
    if(action==='comment-activity')await beginComment(true);
-   if(action==='reconcile'){flush();const latest=await api('studio');snapshot=workspace.reconcile(latest);state.raw={};dirtyRaw.clear();sessions.clear();editorTouched=false;editorChanged=false;message='Latest source reconciled with your local changes. Review, then Save draft explicitly.';render();}
+   if(action==='reconcile'){flush();const latest=await api('studio');snapshot=workspace.reconcile(latest);state.raw={};dirtyRaw.clear();for(const session of sessions.values())if(session?.owner!==editor)session?.release?.();sessions.clear();editorTouched=false;editorChanged=false;message='Latest source reconciled with your local changes. Review, then Save draft explicitly.';render();}
    if(action==='latest'){const latest=await api('studio');if(current()){const area=host.querySelector('[data-author-compare]');area.innerHTML='<details open><summary>Latest saved source · compare before reconciling</summary><p>Your local edits remain above. No overwrite or automatic retry was made.</p><pre></pre></details>';area.querySelector('pre').textContent=JSON.stringify((latest.draft?.content||latest.content).lessons.find(l=>l.id===lessonId),null,2);}}
    const note=comments.find(c=>c.id===el.closest('[data-author-note]')?.dataset.authorNote);
    if(note&&action==='jump'){flush();const anchor=note.anchor;if(!lesson().blocks?.find(b=>b.id===anchor.componentId)?.textPages?.order.includes(anchor.pageId)){message='Original source is historical or missing. Read its retained context below.';refreshStatus();return;}state.componentId=anchor.componentId;state.pageId=anchor.pageId;render();host.querySelector('[data-author-canvas]')?.scrollIntoView?.({block:'start'});host.querySelector('[data-author-canvas]')?.focus({preventScroll:true});}
@@ -139,5 +140,5 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  },{signal:ctl.signal});
  const unsubscribe=workspace.subscribe(refreshStatus);
  render();loadComments();
- return {get editor(){return editor;},save,collect:flush,isDirty:()=>workspace.dirty||Boolean(state.commentBody.trim()),hasCommentDraft:()=>Boolean(state.commentBody.trim()),getState:()=>state,dispose(){if(!reviewOnly)try{flush();}catch{}disposed=true;requestGeneration++;unregister();unregisterSettler?.();unsubscribe();ctl.abort();editor?.dispose();reader?.destroy();host.replaceChildren();}};
+ return {get editor(){return editor;},save,collect:flush,isDirty:()=>workspace.dirty||Boolean(state.commentBody.trim()),hasCommentDraft:()=>Boolean(state.commentBody.trim()),getState:()=>state,dispose(){if(!reviewOnly)try{flush();}catch{}disposed=true;requestGeneration++;unregister();unregisterSettler?.();unsubscribe();ctl.abort();for(const session of sessions.values())session?.release?.();sessions.clear();editor?.dispose();reader?.destroy();host.replaceChildren();}};
 }

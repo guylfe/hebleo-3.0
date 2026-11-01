@@ -13,45 +13,47 @@ import {createServer} from '../src/server.js';
 import {replaceFirstTwo} from '../scripts/install-first2.mjs';
 import {mountExerciseDock} from '../public/exercise-actions.js';
 import {mountTextReader} from '../public/text-reader.js';
-import {TextSelection,undo,closeHistory} from '../public/author/vendor/prosemirror.js';
+import {classicDOM} from '../test-support/classic-dom.js';
+function insert(view,text,offset=2){view.e.fire('internalChange');const node=view.editor.querySelector('p').firstChild;node.insertData(Math.min(offset,node.length),text);view.setEditorValue();}
+function undo(view){view.history.undo();view.setEditorValue();return true;}
 const source='<p class="authored" data-original="keep" style="color:navy">A <strong>bold 😀 שָׁלוֹם</strong> sentence &amp; exact.</p>\r\n\r\n<!-- untouched comment -->\r\n## Markdown **heading**\r\n\r\nA **mixed** paragraph.\r\n\r\n- **First** item\r\n- Second item\r\n\r\n<ol start="3"><li><em>HTML</em> item</li><li data-original="bytes">Untouched &nbsp; sibling</li></ol>\r\n';
 const pack=JSON.parse(readFileSync(new URL('../content/first2/lessons.json',import.meta.url)));
 const tick=()=>new Promise(r=>setTimeout(r,5));
 async function until(fn){for(let i=0;i<300;i++){if(fn())return;await tick();}throw Error('Did not settle');}
-const input=(w,node,value)=>{if(node.hasAttribute('contenteditable')||node.closest('.ProseMirror'))node.textContent=value;else node.value=value;node.dispatchEvent(new w.Event('input',{bubbles:true}));};
-function dom(t){const d=new JSDOM('<main></main>',{pretendToBeVisual:true});const old={window:globalThis.window,document:globalThis.document,getComputedStyle:globalThis.getComputedStyle};globalThis.window=d.window;globalThis.document=d.window.document;globalThis.getComputedStyle=d.window.getComputedStyle.bind(d.window);t.after(()=>{Object.assign(globalThis,old);d.window.close();});return {w:d.window,doc:d.window.document,host:d.window.document.querySelector('main'),renderLesson:createLessonRenderer(marked,purify(d.window),d.window.document)};}
+const input=(w,node,value)=>{if(node.hasAttribute('contenteditable')||node.closest('.jodit-wysiwyg'))node.textContent=value;else node.value=value;node.dispatchEvent(new w.Event('input',{bubbles:true}));};
+function dom(t){const {w,doc,host,deps}=classicDOM(t);return {w,doc,host,deps,renderLesson:createLessonRenderer(marked,deps.purifier,doc)};}
 function select(w,node,start,end){const range=w.document.createRange();range.setStart(node,start);range.setEnd(node,end);w.getSelection().removeAllRanges();w.getSelection().addRange(range);}
 
 async function author(t,{failStatus=0,pending=false}={}){
- const {w,doc,host,renderLesson}=dom(t),s=new Store();const cleaned=structuredClone(pack);for(const l of cleaned.lessons)for(const p of l.blocks[0].textPages.pages){if(p.activity)delete p.activity.image;for(const i of p.activity?.items||[])delete i.image;}
+ const {w,doc,host,renderLesson,deps}=dom(t),s=new Store();const cleaned=structuredClone(pack);for(const l of cleaned.lessons)for(const p of l.blocks[0].textPages.pages){if(p.activity)delete p.activity.image;for(const i of p.activity?.items||[])delete i.image;}
  const c=replaceFirstTwo(s.snapshot(),cleaned).content,l=c.lessons[0],b=l.blocks[0],p=b.textPages.pages[0];p.html=source;p.unknown={preserve:[null,'exact']};s.set('active',s.addRevision(c,'Synthetic rendered-author fixture'));
  const server=createServer(s);await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(async()=>{ui.dispose();await new Promise(r=>server.close(r));s.close();});
  const api=async(path,body,user='author-demo')=>{const response=await fetch('http://127.0.0.1:'+server.address().port+'/api/'+path,{method:body?'POST':'GET',headers:{'x-demo-user':user,'content-type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});const value=await response.json();if(!response.ok)throw Object.assign(Error(value.error),{status:response.status});return value;};
  let release;const workspace=createStudioWorkspace({content:c,baseRevisionId:s.get('active'),saveDraft:async i=>{if(failStatus)throw Object.assign(Error('Synthetic failure'),{status:failStatus});if(pending)await new Promise(r=>release=r);return api('studio/draft',i);}}),state={},calls=[];
  workspace.registerCollector(()=>{const next=workspace.peekContent();next.words[0].notes='Synthetic sibling';workspace.replace(next,{changed:false});});
- let renderCalls=0;const countedRender=value=>{renderCalls++;return renderLesson(value);};const ui=mountInlineAuthor(host,{workspace,lessonId:l.id,componentId:b.id,pageId:p.id,state,api,renderLesson:countedRender,markdownDependencies:{marked,purifier:purify(w)},onPreview:async id=>calls.push(await api('studio/preview/session',{lessonId:id,draftToken:workspace.expectedDraftToken})),onApply:()=>calls.push('Review changes')});
- await until(()=>Boolean(ui.editor?.view));return {w,doc,host,s,ui,state,workspace,api,calls,p,get renderCalls(){return renderCalls;},release:()=>release?.()};
+ let renderCalls=0;const countedRender=value=>{renderCalls++;return renderLesson(value);};const ui=mountInlineAuthor(host,{workspace,lessonId:l.id,componentId:b.id,pageId:p.id,state,api,renderLesson:countedRender,markdownDependencies:{marked,purifier:purify(w),Jodit:deps.Jodit},onPreview:async id=>calls.push(await api('studio/preview/session',{lessonId:id,draftToken:workspace.expectedDraftToken})),onApply:()=>calls.push('Review changes')});
+ await until(()=>Boolean(ui.editor?.view));return {w,doc,host,deps,s,ui,state,workspace,api,calls,p,get renderCalls(){return renderCalls;},release:()=>release?.()};
 }
 
 test('departure Save acknowledges rich model; later collection/disposal cannot resurrect A over a newer Studio B',async t=>{
  const a=await author(t),{workspace,state,host,w,api}=a;
- a.ui.editor.view.dispatch(a.ui.editor.view.state.tr.insertText('Synthetic A ',2));await workspace.save();assert.deepEqual(state.raw,{});
+ insert(a.ui.editor.view,'Synthetic A ',2);await workspace.save();assert.deepEqual(state.raw,{});
  workspace.getContent();assert.deepEqual(state.raw,{},'reading a saved editor must not recreate an acknowledged patch');a.ui.dispose();assert.deepEqual(state.raw,{});
  const c=workspace.getContent();c.lessons[0].blocks[0].textPages.pages[0].html='<p>Synthetic newer Studio B.</p>';workspace.replace(c);await workspace.save();
- const ui=mountInlineAuthor(host,{workspace,lessonId:c.lessons[0].id,componentId:c.lessons[0].blocks[0].id,pageId:c.lessons[0].blocks[0].textPages.pages[0].id,state,api,renderLesson:createLessonRenderer(marked,purify(w),w.document),markdownDependencies:{marked,purifier:purify(w)},onPreview:()=>{},onApply:()=>{}});t.after(()=>ui.dispose());await until(()=>Boolean(ui.editor?.view));
+ const ui=mountInlineAuthor(host,{workspace,lessonId:c.lessons[0].id,componentId:c.lessons[0].blocks[0].id,pageId:c.lessons[0].blocks[0].textPages.pages[0].id,state,api,renderLesson:createLessonRenderer(marked,purify(w),w.document),markdownDependencies:{marked,purifier:purify(w),Jodit:a.deps.Jodit},onPreview:()=>{},onApply:()=>{}});t.after(()=>ui.dispose());await until(()=>Boolean(ui.editor?.view));
  assert.equal(ui.editor.getValue(),'<p>Synthetic newer Studio B.</p>');await ui.save();assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,'<p>Synthetic newer Studio B.</p>');
 });
 
 test('collection followed by exact Undo removes only its materialized prose patch',async t=>{
- const a=await author(t),view=a.ui.editor.view;view.dispatch(view.state.tr.insertText('Synthetic transient ',2));a.workspace.getContent();assert.ok(Object.keys(a.state.raw).length);undo(view.state,tr=>view.dispatch(tr));assert.equal(a.workspace.dirty,false);assert.deepEqual(a.state.raw,{});await a.ui.save();assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,source);
+ const a=await author(t),view=a.ui.editor.view;insert(view,'Synthetic transient ',2);a.workspace.getContent();assert.ok(Object.keys(a.state.raw).length);undo(view);assert.equal(a.workspace.dirty,false);assert.deepEqual(a.state.raw,{});await a.ui.save();assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,source);
 });
 
 test('Advanced source reentry and successful Save reflect the current rich model without remounting its history',async t=>{
  const a=await author(t),view=a.ui.editor.view,raw=a.host.querySelector('[name=author-source]'),advanced=a.host.querySelector('[data-author-advanced]');advanced.open=true;await tick();
  a.w.Range.prototype.getClientRects=()=>[];a.w.Range.prototype.getBoundingClientRect=()=>({left:0,right:0,top:0,bottom:0,width:0,height:0});
  const textareaValue=()=>a.ui.editor.getValue().replace(/\r\n?/g,'\n');
- view.dispatch(view.state.tr.insertText('Synthetic rich ',2));const exact=a.ui.editor.getValue();raw.focus();assert.equal(raw.value,textareaValue());assert.equal(a.ui.editor.getValue(),exact,'focusing a textarea projection must not normalize original source');assert.equal(a.ui.editor.view,view);
- view.focus();view.dispatch(closeHistory(view.state.tr).insertText('saved ',3));assert.notEqual(raw.value,textareaValue());await a.ui.save();assert.equal(raw.value,textareaValue());assert.equal(a.ui.editor.view,view);undo(view.state,tr=>view.dispatch(tr));assert.equal(a.workspace.dirty,true);raw.focus();assert.equal(raw.value,textareaValue());
+ insert(view,'Synthetic rich ',2);const exact=a.ui.editor.getValue();raw.focus();assert.equal(raw.value,textareaValue());assert.equal(a.ui.editor.getValue(),exact,'focusing a textarea projection must not normalize original source');assert.equal(a.ui.editor.view,view);
+ view.s.focus();insert(view,'saved ',3);assert.notEqual(raw.value,textareaValue());await a.ui.save();assert.equal(raw.value,textareaValue());assert.equal(a.ui.editor.view,view);undo(view);assert.equal(a.workspace.dirty,true);raw.focus();assert.equal(raw.value,textareaValue());
 });
 test('rendered heading/sentence save through full draft/CAS; saved Preview reads exact rich source; quote and whole-block notes are readable, persistent and learner-excluded',async t=>{
  const a=await author(t),{w,host,workspace,s,p,api,state,calls}=a,revision=s.get('active'),learners=s.backup().learners;
@@ -80,21 +82,21 @@ test('input, selection and direction do zero workspace clones/reads/validation/r
  let reads=0,clones=0,notifications=0;const originalClone=globalThis.structuredClone,originalPeek=a.workspace.peekContent,originalGet=a.workspace.getContent;
  a.workspace.peekContent=()=>{reads++;return originalPeek();};a.workspace.getContent=()=>{reads++;return originalGet();};globalThis.structuredClone=(...args)=>{clones++;return originalClone(...args);};const unsubscribe=a.workspace.subscribe(()=>notifications++);
  const times=[],view=a.ui.editor.view,renderCalls=a.renderCalls;try{
-  for(let i=0;i<120;i++){const start=performance.now();view.dispatch(view.state.tr.insertText('שָׁלוֹם '+i+' ',2));view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc,2)));times.push(performance.now()-start);}
-  const direction=a.host.querySelector('[aria-label="Paragraph text direction"]');direction.value='rtl';direction.dispatchEvent(new a.w.Event('change',{bubbles:true}));await tick();
+  for(let i=0;i<120;i++){const start=performance.now();insert(view,'שָׁלוֹם '+i+' ',2);times.push(performance.now()-start);}
+  view.o.controls.direction.exec(view,null,{control:{args:['rtl']}});await tick();
   assert.equal(reads,0);assert.equal(clones,0);assert.equal(a.renderCalls,renderCalls);assert.equal(notifications,1);assert.equal(a.workspace.dirty,true);assert.deepEqual(a.state.raw,{},'source compilation waits for collection');
  }finally{globalThis.structuredClone=originalClone;a.workspace.peekContent=originalPeek;a.workspace.getContent=originalGet;unsubscribe();}
  times.sort((a,b)=>a-b);t.diagnostic(JSON.stringify({syntheticLessons:23,operations:120,workspaceReads:reads,workspaceClones:clones,notifications,transactionMs:{p50:times[60],p95:times[114],max:times.at(-1)},measurement:'JSDOM transaction+selection, not native input-to-paint'}));
 });
 test('Undo to initial source clears only its buffer; title work survives, and in-app page switching retains prose history',async t=>{
- const a=await author(t),view=a.ui.editor.view;view.dispatch(view.state.tr.insertText('Synthetic ',2));assert.equal(a.workspace.dirty,true);undo(view.state,tr=>view.dispatch(tr));assert.equal(a.workspace.dirty,false);assert.equal(a.ui.editor.getValue(),source);
- input(a.w,a.host.querySelector('[data-author-field=title]'),'Keep separate title');view.dispatch(closeHistory(view.state.tr).insertText('Transient ',2));undo(view.state,tr=>view.dispatch(tr));assert.equal(a.workspace.dirty,true);await a.ui.save();assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,source);
- const current=a.ui.editor.view;current.dispatch(closeHistory(current.state.tr).insertText('Keep history ',2));const selector=a.host.querySelector('[data-author-page]'),first=selector.value;selector.value=selector.options[1].value;selector.dispatchEvent(new a.w.Event('change',{bubbles:true}));await until(()=>a.ui.editor?.view&&a.ui.editor.view!==current);
- const back=a.host.querySelector('[data-author-page]');back.value=first;back.dispatchEvent(new a.w.Event('change',{bubbles:true}));await until(()=>a.ui.editor?.view?.state.doc.textContent.includes('Keep history '));const restored=a.ui.editor.view;assert.equal(undo(restored.state,tr=>restored.dispatch(tr)),true);assert.equal(a.ui.editor.getValue(),source);
+ const a=await author(t),view=a.ui.editor.view;insert(view,'Synthetic ',2);assert.equal(a.workspace.dirty,true);undo(view);assert.equal(a.workspace.dirty,false);assert.equal(a.ui.editor.getValue(),source);
+ input(a.w,a.host.querySelector('[data-author-field=title]'),'Keep separate title');insert(view,'Transient ',2);undo(view);assert.equal(a.workspace.dirty,true);await a.ui.save();assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,source);
+ const current=a.ui.editor.view;insert(current,'Keep history ',2);const selector=a.host.querySelector('[data-author-page]'),first=selector.value;selector.value=selector.options[1].value;selector.dispatchEvent(new a.w.Event('change',{bubbles:true}));await until(()=>a.ui.editor?.view&&a.ui.editor.view!==current);
+ const back=a.host.querySelector('[data-author-page]');back.value=first;back.dispatchEvent(new a.w.Event('change',{bubbles:true}));await until(()=>a.ui.editor?.view?.editor.textContent.includes('Keep history '));const restored=a.ui.editor.view;assert.equal(undo(restored),true);assert.equal(a.ui.editor.getValue(),source);
 });
 test('shared save waits for IME and delayed receipt retains newer mature model plus unsent comment',async t=>{
- const a=await author(t,{pending:true}),view=a.ui.editor.view,el=view.dom;el.dispatchEvent(new a.w.CompositionEvent('compositionstart',{bubbles:true}));view.dispatch(view.state.tr.insertText('שָׁלוֹם ',2));const promise=a.workspace.save();await tick();assert.equal(a.s.currentDraft(),null);el.dispatchEvent(new a.w.CompositionEvent('compositionend',{bubbles:true}));await tick();
- view.dispatch(view.state.tr.insertText('Newer ',3));input(a.w,a.host.querySelector('[data-author-body]'),'Retain unsent IME comment');a.release();await promise;assert.equal(a.workspace.dirty,true);assert.match(a.ui.editor.getValue(),/Newer/);assert.doesNotMatch(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,/Newer/);assert.equal(a.state.commentBody,'Retain unsent IME comment');
+ const a=await author(t,{pending:true}),view=a.ui.editor.view,el=view.editor;el.dispatchEvent(new a.w.CompositionEvent('compositionstart',{bubbles:true}));insert(view,'שָׁלוֹם ',2);const promise=a.workspace.save();await tick();assert.equal(a.s.currentDraft(),null);el.dispatchEvent(new a.w.CompositionEvent('compositionend',{bubbles:true}));await tick();
+ insert(view,'Newer ',3);input(a.w,a.host.querySelector('[data-author-body]'),'Retain unsent IME comment');a.release();await promise;assert.equal(a.workspace.dirty,true);assert.match(a.ui.editor.getValue(),/Newer/);assert.doesNotMatch(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,/Newer/);assert.equal(a.state.commentBody,'Retain unsent IME comment');
 });
 
 const rect=(top,height)=>({left:20,right:780,width:760,top,bottom:top+height,height});
@@ -113,8 +115,8 @@ test('actual six-page reader 6 → Back → 5 reveals optional summary before hi
 });
 
 test('inline Save keeps rich and Advanced input editable; submitted model receipt cannot clear newer real editor input',async t=>{
- const a=await author(t,{pending:true}),view=a.ui.editor.view;view.dispatch(view.state.tr.insertText('Submitted ',2));const sentSource=a.ui.editor.getValue(),pending=a.ui.save();await tick();
- assert.equal(a.host.querySelector('[data-author-action=save]').disabled,true);assert.equal(a.host.querySelector('[name=author-source]').disabled,false);assert.equal(view.editable,true);assert.equal(a.host.querySelector('[data-author-action=preview]').disabled,true);
- view.dispatch(closeHistory(view.state.tr).insertText('Newer ',2));input(a.w,a.host.querySelector('[data-author-body]'),'Unsent while Saving');a.release();await pending;
+ const a=await author(t,{pending:true}),view=a.ui.editor.view;insert(view,'Submitted ',2);const sentSource=a.ui.editor.getValue(),pending=a.ui.save();await tick();
+ assert.equal(a.host.querySelector('[data-author-action=save]').disabled,true);assert.equal(a.host.querySelector('[name=author-source]').disabled,false);assert.equal(!view.o.readonly,true);assert.equal(a.host.querySelector('[data-author-action=preview]').disabled,true);
+ insert(view,'Newer ',2);input(a.w,a.host.querySelector('[data-author-body]'),'Unsent while Saving');a.release();await pending;
  assert.equal(a.ui.editor.view,view);assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,sentSource);assert.match(a.ui.editor.getValue(),/Newer/);assert.equal(a.workspace.dirty,true);assert.equal(a.state.commentBody,'Unsent while Saving');assert.match(a.host.querySelector('[data-author-status]').textContent,/Newer edits remain unsaved/);
 });

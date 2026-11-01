@@ -1,3 +1,4 @@
+import {sanitizeProse} from './safe-format.js';
 // Source formatting uses Sheets' UTF-16 run offsets, including Hebrew vowel marks.
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function sheetColor(value, theme = [], seen = new Set()) {
@@ -45,13 +46,7 @@ export function richCell(value, cell, theme = []) {
 export function createLessonRenderer(marked, purifier, document) {
   // Rich course content is authored Markdown/HTML, with declarative interactions only.
   return function renderLesson(source) {
-    const clean = purifier.sanitize(marked.parse(String(source || ''), {gfm:true,breaks:false}), {
-      USE_PROFILES:{html:true}, FORBID_TAGS:['style','form','input','button','iframe','audio','video'],
-      FORBID_ATTR:['style'], ADD_ATTR:['dir'], ALLOW_DATA_ATTR:false
-    });
-    const box=document.createElement('div');box.innerHTML=clean;
-    box.querySelectorAll('a').forEach(a=>{const href=a.getAttribute('href')||'';if(!/^(https?:\/\/|\/[^/]|#)/i.test(href))a.removeAttribute('href');a.setAttribute('rel','noopener noreferrer');});
-    box.querySelectorAll('img').forEach(img=>{const src=img.getAttribute('src')||'';if(!/^(https:\/\/|\/media\/[A-Za-z0-9_./-]+$)/i.test(src)||src.includes('..')){img.remove();return;}img.setAttribute('loading','lazy');});
+    const box=document.createElement('div');box.innerHTML=sanitizeProse(marked.parse(String(source || ''), {gfm:true,breaks:false}),purifier,document);
     // One isolate spans the whole Hebrew phrase, even when Markdown makes parts bold/italic.
     const blocks=Array.from(box.querySelectorAll('p,li,h1,h2,h3,h4,h5,h6,td,th,summary,div')).filter(el=>!el.querySelector('p,li,h1,h2,h3,h4,h5,h6,td,th,div'));
     if(!blocks.length)blocks.push(box);

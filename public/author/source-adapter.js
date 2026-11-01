@@ -1,11 +1,12 @@
 // Source ranges belong to this transient field model, never to content IDs or
 // comment anchors. Parsing and source compilation run at mount/collect only.
 import {parseFragment,DOMParser as PMParser,DOMSerializer,defaultMarkdownSerializer,MarkdownSerializer} from './vendor/prosemirror.js';
-const ordinary=new Set('p h1 h2 h3 h4 h5 h6 ul ol blockquote pre hr table'.split(' '));
-const supported=new Set('p h1 h2 h3 h4 h5 h6 ul ol li blockquote pre code hr table thead tbody tr th td strong b em i s del strike a br img span input'.split(' '));
+const ordinary=new Set('p h1 h2 h3 h4 h5 h6 ul ol blockquote pre hr table div section article'.split(' '));
+const supported=new Set('p h1 h2 h3 h4 h5 h6 ul ol li blockquote pre code hr table div section article thead tbody tr th td bdi strong b em i u s del strike a br img span input sup sub'.split(' '));
 const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const nodes=n=>(n.childNodes||[]).filter(c=>c.nodeName!=='#comment');
 function supportedTree(n){const attrs=Object.fromEntries((n.attrs||[]).map(a=>[a.name,a.value]));return (!n.tagName||supported.has(n.tagName))&&!(n.attrs||[]).some(a=>a.name.startsWith('data-activity')||a.name==='contenteditable')&&(n.tagName!=='input'||attrs.type==='checkbox')&&(n.tagName!=='img'||/^\/media\//.test(attrs.src||''))&&(n.tagName!=='a'||!attrs.href||/^(https?:\/\/|mailto:|\/(?!\/)|#)/i.test(attrs.href))&&nodes(n).every(supportedTree);}
+export const supportedHTML=html=>nodes(parseFragment(html)).every(supportedTree);
 function offsetsFor(source){const map=[];let text='';for(let i=0;i<source.length;i++){map.push(i);if(source[i]==='\r'){text+='\n';if(source[i+1]==='\n')i++;}else text+=source[i];}map.push(source.length);return {text,map};}
 export function sourceRegions(source,marked){
  const out=[],{text,map}=offsetsFor(source);let cursor=0;
@@ -64,7 +65,7 @@ export function patchHTML(raw,beforeHTML,afterHTML,doc){
   }
   if(o.tagName!==b.tagName||!a.tagName)return false;
   const originalEditCount=edits.length;
-  if(b.tagName!==a.tagName&&!(/^(p|h[1-6])$/.test(b.tagName)&&/^(p|h[1-6])$/.test(a.tagName)))return false;
+  if(b.tagName!==a.tagName&&!(/^(p|h[1-6]|ul|ol|blockquote|pre|div|section|article|table)$/.test(b.tagName)&&/^(p|h[1-6]|ul|ol|blockquote|pre|div|section|article|table)$/.test(a.tagName)))return false;
   if(loc.startTag&&(b.tagName!==a.tagName||JSON.stringify(b.attrs)!==JSON.stringify(a.attrs))){
    let opening=raw.slice(loc.startTag.startOffset,loc.startTag.endOffset).replace(/^<[^\s/>]+/,'<'+a.tagName);
    const beforeAttrs=Object.fromEntries((b.attrs||[]).map(x=>[x.name,x.value])),afterAttrs=Object.fromEntries((a.attrs||[]).map(x=>[x.name,x.value]));

@@ -1,0 +1,3 @@
+# Keep the pinned supplied Jodit distribution byte-stable on Windows.
+public/author/vendor/jodit.min.js text eol=lf
+public/author/vendor/jodit.min.css text eol=lf

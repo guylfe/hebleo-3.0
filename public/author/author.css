@@ -58,3 +58,14 @@
 .lesson-publication-dialog .publication-token{overflow-wrap:anywhere;font-size:12px}
 .lesson-publication-dialog input[type=checkbox]{width:auto;margin-inline-end:8px}
 .lesson-publication-dialog [hidden]{display:none!important}
+
+/* Supplied Jodit classic theme is the approved local prose-editor variant. */
+.inline-author .jodit-container {color:var(--ink);font:inherit;border-radius:0}
+.inline-author .jodit-wysiwyg {font:inherit;line-height:1.5;outline:none!important;border-radius:0;background:var(--paper,#fff)!important;white-space:pre-wrap}
+.inline-author .jodit-toolbar__box {border-radius:0}
+.inline-author .jodit-container button,.jodit-popup button,.jodit-dialog button {min-height:0;letter-spacing:normal;text-transform:none}
+.inline-author .jodit-container .jodit-toolbar-button__button,.inline-author .jodit-container .jodit-toolbar-button__trigger {padding:0;min-width:0;margin:0;border-radius:0;background:transparent;color:inherit;box-shadow:none}
+.inline-author .jodit-container input,.inline-author .jodit-container select {width:auto;min-height:0;margin:0}
+.inline-author .jodit-wysiwyg table {border-collapse:collapse}
+.inline-author .jodit-wysiwyg td,.inline-author .jodit-wysiwyg th {border:1px solid var(--line);min-width:24px;padding:6px}
+.inline-author .jodit-wysiwyg [data-retained] {user-select:none;white-space:normal}
