@@ -65,7 +65,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else if(url.pathname==='/api/reports')value=store.reports(user);
     else if(url.pathname==='/api/studio/impact'){store.requireAuthor(user);value=store.workspaceImpact(input);}
     else if(url.pathname==='/api/studio/dependencies'){store.requireAuthor(user);value=store.exerciseDependencies(input);}
-    else if(url.pathname==='/api/studio/draft'){store.requireAuthor(user);value=store.stage(input);}
+    else if(url.pathname==='/api/studio/draft'){store.requireAuthor(user);value=store.stage(input,undefined,{returnMinimal:options.headers?.Prefer==='return=minimal'});}
     else if(url.pathname==='/api/studio/publish'){store.requireAuthor(user);value=store.publish(input.baseRevisionId,input.draftToken);}
     else if(url.pathname==='/api/studio/publish-lesson/review'){store.requireAuthor(user);value=store.reviewLessonPublication(input);}
     else if(url.pathname==='/api/studio/publish-lesson'){store.requireAuthor(user);value=store.publishLesson(input);}
@@ -599,7 +599,7 @@ test('Studio guided exercise and lesson forms save private drafts, reload discar
   edit(w,exerciseForm().elements.prompt,draftPrompt);submit(w,exerciseForm());
   await settled(()=>store.currentDraft()?.content.exercises.find(e=>e.id==='ex-1-recognize').prompt===draftPrompt&&doc.querySelector('[data-action="rehearse"]:not([disabled])'));
   assert.deepEqual(store.snapshot(),published);assert.equal(store.get('active'),revision);
-  assert.match(doc.querySelector('.studio-preview').textContent,/ex-1-recognize/);
+  assert.equal(doc.querySelector('.studio-preview'),null,'Save invalidates old impact counts');doc.querySelector('[data-action="studio-task"][data-value="versions"]').click();await settled(()=>doc.querySelector('.studio-preview'));assert.match(doc.querySelector('.studio-preview').textContent,/ex-1-recognize/);doc.querySelector('[data-action="studio-task"][data-value="lesson"]').click();
   edit(w,exerciseForm().elements.prompt,'Unsaved edit');click(doc,'studio-reload');await settled(()=>doc.querySelector('#studio-departure'));doc.querySelector('[data-departure-discard]').click();
   await settled(()=>exerciseForm()?.elements.prompt.value===draftPrompt);
   const saved=store.currentDraft();stageDraft(store,c=>{c.lessons[0].title='Synthetic title from another tab';});const otherToken=store.currentDraft().draftToken;
@@ -747,7 +747,8 @@ test('A rehearsal stops on a changed draft or a newer publication revision, writ
 // Holds this tab's post-save workspace reload (GET /api/studio) and records Studio write request bodies.
 function holdStudioReload(w){
   const original=w.fetch,bodies=[];let gate=null;
-  w.fetch=async(path,options={})=>{const pathname=new URL(path,w.location.href).pathname;if(options.body&&pathname.startsWith('/api/studio/'))bodies.push({path:pathname,body:JSON.parse(options.body)});if(gate&&pathname==='/api/studio'){const held=gate;held.waiting=true;await held.promise;}return original(path,options);};
+  // Hold the actual POST receipt after server commit, not a removed GET reload.
+  w.fetch=async(path,options={})=>{const pathname=new URL(path,w.location.href).pathname;if(options.body&&pathname.startsWith('/api/studio/'))bodies.push({path:pathname,body:JSON.parse(options.body)});const response=await original(path,options);if(gate&&pathname==='/api/studio/draft'){const held=gate;held.waiting=true;await held.promise;}return response;};
   return {bodies,hold(){let release;const promise=new Promise(r=>release=r);gate={promise,release,waiting:false};},release(){const held=gate;gate=null;held?.release();},get waiting(){return Boolean(gate?.waiting);}};
 }
 const publishBody=reload=>reload.bodies.filter(b=>b.path==='/api/studio/publish-lesson').at(-1)?.body;

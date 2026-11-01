@@ -35,7 +35,8 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  function materialize(){if(editorTouched&&editorKey){state.raw[editorKey]=editor.getValue();}}
  function retireCleanSource(){if(editorTouched&&!editorChanged&&!dirtyRaw.has(editorKey)){delete state.raw[editorKey];editorTouched=false;}}
  function retainSession(){if(editor&&editorKey){materialize();sessions.set(editorKey,editor.snapshot?.());}}
- function applyRaw(next){materialize();next=structuredClone(next);for(const [key,value] of Object.entries(state.raw)){const [componentId,pageId,field]=JSON.parse(key);try{next=patchAuthorField(next,{lessonId,componentId,pageId},field,value,{clone:false});}catch(error){throw Object.assign(error,{authorField:field,authorTarget:{componentId,pageId}});}}return next;}
+ // Callers supply a detached owner snapshot; patch it once.
+ function applyRaw(next){materialize();for(const [key,value] of Object.entries(state.raw)){const [componentId,pageId,field]=JSON.parse(key);try{next=patchAuthorField(next,{lessonId,componentId,pageId},field,value,{clone:false});}catch(error){throw Object.assign(error,{authorField:field,authorTarget:{componentId,pageId}});}}return next;}
  function flush(){materialize();const next=applyRaw(contentWithoutCollect());workspace.replace(next,{changed:false});retireCleanSource();snapshot=next;return next;}
  // Avoid recursively invoking our own collector.
  let collecting=false;

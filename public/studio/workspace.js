@@ -2,7 +2,10 @@
 import {deriveLessonIndices,validateCurriculum,validateLessonComposition} from '../course.js';
 import {validateContentIdentities} from '../content-identity.js';
 export function prepareStudioContent(content){
- const next=structuredClone(content);next.lessons=next.lessons.map(l=>deriveLessonIndices(next,l));
+ return prepareCollectedContent(structuredClone(content));
+}
+function prepareCollectedContent(next){
+ next.lessons=next.lessons.map(l=>deriveLessonIndices(next,l));
  validateContentIdentities(next);validateCurriculum(next);for(const l of next.lessons)validateLessonComposition(next,l);return next;
 }
 export function createStudioWorkspace({content,publishedContent,baseRevisionId,expectedDraftToken=null,saveDraft,getWorkspaceImpact}){
@@ -77,9 +80,10 @@ export function createStudioWorkspace({content,publishedContent,baseRevisionId,e
    pending=Promise.resolve().then(async()=>{
     try{
      for(const settle of settlers)await settle();
-     const receipts=[],next=prepareStudioContent(collect(receipts)),serial=version;
-     const impact=getWorkspaceImpact?await getWorkspaceImpact({baseRevisionId,expectedDraftToken:token,content:next}):null;
-     const result=await saveDraft({baseRevisionId,expectedDraftToken:token,content:next,...(impact?.candidateDraftToken?{reviewedDraftToken:impact.candidateDraftToken}:{})});
+     const receipts=[],next=prepareCollectedContent(collect(receipts)),serial=version;
+     // Private Save validates the full D, but does not review publication impact.
+     // Selected publication owns its own dependency/eligibility proof.
+     const result=await saveDraft({baseRevisionId,expectedDraftToken:token,content:next});
      baseline=next;publicationCache.clear();if(version===serial){value=next;dirty=false;buffers.clear();}token=result.draftToken;for(const acknowledge of receipts)acknowledge();notify();return result;
     }catch(error){if(error.status===403)revoked=true;throw error;}
     finally{pending=null;pendingKind=null;notify();}
