@@ -1,0 +1,3 @@
+
+> hebleo-3-local-demo@0.1.0 build:editor
+> node scripts/build-editor-vendor.mjs
