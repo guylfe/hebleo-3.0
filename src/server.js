@@ -67,7 +67,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           // Backups carry every referenced revision, so restore gets a larger bound than ordinary edits.
           // The preserved 23-lesson source workspace exceeds 26 MB. Full-workspace
           // CAS/impact must accept it without weakening the smaller import bounds.
-          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? BACKUP_BYTE_LIMIT : ['/api/studio/draft','/api/studio/impact'].includes(url.pathname)?50000000:url.pathname==='/api/studio/media/import'?30000000:url.pathname.startsWith('/api/studio/sources/')||['/api/studio/lexical/import-preview','/api/studio/text/import-preview','/api/studio/text/import'].includes(url.pathname)?20000000:750000;
+          const chunks = []; let bytes = 0; const limit = url.pathname === '/api/restore' ? BACKUP_BYTE_LIMIT : ['/api/studio/draft','/api/studio/impact'].includes(url.pathname)?50000000:url.pathname==='/api/studio/media/import'?30000000:url.pathname==='/api/studio/media/approve-private-image-use'?4096:url.pathname.startsWith('/api/studio/sources/')||['/api/studio/lexical/import-preview','/api/studio/text/import-preview','/api/studio/text/import'].includes(url.pathname)?20000000:750000;
           for await (const chunk of req.iterator({destroyOnReturn:false})) { bytes += chunk.length; if (bytes > limit){req.resume();throw new DomainError('Request exceeds the local import limit.', 413);} chunks.push(chunk); }
           let input; try { input = parseStrictJSON(Buffer.concat(chunks).toString()); } catch { throw new DomainError('Malformed JSON.'); }
           if (!input || typeof input !== 'object' || Array.isArray(input)) throw new DomainError('Expected a JSON object.');
@@ -75,6 +75,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           if(url.pathname==='/api/studio/author-comments')return json(200,store.authorReview.create(userId,input));
           const authorStatus=/^\/api\/studio\/author-comments\/([a-f0-9-]+)\/status$/.exec(url.pathname);
           if(authorStatus)return json(200,store.authorReview.status(userId,authorStatus[1],input));
+          if(url.pathname==='/api/studio/media/approve-private-image-use')return json(200,store.media.approvePrivateImageUse(userId,input));
           if(url.pathname==='/api/studio/media/import')return json(200,store.media.importAsset(userId,input));
           if(url.pathname==='/api/studio/lexical/import-preview'){try{return json(200,adaptConsolidatedWorkbook(input));}catch(error){throw new DomainError(error.message);}}
           if(url.pathname==='/api/studio/lexical/migration-preview')return json(200,store.lexicalMigrationPreview(input));

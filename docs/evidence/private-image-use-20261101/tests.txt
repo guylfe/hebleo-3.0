@@ -1,0 +1,899 @@
+TAP version 13
+# Subtest: lossless immutable tree changes cover every JSON field, array edits, deletions, nulls and reserved keys
+ok 1 - lossless immutable tree changes cover every JSON field, array edits, deletions, nulls and reserved keys
+  ---
+  duration_ms: 6.7634
+  type: 'test'
+  ...
+# Subtest: comment contexts reconstruct complete immutable workspaces after later draft changes and legacy backup conversion
+ok 2 - comment contexts reconstruct complete immutable workspaces after later draft changes and legacy backup conversion
+  ---
+  duration_ms: 190.2919
+  type: 'test'
+  ...
+# Subtest: revision reuse is deterministic and one-to-one even for identical-content histories and repeated old-backup restores
+ok 3 - revision reuse is deterministic and one-to-one even for identical-content histories and repeated old-backup restores
+  ---
+  duration_ms: 60.7018
+  type: 'test'
+  ...
+# Subtest: large draft-only JSON is shared immutably across six saved tokens, with missing, corrupted or unsupported chunks rejected atomically
+ok 4 - large draft-only JSON is shared immutably across six saved tokens, with missing, corrupted or unsupported chunks rejected atomically
+  ---
+  duration_ms: 699.9633
+  type: 'test'
+  ...
+# Subtest: malformed deltas, base hashes, draft tokens, UTF-16 quotes, receipts, audit and mismatched readers reject before table or sequence writes over HTTP
+ok 5 - malformed deltas, base hashes, draft tokens, UTF-16 quotes, receipts, audit and mismatched readers reject before table or sequence writes over HTTP
+  ---
+  duration_ms: 592.8554
+  type: 'test'
+  ...
+# Subtest: legacy reader 9 migration is lossless, atomic on invalid namespace, and marker-only for reader 8 without review
+ok 6 - legacy reader 9 migration is lossless, atomic on invalid namespace, and marker-only for reader 8 without review
+  ---
+  duration_ms: 233.461
+  type: 'test'
+  ...
+# Subtest: export validates the actual compact UTF-8 file and refuses oversized backup before sending any artifact; shared client/server bound is enforced
+ok 7 - export validates the actual compact UTF-8 file and refuses oversized backup before sending any artifact; shared client/server bound is enforced
+  ---
+  duration_ms: 1420.8892
+  type: 'test'
+  ...
+# Subtest: generic DOM adapter no-op, exact UTF16/entity/CRLF patch, unknown wrappers and opaque boundaries
+ok 8 - generic DOM adapter no-op, exact UTF16/entity/CRLF patch, unknown wrappers and opaque boundaries
+  ---
+  duration_ms: 365.423
+  type: 'test'
+  ...
+# Subtest: strict shared CSS grammar retains bounded visual formatting and strips malicious paste in author and learner
+ok 9 - strict shared CSS grammar retains bounded visual formatting and strips malicious paste in author and learner
+  ---
+  duration_ms: 274.0098
+  type: 'test'
+  ...
+# Subtest: actual pinned Jodit supplied toolbar, HTML/Markdown visual mounting, no-op exact source and immutable acknowledgement
+ok 10 - actual pinned Jodit supplied toolbar, HTML/Markdown visual mounting, no-op exact source and immutable acknowledgement
+  ---
+  duration_ms: 886.9795
+  type: 'test'
+  ...
+# Subtest: actual Jodit Markdown starts visually; formatting persists with same UTF16 projection, safe paste and retained source failures
+ok 11 - actual Jodit Markdown starts visually; formatting persists with same UTF16 projection, safe paste and retained source failures
+  ---
+  duration_ms: 377.0471
+  type: 'test'
+  ...
+# Subtest: composition wait and retained component snapshot preserve real Jodit selection/history across page reuse
+ok 12 - composition wait and retained component snapshot preserve real Jodit selection/history across page reuse
+  ---
+  duration_ms: 462.6357
+  type: 'test'
+  ...
+# Subtest: supplied toolbar commands persist formatting with exact projection; safe styles survive draft, scoped publication and recovery
+ok 13 - supplied toolbar commands persist formatting with exact projection; safe styles survive draft, scoped publication and recovery
+  ---
+  duration_ms: 656.3443
+  type: 'test'
+  ...
+# Subtest: structural Enter preserves authored wrapper attributes; metadata loss refuses compilation with recoverable DOM intact
+ok 14 - structural Enter preserves authored wrapper attributes; metadata loss refuses compilation with recoverable DOM intact
+  ---
+  duration_ms: 114.0041
+  type: 'test'
+  ...
+# Subtest: actual imported private-approved image inserts with alt, saves, publishes synthetically and recovers immutable media
+ok 15 - actual imported private-approved image inserts with alt, saves, publishes synthetically and recovers immutable media
+  ---
+  duration_ms: 584.2851
+  type: 'test'
+  ...
+# Subtest: normal lists/indent/direction and supplied table picker/edit commands compile safe persisted structures
+ok 16 - normal lists/indent/direction and supplied table picker/edit commands compile safe persisted structures
+  ---
+  duration_ms: 263.8118
+  type: 'test'
+  ...
+# Subtest: unsupported inline markup, authored FEFF/checklists and animation remain byte-exact retained boundaries beside editable prose
+ok 17 - unsupported inline markup, authored FEFF/checklists and animation remain byte-exact retained boundaries beside editable prose
+  ---
+  duration_ms: 40.3274
+  type: 'test'
+  ...
+# Subtest: component Enter/list continuation and boundary-adjacent deletion guards keep source recoverable
+ok 18 - component Enter/list continuation and boundary-adjacent deletion guards keep source recoverable
+  ---
+  duration_ms: 153.0092
+  type: 'test'
+  ...
+# Subtest: disk publication retains all 23 saved lessons, raw draft bytes, old contexts, learner pins and later saves
+ok 19 - disk publication retains all 23 saved lessons, raw draft bytes, old contexts, learner pins and later saves
+  ---
+  duration_ms: 320.7736
+  type: 'test'
+  ...
+# Subtest: no-op creates no revision, media, draft or sequence writes
+ok 20 - no-op creates no revision, media, draft or sequence writes
+  ---
+  duration_ms: 109.4351
+  type: 'test'
+  ...
+# Subtest: changed referenced words and shared exercises require exact inclusion and show downstream effects
+ok 21 - changed referenced words and shared exercises require exact inclusion and show downstream effects
+  ---
+  duration_ms: 159.1987
+  type: 'test'
+  ...
+# Subtest: new shared exercise binding closes over a word not listed by the lesson
+ok 22 - new shared exercise binding closes over a word not listed by the lesson
+  ---
+  duration_ms: 141.3147
+  type: 'test'
+  ...
+# Subtest: tag selector addition requires explicit objects and exact membership
+ok 23 - tag selector addition requires explicit objects and exact membership
+  ---
+  duration_ms: 126.5255
+  type: 'test'
+  ...
+# Subtest: tag selector removal requires explicit objects and exact membership
+ok 24 - tag selector removal requires explicit objects and exact membership
+  ---
+  duration_ms: 124.0044
+  type: 'test'
+  ...
+# Subtest: tag selector exclusion requires explicit objects and exact membership
+ok 25 - tag selector exclusion requires explicit objects and exact membership
+  ---
+  duration_ms: 125.5195
+  type: 'test'
+  ...
+# Subtest: tag closure includes simultaneous new IDs and removed old matches, including selected-lesson prerequisites
+ok 26 - tag closure includes simultaneous new IDs and removed old matches, including selected-lesson prerequisites
+  ---
+  duration_ms: 218.7854
+  type: 'test'
+  ...
+# Subtest: cross-lesson membership and shared derived-index rewrites block instead of broadening scope
+ok 27 - cross-lesson membership and shared derived-index rewrites block instead of broadening scope
+  ---
+  duration_ms: 149.7224
+  type: 'test'
+  ...
+# Subtest: new lesson, prerequisite and text eligibility block with concrete scope reasons
+ok 28 - new lesson, prerequisite and text eligibility block with concrete scope reasons
+  ---
+  duration_ms: 145.5329
+  type: 'test'
+  ...
+# Subtest: required lexical representation changes block; unrelated pack data stays private
+ok 29 - required lexical representation changes block; unrelated pack data stays private
+  ---
+  duration_ms: 149.5307
+  type: 'test'
+  ...
+# Subtest: source approval for the full draft cannot authorize a selected candidate; guard reruns inside transaction
+ok 30 - source approval for the full draft cannot authorize a selected candidate; guard reruns inside transaction
+  ---
+  duration_ms: 167.2743
+  type: 'test'
+  ...
+# Subtest: strict missing media and pending real media never publish
+ok 31 - strict missing media and pending real media never publish
+  ---
+  duration_ms: 103.7212
+  type: 'test'
+  ...
+# Subtest: selector removals never delete shared objects and collection order cannot silently change
+ok 32 - selector removals never delete shared objects and collection order cannot silently change
+  ---
+  duration_ms: 111.0569
+  type: 'test'
+  ...
+# Subtest: review scope binds dependency choices and external media bytes; later changes cannot commit
+ok 33 - review scope binds dependency choices and external media bytes; later changes cannot commit
+  ---
+  duration_ms: 212.9895
+  type: 'test'
+  ...
+# Subtest: CAS, forged token, changed scope and unknown or duplicate fields reject with zero writes over HTTP
+ok 34 - CAS, forged token, changed scope and unknown or duplicate fields reject with zero writes over HTTP
+  ---
+  duration_ms: 393.2522
+  type: 'test'
+  ...
+# Subtest: injected failure after media rolls back every table and sqlite_sequence on disk
+ok 35 - injected failure after media rolls back every table and sqlite_sequence on disk
+  ---
+  duration_ms: 94.682
+  type: 'test'
+  ...
+# Subtest: injected failure after revision rolls back every table and sqlite_sequence on disk
+ok 36 - injected failure after revision rolls back every table and sqlite_sequence on disk
+  ---
+  duration_ms: 98.2882
+  type: 'test'
+  ...
+# Subtest: injected failure after active rolls back every table and sqlite_sequence on disk
+ok 37 - injected failure after active rolls back every table and sqlite_sequence on disk
+  ---
+  duration_ms: 95.2152
+  type: 'test'
+  ...
+# Subtest: injected failure after rebase rolls back every table and sqlite_sequence on disk
+ok 38 - injected failure after rebase rolls back every table and sqlite_sequence on disk
+  ---
+  duration_ms: 113.1847
+  type: 'test'
+  ...
+# Subtest: HTTP dropped-response retry cannot duplicate; compact recovery preserves rebased drafts, contexts, media and pins
+ok 39 - HTTP dropped-response retry cannot duplicate; compact recovery preserves rebased drafts, contexts, media and pins
+  ---
+  duration_ms: 867.028
+  type: 'test'
+  ...
+# Subtest: RR-MED-05 retained malformed aliases reject installed export/status and persistent recovery without writes
+ok 40 - RR-MED-05 retained malformed aliases reject installed export/status and persistent recovery without writes
+  ---
+  duration_ms: 240.2005
+  type: 'test'
+  ...
+# Subtest: valid unused and historical aliases export/restore exact bytes alongside pending draft and immutable learner grade
+ok 41 - valid unused and historical aliases export/restore exact bytes alongside pending draft and immutable learner grade
+  ---
+  duration_ms: 118.6825
+  type: 'test'
+  ...
+# Subtest: RR-MED-05 missing retained bytes never fall back to a different external file or rebind an exported alias
+ok 42 - RR-MED-05 missing retained bytes never fall back to a different external file or rebind an exported alias
+  ---
+  duration_ms: 69.4302
+  type: 'test'
+  ...
+# Subtest: new external paths export exact bytes read-only, while intact retained aliases reject replacement and recover original bytes
+ok 43 - new external paths export exact bytes read-only, while intact retained aliases reject replacement and recover original bytes
+  ---
+  duration_ms: 90.9463
+  type: 'test'
+  ...
+# Subtest: QA-REC-01/RR-MED-02 HTTP rejects document-to-audio before blob/history/receipt writes
+ok 44 - QA-REC-01/RR-MED-02 HTTP rejects document-to-audio before blob/history/receipt writes
+  ---
+  duration_ms: 181.5262
+  type: 'test'
+  ...
+# Subtest: QA-REC-01/RR-MED-02 HTTP rejects audio-to-document before blob/history/receipt writes
+ok 45 - QA-REC-01/RR-MED-02 HTTP rejects audio-to-document before blob/history/receipt writes
+  ---
+  duration_ms: 70.0558
+  type: 'test'
+  ...
+# Subtest: same-kind revisions retain old byte URLs and consistent receipts across offline restore
+ok 46 - same-kind revisions retain old byte URLs and consistent receipts across offline restore
+  ---
+  duration_ms: 20.5323
+  type: 'test'
+  ...
+# Subtest: QA-REC-02 advertised 20 MB HTTP upload and full recovery pass; oversize/malformed encodings reject without writes
+ok 47 - QA-REC-02 advertised 20 MB HTTP upload and full recovery pass; oversize/malformed encodings reject without writes
+  ---
+  duration_ms: 2904.4967
+  type: 'test'
+  ...
+# Subtest: RR-MED-01 ordinary Save aliases retain pending real-byte approval at actual HTTP Publish
+ok 48 - RR-MED-01 ordinary Save aliases retain pending real-byte approval at actual HTTP Publish
+  ---
+  duration_ms: 62.5376
+  type: 'test'
+  ...
+# Subtest: RR-MED-01 restored aliases retain pending real-byte approval at actual HTTP Publish
+ok 49 - RR-MED-01 restored aliases retain pending real-byte approval at actual HTTP Publish
+  ---
+  duration_ms: 80.0207
+  type: 'test'
+  ...
+# Subtest: RR-MED-01 a synthetic duplicate ID cannot relabel pending bytes; exact synthetic owner permit remains valid for an alias
+ok 50 - RR-MED-01 a synthetic duplicate ID cannot relabel pending bytes; exact synthetic owner permit remains valid for an alias
+  ---
+  duration_ms: 83.1068
+  type: 'test'
+  ...
+# Subtest: RR-MED-03 restore rejects every unusable unplaced historical managed URL before writes
+ok 51 - RR-MED-03 restore rejects every unusable unplaced historical managed URL before writes
+  ---
+  duration_ms: 36.0203
+  type: 'test'
+  ...
+# Subtest: RR-MED-04 restore reconciles receipt owner/payload/result with exact surviving history before writes
+ok 52 - RR-MED-04 restore reconciles receipt owner/payload/result with exact surviving history before writes
+  ---
+  duration_ms: 57.0386
+  type: 'test'
+  ...
+# Subtest: damaged in-store receipt cannot return invented metadata even when its library revision survives
+ok 53 - damaged in-store receipt cannot return invented metadata even when its library revision survives
+  ---
+  duration_ms: 10.1389
+  type: 'test'
+  ...
+# Subtest: metadata-only mount renders pending provenance, limits and remote/missing/replaced warnings without playback, polling or Stage/Publish
+ok 54 - metadata-only mount renders pending provenance, limits and remote/missing/replaced warnings without playback, polling or Stage/Publish
+  ---
+  duration_ms: 135.4559
+  type: 'test'
+  ...
+# Subtest: old/current revisions select exact copied immutable pins, inert labels and URL/JSON, without sibling mutations
+ok 55 - old/current revisions select exact copied immutable pins, inert labels and URL/JSON, without sibling mutations
+  ---
+  duration_ms: 123.5328
+  type: 'test'
+  ...
+# Subtest: new asset ID only on explicit Add; import includes exact provenance/MIME/CAS/base64 and no fabricated approval or automatic reuse
+ok 56 - new asset ID only on explicit Add; import includes exact provenance/MIME/CAS/base64 and no fabricated approval or automatic reuse
+  ---
+  duration_ms: 95.9182
+  type: 'test'
+  ...
+# Subtest: blank provenance, oversized/empty files and kind/MIME mismatch refuse import and retain metadata while clearing chooser
+ok 57 - blank provenance, oversized/empty files and kind/MIME mismatch refuse import and retain metadata while clearing chooser
+  ---
+  duration_ms: 275.8481
+  type: 'test'
+  ...
+# Subtest: CAS failure preserves title/provenance/prior and manual refresh never silently rebases; explicit same-asset Revise updates only the prior
+ok 58 - CAS failure preserves title/provenance/prior and manual refresh never silently rebases; explicit same-asset Revise updates only the prior
+  ---
+  duration_ms: 85.0656
+  type: 'test'
+  ...
+# Subtest: explicit retry of same bytes/metadata preserves operation ID without retaining bytes in metadata library
+ok 59 - explicit retry of same bytes/metadata preserves operation ID without retaining bytes in metadata library
+  ---
+  duration_ms: 111.1042
+  type: 'test'
+  ...
+# Subtest: corrupt library response blocks old revision reuse; source/auth outages retain form and prior metadata without success claims
+ok 60 - corrupt library response blocks old revision reuse; source/auth outages retain form and prior metadata without success claims
+  ---
+  duration_ms: 59.717
+  type: 'test'
+  ...
+# Subtest: pending file read/import disposal suppresses callbacks, clears transferred buffer and never remounts
+ok 61 - pending file read/import disposal suppresses callbacks, clears transferred buffer and never remounts
+  ---
+  duration_ms: 171.1836
+  type: 'test'
+  ...
+# Subtest: library asset/revision paging preserves old immutable selection and bounds metadata DOM
+ok 62 - library asset/revision paging preserves old immutable selection and bounds metadata DOM
+  ---
+  duration_ms: 175.8846
+  type: 'test'
+  ...
+# Subtest: unexpected response credential metadata never enters selected JSON, markup or errors
+ok 63 - unexpected response credential metadata never enters selected JSON, markup or errors
+  ---
+  duration_ms: 103.805
+  type: 'test'
+  ...
+# Subtest: actual installed media HTTP import through UI verifies synthetic signatures/CAS and leaves every learner/draft/content unchanged
+ok 64 - actual installed media HTTP import through UI verifies synthetic signatures/CAS and leaves every learner/draft/content unchanged
+  ---
+  duration_ms: 236.9008
+  type: 'test'
+  ...
+# Subtest: managed media import retains immutable revisions, exact bytes, replay and explicit pending provenance
+ok 65 - managed media import retains immutable revisions, exact bytes, replay and explicit pending provenance
+  ---
+  duration_ms: 23.6865
+  type: 'test'
+  ...
+# Subtest: all retained local bytes and active/draft/history references restore and rollback without a filesystem or source fetch
+ok 66 - all retained local bytes and active/draft/history references restore and rollback without a filesystem or source fetch
+  ---
+  duration_ms: 107.754
+  type: 'test'
+  ...
+# Subtest: actual HTTP import/playback/ranges and PDF recovery serve only verified immutable bytes
+ok 67 - actual HTTP import/playback/ranges and PDF recovery serve only verified immutable bytes
+  ---
+  duration_ms: 119.3591
+  type: 'test'
+  ...
+# Subtest: legacy local files are pinned by exact aliases; replacement blocks recovery/publication while prior bytes remain
+ok 68 - legacy local files are pinned by exact aliases; replacement blocks recovery/publication while prior bytes remain
+  ---
+  duration_ms: 64.88
+  type: 'test'
+  ...
+# Subtest: legacy aliases recover exact URLs and bytes when original files are absent
+ok 69 - legacy aliases recover exact URLs and bytes when original files are absent
+  ---
+  duration_ms: 36.9073
+  type: 'test'
+  ...
+# Subtest: corrupt/missing media and future versions reject restore before every table/sequence write
+ok 70 - corrupt/missing media and future versions reject restore before every table/sequence write
+  ---
+  duration_ms: 78.0585
+  type: 'test'
+  ...
+# Subtest: legacy v1/v2 backups are explicitly unbound; media state cannot masquerade under an old reader marker
+ok 71 - legacy v1/v2 backups are explicitly unbound; media state cannot masquerade under an old reader marker
+  ---
+  duration_ms: 54.1052
+  type: 'test'
+  ...
+# Subtest: media failure inside restore transaction rolls back source/content/library together
+ok 72 - media failure inside restore transaction rolls back source/content/library together
+  ---
+  duration_ms: 45.025
+  type: 'test'
+  ...
+# Subtest: remote media remains explicitly reference-only and is never fetched or claimed recovered
+ok 73 - remote media remains explicitly reference-only and is never fetched or claimed recovered
+  ---
+  duration_ms: 22.0677
+  type: 'test'
+  ...
+# Subtest: older backup restore preserves historical-only media and private immutable draft media through repeated HTTP recovery
+ok 74 - older backup restore preserves historical-only media and private immutable draft media through repeated HTTP recovery
+  ---
+  duration_ms: 393.1979
+  type: 'test'
+  ...
+# Subtest: conflicting recovered aliases reject before any retained history or media write
+ok 75 - conflicting recovered aliases reject before any retained history or media write
+  ---
+  duration_ms: 36.3428
+  type: 'test'
+  ...
+# Subtest: real media import remains pending and cannot supply canonical approval through a legacy Publish
+ok 76 - real media import remains pending and cannot supply canonical approval through a legacy Publish
+  ---
+  duration_ms: 28.5914
+  type: 'test'
+  ...
+# Subtest: OAuth setup DTO verifies the current supported client route and exact loopback callback without exposing credentials
+ok 77 - OAuth setup DTO verifies the current supported client route and exact loopback callback without exposing credentials
+  ---
+  duration_ms: 2.4227
+  type: 'test'
+  ...
+# Subtest: OAuth consent denial consumes only its pending request and retains prior protected config/content
+ok 78 - OAuth consent denial consumes only its pending request and retains prior protected config/content
+  ---
+  duration_ms: 3.3471
+  type: 'test'
+  ...
+# Subtest: real import → status DTO → explicit private approval → exact selection → required alt → insertion; nothing saves implicitly
+ok 79 - real import → status DTO → explicit private approval → exact selection → required alt → insertion; nothing saves implicitly
+  ---
+  duration_ms: 303.1991
+  type: 'test'
+  ...
+# Subtest: lost approval response retries the identical operation once; failure retains alt and never inserts
+ok 80 - lost approval response retries the identical operation once; failure retains alt and never inserts
+  ---
+  duration_ms: 164.2212
+  type: 'test'
+  ...
+# Subtest: stale chooser approval refuses then explicit refresh reviews the new head; previous revision remains exact
+ok 81 - stale chooser approval refuses then explicit refresh reviews the new head; previous revision remains exact
+  ---
+  duration_ms: 196.4447
+  type: 'test'
+  ...
+# Subtest: cancel during an explicit pending approval ignores late reply; reopening uses the persisted receipt
+ok 82 - cancel during an explicit pending approval ignores late reply; reopening uses the persisted receipt
+  ---
+  duration_ms: 152.891
+  type: 'test'
+  ...
+# Subtest: missing bytes after selection block Insert on the fresh server check and preserve text/alt
+ok 83 - missing bytes after selection block Insert on the fresh server check and preserve text/alt
+  ---
+  duration_ms: 102.9522
+  type: 'test'
+  ...
+# Subtest: canonical-approved fake DTO, remote image URL and mismatched private pin do not enable insertion
+ok 84 - canonical-approved fake DTO, remote image URL and mismatched private pin do not enable insertion
+  ---
+  duration_ms: 164.554
+  type: 'test'
+  ...
+# Subtest: preview failure disables approval/selection until explicit refresh; unavailable API does not fabricate candidates
+ok 85 - preview failure disables approval/selection until explicit refresh; unavailable API does not fabricate candidates
+  ---
+  duration_ms: 116.6198
+  type: 'test'
+  ...
+# Subtest: real image status pagination bounds previews without silently approving imports
+ok 86 - real image status pagination bounds previews without silently approving imports
+  ---
+  duration_ms: 460.5058
+  type: 'test'
+  ...
+# Subtest: HTTP import/status never approve; explicit private consent preserves canonical pending revision, frozen receipt, bytes and unrelated state
+ok 87 - HTTP import/status never approve; explicit private consent preserves canonical pending revision, frozen receipt, bytes and unrelated state
+  ---
+  duration_ms: 166.1108
+  type: 'test'
+  ...
+# Subtest: HTTP permission, strict schema, bounds, origin and forged authority reject without any write
+ok 88 - HTTP permission, strict schema, bounds, origin and forged authority reject without any write
+  ---
+  duration_ms: 217.6475
+  type: 'test'
+  ...
+# Subtest: HTTP exact asset, revision, SHA, MIME, length, URL and CAS pins cannot be substituted
+ok 89 - HTTP exact asset, revision, SHA, MIME, length, URL and CAS pins cannot be substituted
+  ---
+  duration_ms: 215.8297
+  type: 'test'
+  ...
+# Subtest: HTTP concurrent replay is one audited write; changed operation and competing duplicate approval conflict
+ok 90 - HTTP concurrent replay is one audited write; changed operation and competing duplicate approval conflict
+  ---
+  duration_ms: 70.1782
+  type: 'test'
+  ...
+# Subtest: CAS detects newer imports; approval never propagates to another revision and exact replay survives history growth
+ok 91 - CAS detects newer imports; approval never propagates to another revision and exact replay survives history growth
+  ---
+  duration_ms: 131.2832
+  type: 'test'
+  ...
+# Subtest: missing bytes block new approval, replay and status atomically
+ok 92 - missing bytes block new approval, replay and status atomically
+  ---
+  duration_ms: 56.7696
+  type: 'test'
+  ...
+# Subtest: corrupt bytes block new approval, replay and status atomically
+ok 93 - corrupt bytes block new approval, replay and status atomically
+  ---
+  duration_ms: 58.8726
+  type: 'test'
+  ...
+# Subtest: approval audit storage limit refuses append while retaining a valid previous receipt
+ok 94 - approval audit storage limit refuses append while retaining a valid previous receipt
+  ---
+  duration_ms: 11.5913
+  type: 'test'
+  ...
+# Subtest: HTTP older/no-map restores retain newer approvals, exact media receipts, aliases and bytes; repeated export/restore is stable
+ok 95 - HTTP older/no-map restores retain newer approvals, exact media receipts, aliases and bytes; repeated export/restore is stable
+  ---
+  duration_ms: 414.7877
+  type: 'test'
+  ...
+# Subtest: file reopen validates and retains private approval without auto-approving pending imports
+ok 96 - file reopen validates and retains private approval without auto-approving pending imports
+  ---
+  duration_ms: 137.6957
+  type: 'test'
+  ...
+# Subtest: backup and persistent validation reject missing, forged or mismatched approval audit before all writes
+ok 97 - backup and persistent validation reject missing, forged or mismatched approval audit before all writes
+  ---
+  duration_ms: 357.4808
+  type: 'test'
+  ...
+# Subtest: individually valid conflicting audits reject merge atomically; malformed incoming cannot borrow retained receipts
+ok 98 - individually valid conflicting audits reject merge atomically; malformed incoming cannot borrow retained receipts
+  ---
+  duration_ms: 100.871
+  type: 'test'
+  ...
+# Subtest: private approval cannot satisfy whole-workspace or selected-lesson publication guards for human media
+ok 99 - private approval cannot satisfy whole-workspace or selected-lesson publication guards for human media
+  ---
+  duration_ms: 76.2346
+  type: 'test'
+  ...
+# Subtest: exact source-bundle human approval remains necessary and invalidates after a content change despite private image consent
+ok 100 - exact source-bundle human approval remains necessary and invalidates after a content change despite private image consent
+  ---
+  duration_ms: 177.5973
+  type: 'test'
+  ...
+# Subtest: synthetic PNG fixture has complete valid CRC chunks and a decodable 1x1 grayscale/alpha scanline
+ok 101 - synthetic PNG fixture has complete valid CRC chunks and a decodable 1x1 grayscale/alpha scanline
+  ---
+  duration_ms: 6.034
+  type: 'test'
+  ...
+# synthetic write failure
+# Subtest: failed approval write and failed approval-bearing restore roll back every affected table
+ok 102 - failed approval write and failed approval-bearing restore roll back every affected table
+  ---
+  duration_ms: 139.7631
+  type: 'test'
+  ...
+# Subtest: valid historical import receipt extensions survive private approval and recovery unchanged
+ok 103 - valid historical import receipt extensions survive private approval and recovery unchanged
+  ---
+  duration_ms: 18.9196
+  type: 'test'
+  ...
+# Subtest: valid v2 backup restores consistent links with unchanged grades, resumed feedback, legacy records and replay
+ok 104 - valid v2 backup restores consistent links with unchanged grades, resumed feedback, legacy records and replay
+  ---
+  duration_ms: 91.9578
+  type: 'test'
+  ...
+# Subtest: v2 restore rejects nonexistent or existing-but-wrong historical lesson, exercise and word links before any write
+ok 105 - v2 restore rejects nonexistent or existing-but-wrong historical lesson, exercise and word links before any write
+  ---
+  duration_ms: 240.5807
+  type: 'test'
+  ...
+# Subtest: restore refuses missing, malformed or unsupported store schema declarations atomically
+ok 106 - restore refuses missing, malformed or unsupported store schema declarations atomically
+  ---
+  duration_ms: 227.1704
+  type: 'test'
+  ...
+# Subtest: v1 exports without a schema field still restore; links that disagree with a carried revision become explicit legacy links, never repaired
+ok 107 - v1 exports without a schema field still restore; links that disagree with a carried revision become explicit legacy links, never repaired
+  ---
+  duration_ms: 71.5812
+  type: 'test'
+  ...
+# Subtest: restore refuses reported attempts with absent, null or empty identities or grades before any write, in v2 and v1
+ok 108 - restore refuses reported attempts with absent, null or empty identities or grades before any write, in v2 and v1
+  ---
+  duration_ms: 917.2896
+  type: 'test'
+  ...
+# Subtest: valid reports on resumed, no-resume and legacy history restore with unchanged grades; lesson-level questions keep optional targets
+ok 109 - valid reports on resumed, no-resume and legacy history restore with unchanged grades; lesson-level questions keep optional targets
+  ---
+  duration_ms: 62.2575
+  type: 'test'
+  ...
+# Subtest: HTTP restore refuses reported attempts without an exercise, lesson or request ID and writes nothing; a valid report restores
+ok 110 - HTTP restore refuses reported attempts without an exercise, lesson or request ID and writes nothing; a valid report restores
+  ---
+  duration_ms: 505.3993
+  type: 'test'
+  ...
+# Subtest: restore refuses report envelopes that disagree with their key and duplicate report keys before any write, in v2 and v1
+ok 111 - restore refuses report envelopes that disagree with their key and duplicate report keys before any write, in v2 and v1
+  ---
+  duration_ms: 606.6064
+  type: 'test'
+  ...
+# Subtest: valid reports restore under their own identities and resolving one changes only that report, in v2 and v1
+ok 112 - valid reports restore under their own identities and resolving one changes only that report, in v2 and v1
+  ---
+  duration_ms: 54.0564
+  type: 'test'
+  ...
+# Subtest: HTTP restore refuses mismatched or duplicate report identities and writes nothing; after a valid restore, resolving the listed report A changes only A
+ok 113 - HTTP restore refuses mismatched or duplicate report identities and writes nothing; after a valid restore, resolving the listed report A changes only A
+  ---
+  duration_ms: 399.4173
+  type: 'test'
+  ...
+# Subtest: AC01 synthetic registration changes only configuration and enforces its CAS, replay and complete numeric metadata
+ok 114 - AC01 synthetic registration changes only configuration and enforces its CAS, replay and complete numeric metadata
+  ---
+  duration_ms: 15.4208
+  type: 'test'
+  ...
+# Subtest: AC18 Preview/resolve/discard are ephemeral including identity IDs and sequences
+ok 115 - AC18 Preview/resolve/discard are ephemeral including identity IDs and sequences
+  ---
+  duration_ms: 54.9324
+  type: 'test'
+  ...
+# Subtest: AC18 expired reviews reject Stage before acquisition or writes
+ok 116 - AC18 expired reviews reject Stage before acquisition or writes
+  ---
+  duration_ms: 38.0665
+  type: 'test'
+  ...
+# Subtest: AC04/05 synthetic repeated unchanged review and version-only advance produce no_op without any DB or ID write
+ok 117 - AC04/05 synthetic repeated unchanged review and version-only advance produce no_op without any DB or ID write
+  ---
+  duration_ms: 93.2738
+  type: 'test'
+  ...
+# Subtest: AC06 synthetic Stage is separate from approval/Publish and keeps complete source cells, exact forms and default formatting
+ok 118 - AC06 synthetic Stage is separate from approval/Publish and keeps complete source cells, exact forms and default formatting
+  ---
+  duration_ms: 78.2949
+  type: 'test'
+  ...
+# Subtest: AC07 changed capture requires explicit ID confirmation even a unique same-row match
+ok 119 - AC07 changed capture requires explicit ID confirmation even a unique same-row match
+  ---
+  duration_ms: 101.5319
+  type: 'test'
+  ...
+# Subtest: AC11/12 three-way conflicts retain source baseline and local override, with absent fields staying local
+ok 120 - AC11/12 three-way conflicts retain source baseline and local override, with absent fields staying local
+  ---
+  duration_ms: 134.9146
+  type: 'test'
+  ...
+# Subtest: AC13 complete absent row needs a tombstone/detach decision and rejects removal with canonical dependencies atomically
+ok 121 - AC13 complete absent row needs a tombstone/detach decision and rejects removal with canonical dependencies atomically
+  ---
+  duration_ms: 103.336
+  type: 'test'
+  ...
+# Subtest: AC14/16 source freshness or outage fails without replacing source, draft or learner tables
+ok 122 - AC14/16 source freshness or outage fails without replacing source, draft or learner tables
+  ---
+  duration_ms: 23.1085
+  type: 'test'
+  ...
+# Subtest: AC17 second editor saves during Stage network wait; transaction CAS refuses all source mutation
+ok 123 - AC17 second editor saves during Stage network wait; transaction CAS refuses all source mutation
+  ---
+  duration_ms: 45.2484
+  type: 'test'
+  ...
+# Subtest: AC19 identical Publish retry creates one revision; changed payload/approval cannot reuse operation ID
+ok 124 - AC19 identical Publish retry creates one revision; changed payload/approval cannot reuse operation ID
+  ---
+  duration_ms: 53.3274
+  type: 'test'
+  ...
+# Subtest: AC22 source-bound offline rollback restores historical baseline as new revision with current learner state retained
+ok 125 - AC22 source-bound offline rollback restores historical baseline as new revision with current learner state retained
+  ---
+  duration_ms: 155.7283
+  type: 'test'
+  ...
+# Subtest: AC23 full pending-draft source backup retains captures/mappings/identities; restore remaps bindings with no network
+ok 126 - AC23 full pending-draft source backup retains captures/mappings/identities; restore remaps bindings with no network
+  ---
+  duration_ms: 124.2795
+  type: 'test'
+  ...
+# Subtest: AC23/24 tampered or missing source capture/bundle/secrets rejects restore before every table or sequence write
+ok 127 - AC23/24 tampered or missing source capture/bundle/secrets rejects restore before every table or sequence write
+  ---
+  duration_ms: 56.47
+  type: 'test'
+  ...
+# Subtest: AC24 old schema-5 backup remains unbound and marker-5 executable cannot open marker-6 semantics
+ok 128 - AC24 old schema-5 backup remains unbound and marker-5 executable cannot open marker-6 semantics
+  ---
+  duration_ms: 7.8723
+  type: 'test'
+  ...
+# Subtest: AC25 exact canonical forms absent blocks Stage without generating unpointed or curated strings
+ok 129 - AC25 exact canonical forms absent blocks Stage without generating unpointed or curated strings
+  ---
+  duration_ms: 9.898
+  type: 'test'
+  ...
+# Subtest: raw source-only baseline Stage is author-state-only and does not turn source text into canonical vocabulary
+ok 130 - raw source-only baseline Stage is author-state-only and does not turn source text into canonical vocabulary
+  ---
+  duration_ms: 21.3103
+  type: 'test'
+  ...
+# Subtest: source unchanged refresh still stages every unsaved title/text sibling via one collected workspace
+ok 131 - source unchanged refresh still stages every unsaved title/text sibling via one collected workspace
+  ---
+  duration_ms: 87.0343
+  type: 'test'
+  ...
+# Subtest: AC09/10 synthetic exact Lesson+Part membership binds repeated components while 1.3.5 is not coerced or guessed
+ok 132 - AC09/10 synthetic exact Lesson+Part membership binds repeated components while 1.3.5 is not coerced or guessed
+  ---
+  duration_ms: 131.8723
+  type: 'test'
+  ...
+# Subtest: AC21 duplicate field targets, invalid exact headers and invalid rich runs reject without database mutation
+ok 133 - AC21 duplicate field targets, invalid exact headers and invalid rich runs reject without database mutation
+  ---
+  duration_ms: 11.0164
+  type: 'test'
+  ...
+# Subtest: HTTP source routes require actual application source session; fictional author header alone cannot capture/register/approve
+ok 134 - HTTP source routes require actual application source session; fictional author header alone cannot capture/register/approve
+  ---
+  duration_ms: 199.3884
+  type: 'test'
+  ...
+# Subtest: HTTP source Review/Stage/approval/Publish execute the installed routes against a disposable synthetic source session
+ok 135 - HTTP source Review/Stage/approval/Publish execute the installed routes against a disposable synthetic source session
+  ---
+  duration_ms: 148.6236
+  type: 'test'
+  ...
+# Subtest: AC15 exact checked snapshot publishes with its freshness receipt when source advances immediately after check
+ok 136 - AC15 exact checked snapshot publishes with its freshness receipt when source advances immediately after check
+  ---
+  duration_ms: 52.9751
+  type: 'test'
+  ...
+# Subtest: Publish freshness conflict after explicit approval leaves every persisted table untouched
+ok 137 - Publish freshness conflict after explicit approval leaves every persisted table untouched
+  ---
+  duration_ms: 48.3834
+  type: 'test'
+  ...
+# Subtest: a competing Resolve or expiry during freshness wait invalidates pending Stage before writes
+ok 138 - a competing Resolve or expiry during freshness wait invalidates pending Stage before writes
+  ---
+  duration_ms: 37.7473
+  type: 'test'
+  ...
+# Subtest: first binding may reuse an explicitly selected existing canonical word without cloning, generating forms or dropping unknown fields
+ok 139 - first binding may reuse an explicitly selected existing canonical word without cloning, generating forms or dropping unknown fields
+  ---
+  duration_ms: 33.8968
+  type: 'test'
+  ...
+# Subtest: tombstone of a reused word referenced by exercises is rejected before source and draft writes
+ok 140 - tombstone of a reused word referenced by exercises is rejected before source and draft writes
+  ---
+  duration_ms: 50.6461
+  type: 'test'
+  ...
+# Subtest: atomic source-state failure rolls back both nested draft writes and source history
+ok 141 - atomic source-state failure rolls back both nested draft writes and source history
+  ---
+  duration_ms: 35.5005
+  type: 'test'
+  ...
+# Subtest: forged imported approval cannot grant publication eligibility, even with recomputed public bundle digests
+ok 142 - forged imported approval cannot grant publication eligibility, even with recomputed public bundle digests
+  ---
+  duration_ms: 35.9621
+  type: 'test'
+  ...
+# Subtest: ordinary local sibling Save invalidates exact approval and preserves retained source identity/remote baseline
+ok 143 - ordinary local sibling Save invalidates exact approval and preserves retained source identity/remote baseline
+  ---
+  duration_ms: 58.6874
+  type: 'test'
+  ...
+# Subtest: capture canonical payload hash is independent of request chunk partition while retaining row/column metadata
+ok 144 - capture canonical payload hash is independent of request chunk partition while retaining row/column metadata
+  ---
+  duration_ms: 3.6546
+  type: 'test'
+  ...
+# Subtest: file-backed restart retains source baseline, stable identities, saved draft and signed synthetic approval
+ok 145 - file-backed restart retains source baseline, stable identities, saved draft and signed synthetic approval
+  ---
+  duration_ms: 149.5282
+  type: 'test'
+  ...
+# Subtest: baseline and confirmed row reachability rejects recomputed missing-field or locator tampering before restore writes
+ok 146 - baseline and confirmed row reachability rejects recomputed missing-field or locator tampering before restore writes
+  ---
+  duration_ms: 118.8646
+  type: 'test'
+  ...
+# Subtest: source-only inspection cannot silently confirm canonical IDs across a changed capture
+ok 147 - source-only inspection cannot silently confirm canonical IDs across a changed capture
+  ---
+  duration_ms: 87.3601
+  type: 'test'
+  ...
+# Subtest: FB14 labelled reference shape retains exact human approval and rejects unsafe or unresolved URLs
+ok 148 - FB14 labelled reference shape retains exact human approval and rejects unsafe or unresolved URLs
+  ---
+  duration_ms: 61.0152
+  type: 'test'
+  ...
+1..148
+# tests 148
+# suites 0
+# pass 148
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7855.1759

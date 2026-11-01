@@ -10,6 +10,7 @@ import {mountRenderedSource} from '../public/author/rendered-source.js';
 import {safeStyle,sanitizeProse} from '../public/safe-format.js';
 import {createLessonRenderer} from '../public/rich.js';
 import {classicDOM} from '../test-support/classic-dom.js';
+import {mediaHTTP,imageInput,idle} from '../test-support/private-image-fixture.js';
 const source='<p class="authored" data-original="keep" style="color:navy">A <strong>bold 😀 שָׁלוֹם</strong> sentence &amp; exact.</p>\r\n\r\n<!-- untouched comment -->\r\n## Markdown **heading**\r\n\r\nA **mixed** paragraph.\r\n\r\n- **First** item\r\n- Second item\r\n\r\n<ol start="3"><li><em>HTML</em> item</li><li data-original="bytes">Untouched &nbsp; sibling</li></ol>\r\n';
 test('generic DOM adapter no-op, exact UTF16/entity/CRLF patch, unknown wrappers and opaque boundaries',t=>{
  const {doc,deps}=classicDOM(t),a=createClassicAdapter({source,marked,doc,sanitize:html=>sanitizeProse(html,deps.purifier,doc,{editor:true})});
@@ -80,18 +81,23 @@ test('structural Enter preserves authored wrapper attributes; metadata loss refu
  const nested='<p><span data-private="exact">Keep</span> words</p>',b=createClassicAdapter({source:nested,marked,doc,sanitize:h=>sanitizeProse(h,deps.purifier,doc,{editor:true})});
  const changed='<p><strong>Keep words</strong></p>';assert.throws(()=>b.compile(changed),/retained source attributes/);assert.equal(changed,'<p><strong>Keep words</strong></p>');assert.equal(b.compile(b.initial),nested);
 });
-test('approved local chooser retains pinned URL/alt; remote source, forged boundary paste and arbitrary image insertion are rejected',async t=>{
- const {host,deps,doc,w}=classicDOM(t),ui=mountStandardEditor(host,{source:'<p>Before image</p>',dependencies:deps,api:async()=>({assets:[{assetId:'synthetic',title:'Synthetic image',kind:'image',revisions:[{url:'/media/synthetic/pinned.png',revisionId:'r1',sha256:'a'.repeat(64),approval:{status:'approved'}},{url:'https://remote.invalid/img.png',revisionId:'r2',sha256:'b'.repeat(64),approval:{status:'approved'}}]}]})});t.after(()=>ui.dispose());assert.ok(await ui.ready);
- // Jodit merges control defaults even when the image plugin is disabled. The
- // inherited URL popup must be absent, including the split-button trigger.
+test('actual imported private-approved image inserts with alt, saves, publishes synthetically and recovers immutable media',async t=>{
+ const {store,api}=await mediaHTTP(t),pin=await api('studio/media/import',imageInput()),initialState=store.media.state();
+ const {host,deps,doc,w}=classicDOM(t),ui=mountStandardEditor(host,{source:'<p>Before image</p>',dependencies:deps,api});t.after(()=>ui.dispose());assert.ok(await ui.ready);
  assert.equal(ui.view.o.controls.image.popup,null);assert.equal(ui.view.o.controls.image.list,null);
  assert.equal(host.querySelector('[data-ref="image"] .jodit-toolbar-button__trigger'),null);
  const range=doc.createRange();range.selectNodeContents(ui.view.editor.firstElementChild);range.collapse(false);w.getSelection().removeAllRanges();w.getSelection().addRange(range);
- host.querySelector('[data-ref="image"] .jodit-toolbar-button__button').click();await new Promise(r=>setTimeout(r,0));assert.equal(host.querySelectorAll('[data-select-media]').length,1);host.querySelector('[data-select-media]').click();
- const form=host.querySelector('[data-prose-insert] form');form.dispatchEvent(new w.Event('submit',{cancelable:true,bubbles:true}));assert.match(form.querySelector(':scope > p[role=status]').textContent,/alt text/);form.elements.alt.value='Synthetic description';form.dispatchEvent(new w.Event('submit',{cancelable:true,bubbles:true}));ui.view.setEditorValue();
- assert.match(ui.getValue(),/src="\/media\/synthetic\/pinned.png"/);assert.match(ui.getValue(),/alt="Synthetic description"/);assert.doesNotMatch(ui.getValue(),/selection_marker|remote.invalid/);
+ host.querySelector('[data-ref="image"] .jodit-toolbar-button__button').click();await idle(host);assert.equal(host.querySelectorAll('[data-select-media]').length,1);assert.equal(host.querySelector('[data-select-media]').disabled,true);
+ host.querySelector('[data-private-approve]').click();await idle(host);host.querySelector('[data-select-media]').click();
+ const form=host.querySelector('[data-prose-insert] form');form.dispatchEvent(new w.Event('submit',{cancelable:true,bubbles:true}));assert.match(form.querySelector(':scope > p[role=status]').textContent,/alt text/);form.elements.alt.value='Synthetic description';form.dispatchEvent(new w.Event('submit',{cancelable:true,bubbles:true}));await idle(host);ui.view.setEditorValue();
+ const saved=ui.getValue();assert.ok(saved.includes('src="'+pin.url+'"'));assert.match(saved,/alt="Synthetic description"/);assert.doesNotMatch(saved,/selection_marker|remote.invalid/);assert.equal(store.currentDraft(),null);
  const paste=ui.view.e.fire('beforePasteInsert','<div data-retained="0" contenteditable="false"><img src="//remote.invalid/img.png">paste</div>');assert.doesNotMatch(paste,/data-retained|contenteditable|<img/);
  const prior=ui.model;ui.view.execCommand('insertimage',false,'https://remote.invalid/img.png');assert.equal(ui.model,prior);
+ const content=store.snapshot();content.lessons[0].explanation=saved;store.stage({baseRevisionId:store.get('active'),expectedDraftToken:null,content});assert.equal(store.currentDraft().content.lessons[0].explanation,saved);
+ const scope={baseRevisionId:store.get('active'),expectedDraftToken:store.currentDraft().draftToken,lessonId:content.lessons[0].id,includeDependencies:[]},review=store.reviewLessonPublication(scope);assert.equal(review.canPublish,true);store.publishLesson({...scope,reviewToken:review.reviewToken});
+ const recovered=new Store();t.after(()=>recovered.close());recovered.restore(store.backup());assert.equal(recovered.snapshot().lessons[0].explanation,saved);assert.deepEqual(recovered.media.state(),store.media.state());assert.deepEqual(store.media.state().assets,initialState.assets);assert.deepEqual(store.media.state().operations,initialState.operations);
+ const render=createLessonRenderer(marked,deps.purifier,doc);assert.ok(render(recovered.snapshot().lessons[0].explanation).includes(pin.url));
+ const next=doc.createElement('div');doc.body.append(next);const reopened=mountStandardEditor(next,{source:saved,dependencies:deps,api});t.after(()=>reopened.dispose());assert.ok(await reopened.ready);assert.equal(reopened.view.editor.querySelector('img').getAttribute('src'),pin.url);assert.equal(reopened.view.editor.querySelector('img').alt,'Synthetic description');assert.equal(reopened.getValue(),saved);
 });
 
 test('normal lists/indent/direction and supplied table picker/edit commands compile safe persisted structures',async t=>{

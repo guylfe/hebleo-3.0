@@ -4,7 +4,7 @@ import {resolve,relative,isAbsolute,extname} from 'node:path';
 import {DomainError} from './errors.js';
 import {safeID,copy,sha256,equal} from './source-utils.js';
 
-export const MEDIA_LIMITS={fileBytes:20_000_000,backupBytes:50_000_000,assets:1000};
+export const MEDIA_LIMITS={fileBytes:20_000_000,backupBytes:50_000_000,assets:1000,privateImageApprovals:5000};
 export const MEDIA_TYPES={'.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.m4a':'audio/mp4','.mp4':'video/mp4','.webm':'video/webm','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif','.pdf':'application/pdf'};
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
 const fail=(code,message,status=409)=>{throw new DomainError(message,status,code);};
@@ -25,6 +25,43 @@ function validateAliases(records,blobFor){
  return aliases;
 }
 const resultFor=(asset,revision)=>({assetId:asset.assetId,revisionId:revision.revisionId,sha256:revision.sha256,url:revision.url,byteLength:revision.byteLength,mimeType:revision.mimeType,kind:asset.kind,provenance:revision.provenance,approval:revision.approval});
+// Private-use consent is an additive audit overlay, never canonical approval.
+const privateScope='private-image-use';
+const pinFields=['assetId','revisionId','sha256','url','mimeType','byteLength','kind'];
+const requestFields=['operationId','assetId','revisionId','sha256','url','mimeType','byteLength','expectedCurrentRevisionId'];
+const exactKeys=(value,keys)=>plainObject(value)&&equal(Object.keys(value).sort(),[...keys].sort());
+const privatePin=(asset,revision)=>Object.fromEntries(pinFields.map(key=>[key,key==='assetId'?asset.assetId:key==='kind'?asset.kind:revision[key]]));
+const privateKey=pin=>pin.assetId+'/'+pin.revisionId+'/'+pin.sha256;
+const emptyPrivateUse=()=>({version:1,approvals:{},operations:{}});
+function validPrivateRequest(input){
+ return exactKeys(input,requestFields)&&safeID(input.operationId)&&safeID(input.assetId)&&safeID(input.revisionId)&&safeID(input.expectedCurrentRevisionId)&&typeof input.sha256==='string'&&hashRE.test(input.sha256)&&['image/png','image/jpeg','image/webp','image/gif'].includes(input.mimeType)&&input.url===managedURL(input.sha256,input.mimeType)&&Number.isInteger(input.byteLength)&&input.byteLength>0&&input.byteLength<=MEDIA_LIMITS.fileBytes;
+}
+function validatePrivateUse(state,revisions,requireAuthor){
+ if(!Object.hasOwn(state,'privateImageUse'))return; // Old packages retain their exact old shape.
+ const overlay=state.privateImageUse;
+ const invalid=()=>fail('MEDIA_PRIVATE_USE_INVALID','Invalid private image approval audit or exact immutable pin.');
+ if(!exactKeys(overlay,['version','approvals','operations'])||overlay.version!==1||!plainObject(overlay.approvals)||!plainObject(overlay.operations))invalid();
+ const approvals=Object.entries(overlay.approvals),operations=Object.entries(overlay.operations);
+ const importedRevisions=new Set(Object.values(state.operations).map(receipt=>receipt.result.revisionId));
+ if(approvals.length>MEDIA_LIMITS.privateImageApprovals||operations.length>MEDIA_LIMITS.privateImageApprovals||approvals.length!==operations.length)invalid();
+ for(const [key,record] of approvals){
+  if(!exactKeys(record,['version','scope','status','actorId','approvedAt','operationId','pin'])||record.version!==1||record.scope!==privateScope||record.status!=='approved'||!safeID(record.actorId)||!safeID(record.operationId)||typeof record.approvedAt!=='string'||!Number.isFinite(Date.parse(record.approvedAt))||new Date(record.approvedAt).toISOString()!==record.approvedAt||!exactKeys(record.pin,pinFields))invalid();
+  try{requireAuthor(record.actorId);}catch{invalid();}
+  const pair=revisions.get(record.pin.revisionId);
+  if(!pair||pair.asset.kind!=='image'||!equal(record.pin,privatePin(pair.asset,pair.revision))||key!==privateKey(record.pin))invalid();
+  const receipt=overlay.operations[record.actorId+'/'+record.operationId];
+  if(!receipt||!equal(receipt.result,record))invalid();
+  // Only an imported immutable revision can acquire consent; raw URLs cannot.
+  if(!importedRevisions.has(record.pin.revisionId))invalid();
+ }
+ for(const [key,receipt] of operations){
+  if(!exactKeys(receipt,['payload','request','result'])||!validPrivateRequest(receipt.request)||receipt.payload!==sha256(receipt.request))invalid();
+  const record=receipt.result,request=receipt.request,pair=revisions.get(request.revisionId);
+  if(!pair||!record||key!==record.actorId+'/'+request.operationId||record.operationId!==request.operationId||!equal(record,overlay.approvals[privateKey(request)])||!equal(record.pin,privatePin(pair.asset,pair.revision)))invalid();
+  const expected=Object.fromEntries(requestFields.map(field=>[field,field==='operationId'?record.operationId:field==='expectedCurrentRevisionId'?request.expectedCurrentRevisionId:record.pin[field]]));
+  if(!equal(request,expected)||pair.asset.revisions.findIndex(r=>r.revisionId===request.expectedCurrentRevisionId)<pair.asset.revisions.findIndex(r=>r.revisionId===request.revisionId))invalid();
+ }
+}
 function validateLibrary(state,blobFor,requireAuthor){
  if(state?.version!==1||!Array.isArray(state.assets)||state.assets.length>MEDIA_LIMITS.assets||!plainObject(state.operations))fail('MEDIA_BACKUP_INVALID','Invalid reusable media state.');
  const assets=new Map(),revisions=new Map();
@@ -44,6 +81,7 @@ function validateLibrary(state,blobFor,requireAuthor){
   const expected=resultFor(pair.asset,pair.revision),actual=Object.fromEntries(Object.keys(expected).map(field=>[field,receipt.result[field]]));
   if(!equal(actual,expected))fail('MEDIA_BACKUP_INVALID','Media receipt contradicts its surviving asset revision.');
  }
+ validatePrivateUse(state,revisions,requireAuthor);
 }
 
 function validatePins(content,state){const visit=value=>{if(!value||typeof value!=='object')return;if(value.assetId&&typeof value.url==='string'&&value.url.startsWith('/media/blobs/')){const asset=state.assets.find(a=>a.assetId===value.assetId),rev=asset?.revisions.find(r=>r.revisionId===value.revisionId);if(!rev||rev.sha256!==value.sha256||rev.url!==value.url)fail('MEDIA_PIN_INVALID','Pinned media identity/revision/checksum disagrees with its immutable library reference.');}for(const child of Object.values(value))visit(child);};visit(content);}
@@ -76,7 +114,7 @@ function decodeBase64(value){
 const emptyState=()=>({version:1,assets:[],operations:{}});
 
 export class MediaStore {
- constructor(store,{mediaRoot=null}={}){this.store=store;this.db=store.db;this.mediaRoot=mediaRoot;this.db.exec('CREATE TABLE IF NOT EXISTS media_blobs(sha256 TEXT PRIMARY KEY,mime_type TEXT NOT NULL,byte_length INTEGER NOT NULL,bytes BLOB NOT NULL); CREATE TABLE IF NOT EXISTS media_aliases(path TEXT PRIMARY KEY,sha256 TEXT NOT NULL REFERENCES media_blobs(sha256));');}
+ constructor(store,{mediaRoot=null}={}){this.store=store;this.db=store.db;this.mediaRoot=mediaRoot;this.db.exec('CREATE TABLE IF NOT EXISTS media_blobs(sha256 TEXT PRIMARY KEY,mime_type TEXT NOT NULL,byte_length INTEGER NOT NULL,bytes BLOB NOT NULL); CREATE TABLE IF NOT EXISTS media_aliases(path TEXT PRIMARY KEY,sha256 TEXT NOT NULL REFERENCES media_blobs(sha256));');const state=this.state();if(Object.hasOwn(state,'privateImageUse'))validateLibrary(state,hash=>this.blob(hash),id=>this.store.requireAuthor(id));}
  bindRoot(root){this.mediaRoot=root;}
  state(){return this.store.get('media-state')||emptyState();}
  blob(hash){const row=this.db.prepare('SELECT * FROM media_blobs WHERE sha256=?').get(hash);if(!row)return null;const bytes=Buffer.from(row.bytes);const checked=inspectMedia(bytes,row.mime_type);if(checked.sha256!==hash||checked.byteLength!==row.byte_length)fail('MEDIA_CORRUPT','Stored media bytes fail their integrity check.');return {...checked,bytes};}
@@ -100,14 +138,36 @@ export class MediaStore {
   const revision={revisionId:'media-'+randomUUID(),...metadata,url,provenance:copy(input.provenance),approval:{version:1,status:'pending'}};
   return this.store.transaction(()=>{const current=this.state(),now=current.assets.find(a=>a.assetId===input.assetId);if((now?.revisions.at(-1)?.revisionId??null)!==(input.expectedRevisionId??null))fail('MEDIA_CAS','Media revision changed.');if(now&&now.kind!==input.kind)fail('MEDIA_KIND','An existing asset cannot change media kind. Use a new stable asset ID.');const updated=now||{assetId:input.assetId,title:input.title,kind:input.kind,revisions:[]};updated.title=input.title;updated.revisions.push(revision);if(!now)current.assets.push(updated);const result=resultFor(updated,revision);current.operations[key]={payload,result};safeMetadata(current);validateLibrary(current,hash=>this.blob(hash)||(hash===metadata.sha256?metadata:null),id=>this.store.requireAuthor(id));this.putBlob({...metadata,bytes});this.store.set('media-state',current);return copy(result);});
  }
- status(content){const plan=this.plan(content),state=this.state();validateAliases(this.db.prepare('SELECT path,sha256 FROM media_aliases').all(),hash=>this.blob(hash));for(const asset of state.assets)for(const rev of asset.revisions){const bytes=this.blob(rev.sha256);if(!bytes||bytes.mimeType!==rev.mimeType||bytes.byteLength!==rev.byteLength)fail('MEDIA_CORRUPT','Reusable media library references missing or corrupt stored bytes.');}return {version:1,storage:'Immutable bytes in local SQLite; explicitly pinned legacy aliases',assets:state.assets,localReferences:plan.references.local,remoteReferences:plan.references.remote,warnings:plan.warnings,limits:MEDIA_LIMITS,approval:'Import is not canonical content approval'};}
+ approvePrivateImageUse(author,input){
+  this.store.requireAuthor(author);
+  if(!validPrivateRequest(input))fail('MEDIA_PRIVATE_USE_REQUEST','Supply one exact local image pin, expected current revision and operation ID; actor and approval are server-owned.',400);
+  return this.store.transaction(()=>{
+   const state=this.state();validateLibrary(state,hash=>this.blob(hash),id=>this.store.requireAuthor(id));
+   const overlay=state.privateImageUse||emptyPrivateUse(),operationKey=author+'/'+input.operationId,payload=sha256(input),previous=overlay.operations[operationKey];
+   if(previous){if(previous.payload!==payload)fail('MEDIA_OPERATION_CONFLICT','Private image operation ID names another input.');return copy(previous.result);}
+   const asset=state.assets.find(a=>a.assetId===input.assetId),revision=asset?.revisions.find(r=>r.revisionId===input.revisionId);
+   if(!revision||asset.kind!=='image'||!equal(privatePin(asset,revision),{assetId:input.assetId,revisionId:input.revisionId,sha256:input.sha256,url:input.url,mimeType:input.mimeType,byteLength:input.byteLength,kind:'image'}))fail('MEDIA_PIN_INVALID','Private use requires the exact imported image revision, checksum, type, size and local URL.');
+   if(asset.revisions.at(-1).revisionId!==input.expectedCurrentRevisionId)fail('MEDIA_CAS','Media history changed. Refresh and review the exact image again.');
+   const pin=privatePin(asset,revision),key=privateKey(pin);
+   if(overlay.approvals[key])fail('MEDIA_ALREADY_APPROVED','This exact image already has private-use approval. Refresh to select its pin.');
+   if(Object.keys(overlay.approvals).length>=MEDIA_LIMITS.privateImageApprovals)fail('MEDIA_LIMIT','Private image approval audit limit reached; no records were discarded.');
+   const record={version:1,scope:privateScope,status:'approved',actorId:author,approvedAt:new Date().toISOString(),operationId:input.operationId,pin};
+   overlay.approvals[key]=record;overlay.operations[operationKey]={payload,request:copy(input),result:copy(record)};state.privateImageUse=overlay;
+   safeMetadata(state);validateLibrary(state,hash=>this.blob(hash),id=>this.store.requireAuthor(id));this.store.set('media-state',state);return copy(record);
+  });
+ }
+ status(content){
+  const plan=this.plan(content),state=this.state();validateAliases(this.db.prepare('SELECT path,sha256 FROM media_aliases').all(),hash=>this.blob(hash));validateLibrary(state,hash=>this.blob(hash),id=>this.store.requireAuthor(id));
+  const assets=state.assets.map(asset=>({...asset,revisions:asset.revisions.map(revision=>({...revision,privateUseApproval:copy(state.privateImageUse?.approvals[privateKey(privatePin(asset,revision))]||null)}))}));
+  return {version:1,storage:'Immutable bytes in local SQLite; explicitly pinned legacy aliases',assets,localReferences:plan.references.local,remoteReferences:plan.references.remote,warnings:plan.warnings,limits:MEDIA_LIMITS,approval:'Import and private image use are not canonical teaching publication approval'};
+ }
  checkPublication(content,{trustedContentApproval=false}={}){const hashes=new Set(this.plan(content,{strict:true}).entries.map(item=>item.sha256));for(const asset of this.state().assets)for(const rev of asset.revisions)if(hashes.has(rev.sha256)&&rev.provenance.kind!=='synthetic-demo'&&!trustedContentApproval)fail('MEDIA_APPROVAL_REQUIRED','Real source/human media is still unapproved for canonical publication. Use the verified owner approval of this exact source/content bundle; private preview remains available.');}
  backup(packs){validateAliases(this.db.prepare('SELECT path,sha256 FROM media_aliases').all(),hash=>this.blob(hash));const all={local:new Set(),remote:new Set()},entries=new Map();for(const content of packs){const plan=this.plan(content,{strict:true});for(const p of plan.references.local)all.local.add(p);for(const p of plan.references.remote)all.remote.add(p);for(const item of plan.entries)entries.set(item.sha256,item);}
   for(const row of this.db.prepare('SELECT sha256 FROM media_blobs').all()){const item=this.blob(row.sha256);entries.set(item.sha256,item);}let total=0;const blobs=[...entries.values()].map(item=>{total+=item.byteLength;if(total>MEDIA_LIMITS.backupBytes)fail('MEDIA_BACKUP_LIMIT','Referenced local media exceeds the 50 MB recovery package limit; no data has been discarded.');return {sha256:item.sha256,mimeType:item.mimeType,byteLength:item.byteLength,dataBase64:item.bytes.toString('base64')};});
   const aliases=new Map(this.db.prepare('SELECT path,sha256 FROM media_aliases').all().map(a=>[a.path,a.sha256]));for(const content of packs)for(const item of this.plan(content,{strict:true}).entries)if(!item.path.startsWith('blobs/'))aliases.set(item.path,item.sha256);
-  validateAliases([...aliases].map(([path,sha256])=>({path,sha256})),hash=>entries.get(hash));const state=this.state();safeMetadata(state);validateLibrary(state,hash=>entries.get(hash),id=>this.store.requireAuthor(id));return {version:1,storageMode:'sqlite-immutable-bytes',state,blobs,aliases:[...aliases].map(([path,sha256])=>({path,sha256})),localReferences:[...all.local].sort(),remoteReferences:[...all.remote].sort(),remoteRecovery:'References only; no remote bytes fetched or restored'};
+  validateAliases([...aliases].map(([path,sha256])=>({path,sha256})),hash=>entries.get(hash));const state=this.state();safeMetadata(state);validateLibrary(state,hash=>entries.get(hash),id=>this.store.requireAuthor(id));return {version:Object.hasOwn(state,'privateImageUse')?2:1,storageMode:'sqlite-immutable-bytes',state,blobs,aliases:[...aliases].map(([path,sha256])=>({path,sha256})),localReferences:[...all.local].sort(),remoteReferences:[...all.remote].sort(),remoteRecovery:'References only; no remote bytes fetched or restored'};
  }
- validateBackup(bundle,packs,{required=false}={}){if(bundle==null){if(required)fail('MEDIA_BACKUP_REQUIRED','This Store version requires its complete media recovery bundle.');return {legacy:true,blobs:[],aliases:[],state:emptyState()};}safeMetadata(bundle.state);if(bundle.version!==1||bundle.storageMode!=='sqlite-immutable-bytes'||!Array.isArray(bundle.blobs)||!Array.isArray(bundle.aliases)||bundle.state?.version!==1||!Array.isArray(bundle.state.assets)||!bundle.state.operations)fail('MEDIA_BACKUP_INVALID','Unsupported or incomplete media recovery bundle.');const blobs=new Map();let total=0;for(const item of bundle.blobs){if(!hashRE.test(item.sha256)||blobs.has(item.sha256))fail('MEDIA_BACKUP_INVALID','Duplicate/invalid media checksum.');const bytes=decodeBase64(item.dataBase64),checked=inspectMedia(bytes,item.mimeType);if(checked.sha256!==item.sha256||checked.byteLength!==item.byteLength)fail('MEDIA_CORRUPT','Media recovery bytes disagree with their checksum/length.');total+=bytes.length;if(total>MEDIA_LIMITS.backupBytes)fail('MEDIA_BACKUP_LIMIT','Media recovery size limit exceeded.');blobs.set(item.sha256,{...checked,bytes});}
+ validateBackup(bundle,packs,{required=false}={}){if(bundle==null){if(required)fail('MEDIA_BACKUP_REQUIRED','This Store version requires its complete media recovery bundle.');return {legacy:true,blobs:[],aliases:[],state:emptyState()};}safeMetadata(bundle.state);if(![1,2].includes(bundle.version)||(bundle.version===2)!==Object.hasOwn(bundle.state||{},'privateImageUse')||bundle.storageMode!=='sqlite-immutable-bytes'||!Array.isArray(bundle.blobs)||!Array.isArray(bundle.aliases)||bundle.state?.version!==1||!Array.isArray(bundle.state.assets)||!bundle.state.operations)fail('MEDIA_BACKUP_INVALID','Unsupported or incomplete media recovery bundle.');const blobs=new Map();let total=0;for(const item of bundle.blobs){if(!hashRE.test(item.sha256)||blobs.has(item.sha256))fail('MEDIA_BACKUP_INVALID','Duplicate/invalid media checksum.');const bytes=decodeBase64(item.dataBase64),checked=inspectMedia(bytes,item.mimeType);if(checked.sha256!==item.sha256||checked.byteLength!==item.byteLength)fail('MEDIA_CORRUPT','Media recovery bytes disagree with their checksum/length.');total+=bytes.length;if(total>MEDIA_LIMITS.backupBytes)fail('MEDIA_BACKUP_LIMIT','Media recovery size limit exceeded.');blobs.set(item.sha256,{...checked,bytes});}
   const aliases=validateAliases(bundle.aliases,hash=>blobs.get(hash));
   validateLibrary(bundle.state,hash=>blobs.get(hash),id=>this.store.requireAuthor(id));
   const refs=new Set();for(const content of packs){validatePins(content,bundle.state);for(const url of mediaReferences(content).local){refs.add(url);const path=mediaPath(url),managed=/^blobs\/([a-f0-9]{64})\.[a-z0-9]+$/.exec(path),hash=managed?.[1]||aliases.get(path),item=blobs.get(hash);if(!item||item.mimeType!==MEDIA_TYPES[extname(path).toLowerCase()])fail('MEDIA_MISSING','A carried content reference has no matching recovered bytes: '+url);}}if(!equal([...refs].sort(),bundle.localReferences))fail('MEDIA_BACKUP_INVALID','Declared local media references disagree with carried content.');
@@ -133,6 +193,13 @@ export class MediaStore {
    if(asset.revisions.length>=old.revisions.length){const replacement=copy(asset);state.assets[state.assets.findIndex(a=>a.assetId===asset.assetId)]=replacement;assets.set(asset.assetId,replacement);}
   }
   for(const [key,receipt] of Object.entries(incoming.state.operations)){if(Object.hasOwn(state.operations,key)&&!equal(state.operations[key],receipt))conflict();state.operations[key]=copy(receipt);}
+  if(incoming.state.privateImageUse){
+   state.privateImageUse ||= emptyPrivateUse();
+   for(const field of ['approvals','operations'])for(const [key,value] of Object.entries(incoming.state.privateImageUse[field])){
+    if(Object.hasOwn(state.privateImageUse[field],key)&&!equal(state.privateImageUse[field][key],value))conflict();
+    state.privateImageUse[field][key]=copy(value);
+   }
+  }
   safeMetadata(state);validateLibrary(state,hash=>blobs.get(hash),id=>this.store.requireAuthor(id));
   const aliasRows=[...aliases].map(([path,sha256])=>({path,sha256}));validateAliases(aliasRows,hash=>blobs.get(hash));
   return {legacy:false,blobs:[...blobs.values()],aliases:aliasRows,state};
