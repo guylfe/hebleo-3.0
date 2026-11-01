@@ -68,7 +68,7 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
  }
  async function save(){
   if(busy)return;await editor?.whenSettled?.();busy=true;message='Saving complete workspace draft…';refreshStatus();
-  try{const result=await workspace.save();snapshot=workspace.peekContent();if(!workspace.dirty){const quote=host.querySelector('[data-author-quote]');if(quote){const box=doc.createElement('div');box.innerHTML=renderLesson(editor.getValue());quote.value=box.textContent;}}message=workspace.dirty?'Saved the submitted draft. Newer edits remain unsaved.':'';return result;}
+  try{const result=await workspace.save();snapshot=workspace.peekContent();if(!workspace.dirty){const source=editor.getValue(),raw=host.querySelector('[name=author-source]');if(raw&&raw.value!==source)raw.value=source;const quote=host.querySelector('[data-author-quote]');if(quote){const box=doc.createElement('div');box.innerHTML=renderLesson(source);quote.value=box.textContent;}}message=workspace.dirty?'Saved the submitted draft. Newer edits remain unsaved.':'';return result;}
   catch(error){message=error.status===409?'Draft changed elsewhere. Your edits remain here. Compare with the latest saved draft before reconciling.':error.status===403?'Author access ended. Your edits remain here; restore author access to save.':(error.authorField?'Correct '+error.authorField+': ':'')+error.message+' Your edits remain here.';
    if(error.authorField||error.status===400){const field=host.querySelector('[data-author-field="'+(error.authorField||'activity')+'"]');if(field){field.disabled=false;field.setAttribute('aria-invalid','true');field.setAttribute('aria-describedby',statusId);field.focus({preventScroll:true});}}
    throw error;}
@@ -93,7 +93,9 @@ export function mountInlineAuthor(host,{workspace,lessonId,componentId,pageId,ap
    editorKey=rawKey(field,t);editorTarget=t;
    const mountSource=()=>{editor?.dispose();editorChanged=false;editorTouched=false;editor=mountRenderedSource(projection,{source:renderedValue,renderLesson,dependencies:markdownDependencies,api,session:sessions.get(editorKey),onError:error,onChange:()=>{editorTouched=true;editorChanged=!editor.isClean?.();if(editorChanged)dirtyRaw.add(editorKey);else{dirtyRaw.delete(editorKey);delete state.raw[editorKey];}state.selection=null;message='';workspace.touchBuffer?.(bufferOwner,editorChanged||dirtyRaw.size>0);}});editor.setLocked(busy||Boolean(workspace.pending)||workspace.revoked);};
    mountSource();
-   canvas.querySelector('[data-author-advanced]').addEventListener('toggle',event=>{if(event.target.open){materialize();raw.value=editor.getValue();}},{signal:ctl.signal});
+   const syncExactSource=()=>{if(editor.composing){raw.disabled=true;editor.whenSettled().then(()=>{if(current()&&raw.isConnected){raw.disabled=false;materialize();const value=editor.getValue();if(raw.value!==value)raw.value=value;raw.focus({preventScroll:true});}}).catch(error);return;}materialize();const value=editor.getValue();if(raw.value!==value)raw.value=value;};
+   canvas.querySelector('[data-author-advanced]').addEventListener('toggle',event=>{if(event.target.open)syncExactSource();},{signal:ctl.signal});
+   raw.addEventListener('focus',syncExactSource,{signal:ctl.signal});
    raw.addEventListener('input',()=>{renderedValue=raw.value;state.selection=null;write(field,renderedValue,editorTarget);sessions.delete(editorKey);mountSource();},{signal:ctl.signal});
   }else{
    if(reviewOnly)canvas.innerHTML='<h3>'+e(p?.title||l.title)+'</h3><div class="rich-lesson" data-author-projection>'+renderLesson(p?.html||b?.text||l.explanation||'')+'</div>';

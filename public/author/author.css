@@ -57,3 +57,4 @@
 .lesson-publication-dialog .button-row{position:sticky;bottom:-24px;padding:16px 0;background:var(--paper,#fff);flex-wrap:wrap;border-top:1px solid var(--line,#ccd5df)}
 .lesson-publication-dialog .publication-token{overflow-wrap:anywhere;font-size:12px}
 .lesson-publication-dialog input[type=checkbox]{width:auto;margin-inline-end:8px}
+.lesson-publication-dialog [hidden]{display:none!important}

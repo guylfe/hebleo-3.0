@@ -4,6 +4,7 @@ import {JSDOM} from 'jsdom';
 import {Store} from '../src/store.js';
 import {createStudioWorkspace} from '../public/studio/workspace.js';
 import {openLessonPublication} from '../public/studio/lesson-publication.js';
+import {readFileSync} from 'node:fs';
 
 function fixture(t){
  const s=new Store();t.after(()=>s.close());const active=s.snapshot(),c=s.snapshot();c.lessons[0].explanation+=' Synthetic selected text';c.lessons[1].title+=' Synthetic remaining draft';
@@ -13,6 +14,25 @@ function fixture(t){
  return {s,w,id,input,review:()=>s.reviewLessonPublication(input())};
 }
 const turn=()=>new Promise(r=>setImmediate(r));
+for(const kind of ['missing-pins','string-pins','zero-pins','old-revision','missing-published','bad-published','empty-token','malformed-token','old-token'])test('QA-EDITOR-PUB-RECEIPT-01: '+kind+' freezes writes before adopting any pin or acknowledging late input',async t=>{
+ const {s,w,input,review}=fixture(t),r=review(),oldBase=w.baseRevisionId,oldToken=w.expectedDraftToken;let raw=null,acks=0;
+ w.registerCollector(()=>{if(raw){const c=w.peekContent();c.lessons[1].title=raw;w.replace(c,{changed:false});}return ()=>acks++;});
+ await assert.rejects(w.publishLesson(r,()=>{
+  const result=s.publishLesson({...input(),reviewToken:r.reviewToken});raw='Synthetic retained after '+kind;w.touchBuffer('late');
+  if(kind==='missing-pins'){delete result.revisionId;delete result.workspace.revisionId;delete result.workspace.draft.baseRevisionId;}
+  if(kind==='string-pins')result.revisionId=result.workspace.revisionId=result.workspace.draft.baseRevisionId='invalid';
+  if(kind==='zero-pins')result.revisionId=result.workspace.revisionId=result.workspace.draft.baseRevisionId=0;
+  if(kind==='old-revision')result.revisionId=result.workspace.revisionId=result.workspace.draft.baseRevisionId=oldBase;
+  if(kind==='missing-published')delete result.workspace.content;
+  if(kind==='bad-published')result.workspace.content={};
+  if(kind==='empty-token')result.workspace.draft.draftToken='';
+  if(kind==='malformed-token')result.workspace.draft.draftToken='dt1-not-a-hash';
+  if(kind==='old-token')result.workspace.draft.draftToken=oldToken;
+  return result;
+ }),/receipt/);
+ assert.equal(w.baseRevisionId,oldBase);assert.equal(w.expectedDraftToken,oldToken);assert.ok(w.writeBlock);assert.equal(w.dirty,true);assert.equal(w.getContent().lessons[1].title,raw);assert.equal(acks,0);await assert.rejects(w.save(),/reconciliation/);
+ w.reconcile(s.active());await w.save();assert.equal(s.currentDraft().content.lessons[1].title,raw);assert.equal(s.get('active'),oldBase+1);
+});
 test('same owner adopts remaining draft and new pins; later selected/unselected saves cannot revert publication',async t=>{
  const {s,w,id,input,review}=fixture(t),r=review(),before=structuredClone(s.currentDraft().content),result=await w.publishLesson(r,()=>s.publishLesson({...input(),reviewToken:r.reviewToken}));
  assert.equal(w.baseRevisionId,result.revisionId);assert.equal(w.expectedDraftToken,result.workspace.draft.draftToken);assert.equal(w.dirty,false);assert.deepEqual(w.getContent(),before);assert.match(w.publicationState(id),/This lesson is published.*Other workspace drafts remain private/);
@@ -52,4 +72,12 @@ test('dirty input invalidates a displayed confirmation; Cancel does not publish 
  const {s,w,id}=fixture(t),dom=new JSDOM('<button>Review</button>');t.after(()=>dom.window.close());let commits=0;
  const ui=openLessonPublication({document:dom.window.document,workspace:w,lessonId:id,api:async(path,input)=>{if(path.endsWith('/review'))return s.reviewLessonPublication(input);commits++;return s.publishLesson(input);}});await ui.ready;
  w.touchBuffer('late');await turn();assert.equal(ui.dialog.querySelector('[data-publication-confirm]').disabled,true);assert.match(ui.dialog.textContent,/previous confirmation is no longer valid/);ui.close();assert.equal(w.dirty,true);assert.equal(commits,0);
+});
+
+for(const uncertain of [false,true])test('publication controls honor hidden in review, '+(uncertain?'uncertain':'success')+' and Close states',async t=>{
+ const {s,w,id}=fixture(t),dom=new JSDOM('<main></main>',{pretendToBeVisual:true});t.after(()=>dom.window.close());const doc=dom.window.document,style=doc.createElement('style');style.textContent='.button{display:flex}\n'+readFileSync(new URL('../public/author/author.css',import.meta.url),'utf8');doc.head.append(style);
+ const ui=openLessonPublication({document:doc,workspace:w,lessonId:id,api:async(path,input)=>{if(path.endsWith('/review'))return s.reviewLessonPublication(input);const result=s.publishLesson(input);if(uncertain)throw new TypeError('Synthetic dropped response');return result;}});await ui.ready;
+ const display=selector=>dom.window.getComputedStyle(ui.dialog.querySelector(selector)).display;
+ assert.equal(display('[data-publication-check]'),'none');assert.notEqual(display('[data-publication-confirm]'),'none');ui.dialog.querySelector('[data-publication-confirm]').click();await turn();
+ if(uncertain){assert.ok(w.writeBlock);assert.notEqual(display('[data-publication-check]'),'none');assert.equal(ui.dialog.querySelector('[data-publication-confirm]').disabled,true);}else{assert.equal(display('[data-publication-confirm]'),'none');assert.equal(display('[data-publication-refresh]'),'none');assert.equal(display('[data-publication-check]'),'none');assert.equal(ui.dialog.querySelector('[data-publication-cancel]').textContent,'Close');}ui.close();
 });

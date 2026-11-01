@@ -45,6 +45,14 @@ test('departure Save acknowledges rich model; later collection/disposal cannot r
 test('collection followed by exact Undo removes only its materialized prose patch',async t=>{
  const a=await author(t),view=a.ui.editor.view;view.dispatch(view.state.tr.insertText('Synthetic transient ',2));a.workspace.getContent();assert.ok(Object.keys(a.state.raw).length);undo(view.state,tr=>view.dispatch(tr));assert.equal(a.workspace.dirty,false);assert.deepEqual(a.state.raw,{});await a.ui.save();assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,source);
 });
+
+test('Advanced source reentry and successful Save reflect the current rich model without remounting its history',async t=>{
+ const a=await author(t),view=a.ui.editor.view,raw=a.host.querySelector('[name=author-source]'),advanced=a.host.querySelector('[data-author-advanced]');advanced.open=true;await tick();
+ a.w.Range.prototype.getClientRects=()=>[];a.w.Range.prototype.getBoundingClientRect=()=>({left:0,right:0,top:0,bottom:0,width:0,height:0});
+ const textareaValue=()=>a.ui.editor.getValue().replace(/\r\n?/g,'\n');
+ view.dispatch(view.state.tr.insertText('Synthetic rich ',2));const exact=a.ui.editor.getValue();raw.focus();assert.equal(raw.value,textareaValue());assert.equal(a.ui.editor.getValue(),exact,'focusing a textarea projection must not normalize original source');assert.equal(a.ui.editor.view,view);
+ view.focus();view.dispatch(closeHistory(view.state.tr).insertText('saved ',3));assert.notEqual(raw.value,textareaValue());await a.ui.save();assert.equal(raw.value,textareaValue());assert.equal(a.ui.editor.view,view);undo(view.state,tr=>view.dispatch(tr));assert.equal(a.workspace.dirty,true);raw.focus();assert.equal(raw.value,textareaValue());
+});
 test('rendered heading/sentence save through full draft/CAS; saved Preview reads exact rich source; quote and whole-block notes are readable, persistent and learner-excluded',async t=>{
  const a=await author(t),{w,host,workspace,s,p,api,state,calls}=a,revision=s.get('active'),learners=s.backup().learners;
  assert.equal(host.querySelector('[data-author-advanced]').open,false);assert.equal(host.querySelector('[data-author-action=save]').classList.contains('primary'),true);assert.equal(host.querySelector('[data-author-action=apply]').textContent,'Review changes');

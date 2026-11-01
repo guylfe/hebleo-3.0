@@ -54,8 +54,11 @@ export function createStudioWorkspace({content,publishedContent,baseRevisionId,e
      for(const settle of settlers)await settle();
      if(api.dirty||version!==serial)throw Object.assign(new Error('Workspace changed. Save and review again.'),{status:409});
      result=await commit();
-     const receipt=result?.publication,latest=result?.workspace;
-     if(receipt?.scope!=='lesson'||receipt.lessonId!==review.lessonId||receipt.fromBaseRevisionId!==sentBase||receipt.consumedDraftToken!==sentToken||receipt.reviewToken!==review.reviewToken||receipt.publishedContentHash!==review.publishedContentHash||latest?.revisionId!==result.revisionId||latest?.draft?.baseRevisionId!==result.revisionId||typeof latest?.draft?.draftToken!=='string'||JSON.stringify(latest.draft.content)!==JSON.stringify(sent))throw new Error('Publication receipt needs reconciliation; local work is retained.');
+     const receipt=result?.publication,latest=result?.workspace,revision=result?.revisionId;
+     const envelope=content=>content&&typeof content==='object'&&!Array.isArray(content)&&content.courseId===sent.courseId&&['words','lessons','exercises'].every(key=>Array.isArray(content[key]));
+     const validRevision=Number.isSafeInteger(revision)&&revision>0&&typeof result.noChanges==='boolean'&&result.noChanges===review.noChanges&&(result.noChanges?revision===sentBase:revision>sentBase);
+     const validToken=typeof latest?.draft?.draftToken==='string'&&/^dt1-[a-f0-9]{64}$/.test(latest.draft.draftToken)&&(result.noChanges?latest.draft.draftToken===sentToken:latest.draft.draftToken!==sentToken);
+     if(!validRevision||!validToken||!envelope(latest?.content)||!envelope(latest?.draft?.content)||!latest.content.lessons.some(l=>l?.id===review.lessonId)||receipt?.scope!=='lesson'||receipt.lessonId!==review.lessonId||receipt.fromBaseRevisionId!==sentBase||receipt.consumedDraftToken!==sentToken||receipt.reviewToken!==review.reviewToken||receipt.publishedContentHash!==review.publishedContentHash||latest.revisionId!==revision||latest.draft.baseRevisionId!==revision||JSON.stringify(latest.draft.content)!==JSON.stringify(sent))throw new Error('Publication receipt needs reconciliation; local work is retained.');
      const local=collect(),merged=mergeWorkspace(sent,local,latest.draft.content);
      baseline=structuredClone(latest.draft.content);published=structuredClone(latest.content);value=merged;baseRevisionId=latest.revisionId;token=latest.draft.draftToken;publicationCache.clear();
      dirty=version!==serial||JSON.stringify(local)!==JSON.stringify(sent);if(!dirty)buffers.clear();writeBlock=null;notify();return result;
