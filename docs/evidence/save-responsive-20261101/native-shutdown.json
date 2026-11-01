@@ -1,0 +1,40 @@
+{
+  "sourceUnchanged": true,
+  "activeUnchanged": true,
+  "draftLessons": 23,
+  "finalDraftBytes": 26632107,
+  "receipt": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 8,
+        "sha256": "081092d2b923c716865ede9a7c72726102c38a06967bdec8c067ad4b5243a807"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "02ddb42fe1b6eb55737bcc861b38a85d95a8b1bd969c652dc6eb319ca5a35193"
+      },
+      "media_aliases": {
+        "rows": 4,
+        "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+      },
+      "media_blobs": {
+        "rows": 5,
+        "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+      },
+      "revisions": {
+        "rows": 6,
+        "sha256": "76ee4b33191e31bd1ca6446a15c3e8b1e6609057d70392396db94f60d0c9ad76"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "af166db64813795f361d010d7a8bfa0ba9c0f52fb037efce9d5029d5720b0cd6"
+      }
+    },
+    "sha256": "3b102e58981f51eaa66e7d52d2146ba201354dbab100158616aa89b99dfc7049"
+  }
+}

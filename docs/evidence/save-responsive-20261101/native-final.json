@@ -1,0 +1,269 @@
+{
+  "advancedSourcePrefixMatches": true,
+  "allAssetsMatch": true,
+  "assets": [
+    {
+      "path": "/studio/workspace.js",
+      "sha256": "565e26dd5ae08b128123c67fc9a10b42eac9a547cf66f7e5171c458a36d99fa0",
+      "status": 200
+    },
+    {
+      "path": "/studio/save-worker.js",
+      "sha256": "97aefa74158e773f39a16a1f243f781573fa5acdc31f4884b31dc4def91aca28",
+      "status": 200
+    },
+    {
+      "path": "/studio/save-task.js",
+      "sha256": "a71b27572baa0a6fc94f012b20bf2a93fcca32e735719f0e9a99cc7495ce5771",
+      "status": 200
+    },
+    {
+      "path": "/studio/save-processor.js",
+      "sha256": "93b273ae2c964ebc9ed8805b8ffed5197e7721f1eb57359a6e3fb476fe29e087",
+      "status": 200
+    },
+    {
+      "path": "/author/field-patch.js",
+      "sha256": "84b66d760af7d6abd426a5ef339855e3a9966af65c78f5cd84911dba966a0110",
+      "status": 200
+    },
+    {
+      "path": "/author/inline-author.js",
+      "sha256": "3687de49881204cf35f45187021154e648412f89485d5d94a289f92bc85f1235",
+      "status": 200
+    },
+    {
+      "path": "/app.js",
+      "sha256": "3e330af9cc9a69839d2423838c4c0312a143cafdd1b5c26c9969d8f757c78bd9",
+      "status": 200
+    }
+  ],
+  "build": {
+    "fileCount": 100,
+    "revision": "86589da68849b3cac71d5eaa0c26f99d14a55198",
+    "sha256": "68a90bc16efb4c0eee05c1f886ee9c3dc18751e4c6f910d43ed1f0d4fe589a2a"
+  },
+  "inputs": [
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123418.5,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123459,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123490.20000004768,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123521.89999997616,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123556.29999995232,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123590.60000002384,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123623.5,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123654.79999995232,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123689.39999997616,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123722.70000004768,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123757.39999997616,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123790.5,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123823,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123856.39999997616,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 123889.89999997616,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 141327.70000004768,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": false,
+      "time": 156571.79999995232,
+      "trusted": true
+    },
+    {
+      "inputType": "insertText",
+      "pending": true,
+      "time": 165180,
+      "trusted": true
+    }
+  ],
+  "runs": [
+    {
+      "editable": true,
+      "feedback": 1.2999999523162842,
+      "firstRaf": 12.699999928474426,
+      "frameCount": 158,
+      "longTasks": [
+        {
+          "duration": 292,
+          "start": 127738.39999997616
+        }
+      ],
+      "maxFrameGap": 266.6999999999971,
+      "resources": [
+        {
+          "duration": 1978.5,
+          "name": "studio/draft",
+          "start": 905
+        }
+      ],
+      "sameEditor": true,
+      "sameSelection": true,
+      "start": 127723.70000004768,
+      "status": "Draft saved · not published.",
+      "total": 2888.099999904633,
+      "trusted": true
+    },
+    {
+      "editable": true,
+      "feedback": 0.2999999523162842,
+      "firstRaf": 13.899999976158142,
+      "frameCount": 169,
+      "longTasks": [
+        {
+          "duration": 270,
+          "start": 145906.60000002384
+        }
+      ],
+      "maxFrameGap": 250,
+      "resources": [
+        {
+          "duration": 2135.5,
+          "name": "studio/draft",
+          "start": 917.399999976158
+        }
+      ],
+      "sameEditor": true,
+      "sameSelection": true,
+      "start": 145889.60000002384,
+      "status": "Draft saved · not published.",
+      "total": 3055.600000023842,
+      "trusted": true
+    },
+    {
+      "editable": true,
+      "feedback": 0.20000004768371585,
+      "firstRaf": 12.899999976158142,
+      "frameCount": 169,
+      "longTasks": [
+        {
+          "duration": 286,
+          "start": 163221.10000002384
+        }
+      ],
+      "maxFrameGap": 266.70000000001164,
+      "resources": [
+        {
+          "duration": 2177.2999999523163,
+          "name": "studio/draft",
+          "start": 885.2000000476837
+        }
+      ],
+      "sameEditor": true,
+      "sameSelection": false,
+      "start": 163206,
+      "status": "Saved the submitted draft. Newer edits remain unsaved.",
+      "total": 3064.600000023842,
+      "trusted": true
+    },
+    {
+      "editable": true,
+      "feedback": 0.4000000953674317,
+      "firstRaf": 14.200000047683716,
+      "frameCount": 162,
+      "longTasks": [
+        {
+          "duration": 215,
+          "start": 199986.70000004768
+        }
+      ],
+      "maxFrameGap": 183.29999999998836,
+      "resources": [
+        {
+          "duration": 2021.6999999284744,
+          "name": "studio/draft",
+          "start": 843.4000000953674
+        }
+      ],
+      "sameEditor": true,
+      "sameSelection": true,
+      "start": 199970.29999995232,
+      "status": "Draft saved · not published.",
+      "total": 2867.8000000715256,
+      "trusted": true
+    }
+  ],
+  "status": "Draft saved · not published.",
+  "undoRedoVerified": true,
+  "url": "http://127.0.0.1:63483/#lesson/MEMORY-A2/MEMORY-A2-interactive",
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}

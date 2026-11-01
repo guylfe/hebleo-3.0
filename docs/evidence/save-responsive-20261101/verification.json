@@ -1,0 +1,87 @@
+{
+  "codeCommit": "86589da68849b3cac71d5eaa0c26f99d14a55198",
+  "branch": "fix/save-responsive-20261101",
+  "baseCommit": "2490bcfd866a513451c9d80f7a815f609519e465",
+  "checks": [
+    {
+      "command": "npm ci --offline --ignore-scripts",
+      "passed": true
+    },
+    {
+      "command": "npm ci --prefix schemas --offline --ignore-scripts --no-audit --no-fund",
+      "passed": true
+    },
+    {
+      "command": "npm run verify:candidate",
+      "passed": true,
+      "tests": 1036,
+      "limits": "configured audio filenames and audio/speed/playback name exclusions; no independent review"
+    },
+    {
+      "command": "npm test --prefix schemas",
+      "passed": true,
+      "tests": 27
+    },
+    {
+      "command": "npm run runtime --prefix schemas -- --runtime ..",
+      "passed": true,
+      "tests": 9
+    },
+    {
+      "command": "npm run build:editor",
+      "passed": true,
+      "limits": "initial sandbox parent read failure; unrestricted local command passed; vendor semantic diff empty"
+    },
+    {
+      "command": "node scripts/profile-inline-save.mjs <source> before <Lead exact checkout>",
+      "passed": true,
+      "runs": 2,
+      "measurement": "JSDOM inline controller / real loopback HTTP"
+    },
+    {
+      "command": "node scripts/profile-inline-save.mjs <source> after",
+      "passed": true,
+      "runs": 2,
+      "measurement": "JSDOM inline controller / real loopback HTTP / real worker; second run contended"
+    },
+    {
+      "command": "node scripts/serve-save-responsive.mjs <source> 63483",
+      "passed": true,
+      "measurement": "fresh source receipt and original 23D/26632089 bytes; no reset"
+    },
+    {
+      "command": "node scripts/verify-save-responsive.mjs <source> <prepared> <expected synthetic prefix> <report>",
+      "passed": true,
+      "runs": 3,
+      "measurement": "full expected 23D and all non-progress state exact; original source unchanged"
+    },
+    {
+      "command": "py -3 <frontend-design-premium>/scripts/audit_project.py . --mode strict --output tmp/premium-audit.json",
+      "passed": false,
+      "limits": "three pre-existing delegated-button false positives with handlers at lesson-editor.js:41 and media-picker.js:23; no new touched-file finding"
+    },
+    {
+      "command": "git diff --check",
+      "passed": true
+    }
+  ],
+  "native": {
+    "origin": "http://127.0.0.1:63483",
+    "revision": "86589da68849b3cac71d5eaa0c26f99d14a55198",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    },
+    "trustedSaves": 4,
+    "allServedAssetsMatch": true,
+    "lateTrustedInputRetained": true,
+    "undoRedoVerified": true,
+    "independentReview": false,
+    "physicalIME": false
+  },
+  "relatedAutomations": 0,
+  "privateRemoteVerified": true,
+  "privateBranchPushed": true,
+  "installed": false,
+  "guyAcceptance": "Pending"
+}
