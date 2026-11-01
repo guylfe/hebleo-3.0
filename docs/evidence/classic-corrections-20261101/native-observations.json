@@ -1,0 +1,295 @@
+{
+  "nativeBrushKeyboard": {
+    "active": "tab",
+    "activeText": "Text",
+    "tabs": [
+      {
+        "text": "Background",
+        "selected": "false",
+        "tabIndex": -1,
+        "focus": false,
+        "panelHidden": true
+      },
+      {
+        "text": "Text",
+        "selected": "true",
+        "tabIndex": 0,
+        "focus": true,
+        "panelHidden": false
+      }
+    ]
+  },
+  "nativeSave1": {
+    "firstRAF": 14.900000095367432,
+    "events": [
+      {
+        "type": "save",
+        "trusted": true
+      },
+      {
+        "type": "status",
+        "text": "Saving complete workspace draft…",
+        "ms": 0.7000000476837158
+      },
+      {
+        "type": "status",
+        "text": "Saving complete workspace draft…",
+        "ms": 4565.600000023842
+      },
+      {
+        "type": "status",
+        "text": "Draft saved · not published.",
+        "ms": 4568.100000023842
+      }
+    ],
+    "longTasks": [
+      194
+    ],
+    "sameEditor": true,
+    "h2Style": "text-align: center;",
+    "commentsHTTP": 200,
+    "anchors": [
+      {
+        "anchorState": "current",
+        "originalSource": "SYNTHETIC projection fixture\nSYNTHETIC repeated שָׁלוֹם 😀 quote.\nSYNTHETIC repeated שָׁלוֹם 😀 quote.\n"
+      }
+    ],
+    "status": "Draft saved · not published."
+  },
+  "nativePending": {
+    "events": [
+      {
+        "type": "save",
+        "trusted": true
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3286.7999999523163
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3300.7999999523163
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3314.5
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3329.1999999284744
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3344.1999999284744
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3349.1999999284744
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3363.6999999284744
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3377
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3382.2999999523163
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3392.5999999046326
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3397.7999999523163
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3408
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3414.0999999046326
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3424.6999999284744
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3432
+      },
+      {
+        "type": "input",
+        "trusted": true,
+        "whileSaving": true,
+        "ms": 3438
+      }
+    ],
+    "sameEditor": true,
+    "visible": "SYNTHETIC projection fixtureSYNTHETIC repeat SYNTHETIC LATE Bed שָׁלוֹם 😀 quote.SYNTHETIC repeated שָׁלוֹם 😀 quote.",
+    "status": "Saved the submitted draft. Newer edits remain unsaved.",
+    "anchors": [
+      {
+        "state": "current",
+        "original": "SYNTHETIC projection fixture\nSYNTHETIC repeated שָׁלוֹם 😀 quote.\nSYNTHETIC repeated שָׁלוֹם 😀 quote.\n"
+      }
+    ]
+  },
+  "nativeSavedB": {
+    "anchors": [
+      {
+        "state": "changed",
+        "original": "SYNTHETIC projection fixture\nSYNTHETIC repeated שָׁלוֹם 😀 quote.\nSYNTHETIC repeated שָׁלוֹם 😀 quote.\n"
+      }
+    ],
+    "visible": "SYNTHETIC projection fixtureSYNTHETIC repeat SYNTHETIC LATE B﻿ed שָׁלוֹם 😀 quote.SYNTHETIC repeated שָׁלוֹם 😀 quote.",
+    "sameEditor": true
+  },
+  "nativeReload": {
+    "heading": "SYNTHETIC projection fixture",
+    "headingStyle": "text-align:center",
+    "text": "SYNTHETIC projection fixtureSYNTHETIC repeat SYNTHETIC LATE Bed שָׁלוֹם 😀 quote.SYNTHETIC repeated שָׁלוֹם 😀 quote.",
+    "link": "https://example.invalid/synthetic-review",
+    "status": "Draft saved · not published."
+  },
+  "nativeLink": {
+    "links": [
+      {
+        "text": "SYNTHETIC repeated שָׁלוֹם 😀 quote.",
+        "href": "https://example.invalid/synthetic-review"
+      }
+    ],
+    "contextButtons": [
+      {
+        "label": "Insert link",
+        "ref": "link"
+      },
+      {
+        "label": "Unlink",
+        "ref": "unlink"
+      },
+      {
+        "label": "Fill color or set the text color",
+        "ref": "brush"
+      }
+    ],
+    "fileVisible": false
+  },
+  "nativeHashes": [
+    {
+      "path": "/author/classic-source.js",
+      "status": 200,
+      "bytes": 8027,
+      "sha256": "8708c9900c1e8a397457684acf2a9401c8b5169a676064f4353314ca6ff31475"
+    },
+    {
+      "path": "/author/source-adapter.js",
+      "status": 200,
+      "bytes": 13563,
+      "sha256": "7a578c9092fd8f0c91cc40853c9c9ddc96c814eb05c08acc3dcfa302a6d27159"
+    },
+    {
+      "path": "/author/standard-editor.js",
+      "status": 200,
+      "bytes": 12300,
+      "sha256": "ee55d81a55c60f955f6f6d53325b108525719a2aae60c7674474d82ebd84a7c0"
+    },
+    {
+      "path": "/author/author.css",
+      "status": 200,
+      "bytes": 6321,
+      "sha256": "b639324345a14ea0d899bf878fad416fdbba83c11011f4bc696717bfa6da3853"
+    }
+  ],
+  "nativeFinalLink": {
+    "context": [
+      {
+        "label": "Edit link",
+        "ref": "link"
+      },
+      {
+        "label": "Unlink",
+        "ref": "unlink"
+      },
+      {
+        "label": "Fill color or set the text color",
+        "ref": "brush"
+      }
+    ],
+    "fileVisible": false,
+    "status": "Draft saved · not published."
+  },
+  "nativeFontsFinal": [
+    "8px",
+    "10px",
+    "12px",
+    "14px",
+    "16px",
+    "18px",
+    "24px",
+    "32px",
+    "48px",
+    "72px",
+    "96px"
+  ],
+  "nativeHashesFinal": [
+    {
+      "path": "/author/classic-source.js",
+      "status": 200,
+      "bytes": 8027,
+      "sha256": "8708c9900c1e8a397457684acf2a9401c8b5169a676064f4353314ca6ff31475"
+    },
+    {
+      "path": "/author/source-adapter.js",
+      "status": 200,
+      "bytes": 13563,
+      "sha256": "7a578c9092fd8f0c91cc40853c9c9ddc96c814eb05c08acc3dcfa302a6d27159"
+    },
+    {
+      "path": "/author/standard-editor.js",
+      "status": 200,
+      "bytes": 12341,
+      "sha256": "9ec02dab4fa71428c3c46f09db4c76c6b9f62b5386e7afe986ea452f22d6c89e"
+    },
+    {
+      "path": "/author/author.css",
+      "status": 200,
+      "bytes": 6321,
+      "sha256": "b639324345a14ea0d899bf878fad416fdbba83c11011f4bc696717bfa6da3853"
+    }
+  ]
+}
