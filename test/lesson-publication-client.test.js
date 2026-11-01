@@ -9,7 +9,7 @@ import {readFileSync} from 'node:fs';
 function fixture(t){
  const s=new Store();t.after(()=>s.close());const active=s.snapshot(),c=s.snapshot();c.lessons[0].explanation+=' Synthetic selected text';c.lessons[1].title+=' Synthetic remaining draft';
  s.stage({baseRevisionId:s.get('active'),expectedDraftToken:null,content:c});
- const d=s.currentDraft(),w=createStudioWorkspace({content:d.content,publishedContent:active,baseRevisionId:d.baseRevisionId,expectedDraftToken:d.draftToken,saveDraft:input=>s.stage(input)}),id=c.lessons[0].id;
+ const d=s.currentDraft(),w=createStudioWorkspace({content:d.content,publishedContent:active,baseRevisionId:d.baseRevisionId,expectedDraftToken:d.draftToken,saveDraft:input=>s.stage(input,undefined,{returnMinimal:true})}),id=c.lessons[0].id;
  const input=()=>({baseRevisionId:w.baseRevisionId,expectedDraftToken:w.expectedDraftToken,lessonId:id,includeDependencies:[]});
  return {s,w,id,input,review:()=>s.reviewLessonPublication(input())};
 }

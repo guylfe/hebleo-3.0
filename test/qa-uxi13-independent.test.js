@@ -91,12 +91,12 @@ test('QA-UXI13-01 stale concurrent draft refuses departure Save and retains raw 
  doc.querySelector('[data-departure-stay]').click();await settled(()=>!doc.querySelector('#studio-departure'));assert.equal(f.isConnected,true);
 });
 
-test('QA-UXI13-02 failed post-save reload does not silently publish or discard unsaved workspace',async t=>{
+test('QA-UXI13-02 lost post-commit draft receipt does not silently publish or discard unsaved workspace',async t=>{
  const {w,doc,store}=await app(t,{page:'studio',author:true,realHTTP:true});
  const f=doc.querySelector('[data-lesson-metadata] [name=title]');edit(w,f,'SYNTHETIC saved despite reload outage');
- const real=w.fetch;let failed=false;w.fetch=(p,o)=>p==='/api/studio'&&store.currentDraft()&&!failed?(failed=true,Promise.resolve({ok:false,status:503,json:async()=>({error:'SYNTHETIC post-save reload outage'})})):real(p,o);
+ const real=w.fetch;let failed=false;w.fetch=async(p,o)=>{const response=await real(p,o);if(p==='/api/studio/draft'&&!failed){failed=true;return {ok:false,status:503,json:async()=>({error:'SYNTHETIC draft receipt outage'})};}return response;};
  const active=store.get('active');nav(doc,'home').click();await settled(()=>doc.querySelector('#studio-departure'));doc.querySelector('[data-departure-save]').click();
- await settled(()=>/reload outage/.test(doc.querySelector('[data-departure-status]').textContent));
+ await settled(()=>/receipt outage/.test(doc.querySelector('[data-departure-status]').textContent));
  assert.equal(store.currentDraft().content.lessons[0].title,f.value);assert.equal(store.get('active'),active);assert.equal(w.location.hash,'#studio');assert.equal(f.isConnected,true);assert.equal(f.disabled,false);
  doc.querySelector('[data-departure-stay]').click();await settled(()=>!doc.querySelector('#studio-departure'));assert.equal(f.isConnected,true);
 });

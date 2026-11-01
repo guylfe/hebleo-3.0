@@ -251,9 +251,9 @@ export class Store {
   currentDraft() { const draft = this.get('draft'); return draft ? { ...draft, draftToken: draftTokenFor(draft.baseRevisionId, draft.content) } : null; }
   draftConflict(message, code = 'DRAFT_CONFLICT') { return new DomainError(message, code === 'DRAFT_TOKEN_REQUIRED' ? 400 : 409, code, { current: { draftToken: this.currentDraft()?.draftToken ?? null, activeRevisionId: this.get('active') } }); }
   // Callers name the draft they believe is current (null = none). Anything else is a conflict, never a silent overwrite.
-  expectDraft(token) {
+  expectDraft(token, draft = this.currentDraft()) {
     if (token !== null && (typeof token !== 'string' || !token)) throw this.draftConflict('Name the current draft token, or null when there is no draft.', 'DRAFT_TOKEN_REQUIRED');
-    if ((this.currentDraft()?.draftToken ?? null) !== token) throw this.draftConflict('The draft changed elsewhere. Reload before saving again.');
+    if ((draft?.draftToken ?? null) !== token) throw this.draftConflict('The draft changed elsewhere. Reload before saving again.');
   }
   expectBase(baseRevisionId, message = 'Published content changed. Refresh before editing.') { if (baseRevisionId !== this.get('active')) throw this.draftConflict(message, 'STALE_BASE'); }
   active() { return { revisionId: this.get('active'), content: this.snapshot(), draft: this.currentDraft(), history: this.db.prepare('SELECT id,created_at AS createdAt,reason FROM revisions ORDER BY id DESC').all() }; }
@@ -529,12 +529,12 @@ export class Store {
     const progress=this.db.prepare('SELECT id,state FROM learners').all().flatMap(row=>Object.entries(JSON.parse(row.state).cards).map(([wordId,state])=>({learnerId:row.id,wordId,cardId:wordId,...state})));
     return previewProgressMigration({content:content.lexical,mappings:input.mappings||[],progress});
   }
-  stage(input,sourcePermit) {
+  stage(input,sourcePermit,{returnMinimal=false}={}) {
     if(this.get('source-state')?.sources && Object.keys(this.get('source-state').sources).length && !this.sourceAuthoring)throw new DomainError('Source authoring engine is required for source-bound edits.',409,'SOURCE_ENGINE_REQUIRED');
     if (!input || !Object.hasOwn(input, 'expectedDraftToken')) throw this.draftConflict('expectedDraftToken is required (null when creating a draft).', 'DRAFT_TOKEN_REQUIRED');
     return this.transaction(() => {
-      const active = this.get('active'); this.expectBase(input.baseRevisionId); this.expectDraft(input.expectedDraftToken);
-      const current = this.currentDraft();
+      const active = this.get('active'); this.expectBase(input.baseRevisionId);
+      const current = this.currentDraft();this.expectDraft(input.expectedDraftToken,current);
       let content = input.content ? clone(input.content) : clone(current?.content || this.snapshot());
       if (input.word) { const index = content.words.findIndex(w => w.id === input.word.id); if (index < 0) throw new DomainError('Word not found.', 404); content.words[index] = { ...content.words[index], ...input.word, id: content.words[index].id }; }
       validateContent(content);
@@ -549,7 +549,9 @@ export class Store {
       const mediaPlan=this.media.plan(content);if(!unchanged&&sourcePermit!==this.sourcePermit)this.sourceAuthoring?.validateLocalContent(content);
       // Re-staging the exact same draft writes nothing and keeps its token and stagedAt.
       if (!unchanged) {this.media.persistPlan(mediaPlan);if(sourcePermit!==this.sourcePermit)this.sourceAuthoring?.onLocalStage(content,draftToken);this.set('draft', { baseRevisionId: active, content, stagedAt: new Date().toISOString() });}
-      return { ...this.preview(), draftToken, baseRevisionId: active, unchanged,mediaWarnings:mediaPlan.warnings };
+      // Minimal is an explicit response preference, never a partial-write path.
+      // Validation, CAS, source hooks and media planning above are identical.
+      return { ...(returnMinimal?{}:this.preview()), draftToken, baseRevisionId: active, unchanged,mediaWarnings:mediaPlan.warnings };
     });
   }
   exerciseDependencies(input) {

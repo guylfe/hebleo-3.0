@@ -104,7 +104,12 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           if (url.pathname === '/api/enroll') return json(200, store.enroll(userId, input.wordId));
           if (url.pathname === '/api/studio/impact') return json(200,store.workspaceImpact(input));
           if (url.pathname === '/api/studio/dependencies') return json(200,store.exerciseDependencies(input));
-          if (url.pathname === '/api/studio/draft') return json(200, store.stage(input));
+          if (url.pathname === '/api/studio/draft') {
+            const returnMinimal=String(req.headers.prefer||'').split(',').some(value=>value.trim().toLowerCase()==='return=minimal');
+            const result=store.stage(input,undefined,{returnMinimal});
+            if(returnMinimal)res.setHeader('Preference-Applied','return=minimal');
+            return json(200,result);
+          }
           if (url.pathname === '/api/studio/publish-lesson/review') return json(200, store.reviewLessonPublication(input));
           if (url.pathname === '/api/studio/publish-lesson') return json(200, store.publishLesson(input));
           if (url.pathname === '/api/studio/publish') return json(200, store.publish(input.baseRevisionId, input.draftToken));
