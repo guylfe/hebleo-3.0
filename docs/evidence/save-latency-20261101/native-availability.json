@@ -1,0 +1,12 @@
+{
+  "origin": "http://127.0.0.1:63476",
+  "codeCommit": "6499ec6d70738563d2a73554cbad5211ce4db406",
+  "runtimeSha256": "54bf97567139a43529643f0e47abba877c56b9eac776593652ab85e49795dd8e",
+  "backendSha256": "74dc64579a1c5cf5ac5bdf1f03ba10d9b91bdd8c5102489b46ae9c2c4d1a48cb",
+  "browserAttempt": "Mounted Browser refused: another thread is using this browser",
+  "browserActions": 0,
+  "nativeSaveTiming": null,
+  "sourceUnchanged": true,
+  "disposableUnchanged": true,
+  "serverGracefullyStopped": true
+}
