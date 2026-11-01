@@ -37,6 +37,7 @@ import {inspectImport,renderImportReview} from '../public/studio/import-review.j
 import {pathToFileURL} from 'node:url';
 const {mountLessonPreview} = await import(process.env.HEBLEO_PREVIEW_CONTROLLER ? pathToFileURL(process.env.HEBLEO_PREVIEW_CONTROLLER) : '../public/preview/lesson-preview.js');
 import {createLearnerRenderer} from '../public/preview/learner-renderer.js';
+const parseRequestBody=body=>JSON.parse(typeof body==='string'?body:new TextDecoder().decode(body));
 async function settled(predicate){const deadline=Date.now()+5000;while(Date.now()<deadline){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle within 5 seconds.');}
 async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,width=1024,navigationPrefs,markdownDependencies,reduceMotion=false,textProgressTransport}={}){
   const store=providedStore||new Store();prepare?.(store);const d=new JSDOM('<div id="app"></div><div id="toast"></div>',{url:'http://127.0.0.1/#'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=d.window;
@@ -50,7 +51,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   Object.assign(w,{createStudioWorkspace,mountInlineAuthor,hasTextPages,mountTextReader,mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountTextImport,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   if(markdownDependencies){w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});w.mountInlineAuthor=(host,options)=>mountInlineAuthor(host,{...options,markdownDependencies:markdownDependencies(w)});}
   const calls=[];
-  w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
+  w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?parseRequestBody(options.body):null;calls.push(url.pathname);try{let value;
     if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
     if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
     else if(url.pathname==='/api/text-progress'&&textProgressTransport)value=await textProgressTransport({user,input,query:url.searchParams});
@@ -105,7 +106,7 @@ test('STUDIO-PICKER-01 real app Choose lesson lists all23 drafts and routes MEMO
  const {store,w,doc,calls}=await app(t,{author:true,page:'studio',realHTTP:true,prepare:first20Draft});
  await settled(()=>doc.querySelector('[data-current-lesson]'));
  const before=pickerDump(store),requests=[],fetch=w.fetch;
- w.fetch=(path,options)=>{if(path==='/api/studio/preview/session')requests.push(JSON.parse(options.body));return fetch(path,options);};
+ w.fetch=(path,options)=>{if(path==='/api/studio/preview/session')requests.push(parseRequestBody(options.body));return fetch(path,options);};
  for(const readable of ['MEMORY','MNT']){
   const lesson=store.currentDraft().content.lessons.find(l=>l.contentId===readable);
   doc.querySelector('.studio-context button').click();const picker=doc.querySelector('.studio-lesson-picker');assert.ok(picker?.open,'Choose lesson opens a visible native dialog');
@@ -544,7 +545,7 @@ test('G5 automated HTTP overlap: learner autosave response is pending when Studi
   t.after(()=>release());
   w.fetch=async(path,options={})=>{
     const progress=new URL(path,w.location.href).pathname==='/api/progress';
-    if(progress)payloads.push(JSON.parse(options.body));
+    if(progress)payloads.push(parseRequestBody(options.body));
     const result=await original(path,options);
     if(progress&&payloads.length===1){arrived();await blocked;}
     return result;
@@ -748,7 +749,7 @@ test('A rehearsal stops on a changed draft or a newer publication revision, writ
 function holdStudioReload(w){
   const original=w.fetch,bodies=[];let gate=null;
   // Hold the actual POST receipt after server commit, not a removed GET reload.
-  w.fetch=async(path,options={})=>{const pathname=new URL(path,w.location.href).pathname;if(options.body&&pathname.startsWith('/api/studio/'))bodies.push({path:pathname,body:JSON.parse(options.body)});const response=await original(path,options);if(gate&&pathname==='/api/studio/draft'){const held=gate;held.waiting=true;await held.promise;}return response;};
+  w.fetch=async(path,options={})=>{const pathname=new URL(path,w.location.href).pathname;if(options.body&&pathname.startsWith('/api/studio/'))bodies.push({path:pathname,body:parseRequestBody(options.body)});const response=await original(path,options);if(gate&&pathname==='/api/studio/draft'){const held=gate;held.waiting=true;await held.promise;}return response;};
   return {bodies,hold(){let release;const promise=new Promise(r=>release=r);gate={promise,release,waiting:false};},release(){const held=gate;gate=null;held?.release();},get waiting(){return Boolean(gate?.waiting);}};
 }
 const publishBody=reload=>reload.bodies.filter(b=>b.path==='/api/studio/publish-lesson').at(-1)?.body;
@@ -1060,7 +1061,7 @@ test('FB14 item9 Studio chapter and lesson controls retain associated labels and
 });
 test('Actions: lost attempt response recovers the exact immutable receipt and removes Check without remounting the answer',async t=>{
  const {w,doc,store}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});const answer=doc.querySelector('#answer'),scope=doc.querySelector('#practice');edit(w,answer,'SYNTHETIC wrong');answer.focus();answer.setSelectionRange(3,7);
- const fetch=w.fetch,requests=[];let lose=true;w.fetch=async(url,options)=>{if(url==='/api/attempt'){requests.push(JSON.parse(options.body));const response=await fetch(url,options);if(lose){lose=false;throw new Error('SYNTHETIC lost receipt');}return response;}return fetch(url,options);};
+ const fetch=w.fetch,requests=[];let lose=true;w.fetch=async(url,options)=>{if(url==='/api/attempt'){requests.push(parseRequestBody(options.body));const response=await fetch(url,options);if(lose){lose=false;throw new Error('SYNTHETIC lost receipt');}return response;}return fetch(url,options);};
  click(doc,'check');await settled(()=>doc.querySelector('[data-action=recover-attempt]'));
  assert.equal(store.learner('learner-demo').attempts.length,1);assert.equal(doc.querySelector('.feedback'),null);assert.equal(doc.querySelector('[data-action=check]'),null);assert.equal(doc.querySelector('#answer'),answer);assert.equal(answer.value,'SYNTHETIC wrong');assert.equal(answer.disabled,true);
  click(doc,'recover-attempt');await settled(()=>doc.querySelector('[data-action=next-question]'));
@@ -1080,7 +1081,7 @@ test('Actions: known grade save failure repeatedly retries only persistence with
 
 test('Actions: failed continuing retains the graded answer until the same destination saves, including a lost save response',async t=>{
  const {w,doc,store,calls}=await app(t,{page:'lesson/lesson-1/apply',realHTTP:true});edit(w,doc.querySelector('#answer'),'אני');click(doc,'check');await settled(()=>doc.querySelector('[data-action=next-question]'));const answer=doc.querySelector('#answer'),scope=doc.querySelector('#practice'),fetch=w.fetch,targets=[];let lose=true;
- w.fetch=async(url,options)=>{const response=await fetch(url,options);if(url==='/api/progress'){targets.push(JSON.parse(options.body));if(lose){lose=false;throw new Error('SYNTHETIC lost save response');}}return response;};
+ w.fetch=async(url,options)=>{const response=await fetch(url,options);if(url==='/api/progress'){targets.push(parseRequestBody(options.body));if(lose){lose=false;throw new Error('SYNTHETIC lost save response');}}return response;};
  click(doc,'next-question');await settled(()=>doc.querySelector('[data-action=retry-continuing]'));assert.equal(doc.querySelector('#practice'),scope);assert.equal(doc.querySelector('#answer'),answer);assert.equal(answer.value,'אני');assert.ok(doc.querySelector('.compact-result'));assert.equal(doc.querySelector('[data-action=check]'),null);
  click(doc,'retry-continuing');await settled(()=>doc.querySelector('.matching-game'));assert.deepEqual(targets[0],targets[1]);assert.equal(calls.filter(url=>url==='/api/attempt').length,1);assert.equal(store.learner('learner-demo').resumes['lesson-1'].question,1);
 });

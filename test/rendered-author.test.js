@@ -111,3 +111,10 @@ test('actual six-page reader 6 → Back → 5 reveals optional summary before hi
  const textPages=pack.lessons[0].blocks[0].textPages,ui=mountTextReader(host,{textPages,renderLesson:s=>s,initialState:{cursorPageId:textPages.order[5]},onContinue:()=>{}});t.after(()=>ui.destroy());host.querySelector('[data-source-action=back]').click();
  const summary=host.querySelector('[data-source-comparison] > summary');assert.ok(summary);assert.ok(summary.getBoundingClientRect().bottom<620);assert.equal(summary.parentElement.open,false);assert.equal(host.querySelector('[data-source-action=next]').disabled,false);summary.focus();summary.click();assert.equal(summary.parentElement.open,true);assert.equal(host.querySelector('[data-source-action=next]').disabled,false);
 });
+
+test('inline Save keeps rich and Advanced input editable; submitted model receipt cannot clear newer real editor input',async t=>{
+ const a=await author(t,{pending:true}),view=a.ui.editor.view;view.dispatch(view.state.tr.insertText('Submitted ',2));const sentSource=a.ui.editor.getValue(),pending=a.ui.save();await tick();
+ assert.equal(a.host.querySelector('[data-author-action=save]').disabled,true);assert.equal(a.host.querySelector('[name=author-source]').disabled,false);assert.equal(view.editable,true);assert.equal(a.host.querySelector('[data-author-action=preview]').disabled,true);
+ view.dispatch(closeHistory(view.state.tr).insertText('Newer ',2));input(a.w,a.host.querySelector('[data-author-body]'),'Unsent while Saving');a.release();await pending;
+ assert.equal(a.ui.editor.view,view);assert.equal(a.s.currentDraft().content.lessons[0].blocks[0].textPages.pages[0].html,sentSource);assert.match(a.ui.editor.getValue(),/Newer/);assert.equal(a.workspace.dirty,true);assert.equal(a.state.commentBody,'Unsent while Saving');assert.match(a.host.querySelector('[data-author-status]').textContent,/Newer edits remain unsaved/);
+});

@@ -1,0 +1,34 @@
+// Client/HTTP phase profile on disposable full-size data; not native latency.
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {mkdirSync,writeFileSync,readFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {JSDOM} from 'jsdom';
+import {marked} from 'marked';
+import purify from 'dompurify';
+import {Worker as NodeWorker} from 'node:worker_threads';
+import {Store} from '../src/store.js';
+import {createServer} from '../src/server.js';
+import {databaseReceipt,sha256} from './runtime-state.mjs';
+import {createLessonRenderer} from '../public/rich.js';
+const [source,mode='after',baselineRoot]=process.argv.slice(2);assert.ok(source);assert.ok(['before','after'].includes(mode));
+const moduleRoot=mode==='before'?resolve(baselineRoot):resolve('.');
+const {createStudioWorkspace}=await import(pathToFileURL(resolve(moduleRoot,'public/studio/workspace.js'))),{mountInlineAuthor}=await import(pathToFileURL(resolve(moduleRoot,'public/author/inline-author.js')));
+if(mode==='before'){const {execFileSync}=await import('node:child_process');for(const file of ['public/studio/workspace.js','public/author/inline-author.js'])assert.equal(sha256(readFileSync(resolve(moduleRoot,file),'utf8').replaceAll('\r\n','\n')),sha256(execFileSync('git',['show','2490bcfd866a513451c9d80f7a815f609519e465:'+file],{maxBuffer:1000000,windowsHide:true,encoding:'utf8'}).replaceAll('\r\n','\n')),'baseline file must equal exact Lead base');}
+mkdirSync('tmp',{recursive:true});const beforeSource=databaseReceipt(source),file=resolve('tmp/profile-inline-'+mode+'-'+Date.now()+'.sqlite'),db=new DatabaseSync(source,{readOnly:true});db.prepare('VACUUM INTO ?').run(file);db.close();
+const store=new Store(file),initial=store.currentDraft(),active=JSON.stringify(store.snapshot()),before=databaseReceipt(file),server=createServer(store,{mediaRoot:resolve('tmp/absent-media-root')});await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
+const initialKV=store.db.prepare('SELECT * FROM kv ORDER BY key').all();
+const d=new JSDOM('<main></main>',{pretendToBeVisual:true}),w=d.window,doc=w.document;Object.assign(globalThis,{window:w,document:doc,getComputedStyle:w.getComputedStyle.bind(w)});w.Range.prototype.getBoundingClientRect=()=>({left:0,right:0,top:0,bottom:0,width:0,height:0});w.Range.prototype.getClientRects=()=>[];
+if(mode==='after')globalThis.Worker=class{constructor(url){this.w=new NodeWorker(new URL('data:text/javascript,'+encodeURIComponent("import {parentPort} from 'node:worker_threads';globalThis.self={postMessage:(data,transfer)=>parentPort.postMessage(data,transfer)};await import("+JSON.stringify(url.href)+");parentPort.on('message',data=>self.onmessage({data}));")));this.w.on('message',data=>this.onmessage?.({data}));this.w.on('error',e=>this.onerror?.(e));}postMessage(task){this.w.postMessage(task);}terminate(){this.w.terminate();}};
+const phases={},copies=[],serializations=[];let start,phase='idle';const clone=globalThis.structuredClone,stringify=JSON.stringify;
+const workspace=createStudioWorkspace({content:initial.content,publishedContent:store.snapshot(),baseRevisionId:initial.baseRevisionId,expectedDraftToken:initial.draftToken,saveDraft:async(input,prepared)=>{
+ phases.clickToSubmit=performance.now()-start;const encode=performance.now(),body=prepared?.body??JSON.stringify(input);phases.requestEncodingMain=performance.now()-encode;phases.worker=prepared?.timing;
+ phase='http';const http=performance.now(),res=await fetch(origin+'/api/studio/draft',{method:'POST',headers:{'x-demo-user':'author-demo','content-type':'application/json',Prefer:'return=minimal'},body}),result=await res.json();phases.http=performance.now()-http;assert.equal(res.status,200);phase='acknowledgement';const t=performance.now();if(mode==='before')structuredClone(input.content);phases.appAdopt=performance.now()-t;return result;
+ }});
+const l=initial.content.lessons.find(l=>l.id==='MEMORY-A2'),b=l.blocks[0],p=b.textPages.pages[0],state={};const ui=mountInlineAuthor(doc.querySelector('main'),{workspace,lessonId:l.id,componentId:b.id,pageId:p.id,state,api:async()=>({comments:[],total:0}),renderLesson:createLessonRenderer(marked,purify(w),doc),markdownDependencies:{marked,purifier:purify(w)}});await ui.editor.ready;
+const raw=doc.querySelector('[name=author-source]'),expected=structuredClone(initial.content);raw.value=p.html.replace('Welcome to Hebleo','SYNTHETIC phase Welcome to Hebleo');assert.notEqual(raw.value,p.html);expected.lessons.find(x=>x.id===l.id).blocks[0].textPages.pages[0].html=raw.value;raw.dispatchEvent(new w.Event('input',{bubbles:true}));await ui.editor.ready;
+globalThis.structuredClone=(value,...args)=>{const t=performance.now(),result=clone(value,...args);if(phase!=='http'&&phase!=='idle')copies.push({fullWorkspace:value?.lessons?.length===23,ms:performance.now()-t});return result;};JSON.stringify=(value,...args)=>{const t=performance.now(),result=stringify(value,...args);if(phase!=='http'&&phase!=='idle')serializations.push({fullWorkspace:Boolean(value?.lessons?.length===23||value?.content?.lessons?.length===23),ms:performance.now()-t});return result;};
+try{start=performance.now();phase='preparation';await ui.save();phases.total=performance.now()-start;phase='idle';globalThis.structuredClone=clone;JSON.stringify=stringify;assert.deepEqual(store.currentDraft().content,expected);assert.equal(JSON.stringify(store.snapshot()),active);assert.equal(workspace.dirty,false);const after=databaseReceipt(file);for(const table of Object.keys(before.tables))if(table!=='kv')assert.deepEqual(after.tables[table],before.tables[table]);assert.equal(after.schemaSha256,before.schemaSha256);const finalKV=store.db.prepare('SELECT * FROM kv ORDER BY key').all();assert.deepEqual(finalKV.map(r=>r.key),initialKV.map(r=>r.key));for(const row of initialKV)if(row.key!=='draft')assert.deepEqual(finalKV.find(r=>r.key===row.key),row);assert.deepEqual(databaseReceipt(source),beforeSource);
+ const result={mode,measurement:'JSDOM real inline controller + loopback HTTP + real worker; NOT native paint',lessons:initial.content.lessons.length,bytes:Buffer.byteLength(JSON.stringify(initial.content)),phases,copies,serializations,fullDraftExact:true,activeExact:true,sourceUnchanged:true,allOtherTablesExact:true,nonDraftKVExact:true,schemaExact:true,beforeSource,afterReceipt:after};writeFileSync('tmp/profile-inline-'+mode+'.json',JSON.stringify(result,null,2));console.log(JSON.stringify({mode,phases,fullCopies:copies.filter(x=>x.fullWorkspace),fullSerializations:serializations.filter(x=>x.fullWorkspace),exact:true}));
+}finally{phase='idle';globalThis.structuredClone=clone;JSON.stringify=stringify;ui.dispose();d.window.close();server.closeAllConnections();await new Promise(r=>server.close(r));store.close();}

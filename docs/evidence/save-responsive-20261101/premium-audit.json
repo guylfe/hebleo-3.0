@@ -1,0 +1,41 @@
+{
+  "findings": [
+    {
+      "category": "violation",
+      "file": "public/studio/lesson-editor.js",
+      "line": 30,
+      "message": "Enabled literal button has no detectable action or submit behavior.",
+      "remediation": "Connect the button to a real action, make it a submit button, or disable/remove it.",
+      "ruleId": "affordance.actionless-button",
+      "severity": "error"
+    },
+    {
+      "category": "violation",
+      "file": "public/studio/lesson-editor.js",
+      "line": 30,
+      "message": "Enabled literal button has no detectable action or submit behavior.",
+      "remediation": "Connect the button to a real action, make it a submit button, or disable/remove it.",
+      "ruleId": "affordance.actionless-button",
+      "severity": "error"
+    },
+    {
+      "category": "violation",
+      "file": "public/studio/media-picker.js",
+      "line": 15,
+      "message": "Enabled literal button has no detectable action or submit behavior.",
+      "remediation": "Connect the button to a real action, make it a submit button, or disable/remove it.",
+      "ruleId": "affordance.actionless-button",
+      "severity": "error"
+    }
+  ],
+  "mode": "strict",
+  "projectRoot": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\71c71389-5334-4e0c-9ca8-d80dd28223d1\\653fb433-7485-48b1-9f7c-cb22711bda02\\hebleo-3\\save-responsive-20261101",
+  "schemaVersion": 1,
+  "summary": {
+    "errors": 3,
+    "total": 3,
+    "unresolved": 0,
+    "violations": 3,
+    "warnings": 0
+  }
+}
