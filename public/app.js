@@ -37,7 +37,7 @@ function openSelectedLessonPublication(lessonId){
  const owner=state.user,workspace=ensureAuthorContext(state.studio);workspace.savedContext();
  state.authorLessonId=lessonId;
  const title=workspace.peekContent().lessons.find(l=>l.id===lessonId)?.title||lessonId;
- publicationDialog=openLessonPublication({document,workspace,lessonId,title,api:(path,input)=>api(path,input,owner),onPublished:async result=>{
+ publicationDialog=openLessonPublication({document,workspace,lessonId,title,api:(path,input)=>api(path,input,owner),returnFocus:()=>root.querySelector('[data-author-action="save"]:not(:disabled),[data-save-workspace]:not(:disabled)')||root.querySelector('h1'),onPublished:async result=>{
   if(authorContext?.workspace!==workspace||state.user!==owner)return;
   state.studio={...state.studio,...result.workspace};
   // Refresh summaries without remounting the editor, its selection or comments.

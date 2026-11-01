@@ -1,7 +1,7 @@
 import {escapeHTML as e} from './editor-fields.js';
 
 // Review stored content only. Opening, changing scope and cancelling never publish.
-export function openLessonPublication({document:doc=globalThis.document,workspace,lessonId,title=lessonId,api,onPublished=()=>{},onReconciled=()=>{}}){
+export function openLessonPublication({document:doc=globalThis.document,workspace,lessonId,title=lessonId,api,onPublished=()=>{},onReconciled=()=>{},returnFocus=()=>null}){
  workspace.savedContext();
  const focus=doc.activeElement,dialog=doc.createElement('dialog');
  dialog.className='lesson-publication-dialog';dialog.setAttribute('aria-labelledby','lesson-publication-title');
@@ -75,7 +75,18 @@ export function openLessonPublication({document:doc=globalThis.document,workspac
   finally{busy=false;sync();recoverFocus(cancel);}
  }
  const unsubscribe=workspace.subscribe(sync);
- function close(){if(busy)return;closed=true;generation++;unsubscribe();dialog.close?.();dialog.remove();if(focus?.isConnected)focus.focus({preventScroll:true});}
+ function usableReturnTarget(element){
+  if(!element?.isConnected||element.disabled||element.hidden||element.closest('[hidden],[inert]'))return false;
+  const style=doc.defaultView.getComputedStyle(element);return style.display!=='none'&&style.visibility!=='hidden';
+ }
+ function close(){
+  if(busy)return;closed=true;generation++;unsubscribe();dialog.close?.();dialog.remove();
+  // Reconciliation can disable or replace the opener. Return to the owner's
+  // current Save control, with a page landmark as the final stable fallback.
+  const continuation=usableReturnTarget(focus)?focus:returnFocus();
+  const target=usableReturnTarget(continuation)?continuation:doc.querySelector('main h1,#app h1,main,#app');
+  if(usableReturnTarget(target)){if(!target.matches('button,input,textarea,select,a[href],[tabindex]'))target.tabIndex=-1;target.focus({preventScroll:true});}
+ }
  cancel.addEventListener('click',close);refresh.addEventListener('click',refreshReview);confirm.addEventListener('click',publish);check.addEventListener('click',reconcile);
  dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
  doc.body.append(dialog);if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');heading.focus({preventScroll:true});

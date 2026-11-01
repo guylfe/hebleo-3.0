@@ -83,6 +83,12 @@ test('publication loading retains a stable focus target; refresh and completion 
  const confirm=ui.dialog.querySelector('[data-publication-confirm]');confirm.focus();confirm.click();doc.body.focus();await turn();assert.equal(doc.activeElement,ui.dialog.querySelector('[data-publication-cancel]'));assert.equal(doc.activeElement.textContent,'Close');ui.close();assert.equal(doc.activeElement,opener);
 });
 
+for(const kind of ['disabled','hidden','removed'])test('Close returns to the current Save continuation when review opener is '+kind,async t=>{
+ const {s,w,id}=fixture(t),dom=new JSDOM('<button id="opener">Review</button><button id="save">Save draft</button>');t.after(()=>dom.window.close());const doc=dom.window.document,opener=doc.querySelector('#opener'),save=doc.querySelector('#save');opener.focus();
+ const ui=openLessonPublication({document:doc,workspace:w,lessonId:id,api:async(path,input)=>s.reviewLessonPublication(input),returnFocus:()=>save});await ui.ready;
+ if(kind==='removed')opener.remove();else opener[kind]=true;ui.close();assert.equal(doc.activeElement,save);
+});
+
 for(const uncertain of [false,true])test('publication controls honor hidden in review, '+(uncertain?'uncertain':'success')+' and Close states',async t=>{
  const {s,w,id}=fixture(t),dom=new JSDOM('<main></main>',{pretendToBeVisual:true});t.after(()=>dom.window.close());const doc=dom.window.document,style=doc.createElement('style');style.textContent='.button{display:flex}\n'+readFileSync(new URL('../public/author/author.css',import.meta.url),'utf8');doc.head.append(style);
  const ui=openLessonPublication({document:doc,workspace:w,lessonId:id,api:async(path,input)=>{if(path.endsWith('/review'))return s.reviewLessonPublication(input);const result=s.publishLesson(input);if(uncertain)throw new TypeError('Synthetic dropped response');return result;}});await ui.ready;

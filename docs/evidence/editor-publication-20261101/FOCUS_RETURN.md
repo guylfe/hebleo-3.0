@@ -1,0 +1,7 @@
+# QA-EDITOR-FOCUS-02 correction — pending native recheck
+
+Independent QA04858b4 closed original state/metadata and malformed-receipt defects, worker/pending/failure checks and current-size preservation, but found a native P2: successful reconciliation leaves the workspace intentionally dirty, so Close targets a still-connected disabled review opener and loses focus to BODY. Normal publication Close, Cancel and Escape passed. Release04858b4 independently passed integrity on all145 raw executable hashes,96 focused checks,11 app flows,nine additional worker checks,seven API/Store groups and nine full-size groups. Full reports remain separate independent evidence; no installation is implied.
+
+The narrow correction validates a connected, enabled, visible opener. Otherwise the application supplies its current enabled Save control, evaluated after possible remount/reconciliation; a page landmark is the final fallback. Closing neither saves nor publishes. Scope, owner, transport, receipts, server, schema and recovery are unchanged.
+
+Lead checks on the correction:22 publication-client tests pass, including disabled/hidden/removed opener regressions; nine actual app flows pass, including publication, pending operations, departure and stale inline A→Studio B. Syntax/diff checks pass. Exact04858b4 private CI41262483173 succeeded. Corrected-byte native reconciliation/Close and final exact-hash delta are still pending; Guy acceptance remains Pending. No original data or installed runtime change has occurred.
