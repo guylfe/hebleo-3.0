@@ -74,6 +74,15 @@ test('dirty input invalidates a displayed confirmation; Cancel does not publish 
  w.touchBuffer('late');await turn();assert.equal(ui.dialog.querySelector('[data-publication-confirm]').disabled,true);assert.match(ui.dialog.textContent,/previous confirmation is no longer valid/);ui.close();assert.equal(w.dirty,true);assert.equal(commits,0);
 });
 
+test('publication loading retains a stable focus target; refresh and completion recover usable dialog focus',async t=>{
+ const {s,w,id}=fixture(t),dom=new JSDOM('<button id="opener">Review</button>',{pretendToBeVisual:true}),doc=dom.window.document;t.after(()=>dom.window.close());
+ const opener=doc.querySelector('button');opener.focus();let release;const ui=openLessonPublication({document:doc,workspace:w,lessonId:id,api:(path,input)=>path.endsWith('/review')?new Promise(resolve=>release=()=>resolve(s.reviewLessonPublication(input))):s.publishLesson(input)});
+ assert.equal(doc.activeElement,ui.dialog.querySelector('h2'));assert.equal(ui.dialog.querySelector('[data-publication-cancel]').disabled,true);release();await ui.ready;
+ assert.equal(doc.activeElement,ui.dialog.querySelector('h2'));
+ const refresh=ui.dialog.querySelector('[data-publication-refresh]');refresh.focus();refresh.click();doc.body.tabIndex=-1;doc.body.focus();release();await turn();assert.equal(doc.activeElement,refresh);
+ const confirm=ui.dialog.querySelector('[data-publication-confirm]');confirm.focus();confirm.click();doc.body.focus();await turn();assert.equal(doc.activeElement,ui.dialog.querySelector('[data-publication-cancel]'));assert.equal(doc.activeElement.textContent,'Close');ui.close();assert.equal(doc.activeElement,opener);
+});
+
 for(const uncertain of [false,true])test('publication controls honor hidden in review, '+(uncertain?'uncertain':'success')+' and Close states',async t=>{
  const {s,w,id}=fixture(t),dom=new JSDOM('<main></main>',{pretendToBeVisual:true});t.after(()=>dom.window.close());const doc=dom.window.document,style=doc.createElement('style');style.textContent='.button{display:flex}\n'+readFileSync(new URL('../public/author/author.css',import.meta.url),'utf8');doc.head.append(style);
  const ui=openLessonPublication({document:doc,workspace:w,lessonId:id,api:async(path,input)=>{if(path.endsWith('/review'))return s.reviewLessonPublication(input);const result=s.publishLesson(input);if(uncertain)throw new TypeError('Synthetic dropped response');return result;}});await ui.ready;

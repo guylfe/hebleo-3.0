@@ -5,10 +5,21 @@ export function openLessonPublication({document:doc=globalThis.document,workspac
  workspace.savedContext();
  const focus=doc.activeElement,dialog=doc.createElement('dialog');
  dialog.className='lesson-publication-dialog';dialog.setAttribute('aria-labelledby','lesson-publication-title');
- dialog.innerHTML='<h2 id="lesson-publication-title">Review & publish</h2><p><strong data-publication-title></strong> <small data-publication-id></small></p><p>Publish reviewed changes to this local demo. Save draft and Preview remain separate.</p><p data-publication-status role="status"></p><div data-publication-review></div><div class="button-row"><button type="button" class="button outline" data-publication-refresh>Review saved draft again</button><button type="button" class="button outline" data-publication-check hidden>Check saved state & reconcile</button><button type="button" class="button primary" data-publication-confirm disabled>Publish reviewed changes</button><button type="button" class="button outline" data-publication-cancel>Cancel</button></div>';
+ dialog.innerHTML='<h2 id="lesson-publication-title" tabindex="-1">Review & publish</h2><p><strong data-publication-title></strong> <small data-publication-id></small></p><p>Publish reviewed changes to this local demo. Save draft and Preview remain separate.</p><p data-publication-status role="status"></p><div data-publication-review></div><div class="button-row"><button type="button" class="button outline" data-publication-refresh>Review saved draft again</button><button type="button" class="button outline" data-publication-check hidden>Check saved state & reconcile</button><button type="button" class="button primary" data-publication-confirm disabled>Publish reviewed changes</button><button type="button" class="button outline" data-publication-cancel>Cancel</button></div>';
  dialog.querySelector('[data-publication-title]').textContent=title;dialog.querySelector('[data-publication-id]').textContent=lessonId;
  const area=dialog.querySelector('[data-publication-review]'),status=dialog.querySelector('[data-publication-status]'),confirm=dialog.querySelector('[data-publication-confirm]'),refresh=dialog.querySelector('[data-publication-refresh]'),check=dialog.querySelector('[data-publication-check]'),cancel=dialog.querySelector('[data-publication-cancel]');
  let review=null,scope=null,serial=null,generation=0,busy=false,closed=false,includes=[];
+ const heading=dialog.querySelector('h2');
+ // Disabling a focused async control can send native focus to BODY. Keep the
+ // stable heading during initial loading; recover lost focus after operations
+ // without moving it away from a usable element the reader chose meanwhile.
+ function recoverFocus(preferred=heading){
+  if(closed)return;const active=doc.activeElement;
+  if(!active||active===doc.body||active===dialog||!active.isConnected||active.disabled||active.hidden){
+   const target=preferred?.isConnected&&!preferred.disabled&&!preferred.hidden?preferred:heading;
+   target.focus({preventScroll:true});
+  }
+ }
  const changes=list=>'<ul>'+list.map(c=>'<li>'+e(c.kind)+' · '+e(c.id)+' · '+e(c.action)+'</li>').join('')+'</ul>';
  const valid=()=>review&&scope&&serial===workspace.version&&!workspace.dirty&&!workspace.pending&&!workspace.writeBlock&&review.baseRevisionId===workspace.baseRevisionId&&review.expectedDraftToken===workspace.expectedDraftToken;
  function sync(){
@@ -34,6 +45,7 @@ export function openLessonPublication({document:doc=globalThis.document,workspac
   }));
  }
  async function refreshReview(){
+  const priorFocus=doc.activeElement;
   const request=++generation;busy=true;review=null;scope=null;status.textContent='Reviewing the selected saved lesson and required dependencies…';sync();
   try{
    const pins=workspace.savedContext();serial=workspace.version;
@@ -42,7 +54,7 @@ export function openLessonPublication({document:doc=globalThis.document,workspac
    if(closed||request!==generation)return;scope=input;review=result;render();
    status.textContent=result.noChanges?'This selected lesson is already published. Other saved changes remain private.':result.canPublish?'Review the scope above. Publish reviewed changes confirms publication to this local demo.':'Resolve the listed blockers or include the explicitly required dependencies, then review again.';
   }catch(error){status.textContent=error.message+' No publication was requested.';}
-  finally{if(request===generation){busy=false;sync();}}
+  finally{if(request===generation){busy=false;sync();recoverFocus(priorFocus);}}
  }
  async function publish(){
   if(!valid()||!review.canPublish||review.noChanges||busy)return;
@@ -54,18 +66,18 @@ export function openLessonPublication({document:doc=globalThis.document,workspac
    status.textContent='Published '+lessonId+' to local revision '+result.revisionId+'. '+result.remainingSavedChanges.length+' saved difference(s) remain private.'+(workspace.dirty?' Newer local edits remain unsaved.':'');
    confirm.hidden=true;refresh.hidden=true;cancel.textContent='Close';
   }catch(error){status.textContent=(workspace.writeBlock||error.message)+' Your local edits and private comment drafts are retained. No automatic retry was made.';}
-  finally{busy=false;sync();}
+  finally{busy=false;sync();recoverFocus(workspace.writeBlock?check:confirm.hidden?cancel:confirm);}
  }
  async function reconcile(){
   busy=true;status.textContent='Checking current saved state and reconciling retained local edits…';sync();
   try{const latest=await api('studio');workspace.reconcile(latest);onReconciled(latest);review=null;scope=null;area.replaceChildren();status.textContent='Current local published revision is '+latest.revisionId+'. Local edits were reconciled and remain unsaved. Save draft, then open a fresh review.';confirm.hidden=true;refresh.hidden=true;cancel.textContent='Close';}
   catch(error){status.textContent=error.message+' Local work remains retained; saving stays blocked until reconciliation succeeds.';}
-  finally{busy=false;sync();}
+  finally{busy=false;sync();recoverFocus(cancel);}
  }
  const unsubscribe=workspace.subscribe(sync);
  function close(){if(busy)return;closed=true;generation++;unsubscribe();dialog.close?.();dialog.remove();if(focus?.isConnected)focus.focus({preventScroll:true});}
  cancel.addEventListener('click',close);refresh.addEventListener('click',refreshReview);confirm.addEventListener('click',publish);check.addEventListener('click',reconcile);
  dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
- doc.body.append(dialog);if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');cancel.focus();
+ doc.body.append(dialog);if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');heading.focus({preventScroll:true});
  const ready=refreshReview();return {dialog,ready,close,get review(){return review;}};
 }
