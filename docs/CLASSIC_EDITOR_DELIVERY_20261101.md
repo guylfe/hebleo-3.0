@@ -1,3 +1,5 @@
+Current final status: installed and verified40864ec. See [final installation and independent evidence](evidence/classic-installed-20261101/DELIVERY.md). The candidate report below is the earlier checkpoint.
+
 # Classic Jodit editor: isolated candidate handoff — 1 November 2026
 
 Status: implemented, automated/JSDOM/HTTP checked, privately pushed. **Native implementation review is blocked; not installed or independently accepted.** This handoff returns to Lead; no final installation or Guy acceptance claim.

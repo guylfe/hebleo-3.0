@@ -1,0 +1,1040 @@
+{
+  "status": "INSTALLED AND VERIFIED locally; no teaching publication",
+  "recordedAt": "2026-11-01T10:47:00.967Z",
+  "url": "http://127.0.0.1:63358/",
+  "pid": 61604,
+  "installedCheckout": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\4d4e36bc-67d1-4c07-bcfb-e381d246b0b3\\hebleo-editor",
+  "identity": {
+    "revision": "40864ec3cad885b5d550eb9c9cda9c0addc6bd6d",
+    "runtimeSha256": "9554d3804855327e9159947abd6841a1d50a2bce2408afeb46cbdb2bd72460d7",
+    "backendSha256": "4c182a5bae3e6e9569492d7595b4e5529a026d04ad008937e3f15e5943d021d3",
+    "files": {
+      "package-lock.json": "e86e3e61121e8d6fd3a86acfba5e8af9d46b498b45d89970e4f8d352e68566f5",
+      "package.json": "1e8961374eb4f18e85f866d7bbc0718d148c9eb73ce6e8fd8b05370e8c3e8496",
+      "public/answer-policy.js": "7b9ace0f96f65980cb5a0ac655dd115a512f131d7419557260cf447cccd8c437",
+      "public/app.js": "3ff2f78209792a3cb053c4b1011ca54f4ded959ec0a72f7f27428fec8c917015",
+      "public/assets/hebleo-wide-navy.png": "d744d37a3a10f315d58372b3a8f557b2913c04f6d6065c4f15ae26fc10789971",
+      "public/author/author.css": "b639324345a14ea0d899bf878fad416fdbba83c11011f4bc696717bfa6da3853",
+      "public/author/classic-source.js": "8708c9900c1e8a397457684acf2a9401c8b5169a676064f4353314ca6ff31475",
+      "public/author/field-patch.js": "fc4bd4872ae40f7af50f22de83df5a62a4aaa5d79706303f9d68c4c19e71702d",
+      "public/author/image-chooser.js": "38d4ca6079e859dd2f9ae6af65feb0ec55791cffdeeba7de1e2d41d1005423ae",
+      "public/author/inline-author.js": "ea17963601cf7874520dc0ce32d31f35ba639b9afb85361417ba53ea3206a2f1",
+      "public/author/legacy-editor.js": "1ccefdd2026b07133dc5114983d225a9b9bbbaa9c1ecdfea53a40d55bcd4010f",
+      "public/author/rendered-source.js": "ebf8b1a7573ee6dfbfb467831718aecb1be79a56520dc8ce0db31754f09f12a6",
+      "public/author/source-adapter.js": "7a578c9092fd8f0c91cc40853c9c9ddc96c814eb05c08acc3dcfa302a6d27159",
+      "public/author/standard-editor.js": "9ec02dab4fa71428c3c46f09db4c76c6b9f62b5386e7afe986ea452f22d6c89e",
+      "public/author/vendor/LICENSES.txt": "f3a09cf70325a1ddea7b34e1e5042196fab066e7cbe4ee6604525868b211dba3",
+      "public/author/vendor/jodit.min.css": "d9ba17faee055dfae5f2aad40e3b6c3d154aa8084a187dbbc33d15114531070f",
+      "public/author/vendor/jodit.min.js": "a3bccf84a49c203f41c9ac954359c0cfa4fa549d2e8874a5df71650321db0644",
+      "public/author/vendor/prosemirror.js": "352bbb534e9de0c3a66c94c23e47d5fc2fe87dd36df8dd4c5092f52119c82090",
+      "public/backup-contract.js": "b81068263d2017f67312c8c9c8d69cca025d78d8b6292140d50c68bec9743064",
+      "public/content-identity.js": "b380ad0d0af902b5944835be478c86d107a9a1935b1c02d4d813fcb368ea07f1",
+      "public/content.js": "cddcf13ab9c1df3cb420d8c9b178fef4365d9c241018af5ac0fd7a69495885a2",
+      "public/course.js": "db3efe007cf07e4c3254d38b5b435ea6845e7d468a51de6169737fced25d7c12",
+      "public/exercise-actions.js": "010dfb7327ba604cebbb6f60c57cde06a7830142e61f013d9e62e6e8f7320ceb",
+      "public/exercise-bindings.js": "6ea7abdcd285c3b187ba1c58d5044df08816412e4fd68ebbd2bd9ee73af853cb",
+      "public/google-setup.html": "142137fb99eac2e0cdcbedd757f2aace5c64c83bb4a7388d7bfcd968d1860961",
+      "public/google-setup.js": "63f2a61a2349b0474b7970081aadf951066c0db19ae60396fbaaf71abb5b4bb4",
+      "public/hebleo-lion-mark.svg": "b1a4608d426b2547c64263821cf1a26c496bff1eb1b3a429d1204cc3d386b6f2",
+      "public/index.html": "4a6109d36cb60622700fe26926f075109baae00338e2c53fa1066ef2dbb56183",
+      "public/interactions.js": "0408795003104dee4976b376f79371a0ca75932ac4c9fb558ec6a5398c22137f",
+      "public/keyboard-owner.css": "8e3c5a05c30ab7b9d4ab34e63a68485c51fd04935e49934d7c94a0dbd5256a62",
+      "public/keyboard-owner.js": "6e813727db224050295344f1fe80185cdca82274ea5ebad30428469f0a49b6ea",
+      "public/learner-view.js": "b723e388b1c79a69140a3f04063ec6bda74da5ba062479e9e61824cdd7ba0185",
+      "public/lexical-contract.d.ts": "70504f10f2851e9ce5d83cef2caf4d6626e7168caccaba7f4684a95348eb348d",
+      "public/lexical-contract.js": "c30c3c7a24e900691d0199adb684a6b0a8c4c333590d95308b862a14f085700b",
+      "public/lexical-runtime.js": "b050aca59b816266bbb47079577c686ade0bdddc16de66e6c00802626d63fb0b",
+      "public/lexical-vocabulary.css": "227158c0c566c72563c4d330a0a4c849f6c0362d1f4c5331b8f5c0accd2a59a1",
+      "public/lexical-vocabulary.js": "f0c5aa263cd5acc96b4caaceacbe1c5ad0674404e4aa082f2713d1f30bc692cc",
+      "public/media.js": "cf65b04dc4d0d0f6e95868818f06ee8d76bfe3ebe5f2bcfd9ab123975cbf96c0",
+      "public/post-answer-vocabulary.js": "dcacd0baf9784098e78222243a3b62f7e23e8d4c11b40880e601f200d1fbb2bc",
+      "public/preview/learner-renderer.js": "0431431146b4a688d12d8f767b3f2224bd4bb84f6d8e899897bbc3198f3a29dc",
+      "public/preview/lesson-preview.js": "8a39e84bf44eda84c71f08a50dba5092b9c2f45fc73a01b19255f2e49280b17e",
+      "public/refinement.css": "61a43ea88b30a904be4cfd321f86548b3d18907b011a62b03a1bfd017c9972a5",
+      "public/review-schedule.js": "685cc4028fbf16bdba93b58ea7f05735e542f6cadeadc76315bed4c33b84713c",
+      "public/rich-browser.js": "b9ee02e3efd01a246f138a5795f8d3cb3455bb31a3d6d30164307a03f7a87963",
+      "public/rich.js": "3c9478846615b8a55cb3002840b6e2aa7b22dae988d6b8d2f109871655d2962f",
+      "public/safe-format.js": "753ca0d990bceb86037a195de17eb231c0f97339d002c8aa35b73e9bbe45ddd7",
+      "public/sidebar-toggle.js": "e11b37f0daa5b555cc02fdadf0726194747590821e9c2c47f845a93dab2f2a2c",
+      "public/source-activities.js": "490050613c63c95ea47612458d1f4051090607e8da82a607a7d3c8bf16db9e88",
+      "public/source-vocabulary.js": "abd81bc2c5ee85a94481207d7615aa553562ff9edb4103b220e93ccf5253814f",
+      "public/studio/curriculum-editor.js": "f73924eefd5a7e0e743b4fc25bdd205a944dba986cbb646526ddb0fabfefc5be",
+      "public/studio/editor-fields.js": "45d32489e0d48a881c570298ac2adaca9c427f8a5f2fa190f63f3be53b371bb6",
+      "public/studio/exercise-bindings-editor.js": "cdd93cb7d8d3b649d25a8d2862829266fd0b021c616b4c2a3518110f90bb1cd2",
+      "public/studio/exercise-editor.js": "d53d3fc5b7195dca1203db37315aa1b3f4f879995f8a8a74a14041656f966d7e",
+      "public/studio/import-review.js": "718c318ec8303f08d25a81864cd15c8705e68bf9cfcee4c5c37c3784e2e8ae93",
+      "public/studio/import-workflow.js": "f4527beaab6388f1d90233f3271e7e5399b2405d99c0bb5c0e42555326c986cb",
+      "public/studio/lesson-editor.js": "126c42c549575b8ab4d44542ab9155465bb9a489cf7103fffbb27f2a6805dd7a",
+      "public/studio/lesson-publication.js": "24a7e8f196ab22700a1bb67b795e7fc343af306a4fcdd651b04884c9e3abf40c",
+      "public/studio/lexical-settings.js": "11724abe76d7c698e13432abcf916ebdc1badce8dff4d03791a8e3bd97e571c7",
+      "public/studio/markdown-editor.js": "97448890701cfd762f3faa93b8e3f5d6d6397a030a177bd1fe689d407ed4b2a4",
+      "public/studio/media-library.css": "9148b289cf392dcaaf4df44821bc18005b4b37fdd58f39e13c059cecc4ec9d12",
+      "public/studio/media-library.js": "95518f649d7e3215de1113b7c09165a139ed8efc1433430cccbf2a47f5179e33",
+      "public/studio/media-picker.js": "6eab42a64eafa9f8552258220137962c6f9173c2b3a25046708bc457f69ac9b0",
+      "public/studio/save-processor.js": "cb27e4d5efe02953fd6125d7a977ba0a06ed2dc9d46df554b93c860b44da825e",
+      "public/studio/save-task.js": "63fdcb0f63e9b5b4bea690a0ce49e9b929a189975bf1e5cb52af836b50fe64f6",
+      "public/studio/save-worker.js": "ba02a7cd11b567d41beea049616fa9a7393a0ea7abee3df4ad8b12d5143edfaf",
+      "public/studio/selector-editor.js": "2c7025a21afd9b934d7f92562f5e79ae480e9646e30d2a162a3ec52a5d5cd1e0",
+      "public/studio/sources-editor.js": "ed6be80b6920cc77606be9fad420645dad554349d42d6011b958dbc706b17f17",
+      "public/studio/sources.css": "836d5f7eeb4fbcb1b99ba25e266cdba57ce1e94bc0a0f99005f900f78a6660f1",
+      "public/studio/studio.css": "97d3df52de788bd88e2ee6c560d3eaeb30f9bc3647652a05e77ff1d2bcb3773b",
+      "public/studio/text-import.js": "e0e8082355529fe6630d518f7046d92a5cb1b826db60c205d632b73c4d456e3b",
+      "public/studio/text-pages-editor.js": "55bf51abb6076dcf28ed4455e30b08e145df2c111d393984c0edf3de49aa466a",
+      "public/studio/unified-studio.js": "c73da2d8d9be5b6aeb6b5fcec1b9ed82f0dfbe2eb18acabf3119f7b1af5937f1",
+      "public/studio/vendor/.gitattributes": "22e9574ea2596be17118531ee716a7757a851839b66b0b363dba96ae270461a8",
+      "public/studio/vendor/CodeMirror-LICENSE.txt": "fb157923657be7506d658d64cfeddf7d79d5eddeea2af59e2855c58f2fdd91cb",
+      "public/studio/vendor/EasyMDE-LICENSE.txt": "21daaae0a5babf78fafeae341366dda074270c1a2a5a85f4237dd605137a2bdf",
+      "public/studio/vendor/Marked-bundled-LICENSE.txt": "ce0bfbb1e2d31127e33538a15a0ae4a12d3408036ae6f894e3498a52c634c4fa",
+      "public/studio/vendor/SpellChecker-LICENSE.txt": "8896b84d273cd3a17249f7a2423690b6abb94025c06b5b99f06dfda29ea8c571",
+      "public/studio/vendor/TypoJS-LICENSE.txt": "ec1c95261571d2f2ae373dfba94f493ecb27535e06f3fecbdf2660d791b724ae",
+      "public/studio/vendor/easymde.min.css": "6eee36340432776d682e7372ec4a7eb29be4fdb3ffada32c0bfa5e31a5ef34a2",
+      "public/studio/vendor/easymde.min.js": "2c06bddfd0c89176db08ccf9d42e2beaa9b4f1a4ff8fb2ec0bf1bed25ce08e05",
+      "public/studio/vocabulary-browser.js": "145633a98c624a50f8627bc9c186d447173c8364069b3b9aa689b541f8833000",
+      "public/studio/workspace.js": "beabe0c98d91e1e8aadd9d0f789d530f54e173eb5e24ca4b22edf02f8e400d92",
+      "public/styles.css": "e1d9518b309da250a0a90522b3097a7a748d888bf9e91b0b0f565072c015751c",
+      "public/text-contract.js": "050174bde975b447577b472f5af09147ef6ad6e5030c504786ab02351f789c57",
+      "public/text-reader.js": "2bb76b7bcccde9c0aa0988ad377b1f29707d33d4570023fd2c80b6d573f060dd",
+      "public/ux.js": "9ead968a44575b7a362890ad6e8cb7f080b0a53b6063496684e952a13a2c0d00",
+      "public/vocabulary-import.js": "93fca44eaf6e0aa1bf9ebcae8b7fa26684646f04e975edcb5a1fe314273c7891",
+      "public/vocabulary-reminder.css": "a26300ff22cc8d7104cbc9b8ca1fe04b641ff739ea27a3794b77437a4a48a5bc",
+      "public/vocabulary-reminder.js": "14b2221540958c5869aa3fa68959bbb001ecdf9c044eaff09dd69e9c016460c7",
+      "scripts/adopt-source-browse.mjs": "2da7342e48506c751389ef7e4bcf3a37c40eed01393dd6eee5422cedae7a93d7",
+      "scripts/build-editor-vendor.mjs": "38c282c7d7cdb64d3f421bdddd6b2963c14c2bb2287c97789c922129df6b2df6",
+      "scripts/build-first2-content.mjs": "c5bb17b20c8695a7cf4744a7d051e0d458e4492b4101644da7b2fb88035963f9",
+      "scripts/build-visual-vocabulary.mjs": "a89de9e574e141274b96d719e1c3ace95879fda776152ccc4de6ed396e76e84a",
+      "scripts/capture-lexical-workbook.mjs": "975a4afbd41913c9fc7359326fa8c2eaa111299cff0309ebce6c0488d07fcd3a",
+      "scripts/editor-vendor-entry.js": "4c766b172dc19d7a6de38350fe722b971a4cfa1fdc6d03879d771109f14962f6",
+      "scripts/eligibility-fixture-adapter.mjs": "e2883e796e485c495e29e712ee410413916e6ac0c92c7166c28bfdd2cad0295d",
+      "scripts/exercise-bindings-fixture.mjs": "7d61b9f2ce4bac3c4b5c086f5e25841000dc199fa924059fe7b32453736d6481",
+      "scripts/install-first2.mjs": "868c094f49b79bdb4179ad415f07fa134a821ded537e0cb1b1bcfb2520a62e18",
+      "scripts/lexical-fixture.mjs": "2ebebfe8e3d496fc4cfe2b7065f070050e6dd44e6c06a734dbefffd4bd9fd722",
+      "scripts/link-illustrative-exercises.mjs": "730bc6b0723df418e8e959e0ad7fa8663c811ff21279ec11843e537eea946186",
+      "scripts/prepare-source-browse.mjs": "37784417a50f5741feb5815e23b86c875585cc33419255ae56710b41e9bac785",
+      "scripts/prepare-text-install.mjs": "86f18ead3a5eaefcebfd6db82aed495baad668542bb02c250a337a5f332ea322",
+      "scripts/probe-lexical-http.mjs": "51e9d1dd5194139c5d8deb5f5ea735233f09cb8ffcd46e5879576757cfeb887e",
+      "scripts/profile-inline-save.mjs": "c768c0e78e3722a783d2d271500e44be44435a4f423e7c0193333f030cb791a6",
+      "scripts/profile-workspace-save.mjs": "b3e67c6edc7ee74810e0b08c748a8b0a0c0698888e687eeda40e789ffd7b79bc",
+      "scripts/revise-first2-feedback.mjs": "02ac6e09bba68a586be2d47448712e4b9f0a664ed66f1404693bc0d9abb21ee1",
+      "scripts/runtime-state.mjs": "9e5f7f413d2459688685633f0e97b81c249ead94b5b5b8529dd9f4cd78b3c49f",
+      "scripts/serve-save-responsive.mjs": "01f79ef79af508d81c3f8e7112b05f555928e7319034e38693986909f1023718",
+      "scripts/source-browse-fixture.mjs": "69be7afc65d774d2d241d27451dd0c38dba863b01053c26719a0bfd23f0055a6",
+      "scripts/start-lexical-demo.mjs": "7fce72900467327c47c6625f32f8eef917f321ae321869e367ee796596cbb3e2",
+      "scripts/start-preserved-demo.mjs": "e8cb1bd20d362ef6bfc750e9ef8cb9ee0b318764611b70a803c4928adffb50c6",
+      "scripts/start-rendered-author-candidate.mjs": "08a2068b6e0dd6bb2f158ef5df085059e7d49b877a2fae8516a743c88c533b5d",
+      "scripts/start-visual-vocabulary.mjs": "0dd8d76c972391fccc5273199df8e5974b43cefb96247d452e8851472ad8e288",
+      "scripts/update-first2-feedback.mjs": "7141ed3ca2684a1956190ede984cc710a2a70127adc096c4909770e4449162dc",
+      "scripts/verify-author-recovery.mjs": "c6ee2f33db92ac2e9781af87bd056d3804e3b8e6a27f5d0694573cc468820bac",
+      "scripts/verify-candidate.mjs": "e92a61f09460c64ad932ea5797d061f2f484de729ccdca58c4db0e238eea3e47",
+      "scripts/verify-classic-copy.mjs": "c774cfef456ed48aaf83dd6d7b4bc86acf72462b66f728263ad323e2f488d848",
+      "scripts/verify-eligibility-contract.mjs": "1241dee8fc86b29b763c19b0d5ab4bb24eaf3082bb473bce25f1a6ad66848a00",
+      "scripts/verify-eligibility-pack.mjs": "f82ca3a211fdc2d368c3d8abfda159d37b83668f688ab92475f771ce5c2e4f59",
+      "scripts/verify-first2-parity.mjs": "5d1ecdf289cbb46b72389ce437f19c2f7fc569e20d283993e18f700bbfee0d79",
+      "scripts/verify-lexical-workbook.mjs": "dd5e5e0c821d04d2415fe739a808a43ba7c5db9292dc1210f18c0919d8276bc7",
+      "scripts/verify-save-responsive.mjs": "26f68952f24ebc18ceb009445fb1a595f9f64996b32235741e14002b149ab599",
+      "scripts/verify-selected-publication-copy.mjs": "fbf8632160ac10fff6e72d51db2e99dae7392ef32d01215457d535cf18f9ea7f",
+      "scripts/verify-selected-recovery-copy.mjs": "3a3dab6e6a183d172e5ee675c7b26733fd7979c3971cd12cff42806cca732df4",
+      "src/author-review.js": "afa66695e4d19ec82bdee07b8ce6a6bae642d2333a1f015116485f7e5df5c8a9",
+      "src/demo-build.js": "b03afd2b53fd8154f4b2d49f1e1b1e56040e3fa60bddad88d44f892de50e3a2c",
+      "src/demo-signal.js": "d11c5e8deceabe023ed6c336faf1d46aad82f96f447ea04a5b0bdcc9f9e6b424",
+      "src/errors.js": "d7176f8f5f83e134b7d024d10dcf1b6db0d95a336c7be8299eb2bff3d29c7d29",
+      "src/evaluate.js": "bfd7384ea1f2c6d57c4acc622e617f879a35220ead6e439d86e1ab4fd203ed4e",
+      "src/exercise-vocabulary.js": "1ed52bc0604f1a485aef38869507acd6789bc8e5db71013cf84380d6115f3132",
+      "src/fixtures/demo-signal.wav": "d0c997c336555068b46cf033a9fac2d3e22cadf5438cfc7725b6460e2a9ac83d",
+      "src/google-auth.js": "a9752a9db4dc8b96992d6962f150d06a527596f54274d1e9f8a5a7551c672491",
+      "src/google-source.js": "e926b1aa1a1596dbb5c2e75794b9cc81ae337876781be89db94a9decac447975",
+      "src/immutable-context.js": "84640383b4e0304c1dd6df1a8aae2bb885080f23d5dd977dd671e6e86dcec7af",
+      "src/lesson-publication.js": "1d600301f487922e6cdaac39262d8d075796c5868027b87e5e04c91206cc9f44",
+      "src/lexical-adapter.js": "de72bfa1ec0eb6e05eeff97ef4a08b9bbacd62ce8d1464641fdf4d3f78b7841d",
+      "src/lexical-capture.js": "f590306e66804d2126030d306e8de4b1b40713716f4a0468d897ac98cc2f26d2",
+      "src/lexical-trust.js": "4c43d1838d201f2d5f4ac248eabf7e15bacee9aa0397b74c2c04ccb85bd8263a",
+      "src/media-store.js": "bd4edac0dd386452289732e690547eef66d0e63f6e2e22702e59517d84ea4d84",
+      "src/seed.js": "929493b68ce0034291bcd53bf806e47f2a09c1175baabf7915974c2741e62d00",
+      "src/server.js": "8c162eeceb20d9552484ba094eaaeb6a2b167274dcf118a55e916d42a70a5f7c",
+      "src/source-authoring.js": "0f07d36573b2fcf7c1ed32793c7aad14a451e39293513199c38ed007d5a76f02",
+      "src/source-invariants.js": "1fa8e895e4f50450ce58f69b2fac446e5fc600029e282001e62d9de17b8fc4c1",
+      "src/source-mapping.js": "dda5bcc5d35a625e678cb8e310b04cf17c69fc9d91fea57ef3e4feea9529dc3d",
+      "src/source-state.js": "752e2f9a9f48825b71dfdd40f164619a01fea756ce0633e2a731f32e5b7b6c4a",
+      "src/source-template.js": "f7be2a959d03be331a2889c0e211da1eae312f4bf466ed732c3ff73cc130d712",
+      "src/source-utils.js": "cd2658e33f9962f3b2e69fedecca50d549760dbf55e27b582d49ca061bca5c41",
+      "src/source-vocabulary.js": "384892fef6d36bba145a4f01de49a86eec79c2b511ba0c7c405408b271a8a26a",
+      "src/store.js": "d5d933f647d7f22830373931bc8d0bd04c58ee21e51d410a4399da116f5ad404",
+      "src/text-import.js": "878b48c7a02c72293f85eda569f7537e3a4506870d6010d01a72cb7d08358b38",
+      "src/tutor.js": "822fad5b4c002c4af7e767cdde0002576f17988b6a701bf7e7a7004bfebbb1ed"
+    },
+    "preservationMode": true
+  },
+  "component": {
+    "name": "Jodit core",
+    "version": "4.18.12",
+    "license": "MIT",
+    "suppliedToolbarAndTheme": true,
+    "pinnedAndBundled": true,
+    "paidAccountOrKey": false
+  },
+  "ci": {
+    "conclusion": "success",
+    "databaseId": 41293860082,
+    "headSha": "40864ec3cad885b5d550eb9c9cda9c0addc6bd6d",
+    "jobs": [
+      {
+        "completedAt": "2026-11-01T09:40:24Z",
+        "conclusion": "success",
+        "databaseId": 124810496196,
+        "name": "verify",
+        "startedAt": "2026-11-01T09:36:28Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-11-01T09:36:29Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-01T09:36:28Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-01T09:36:30Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-11-01T09:36:29Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-01T09:36:31Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "startedAt": "2026-11-01T09:36:30Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-01T09:36:33Z",
+            "conclusion": "success",
+            "name": "Run npm ci --ignore-scripts",
+            "number": 4,
+            "startedAt": "2026-11-01T09:36:31Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-01T09:36:34Z",
+            "conclusion": "success",
+            "name": "Run npm ci --ignore-scripts --prefix schemas",
+            "number": 5,
+            "startedAt": "2026-11-01T09:36:33Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-01T09:40:22Z",
+            "conclusion": "success",
+            "name": "Run npm run verify:candidate",
+            "number": 6,
+            "startedAt": "2026-11-01T09:36:34Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-01T09:40:22Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 11,
+            "startedAt": "2026-11-01T09:40:22Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-01T09:40:22Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 12,
+            "startedAt": "2026-11-01T09:40:22Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-01T09:40:22Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 13,
+            "startedAt": "2026-11-01T09:40:22Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/guylfe/hebleo-3.0/actions/runs/41293860082/job/124810496196"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/guylfe/hebleo-3.0/actions/runs/41293860082"
+  },
+  "gates": {
+    "reports": {
+      "qa": {
+        "path": "C:/Users/Trans/.openmausbot/task-workspaces/71c71389-5334-4e0c-9ca8-d80dd28223d1/653fb433-7485-48b1-9f7c-cb22711bda02/hebleo-3/qa-classic-40864ec/REPORT.md",
+        "sha256": "99151bba8aae10963acbfb0d01cd2e32c3304f6bb2aed7ab02677974cca2deaf"
+      },
+      "release": {
+        "path": "C:/Users/Trans/.openmausbot/task-workspaces/71c71389-5334-4e0c-9ca8-d80dd28223d1/653fb433-7485-48b1-9f7c-cb22711bda02/hebleo-3/tmp/rr-combined-40864ec/REPORT.md",
+        "sha256": "0fc0d55ecaaa998e17dfa7f0b05552fc732e1ffab0be9352dca53de9d5412e49"
+      },
+      "ux": {
+        "path": "C:/Users/Trans/.openmausbot/task-workspaces/33456e11-6fe6-4081-9ac2-a1a240770492/9b214edb-a778-44be-acbc-f06f6a5d1fcb/CORRECTED_NATIVE_UX_40864EC.md",
+        "sha256": "cdf11f39622ef8fffaffa45938299997a645edf3165c1dc2420a04694d07bcfc"
+      }
+    },
+    "ci": {
+      "conclusion": "success",
+      "databaseId": 41293860082,
+      "headSha": "40864ec3cad885b5d550eb9c9cda9c0addc6bd6d",
+      "jobs": [
+        {
+          "completedAt": "2026-11-01T09:40:24Z",
+          "conclusion": "success",
+          "databaseId": 124810496196,
+          "name": "verify",
+          "startedAt": "2026-11-01T09:36:28Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-01T09:36:29Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-01T09:36:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T09:36:30Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-11-01T09:36:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T09:36:31Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "startedAt": "2026-11-01T09:36:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T09:36:33Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 4,
+              "startedAt": "2026-11-01T09:36:31Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T09:36:34Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts --prefix schemas",
+              "number": 5,
+              "startedAt": "2026-11-01T09:36:33Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T09:40:22Z",
+              "conclusion": "success",
+              "name": "Run npm run verify:candidate",
+              "number": 6,
+              "startedAt": "2026-11-01T09:36:34Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T09:40:22Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 11,
+              "startedAt": "2026-11-01T09:40:22Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T09:40:22Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 12,
+              "startedAt": "2026-11-01T09:40:22Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T09:40:22Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 13,
+              "startedAt": "2026-11-01T09:40:22Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/guylfe/hebleo-3.0/actions/runs/41293860082/job/124810496196"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/guylfe/hebleo-3.0/actions/runs/41293860082"
+    },
+    "qa": "bounded native/preinstall PASS",
+    "ux": "bounded native reference and corrected controls PASS",
+    "release": "bounded preinstall integrity PASS",
+    "guyAcceptance": "Pending"
+  },
+  "leadChecks": {
+    "candidate": 1093,
+    "schema": 27,
+    "runtime": 9,
+    "buildPassed": true,
+    "scope": "Configured candidate audio exclusions retained; exact40864ec; unchanged accepted checks not blindly repeated."
+  },
+  "preservation": {
+    "all23SavedDraftsAndRawMetadataExact": true,
+    "allSourceAndPrivateSettingsExact": true,
+    "allRevisionsMediaEventsAndSequencesExact": true,
+    "allNonprogressLearnerFieldsExact": true,
+    "contentRevision": 6,
+    "reader": 10,
+    "draftContentBytes": 26632089,
+    "draftContentSha256": "bcf972cf542eae85622b41f8212a4b98cac1515994b2b4db3f3c5493836c09f2",
+    "rawDraftSha256": "6743ee5eb0f421c432e9f426f5f4900931ce78fc772ad0abd915cc5987387966"
+  },
+  "receipts": {
+    "before": {
+      "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+      "tables": {
+        "events": {
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "kv": {
+          "rows": 8,
+          "sha256": "4ab38d91c6ed4d1288e67e0e0178389994463413150cafb3ad234fdd48c5da59"
+        },
+        "learners": {
+          "rows": 3,
+          "sha256": "712484039529c05b7c626ecc2e3b303a80165e6ddf70eb28f8f6ab8b2a524779"
+        },
+        "media_aliases": {
+          "rows": 4,
+          "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+        },
+        "media_blobs": {
+          "rows": 5,
+          "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+        },
+        "revisions": {
+          "rows": 6,
+          "sha256": "76ee4b33191e31bd1ca6446a15c3e8b1e6609057d70392396db94f60d0c9ad76"
+        },
+        "sqlite_sequence": {
+          "rows": 1,
+          "sha256": "af166db64813795f361d010d7a8bfa0ba9c0f52fb037efce9d5029d5720b0cd6"
+        }
+      },
+      "sha256": "09d24427a13d3f64418b1d11655ad091f70675a0da35e5db08feb03ff00196e1"
+    },
+    "afterAuthorizedFictionalReset": {
+      "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+      "tables": {
+        "events": {
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "kv": {
+          "rows": 8,
+          "sha256": "b3ea37eaa8e01b603ff9073a5ac80e00b5d3cbde59573e9d71e4b49f1fcb32f0"
+        },
+        "learners": {
+          "rows": 3,
+          "sha256": "958c02036fcbece4eae42e093a406d79ba62c1ace6ef1d70e6a896245edb660b"
+        },
+        "media_aliases": {
+          "rows": 4,
+          "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+        },
+        "media_blobs": {
+          "rows": 5,
+          "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+        },
+        "revisions": {
+          "rows": 6,
+          "sha256": "76ee4b33191e31bd1ca6446a15c3e8b1e6609057d70392396db94f60d0c9ad76"
+        },
+        "sqlite_sequence": {
+          "rows": 1,
+          "sha256": "af166db64813795f361d010d7a8bfa0ba9c0f52fb037efce9d5029d5720b0cd6"
+        }
+      },
+      "sha256": "b55684212a72e581d47e3f38464ea9a672eca8e04e6642c0b94f881692cbed7f"
+    },
+    "afterNativeNavigationAndSameBuildRestart": {
+      "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+      "tables": {
+        "events": {
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "kv": {
+          "rows": 8,
+          "sha256": "b3ea37eaa8e01b603ff9073a5ac80e00b5d3cbde59573e9d71e4b49f1fcb32f0"
+        },
+        "learners": {
+          "rows": 3,
+          "sha256": "ace6a8fb49c214a13c87be81dbe72937ae50b3fa5e82c650dcafe55c6f4a461a"
+        },
+        "media_aliases": {
+          "rows": 4,
+          "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+        },
+        "media_blobs": {
+          "rows": 5,
+          "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+        },
+        "revisions": {
+          "rows": 6,
+          "sha256": "76ee4b33191e31bd1ca6446a15c3e8b1e6609057d70392396db94f60d0c9ad76"
+        },
+        "sqlite_sequence": {
+          "rows": 1,
+          "sha256": "af166db64813795f361d010d7a8bfa0ba9c0f52fb037efce9d5029d5720b0cd6"
+        }
+      },
+      "sha256": "1b528da6feef286d2985ef303ba0f2d96da0e82ce11dee6bddd6a9b2daccea95"
+    }
+  },
+  "freshBackup": {
+    "path": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\4d4e36bc-67d1-4c07-bcfb-e381d246b0b3\\installed-classic-editor-20261101\\before.sqlite",
+    "copyExact": true,
+    "rehearsalNeverInstalled": true,
+    "authorizedResetRehearsalPassed": true,
+    "sameBuildRehearsalNoReset": true
+  },
+  "sameBuildRestart": {
+    "everyRowRetained": true,
+    "newFictionalProgressRetained": true,
+    "profiles": [
+      {
+        "id": "author-demo",
+        "completed": 0,
+        "attempts": 0,
+        "resumes": 1,
+        "textPageRecords": 0,
+        "hasLastLesson": true
+      },
+      {
+        "id": "learner-core",
+        "completed": 0,
+        "attempts": 0,
+        "resumes": 0,
+        "textPageRecords": 0,
+        "hasLastLesson": false
+      },
+      {
+        "id": "learner-demo",
+        "completed": 0,
+        "attempts": 0,
+        "resumes": 0,
+        "textPageRecords": 0,
+        "hasLastLesson": false
+      }
+    ]
+  },
+  "http": {
+    "servedAssets": [
+      {
+        "path": "/answer-policy.js",
+        "sha256": "7b9ace0f96f65980cb5a0ac655dd115a512f131d7419557260cf447cccd8c437"
+      },
+      {
+        "path": "/app.js",
+        "sha256": "3ff2f78209792a3cb053c4b1011ca54f4ded959ec0a72f7f27428fec8c917015"
+      },
+      {
+        "path": "/assets/hebleo-wide-navy.png",
+        "sha256": "d744d37a3a10f315d58372b3a8f557b2913c04f6d6065c4f15ae26fc10789971"
+      },
+      {
+        "path": "/author/author.css",
+        "sha256": "b639324345a14ea0d899bf878fad416fdbba83c11011f4bc696717bfa6da3853"
+      },
+      {
+        "path": "/author/classic-source.js",
+        "sha256": "8708c9900c1e8a397457684acf2a9401c8b5169a676064f4353314ca6ff31475"
+      },
+      {
+        "path": "/author/field-patch.js",
+        "sha256": "fc4bd4872ae40f7af50f22de83df5a62a4aaa5d79706303f9d68c4c19e71702d"
+      },
+      {
+        "path": "/author/image-chooser.js",
+        "sha256": "38d4ca6079e859dd2f9ae6af65feb0ec55791cffdeeba7de1e2d41d1005423ae"
+      },
+      {
+        "path": "/author/inline-author.js",
+        "sha256": "ea17963601cf7874520dc0ce32d31f35ba639b9afb85361417ba53ea3206a2f1"
+      },
+      {
+        "path": "/author/legacy-editor.js",
+        "sha256": "1ccefdd2026b07133dc5114983d225a9b9bbbaa9c1ecdfea53a40d55bcd4010f"
+      },
+      {
+        "path": "/author/rendered-source.js",
+        "sha256": "ebf8b1a7573ee6dfbfb467831718aecb1be79a56520dc8ce0db31754f09f12a6"
+      },
+      {
+        "path": "/author/source-adapter.js",
+        "sha256": "7a578c9092fd8f0c91cc40853c9c9ddc96c814eb05c08acc3dcfa302a6d27159"
+      },
+      {
+        "path": "/author/standard-editor.js",
+        "sha256": "9ec02dab4fa71428c3c46f09db4c76c6b9f62b5386e7afe986ea452f22d6c89e"
+      },
+      {
+        "path": "/author/vendor/jodit.min.css",
+        "sha256": "d9ba17faee055dfae5f2aad40e3b6c3d154aa8084a187dbbc33d15114531070f"
+      },
+      {
+        "path": "/author/vendor/jodit.min.js",
+        "sha256": "a3bccf84a49c203f41c9ac954359c0cfa4fa549d2e8874a5df71650321db0644"
+      },
+      {
+        "path": "/author/vendor/prosemirror.js",
+        "sha256": "352bbb534e9de0c3a66c94c23e47d5fc2fe87dd36df8dd4c5092f52119c82090"
+      },
+      {
+        "path": "/backup-contract.js",
+        "sha256": "b81068263d2017f67312c8c9c8d69cca025d78d8b6292140d50c68bec9743064"
+      },
+      {
+        "path": "/content-identity.js",
+        "sha256": "b380ad0d0af902b5944835be478c86d107a9a1935b1c02d4d813fcb368ea07f1"
+      },
+      {
+        "path": "/content.js",
+        "sha256": "cddcf13ab9c1df3cb420d8c9b178fef4365d9c241018af5ac0fd7a69495885a2"
+      },
+      {
+        "path": "/course.js",
+        "sha256": "db3efe007cf07e4c3254d38b5b435ea6845e7d468a51de6169737fced25d7c12"
+      },
+      {
+        "path": "/exercise-actions.js",
+        "sha256": "010dfb7327ba604cebbb6f60c57cde06a7830142e61f013d9e62e6e8f7320ceb"
+      },
+      {
+        "path": "/exercise-bindings.js",
+        "sha256": "6ea7abdcd285c3b187ba1c58d5044df08816412e4fd68ebbd2bd9ee73af853cb"
+      },
+      {
+        "path": "/google-setup.html",
+        "sha256": "142137fb99eac2e0cdcbedd757f2aace5c64c83bb4a7388d7bfcd968d1860961"
+      },
+      {
+        "path": "/google-setup.js",
+        "sha256": "63f2a61a2349b0474b7970081aadf951066c0db19ae60396fbaaf71abb5b4bb4"
+      },
+      {
+        "path": "/hebleo-lion-mark.svg",
+        "sha256": "b1a4608d426b2547c64263821cf1a26c496bff1eb1b3a429d1204cc3d386b6f2"
+      },
+      {
+        "path": "/",
+        "sha256": "4a6109d36cb60622700fe26926f075109baae00338e2c53fa1066ef2dbb56183"
+      },
+      {
+        "path": "/interactions.js",
+        "sha256": "0408795003104dee4976b376f79371a0ca75932ac4c9fb558ec6a5398c22137f"
+      },
+      {
+        "path": "/keyboard-owner.css",
+        "sha256": "8e3c5a05c30ab7b9d4ab34e63a68485c51fd04935e49934d7c94a0dbd5256a62"
+      },
+      {
+        "path": "/keyboard-owner.js",
+        "sha256": "6e813727db224050295344f1fe80185cdca82274ea5ebad30428469f0a49b6ea"
+      },
+      {
+        "path": "/learner-view.js",
+        "sha256": "b723e388b1c79a69140a3f04063ec6bda74da5ba062479e9e61824cdd7ba0185"
+      },
+      {
+        "path": "/lexical-contract.js",
+        "sha256": "c30c3c7a24e900691d0199adb684a6b0a8c4c333590d95308b862a14f085700b"
+      },
+      {
+        "path": "/lexical-runtime.js",
+        "sha256": "b050aca59b816266bbb47079577c686ade0bdddc16de66e6c00802626d63fb0b"
+      },
+      {
+        "path": "/lexical-vocabulary.css",
+        "sha256": "227158c0c566c72563c4d330a0a4c849f6c0362d1f4c5331b8f5c0accd2a59a1"
+      },
+      {
+        "path": "/lexical-vocabulary.js",
+        "sha256": "f0c5aa263cd5acc96b4caaceacbe1c5ad0674404e4aa082f2713d1f30bc692cc"
+      },
+      {
+        "path": "/media.js",
+        "sha256": "cf65b04dc4d0d0f6e95868818f06ee8d76bfe3ebe5f2bcfd9ab123975cbf96c0"
+      },
+      {
+        "path": "/post-answer-vocabulary.js",
+        "sha256": "dcacd0baf9784098e78222243a3b62f7e23e8d4c11b40880e601f200d1fbb2bc"
+      },
+      {
+        "path": "/preview/learner-renderer.js",
+        "sha256": "0431431146b4a688d12d8f767b3f2224bd4bb84f6d8e899897bbc3198f3a29dc"
+      },
+      {
+        "path": "/preview/lesson-preview.js",
+        "sha256": "8a39e84bf44eda84c71f08a50dba5092b9c2f45fc73a01b19255f2e49280b17e"
+      },
+      {
+        "path": "/refinement.css",
+        "sha256": "61a43ea88b30a904be4cfd321f86548b3d18907b011a62b03a1bfd017c9972a5"
+      },
+      {
+        "path": "/review-schedule.js",
+        "sha256": "685cc4028fbf16bdba93b58ea7f05735e542f6cadeadc76315bed4c33b84713c"
+      },
+      {
+        "path": "/rich-browser.js",
+        "sha256": "b9ee02e3efd01a246f138a5795f8d3cb3455bb31a3d6d30164307a03f7a87963"
+      },
+      {
+        "path": "/rich.js",
+        "sha256": "3c9478846615b8a55cb3002840b6e2aa7b22dae988d6b8d2f109871655d2962f"
+      },
+      {
+        "path": "/safe-format.js",
+        "sha256": "753ca0d990bceb86037a195de17eb231c0f97339d002c8aa35b73e9bbe45ddd7"
+      },
+      {
+        "path": "/sidebar-toggle.js",
+        "sha256": "e11b37f0daa5b555cc02fdadf0726194747590821e9c2c47f845a93dab2f2a2c"
+      },
+      {
+        "path": "/source-activities.js",
+        "sha256": "490050613c63c95ea47612458d1f4051090607e8da82a607a7d3c8bf16db9e88"
+      },
+      {
+        "path": "/source-vocabulary.js",
+        "sha256": "abd81bc2c5ee85a94481207d7615aa553562ff9edb4103b220e93ccf5253814f"
+      },
+      {
+        "path": "/studio/curriculum-editor.js",
+        "sha256": "f73924eefd5a7e0e743b4fc25bdd205a944dba986cbb646526ddb0fabfefc5be"
+      },
+      {
+        "path": "/studio/editor-fields.js",
+        "sha256": "45d32489e0d48a881c570298ac2adaca9c427f8a5f2fa190f63f3be53b371bb6"
+      },
+      {
+        "path": "/studio/exercise-bindings-editor.js",
+        "sha256": "cdd93cb7d8d3b649d25a8d2862829266fd0b021c616b4c2a3518110f90bb1cd2"
+      },
+      {
+        "path": "/studio/exercise-editor.js",
+        "sha256": "d53d3fc5b7195dca1203db37315aa1b3f4f879995f8a8a74a14041656f966d7e"
+      },
+      {
+        "path": "/studio/import-review.js",
+        "sha256": "718c318ec8303f08d25a81864cd15c8705e68bf9cfcee4c5c37c3784e2e8ae93"
+      },
+      {
+        "path": "/studio/import-workflow.js",
+        "sha256": "f4527beaab6388f1d90233f3271e7e5399b2405d99c0bb5c0e42555326c986cb"
+      },
+      {
+        "path": "/studio/lesson-editor.js",
+        "sha256": "126c42c549575b8ab4d44542ab9155465bb9a489cf7103fffbb27f2a6805dd7a"
+      },
+      {
+        "path": "/studio/lesson-publication.js",
+        "sha256": "24a7e8f196ab22700a1bb67b795e7fc343af306a4fcdd651b04884c9e3abf40c"
+      },
+      {
+        "path": "/studio/lexical-settings.js",
+        "sha256": "11724abe76d7c698e13432abcf916ebdc1badce8dff4d03791a8e3bd97e571c7"
+      },
+      {
+        "path": "/studio/markdown-editor.js",
+        "sha256": "97448890701cfd762f3faa93b8e3f5d6d6397a030a177bd1fe689d407ed4b2a4"
+      },
+      {
+        "path": "/studio/media-library.css",
+        "sha256": "9148b289cf392dcaaf4df44821bc18005b4b37fdd58f39e13c059cecc4ec9d12"
+      },
+      {
+        "path": "/studio/media-library.js",
+        "sha256": "95518f649d7e3215de1113b7c09165a139ed8efc1433430cccbf2a47f5179e33"
+      },
+      {
+        "path": "/studio/media-picker.js",
+        "sha256": "6eab42a64eafa9f8552258220137962c6f9173c2b3a25046708bc457f69ac9b0"
+      },
+      {
+        "path": "/studio/save-processor.js",
+        "sha256": "cb27e4d5efe02953fd6125d7a977ba0a06ed2dc9d46df554b93c860b44da825e"
+      },
+      {
+        "path": "/studio/save-task.js",
+        "sha256": "63fdcb0f63e9b5b4bea690a0ce49e9b929a189975bf1e5cb52af836b50fe64f6"
+      },
+      {
+        "path": "/studio/save-worker.js",
+        "sha256": "ba02a7cd11b567d41beea049616fa9a7393a0ea7abee3df4ad8b12d5143edfaf"
+      },
+      {
+        "path": "/studio/selector-editor.js",
+        "sha256": "2c7025a21afd9b934d7f92562f5e79ae480e9646e30d2a162a3ec52a5d5cd1e0"
+      },
+      {
+        "path": "/studio/sources-editor.js",
+        "sha256": "ed6be80b6920cc77606be9fad420645dad554349d42d6011b958dbc706b17f17"
+      },
+      {
+        "path": "/studio/sources.css",
+        "sha256": "836d5f7eeb4fbcb1b99ba25e266cdba57ce1e94bc0a0f99005f900f78a6660f1"
+      },
+      {
+        "path": "/studio/studio.css",
+        "sha256": "97d3df52de788bd88e2ee6c560d3eaeb30f9bc3647652a05e77ff1d2bcb3773b"
+      },
+      {
+        "path": "/studio/text-import.js",
+        "sha256": "e0e8082355529fe6630d518f7046d92a5cb1b826db60c205d632b73c4d456e3b"
+      },
+      {
+        "path": "/studio/text-pages-editor.js",
+        "sha256": "55bf51abb6076dcf28ed4455e30b08e145df2c111d393984c0edf3de49aa466a"
+      },
+      {
+        "path": "/studio/unified-studio.js",
+        "sha256": "c73da2d8d9be5b6aeb6b5fcec1b9ed82f0dfbe2eb18acabf3119f7b1af5937f1"
+      },
+      {
+        "path": "/studio/vendor/easymde.min.css",
+        "sha256": "6eee36340432776d682e7372ec4a7eb29be4fdb3ffada32c0bfa5e31a5ef34a2"
+      },
+      {
+        "path": "/studio/vendor/easymde.min.js",
+        "sha256": "2c06bddfd0c89176db08ccf9d42e2beaa9b4f1a4ff8fb2ec0bf1bed25ce08e05"
+      },
+      {
+        "path": "/studio/vocabulary-browser.js",
+        "sha256": "145633a98c624a50f8627bc9c186d447173c8364069b3b9aa689b541f8833000"
+      },
+      {
+        "path": "/studio/workspace.js",
+        "sha256": "beabe0c98d91e1e8aadd9d0f789d530f54e173eb5e24ca4b22edf02f8e400d92"
+      },
+      {
+        "path": "/styles.css",
+        "sha256": "e1d9518b309da250a0a90522b3097a7a748d888bf9e91b0b0f565072c015751c"
+      },
+      {
+        "path": "/text-contract.js",
+        "sha256": "050174bde975b447577b472f5af09147ef6ad6e5030c504786ab02351f789c57"
+      },
+      {
+        "path": "/text-reader.js",
+        "sha256": "2bb76b7bcccde9c0aa0988ad377b1f29707d33d4570023fd2c80b6d573f060dd"
+      },
+      {
+        "path": "/ux.js",
+        "sha256": "9ead968a44575b7a362890ad6e8cb7f080b0a53b6063496684e952a13a2c0d00"
+      },
+      {
+        "path": "/vocabulary-import.js",
+        "sha256": "93fca44eaf6e0aa1bf9ebcae8b7fa26684646f04e975edcb5a1fe314273c7891"
+      },
+      {
+        "path": "/vocabulary-reminder.css",
+        "sha256": "a26300ff22cc8d7104cbc9b8ca1fe04b641ff739ea27a3794b77437a4a48a5bc"
+      },
+      {
+        "path": "/vocabulary-reminder.js",
+        "sha256": "14b2221540958c5869aa3fa68959bbb001ecdf9c044eaff09dd69e9c016460c7"
+      },
+      {
+        "path": "/vendor/marked.js",
+        "sha256": "528a1b88bef88fc27277e06036ce7f4afb6a220b18110ba57c09e292b24a7ce0"
+      },
+      {
+        "path": "/vendor/purify.js",
+        "sha256": "60c5d5ccbb466de3de3ba863461a92bf134f8c156cef7992da43e0f659bc5cbd"
+      }
+    ],
+    "unmappedPublicFiles": [
+      "/author/vendor/LICENSES.txt",
+      "/lexical-contract.d.ts",
+      "/studio/vendor/.gitattributes",
+      "/studio/vendor/CodeMirror-LICENSE.txt",
+      "/studio/vendor/EasyMDE-LICENSE.txt",
+      "/studio/vendor/Marked-bundled-LICENSE.txt",
+      "/studio/vendor/SpellChecker-LICENSE.txt",
+      "/studio/vendor/TypoJS-LICENSE.txt"
+    ],
+    "mediaReadback": [
+      {
+        "path": "/media/first2/first2-l.png",
+        "sha256": "0df69d3c4491f2869cbac224e1a79631490ed195e97bc3538e671e717896c2e7"
+      },
+      {
+        "path": "/media/first2/first2-m.png",
+        "sha256": "d1e0fef1c13fd03714cc2e9d6ff5c6a3313eb955b7af54e451177a1e4cabdb90"
+      },
+      {
+        "path": "/media/first2/first2-n.png",
+        "sha256": "15ed70105706f28fa69f800e771694bbe3b8df4a0ae0ff4c7632b63e6fca2f63"
+      },
+      {
+        "path": "/media/first2/first2-t.png",
+        "sha256": "cfdee0b8de8342dde59319765b09c4de5fe992e9b4a898e5fff43a5b1e72bbd1"
+      },
+      {
+        "path": "/media/blobs/0df69d3c4491f2869cbac224e1a79631490ed195e97bc3538e671e717896c2e7.png",
+        "sha256": "0df69d3c4491f2869cbac224e1a79631490ed195e97bc3538e671e717896c2e7"
+      },
+      {
+        "path": "/media/blobs/15ed70105706f28fa69f800e771694bbe3b8df4a0ae0ff4c7632b63e6fca2f63.png",
+        "sha256": "15ed70105706f28fa69f800e771694bbe3b8df4a0ae0ff4c7632b63e6fca2f63"
+      },
+      {
+        "path": "/media/blobs/cfdee0b8de8342dde59319765b09c4de5fe992e9b4a898e5fff43a5b1e72bbd1.png",
+        "sha256": "cfdee0b8de8342dde59319765b09c4de5fe992e9b4a898e5fff43a5b1e72bbd1"
+      },
+      {
+        "path": "/media/blobs/d0c997c336555068b46cf033a9fac2d3e22cadf5438cfc7725b6460e2a9ac83d.wav",
+        "sha256": "d0c997c336555068b46cf033a9fac2d3e22cadf5438cfc7725b6460e2a9ac83d"
+      },
+      {
+        "path": "/media/blobs/d1e0fef1c13fd03714cc2e9d6ff5c6a3313eb955b7af54e451177a1e4cabdb90.png",
+        "sha256": "d1e0fef1c13fd03714cc2e9d6ff5c6a3313eb955b7af54e451177a1e4cabdb90"
+      }
+    ],
+    "all23FullDraftAndPublishedExact": true,
+    "savedTokenExact": true,
+    "readbackChangedNoRows": true
+  },
+  "native": {
+    "surface": "mounted Browser",
+    "url": "http://127.0.0.1:63358/#lesson/MEMORY-A2/MEMORY-A2-interactive",
+    "viewport": [
+      1280,
+      720
+    ],
+    "component": "Jodit core4.18.12",
+    "toolbarCssPixels": [
+      758,
+      65
+    ],
+    "suppliedTwoRowIconToolbar": true,
+    "visualOriginalTeachingCanvas": true,
+    "fontMenuPx": [
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      24,
+      32,
+      48,
+      72,
+      96
+    ],
+    "sidebar": {
+      "expandedName": "Collapse course outline",
+      "collapsedName": "Expand course outline",
+      "collapsedExpandedState": "false"
+    },
+    "publicationReview": {
+      "selectedLesson": "MEMORY-A2",
+      "reviewedObjectChanges": 1,
+      "requiredChangedDependencies": 0,
+      "remainingSavedDifferencesPrivate": 22,
+      "initialFocus": "H2 Review & publish",
+      "escapeCloses": true,
+      "escapeReturnsFocus": "Review & publish…",
+      "finalPublishNotActivated": true
+    },
+    "ordinarySavedPreview": {
+      "opened": true,
+      "renderedOriginalSavedParagraphAndList": true,
+      "exited": true
+    },
+    "afterSameBuildRestart": {
+      "servedIdentityExact": true,
+      "componentStillMounted": true,
+      "draftSavedNotPublished": true,
+      "noUnsavedEdits": true
+    },
+    "teachingSaveSubmitted": false,
+    "commentSubmitted": false,
+    "imageApprovalSubmitted": false,
+    "publicationSubmitted": false,
+    "performance": "No new installed mutation benchmark; independent matching-data native measurements below.",
+    "excludedAttempts": [
+      "One passive page expression failed syntax before corrected read succeeded.",
+      "Explicit role=dialog selector did not match the native dialog; actual snapshot/native dialog checks succeeded.",
+      "One selector screenshot was blank and is excluded; inspected full viewport captures are retained."
+    ]
+  },
+  "independentNative": {
+    "qa": "Bounded native/preinstall PASS exact40864ec; projection, real private image lifecycle, formatting Save/Preview/reload, copy/paste, Enter, Undo/Redo, pending input, injected503 retry",
+    "ux": "Bounded corrected native/reference PASS exact40864ec; NC01–04 closed",
+    "typing": {
+      "trustedInputCount": 18,
+      "p50Ms": 0.3,
+      "p95Ms": 1.1,
+      "maxMs": 1.1,
+      "nextRAFP95Ms": 14.3,
+      "observedFullWorkspaceClonesDuringInput": 0
+    },
+    "firstSave": {
+      "totalMs": 5056.2,
+      "httpMs": 4291.3,
+      "feedbackMs": 2.3,
+      "firstRAFMs": 9.9
+    },
+    "limits": {
+      "saveLongTasksMs": [
+        184,
+        276
+      ],
+      "editorEntryLongTaskMs": 1016,
+      "noUniversalSmoothnessClaim": true
+    }
+  },
+  "independentRecovery": {
+    "reviewer": "Release",
+    "focused": 165,
+    "additionalGroups": 6,
+    "formattedImageBackupBytes": 85483413,
+    "httpRestoreCycles": 2,
+    "approvalAuditAndPrivateAnchorsPreserved": true,
+    "scope": "One synthetic full-size context and pinned synthetic image. Prior multi-context93MB proof retained as bounded earlier evidence; no unlimited-size/old-reader claim."
+  },
+  "rollback": {
+    "readOnly": true,
+    "matchingPreUpdateBackup": true,
+    "oldExecutable": "3e01c79ebc51c72a8eff11b56e406367b87502a1",
+    "oldRuntimeSha256": "9eba7cc35c92fc001e268fd1e460f4c79b2355d6447467aaa67c98caa0940832",
+    "currentReceipt": "1b528da6feef286d2985ef303ba0f2d96da0e82ce11dee6bddd6a9b2daccea95",
+    "unchangedSinceUpdate": false,
+    "automaticRollbackAllowed": false,
+    "reason": "Refuse rollback: original changed after installation, including new progress. Do not overwrite newer state or run old code against newer private image approvals.",
+    "noDatabaseOrExecutableWritten": true
+  },
+  "sourceOrDraftReplaced": false,
+  "actualTeachingPublication": false,
+  "reviewDatabaseInstalled": false,
+  "contentRevision": 6,
+  "reader": 10,
+  "limitations": [
+    "Physical Hebrew IME",
+    "Narrow viewport and200% zoom",
+    "Screen-reader and physical-touch/mobile",
+    "Remaining editor-entry and Save Long Tasks",
+    "Four inherited static heuristic findings",
+    "Historical pooled-connection ECONNRESET cause unresolved; fresh-connection integrity/recovery checks passed"
+  ],
+  "guyAcceptance": "Pending"
+}
