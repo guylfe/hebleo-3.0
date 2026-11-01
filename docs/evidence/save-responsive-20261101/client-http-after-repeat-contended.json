@@ -1,0 +1,109 @@
+{
+  "mode": "after",
+  "measurement": "JSDOM real inline controller + loopback HTTP + real worker; NOT native paint",
+  "lessons": 23,
+  "bytes": 26632089,
+  "phases": {
+    "clickToSubmit": 579.7952000000005,
+    "requestEncodingMain": 0.001299999999901047,
+    "worker": {
+      "validationMs": 5.919799999999668,
+      "encodingMs": 122.23390000000109,
+      "publicationMs": 0.8521999999993568,
+      "blobMs": 4.65979999999945
+    },
+    "http": 7228.398299999999,
+    "appAdopt": 0.0006000000012136297,
+    "total": 7821.747000000001
+  },
+  "copies": [
+    {
+      "fullWorkspace": false,
+      "ms": 0.07070000000021537
+    },
+    {
+      "fullWorkspace": false,
+      "ms": 0.12200000000120781
+    }
+  ],
+  "serializations": [
+    {
+      "fullWorkspace": false,
+      "ms": 0.005899999998291605
+    }
+  ],
+  "fullDraftExact": true,
+  "activeExact": true,
+  "sourceUnchanged": true,
+  "allOtherTablesExact": true,
+  "nonDraftKVExact": true,
+  "schemaExact": true,
+  "beforeSource": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 8,
+        "sha256": "7eccf1993ac8bd290e56d9c402f9f391e9da1754594775cd2b9ecdda8125cc3c"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "55b5c53c4c8f07ad6dabed6929fb19402c858d49ba1c67751ea627c2cb369835"
+      },
+      "media_aliases": {
+        "rows": 4,
+        "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+      },
+      "media_blobs": {
+        "rows": 5,
+        "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+      },
+      "revisions": {
+        "rows": 6,
+        "sha256": "76ee4b33191e31bd1ca6446a15c3e8b1e6609057d70392396db94f60d0c9ad76"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "af166db64813795f361d010d7a8bfa0ba9c0f52fb037efce9d5029d5720b0cd6"
+      }
+    },
+    "sha256": "f71259b6ba84e81f24373218a031b7e69a5abbef8936143babea2edfe2cb444f"
+  },
+  "afterReceipt": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 8,
+        "sha256": "f9fcebce0662a76d2d3989ff7f3e32f3580026144df8ab7c509fab4e5b3833d3"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "55b5c53c4c8f07ad6dabed6929fb19402c858d49ba1c67751ea627c2cb369835"
+      },
+      "media_aliases": {
+        "rows": 4,
+        "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+      },
+      "media_blobs": {
+        "rows": 5,
+        "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+      },
+      "revisions": {
+        "rows": 6,
+        "sha256": "76ee4b33191e31bd1ca6446a15c3e8b1e6609057d70392396db94f60d0c9ad76"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "af166db64813795f361d010d7a8bfa0ba9c0f52fb037efce9d5029d5720b0cd6"
+      }
+    },
+    "sha256": "db10e441c1814ffc81e0cca2f056cd66240e4161780cb44dd6d1a3b22bdd445c"
+  }
+}
