@@ -1,3 +1,4 @@
+import {SharedCards,validateSharedState,validateCardSettings,parseSharedCardId} from './shared-cards.js';
 import {AuthorReview,validateAuthorReview,relinkAuthorReview,mergeAuthorReview,authorReviewContents} from './author-review.js';
 import {canonicalJSON,contextHash} from './immutable-context.js';
 import {publicationScope,planLessonPublication,lessonReviewToken,rebaseDraftJSON,remainingLessonChanges} from './lesson-publication.js';
@@ -26,11 +27,11 @@ import {prepareTextDraftImport} from './text-import.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
 
 // v2: revision-mapped backups; v3: component cursors; v4: shared discussions; v5: authored typing/context; v6: retained source authoring bundles.
-export const STORE_SCHEMA_VERSION = 10;
+export const STORE_SCHEMA_VERSION = 11;
 const backupFormats = ['hebleo-demo-backup-v1', 'hebleo-demo-backup-v2'];
 // Supported backup markers are checked before any restore write.
 // v1 predates the marker; v2 backups retain each supported historical contract.
-export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3,4,5,6,7,8,9,10] };
+export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3,4,5,6,7,8,9,10,11] };
 export { DomainError, normalizeHebrew };
 const clone = value => JSON.parse(JSON.stringify(value));
 // Sorted-key JSON, so the same content always yields the same token whatever key order an import used.
@@ -228,11 +229,14 @@ export class Store {
     });
     this.authorReview=new AuthorReview(this,draftTokenFor);
     this.media=new MediaStore(this);
+    if(version<11)this.set('schema-version',11);
+    this.shared=new SharedCards(this);
+    const shared=this.shared.state();if(shared)validateSharedState(shared,h=>this.media.blob(h));
     this.sourcePermit=Symbol('internal-source-commit');
   }
   transaction(fn) { const nested=(this.transactionDepth||0)>0,name='nested_'+(this.transactionDepth||0);this.db.exec(nested?'SAVEPOINT '+name:'BEGIN IMMEDIATE');this.transactionDepth=(this.transactionDepth||0)+1;try{const result=fn();if(result?.then)throw new DomainError('Database transactions must be synchronous.');this.db.exec(nested?'RELEASE '+name:'COMMIT');return result;}catch(e){this.db.exec(nested?'ROLLBACK TO '+name:'ROLLBACK');if(nested)this.db.exec('RELEASE '+name);throw e;}finally{this.transactionDepth--;} }
   get(key) { const row = this.db.prepare('SELECT value FROM kv WHERE key=?').get(key); return row ? JSON.parse(row.value) : null; }
-  set(key, value) { this.db.prepare('INSERT INTO kv(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run(key, JSON.stringify(value)); }
+  set(key, value) { if(key==='shared-cards')this.shared?.invalidate();this.db.prepare('INSERT INTO kv(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run(key, JSON.stringify(value)); }
   addRevision(content, reason) { const result = this.db.prepare('INSERT INTO revisions(snapshot,created_at,reason) VALUES(?,?,?)').run(JSON.stringify(content), new Date().toISOString(), reason); return Number(result.lastInsertRowid); }
   snapshot(revisionId = this.get('active')) { const row = this.db.prepare('SELECT snapshot FROM revisions WHERE id=?').get(Number(revisionId)); if (!row) throw new DomainError('Content revision not found.', 404); return JSON.parse(row.snapshot); }
   learner(userId) { if (!users.some(u => u.id === userId)) throw new DomainError('Unknown demo learner.', 404); const state = JSON.parse(this.db.prepare('SELECT state FROM learners WHERE id=?').get(userId).state); state.preferences = { ...preferenceDefaults, ...state.preferences }; state.resumes ||= {}; return state; }
@@ -264,8 +268,8 @@ export class Store {
   }
   bootstrap(userId) {
     const content = this.snapshot(); const learner = this.learner(userId);
-    const due = Object.entries(learner.cards).filter(([, c]) => Date.parse(c.due) <= Date.now()).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
-    return { revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
+    const due = Object.entries(learner.cards).filter(([, c]) => Date.parse(c.due) <= Date.now()).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)||this.shared.word(wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
+    return { sharedCollection: this.shared.state()&&learner.purchasedCourses.includes('demo-foundations')?this.shared.collection(userId):null, revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
   }
   publicWord(word) {
     if(!word)return word;
@@ -326,7 +330,7 @@ export class Store {
     if (![1, 2, 3, 4].includes(input.rating)) throw new DomainError('Invalid review rating.');
     const state = this.learner(userId); const card = state.cards[input.wordId];
     if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
-    if (!card || !this.snapshot().words.some(w => w.id === input.wordId)) throw new DomainError('Review card not found.', 404);
+    if (!card || !this.snapshot().words.some(w => w.id === input.wordId) && !this.shared.word(input.wordId)) throw new DomainError('Review card not found.', 404);
     const requestId = id(input.requestId); const previous = this.get('review-' + userId + '-' + requestId);
     if (previous) { if (previous.wordId !== input.wordId || previous.rating !== input.rating) throw new DomainError('Conflicting review request ID.', 409); return { ...previous, duplicate: true }; }
     if (Object.hasOwn(input,'expectedCard') && canonicalJSON(input.expectedCard) !== canonicalJSON(card)) throw new DomainError('This card changed elsewhere. Refresh its review choices.',409,'REVIEW_CARD_CHANGED');
@@ -522,7 +526,7 @@ export class Store {
   }
   answerQuestion(userId,input) { this.requireAuthor(userId);const key='question-'+id(input.userId)+'-'+id(input.requestId),q=this.get(key);if(!q)throw new DomainError('Question not found.',404);q.answer=text(input.answer,'author answer',12000);q.status='answered';q.answeredAt=new Date().toISOString();this.set(key,q);return q; }
   resolveReport(userId, input) { this.requireAuthor(userId); const key = 'report-' + id(input.userId) + '-' + id(input.requestId); const r = this.get(key); if (!r) throw new DomainError('Report not found.',404); if (!['pending','reviewed'].includes(input.status)) throw new DomainError('Invalid report status.'); r.status = input.status; this.set(key,r); return r; }
-  enroll(userId, wordId) { if (!this.snapshot().words.some(w => w.id === wordId)) throw new DomainError('Word not found.', 404); const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403); if (!state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false }; this.saveLearner(userId, state); return state; }
+  enroll(userId, wordId) { if (!this.snapshot().words.some(w => w.id === wordId) && !this.shared.word(wordId)) throw new DomainError('Word not found.', 404); const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403); if (!state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false }; this.saveLearner(userId, state); return state; }
   lexicalMigrationPreview(input){
     const content=this.previewDraft(input.draftToken).content;
     if(!content.lexical)throw new DomainError('The saved draft has no lexical model.');
@@ -747,7 +751,7 @@ export class Store {
     const sourceAuthoring=this.get('source-state');
     const referenced = [...this.db.prepare('SELECT id FROM revisions').all().map(r=>r.id),...Object.keys(sourceAuthoring?.revisions||{}).map(Number),activeRevisionId, draft?.baseRevisionId, ...learners.flatMap(({ state }) => [...state.attempts.map(a => a.revisionId), ...Object.values(state.resumes).map(p => p.revisionId),...(state.textPages||[]).map(p=>p.revisionId)]), ...questions.map(q => q.value.revisionId), ...reports.map(r => r.value.attempt?.revisionId)];
     const revisionSnapshots = [...new Set(referenced.filter(Number.isInteger))].sort((a, b) => a - b).map(revisionId => ({ revisionId, content: this.snapshot(revisionId) }));
-    const result={ format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),authorReview:this.authorReview.state(),mediaRecovery:this.media.backup([...revisionSnapshots.map(r=>r.content),...(draft?[draft.content]:[]),...this.authorReview.contexts()]),...(sourceAuthoring?{sourceAuthoring}: {}) };
+    const result={ sharedCards:structuredClone(this.shared.state()), format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),authorReview:this.authorReview.state(),mediaRecovery:this.media.backup([...revisionSnapshots.map(r=>r.content),...(draft?[draft.content]:[]),...this.authorReview.contexts()]),...(sourceAuthoring?{sourceAuthoring}: {}) };
     this.serializeBackup(result);return result;
   }
   serializeBackup(value){try{return serializeBackup(value);}catch(error){if(error.code==='BACKUP_TOO_LARGE')throw new DomainError(error.message,error.status,error.code);throw error;}}
@@ -769,7 +773,9 @@ export class Store {
     }
     if(input.authorReview!==undefined&&input.storeSchemaVersion<9)throw new DomainError('Author review backups require Store reader 9.',409,'AUTHOR_REVIEW_READER_MISMATCH');
     if(input.storeSchemaVersion>=9&&input.authorReview==null)throw new DomainError('Backup is missing its private author review namespace.');
-    if(input.authorReview?.schemaVersion===2&&input.storeSchemaVersion!==10||input.storeSchemaVersion===10&&input.authorReview?.schemaVersion!==2)throw new DomainError('Compact author review requires Store reader 10 and namespace 2.',409,'AUTHOR_REVIEW_READER_MISMATCH');
+    if(input.authorReview?.schemaVersion===2&&input.storeSchemaVersion<10||input.storeSchemaVersion>=10&&input.authorReview?.schemaVersion!==2)throw new DomainError('Compact author review requires Store reader 10 and namespace 2.',409,'AUTHOR_REVIEW_READER_MISMATCH');
+    if(input.storeSchemaVersion>=11&&!Object.hasOwn(input,'sharedCards')||input.storeSchemaVersion<11&&input.sharedCards!=null)throw new DomainError('Shared namespace requires reader 11.',409);
+    if(this.shared.state()&&!input.sharedCards)throw new DomainError('Restore would drop the shared namespace. Use a shared-aware backup.',409);
     const restoredAuthorReview=validateAuthorReview(input.authorReview,{carried,validateContent,draftTokenFor,authorIds:users.filter(u=>u.canAuthor).map(u=>u.id)});
     const restoredContexts=authorReviewContents(restoredAuthorReview,id=>carried.get(id),draftTokenFor),existingContexts=this.authorReview.contexts();
     const known=this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot));
@@ -780,6 +786,7 @@ export class Store {
     const restoredSource=validateSourceState(input.sourceAuthoring??null,carried,input.draft,input.content);
     if(input.mediaRecovery!==undefined&&!(Number.isInteger(input.storeSchemaVersion)&&input.storeSchemaVersion>=7))throw new DomainError('Media-bearing backups require Store/backup reader 7.',409,'MEDIA_READER_MISMATCH');
     const restoredMedia=this.media.preserveForRestore(this.media.validateBackup(input.mediaRecovery??null,incoming,{required:input.storeSchemaVersion>=7}),[...known,...existingContexts]);
+    const restoredShared=validateSharedState(input.sharedCards??null,h=>restoredMedia.blobs.find(b=>b.sha256===h));
     // A link holds only if its exact carried revision agrees with every reference, as normal writes require: the lesson exists, the exercise belongs to that lesson, an optional word exists.
     // v2 must carry every link and rejects any disagreement. v1 history that does not hold becomes an explicit legacy link with its grade; nothing is repaired or regraded.
     const linked = record => { const c = carried.get(record.revisionId); return Boolean(c) && c.lessons.some(l => l.id === record.lessonId) && (!record.exerciseId || c.exercises.some(e => e.id === record.exerciseId && (e.lessonId===record.lessonId || exerciseInLesson(c,record.lessonId,e.id)))) && (!record.wordId || c.words.some(w => w.id === record.wordId)); };
@@ -815,6 +822,8 @@ export class Store {
       if (new Set(s.attempts.map(a => a.requestId)).size !== s.attempts.length) throw new DomainError('Duplicate saved attempt receipt.');
       for (const [key, note] of Object.entries(s.notes)) { id(key); if (typeof note !== 'string' || note.length > 2000) throw new DomainError('Invalid saved note.'); }
       validatePreferences(s.preferences);
+      if(s.sharedCardSettings!==undefined)validateCardSettings(s.sharedCardSettings);
+      for(const cardId of Object.keys(s.cards).filter(k=>k.startsWith('sc-'))){const key=parseSharedCardId(cardId);if(!key||!restoredShared?.raw.notes.some(n=>n.id===key.sourceId))throw new DomainError('Orphan shared card schedule.');}
       if(s.textPages!==undefined){
         if(input.storeSchemaVersion<8)throw new DomainError('Text response backups require Store reader 8.',409,'TEXT_READER_MISMATCH');
         if(!Array.isArray(s.textPages)||s.textPages.length>2000||new Set(s.textPages.map(r=>JSON.stringify([r.lessonId,r.componentId,r.revisionId]))).size!==s.textPages.length)throw new DomainError('Invalid text response history.');
@@ -853,6 +862,7 @@ export class Store {
       const relink = record => { if (!record || record.revisionId == null) return; if (linked(record)) record.revisionId = ids.get(record.revisionId); else { record.legacyRevisionId = record.revisionId; record.revisionId = null; } };
       this.set('author-review',mergeAuthorReview(this.authorReview.state(),relinkAuthorReview(restoredAuthorReview,ids,draftTokenFor,id=>carried.get(id))));
       this.media.restore(restoredMedia);
+      this.set('shared-cards',restoredShared);
       this.set('active', revisionId); this.set('draft', v2 && input.draft ? { ...clone(input.draft), baseRevisionId: revisionId } : null);
       for (const row of input.learners) { const state = clone(row.state); state.attempts.forEach(relink); Object.values(state.resumes || {}).forEach(relink);(state.textPages||[]).forEach(relink); this.saveLearner(row.id, state); }
       this.db.exec("DELETE FROM events; DELETE FROM kv WHERE key LIKE 'review-%' OR key LIKE 'report-%' OR key LIKE 'question-%';");

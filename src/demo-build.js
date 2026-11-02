@@ -11,7 +11,7 @@ async function executableFiles(base,directory){
   for(const entry of await readdir(resolve(base,directory),{withFileTypes:true})){
     const path=directory+'/'+entry.name;
     if(entry.isDirectory())paths.push(...await executableFiles(base,path));
-    else if(entry.isFile() && /\.(js|css|html|svg)$/.test(entry.name))paths.push(path);
+    else if(entry.isFile() && (/\.(js|mjs|css|html|svg)$/.test(entry.name) || path==='src/shared-card-adapter/approved-templates.json'))paths.push(path);
   }
   return paths;
 }

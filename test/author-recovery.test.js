@@ -109,11 +109,11 @@ test('malformed deltas, base hashes, draft tokens, UTF-16 quotes, receipts, audi
 test('legacy reader 9 migration is lossless, atomic on invalid namespace, and marker-only for reader 8 without review',t=>{
  const dir=mkdtempSync(join(tmpdir(),'hebleo-context-migrate-')),file=join(dir,'legacy.sqlite');t.after(()=>rmSync(dir,{recursive:true,force:true}));
  let s=new Store(file);const f=contextFixture(s),legacy=s.authorReview.state();legacy.schemaVersion=1;delete legacy.chunks;legacy.drafts[f.req.draftToken]={baseRevisionId:f.req.baseRevisionId,content:f.content};s.set('author-review',legacy);s.set('schema-version',9);const before=dump(s);s.close();
- s=new Store(file);assert.equal(s.get('schema-version'),10);assert.deepEqual(s.authorReview.contexts()[0],f.content);assert.deepEqual(s.authorReview.state().comments[0],f.created);
- const after=dump(s);for(const [table,rows] of before)assert.deepEqual(after.find(([t])=>t===table)[1],table==='kv'?rows.map(r=>r.key==='schema-version'?{...r,value:'10'}:r.key==='author-review'?{...r,value:JSON.stringify(s.authorReview.state())}:r):rows);
+ s=new Store(file);assert.equal(s.get('schema-version'),11);assert.deepEqual(s.authorReview.contexts()[0],f.content);assert.deepEqual(s.authorReview.state().comments[0],f.created);
+ const after=dump(s);for(const [table,rows] of before)assert.deepEqual(after.find(([t])=>t===table)[1],table==='kv'?rows.map(r=>r.key==='schema-version'?{...r,value:'11'}:r.key==='author-review'?{...r,value:JSON.stringify(s.authorReview.state())}:r):rows);
  // A malformed old context must not even advance its reader marker.
  legacy.comments[0].anchor.contentHash='0'.repeat(64);s.set('author-review',legacy);s.set('schema-version',9);const invalid=dump(s);s.close();assert.throws(()=>new Store(file));const db=new DatabaseSync(file,{readOnly:true});try{assert.deepEqual(dump({db}),invalid);}finally{db.close();}
- const cleanFile=join(dir,'reader8.sqlite');s=new Store(cleanFile);s.set('schema-version',8);const clean=dump(s);s.close();s=new Store(cleanFile);try{assert.deepEqual(dump(s),clean.map(([table,rows])=>[table,table==='kv'?rows.map(r=>r.key==='schema-version'?{...r,value:'10'}:r):rows]));}finally{s.close();}
+ const cleanFile=join(dir,'reader8.sqlite');s=new Store(cleanFile);s.set('schema-version',8);const clean=dump(s);s.close();s=new Store(cleanFile);try{assert.deepEqual(dump(s),clean.map(([table,rows])=>[table,table==='kv'?rows.map(r=>r.key==='schema-version'?{...r,value:'11'}:r):rows]));}finally{s.close();}
 });
 
 test('export validates the actual compact UTF-8 file and refuses oversized backup before sending any artifact; shared client/server bound is enforced',async t=>{

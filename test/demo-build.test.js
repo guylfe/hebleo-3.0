@@ -92,3 +92,14 @@ test('The checkout fingerprint includes every nested public module and no docs o
   for(const path of nested)assert.ok(listed.includes(path),path+' is part of the build');
   assert.ok(listed.includes('src/demo-build.js'));assert.ok(listed.every(p=>p==='package-lock.json'||/^(public|src)\//.test(p)));
 });
+
+test('shared renderer modules and approved template are executable fingerprint inputs; arbitrary JSON is not',async t=>{
+ const dir=directory(t),folder=join(dir,'src','shared-card-adapter');mkdirSync(folder,{recursive:true});mkdirSync(join(dir,'public'));writeFileSync(join(dir,'package-lock.json'),'{}');
+ const modulePath=join(folder,'index.mjs'),templatePath=join(folder,'approved-templates.json');
+ writeFileSync(modulePath,'approved renderer');writeFileSync(templatePath,'{"css":"approved"}');
+ const first=await demoBuildFingerprint(dir);
+ assert.ok((await demoBuildFiles(dir)).includes('src/shared-card-adapter/index.mjs'));assert.ok((await demoBuildFiles(dir)).includes('src/shared-card-adapter/approved-templates.json'));
+ writeFileSync(modulePath,'updated renderer');assert.notEqual(await demoBuildFingerprint(dir),first);
+ writeFileSync(modulePath,'approved renderer');writeFileSync(templatePath,'{"css":"reviewed update"}');assert.notEqual(await demoBuildFingerprint(dir),first);
+ writeFileSync(templatePath,'{"css":"approved"}');writeFileSync(join(folder,'unrelated.json'),'mutable JSON');assert.equal(await demoBuildFingerprint(dir),first);
+});

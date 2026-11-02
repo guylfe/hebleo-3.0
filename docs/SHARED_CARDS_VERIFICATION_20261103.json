@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-03",
+  "scope": "isolated app candidate only",
+  "branch": "feature/shared-cards-20261102",
+  "startRevision": "40864ec3cad885b5d550eb9c9cda9c0addc6bd6d",
+  "namespaceVersion": 1,
+  "storeReader": 11,
+  "counts": {
+    "notes": 1025,
+    "directions": 2050,
+    "media": 1329
+  },
+  "checks": {
+    "syntax": "pass",
+    "focused": {
+      "pass": 9,
+      "fail": 0
+    },
+    "app": {
+      "pass": 127,
+      "fail": 0
+    },
+    "bounded": {
+      "pass": 1101,
+      "fail": 0,
+      "ms": 72851.7325
+    },
+    "full": {
+      "pass": 1165,
+      "fail": 18,
+      "total": 1183
+    },
+    "baselineAppReproduction": {
+      "fail": 17
+    },
+    "unrelatedFrozenBuildGates": 1,
+    "buildFingerprint": {
+      "pass": 6,
+      "fail": 0
+    }
+  },
+  "installed": false,
+  "sourceMediaCommitted": false,
+  "newPhraseRecordingsBound": 0,
+  "browser": {
+    "surface": "mounted Browser",
+    "port": 63592,
+    "frameSandbox": "allow-scripts",
+    "childWidth": 390,
+    "nativePhone": false,
+    "settings": {
+      "mode": "dark",
+      "nikkud": true
+    },
+    "independentDisclosures": [
+      "Past",
+      "Present"
+    ],
+    "mediaResponse": {
+      "status": 206,
+      "range": "bytes=0-",
+      "file": "14ed89409750e41c60e81569bd5fea6c9284c10fbc4ce1eb63b7f09717a3d7ba.mp3"
+    },
+    "humanListeningJudgment": false
+  },
+  "remaining": [
+    "Independent review",
+    "Guarded original-data preservation rehearsal",
+    "Native-device listening and Guy acceptance",
+    "Lead integration/install/main/push"
+  ]
+}
