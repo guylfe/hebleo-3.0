@@ -1,0 +1,46 @@
+[
+  {
+    "file": "shared-cards.php",
+    "sha256": "cfbf8ecb701204598721bae60634601b0f784858fdc54106e1544eda382ad90b"
+  },
+  {
+    "file": "release.php",
+    "sha256": "91dc38bea86b91b88f6dd9cf099dbad9bccf8a3083d959a1e2347825d5690596"
+  },
+  {
+    "file": "release-recovery.php",
+    "sha256": "7d5489de24ecd2c92a10d34f09799ad0b7bb055b2e47d550a5c7ed1765b59b33"
+  },
+  {
+    "file": "release-recovery.test.php",
+    "sha256": "ed848fb967d300dde6dd9595b93eee8c03c6cf4267f4125a8b948ee85db8e329"
+  },
+  {
+    "file": "LEAD_CORRECTIONS.md",
+    "sha256": "6d66e0b2456aece29029a5a71df1e885534905fad482fe1fe88b6c8c170da09a"
+  },
+  {
+    "file": "frame-bridge.php",
+    "sha256": "ea88af38cd11194b06c2254436f256c3c57b0812ea914673aea110aaf92a543f"
+  },
+  {
+    "file": "frame-child.js",
+    "sha256": "b3f61d190317df2c9c96a0ba2731ccacb2fb1220f08e3770915d10c5056a3704"
+  },
+  {
+    "file": "frame-host.js",
+    "sha256": "01f46573a6b6c484f6f6f48ae411272cddd394f345950c4f084ccfb9ae668d8e"
+  },
+  {
+    "file": "cards.candidate.php",
+    "sha256": "641630e3af745b86bd2d95c93386e1126487d32d08c25e5a7b814d76cfafc922"
+  },
+  {
+    "file": "card_loader.candidate.php",
+    "sha256": "803bfbc4c2c1f07f1090c20ef671a6750bbf58f098dd3362a48d7ee04d163a8e"
+  },
+  {
+    "file": "convert-runtime.mjs",
+    "sha256": "d4fec6f0b1305e09a9b0b66b9393197f2f06e68e592e5e713814f890397dc458"
+  }
+]

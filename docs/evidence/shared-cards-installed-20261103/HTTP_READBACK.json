@@ -1,0 +1,22 @@
+{
+  "revision": "14583746dd507a343e779e1274fb5911fdc55567",
+  "runtimeSha256": "3b2d202fd0828b709cb69d9a4d313bc3ad6a00abd108351c8e29c9a75db256b1",
+  "reader": 11,
+  "draftLessons": 23,
+  "draftContentBytes": 26632089,
+  "notes": 1025,
+  "directions": 2050,
+  "mediaVerified": 1329,
+  "mediaBytes": 14462012,
+  "mediaMIMEAndHashReadback": true,
+  "range206": true,
+  "sourceUntouched": true,
+  "databaseReceipt": "3d27c518fff3c75e2049098df97b1d18f381494c672279f63e711585dadf40fe",
+  "freshFictionalProfiles": 3,
+  "readOnlyVerificationNoWrites": true,
+  "installedURL": "http://127.0.0.1:63358/",
+  "installed": true,
+  "nativeBrowserVerification": "pending",
+  "physicalPhone": false,
+  "humanListening": false
+}
