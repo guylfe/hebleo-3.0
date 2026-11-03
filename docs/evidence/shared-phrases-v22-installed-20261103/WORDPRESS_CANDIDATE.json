@@ -1,0 +1,35 @@
+{
+  "installed": false,
+  "packageSHA256": "7a91c3d07d493dde5b701ca06a4d748352c8e7f1991a614c1d15814d93c8c1de",
+  "sameRawExportAsInstalledApp": true,
+  "notes": 1025,
+  "directions": 2050,
+  "media": 1426,
+  "phrases": 97,
+  "phraseBindings": 107,
+  "baseBindings": 930,
+  "totalBindings": 1037,
+  "scopedNativeUpgradeReimportRollback": true,
+  "stableNativeMapAndProgressAndAssignments": true,
+  "wp": "7.1.4",
+  "db": "11.4.13",
+  "seconds": 84.07,
+  "peakMemoryBytes": 929038336,
+  "portableFixtureStopped": true,
+  "hashes": {
+    "phrase-v22-evidence/runtime.wp.json": "ccf3a9e5cd28abf2ad0735b760f655bfefe14fae893b15d20ec1a9d0db0a02b9",
+    "phrase-v22-evidence/wordpress.v22.json": "bac5edfe6d57edc8d7449d649b5990e8bb4b0528b795a8ab5401cc9c449249ba",
+    "hebleo-phrases/adapters/wordpress/shared-cards/shared-cards.php": "8d4b8fb7e99f5fabc501f4fc43139c70c039b21a12527eb7ea1fcb6580a489e9",
+    "hebleo-phrases/adapters/wordpress/shared-cards/convert-runtime.mjs": "e581f8071097569dba105c6880b089f4c92a6fcb3b8932a05d1f196cd1c75098"
+  },
+  "gates": [
+    "Permitted complete wp-learning-cards1.2.2 package or hosting clone for full bootstrap/access (question already pending).",
+    "Complete-stack headroom under actual1024M hosting limit; scoped peak about886MiB.",
+    "Actual served media/authenticated CSP, approved additive deck placement, private backups and guarded target-filesystem install/recovery."
+  ],
+  "noRefusedExportRetry": true,
+  "liveRowsUntouched": {
+    "progress": 917,
+    "assignments": 68
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "url": "http://127.0.0.1:63358",
+  "revision": "6484ec7ea4d6ecbf2923a7eb7eb62ae95dfed3a9",
+  "noteId": "mf-000361",
+  "direction": "he-en",
+  "face": "back",
+  "sandbox": "allow-scripts",
+  "mode": "dark",
+  "nikkud": true,
+  "phraseText077": "ארוחת ערב גדולה",
+  "phraseText078": "ארוחות ערב גדולות",
+  "phrasePointingNotInvented": true,
+  "successfulTrustedPlayClicks": 2,
+  "playbackRequests": [
+    {
+      "at": "2026-11-03T00:33:07.228Z",
+      "file": "hebleo-phrase-0692b1ae7d020eefbc517c1e5de5c73e979b238827a44f7ef7bb97ed0e106a09.mp3",
+      "status": 206,
+      "range": "bytes=0-"
+    },
+    {
+      "at": "2026-11-03T00:33:15.089Z",
+      "file": "hebleo-phrase-b5e9f24c7221f9dd59e36b730a6b424838216f8cdd17f5baf13490b3e7961287.mp3",
+      "status": 206,
+      "range": "bytes=0-"
+    }
+  ],
+  "scope": "Read-only diagnostic mounted the actual signed resource in the actual opaque app iframe; no enrollment/rating/settings writes. Reload restored normal app.",
+  "limitation": "Successful playback requests and no visible failure message; no human listening or physical-phone acceptance.",
+  "initialDiagnosticClickCovered": true,
+  "coveredClickResolution": "Removed overlapping parent shell from temporary diagnostic view; normal product code untouched",
+  "screenshot": "browser-dinner-examples.png"
+}
