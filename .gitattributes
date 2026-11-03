@@ -1,3 +1,6 @@
 # Keep the pinned supplied Jodit distribution byte-stable on Windows.
 public/author/vendor/jodit.min.js text eol=lf
 public/author/vendor/jodit.min.css text eol=lf
+# Keep reviewed WordPress source/checksum bytes portable across Windows/Linux.
+adapters/wordpress/shared-cards/** text eol=lf
+docs/evidence/shared-cards-installed-20261103/** text eol=lf
