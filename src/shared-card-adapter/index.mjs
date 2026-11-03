@@ -4,10 +4,12 @@ import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 
 const approved = JSON.parse(readFileSync(new URL('./approved-templates.json', import.meta.url)));
-const behavior = readFileSync(new URL('./behavior.js', import.meta.url), 'utf8');
+// HTML parsing normalizes line endings before CSP hashes are evaluated.
+const behavior = readFileSync(new URL('./behavior.js', import.meta.url), 'utf8').replace(/\r\n?/g,'\n');
 export const FIELD_NAMES = Object.freeze(['SourceId','Hebrew','English','Forms','Notes','Grammar','Source','Audio','HebrewNikkud']);
 export const DIRECTIONS = Object.freeze(['he-en','en-he']);
 export const PACKAGE_SHA256 = '597c2fb3c78591a0c377216ab6668b5408a48a3f5f0a66b57fbb225122dd4e2a';
+export const PACKAGE_SHA256S = Object.freeze([PACKAGE_SHA256,'7a91c3d07d493dde5b701ca06a4d748352c8e7f1991a614c1d15814d93c8c1de']);
 export const templateSha256 = createHash('sha256').update(JSON.stringify(approved)).digest('hex');
 const escape = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const tags = new Set('section div span bdi b strong i em u s br p h2 h3 details summary table caption thead tbody tr th td ul ol li abbr button svg circle path audio a'.split(' '));
@@ -38,7 +40,7 @@ export function createRenderer({mediaManifest, mediaBaseUrl}) {
         if (node.nodeName === '#text') return [node];
         if (!tags.has(node.tagName)) return [];
         // Links are retained as inert text containers; no navigation from fields.
-        node.attrs = node.attrs.filter(a => !a.namespace && (attrs.has(a.name.toLowerCase()) || a.name === 'data-audio'));
+        node.attrs = node.attrs.filter(a => !a.namespace && (attrs.has(a.name.toLowerCase()) || a.name === 'data-audio' || a.name === 'data-phrase' && /^(?:[1-9]|[1-8][0-9]|9[0-7])$/.test(a.value)));
         node.attrs = node.attrs.map(a => a.name === 'data-audio' ? {...a,value:mediaUrl(a.value)} : a);
         clean(node);
         return [node];
@@ -75,7 +77,7 @@ export function createRenderer({mediaManifest, mediaBaseUrl}) {
 }
 
 export function buildRuntime({vocabulary, templates, mediaManifest, mediaBaseUrl, settings = {}}) {
-  if (vocabulary.schemaVersion !== 1 || vocabulary.packageSha256 !== PACKAGE_SHA256 || JSON.stringify(vocabulary.fields) !== JSON.stringify(FIELD_NAMES)) throw Error('Unexpected source package');
+  if (vocabulary.schemaVersion !== 1 || !PACKAGE_SHA256S.includes(vocabulary.packageSha256) || JSON.stringify(vocabulary.fields) !== JSON.stringify(FIELD_NAMES)) throw Error('Unexpected source package');
   if (JSON.stringify(templates) !== JSON.stringify(approved)) throw Error('Unapproved templates/CSS');
   const renderer = createRenderer({mediaManifest,mediaBaseUrl});
   const seen = new Set();
@@ -90,5 +92,5 @@ export function buildRuntime({vocabulary, templates, mediaManifest, mediaBaseUrl
     front:renderer.renderCard({note,direction,face:'front',settings}),
     back:renderer.renderCard({note,direction,face:'back',settings})
   })));
-  return {schemaVersion:1,adapterVersion:'1.0.0',packageSha256:PACKAGE_SHA256,templateSha256,modelId:approved.modelId,mediaBaseUrl:new URL(mediaBaseUrl).href,settings:structuredClone(settings),raw:structuredClone(vocabulary),mediaManifest:structuredClone(mediaManifest),cards};
+  return {schemaVersion:1,adapterVersion:'1.0.0',packageSha256:vocabulary.packageSha256,templateSha256,modelId:approved.modelId,mediaBaseUrl:new URL(mediaBaseUrl).href,settings:structuredClone(settings),raw:structuredClone(vocabulary),mediaManifest:structuredClone(mediaManifest),cards};
 }

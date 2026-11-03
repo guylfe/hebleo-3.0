@@ -1,13 +1,18 @@
 import {createHash} from 'node:crypto';
 import {parseFragment,parse} from 'parse5';
-import {createRenderer,validateNote,PACKAGE_SHA256} from './shared-card-adapter/index.mjs';
+import {createRenderer,validateNote} from './shared-card-adapter/index.mjs';
 import {inspectMedia} from './media-store.js';
 import {DomainError} from './errors.js';
 const copy=structuredClone;
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const fail=(message,status=400)=>{throw new DomainError(message,status,'SHARED_CARDS_INVALID');};
-const fieldsHash='12b3f62e02e09c7f143d502c7559ba5eed4788f5ebe6dae86ba0aba84b2a8dd2';
-const manifestHash='64aea4e805f7d4c949fb8b431775e20f82237d69a7e3c9b1e13afec29f1cdf77';
+// Independent raw/manifest approvals, not a self-declared package label. Both
+// existing v2.1 backups and the approved appended v2.2 examples remain readable.
+const approvedPackages=Object.freeze([
+ {package:'597c2fb3c78591a0c377216ab6668b5408a48a3f5f0a66b57fbb225122dd4e2a',raw:'12b3f62e02e09c7f143d502c7559ba5eed4788f5ebe6dae86ba0aba84b2a8dd2',manifest:'64aea4e805f7d4c949fb8b431775e20f82237d69a7e3c9b1e13afec29f1cdf77',media:1329},
+ {package:'7a91c3d07d493dde5b701ca06a4d748352c8e7f1991a614c1d15814d93c8c1de',raw:'064ef98a5b9a19739ff5bc580f35a71597a9d3d7d303e2c9d9587126f1091dc4',manifest:'1dde8976ac6ac3d6995e8785f266ec19c5fd695f471cc4ec5332e41072904295',media:1426}
+]);
+const packageApproval=raw=>approvedPackages.find(p=>p.package===raw?.packageSha256);
 const text=node=>node.nodeName==='#text'?node.value:(node.childNodes||[]).map(text).join('');
 const all=node=>[node,...(node.childNodes||[]).flatMap(all)];
 const attr=(node,name)=>node.attrs?.find(a=>a.name===name)?.value;
@@ -30,9 +35,10 @@ export function audioSlots(note) {
 }
 export function validateSharedState(state,blobFor) {
  if(state===null)return null;
- if(!state||state.version!==1||Object.keys(state).sort().join('|')!=='manifest|overlays|raw|revision|version'||hash(state.raw)!==fieldsHash||hash(state.manifest)!==manifestHash||state.revision!==hash({raw:state.raw,manifest:state.manifest})||!Array.isArray(state.overlays))fail('Shared namespace does not match independently approved content.',409);
+ const approval=packageApproval(state?.raw);
+ if(!state||!approval||state.version!==1||Object.keys(state).sort().join('|')!=='manifest|overlays|raw|revision|version'||hash(state.raw)!==approval.raw||hash(state.manifest)!==approval.manifest||state.revision!==hash({raw:state.raw,manifest:state.manifest})||!Array.isArray(state.overlays))fail('Shared namespace does not match independently approved content.',409);
  const notes=new Map(state.raw.notes.map(n=>[n.id,n]));
- if(notes.size!==1025||state.manifest.length!==1329||state.raw.packageSha256!==PACKAGE_SHA256)fail('Invalid shared counts.');
+ if(notes.size!==1025||state.manifest.length!==approval.media)fail('Invalid shared counts.');
  for(const note of notes.values())validateNote(note);
  const seen=new Set();
  for(const overlay of state.overlays){
@@ -74,6 +80,7 @@ export class SharedCards {
   validateSharedState(state,h=>prepared.get(h)||this.store.media.blob(h));
   return this.store.transaction(()=>{
    const current=this.state();if((current?.revision??null)!==expectedRevision)fail('Shared source revision changed.',409);
+   if(current&&approvedPackages.indexOf(packageApproval(raw))<approvedPackages.indexOf(packageApproval(current.raw)))fail('Older source import refused. Use a reviewed backup recovery instead.',409);
    for(const item of prepared.values())this.store.media.putBlob(item);
    this.store.set('shared-cards',state);return {revision:state.revision,notes:raw.notes.length,cards:2050,media:manifest.length};
   });

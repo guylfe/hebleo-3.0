@@ -1,3 +1,6 @@
 # Keep the pinned supplied Jodit distribution byte-stable on Windows.
 public/author/vendor/jodit.min.js text eol=lf
 public/author/vendor/jodit.min.css text eol=lf
+# Stable reviewed adapter source, including CSP script hashes, across platforms.
+adapters/wordpress/shared-cards/** text eol=lf
+src/shared-card-adapter/** text eol=lf

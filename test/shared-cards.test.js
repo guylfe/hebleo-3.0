@@ -23,7 +23,7 @@ test('shared display malicious fields, URLs and settings reject (synthetic secur
 });
 test('approved full raw package import/reimport, source slots, stable directions and content preservation',{skip:!source},t=>{
  const s=setup(t),state=s.shared.state(),before=s.backup(),revision=state.revision;
- assert.equal(state.raw.notes.length,1025);assert.equal(state.manifest.length,1329);
+ assert.equal(state.raw.notes.length,1025);assert.equal(state.manifest.length,input().manifest.length);
  for(const n of state.raw.notes)audioSlots(n);
  assert.deepEqual(state.raw,input().raw);assert.equal(s.bootstrap('learner-demo').due.length,0);
  s.shared.importPackage('author-demo',{...input(),expectedRevision:revision});
