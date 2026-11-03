@@ -1,0 +1,158 @@
+{
+  "destination": "https://hebleo.com/decks/?deck=49480",
+  "codeCommit": "6484ec7ea4d6ecbf2923a7eb7eb62ae95dfed3a9",
+  "mainUnchanged": "44acd853969201437af72ac4a6cee91889fc09c4",
+  "artifactSHA256": "d39ec440e9146e199bda6e50b1ce6ca526def13fddbc916835cf5cabdbfef040",
+  "sourcePackageSHA256": "7a91c3d07d493dde5b701ca06a4d748352c8e7f1991a614c1d15814d93c8c1de",
+  "sourceReadback": {
+    "utc": "2026-11-03T21:42:30+00:00",
+    "notes": 1025,
+    "directions": 2050,
+    "facesExact": 4100,
+    "mediaSourceHashesExact": 1426,
+    "phraseClips": 97,
+    "phraseBindings": 107,
+    "phraseNotes": 56,
+    "dinnerWordingExact": true,
+    "stateHash": "af9d9cffa12e63b3d2db4a1a33071ab1311815610c815bb8fc0968dc261adf7e",
+    "mapSHA256": "7ea8e185cf3fc84a0ce9947fae11e8f8efb8ed8aca1c4a752549d91b1c830b47",
+    "seconds": 3.767,
+    "peakBytes": 685772800
+  },
+  "import": {
+    "utc": "2026-11-03T21:28:18+00:00",
+    "mode": "first",
+    "changed": true,
+    "stateHash": "af9d9cffa12e63b3d2db4a1a33071ab1311815610c815bb8fc0968dc261adf7e",
+    "mapSHA256": "7ea8e185cf3fc84a0ce9947fae11e8f8efb8ed8aca1c4a752549d91b1c830b47",
+    "notes": 1025,
+    "directions": 2050,
+    "seconds": 23.469,
+    "peakBytes": 755646464,
+    "published": false
+  },
+  "reimport": {
+    "utc": "2026-11-03T21:28:48+00:00",
+    "mode": "reimport",
+    "changed": false,
+    "stateHash": "af9d9cffa12e63b3d2db4a1a33071ab1311815610c815bb8fc0968dc261adf7e",
+    "mapSHA256": "7ea8e185cf3fc84a0ce9947fae11e8f8efb8ed8aca1c4a752549d91b1c830b47",
+    "notes": 1025,
+    "directions": 2050,
+    "seconds": 14.927,
+    "peakBytes": 747257856,
+    "published": false
+  },
+  "nativePreservation": {
+    "utc": "2026-11-03T21:40:04+00:00",
+    "studyUrl": "https://hebleo.com/decks/?deck=49480",
+    "oldSRSRowsExact": {
+      "ei1ye_flashcard_card_decks": {
+        "count": 68,
+        "sha256": "adc14d73dd926453736af4a3ecde32143438827931dca7242b341ffcd0868749"
+      },
+      "ei1ye_flashcard_deck_rules": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ei1ye_flashcard_deck_settings": {
+        "count": 34,
+        "sha256": "7e450c3ce2a3b7b740917a58c70c01c2b71720374e1d6da6663270525c433ca1"
+      },
+      "ei1ye_flashcard_global_suspensions": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ei1ye_flashcard_import_export_log": {
+        "count": 4,
+        "sha256": "4c7edb5f25f3d7ac2cce9117c7d98434db53bf8c06898761635fc206d048bfee"
+      },
+      "ei1ye_flashcard_progress": {
+        "count": 917,
+        "sha256": "0cd7d4ceb86e10f4a4a075fcd3dce50f99a78f6fc3d57378e7948ad51c2ad6e1"
+      },
+      "ei1ye_flashcard_sessions": {
+        "count": 3,
+        "sha256": "229d80d5cfb75842d163cc5971a7839924ea63c1e83dfa975aeaf3f3fc344416"
+      },
+      "ei1ye_flashcard_streaks": {
+        "count": 16,
+        "sha256": "f41112dec640e89f3b1a0553fab95f62f1212b55a2dfd361a6b648d58dc7c1cb"
+      }
+    },
+    "oldSRSPostsAndMetadataExact": 28,
+    "nativePhraseDirections": 112,
+    "nativeRatingDueWrites": 8,
+    "nativeEnrollmentDirections": 2050,
+    "ratingVerificationTransactionRolledBack": true,
+    "noArtificialLearnerActivityRetained": true,
+    "progressCount": 917,
+    "newAssignments": 2050,
+    "oldAssignments": 68,
+    "seconds": 3.561,
+    "peakBytes": 648691712
+  },
+  "finalReadback": {
+    "utc": "2026-11-03T21:43:26+00:00",
+    "originalPluginFilesChecked": 19,
+    "changedOriginalFiles": 3,
+    "runtimeAssetsExact": 4,
+    "dinnerMedia": [
+      {
+        "file": "hebleo-phrase-0692b1ae7d020eefbc517c1e5de5c73e979b238827a44f7ef7bb97ed0e106a09.mp3",
+        "sha256": "0692b1ae7d020eefbc517c1e5de5c73e979b238827a44f7ef7bb97ed0e106a09",
+        "bytes": 21885,
+        "fullStatus": 200,
+        "mime": "audio/mpeg",
+        "rangeStatus": 206
+      },
+      {
+        "file": "hebleo-phrase-b5e9f24c7221f9dd59e36b730a6b424838216f8cdd17f5baf13490b3e7961287.mp3",
+        "sha256": "b5e9f24c7221f9dd59e36b730a6b424838216f8cdd17f5baf13490b3e7961287",
+        "bytes": 21405,
+        "fullStatus": 200,
+        "mime": "audio/mpeg",
+        "rangeStatus": 206
+      }
+    ],
+    "databaseBackupSHA256": "3ca769c0d24e825bd911b88a47d845ddcf4f9392d6dfe8cba2097eca27b6e5fa",
+    "gzipCRCAndFooterVerified": true,
+    "backupUncompressedBytes": 805117328,
+    "progressCount": 917,
+    "assignmentCount": 2118,
+    "journalTarget": "after"
+  },
+  "phraseHTTP": {
+    "utc": "2026-11-03T21:44:23+00:00",
+    "phraseClips": 97,
+    "allStatus200": true,
+    "allSHA256BytesMimesExact": true,
+    "manifestSHA256": "690d6adb27ee5e4af860b5892847efe49e852c636460fb59bd8f28807c567259",
+    "seconds": 6.608,
+    "bulkBaseAudioRetry": false
+  },
+  "runtimeHashes": {
+    "shared-cards.php": "8d4b8fb7e99f5fabc501f4fc43139c70c039b21a12527eb7ea1fcb6580a489e9",
+    "frame-bridge.php": "ea88af38cd11194b06c2254436f256c3c57b0812ea914673aea110aaf92a543f",
+    "frame-child.js": "b3f61d190317df2c9c96a0ba2731ccacb2fb1220f08e3770915d10c5056a3704",
+    "frame-host.js": "01f46573a6b6c484f6f6f48ae411272cddd394f345950c4f084ccfb9ae668d8e"
+  },
+  "limits": {
+    "committedLearnerRatingReloadUnverified": true,
+    "signedInBrowserUnverified": true,
+    "noSavedBrowserLogin": true,
+    "physicalAudibleAndGuyAcceptanceUnverified": true,
+    "all1426OriginHashesExact": true,
+    "all1426HTTPSHashesClaimed": false,
+    "baseAudioHTTPSExact": 250,
+    "phraseAudioHTTPSExact": 97,
+    "pngEncodingChangedByCDN": true,
+    "pngVisibleAlphaPixelsExact": true,
+    "bulkHTTP429NoBroadRetry": true
+  },
+  "publication": {
+    "reconciledAfterTimeout": true,
+    "seconds": 350.624,
+    "retried": false
+  }
+}
