@@ -1,0 +1,43 @@
+[
+  {
+    "name": "m",
+    "slide": 2,
+    "shapeNames": [
+      "Freeform 9",
+      "Freeform 10"
+    ],
+    "sha256": "d1e0fef1c13fd03714cc2e9d6ff5c6a3313eb955b7af54e451177a1e4cabdb90",
+    "bytes": 31009,
+    "sourceShapesPreserved": true
+  },
+  {
+    "name": "n",
+    "slide": 2,
+    "shapeNames": [
+      "Freeform 11"
+    ],
+    "sha256": "15ed70105706f28fa69f800e771694bbe3b8df4a0ae0ff4c7632b63e6fca2f63",
+    "bytes": 125839,
+    "sourceShapesPreserved": true
+  },
+  {
+    "name": "t",
+    "slide": 2,
+    "shapeNames": [
+      "Freeform 12"
+    ],
+    "sha256": "cfdee0b8de8342dde59319765b09c4de5fe992e9b4a898e5fff43a5b1e72bbd1",
+    "bytes": 332867,
+    "sourceShapesPreserved": true
+  },
+  {
+    "name": "l",
+    "slide": 6,
+    "shapeNames": [
+      "Freeform 9"
+    ],
+    "sha256": "0df69d3c4491f2869cbac224e1a79631490ed195e97bc3538e671e717896c2e7",
+    "bytes": 86531,
+    "sourceShapesPreserved": true
+  }
+]

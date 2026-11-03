@@ -1,0 +1,19 @@
+{
+  "baselineUnchanged": "8f2dac78cc94520e67fb74336efc8cae8e4df1509a1cd3f6ee3d903851c5e5dc",
+  "disposableNeverInstall": true,
+  "lessonCount": 23,
+  "contentBytes": 26632008,
+  "onlyDraftFieldDeltas": [
+    "first MEMORY page.title",
+    "first MEMORY page.html"
+  ],
+  "other22LessonsAndBranchesExact": true,
+  "allNonKVTablesExceptAuthorNavigationExact": true,
+  "otherLearnersExact": true,
+  "retainedSettingsAndKVExact": true,
+  "oldSyntheticContextAndNoteUnchanged": true,
+  "realLateTextEditLegitimatelyChangesAnchor": true,
+  "removingOnlyDeclaredLateTextRestoresExactOriginalProjection": true,
+  "noPersistedScaffolding": true,
+  "receipt": "20385b5988a892038860903249a3a203d9ed61f8ab4ac5af470212b1259d1b17"
+}

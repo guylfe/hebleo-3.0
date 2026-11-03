@@ -1,0 +1,24 @@
+{
+  "startedAt": "2026-10-31T00:14:30.857Z",
+  "checks": [
+    {
+      "name": "initial",
+      "pass": true,
+      "savedTime": "2026-10-31T00:01:35.752Z",
+      "actualTime": "2026-10-31T00:02:02.018Z",
+      "onlyDifference": "demo-progress-reset-at",
+      "afterSha256": "72340619fc25b0a829dad5b88501fb7d9e58cd612dc851f4e5c03930be435c8a"
+    },
+    {
+      "name": "final",
+      "pass": true,
+      "savedTime": "2026-10-31T00:05:01.087Z",
+      "actualTime": "2026-10-31T00:05:26.334Z",
+      "onlyDifference": "demo-progress-reset-at",
+      "afterSha256": "11029b482abea7916d414fc0ef15243fe594412b3ed1d32b7f6b3bece529be33"
+    }
+  ],
+  "liveReadsUnchanged": true,
+  "pass": true,
+  "finishedAt": "2026-10-31T00:14:36.146Z"
+}

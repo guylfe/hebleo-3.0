@@ -1,0 +1,233 @@
+[
+  {
+    "kind": "replace",
+    "start": 24356,
+    "end": 24660,
+    "oldText": "Connecting new information to established old information: if you already know these events and their dates, the number connects to knowledge you already have. If the events are unfamiliar, this particular connection will be less useful to you, even though the grouping and date structure may still help.",
+    "newText": "Memory hooks: if you already know these events and their dates, the number connects to knowledge you already have. If the events are unfamiliar, this particular connection will be less useful to you, even though the grouping and date structure may still help."
+  },
+  {
+    "kind": "replace",
+    "start": 23765,
+    "end": 23885,
+    "oldText": "What changed is our interpretation, or framing, of the information, which makes it easier to remember due to 3 concepts:",
+    "newText": "What changed is our interpretation, or framing, of the information, which makes it easier to remember due to 3 concepts:\n[AUTHOR INSTRUCTION] REVEAL MEMORY-PRINCIPLES: start with all three principles hidden. Each learner click on “Show the next idea” reveals one complete principle in order: Chunking, Logical constraints, Memory hooks. Bold each title. Keep earlier principles visible; after the third, remove the reveal control and offer Continue. No automatic advance or animation timer. Use a native button, announce each new item, retain keyboard focus and respect reduced motion."
+  },
+  {
+    "kind": "replace",
+    "start": 25309,
+    "end": 25458,
+    "oldText": "All three principles will come back throughout the course. If you’re interested, the section below explains in more detail how these principles work.",
+    "newText": "All three principles will come back throughout the course. Let’s check what they mean in practice."
+  },
+  {
+    "kind": "delete-section",
+    "start": 25459,
+    "end": 26283,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] OPTIONAL SLIDE-DOWN MEMORY-ASSOCIATIVE-NETWORK: collapsed by default, labelled “How does the associative network memory model explain this?” Open and close on request; opening it is not required for progress and adds no quiz. Keep focus on the control, expose its expanded/collapsed state, and respect reduced motion.\nOPTIONAL LEARNER TEXT: One useful way to think about memory is as a network of connected ideas. Bringing one idea to mind can make related ideas easier to reach. For example, thinking about American Independence Day may bring July 4 to mind, which then helps you recover part of the number. In an associative network model, those links help explain how one idea can lead to another. We’ll use connections like these to give new Hebrew material a familiar starting point.\n",
+    "newText": ""
+  },
+  {
+    "kind": "replace",
+    "start": 26283,
+    "end": 26325,
+    "oldText": "MEMORY-A2.embedded.what-changed — matching",
+    "newText": "MEMORY-A2.embedded.what-changed — multiple choice"
+  },
+  {
+    "kind": "replace",
+    "start": 26326,
+    "end": 26399,
+    "oldText": "LEARNER PROMPT: Match each observation to the principle that explains it.",
+    "newText": "LEARNER PROMPT: Imagine you recognise the number as two dates, but neither event is familiar to you. What could still help you remember it?"
+  },
+  {
+    "kind": "replace",
+    "start": 26400,
+    "end": 26413,
+    "oldText": "OBSERVATIONS:",
+    "newText": "OPTIONS:"
+  },
+  {
+    "kind": "replace",
+    "start": 26414,
+    "end": 26474,
+    "oldText": "1. Thinking of two dates instead of sixteen separate digits.",
+    "newText": "A. Memorise the names of the three memory principles."
+  },
+  {
+    "kind": "replace",
+    "start": 26475,
+    "end": 26543,
+    "oldText": "2. Ruling out 19 as the month because a year has only twelve months.",
+    "newText": "B. Use the two date groups and what you know about how dates work."
+  },
+  {
+    "kind": "replace",
+    "start": 26544,
+    "end": 26624,
+    "oldText": "3. Using your existing knowledge of American Independence Day to recover July 4.",
+    "newText": "C. Attach an event name to each date, even if neither event means anything to you."
+  },
+  {
+    "kind": "delete-section",
+    "start": 26625,
+    "end": 26756,
+    "oldText": "RESPONSE OPTIONS (each used once):\nA. Logical constraints\nB. Connecting new information to established old information\nC. Chunking\n",
+    "newText": ""
+  },
+  {
+    "kind": "replace",
+    "start": 26756,
+    "end": 26894,
+    "oldText": "ANSWER / ACCEPTED MODEL: 1 → C (Chunking); 2 → A (Logical constraints); 3 → B (Connecting new information to established old information).",
+    "newText": "ANSWER / ACCEPTED MODEL: B. Use the two date groups and what you know about how dates work."
+  },
+  {
+    "kind": "replace",
+    "start": 26895,
+    "end": 26984,
+    "oldText": "FEEDBACK for observation 1: “Chunking. You’re grouping the digits into two larger units.”",
+    "newText": "FEEDBACK after A: “Knowing the names doesn’t help you recover these digits. Try using the grouping and date structure instead.”"
+  },
+  {
+    "kind": "replace",
+    "start": 26985,
+    "end": 27090,
+    "oldText": "FEEDBACK for observation 2: “Logical constraints. Knowing how months work rules out an impossible value.”",
+    "newText": "FEEDBACK after B: “Yes. Two date groups give you larger units to work with, and the date format limits the possibilities. Those can still help even when the events are unfamiliar.”"
+  },
+  {
+    "kind": "replace",
+    "start": 27091,
+    "end": 27234,
+    "oldText": "FEEDBACK for observation 3: “Connecting new information to established old information. Something you already know helps you recover the date.”",
+    "newText": "FEEDBACK after C: “An unfamiliar event name adds something else to remember. A useful memory hook connects the new information to something you already know.”"
+  },
+  {
+    "kind": "replace",
+    "start": 27235,
+    "end": 27481,
+    "oldText": "[AUTHOR INSTRUCTION] This is the only comprehension question in the lesson. After submission, show the relevant explanation beside each match; keep correct matches and explain any mismatch. No extra questions or compulsory repeat round follow it.",
+    "newText": "[AUTHOR INSTRUCTION] This is the only comprehension question in the lesson. It checks how the ideas work, not recall of their names. Show the authored feedback for the selected option and the explanation for B after submission. Permit Continue without a compulsory repeat round."
+  },
+  {
+    "kind": "replace",
+    "start": 27521,
+    "end": 27577,
+    "oldText": "Screen 6: Notice the difference · MEMORY-A2.learn.return",
+    "newText": "Screen 6: Notice the difference (optional) · MEMORY-A2.learn.return"
+  },
+  {
+    "kind": "replace",
+    "start": 27592,
+    "end": 27858,
+    "oldText": "Now that the number has a structure and a meaning, try bringing it back to mind once more. Think of the two dates and enter what you remember, without looking back. We’re comparing the two ways of thinking about the number—you don’t need to master the number itself.",
+    "newText": "If you’d like to try the comparison, bring the number back to mind once more. Think of the two dates and enter what you remember, without looking back. You can also skip this step and continue to the next lesson."
+  },
+  {
+    "kind": "replace",
+    "start": 27859,
+    "end": 28090,
+    "oldText": "Compare your attempts and notice whether grouping, the date format, or the familiar events helped. We’ll use the same ideas throughout the course, starting with familiar images that help us remember Hebrew letter shapes and sounds.",
+    "newText": "If you try it, compare your attempts and notice whether grouping, the date format, or the familiar events helped. We’ll use the same ideas throughout the course, starting with familiar images that help us remember Hebrew letter shapes and sounds."
+  },
+  {
+    "kind": "replace",
+    "start": 28091,
+    "end": 28138,
+    "oldText": "MEMORY-A2.embedded.number-return — typed recall",
+    "newText": "MEMORY-A2.embedded.number-return — typed recall (optional)"
+  },
+  {
+    "kind": "replace",
+    "start": 28139,
+    "end": 28258,
+    "oldText": "LEARNER PROMPT: With the two dates in mind, what can you now recall? Enter your attempt, or select Show the comparison.",
+    "newText": "LEARNER PROMPT: With the two dates in mind, what can you now recall? Enter an attempt, select Show the comparison, or skip this step."
+  },
+  {
+    "kind": "replace",
+    "start": 28259,
+    "end": 28711,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] COMPARISON: no second timed display and no recall Replay/Try again button. Keep earlier dates hidden until the learner submits this one attempt or chooses Show the comparison. Then show the original number, the formatted dates and both attempts. Give specific feedback below when the input supports it, followed by Continue for every outcome. The exact number is an author comparison model, not a passing requirement.",
+    "newText": "[AUTHOR INSTRUCTION] OPTIONAL COMPARISON: offer “Try the comparison” and “Continue without it” before showing the activity. Both paths permit completion; no response, reveal or comparison is required. Keep Skip available after opening it. If opened, do not add a second timed display or recall Replay/Try again button. Hide earlier dates until submission or Show the comparison, then show the original number, the dates and any attempts actually made. Never invent an attempt. Give the specific feedback below when supported by the input, followed by Continue for every outcome. The exact number is an author comparison model, not a passing requirement."
+  },
+  {
+    "kind": "replace",
+    "start": 32708,
+    "end": 32887,
+    "oldText": "DESIGN DECISIONS: Preserve Guy’s mountain-climber, nose, tripping and ladle anchors. The actual drawings remain original-asset placeholders. No final-form teaching in this lesson.",
+    "newText": "DESIGN DECISIONS: Preserve Guy’s mountain-climber, nose, tripping and ladle anchors. Introduce all four letters together before mixed retrieval; the earlier two-pair split is removed. Use the original drawings and human sound recordings. No final-form teaching or extra vocabulary in this lesson."
+  },
+  {
+    "kind": "replace",
+    "start": 32933,
+    "end": 32989,
+    "oldText": "Screen 1: Two shapes, two sounds · MNTL-A2.learn.mem-nun",
+    "newText": "Screen 1: Four shapes, four sounds · MNTL-A2.learn.mem-nun"
+  },
+  {
+    "kind": "replace",
+    "start": 33142,
+    "end": 33288,
+    "oldText": "Listen to each sound and look at its letter. Focus on connecting the sound to the printed shape; you do not need to memorise the letter names yet.",
+    "newText": "ת represents /t/, as at the start of tripping. Its name is Tav.\nל represents /l/, as at the start of ladle. Its name is Lamed.\nListen to each sound and look at its letter. The mountain-climber, nose, tripping and ladle pictures connect each printed shape to a familiar word that begins with its sound. You do not need to memorise the letter names yet."
+  },
+  {
+    "kind": "replace",
+    "start": 33289,
+    "end": 33420,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] AUDIO MNTL-M: isolated /m/; AUDIO MNTL-N: isolated /n/. Play on request, without adding a vowel.",
+    "newText": "[AUTHOR INSTRUCTION] AUDIO MNTL-M, MNTL-N, MNTL-T and MNTL-L: human recordings of /m/, /n/, /t/ and /l/. Play individually on request, without an added vowel. Present all four on this page."
+  },
+  {
+    "kind": "replace",
+    "start": 33421,
+    "end": 33577,
+    "oldText": "[PLACEHOLDER / AUTHOR INSTRUCTION] IMAGE MNTL-M and MNTL-N: Guy’s original mountain-climber and nose mnemonic drawings, paired with the exact block letters.",
+    "newText": "[AUTHOR INSTRUCTION] IMAGE MNTL-M, MNTL-N, MNTL-T and MNTL-L: Guy’s original mountain-climber, nose, tripping and ladle drawings, each paired with the exact block letter. Preserve the original drawings. Show all four together; let the learner inspect and replay each at their own pace."
+  },
+  {
+    "kind": "replace",
+    "start": 33617,
+    "end": 33679,
+    "oldText": "Screen 2: Recover the first pair · MNTL-A2.learn.pair-retrieve",
+    "newText": "Screen 2: Try without the pictures · MNTL-A2.learn.pair-retrieve"
+  },
+  {
+    "kind": "replace",
+    "start": 33694,
+    "end": 33817,
+    "oldText": "Hide the pictures. Try to recognise the letters from their sounds. If you need help, bring the familiar image back to mind.",
+    "newText": "Now try recognising a letter without its picture. If you need help, bring the familiar image back to mind."
+  },
+  {
+    "kind": "replace",
+    "start": 33979,
+    "end": 33983,
+    "oldText": "B. נ",
+    "newText": "B. נ\nC. ת\nD. ל"
+  },
+  {
+    "kind": "replace",
+    "start": 34133,
+    "end": 34171,
+    "oldText": "[NEXT PAGE — learner selects Continue]",
+    "newText": "[AUTHOR INSTRUCTION] Add option-specific feedback for ת and ל: “ת represents /t/. The sound you heard was /n/.” / “ל represents /l/. The sound you heard was /n/.” The four-letter teaching page comes before this first question.\n[NEXT PAGE — learner selects Continue]"
+  },
+  {
+    "kind": "delete-section",
+    "start": 34172,
+    "end": 34782,
+    "oldText": "Screen 3: Two more shapes · MNTL-A2.learn.tav-lamed\nLEARNER TEXT:\nת represents /t/, as at the start of tripping. Its name is Tav.\nל represents /l/, as at the start of ladle. Its name is Lamed.\nUse the tripping image for ת and the ladle image for ל. Say each sound, look away, and picture the printed shape.\n[PLACEHOLDER / AUTHOR INSTRUCTION] AUDIO MNTL-T: isolated /t/; AUDIO MNTL-L: isolated /l/.\n[PLACEHOLDER / AUTHOR INSTRUCTION] IMAGE MNTL-T and MNTL-L: Guy’s original tripping and ladle drawings. Preserve the source drawing rather than substituting a new mnemonic.\n[NEXT PAGE — learner selects Continue]\n",
+    "newText": ""
+  },
+  {
+    "kind": "replace",
+    "start": 34782,
+    "end": 34838,
+    "oldText": "Screen 4: Make the shape yourself · MNTL-A2.learn.typing",
+    "newText": "Screen 3: Make the shape yourself · MNTL-A2.learn.typing"
+  }
+]

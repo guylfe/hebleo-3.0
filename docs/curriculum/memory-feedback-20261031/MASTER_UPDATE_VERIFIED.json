@@ -1,0 +1,564 @@
+{
+  "status": "PASS",
+  "dateIsrael": "2026-10-31",
+  "sourceDocument": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+  "documentUrl": "https://docs.google.com/document/d/1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+  "tabId": "t.0",
+  "beforeRevision": "AHj4eMTR0by31evGX4iMrrQ5teAxK8OEph12_9zREo_9rIR1JYy5kabefa8bSn5U2DREhRWCGZT48dE31mu0lXU9GpylFMT0-6SE-k08GQ",
+  "currentGoogleDocRevision": "AHj4eMRxQhMluC04Gm0-aMjeII8LLcqZjsm8oJk1OkkA5amjOLeQAnPd9EsQCsqwb-g8t4yM7BkmHezGXxsy5iGHeaOFaR4xNRtcd0d6RQ",
+  "sourceCopyCommit": "15fc734cc1b0a25492a81ca5e96052de5f1d9e62",
+  "sourceCopySha256": "c06ac02f9086d10a8e36b9ee419d7fbba703354bfaf8879df02b805102d98c12",
+  "revisionJsonSha256": "8ca3538900d02d960e8110a709fd2d2041e872674bafda5e12efea3d9897b111",
+  "sourceTextSha256": "78ed3a7421364498fa3d0fefdef6a3cb96c354ada3c5b0bd93937a1d976de011",
+  "sourceParagraphsSha256": "f94bf3aef7490a10ca8b2fca98f7753915e016d2cbc655dc2ddc041997dfeb50",
+  "sourceSnapshot": "MASTER_MEMORY_AFTER.json",
+  "sourceBeforeSnapshot": "MASTER_MEMORY_BEFORE.json",
+  "exactParagraphSourceHashMapping": [
+    {
+      "field": "pages[0].copy.paragraphs[0]",
+      "text": "Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:",
+      "sha256": "6970a29a2410f78c73fe6823f5a94a52f887df631a3e064710eb25370196142a",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 19315,
+          "paragraphEnd": 19436,
+          "startIndex": 19315,
+          "endIndex": 19435,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[0].copy.numberedList[0]",
+      "text": "Learning languages independently and seeing what works first-hand.",
+      "sha256": "eb5ef03eead7e4b1330c6cdc0de78fe46a1f408a706cfa55fe3c8e4b96fbac72",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 19436,
+          "paragraphEnd": 19503,
+          "startIndex": 19436,
+          "endIndex": 19502,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[0].copy.numberedList[1]",
+      "text": "Teaching Hebrew and refining my materials with each student.",
+      "sha256": "4b6378728beda5a30421278909e17e22b3a29e0ecc8986f83b998d675802290d",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 19503,
+          "paragraphEnd": 19564,
+          "startIndex": 19503,
+          "endIndex": 19563,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[0].copy.numberedList[2]",
+      "text": "My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages.",
+      "sha256": "d6faaec1a8c3a007fcabc1534a8e06853cce6ecb1b778a8f567fbda3a9fe7a5e",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 19564,
+          "paragraphEnd": 19669,
+          "startIndex": 19564,
+          "endIndex": 19668,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[1].copy.paragraphs[0]",
+      "text": "One of my students, Adam, started with no Hebrew and a similar scientific background. We tested how long it would take him to hold conversations with me in Hebrew.",
+      "sha256": "bae421fa6ed3a72d7d498fec6a233de524b1bd2910b5c3452299150adcf8d0e7",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 19765,
+          "paragraphEnd": 19929,
+          "startIndex": 19765,
+          "endIndex": 19928,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[1].copy.paragraphs[1]",
+      "text": "For an English speaker, this usually takes around 500 hours. Using the method at the core of Hebleo, Adam took around 70 hours—over seven times faster.",
+      "sha256": "0ab5250dc56092c4734f9328b2028354e7df9622cd8f320ef853806ae238d07b",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 19929,
+          "paragraphEnd": 20081,
+          "startIndex": 19929,
+          "endIndex": 20080,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[1].copy.paragraphs[2]",
+      "text": "Let’s try a short demonstration. These ideas can help you learn beyond this course, too.",
+      "sha256": "f500240486a4506aeac93550cce7d4a61bddfb83d2d61f6a3e0c8db8b66f573d",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 20081,
+          "paragraphEnd": 20170,
+          "startIndex": 20081,
+          "endIndex": 20169,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[2].copy.paragraphs[0]",
+      "text": "Press Play to see a number for ten seconds. Remember as much as you can without writing it down. When it disappears, type what you remember.",
+      "sha256": "aaa411f31dc8569c1a36c393225d3782243a97b8277797f6db76294ac496c4d3",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 20291,
+          "paragraphEnd": 20432,
+          "startIndex": 20291,
+          "endIndex": 20431,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[2].prompt",
+      "text": "What do you remember? Enter an attempt, or select Show me how.",
+      "sha256": "01c7a5f7b3201e9a5dbe6f1badeb2ae638840bfcfa7e222592bf76393130770b",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 21641,
+          "paragraphEnd": 21720,
+          "startIndex": 21657,
+          "endIndex": 21719,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[2].activity.feedback.partial",
+      "text": "That was a lot of digits to hold in mind! Let me show you a way to make sense of them.",
+      "sha256": "a226d5f950f52280b17cd89b6accde1b7374800f89eabe809ed6ce275289e4fa",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 21973,
+          "paragraphEnd": 22105,
+          "startIndex": 22017,
+          "endIndex": 22103,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[2].activity.feedback.exact",
+      "text": "You remembered it. Now let me show you a way to organise the same information.",
+      "sha256": "6a89f7d9507578ddaaa7ad787ac5b650c011275454c016eca05fdccfe3b30ed3",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 22105,
+          "paragraphEnd": 22222,
+          "startIndex": 22142,
+          "endIndex": 22220,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[3].copy.paragraphs[0]",
+      "text": "Let’s give the same digits some meaning.",
+      "sha256": "774743c5bb75aa9ff58d58e60d7c46640ad67ab8343dbce67aa8b34d7b0492d9",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 22404,
+          "paragraphEnd": 22445,
+          "startIndex": 22404,
+          "endIndex": 22444,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[3].activity.dateContext.introduction",
+      "text": "American month–day–year order:",
+      "sha256": "b0834779ae6b08572742835ffbf0a8ef38cd40f26ca89f9e27a5e238e43b6b3a",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 23023,
+          "paragraphEnd": 23054,
+          "startIndex": 23023,
+          "endIndex": 23053,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[3].activity.dateContext.events[0]",
+      "text": "July 4, 1776 — the American Declaration of Independence.",
+      "sha256": "415e98cd6283cea92012427d611fe3aa4fc46688ac06ba36613eab0c544af234",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 23054,
+          "paragraphEnd": 23111,
+          "startIndex": 23054,
+          "endIndex": 23110,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[3].activity.dateContext.events[1]",
+      "text": "September 11, 2001 — the September 11 attacks.",
+      "sha256": "b9cedd95a942658eb7886b062a69d25725b225d93b80ee96b9c312eddc8a7382",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 23111,
+          "paragraphEnd": 23158,
+          "startIndex": 23111,
+          "endIndex": 23157,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[3].activity.dateContext.transition",
+      "text": "Same digits, different meaning. Three ideas help:",
+      "sha256": "acf71d740fe9e9465980ffec05b35bc0b267ef2af5d262b2f6fdb503b8ddc784",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 23159,
+          "paragraphEnd": 23209,
+          "startIndex": 23159,
+          "endIndex": 23208,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[3].activity.principles[0]",
+      "text": "Chunking: Think of two meaningful dates instead of sixteen separate digits.",
+      "sha256": "fe0dd236534b819c85cc5ead52e7c3bd0dd182101a88f869f6b5d4eb203da50d",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 23616,
+          "paragraphEnd": 23692,
+          "startIndex": 23616,
+          "endIndex": 23691,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[3].activity.principles[1]",
+      "text": "Logical constraints: A date limits the possibilities: months run from 01 to 12, and a day cannot be 47.",
+      "sha256": "c28d6d7dc87311494b489be4cd8b240c7defbe510797ffb3965eb76a16bb0937",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 23692,
+          "paragraphEnd": 23796,
+          "startIndex": 23692,
+          "endIndex": 23795,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[3].activity.principles[2]",
+      "text": "Memory hooks: Connect new information to established old knowledge. If you know these events and their dates, they give the digits something familiar to connect to. If not, grouping and date structure can still help.",
+      "sha256": "545b56d47c652325285ea9f36733b864be4358ed832d167a322b7b7c9908eed9",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 23796,
+          "paragraphEnd": 24013,
+          "startIndex": 23796,
+          "endIndex": 24012,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].copy.paragraphs[0]",
+      "text": "We’ll use all three principles, starting with memory hooks: connecting new information to established old knowledge. First, we’ll build on things you know from English. Later, we’ll connect new Hebrew concepts to Hebrew you’ve already learned.",
+      "sha256": "5b1edb92292f42b81c54f6ea3c545a632f193ab3d019a3f36a713eb2b6589a6d",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 24119,
+          "paragraphEnd": 24363,
+          "startIndex": 24119,
+          "endIndex": 24362,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].inlineOptional.label",
+      "text": "Try the comparison (optional)",
+      "sha256": "015e2421715f6ddeda5acee25a5cfff153ab5a0790ae5862f0491bf916af0524",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 26088,
+          "paragraphEnd": 26226,
+          "startIndex": 26122,
+          "endIndex": 26151,
+          "headingId": "h.wjryxoncl9oh"
+        },
+        {
+          "tabId": "t.0",
+          "paragraphStart": 26240,
+          "paragraphEnd": 26270,
+          "startIndex": 26240,
+          "endIndex": 26269,
+          "headingId": null
+        },
+        {
+          "tabId": "t.0",
+          "paragraphStart": 26519,
+          "paragraphEnd": 27483,
+          "startIndex": 26629,
+          "endIndex": 26658,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].inlineOptional.copy.paragraphs[0]",
+      "text": "Think of the two dates and type what you remember, without looking back. Then compare your attempts and notice what helped.",
+      "sha256": "71f2508773ba6dff443465d2738411377249d1e32290926f3cbfbd73f0098c8a",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 26270,
+          "paragraphEnd": 26394,
+          "startIndex": 26270,
+          "endIndex": 26393,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].inlineOptional.prompt",
+      "text": "With the two dates in mind, what do you remember?",
+      "sha256": "294a9f93829f800b385f2304cbe539ee5017dd6170cf7732d33215367a5f2074",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 26453,
+          "paragraphEnd": 26519,
+          "startIndex": 26469,
+          "endIndex": 26518,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.exact",
+      "text": "That’s the original sequence. Notice which part of the connection helped you bring it back.",
+      "sha256": "923a44148b4f83d49314253c020a73b694a6ba457a0b41243b3506270d7dbea4",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 27755,
+          "paragraphEnd": 27910,
+          "startIndex": 27817,
+          "endIndex": 27908,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.reverse",
+      "text": "You recalled both dates, but swapped their order. The original starts with July 4, 1776, then September 11, 2001.",
+      "sha256": "4c2ee1f5b16ca65af20caa1ba715eb9ae20ec50f8f78f1be8f5682cdd1de2163",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 27910,
+          "paragraphEnd": 28087,
+          "startIndex": 27972,
+          "endIndex": 28085,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.zeros",
+      "text": "You recalled the dates. In the original display, months and days use two digits: 07/04 and 09/11. Those zeroes are part of the original sequence.",
+      "sha256": "0a41cc72babf89acbf1f7c84cbc01467a190a3861e3eb2e74c814eba44030131",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 28087,
+          "paragraphEnd": 28316,
+          "startIndex": 28169,
+          "endIndex": 28314,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.dayMonth",
+      "text": "You used day–month–year. These are the same dates; the demonstration uses month–day–year, so its sequence begins 07/04/1776.",
+      "sha256": "8b1626cbcadb9f2bc72596ee820875e65d16dd40ced3785cb987d71cfd74d1cf",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 28316,
+          "paragraphEnd": 28501,
+          "startIndex": 28375,
+          "endIndex": 28499,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.partial",
+      "text": "Here’s the original number alongside your attempt. Compare the two date groups and notice which parts came back to you.",
+      "sha256": "c096b74ad0109fd51f99d7ceb6c8ba58e6b4b10a47c1c043e3efc87fbe73d24a",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 28501,
+          "paragraphEnd": 28671,
+          "startIndex": 28550,
+          "endIndex": 28669,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[4].inlineOptional.activity.feedback.empty",
+      "text": "Here are the two dates within the original number. Notice how the grouping, format and familiar events can help you make sense of it.",
+      "sha256": "6bb65b1d6c34fb9fc6a9440b8a1ea5f58ccd0abc1938892255a4ec850966cca3",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 28671,
+          "paragraphEnd": 28830,
+          "startIndex": 28695,
+          "endIndex": 28828,
+          "headingId": null
+        }
+      ]
+    },
+    {
+      "field": "pages[5].copy.paragraphs[0]",
+      "text": "Next, we’ll use familiar concepts from English to learn your first four Hebrew letters. See you in the next lesson!",
+      "sha256": "86595c589e84b725f50222e351d28421bb706cec13069331f9b3b555ebb86a95",
+      "locations": [
+        {
+          "tabId": "t.0",
+          "paragraphStart": 29574,
+          "paragraphEnd": 29690,
+          "startIndex": 29574,
+          "endIndex": 29689,
+          "headingId": null
+        }
+      ]
+    }
+  ],
+  "scopedPreservation": {
+    "scope": "Only MEMORY-A2; complete outside-MEMORY content and styles compared after removing positional startIndex/endIndex offsets only",
+    "prefixBeforeSha256": "02d58be6cc9a3f99c5af66a07a601c2a20124172c014b036c2d2c2a66d7be2e9",
+    "prefixAfterSha256": "02d58be6cc9a3f99c5af66a07a601c2a20124172c014b036c2d2c2a66d7be2e9",
+    "suffixBeforeSha256": "8eed024e02e68e852e89cc2fe996b9a173487a0660e2e291a78577548dae01bf",
+    "suffixAfterSha256": "8eed024e02e68e852e89cc2fe996b9a173487a0660e2e291a78577548dae01bf",
+    "existingHeadings": 359,
+    "lessonHeadings": 119,
+    "commentThreads": 13,
+    "activeCommentThreads": 11,
+    "commentsBeforeSha256": "3871adef6c11cfd592e5111313e87b94de49b2c117480619a8a5086b463ae4dd",
+    "commentsAfterSha256": "3871adef6c11cfd592e5111313e87b94de49b2c117480619a8a5086b463ae4dd",
+    "commentPreservation": "Thread IDs, anchor values, quoted content, replies, deletion/resolution state and timestamps are identical by API readback; visual anchor placement not inspected",
+    "interveningChanges": [
+      {
+        "paragraph": 1,
+        "old": "Content: Revised draft · Approval: Guy authorised local software implementation for testing; adapted wording remains reviewable · Built version: pending · Verified version: pending · Revision: 4 (30 October 2026)\n",
+        "current": "Content: Installed local test draft · Approval: Guy testing pending · Built version: 73e242e / content revision 5 · Verified: current source/content readback; team learner-control checks · Revision: 4 (30 October 2026)\n"
+      },
+      {
+        "paragraph": 87,
+        "old": "Approval revision/date: Guy authorised local implementation for testing on 30 October 2026; comments applied; adapted wording remains reviewable · Course lesson/version: pending · Verification evidence: document readback complete; software implementation pending.\n",
+        "current": "Implementation record, 31 October 2026: installed in the local software as MEMORY-A2, content revision 5, code 73e242e717c630976fd2d040396d4d8d5fcd3127. Curriculum verified exact installed content against the source pack and read the served build. Team learner-control checks and preservation review recorded separately. Timed recall, date transformation, three deliberate reveals, application question and optional comparison are implemented; direct device/accessibility acceptance remains pending. Guy acceptance remains pending.\n"
+      }
+    ]
+  },
+  "checks": {
+    "prefix_content_styles_and_index_links_unchanged": true,
+    "suffix_all_other_lessons_content_and_styles_unchanged": true,
+    "all_existing_heading_ids_and_levels_preserved": true,
+    "all_119_lesson_headings_and_titles_unchanged": true,
+    "all_comment_threads_quotes_anchors_replies_and_statuses_unchanged": true,
+    "tab_resources_named_ranges_objects_styles_unchanged": true,
+    "memory_heading_styles_preserved": true,
+    "all_40_scoped_edits_read_back_exactly": true,
+    "all_exact_learner_copy_fields_mapped": true,
+    "three_credentials_one_native_decimal_list": true,
+    "three_principles_one_native_decimal_list": true,
+    "70_hours_and_all_three_principle_titles_bold": true,
+    "original_quiz_question_options_answer_feedback_retained_verbatim_as_inactive_history": true,
+    "six_top_level_screen_headings_only": true,
+    "principles_directly_available_without_continue_gate": true,
+    "comparison_collapsed_within_meaning_and_never_required": true,
+    "accessible_alternative_no_audio_or_tts_requirement": true,
+    "installed_baseline_record_retained_verbatim": true,
+    "guy_acceptance_pending": true,
+    "all_untargeted_memory_paragraphs_styles_and_content_preserved": true
+  },
+  "activeOrder": [
+    "MEMORY-A2.learn.try-first",
+    "MEMORY-A2.learn.adam-study",
+    "MEMORY-A2.learn.number-round",
+    "MEMORY-A2.learn.connection",
+    "MEMORY-A2.learn.meaning",
+    "MEMORY-A2.continue"
+  ],
+  "retiredActivityIds": [
+    "MEMORY-A2.embedded.what-changed"
+  ],
+  "retiredTopLevelPageIds": [
+    "MEMORY-A2.learn.return"
+  ],
+  "history": "The prior quiz is explicitly inactive inside the master so its original heading identity/comment anchors survive; complete pre-update MEMORY snapshot and source baseline also retain original text. Historical .learn.return heading remains identified as an optional section, not a top-level screen.",
+  "applicationStatus": "Source saved/read back for local testing. No app source, installation, main, WordPress or publication change. Guy final copy/design acceptance pending.",
+  "limitations": [
+    "Runtime/schema/state migration, editing, installation and assistive behavior remain Lead work.",
+    "Rendered Google Docs layout and physical device behavior were not inspected.",
+    "Source lists and emphasis verified through native structure/style readback.",
+    "Google Docs edit history is additive; no history/comment deletion operations were sent."
+  ],
+  "hashConventions": {
+    "sourceCopySha256": "Exact local LEARNER_COPY.md bytes at preparation; checkout line endings retained",
+    "sourceCopyGitBlobSha256": "Exact committed LEARNER_COPY.md bytes from the stated source-copy commit",
+    "sourceTextSha256": "Concatenated native paragraph text as returned by Google Docs, encoded UTF-8",
+    "sourceParagraphsSha256": "JSON.stringify native MEMORY paragraph array, including UTF-16 indexes",
+    "preservation": "JSON.stringify structures with positional startIndex/endIndex removed, all other fields retained"
+  },
+  "sourceCopyGitBlobSha256": "c06ac02f9086d10a8e36b9ee419d7fbba703354bfaf8879df02b805102d98c12",
+  "appliedRequestsSha256": "ea59ad1ebc7103c30f1fd56be8689f7bce4507d4aa66c9b93774aae16d1beaa8",
+  "successfulBatchRequests": 115
+}

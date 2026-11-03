@@ -1,0 +1,44 @@
+release-candidate
+✔ removed triggers restore prior ARIA after observer-driven close (52.2151ms)
+✔ retained old card nodes cannot close the new card or alter its transit timer (70.1224ms)
+✔ complete retained workspace above 20 MB supports impact and exact-token draft; oversized input returns 413 without losing work (5218.8889ms)
+ℹ tests 938
+ℹ suites 0
+ℹ pass 938
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115018.4826
+
+
+release-schema
+✔ semantic validator adds complete inventories and scoped references after structure (0.9713ms)
+✔ QA-NEW7-01 schema semantics reject empty-effective authored keys without rewriting source (35.5521ms)
+✔ optional v2 text-only course validates author and learner schemas without invented registry objects (19.6541ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5506.1321
+
+
+release-runtime
+
+PASS GET null draft and empty diff match schemas
+PASS no-draft, missing token and stale base errors are coded and write nothing
+PASS stage preserves every field and emits first-stage unchanged false
+PASS full-token scope and key-order-only restage preserve time and database rows
+PASS HTTP preview matches preparation/evaluation schemas and changes no stored profile rows
+PASS non-authors, malformed answers and wrong targets are rejected without writes
+PASS newer draft rejects stale saves, preview, publish and rollback atomically
+PASS publish and rollback return revision envelopes and enforce null/no-draft CAS
+PASS HTTP v2 repeated instances, mixed curriculum and keyed rehearsal validate without writes; a forged selector rejects atomically
+{"runtimeCommit":"03a3e9e613a4c92d1cf683627a1394c0e75c616c","passed":9,"database":":memory:","transport":"ephemeral loopback HTTP; closed on exit","limits":"Contract and backend checks only; no app renderer, browser or independent release acceptance."}
+
+
+premium-audit
+Unable to create process using '"C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\python3.13.exe" C:\Users\Trans\.codex\plugins\cache\openai-curated-remote\frontend-design-premium\1.4.0\skills\frontend-design-premium\scripts\audit_project.py . --mode strict'

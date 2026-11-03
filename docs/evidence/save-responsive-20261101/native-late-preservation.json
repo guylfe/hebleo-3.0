@@ -1,0 +1,82 @@
+{
+  "lessonCount": 23,
+  "contentBytes": 26632106,
+  "draftSha256": "dff463ab07251b90476ee06ba86493b455b668d199f5c74e33f0e35e685b683a",
+  "completeExpectedDraftExact": true,
+  "allNonProgressStateExact": true,
+  "allNonDraftKVExact": true,
+  "allRevisionsEventsMediaSequenceExact": true,
+  "schemaExact": true,
+  "changedProfiles": [
+    "author-demo"
+  ],
+  "sourceUnchanged": true,
+  "sourceReceipt": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 8,
+        "sha256": "7eccf1993ac8bd290e56d9c402f9f391e9da1754594775cd2b9ecdda8125cc3c"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "55b5c53c4c8f07ad6dabed6929fb19402c858d49ba1c67751ea627c2cb369835"
+      },
+      "media_aliases": {
+        "rows": 4,
+        "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+      },
+      "media_blobs": {
+        "rows": 5,
+        "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+      },
+      "revisions": {
+        "rows": 6,
+        "sha256": "76ee4b33191e31bd1ca6446a15c3e8b1e6609057d70392396db94f60d0c9ad76"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "af166db64813795f361d010d7a8bfa0ba9c0f52fb037efce9d5029d5720b0cd6"
+      }
+    },
+    "sha256": "f71259b6ba84e81f24373218a031b7e69a5abbef8936143babea2edfe2cb444f"
+  },
+  "finalReceipt": {
+    "schemaSha256": "9f2d5765d9d63bec67012bef29cbb82d04532933e4063c88075cf29c6a5187ea",
+    "tables": {
+      "events": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "kv": {
+        "rows": 8,
+        "sha256": "b24a178cba96e6209adf07146cd1f211f55a8ef58e0efa949fa19b42652c4e7b"
+      },
+      "learners": {
+        "rows": 3,
+        "sha256": "02ddb42fe1b6eb55737bcc861b38a85d95a8b1bd969c652dc6eb319ca5a35193"
+      },
+      "media_aliases": {
+        "rows": 4,
+        "sha256": "c328dc462485975ac8c81bd3f5211bdc2e631ee72b7efc570a6e7c28e12946bb"
+      },
+      "media_blobs": {
+        "rows": 5,
+        "sha256": "5a6b0eede2bc7a838e30bc8a4fe11ca95639f84f650cbbca5adab701759c6f6a"
+      },
+      "revisions": {
+        "rows": 6,
+        "sha256": "76ee4b33191e31bd1ca6446a15c3e8b1e6609057d70392396db94f60d0c9ad76"
+      },
+      "sqlite_sequence": {
+        "rows": 1,
+        "sha256": "af166db64813795f361d010d7a8bfa0ba9c0f52fb037efce9d5029d5720b0cd6"
+      }
+    },
+    "sha256": "87aa6cd2d9b1d238b11aa50051a8689e2147afb74aee84dc36a201f7bbeb43ad"
+  }
+}

@@ -11,6 +11,25 @@ export const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&am
 export const exerciseSurface = (text, field, index) => '<span data-vocabulary-surface="'+field+'"'+(index===undefined?'':' data-vocabulary-index="'+index+'"')+'>'+esc(text).replace(/\r/g,'&#13;')+'</span>';
 export const button = (label, action, cls='', value='', disabled=false) => '<button type="button" class="button '+cls+'" data-action="'+action+'" data-value="'+esc(value)+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
 export {textGatesPassed} from './text-contract.js';
+export const ownsTextNavigation=lesson=>lesson?.textPages?.activityVersion===1&&hasTextPages(lesson);
+export function extraInformationControl(lesson){
+ const text=lesson?.extraInformation;
+ return typeof text==='string'&&text.replace(/<[^>]*>|&nbsp;|&#160;/g,'').trim()?'<div class="button-row"><button type="button" class="button outline small" data-extra-information>Extra information</button></div>':'';
+}
+// Shared read-only dialog for authored extras, in the learner and disposable Preview.
+let extraSerial=0;
+export function bindExtraInformation(scope,lesson,renderLesson){
+ const trigger=scope.querySelector('[data-extra-information]'),doc=scope.ownerDocument;let dialog;
+ const close=()=>{if(!dialog)return;dialog.close();dialog.remove();dialog=null;if(trigger?.isConnected)trigger.focus({preventScroll:true});};
+ const open=()=>{
+  if(dialog||!trigger||!extraInformationControl(lesson))return;
+  const title='extra-information-'+(++extraSerial);dialog=doc.createElement('dialog');dialog.className='lesson-extra-information';dialog.setAttribute('aria-labelledby',title);
+  dialog.innerHTML='<div class="panel-header"><h2 id="'+title+'">Extra information</h2><button type="button" class="button small outline" data-extra-close>Close</button></div><div class="rich-lesson">'+renderLesson(lesson.extraInformation)+'</div>';
+  doc.body.append(dialog);dialog.showModal();dialog.querySelector('[data-extra-close]').focus({preventScroll:true});dialog.querySelector('[data-extra-close]').addEventListener('click',close);dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
+ };
+ trigger?.addEventListener('click',open);
+ return {destroy(){trigger?.removeEventListener('click',open);close();}};
+}
 let textGateSerial=0;
 export const textGateNotice=()=>'<p class="hint" data-text-gate-notice role="status" hidden>Complete the required text-page activities before continuing.</p>';
 export function syncTextContinue(scope,ready){

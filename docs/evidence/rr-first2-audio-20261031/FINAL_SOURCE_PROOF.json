@@ -1,0 +1,8 @@
+{
+  "sourcePackSha256": "1b9df3021485e37c5c01af7a0eb573a482ba7329c797dc1dad55aaa2e9fb9e3a",
+  "executableFiles": 113,
+  "unchangedExecutables": 112,
+  "onlyChangedExecutable": "public/text-contract.js",
+  "runtimeSha256": "08e689b369f2129b94e6d6d0016c4a0c6dadc4936b680cd30d26b69a20bb2249",
+  "backendSha256": "c5f13d8d3e9190bb620874e9a239a454a96d90074dc711ead64aa7f54a38edc1"
+}

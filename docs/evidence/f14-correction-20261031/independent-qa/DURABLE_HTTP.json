@@ -1,0 +1,40 @@
+{
+  "synthetic": true,
+  "acknowledged": [
+    "A",
+    "B"
+  ],
+  "pendingBRetained": true,
+  "staleHTTPStatus": 409,
+  "conflictAllTablesUnchanged": true,
+  "reservedHTTPStatus": 400,
+  "reservedHTTPAllTablesUnchanged": true,
+  "reservedPersistenceBoundary": "merge/Store, not HTTP acceptance",
+  "finalDraftToken": "dt1-359eb6fd39031a523ab5ab48aa73f83064cdbce271c36f1f090f4ff2a3d4f661",
+  "finalTitle": "B",
+  "metadata": {
+    "left": 1,
+    "right": 1,
+    "__proto__": {
+      "constructor": [
+        null,
+        "שָׁלוֹם 😀"
+      ]
+    },
+    "constructor": {
+      "left": 1,
+      "right": 1
+    },
+    "nullMe": null,
+    "array": [
+      null,
+      {
+        "__proto__": "keep"
+      }
+    ]
+  },
+  "unaffectedTablesBefore": "3ca588e6219f5b3028e67cf2752487093528ae8d51a22492bc89f7aa8aca8948",
+  "unaffectedTablesAfterReopen": "3ca588e6219f5b3028e67cf2752487093528ae8d51a22492bc89f7aa8aca8948",
+  "completeDraftAfterReopen": "8a72d0e890a96cd647985bb32f8ae3ad6057163cd81cedfb5a4ffd9b3b67c70b",
+  "database": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\71c71389-5334-4e0c-9ca8-d80dd28223d1\\653fb433-7485-48b1-9f7c-cb22711bda02\\hebleo-3\\qa-first2-recheck-0e874af\\disk-store-sICUc7/synthetic.sqlite"
+}

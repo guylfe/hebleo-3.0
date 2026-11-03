@@ -1,0 +1,12 @@
+{
+  "assignmentId": "b0979940-d729-4103-9696-8677bb357502",
+  "reviewer": "Hebleo Release Reviewer",
+  "sourceDirectory": "C:/Users/Trans/.openmausbot/task-workspaces/71c71389-5334-4e0c-9ca8-d80dd28223d1/653fb433-7485-48b1-9f7c-cb22711bda02/hebleo-3/tmp/release-first2-audio-73e242e",
+  "reportSha256": "e4f78181915ad0c184d71e89d5ef44519ea8c1bd025a4e5b38a49fda0c5ad4f2",
+  "verdict": "RR-FIRST2-01 CLOSED; preservation PASS",
+  "code": "73e242e717c630976fd2d040396d4d8d5fcd3127",
+  "runtime": "08e689b369f2129b94e6d6d0016c4a0c6dadc4936b680cd30d26b69a20bb2249",
+  "audio": "unfinished",
+  "sourceReportSha256": "b35798e5de260d058c199f580abcdcb5049892f3903275338804e513fb9420e4",
+  "copyNormalization": "Removed terminal blank line for Git whitespace validation; byte-exact original retained as external RELEASE_REVIEW.md."
+}

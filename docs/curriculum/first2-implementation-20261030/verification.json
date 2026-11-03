@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checks": {
+    "exact_39_scoped_text_edits": true,
+    "outside_two_lessons_content_and_styles_preserved": true,
+    "all_lesson_headings_and_index_links_preserved": true,
+    "all_11_comments_preserved": true,
+    "no_pending_suggestions": true,
+    "three_bold_click_revealed_principles": true,
+    "one_application_question_no_name_matching": true,
+    "redundant_optional_theory_removed": true,
+    "second_recall_and_comparison_optional": true,
+    "original_number_demo_retained": true,
+    "human_intro_and_adam_preserved": true,
+    "no_reintroduced_cefr_reference": true,
+    "all_four_letters_taught_before_first_question": true,
+    "three_letter_screens": true,
+    "all_seven_letter_exercises_retained": true,
+    "no_vocabulary_added": true
+  },
+  "sourceDocument": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+  "sourceRevision": "AHj4eMQbs4AvKUsSFH4nKDDgob7uHGFqMEUYjrcLSJusbw9BDL-hbD4SS5aoSdFhnQ9Nw7MTG6VSJHoCNSbZcQ5Nl-UzglgR3ddjxE0pGA",
+  "scope": "Live authoring content verified. Software implementation and installation are separate pending work."
+}

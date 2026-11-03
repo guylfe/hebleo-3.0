@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "oldCommit": "03a3e9e613a4c92d1cf683627a1394c0e75c616c",
+  "reader": 9,
+  "databaseReject": 409,
+  "backupReject": 409,
+  "databaseTablesAndSequencesUnchanged": true,
+  "backupDestinationTablesAndSequencesUnchanged": true
+}

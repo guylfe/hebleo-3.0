@@ -1,0 +1,12 @@
+export * from 'prosemirror-model';
+export * from 'prosemirror-state';
+export * from 'prosemirror-view';
+export * from 'prosemirror-commands';
+export * from 'prosemirror-history';
+export * from 'prosemirror-keymap';
+export * from 'prosemirror-inputrules';
+export * from 'prosemirror-schema-list';
+export * from 'prosemirror-tables';
+export {schema as basicSchema} from 'prosemirror-schema-basic';
+export {MarkdownSerializer, defaultMarkdownSerializer} from 'prosemirror-markdown';
+export {parseFragment} from 'parse5';

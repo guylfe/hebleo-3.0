@@ -1,0 +1,74 @@
+/* Shared refinement tokens remain authoritative; author tools stay in flow. */
+.inline-author {max-width:var(--reading-measure);margin-inline:auto;color:var(--ink)}
+.author-toolbar {display:flex;flex-wrap:wrap;gap:8px;margin-block:12px}
+.inline-author label {display:block;margin-block:12px}
+.inline-author input,.inline-author textarea,.inline-author select {max-width:100%;width:100%;box-sizing:border-box}
+.inline-author textarea {resize:none;min-height:6em}
+.inline-author .CodeMirror {max-width:100%}
+.author-scope {color:var(--muted);font-size:.9em}
+.author-review-panel {border-block-start:1px solid var(--line);margin-block-start:24px;padding-block-start:16px}
+.author-review-panel article {border-block-start:1px solid var(--line);padding-block:16px;overflow-wrap:anywhere}
+.author-review-panel .button {margin-inline-end:8px}
+.author-note-body {white-space:pre-wrap}
+.inline-author pre {white-space:pre-wrap;overflow-wrap:anywhere;max-height:30em;overflow:auto}
+.inline-author [data-author-status],.inline-author [data-author-comment-status] {min-height:1.5em}
+@media(max-width:480px){.author-toolbar .button{flex:1 1 45%}.inline-author .editor-toolbar{white-space:normal}}
+
+.inline-author [hidden] {display:none}
+
+.inline-author [data-author-canvas],.author-review-panel {scroll-margin-block-start:calc(var(--header-height,88px) + 16px)}
+
+/* Rendered prose keeps learner typography and dimensions. Selection uses the
+   established blue token; only the current leaf gets an editing affordance. */
+.inline-author [contenteditable] {outline:1px solid transparent;outline-offset:4px;border-radius:var(--radius,8px);cursor:text;overflow-wrap:anywhere}
+.inline-author [contenteditable=true]:hover {outline-color:var(--line)}
+.inline-author [contenteditable=true]:focus {outline:2px solid var(--primary);background:var(--selection,#EAF5FC)}
+.inline-author [contenteditable=false] {cursor:default}
+.author-context-tools {display:flex;gap:8px;margin-block:8px;min-height:32px}
+.inline-author .author-context-tools[hidden] {display:flex!important;visibility:hidden}
+.inline-author [data-author-anchor] {white-space:pre-wrap;max-height:12em;overflow:auto}
+.inline-author [data-author-advanced] {margin-block:20px}
+
+/* One prose document retains the existing reading measure and palette. */
+.author-format-tools {display:flex;flex-wrap:wrap;gap:6px;margin-block:12px;align-items:center}
+.author-format-tools select {max-width:100%;width:auto;min-height:34px}
+.author-format-tools button:focus-visible,.author-format-tools select:focus-visible {outline:2px solid var(--primary);outline-offset:2px}
+.inline-author .ProseMirror {min-height:220px;position:relative;white-space:pre-wrap;overflow-wrap:anywhere;padding:12px;outline:1px solid var(--line);border-radius:var(--radius,8px)}
+.inline-author .ProseMirror:focus {outline:2px solid var(--primary)}
+.ProseMirror li {position:relative}
+.ProseMirror li[data-task-item] {list-style:none;display:flex;gap:8px}
+.ProseMirror li[data-task-item]>div {flex:1;min-width:0}
+.ProseMirror pre {white-space:pre-wrap}
+.ProseMirror-hideselection *::selection {background:transparent}
+.ProseMirror-hideselection {caret-color:transparent}
+.ProseMirror-selectednode {outline:2px solid var(--primary)}
+.ProseMirror table {border-collapse:collapse;table-layout:fixed;width:100%}
+.ProseMirror td,.ProseMirror th {border:1px solid var(--line);padding:8px;vertical-align:top;position:relative;min-width:36px}
+.ProseMirror .selectedCell::after {content:'';position:absolute;inset:0;pointer-events:none;background:var(--selection);opacity:.6}
+.author-opaque {padding-block:8px;color:var(--muted);font-size:.85em;border-block:1px dashed var(--line);user-select:none}
+.author-title-label {font-size:.85em;color:var(--muted)}
+.inline-author input.author-title {font-size:1.6rem;font-weight:700;color:var(--ink);border:0;border-bottom:1px solid var(--line);width:100%;background:transparent}
+.author-editor-fullscreen {position:fixed;inset:0;background:var(--paper,#fff);z-index:120;overflow:auto;padding:24px}
+.author-editor-fullscreen .author-standard {max-width:760px;margin-inline:auto}
+.inline-author [data-prose-insert] {padding-block:12px}
+.inline-author [data-prose-insert] form {display:grid;gap:8px}
+.lesson-publication-dialog{max-width:min(760px,calc(100vw - 32px));width:100%;max-height:calc(100dvh - 32px);overflow:auto;border:1px solid var(--line,#ccd5df);border-radius:16px;padding:24px;color:var(--ink,#152c45);background:var(--paper,#fff)}
+.lesson-publication-dialog::backdrop{background:rgb(12 28 48 / .4)}
+.lesson-publication-dialog .button-row{position:sticky;bottom:-24px;padding:16px 0;background:var(--paper,#fff);flex-wrap:wrap;border-top:1px solid var(--line,#ccd5df)}
+.lesson-publication-dialog .publication-token{overflow-wrap:anywhere;font-size:12px}
+.lesson-publication-dialog input[type=checkbox]{width:auto;margin-inline-end:8px}
+.lesson-publication-dialog [hidden]{display:none!important}
+
+/* Supplied Jodit classic theme is the approved local prose-editor variant. */
+.inline-author .jodit-container {color:var(--ink);font:inherit;border-radius:0}
+.inline-author .jodit-wysiwyg {font:inherit;line-height:1.5;outline:none!important;border-radius:0;background:var(--paper,#fff)!important;white-space:pre-wrap}
+.inline-author .jodit-toolbar__box {border-radius:0}
+.inline-author .jodit-container button,.jodit-popup button,.jodit-dialog button {min-height:0;letter-spacing:normal;text-transform:none}
+.inline-author .jodit-container .jodit-toolbar-button__button,.inline-author .jodit-container .jodit-toolbar-button__trigger {padding:0;min-width:0;margin:0;border-radius:0;background:transparent;color:inherit;box-shadow:none}
+.inline-author .jodit-container input,.inline-author .jodit-container select {width:auto;min-height:0;margin:0}
+.inline-author .jodit-wysiwyg table {border-collapse:collapse}
+.inline-author .jodit-wysiwyg td,.inline-author .jodit-wysiwyg th {border:1px solid var(--line);min-width:24px;padding:6px}
+.inline-author .jodit-wysiwyg [data-retained] {user-select:none;white-space:normal}
+
+.author-classic-brush-tabs [role=tabpanel][hidden] {display:none!important}
+.author-classic-brush-tabs [role=tab]:focus-visible {outline:2px solid var(--primary);outline-offset:-2px}

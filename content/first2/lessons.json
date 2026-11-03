@@ -1,0 +1,463 @@
+{
+  "version": 1,
+  "sourceRevision": "AHj4eMRxQhMluC04Gm0-aMjeII8LLcqZjsm8oJk1OkkA5amjOLeQAnPd9EsQCsqwb-g8t4yM7BkmHezGXxsy5iGHeaOFaR4xNRtcd0d6RQ",
+  "retiredUnpublishedPageIds": [
+    "MNTL-A2.learn.tav-lamed"
+  ],
+  "lessons": [
+    {
+      "id": "MEMORY-A2",
+      "contentId": "MEMORY-A2",
+      "title": "How memory works",
+      "chapter": "Getting started",
+      "minutes": 7,
+      "letters": "",
+      "introducedLetters": "",
+      "wordIds": [],
+      "exerciseIds": [],
+      "checkExerciseIds": [],
+      "compositionVersion": 2,
+      "provenance": {
+        "kind": "human-authored",
+        "label": "Guy’s course material, adapted for local testing",
+        "sourceDocument": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+        "sourceRevision": "AHj4eMRxQhMluC04Gm0-aMjeII8LLcqZjsm8oJk1OkkA5amjOLeQAnPd9EsQCsqwb-g8t4yM7BkmHezGXxsy5iGHeaOFaR4xNRtcd0d6RQ",
+        "localTestingAuthorized": "2026-10-30",
+        "finalAcceptance": "pending",
+        "editorialSource": "docs/curriculum/memory-feedback-20261031/REVISION.json",
+        "editorialDate": "2026-10-31",
+        "masterReceipt": "docs/curriculum/memory-feedback-20261031/MASTER_UPDATE_VERIFIED.json"
+      },
+      "blocks": [
+        {
+          "id": "MEMORY-A2-interactive",
+          "type": "explanation",
+          "source": "inline",
+          "renderer": "text",
+          "text": "",
+          "textPages": {
+            "version": 1,
+            "activityVersion": 1,
+            "pages": [
+              {
+                "id": "MEMORY-A2.learn.try-first",
+                "type": "reading",
+                "title": "Welcome to Hebleo",
+                "gate": "none",
+                "stage": "Learn",
+                "html": "<p>Welcome to Hebleo, the smart way to learn Hebrew. I’ve spent over ten years bringing together three kinds of experience:</p><ol><li>Learning languages independently and seeing what works first-hand.</li><li>Teaching Hebrew and refining my materials with each student.</li><li>My M.Sc. in Cognitive Science, which helped me understand how to improve learning, especially languages.</li></ol>"
+              },
+              {
+                "id": "MEMORY-A2.learn.adam-study",
+                "type": "reading",
+                "title": "Welcome to Hebleo",
+                "gate": "none",
+                "stage": "Learn",
+                "html": "<p>One of my students, Adam, started with no Hebrew and a similar scientific background. We tested how long it would take him to hold conversations with me in Hebrew.</p><p>For an English speaker, this usually takes around 500 hours. Using the method at the core of Hebleo, Adam took around <strong>70 hours</strong>—over seven times faster.</p><p>Let’s try a short demonstration. These ideas can help you learn beyond this course, too.</p>"
+              },
+              {
+                "id": "MEMORY-A2.learn.number-round",
+                "type": "reading",
+                "title": "A quick memory experiment",
+                "gate": "none",
+                "stage": "Learn",
+                "html": "<p>Press Play to see a number for ten seconds. Remember as much as you can without writing it down. When it disappears, type what you remember.</p>",
+                "prompt": "What do you remember? Enter an attempt, or select Show me how.",
+                "activity": {
+                  "value": "0704177609112001",
+                  "durationMs": 10000,
+                  "feedback": {
+                    "partial": "That was a lot of digits to hold in mind! Let me show you a way to make sense of them.",
+                    "exact": "You remembered it. Now let me show you a way to organise the same information."
+                  },
+                  "id": "MEMORY-A2.embedded.number-first",
+                  "kind": "memory-first"
+                }
+              },
+              {
+                "id": "MEMORY-A2.learn.connection",
+                "type": "reading",
+                "title": "How memory works",
+                "gate": "none",
+                "stage": "Learn",
+                "html": "<p>Let’s give the same digits some meaning.</p>",
+                "activity": {
+                  "stages": [
+                    "0704177609112001",
+                    "07041776 · 09112001",
+                    "07/04/1776 · 09/11/2001"
+                  ],
+                  "descriptions": [
+                    "The original sixteen digits.",
+                    "The same digits, grouped into two sets of eight.",
+                    ""
+                  ],
+                  "principles": [
+                    {
+                      "title": "Chunking:",
+                      "text": "Think of two meaningful dates instead of sixteen separate digits."
+                    },
+                    {
+                      "title": "Logical constraints:",
+                      "text": "A date limits the possibilities: months run from 01 to 12, and a day cannot be 47."
+                    },
+                    {
+                      "title": "Memory hooks:",
+                      "text": "Connect new information to established old knowledge. If you know these events and their dates, they give the digits something familiar to connect to. If not, grouping and date structure can still help."
+                    }
+                  ],
+                  "id": "MEMORY-NUMBER-TO-DATES",
+                  "kind": "date-connection",
+                  "after": "<p>American month–day–year order:</p><ul><li>July 4, 1776 — the American Declaration of Independence.</li><li>September 11, 2001 — the September 11 attacks.</li></ul><p>Same digits, different meaning. Three ideas help:</p>",
+                  "principleInteraction": "expandable"
+                }
+              },
+              {
+                "id": "MEMORY-A2.learn.meaning",
+                "type": "reading",
+                "title": "How memory works",
+                "gate": "none",
+                "stage": "Learn",
+                "html": "<p>We’ll use all three principles, starting with memory hooks: connecting new information to established old knowledge. First, we’ll build on things you know from English. Later, we’ll connect new Hebrew concepts to Hebrew you’ve already learned.</p>",
+                "prompt": "With the two dates in mind, what do you remember?",
+                "activity": {
+                  "value": "0704177609112001",
+                  "dates": "07/04/1776 · 09/11/2001",
+                  "feedback": {
+                    "exact": "That’s the original sequence. Notice which part of the connection helped you bring it back.",
+                    "reverse": "You recalled both dates, but swapped their order. The original starts with July 4, 1776, then September 11, 2001.",
+                    "zeros": "You recalled the dates. In the original display, months and days use two digits: 07/04 and 09/11. Those zeroes are part of the original sequence.",
+                    "dayMonth": "You used day–month–year. These are the same dates; the demonstration uses month–day–year, so its sequence begins 07/04/1776.",
+                    "partial": "Here’s the original number alongside your attempt. Compare the two date groups and notice which parts came back to you.",
+                    "empty": "Here are the two dates within the original number. Notice how the grouping, format and familiar events can help you make sense of it."
+                  },
+                  "id": "MEMORY-A2.embedded.number-return",
+                  "kind": "memory-comparison",
+                  "optional": true,
+                  "intro": "<p>Think of the two dates and type what you remember, without looking back. Then compare your attempts and notice what helped.</p>",
+                  "label": "Try the comparison (optional)"
+                }
+              },
+              {
+                "id": "MEMORY-A2.continue",
+                "type": "complete",
+                "title": "Continue",
+                "html": "<p>Next, we’ll use familiar concepts from English to learn your first four Hebrew letters. See you in the next lesson!</p>",
+                "gate": "none",
+                "stage": "Continue"
+              }
+            ],
+            "order": [
+              "MEMORY-A2.learn.try-first",
+              "MEMORY-A2.learn.adam-study",
+              "MEMORY-A2.learn.number-round",
+              "MEMORY-A2.learn.connection",
+              "MEMORY-A2.learn.meaning",
+              "MEMORY-A2.continue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "MNTL-A2",
+      "contentId": "MNTL-A2",
+      "title": "Letters 1: מנתל — four consonants",
+      "chapter": "Getting started",
+      "minutes": 8,
+      "letters": "מנתל",
+      "introducedLetters": "מנתל",
+      "wordIds": [],
+      "exerciseIds": [],
+      "checkExerciseIds": [],
+      "compositionVersion": 2,
+      "provenance": {
+        "kind": "human-authored",
+        "label": "Guy’s course material, adapted for local testing",
+        "sourceDocument": "1ZC5w2lc89mwGQ1AtwMVQAKwwoaD8GU3PaCNmPPcgtYY",
+        "sourceRevision": "AHj4eMQbs4AvKUsSFH4nKDDgob7uHGFqMEUYjrcLSJusbw9BDL-hbD4SS5aoSdFhnQ9Nw7MTG6VSJHoCNSbZcQ5Nl-UzglgR3ddjxE0pGA",
+        "localTestingAuthorized": "2026-10-30",
+        "finalAcceptance": "pending"
+      },
+      "blocks": [
+        {
+          "id": "MNTL-A2-interactive",
+          "type": "explanation",
+          "source": "inline",
+          "renderer": "text",
+          "text": "",
+          "textPages": {
+            "version": 1,
+            "activityVersion": 1,
+            "pages": [
+              {
+                "id": "MNTL-A2.learn.mem-nun",
+                "type": "reading",
+                "title": "Four shapes, four sounds",
+                "gate": "none",
+                "stage": "Learn",
+                "html": "<p>Listen to each sound and look at its letter. The mountain-climber, nose, tripping and ladle pictures connect each printed shape to a familiar word that begins with its sound. You do not need to memorise the letter names yet.</p>",
+                "activity": {
+                  "items": [
+                    {
+                      "id": "m",
+                      "letter": "מ",
+                      "sound": "/m/",
+                      "image": "/media/first2/first2-m.png",
+                      "text": "<p>מ represents /m/, the sound at the start of <strong>m</strong>ountain. Its name is Mem.</p>",
+                      "alt": "Original mountain and climber mnemonic"
+                    },
+                    {
+                      "id": "n",
+                      "letter": "נ",
+                      "sound": "/n/",
+                      "image": "/media/first2/first2-n.png",
+                      "text": "<p>נ represents /n/, the sound at the start of <strong>n</strong>ose. Its name is Nun.</p>",
+                      "alt": "Original nose mnemonic"
+                    },
+                    {
+                      "id": "t",
+                      "letter": "ת",
+                      "sound": "/t/",
+                      "image": "/media/first2/first2-t.png",
+                      "text": "<p>ת represents /t/, as at the start of tripping. Its name is Tav.</p>",
+                      "alt": "Original tripping mnemonic"
+                    },
+                    {
+                      "id": "l",
+                      "letter": "ל",
+                      "sound": "/l/",
+                      "image": "/media/first2/first2-l.png",
+                      "text": "<p>ל represents /l/, as at the start of ladle. Its name is Lamed.</p>",
+                      "alt": "Original ladle mnemonic"
+                    }
+                  ],
+                  "id": "MNTL-A2.teach-four",
+                  "kind": "letter-gallery"
+                }
+              },
+              {
+                "id": "MNTL-A2.learn.pair-retrieve",
+                "type": "choice",
+                "title": "Try without the pictures",
+                "gate": "none",
+                "stage": "Learn",
+                "html": "<p>Now try recognising a letter without its picture. If you need help, bring the familiar image back to mind.</p>",
+                "prompt": "Listen, then choose the letter.",
+                "options": [
+                  "מ",
+                  "נ",
+                  "ת",
+                  "ל"
+                ],
+                "answer": 1,
+                "activity": {
+                  "id": "MNTL-A2.embedded.nun",
+                  "letter": "נ",
+                  "sound": "/n/",
+                  "image": "/media/first2/first2-n.png",
+                  "feedback": [
+                    "מ represents /m/. The sound you heard was /n/.",
+                    "Yes: נ represents /n/, as in nose.",
+                    "ת represents /t/. The sound you heard was /n/.",
+                    "ל represents /l/. The sound you heard was /n/."
+                  ],
+                  "kind": "letter-choice"
+                }
+              },
+              {
+                "id": "MNTL-A2.learn.typing",
+                "type": "reading",
+                "title": "Make the shape yourself",
+                "gate": "none",
+                "stage": "Learn",
+                "html": "<p>Choose the matching printed letter on the Hebrew keyboard. You may use the on-screen keyboard.</p><p>Copying a visible shape helps you locate its key. In the next exercise, the shape will be hidden so that you can try to recall it.</p>",
+                "prompt": "Copy this letter: ל",
+                "activity": {
+                  "answer": "ל",
+                  "copy": true,
+                  "feedback": "Correct: ל. Use the same printed form; handwriting is not required.",
+                  "id": "MNTL-A2.embedded.copy-lamed",
+                  "kind": "letter-input"
+                }
+              },
+              {
+                "id": "MNTL-A2.check.tav",
+                "type": "choice",
+                "title": "Check your understanding",
+                "stage": "Check",
+                "prompt": "Which letter represents /t/?",
+                "options": [
+                  "נ",
+                  "ת",
+                  "מ",
+                  "ל"
+                ],
+                "answer": 1,
+                "activity": {
+                  "feedback": [
+                    "נ is /n/. Think of tripping for /t/.",
+                    "Yes: ת is /t/.",
+                    "מ is /m/. Think of tripping for /t/.",
+                    "ל is /l/. Think of tripping for /t/."
+                  ],
+                  "id": "MNTL-A2.check.tav",
+                  "kind": "letter-choice"
+                }
+              },
+              {
+                "id": "MNTL-A2.apply.four-sounds",
+                "type": "reading",
+                "title": "Match sounds and letters",
+                "stage": "Apply",
+                "prompt": "Match each sound to its printed letter.",
+                "activity": {
+                  "items": [
+                    {
+                      "id": "m",
+                      "letter": "מ",
+                      "sound": "/m/",
+                      "image": "/media/first2/first2-m.png"
+                    },
+                    {
+                      "id": "n",
+                      "letter": "נ",
+                      "sound": "/n/",
+                      "image": "/media/first2/first2-n.png"
+                    },
+                    {
+                      "id": "t",
+                      "letter": "ת",
+                      "sound": "/t/",
+                      "image": "/media/first2/first2-t.png"
+                    },
+                    {
+                      "id": "l",
+                      "letter": "ל",
+                      "sound": "/l/",
+                      "image": "/media/first2/first2-l.png"
+                    }
+                  ],
+                  "options": [
+                    "ת",
+                    "ל",
+                    "מ",
+                    "נ"
+                  ],
+                  "feedback": "מ = /m/, נ = /n/, ת = /t/, ל = /l/. Replay a missed sound, then retry it without the mnemonic.",
+                  "id": "MNTL-A2.apply.four-sounds",
+                  "kind": "letter-matching"
+                }
+              },
+              {
+                "id": "MNTL-A2.apply.mem",
+                "type": "reading",
+                "title": "Recall the printed letter",
+                "stage": "Apply",
+                "prompt": "Listen and type the printed letter.",
+                "activity": {
+                  "id": "MNTL-A2.apply.mem",
+                  "letter": "מ",
+                  "sound": "/m/",
+                  "image": "/media/first2/first2-m.png",
+                  "answer": "מ",
+                  "feedback": "The matching letter is מ; its sound is /m/.",
+                  "kind": "letter-input"
+                }
+              },
+              {
+                "id": "MNTL-A2.apply.lamed",
+                "type": "reading",
+                "title": "Recall another letter",
+                "stage": "Apply",
+                "prompt": "Listen and type the printed letter.",
+                "activity": {
+                  "id": "MNTL-A2.apply.lamed",
+                  "letter": "ל",
+                  "sound": "/l/",
+                  "image": "/media/first2/first2-l.png",
+                  "answer": "ל",
+                  "feedback": "The matching letter is ל; its sound is /l/.",
+                  "kind": "letter-input"
+                }
+              },
+              {
+                "id": "MNTL-A2.apply.say-four",
+                "type": "reading",
+                "title": "Read aloud (optional)",
+                "stage": "Apply",
+                "prompt": "Read the sounds of these letters aloud: ל  מ  ת  נ.",
+                "activity": {
+                  "items": [
+                    {
+                      "id": "l",
+                      "letter": "ל",
+                      "sound": "/l/",
+                      "image": "/media/first2/first2-l.png"
+                    },
+                    {
+                      "id": "m",
+                      "letter": "מ",
+                      "sound": "/m/",
+                      "image": "/media/first2/first2-m.png"
+                    },
+                    {
+                      "id": "t",
+                      "letter": "ת",
+                      "sound": "/t/",
+                      "image": "/media/first2/first2-t.png"
+                    },
+                    {
+                      "id": "n",
+                      "letter": "נ",
+                      "sound": "/n/",
+                      "image": "/media/first2/first2-n.png"
+                    }
+                  ],
+                  "feedback": "Reveal the four individual sound buttons and compare one at a time. This is self-check, not automatic pronunciation scoring.",
+                  "id": "MNTL-A2.apply.say-four",
+                  "kind": "self-check"
+                }
+              },
+              {
+                "id": "MNTL-A2.continue",
+                "type": "complete",
+                "title": "Continue",
+                "stage": "Continue",
+                "html": "<p>You can now connect four printed letters to their sounds. Next, you will see how Hebrew arranges them and what happens to מ and נ at the end of a word.</p>"
+              }
+            ],
+            "order": [
+              "MNTL-A2.learn.mem-nun",
+              "MNTL-A2.learn.pair-retrieve",
+              "MNTL-A2.learn.typing",
+              "MNTL-A2.check.tav",
+              "MNTL-A2.apply.four-sounds",
+              "MNTL-A2.apply.mem",
+              "MNTL-A2.apply.lamed",
+              "MNTL-A2.apply.say-four",
+              "MNTL-A2.continue"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "memoryFeedbackTransition": {
+    "retiredActivityIds": [
+      "MEMORY-A2.embedded.what-changed"
+    ],
+    "retiredTopLevelPageIds": [
+      "MEMORY-A2.learn.return"
+    ],
+    "movedActivity": {
+      "id": "MEMORY-A2.embedded.number-return",
+      "fromPageId": "MEMORY-A2.learn.return",
+      "toPageId": "MEMORY-A2.learn.meaning",
+      "placement": "inline optional section"
+    },
+    "progressRemapped": false,
+    "history": "content/first2/history/revision5.json",
+    "strategy": "Revision-pinned records retained; no historical response rekeying."
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "label": "after",
+  "mode": "minimal",
+  "lessonCount": 23,
+  "contentBytes": 26632089,
+  "totalMs": 10629.9968,
+  "phases": {
+    "studio/draft:serialize": 207.2592999999979,
+    "studio/draft:httpParse": 9416.5788
+  },
+  "methods": {
+    "snapshot": {
+      "calls": 2,
+      "ms": 594.3845999999994
+    },
+    "currentDraft": {
+      "calls": 2,
+      "ms": 3231.2749000000003
+    },
+    "expectDraft": {
+      "calls": 1,
+      "ms": 0.1889999999984866
+    },
+    "stage": {
+      "calls": 1,
+      "ms": 7246.994200000001
+    }
+  },
+  "exactFullDraftReadback": true,
+  "activeUnchanged": true,
+  "sourceReceiptBefore": {
+    "events": {
+      "rows": 0,
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kv": {
+      "rows": 8,
+      "hash": "cb52ffc7e810e7abc2665ed7908de03da2af39908af6d79e06a4a466928cda4b"
+    },
+    "learners": {
+      "rows": 3,
+      "hash": "253f04b9b1b698222682166b6d3bfffa83427a8eb1dcafea9a1ac9fbe9bf8dbf"
+    },
+    "media_aliases": {
+      "rows": 4,
+      "hash": "60b9901155828577654cdbc06a32f631accf102795fdf78e3a6ca6997a23c571"
+    },
+    "media_blobs": {
+      "rows": 5,
+      "hash": "83267f777bce21f3fa0492138522ea1f4b51ff69b35703396b1ce6615b75f98c"
+    },
+    "revisions": {
+      "rows": 6,
+      "hash": "e3018b342414914f810d5b2ebd400fde4eaddf6aca66ef2490cbbd20781f9dc9"
+    },
+    "sqlite_sequence": {
+      "rows": 1,
+      "hash": "f45b6fe64816ea859a69520f23ca367cd3bccd3f11d8a4ec911ca99d3c781059"
+    }
+  },
+  "sourceReceiptAfter": {
+    "events": {
+      "rows": 0,
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kv": {
+      "rows": 8,
+      "hash": "cb52ffc7e810e7abc2665ed7908de03da2af39908af6d79e06a4a466928cda4b"
+    },
+    "learners": {
+      "rows": 3,
+      "hash": "253f04b9b1b698222682166b6d3bfffa83427a8eb1dcafea9a1ac9fbe9bf8dbf"
+    },
+    "media_aliases": {
+      "rows": 4,
+      "hash": "60b9901155828577654cdbc06a32f631accf102795fdf78e3a6ca6997a23c571"
+    },
+    "media_blobs": {
+      "rows": 5,
+      "hash": "83267f777bce21f3fa0492138522ea1f4b51ff69b35703396b1ce6615b75f98c"
+    },
+    "revisions": {
+      "rows": 6,
+      "hash": "e3018b342414914f810d5b2ebd400fde4eaddf6aca66ef2490cbbd20781f9dc9"
+    },
+    "sqlite_sequence": {
+      "rows": 1,
+      "hash": "f45b6fe64816ea859a69520f23ca367cd3bccd3f11d8a4ec911ca99d3c781059"
+    }
+  },
+  "sourceUnchanged": true
+}

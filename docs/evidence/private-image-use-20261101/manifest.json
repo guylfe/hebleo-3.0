@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "recordedAt": "2026-11-01T09:04:37.514631+00:00",
+  "baseCommit": "ece6c085bd987a5c3fcb7899da68476c89eefb87",
+  "branch": "fix/classic-private-image-use-20261101",
+  "evidenceLevel": "source + actual loopback HTTP + JSDOM; no native Browser",
+  "syntheticOnly": true,
+  "productionTouched": false,
+  "installed": false,
+  "fullSuiteRun": false,
+  "syntaxCheck": "pass",
+  "focusedTests": {
+    "pass": 148,
+    "fail": 0,
+    "skipped": 0
+  },
+  "files": [
+    {
+      "path": "src/media-store.js",
+      "sha256": "bd4edac0dd386452289732e690547eef66d0e63f6e2e22702e59517d84ea4d84",
+      "bytes": 31511,
+      "sha256LF": "43e25524a3aee6b9342c31c5e77d994f4fa323038b57b51adbfb0c2c8272056e"
+    },
+    {
+      "path": "src/server.js",
+      "sha256": "8c162eeceb20d9552484ba094eaaeb6a2b167274dcf118a55e916d42a70a5f7c",
+      "bytes": 22601,
+      "sha256LF": "82f48a9bc4084af95712232038ce3c9998286236b16b1eacd1deb11e06a2a40d"
+    },
+    {
+      "path": "public/author/image-chooser.js",
+      "sha256": "38d4ca6079e859dd2f9ae6af65feb0ec55791cffdeeba7de1e2d41d1005423ae",
+      "bytes": 8213,
+      "sha256LF": "2836097a04ff5d0387eac086bfb645e0acc28b0f24ee89bb3aad0b1ee5f0ee2e"
+    },
+    {
+      "path": "test/private-image-use.test.js",
+      "sha256": "e704c4c8f436cc44cf042b86fb7fefcbb1fad68ee303aacf32782fd9ae977c18",
+      "bytes": 19208,
+      "sha256LF": "6633ccaf85c319e1f97618f0d59d1d405827cf2d697e66ae74a70e275b44dca3"
+    },
+    {
+      "path": "test/private-image-chooser.test.js",
+      "sha256": "8413c5dfa98869237cd6dcca9a39bf084d859001538501f1f61412dd02d8191a",
+      "bytes": 9649,
+      "sha256LF": "a964936f76a22e06ea49d2d279b619130013e093a90fd520488e9f154ec7db7e"
+    },
+    {
+      "path": "test-support/private-image-fixture.js",
+      "sha256": "37468926840c43d998a7f6166a625ed1b89012444cba4ceec1c77f1fb8bb7a0b",
+      "bytes": 2443,
+      "sha256LF": "bc905865a66c841199c82ef53eeab0a41d80e537b47d24cd40ef2238009c351b"
+    },
+    {
+      "path": "test/classic-editor.test.js",
+      "sha256": "29990caab10502cd9278e7ec660968d162357f11879028a032850238ebb63a12",
+      "bytes": 18452,
+      "sha256LF": "b1a959fdd64bf23cf6b1189cd69202e79eb3b318bdae2567e3dc684f5f03682a"
+    },
+    {
+      "path": "docs/adr/ADR-B06-private-image-use.md",
+      "sha256": "d5edbcabf6ed2cb047bfa1f4e0fc54e9fa243b0617da451b7f1fcb51ba4a959b",
+      "bytes": 6265,
+      "sha256LF": "4a5530128fb66a5d30bc02acabbbd5e2bac1251ccfd8e1e9804642aa0a9ffbe1"
+    },
+    {
+      "path": "docs/architecture/PRIVATE_IMAGE_USE_DELIVERY_20261101.md",
+      "sha256": "9a022ba614970cce401955bd826d74ff04cd7a4f972935af560fe7d170f3f4e8",
+      "bytes": 5881,
+      "sha256LF": "1e5d9f813d5fb8a65cdc94e458d7a6e85cdd160c236668c1ca9121db06affeb1"
+    },
+    {
+      "path": "docs/evidence/private-image-use-20261101/check.txt",
+      "sha256": "c471367c2a74215e5ffce9a3bf81a70c4fe7532faadc6f8b8adb5a7ace18787d",
+      "bytes": 2875,
+      "sha256LF": "3ceb59cd7498420a6163f389e27593680febf8cd887cc459e491c90abd511eef"
+    },
+    {
+      "path": "docs/evidence/private-image-use-20261101/tests.txt",
+      "sha256": "faa331bad26d993fc8cbb685c211f08b6b5b10fbe1d7b939bee99e90d1c29b62",
+      "bytes": 40983,
+      "sha256LF": "faa331bad26d993fc8cbb685c211f08b6b5b10fbe1d7b939bee99e90d1c29b62"
+    }
+  ],
+  "hashNote": "sha256 and bytes describe the tested worktree; sha256LF permits comparison after Git text line-ending conversion."
+}

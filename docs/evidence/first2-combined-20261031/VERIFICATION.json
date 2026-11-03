@@ -1,0 +1,51 @@
+{
+  "code": "03a3e9e613a4c92d1cf683627a1394c0e75c616c",
+  "runtime": "da530fae04632b58d0104f201278a9cfc5c79c52fd0a37044d3443282f494d80",
+  "candidate": {
+    "command": "npm run verify:candidate",
+    "passed": 938,
+    "failed": 0,
+    "exclusions": "Existing candidate audio filename/name exclusions; not unrestricted npm test"
+  },
+  "schema": {
+    "command": "npm test (schemas)",
+    "passed": 27,
+    "failed": 0
+  },
+  "runtimeContracts": {
+    "command": "npm run runtime -- --runtime .. (schemas)",
+    "passed": 9
+  },
+  "sourceParity": {
+    "command": "node scripts/verify-first2-parity.mjs",
+    "fields": 30,
+    "status": "PASS"
+  },
+  "migrationAndRestore": {
+    "receipt": "PRESERVATION_REHEARSAL.json",
+    "reader8To9MarkerOnly": true,
+    "restoreTwice": true,
+    "liveInstalled": false
+  },
+  "native": "BROWSER.md",
+  "strictStaticAudit": "Attempted; Python launcher unavailable; no PASS",
+  "privateRemote": {
+    "branch": "fix/first2-combined-20261031",
+    "verifiedHead": "03a3e9e613a4c92d1cf683627a1394c0e75c616c",
+    "isPrivate": true
+  },
+  "ci": {
+    "id": 41204103296,
+    "headSha": "03a3e9e613a4c92d1cf683627a1394c0e75c616c",
+    "statusAtRead": "in_progress",
+    "url": "https://github.com/guylfe/hebleo-3.0/actions/runs/41204103296"
+  },
+  "logSHA256": {
+    "release-candidate": "855b3bb51e82d098b6b1e01fb74f4bb81957da13d807921a0c6ff88cd38ea3f4",
+    "release-schema": "884b72247264487bcc2989da50dae96559d7eab7d0928dd49733104e8518ffdc",
+    "release-runtime": "8b31db72d9bd28884905be907d16537a0ab7da42c95dd10b4b1673f4de8d4571",
+    "premium-audit": "f551b2a4c861d1f76765c0196e724bfa47497e3a7034dbf9e9e6d433c557b39e"
+  },
+  "independentPreinstallReview": "requested next",
+  "guyAcceptance": "pending"
+}

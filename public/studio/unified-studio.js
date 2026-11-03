@@ -9,11 +9,8 @@ import {mountCurriculumEditor} from './curriculum-editor.js';
 import {validateContentIdentities} from '../content-identity.js';
 import {mountTextPagesEditor} from './text-pages-editor.js';
 
-export function prepareStudioContent(content){
- const next=structuredClone(content);
- next.lessons=next.lessons.map(l=>deriveLessonIndices(next,l));
- validateContentIdentities(next);validateCurriculum(next);for(const l of next.lessons)validateLessonComposition(next,l);return next;
-}
+export {prepareStudioContent} from './workspace.js';
+import {prepareStudioContent} from './workspace.js';
 export function moveComponent(lesson,id,target){
  const next=structuredClone(lesson),i=next.blocks.findIndex(b=>b.id===id);if(i<0)throw new Error('Component not found.');
  const [block]=next.blocks.splice(i,1);next.blocks.splice(Math.max(0,Math.min(next.blocks.length,target)),0,block);return next;
@@ -30,16 +27,17 @@ export function mountComponentDrag(host,{onMove,onStart=()=>{}}){
 }
 
 // One content snapshot, one CAS save. All sibling editors contribute patches before any save.
-export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expectedDraftToken=null,saveDraft,onSaved=()=>{},onLessonSelect=()=>{},onChanged=()=>{},getExerciseDependencies,getWorkspaceImpact,importWorkbook,newId=prefix=>prefix+'-'+crypto.randomUUID(),markdownDependencies}){
- let workspace=structuredClone(content),selected=lessonId||workspace.lessons[0]?.id,disposed=false,saving=false,dirty=false,children=[],exerciseMounts=[],wordId=workspace.words[0]?.id,wordOriginal=null,layout=false;
+export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expectedDraftToken=null,saveDraft,onSaved=()=>{},onLessonSelect=()=>{},onChanged=()=>{},getExerciseDependencies,getWorkspaceImpact,importWorkbook,newId=prefix=>prefix+'-'+crypto.randomUUID(),markdownDependencies,coordinator}){
+ let workspace=structuredClone(coordinator?.getContent()||content),selected=lessonId||workspace.lessons[0]?.id,disposed=false,saving=false,dirty=false,children=[],exerciseMounts=[],wordId=workspace.words[0]?.id,wordOriginal=null,layout=false;
  const dependencyRequests=new WeakMap(),saveWaiters=[];
- let textPageMounts=[];
+ let textPageMounts=[],stagingContent=null;
  const ctl=new host.ownerDocument.defaultView.AbortController(),doc=host.ownerDocument;
  const status=message=>{const el=host.querySelector('[data-unified-status]');if(el)el.textContent=message;};
- const touch=()=>{dirty=true;onChanged();host.querySelector('[data-unsaved-status]').textContent='Unsaved workspace edits. Save includes lesson, component, exercise and vocabulary edits.';};
+ const syncOwnerPins=()=>{if(coordinator){baseRevisionId=coordinator.baseRevisionId;expectedDraftToken=coordinator.expectedDraftToken;}};
+ const touch=()=>{dirty=true;coordinator?.touch();onChanged();host.querySelector('[data-unsaved-status]').textContent='Unsaved workspace edits. Save includes lesson, component, exercise and vocabulary edits.';};
  const clearChildren=()=>{children.splice(0).forEach(x=>typeof x==='function'?x():x.dispose());exerciseMounts=[];textPageMounts=[];};
  function lesson(){return workspace.lessons.find(l=>l.id===selected);}
- function collect(){
+ function collectFields(){
   // Metadata is in a separate form; authored exercise forms are never nested.
   const meta=host.querySelector('[data-lesson-metadata]');if(meta){const l=lesson();for(const name of ['title','estimatedMinutes'])if(meta.elements[name]?.dataset.dirty)l[name]=name==='estimatedMinutes'?Number(meta.elements[name].value):meta.elements[name].value;
    if(meta.elements.contentId?.dataset.dirty){const next=meta.elements.contentId.value.trim();if(l.contentId&&l.contentId!==next){l.contentAliases||=[];if(!l.contentAliases.some(a=>a.value===l.contentId&&a.namespace==='readable'))l.contentAliases.push({namespace:'readable',value:l.contentId});}if(next)l.contentId=next;else delete l.contentId;}
@@ -55,8 +53,8 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
     for(const key of Object.keys(word))if(!['id','pointed','unpointed','curated','english','notes'].includes(key))delete word[key];Object.assign(word,extra);
    }
   }
-  return structuredClone(workspace);
  }
+ function collect(){collectFields();return structuredClone(workspace);}
  function ensureProjection(){const index=workspace.lessons.findIndex(l=>l.id===selected);workspace.lessons[index]=projectLesson(workspace,workspace.lessons[index]);}
  function keyboard(){
   try{const c=collect(),k=keyboardForLesson(c,selected),warnings=introductionWarnings(c);host.querySelector('[data-keyboard-preview]').innerHTML='<p>Previously introduced: <bdi dir="rtl">'+e(k.knownKeys||'')+'</bdi></p><p>New in this lesson: <bdi dir="rtl">'+e(k.newKeys||'')+'</bdi></p><p>Available: <bdi dir="rtl">'+e(k.availableKeys||((k.knownKeys||'')+(k.newKeys||'')))+'</bdi></p>'+warnings.slice(0,50).map(w=>'<p>'+e(w)+'</p>').join('');}catch(err){status(err.message);}
@@ -73,7 +71,7 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
  async function dependencyNotice(el,id){
   const request=(dependencyRequests.get(el)||0)+1;dependencyRequests.set(el,request);const local=affectedLessons(id);el.textContent='Shared canonical exercise '+id+' · current workspace affected lessons: '+local.map(l=>l.title+' ('+l.id+')').join(', ')+'. Edits apply to every reference after deliberate publication.';
   if(!getExerciseDependencies){el.textContent+=' Server dependency counts are unavailable in this mount.';return;}
-  try{const result=await getExerciseDependencies({exerciseId:id,baseRevisionId,expectedDraftToken,signal:ctl.signal});if(disposed||!el.isConnected||dependencyRequests.get(el)!==request)return;
+  try{syncOwnerPins();const result=await getExerciseDependencies({exerciseId:id,baseRevisionId,expectedDraftToken,signal:ctl.signal});if(disposed||!el.isConnected||dependencyRequests.get(el)!==request)return;
    if(result?.exerciseId!==id||!Array.isArray(result.lessons)||result.lessons.some(l=>typeof l.id!=='string'||typeof l.title!=='string')||!Number.isInteger(result.lessonCount)||result.lessonCount!==result.lessons.length||!Number.isInteger(result.componentCount)||result.componentCount<0)throw new Error('Invalid dependency callback result.');
    el.textContent+=' Server scope: '+result.lessonCount+' lessons, '+result.componentCount+' component references: '+result.lessons.map(l=>l.title+' ('+l.id+')').join(', ')+' · active revision '+result.activeRevisionId+' · draft token '+(result.draftToken??'none')+'.';
   }catch(err){if(!disposed&&el.isConnected&&dependencyRequests.get(el)===request)el.textContent+=' Server dependencies could not be refreshed: '+err.message;}
@@ -112,7 +110,7 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
  }
  function collectAll(){
   for(const {block,editor} of textPageMounts){const value=editor.getValue();if(value)block.textPages=value;else delete block.textPages;}
-  collect();for(const row of host.querySelectorAll('[data-component-id]')){const b=lesson().blocks.find(x=>x.id===row.dataset.componentId);if(b?.type!=='explanation')continue;
+  collectFields();for(const row of host.querySelectorAll('[data-component-id]')){const b=lesson().blocks.find(x=>x.id===row.dataset.componentId);if(b?.type!=='explanation')continue;
    for(const name of ['video','interactions']){const el=row.querySelector('[name="'+name+'"]');if(el?.dataset.dirty){const value=JSON.parse(el.value);if(name==='video'&&value===null)delete b.video;else b[name]=value;}}
   }return structuredClone(workspace);
  }
@@ -139,14 +137,14 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
  else{for(const [el,was] of disabledState)if(el.isConnected)el.disabled=was;disabledState.clear();host.querySelectorAll('.CodeMirror').forEach(el=>el.CodeMirror?.setOption('readOnly',false));}}
  async function stage(){
   if(saving)throw new Error('The previous workspace save is still reloading.');
-  let next;try{const collected=collectAll();for(const exercise of collected.exercises)validateExerciseDraft(exercise,collected);next=prepareStudioContent(collected);}catch(err){if(err.exerciseId)focusExercise(err.exerciseId);status(err.message+' · All entered values retained.');throw err;}saving=true;lock(true);status('Saving every workspace edit and reloading the saved draft…');
-  try{if(getExerciseDependencies)await Promise.all(exerciseMounts.filter(({mount})=>Object.keys(mount.getEdits()).length).map(({id,container})=>dependencyNotice(container.parentElement.querySelector('[data-exercise-dependencies]'),id)));let reviewedDraftToken;
-   if(getWorkspaceImpact){const impact=await getWorkspaceImpact({baseRevisionId,expectedDraftToken,content:next});const notice=host.querySelector('[data-workspace-impact]');notice.textContent='Server-checked impact: '+impact.affectedLessons.map(l=>l.title+' ('+l.id+')').join(', ')+'. Shared edits apply to all listed references after deliberate publication.';notice.hidden=false;reviewedDraftToken=impact.candidateDraftToken;}
-
-   const result=await saveDraft({baseRevisionId,expectedDraftToken,content:next,...(reviewedDraftToken?{reviewedDraftToken}:{})});if(disposed)return result;
+  let next;try{const collected=collectAll();for(const exercise of collected.exercises)validateExerciseDraft(exercise,collected);next=coordinator?collected:prepareStudioContent(collected);}catch(err){if(err.exerciseId)focusExercise(err.exerciseId);status(err.message+' · All entered values retained.');throw err;}saving=true;lock(true);status('Saving every workspace edit…');
+  try{if(getExerciseDependencies)await Promise.all(exerciseMounts.filter(({mount})=>Object.keys(mount.getEdits()).length).map(({id,container})=>dependencyNotice(container.parentElement.querySelector('[data-exercise-dependencies]'),id)));
+   syncOwnerPins();
+   stagingContent=next;
+   const result=coordinator?await coordinator.save():await saveDraft({baseRevisionId,expectedDraftToken,content:next});if(disposed)return result;
    workspace=structuredClone(next);expectedDraftToken=result?.draftToken??expectedDraftToken;dirty=false;status('Draft saved. Publish separately.');await onSaved(result,next);if(!disposed){renderLesson();renderWord();curriculum.refresh();host.querySelector('[data-unsaved-status]').textContent='All workspace edits saved to the private draft.';status('Draft saved. Publish separately.');}return result;
   }catch(err){if(!disposed)status(draftSaveError(err)+' · All entered values retained.');throw err;}
-  finally{saving=false;if(!disposed)lock(false);saveWaiters.splice(0).forEach(resolve=>resolve());}
+  finally{stagingContent=null;saving=false;if(!disposed)lock(false);saveWaiters.splice(0).forEach(resolve=>resolve());}
  }
  host.innerHTML='<section class="card unified-studio"><div data-curriculum-editor></div><p data-unsaved-status role="status">Opening the workspace writes nothing. Changes are staged only by explicit Save.</p><p data-unified-status role="status"></p><p data-workspace-impact role="status" hidden></p><div data-lesson-workspace></div><details><summary>Author card presentation default</summary><form data-review-policy-form><label>Default flashcard front Nikkud<select data-review-policy><option value="full">With Nikkud</option><option value="curated">Authored Nikkud</option><option value="none">Without Nikkud</option></select></label><button type="submit">Save default & workspace edits</button></form></details><details class="studio-source-browser"><summary>Vocabulary source · search, tags and lesson filters</summary><div data-source-browser></div><div data-word-editor></div></details></section>';
  const curriculum=mountCurriculumEditor(host.querySelector('[data-curriculum-editor]'),{getContent:collectAll,getLessonOptions:()=>workspace.lessons,selectedLessonId:selected,newId:()=>newId('chapter'),onChange:next=>{workspace=next;touch();renderLesson();renderWord();},onLessonSelect:id=>{try{if(saving)throw new Error('The previous workspace save is still reloading.');if(!workspace.lessons.some(l=>l.id===id))throw new Error('Lesson not found in this workspace.');collectAll();selected=id;onLessonSelect(id);renderLesson();return true;}catch(err){status(err.message);return false;}}});
@@ -168,5 +166,6 @@ export function mountUnifiedStudio(host,{content,lessonId,baseRevisionId,expecte
  const block=type==='explanation'?{id,type,source:'inline',renderer:'text',text:'',options:{textDirection:'auto'}}:type==='vocabulary'?{id,type,source:'words',renderer:'vocabulary-table',selector:{mode:'lesson',lessonId:selected}}:{id,type,source:'exercises',renderer:'practice',role:b.matches('[data-add-check]')?'check':'apply',selector:{mode:'ids',ids:[]}};
  const index=b.matches('[data-add-check]')?next.blocks.findIndex(x=>x.id===b.dataset.addCheck)+1:next.blocks.length;next.blocks.splice(index,0,block);return next;});
  },{signal:ctl.signal});
- return {getContent:collectAll,save:stage,openLessonPicker:opener=>curriculum.openPicker(opener,()=>host.querySelector('[data-lesson-metadata] [name="title"]')?.focus()),whenIdle:()=>saving?new Promise(resolve=>saveWaiters.push(resolve)):Promise.resolve(),isDirty:()=>dirty||exerciseMounts.some(({mount})=>Object.keys(mount.getEdits()).length>0),dispose(){disposed=true;ctl.abort();clearChildren();curriculum.dispose();browser.dispose();host.replaceChildren();}};
+ const unregister=coordinator?.registerCollector(()=>{coordinator.replace(stagingContent||collectAll(),{changed:false});});
+ return {getContent:collectAll,save:stage,openLessonPicker:opener=>curriculum.openPicker(opener,()=>host.querySelector('[data-lesson-metadata] [name="title"]')?.focus()),whenIdle:()=>saving?new Promise(resolve=>saveWaiters.push(resolve)):Promise.resolve(),isDirty:()=>Boolean(coordinator?.dirty)||dirty||exerciseMounts.some(({mount})=>Object.keys(mount.getEdits()).length>0),dispose(){unregister?.();disposed=true;ctl.abort();clearChildren();curriculum.dispose();browser.dispose();host.replaceChildren();}};
 }

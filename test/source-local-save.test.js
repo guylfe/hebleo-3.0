@@ -16,13 +16,13 @@ async function pending(t,restored){
  const f=restored?fixture(t):original;if(restored)f.store.restore(original.store.backup());f.offline(true);return {f,previous,headers};
 }
 
-for(const restored of [false,true])test('RR-SRC-06 unrelated offline HTTP Save preserves pending source/header state '+(restored?'after restore':'before restore'),async t=>{
+for(const minimal of [false,true])for(const restored of [false,true])test('RR-SRC-06 unrelated offline HTTP Save preserves pending source/header state '+(restored?'after restore':'before restore')+(minimal?' minimal receipt':' default receipt'),async t=>{
  const {f,headers}=await pending(t,restored),store=f.store;
  const exercise=store.snapshot().exercises.find(e=>e.type==='typing'),word=store.snapshot().words.find(w=>w.id===exercise.wordId);
  store.attempt('learner-demo',{requestId:'synthetic-preserved-grade',exerciseId:exercise.id,lessonId:exercise.lessonId,revisionId:store.get('active'),answer:word.unpointed});
  const server=createServer(store,{sourceAuth:f.auth,sourceTransport:f.transport});await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(()=>new Promise(r=>server.close(r)));
  let acquisitions=0;f.transport.captureSource=async()=>{acquisitions++;throw Error('Local Save must not acquire source');};
- const origin='http://127.0.0.1:'+server.address().port,post=async(path,body)=>{const response=await fetch(origin+'/api/'+path,{method:'POST',headers:{'content-type':'application/json','x-demo-user':author},body:JSON.stringify(body)});return {status:response.status,body:await response.json()};};
+ const origin='http://127.0.0.1:'+server.address().port,post=async(path,body)=>{const response=await fetch(origin+'/api/'+path,{method:'POST',headers:{'content-type':'application/json','x-demo-user':author,...(minimal&&path==='studio/draft'?{Prefer:'return=minimal'}:{})},body:JSON.stringify(body)});return {status:response.status,body:await response.json()};};
  const draft=store.currentDraft(),content=copy(draft.content),sourceState=copy(server.sourceAuthoring.state()),active=store.get('active'),learners=store.db.prepare('SELECT * FROM learners ORDER BY id').all();
  content.lessons[0].title='Synthetic offline title preserved with pending schema';content.lessons[0].explanation+=' Synthetic sibling paragraph';content.exercises[0].prompt+=' Synthetic sibling prompt';content.words[0].notes='Synthetic unmapped sibling note';
  const input={baseRevisionId:active,expectedDraftToken:draft.draftToken,content},impact=await post('studio/impact',input);assert.equal(impact.status,200);

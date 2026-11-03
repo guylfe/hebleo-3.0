@@ -1,3 +1,8 @@
+import {SharedCards,validateSharedState,validateCardSettings,parseSharedCardId} from './shared-cards.js';
+import {AuthorReview,validateAuthorReview,relinkAuthorReview,mergeAuthorReview,authorReviewContents} from './author-review.js';
+import {canonicalJSON,contextHash} from './immutable-context.js';
+import {publicationScope,planLessonPublication,lessonReviewToken,rebaseDraftJSON,remainingLessonChanges} from './lesson-publication.js';
+import {serializeBackup} from '../public/backup-contract.js';
 import {projectSourceVocabulary} from '../public/source-vocabulary.js';
 import {projectExerciseVocabulary} from './exercise-vocabulary.js';
 import {validateExerciseVocabularyBindings, exerciseVocabularyReferenceIds, projectExerciseVocabularyBindings, withAnswerVocabularyBindings} from '../public/exercise-bindings.js';
@@ -22,15 +27,14 @@ import {prepareTextDraftImport} from './text-import.js';
 import { orderingTokens, orderingPrefixes, lessonSteps, stepExercises, targetedExercises, audioURL, lessonQuestionProgress, lessonPortions } from '../public/ux.js';
 
 // v2: revision-mapped backups; v3: component cursors; v4: shared discussions; v5: authored typing/context; v6: retained source authoring bundles.
-export const STORE_SCHEMA_VERSION = 8;
+export const STORE_SCHEMA_VERSION = 11;
 const backupFormats = ['hebleo-demo-backup-v1', 'hebleo-demo-backup-v2'];
 // Supported backup markers are checked before any restore write.
 // v1 predates the marker; v2 backups retain each supported historical contract.
-export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3,4,5,6,7,8] };
+export const RESTORABLE_SCHEMA_VERSIONS = { 'hebleo-demo-backup-v1': [undefined, 1, 2], 'hebleo-demo-backup-v2': [2,3,4,5,6,7,8,9,10,11] };
 export { DomainError, normalizeHebrew };
 const clone = value => JSON.parse(JSON.stringify(value));
 // Sorted-key JSON, so the same content always yields the same token whatever key order an import used.
-const canonicalJSON = value => Array.isArray(value) ? '[' + value.map(canonicalJSON).join(',') + ']' : value && typeof value === 'object' ? '{' + Object.keys(value).sort().filter(k => value[k] !== undefined).map(k => JSON.stringify(k) + ':' + canonicalJSON(value[k])).join(',') + '}' : JSON.stringify(value);
 // The token names one exact draft: every content field (unknown/source fields, provenance, approval, formatting, media refs) plus its base revision.
 export const draftTokenFor = (baseRevisionId, content) => 'dt1-' + createHash('sha256').update(canonicalJSON({ v: 1, baseRevisionId, content })).digest('hex');
 const text = (value, label, max = 4000) => { if (typeof value !== 'string' || !value.trim() || value.length > max) throw new DomainError('Invalid ' + label); return value; };
@@ -135,6 +139,8 @@ export function validateContent(content) {
       try{validateTextMetadata(l.draftTargets);}catch(error){throw new DomainError(error.message);}
       for(const target of l.draftTargets){if(typeof target.id!=='string'||target.wordId!==undefined&&!words.has(target.wordId))throw new DomainError('Invalid canonical target mapping.');}
     }
+    const extra=(v)=>{if(v!==undefined&&(typeof v!=='string'||v.length>100000))throw new DomainError('Invalid authored extra information; use text up to 100000 characters.');};
+    extra(l.extraInformation);for(const b of l.blocks||[]){extra(b.options?.extraInformation);for(const p of b.textPages?.pages||[])extra(p.extraInformation);}
     text(l.title, 'lesson title'); if (l.compositionVersion!==2 && (!l.video || l.explanation)) text(l.explanation, 'lesson explanation',100000);
     if(l.textDirection && !['auto','ltr','rtl'].includes(l.textDirection))throw new DomainError('Invalid lesson direction.');
     if(l.keyboard){for(const k of ['knownKeys','newKeys'])if(typeof l.keyboard[k]!=='string'||l.keyboard[k].length>100)throw new DomainError('Invalid keyboard highlights.');if([...l.keyboard.newKeys].some(k=>l.keyboard.knownKeys.includes(k)))throw new DomainError('Known and new key groups must be distinct.');for(const k of ['knownColor','newColor'])if(l.keyboard[k]&&!/^#[0-9a-f]{6}$/i.test(l.keyboard[k]))throw new DomainError('Invalid highlight color.');}
@@ -209,12 +215,28 @@ export class Store {
     if(version<7)this.transaction(()=>this.set('schema-version',7));
     // v8 adds separately keyed text-page responses. Existing records/snapshots are untouched.
     if(version<8)this.transaction(()=>this.set('schema-version',8));
+    // Reader 10 compacts legacy full contexts atomically with its marker. Reader 8
+    // databases without private review change only the marker; no namespace is added.
+    if(version<10)this.transaction(()=>{
+      const review=this.get('author-review');
+      if(review){
+        if(review.schemaVersion!==1)throw new DomainError('Legacy Store marker requires author review namespace 1.',409,'AUTHOR_REVIEW_READER_MISMATCH');
+        const carried=new Map(this.db.prepare('SELECT id,snapshot FROM revisions').all().map(r=>[r.id,JSON.parse(r.snapshot)]));
+        const compact=validateAuthorReview(review,{carried,validateContent,draftTokenFor,authorIds:users.filter(u=>u.canAuthor).map(u=>u.id)});
+        this.set('author-review',compact);
+      }
+      this.set('schema-version',10);
+    });
+    this.authorReview=new AuthorReview(this,draftTokenFor);
     this.media=new MediaStore(this);
+    if(version<11)this.set('schema-version',11);
+    this.shared=new SharedCards(this);
+    const shared=this.shared.state();if(shared)validateSharedState(shared,h=>this.media.blob(h));
     this.sourcePermit=Symbol('internal-source-commit');
   }
   transaction(fn) { const nested=(this.transactionDepth||0)>0,name='nested_'+(this.transactionDepth||0);this.db.exec(nested?'SAVEPOINT '+name:'BEGIN IMMEDIATE');this.transactionDepth=(this.transactionDepth||0)+1;try{const result=fn();if(result?.then)throw new DomainError('Database transactions must be synchronous.');this.db.exec(nested?'RELEASE '+name:'COMMIT');return result;}catch(e){this.db.exec(nested?'ROLLBACK TO '+name:'ROLLBACK');if(nested)this.db.exec('RELEASE '+name);throw e;}finally{this.transactionDepth--;} }
   get(key) { const row = this.db.prepare('SELECT value FROM kv WHERE key=?').get(key); return row ? JSON.parse(row.value) : null; }
-  set(key, value) { this.db.prepare('INSERT INTO kv(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run(key, JSON.stringify(value)); }
+  set(key, value) { if(key==='shared-cards')this.shared?.invalidate();this.db.prepare('INSERT INTO kv(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run(key, JSON.stringify(value)); }
   addRevision(content, reason) { const result = this.db.prepare('INSERT INTO revisions(snapshot,created_at,reason) VALUES(?,?,?)').run(JSON.stringify(content), new Date().toISOString(), reason); return Number(result.lastInsertRowid); }
   snapshot(revisionId = this.get('active')) { const row = this.db.prepare('SELECT snapshot FROM revisions WHERE id=?').get(Number(revisionId)); if (!row) throw new DomainError('Content revision not found.', 404); return JSON.parse(row.snapshot); }
   learner(userId) { if (!users.some(u => u.id === userId)) throw new DomainError('Unknown demo learner.', 404); const state = JSON.parse(this.db.prepare('SELECT state FROM learners WHERE id=?').get(userId).state); state.preferences = { ...preferenceDefaults, ...state.preferences }; state.resumes ||= {}; return state; }
@@ -233,9 +255,9 @@ export class Store {
   currentDraft() { const draft = this.get('draft'); return draft ? { ...draft, draftToken: draftTokenFor(draft.baseRevisionId, draft.content) } : null; }
   draftConflict(message, code = 'DRAFT_CONFLICT') { return new DomainError(message, code === 'DRAFT_TOKEN_REQUIRED' ? 400 : 409, code, { current: { draftToken: this.currentDraft()?.draftToken ?? null, activeRevisionId: this.get('active') } }); }
   // Callers name the draft they believe is current (null = none). Anything else is a conflict, never a silent overwrite.
-  expectDraft(token) {
+  expectDraft(token, draft = this.currentDraft()) {
     if (token !== null && (typeof token !== 'string' || !token)) throw this.draftConflict('Name the current draft token, or null when there is no draft.', 'DRAFT_TOKEN_REQUIRED');
-    if ((this.currentDraft()?.draftToken ?? null) !== token) throw this.draftConflict('The draft changed elsewhere. Reload before saving again.');
+    if ((draft?.draftToken ?? null) !== token) throw this.draftConflict('The draft changed elsewhere. Reload before saving again.');
   }
   expectBase(baseRevisionId, message = 'Published content changed. Refresh before editing.') { if (baseRevisionId !== this.get('active')) throw this.draftConflict(message, 'STALE_BASE'); }
   active() { return { revisionId: this.get('active'), content: this.snapshot(), draft: this.currentDraft(), history: this.db.prepare('SELECT id,created_at AS createdAt,reason FROM revisions ORDER BY id DESC').all() }; }
@@ -246,8 +268,8 @@ export class Store {
   }
   bootstrap(userId) {
     const content = this.snapshot(); const learner = this.learner(userId);
-    const due = Object.entries(learner.cards).filter(([, c]) => Date.parse(c.due) <= Date.now()).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
-    return { revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
+    const due = Object.entries(learner.cards).filter(([, c]) => Date.parse(c.due) <= Date.now()).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)||this.shared.word(wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
+    return { sharedCollection: this.shared.state()&&learner.purchasedCourses.includes('demo-foundations')?this.shared.collection(userId):null, revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
   }
   publicWord(word) {
     if(!word)return word;
@@ -308,7 +330,7 @@ export class Store {
     if (![1, 2, 3, 4].includes(input.rating)) throw new DomainError('Invalid review rating.');
     const state = this.learner(userId); const card = state.cards[input.wordId];
     if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
-    if (!card || !this.snapshot().words.some(w => w.id === input.wordId)) throw new DomainError('Review card not found.', 404);
+    if (!card || !this.snapshot().words.some(w => w.id === input.wordId) && !this.shared.word(input.wordId)) throw new DomainError('Review card not found.', 404);
     const requestId = id(input.requestId); const previous = this.get('review-' + userId + '-' + requestId);
     if (previous) { if (previous.wordId !== input.wordId || previous.rating !== input.rating) throw new DomainError('Conflicting review request ID.', 409); return { ...previous, duplicate: true }; }
     if (Object.hasOwn(input,'expectedCard') && canonicalJSON(input.expectedCard) !== canonicalJSON(card)) throw new DomainError('This card changed elsewhere. Refresh its review choices.',409,'REVIEW_CARD_CHANGED');
@@ -504,19 +526,19 @@ export class Store {
   }
   answerQuestion(userId,input) { this.requireAuthor(userId);const key='question-'+id(input.userId)+'-'+id(input.requestId),q=this.get(key);if(!q)throw new DomainError('Question not found.',404);q.answer=text(input.answer,'author answer',12000);q.status='answered';q.answeredAt=new Date().toISOString();this.set(key,q);return q; }
   resolveReport(userId, input) { this.requireAuthor(userId); const key = 'report-' + id(input.userId) + '-' + id(input.requestId); const r = this.get(key); if (!r) throw new DomainError('Report not found.',404); if (!['pending','reviewed'].includes(input.status)) throw new DomainError('Invalid report status.'); r.status = input.status; this.set(key,r); return r; }
-  enroll(userId, wordId) { if (!this.snapshot().words.some(w => w.id === wordId)) throw new DomainError('Word not found.', 404); const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403); if (!state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false }; this.saveLearner(userId, state); return state; }
+  enroll(userId, wordId) { if (!this.snapshot().words.some(w => w.id === wordId) && !this.shared.word(wordId)) throw new DomainError('Word not found.', 404); const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403); if (!state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false }; this.saveLearner(userId, state); return state; }
   lexicalMigrationPreview(input){
     const content=this.previewDraft(input.draftToken).content;
     if(!content.lexical)throw new DomainError('The saved draft has no lexical model.');
     const progress=this.db.prepare('SELECT id,state FROM learners').all().flatMap(row=>Object.entries(JSON.parse(row.state).cards).map(([wordId,state])=>({learnerId:row.id,wordId,cardId:wordId,...state})));
     return previewProgressMigration({content:content.lexical,mappings:input.mappings||[],progress});
   }
-  stage(input,sourcePermit) {
+  stage(input,sourcePermit,{returnMinimal=false}={}) {
     if(this.get('source-state')?.sources && Object.keys(this.get('source-state').sources).length && !this.sourceAuthoring)throw new DomainError('Source authoring engine is required for source-bound edits.',409,'SOURCE_ENGINE_REQUIRED');
     if (!input || !Object.hasOwn(input, 'expectedDraftToken')) throw this.draftConflict('expectedDraftToken is required (null when creating a draft).', 'DRAFT_TOKEN_REQUIRED');
     return this.transaction(() => {
-      const active = this.get('active'); this.expectBase(input.baseRevisionId); this.expectDraft(input.expectedDraftToken);
-      const current = this.currentDraft();
+      const active = this.get('active'); this.expectBase(input.baseRevisionId);
+      const current = this.currentDraft();this.expectDraft(input.expectedDraftToken,current);
       let content = input.content ? clone(input.content) : clone(current?.content || this.snapshot());
       if (input.word) { const index = content.words.findIndex(w => w.id === input.word.id); if (index < 0) throw new DomainError('Word not found.', 404); content.words[index] = { ...content.words[index], ...input.word, id: content.words[index].id }; }
       validateContent(content);
@@ -531,7 +553,9 @@ export class Store {
       const mediaPlan=this.media.plan(content);if(!unchanged&&sourcePermit!==this.sourcePermit)this.sourceAuthoring?.validateLocalContent(content);
       // Re-staging the exact same draft writes nothing and keeps its token and stagedAt.
       if (!unchanged) {this.media.persistPlan(mediaPlan);if(sourcePermit!==this.sourcePermit)this.sourceAuthoring?.onLocalStage(content,draftToken);this.set('draft', { baseRevisionId: active, content, stagedAt: new Date().toISOString() });}
-      return { ...this.preview(), draftToken, baseRevisionId: active, unchanged,mediaWarnings:mediaPlan.warnings };
+      // Minimal is an explicit response preference, never a partial-write path.
+      // Validation, CAS, source hooks and media planning above are identical.
+      return { ...(returnMinimal?{}:this.preview()), draftToken, baseRevisionId: active, unchanged,mediaWarnings:mediaPlan.warnings };
     });
   }
   exerciseDependencies(input) {
@@ -602,6 +626,71 @@ export class Store {
     const issues=textPublicationIssues(content);
     if(issues.length)throw new DomainError('Adapted text drafts require human wording, vocabulary and source review before publication or release activation.',409,'TEXT_DRAFT_REVIEW_REQUIRED',{issues});
   }
+  // Called only inside the transaction used by review/commit. All mutable pins,
+  // eligibility and dependency scope are read again, never trusted from the client.
+  planSavedLessonPublication(scope) {
+    this.expectBase(scope.baseRevisionId);this.expectDraft(scope.expectedDraftToken);
+    const draft=this.currentDraft();
+    if(!draft || draft.baseRevisionId!==scope.baseRevisionId)throw this.draftConflict('A current saved draft is required.','STALE_BASE');
+    const active=this.snapshot(),plan=planLessonPublication(active,draft.content,scope),candidate=plan.candidate;
+    for(const dependency of plan.requiredDependencies){
+      const ids=new Set();
+      for(const content of [active,draft.content]){
+        if(dependency.kind==='exercises'){
+          for(const lesson of content.lessons)if(exerciseInLesson(content,lesson.id,dependency.id))ids.add(lesson.id);
+        }else{
+          for(const id of this.dependencies(dependency.id,content).lessons)ids.add(id);
+          // Prepared ordering trays also consume preceding lessons' taught words.
+          const ordered=orderedLessons(content);
+          for(let i=0;i<ordered.length;i++)if(ordered.slice(Math.max(0,i-2),i+1).some(l=>l.wordIds.includes(dependency.id))&&content.exercises.some(e=>e.type==='ordering'&&exerciseInLesson(content,ordered[i].id,e.id)))ids.add(ordered[i].id);
+        }
+      }
+      dependency.potentiallyAffectedPublishedLessons=active.lessons.filter(l=>ids.has(l.id)).map(l=>l.id);
+    }
+    const sourceState=this.get('source-state'),mediaState=this.get('media-state');
+    if(sourceState?.draftBinding || sourceState?.authorBundle || Object.keys(sourceState?.sources||{}).length)plan.blockers.push({code:'SOURCE_PUBLICATION_REQUIRED',id:scope.lessonId,path:'source-state',reason:'Source-bound work requires the exact source freshness and approval publication path.',action:'Use the reviewed source publication workflow.'});
+    const check=(path,fn,code)=>{try{return fn();}catch(error){if(!(error instanceof DomainError)&&!code)throw error;plan.blockers.push({code:code||error.code,id:scope.lessonId,path,reason:error.message,action:'Resolve the publication blocker before reviewing again.'});return null;}};
+    check('content',()=>validateContent(candidate));
+    check('identity',()=>assertContentIdentityTransition(active,candidate),'CONTENT_IDENTITY_CONFLICT');
+    check('lexical',()=>assertLexicalTransition(active,candidate));
+    check('lessons',()=>this.assertTextPublicationEligible(candidate));
+    check('media',()=>this.media.checkPublication(candidate));
+    const mediaPlan=check('media',()=>this.media.plan(candidate,{strict:true}));
+    let changes=[],affectedLessons=[];
+    // Impact projection needs a valid candidate. Invalid candidates remain reviewable
+    // through typed blockers and requiredDependencies without partial writes.
+    if(!plan.blockers.length){({changes,affectedLessons}=this.preview({content:candidate}));}
+    const remaining=remainingLessonChanges(candidate,draft.content);
+    const publishedContentHash=contextHash(candidate);
+    const eligibility={sourceState:contextHash(sourceState),mediaState:contextHash(mediaState),media:(mediaPlan?.entries||[]).map(({path,sha256,mimeType,byteLength})=>({path,sha256,mimeType,byteLength}))};
+    const review={scope:'lesson',lessonId:scope.lessonId,baseRevisionId:scope.baseRevisionId,expectedDraftToken:scope.expectedDraftToken,canPublish:plan.blockers.length===0,noChanges:plan.blockers.length===0&&changes.length===0,blockers:plan.blockers,requiredDependencies:plan.requiredDependencies,includedDependencies:plan.includedDependencies,changes,affectedPublishedLessons:affectedLessons.filter(id=>active.lessons.some(l=>l.id===id)),remainingSavedChanges:remaining,publishedContentHash};
+    review.reviewToken=lessonReviewToken({...review,eligibility});
+    return {review,candidate,mediaPlan,draft};
+  }
+  reviewLessonPublication(input) {
+    const scope=publicationScope(input);
+    return this.transaction(()=>this.planSavedLessonPublication(scope).review);
+  }
+  rebaseSavedDraft(baseRevisionId,revisionId) {
+    const raw=this.db.prepare("SELECT value FROM kv WHERE key='draft'").get()?.value;
+    this.db.prepare("UPDATE kv SET value=? WHERE key='draft'").run(rebaseDraftJSON(raw,baseRevisionId,revisionId));
+  }
+  publishLesson(input) {
+    const scope=publicationScope(input,{commit:true});
+    return this.transaction(()=>{
+      const {review,candidate,mediaPlan}=this.planSavedLessonPublication(scope);
+      if(review.reviewToken!==input.reviewToken)throw this.draftConflict('Publication scope or eligibility changed. Review again.','LESSON_REVIEW_CHANGED');
+      if(!review.canPublish)throw new DomainError('Selected lesson publication is blocked.',409,'LESSON_PUBLICATION_BLOCKED',{blockers:review.blockers});
+      let revisionId=scope.baseRevisionId;
+      if(!review.noChanges){
+        this.media.persistPlan(mediaPlan);
+        revisionId=this.addRevision(candidate,'Published lesson '+scope.lessonId+'; dependencies '+(scope.includeDependencies.map(d=>d.kind+'/'+d.id).join(', ')||'none'));
+        this.set('active',revisionId);
+        this.rebaseSavedDraft(scope.baseRevisionId,revisionId);
+      }
+      return {revisionId,noChanges:review.noChanges,publication:{scope:'lesson',lessonId:scope.lessonId,fromBaseRevisionId:scope.baseRevisionId,consumedDraftToken:scope.expectedDraftToken,reviewToken:review.reviewToken,publishedContentHash:review.publishedContentHash,includedDependencies:review.includedDependencies,includedChanges:review.changes,affectedPublishedLessons:review.affectedPublishedLessons},workspace:{revisionId,content:candidate,draft:this.currentDraft()},remainingSavedChanges:review.remainingSavedChanges};
+    });
+  }
   publish(baseRevisionId, draftToken,sourcePermit) {
     if(this.get('source-state')?.draftBinding && sourcePermit!==this.sourcePermit)throw new DomainError('Source-backed drafts publish only through the reviewed source freshness and approval path.',409,'SOURCE_PUBLICATION_REQUIRED');
     if (typeof draftToken !== 'string' || !draftToken) throw this.draftConflict('Publishing needs the reviewed draft token.', 'DRAFT_TOKEN_REQUIRED');
@@ -662,8 +751,10 @@ export class Store {
     const sourceAuthoring=this.get('source-state');
     const referenced = [...this.db.prepare('SELECT id FROM revisions').all().map(r=>r.id),...Object.keys(sourceAuthoring?.revisions||{}).map(Number),activeRevisionId, draft?.baseRevisionId, ...learners.flatMap(({ state }) => [...state.attempts.map(a => a.revisionId), ...Object.values(state.resumes).map(p => p.revisionId),...(state.textPages||[]).map(p=>p.revisionId)]), ...questions.map(q => q.value.revisionId), ...reports.map(r => r.value.attempt?.revisionId)];
     const revisionSnapshots = [...new Set(referenced.filter(Number.isInteger))].sort((a, b) => a - b).map(revisionId => ({ revisionId, content: this.snapshot(revisionId) }));
-    return { format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),mediaRecovery:this.media.backup([...revisionSnapshots.map(r=>r.content),...(draft?[draft.content]:[])]),...(sourceAuthoring?{sourceAuthoring}: {}) };
+    const result={ sharedCards:structuredClone(this.shared.state()), format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),authorReview:this.authorReview.state(),mediaRecovery:this.media.backup([...revisionSnapshots.map(r=>r.content),...(draft?[draft.content]:[]),...this.authorReview.contexts()]),...(sourceAuthoring?{sourceAuthoring}: {}) };
+    this.serializeBackup(result);return result;
   }
+  serializeBackup(value){try{return serializeBackup(value);}catch(error){if(error.code==='BACKUP_TOO_LARGE')throw new DomainError(error.message,error.status,error.code);throw error;}}
   restore(input) {
     if (!backupFormats.includes(input?.format) || !Array.isArray(input.learners) || ![2,3].includes(input.learners.length) || new Set(input.learners.map(x => x?.id)).size !== input.learners.length || !['learner-demo','learner-core'].every(id=>input.learners.some(row=>row.id===id))) throw new DomainError('Invalid demo backup.');
     if (!RESTORABLE_SCHEMA_VERSIONS[input.format].includes(input.storeSchemaVersion)) throw new DomainError('This backup declares store schema ' + JSON.stringify(input.storeSchemaVersion ?? null) + '; this build restores ' + input.format + ' with schema ' + RESTORABLE_SCHEMA_VERSIONS[input.format].filter(Boolean).join(' or ') + '. Use a newer build.', 409);
@@ -680,11 +771,22 @@ export class Store {
       if (!carried.has(input.activeRevisionId) || JSON.stringify(carried.get(input.activeRevisionId)) !== JSON.stringify(input.content)) throw new DomainError('Backup active revision does not match its content.');
       if (input.draft != null) { if (typeof input.draft !== 'object' || input.draft.baseRevisionId !== input.activeRevisionId || typeof input.draft.stagedAt !== 'string') throw new DomainError('Invalid backup draft.'); validateContent(input.draft.content); }
     }
-    try{assertKnownTextIdentityRestore([...this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot)),this.currentDraft()?.content],[input.content,...sessions.map(s=>s.content),input.draft?.content]);}catch(error){throw new DomainError(error.message,409,'TEXT_IMPORT_IDENTITY_REQUIRED');}
-    assertKnownLexicalRestore(this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot)),[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[])]);
+    if(input.authorReview!==undefined&&input.storeSchemaVersion<9)throw new DomainError('Author review backups require Store reader 9.',409,'AUTHOR_REVIEW_READER_MISMATCH');
+    if(input.storeSchemaVersion>=9&&input.authorReview==null)throw new DomainError('Backup is missing its private author review namespace.');
+    if(input.authorReview?.schemaVersion===2&&input.storeSchemaVersion<10||input.storeSchemaVersion>=10&&input.authorReview?.schemaVersion!==2)throw new DomainError('Compact author review requires Store reader 10 and namespace 2.',409,'AUTHOR_REVIEW_READER_MISMATCH');
+    if(input.storeSchemaVersion>=11&&!Object.hasOwn(input,'sharedCards')||input.storeSchemaVersion<11&&input.sharedCards!=null)throw new DomainError('Shared namespace requires reader 11.',409);
+    if(this.shared.state()&&!input.sharedCards)throw new DomainError('Restore would drop the shared namespace. Use a shared-aware backup.',409);
+    const restoredAuthorReview=validateAuthorReview(input.authorReview,{carried,validateContent,draftTokenFor,authorIds:users.filter(u=>u.canAuthor).map(u=>u.id)});
+    const restoredContexts=authorReviewContents(restoredAuthorReview,id=>carried.get(id),draftTokenFor),existingContexts=this.authorReview.contexts();
+    const known=this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot));
+    const incoming=[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[]),...restoredContexts];
+    try{assertKnownTextIdentityRestore([...known,this.currentDraft()?.content,...existingContexts],incoming);}catch(error){throw new DomainError(error.message,409,'TEXT_IMPORT_IDENTITY_REQUIRED');}
+    assertKnownLexicalRestore([...known,...existingContexts],incoming);
+    mergeAuthorReview(this.authorReview.state(),restoredAuthorReview);
     const restoredSource=validateSourceState(input.sourceAuthoring??null,carried,input.draft,input.content);
     if(input.mediaRecovery!==undefined&&!(Number.isInteger(input.storeSchemaVersion)&&input.storeSchemaVersion>=7))throw new DomainError('Media-bearing backups require Store/backup reader 7.',409,'MEDIA_READER_MISMATCH');
-    const restoredMedia=this.media.validateBackup(input.mediaRecovery??null,[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[])],{required:input.storeSchemaVersion>=7});
+    const restoredMedia=this.media.preserveForRestore(this.media.validateBackup(input.mediaRecovery??null,incoming,{required:input.storeSchemaVersion>=7}),[...known,...existingContexts]);
+    const restoredShared=validateSharedState(input.sharedCards??null,h=>restoredMedia.blobs.find(b=>b.sha256===h));
     // A link holds only if its exact carried revision agrees with every reference, as normal writes require: the lesson exists, the exercise belongs to that lesson, an optional word exists.
     // v2 must carry every link and rejects any disagreement. v1 history that does not hold becomes an explicit legacy link with its grade; nothing is repaired or regraded.
     const linked = record => { const c = carried.get(record.revisionId); return Boolean(c) && c.lessons.some(l => l.id === record.lessonId) && (!record.exerciseId || c.exercises.some(e => e.id === record.exerciseId && (e.lessonId===record.lessonId || exerciseInLesson(c,record.lessonId,e.id)))) && (!record.wordId || c.words.some(w => w.id === record.wordId)); };
@@ -720,6 +822,8 @@ export class Store {
       if (new Set(s.attempts.map(a => a.requestId)).size !== s.attempts.length) throw new DomainError('Duplicate saved attempt receipt.');
       for (const [key, note] of Object.entries(s.notes)) { id(key); if (typeof note !== 'string' || note.length > 2000) throw new DomainError('Invalid saved note.'); }
       validatePreferences(s.preferences);
+      if(s.sharedCardSettings!==undefined)validateCardSettings(s.sharedCardSettings);
+      for(const cardId of Object.keys(s.cards).filter(k=>k.startsWith('sc-'))){const key=parseSharedCardId(cardId);if(!key||!restoredShared?.raw.notes.some(n=>n.id===key.sourceId))throw new DomainError('Orphan shared card schedule.');}
       if(s.textPages!==undefined){
         if(input.storeSchemaVersion<8)throw new DomainError('Text response backups require Store reader 8.',409,'TEXT_READER_MISMATCH');
         if(!Array.isArray(s.textPages)||s.textPages.length>2000||new Set(s.textPages.map(r=>JSON.stringify([r.lessonId,r.componentId,r.revisionId]))).size!==s.textPages.length)throw new DomainError('Invalid text response history.');
@@ -739,11 +843,26 @@ export class Store {
     }
     return this.transaction(() => {
       const ids = new Map(); let revisionId;
-      if (v2) { for (const s of [...sessions].sort((a, b) => a.revisionId - b.revisionId)) ids.set(s.revisionId, this.addRevision(s.content, s.revisionId === input.activeRevisionId ? 'Restored local demo backup' : 'Restored backup revision ' + s.revisionId)); revisionId = ids.get(input.activeRevisionId); }
+      if (v2) {
+        // Consume identical snapshots in ascending ID order on both sides.
+        // New rows append at the end of their bucket, so restoring the SAME
+        // backup again keeps the mapping even when content has duplicate rows.
+        // A same-ID preference would change that mapping after the first append.
+        const existing=this.db.prepare('SELECT id,snapshot FROM revisions ORDER BY id').all().map(r=>({id:r.id,hash:contextHash(JSON.parse(r.snapshot))}));
+        const incoming=[...sessions].sort((a,b)=>a.revisionId-b.revisionId).map(s=>({...s,hash:contextHash(s.content)})),used=new Set();
+        for(const s of incoming){
+          const match=existing.find(r=>!used.has(r.id)&&r.hash===s.hash);
+          const dest=match?.id??this.addRevision(s.content,s.revisionId===input.activeRevisionId?'Restored local demo backup':'Restored backup revision '+s.revisionId);
+          ids.set(s.revisionId,dest);used.add(dest);
+        }
+        revisionId=ids.get(input.activeRevisionId);
+      }
       else { revisionId = this.addRevision(input.content, 'Restored local demo backup'); for (const s of sessions) ids.set(s.revisionId, this.addRevision(s.content, 'Restored pinned lesson session')); }
       // Attempts, resumes, questions and reports move together, so a resumed result still points at the attempt graded in that same revision.
       const relink = record => { if (!record || record.revisionId == null) return; if (linked(record)) record.revisionId = ids.get(record.revisionId); else { record.legacyRevisionId = record.revisionId; record.revisionId = null; } };
+      this.set('author-review',mergeAuthorReview(this.authorReview.state(),relinkAuthorReview(restoredAuthorReview,ids,draftTokenFor,id=>carried.get(id))));
       this.media.restore(restoredMedia);
+      this.set('shared-cards',restoredShared);
       this.set('active', revisionId); this.set('draft', v2 && input.draft ? { ...clone(input.draft), baseRevisionId: revisionId } : null);
       for (const row of input.learners) { const state = clone(row.state); state.attempts.forEach(relink); Object.values(state.resumes || {}).forEach(relink);(state.textPages||[]).forEach(relink); this.saveLearner(row.id, state); }
       this.db.exec("DELETE FROM events; DELETE FROM kv WHERE key LIKE 'review-%' OR key LIKE 'report-%' OR key LIKE 'question-%';");

@@ -19,9 +19,9 @@ function dom(t,html=''){const d=new JSDOM(html,{url:'http://127.0.0.1',runScript
 
 test('Markdown renders headings, tables, images, formatting and authored disclosure while removing executable markup',t=>{
   const d=dom(t),render=createLessonRenderer(marked,createPurifier(d.window),d.window.document);
-  d.window.document.body.innerHTML=render('## Heading\n\n**Bold** and *italic* ~~old~~\n\n| A | B |\n| --- | --- |\n| 1 | 2 |\n\n![Diagram](https://example.com/diagram.png)\n\n<details><summary>More</summary>Answer</details>\n\n<script>alert(1)</script><img src="x" onerror="alert(1)"><a href="javascript:alert(1)">bad</a><iframe src="https://example.com"></iframe><p style="position:fixed">Text</p>');
+  d.window.document.body.innerHTML=render('## Heading\n\n**Bold** and *italic* ~~old~~\n\n| A | B |\n| --- | --- |\n| 1 | 2 |\n\n![Diagram](/media/synthetic/diagram.png)\n\n<details><summary>More</summary>Answer</details>\n\n<script>alert(1)</script><img src="x" onerror="alert(1)"><a href="javascript:alert(1)">bad</a><iframe src="https://example.com"></iframe><p style="position:fixed">Text</p>');
   const doc=d.window.document;for(const tag of ['h2','strong','em','del','table','img','details','summary'])assert.ok(doc.querySelector(tag),tag);
-  assert.equal(doc.querySelector('img').src,'https://example.com/diagram.png');
+  assert.equal(doc.querySelector('img').getAttribute('src'),'/media/synthetic/diagram.png');
   assert.equal(doc.querySelectorAll('script,iframe,[onerror],[style]').length,0);assert.equal(doc.querySelector('a').hasAttribute('href'),false);
 });
 test('Hebrew lesson phrases remain in source order inside a single directional isolate',t=>{

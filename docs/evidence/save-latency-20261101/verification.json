@@ -1,0 +1,59 @@
+{
+  "codeCommit": "6499ec6d70738563d2a73554cbad5211ce4db406",
+  "base": "c5c62e76efbf167f8a155d888623f8dd8749190a",
+  "commands": [
+    {
+      "command": "npm run verify:candidate",
+      "syntax": "PASS",
+      "tests": 1027,
+      "passed": 1027,
+      "failed": 0,
+      "files": 88,
+      "exclusions": "configured audio filename and audio/speed/playback test-name exclusions"
+    },
+    {
+      "command": "npm test --prefix schemas",
+      "passed": 27,
+      "failed": 0
+    },
+    {
+      "command": "npm run runtime --prefix schemas -- --runtime ..",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "command": "npm run build:editor",
+      "result": "PASS",
+      "semanticVendorDiff": false
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS"
+    }
+  ],
+  "native": {
+    "origin": "http://127.0.0.1:63476",
+    "codeCommit": "6499ec6d70738563d2a73554cbad5211ce4db406",
+    "runtimeSha256": "54bf97567139a43529643f0e47abba877c56b9eac776593652ab85e49795dd8e",
+    "backendSha256": "74dc64579a1c5cf5ac5bdf1f03ba10d9b91bdd8c5102489b46ae9c2c4d1a48cb",
+    "browserAttempt": "Mounted Browser refused: another thread is using this browser",
+    "browserActions": 0,
+    "nativeSaveTiming": null,
+    "sourceUnchanged": true,
+    "disposableUnchanged": true,
+    "serverGracefullyStopped": true
+  },
+  "rawLocalLogs": [
+    "tmp-candidate-final.log",
+    "tmp-schema.log",
+    "tmp-runtime.log",
+    "tmp-build.log",
+    "tmp-adapted.log",
+    "tmp-app-focused.log",
+    "tmp-minimal-verified.log"
+  ],
+  "remoteReadback": "6499ec6d70738563d2a73554cbad5211ce4db406 refs/heads/fix/save-latency-20261101",
+  "independentReview": "Pending",
+  "installed": false,
+  "liveDataChanged": false
+}

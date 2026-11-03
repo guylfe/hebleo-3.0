@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "oldReaderCommit": "43a40ca7181a2dea6ac23c1f6121f29b007f1e06",
+  "reader10DatabaseRejectedByReader9": 409,
+  "reader10BackupRejectedByReader9": 409,
+  "allRowsAndSequencesUnchanged": true
+}

@@ -1,3 +1,6 @@
+import {courseRailEdge,updateCourseToggle} from '../public/sidebar-toggle.js';
+import {createStudioWorkspace} from '../public/studio/workspace.js';
+import {mountInlineAuthor} from '../public/author/inline-author.js';
 import {mountMediaLibrary} from '../public/studio/media-library.js';
 import {mountSourceAuthoring} from '../public/studio/sources-editor.js';
 import {test} from 'node:test';
@@ -34,10 +37,10 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   if(author)w.localStorage.setItem('hebleo-demo-user','author-demo');
   if(navigationPrefs)w.localStorage.setItem('hebleo-navigation-'+(author?'author-demo':'learner-demo'),JSON.stringify(navigationPrefs));
   if(ownerKeyboard){w.scrollBy=()=>{};w.eval(readFileSync(process.env.HEBLEO_KEYBOARD_SOURCE || new URL('../public/keyboard-owner.js',import.meta.url),'utf8'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));}
-  Object.assign(w,ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountTextImport,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>({}),playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
+  Object.assign(w,{courseRailEdge,updateCourseToggle,createStudioWorkspace,mountInlineAuthor},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountTextImport,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>({}),playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   if(markdownDependencies)w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});
   const calls=[];
-  w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(options.body):null;calls.push(url.pathname);try{let value;
+  w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?JSON.parse(typeof options.body==='string'?options.body:new TextDecoder().decode(options.body)):null;calls.push(url.pathname);try{let value;
     if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
     if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
     else if(url.pathname==='/api/questions')value=input?store.askQuestion(user,input):store.questions(user);
@@ -64,6 +67,13 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+// The obsolete general Help control was removed at Guy's request. Keep the
+// delayed help regressions through the supported word-linked discussion entry.
+async function openLessonWordHelp(w,doc){
+ doc.querySelector('[data-action=step][data-value=vocabulary]').click();
+ await settled(()=>doc.querySelector('[data-action=lookup][data-value=w-ani]'));
+ doc.querySelector('[data-action=lookup][data-value=w-ani]').click();click(doc,'help-word');
+}
 const edit=(w,el,value)=>{assert.ok(el);el.value=value;el.dispatchEvent(new w.Event('input',{bubbles:true}));};
 const submit=(w,f)=>f.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
 const pause=()=>new Promise(r=>setTimeout(r,60));
@@ -81,12 +91,12 @@ test('QA-UXI13-01 stale concurrent draft refuses departure Save and retains raw 
  doc.querySelector('[data-departure-stay]').click();await settled(()=>!doc.querySelector('#studio-departure'));assert.equal(f.isConnected,true);
 });
 
-test('QA-UXI13-02 failed post-save reload does not silently publish or discard unsaved workspace',async t=>{
+test('QA-UXI13-02 lost post-commit draft receipt does not silently publish or discard unsaved workspace',async t=>{
  const {w,doc,store}=await app(t,{page:'studio',author:true,realHTTP:true});
  const f=doc.querySelector('[data-lesson-metadata] [name=title]');edit(w,f,'SYNTHETIC saved despite reload outage');
- const real=w.fetch;let failed=false;w.fetch=(p,o)=>p==='/api/studio'&&store.currentDraft()&&!failed?(failed=true,Promise.resolve({ok:false,status:503,json:async()=>({error:'SYNTHETIC post-save reload outage'})})):real(p,o);
+ const real=w.fetch;let failed=false;w.fetch=async(p,o)=>{const response=await real(p,o);if(p==='/api/studio/draft'&&!failed){failed=true;return {ok:false,status:503,json:async()=>({error:'SYNTHETIC draft receipt outage'})};}return response;};
  const active=store.get('active');nav(doc,'home').click();await settled(()=>doc.querySelector('#studio-departure'));doc.querySelector('[data-departure-save]').click();
- await settled(()=>/reload outage/.test(doc.querySelector('[data-departure-status]').textContent));
+ await settled(()=>/receipt outage/.test(doc.querySelector('[data-departure-status]').textContent));
  assert.equal(store.currentDraft().content.lessons[0].title,f.value);assert.equal(store.get('active'),active);assert.equal(w.location.hash,'#studio');assert.equal(f.isConnected,true);assert.equal(f.disabled,false);
  doc.querySelector('[data-departure-stay]').click();await settled(()=>!doc.querySelector('#studio-departure'));assert.equal(f.isConnected,true);
 });
@@ -94,7 +104,6 @@ test('QA-UXI13-02 failed post-save reload does not silently publish or discard u
 test('QA-UXI13-03 word and general comment contexts retain independent drafts with late failure',async t=>{
  const {w,doc,store}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true});
  const general=doc.querySelector('[data-lesson-comment]');edit(w,general.querySelector('textarea'),'SYNTHETIC general draft');general.querySelector('[name=anonymous]').checked=true;
- click(doc,'help');await settled(()=>doc.querySelector('#author-question-form'));assert.equal(doc.querySelector('#author-question-form textarea').value,'');edit(w,doc.querySelector('#author-question-form textarea'),'SYNTHETIC exercise-context draft');click(doc,'panel-close');
  nav(doc,'library').click();await settled(()=>doc.querySelector('[data-action=note-open]'));doc.querySelector('[data-action=note-open][data-value=w-ani]').click();click(doc,'help-word');await settled(()=>doc.querySelector('#author-question-form'));
  const f=doc.querySelector('#author-question-form');assert.equal(f.querySelector('textarea').value,'');edit(w,f.querySelector('textarea'),'SYNTHETIC word-only draft');
  const real=w.fetch;let release;w.fetch=(p,o)=>p==='/api/questions'&&o?.method==='POST'?new Promise(r=>release=()=>r({ok:false,status:503,json:async()=>({error:'SYNTHETIC word post failure'})})):real(p,o);
@@ -151,19 +160,19 @@ test('QA-UXI13-08 installed static routes original logo hash and source boundary
 test('QA-UXI13-09 late help callback after profile departure does not reopen old context on new owner',async t=>{
  const {w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true});const real=w.fetch;let release;
  w.fetch=(p,o)=>p==='/api/help'?new Promise(r=>release=async()=>r(await real(p,o))):real(p,o);
- click(doc,'help');await settled(()=>release);await profile(w,doc,'learner-core');assert.equal(w.location.hash,'#home');release();await pause();
+ await openLessonWordHelp(w,doc);await settled(()=>release);await profile(w,doc,'learner-core');assert.equal(w.location.hash,'#home');release();await pause();
  console.log('SYNTHETIC late-help observation',JSON.stringify({route:w.location.hash,profile:doc.querySelector('#demo-user').value,modalOwner:doc.querySelector('#author-question-form')?.dataset.commentOwner,context:doc.querySelector('#author-question-form')?.dataset.commentContext}));assert.equal(doc.querySelector('#context-panel'),null,'An obsolete help request must not open a modal after profile/route departure');
 });
 
 
-// Above: the complete independent QA harness is retained byte-for-byte from
+// Original independent QA provenance (general Help entry adapted above for the Oct31 removal):
 // qa-uxi13-20261013/source/test/qa-uxi13-independent.test.js at candidate 1669a10.
 // Below: Lead's bounded delayed-response lifecycle regressions, using only
 // fictional in-memory profiles and ephemeral loopback HTTP.
 function holdHelp(w) {
  const real=w.fetch,requests=[];
  w.fetch=(path,options)=>path==='/api/help'?new Promise(resolve=>requests.push({
-  owner:options.headers['x-demo-user'],context:JSON.parse(options.body),
+  owner:options.headers['x-demo-user'],context:JSON.parse(typeof options.body==='string'?options.body:new TextDecoder().decode(options.body)),
   release:async(error)=>{resolve(error?{ok:false,status:503,json:async()=>({error})}:await real(path,options));await pause();}
  })):real(path,options);
  return requests;
@@ -179,14 +188,14 @@ for(const outcome of ['success','error']) {
  const failure=outcome==='error'?'SYNTHETIC obsolete Help failure':undefined;
  test('UXI13 Help '+outcome+' ignores same-profile route departure',async t=>{
   const {w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true}),requests=holdHelp(w);
-  click(doc,'help');await settled(()=>requests.length===1);nav(doc,'home').click();await settled(()=>w.location.hash==='#home');
+  await openLessonWordHelp(w,doc);await settled(()=>requests.length===1);nav(doc,'home').click();await settled(()=>w.location.hash==='#home');
   await requests[0].release(failure);assert.equal(doc.querySelector('#context-panel'),null);assert.equal(doc.querySelector('#toast').textContent,'');
  });
  test('UXI13 Help '+outcome+' stays obsolete after returning to the same route and profile',async t=>{
   const {w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true}),requests=holdHelp(w);
-  click(doc,'help');await settled(()=>requests.length===1);nav(doc,'home').click();await settled(()=>w.location.hash==='#home');
+  await openLessonWordHelp(w,doc);await settled(()=>requests.length===1);nav(doc,'home').click();await settled(()=>w.location.hash==='#home');
   nav(doc,'course').click();await settled(()=>doc.querySelector('[data-action=lesson][data-value=lesson-1]'));doc.querySelector('[data-action=lesson][data-value=lesson-1]').click();await settled(()=>doc.querySelector('[data-lesson-comment]'));
-  assert.equal(w.location.hash,'#lesson/lesson-1/learn');await requests[0].release(failure);assert.equal(doc.querySelector('#context-panel'),null);assert.equal(doc.querySelector('#toast').textContent,'');
+  assert.equal(w.location.hash,'#lesson/lesson-1/vocabulary');await requests[0].release(failure);assert.equal(doc.querySelector('#context-panel'),null);assert.equal(doc.querySelector('#toast').textContent,'');
  });
  test('UXI13 Help '+outcome+' preserves a newer word panel and private draft',async t=>{
   const {w,doc}=await app(t,{page:'library',realHTTP:true}),requests=holdHelp(w);
@@ -210,26 +219,26 @@ for(const outcome of ['success','error']) {
  });
  test('UXI13 Help '+outcome+' ignores departure to a different lesson portion',async t=>{
   const {w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true}),requests=holdHelp(w);
-  click(doc,'help');await settled(()=>requests.length===1);doc.querySelector('[data-action=step][data-value=apply]').click();await settled(()=>w.location.hash==='#lesson/lesson-1/apply');
+  await openLessonWordHelp(w,doc);await settled(()=>requests.length===1);doc.querySelector('[data-action=step][data-value=apply]').click();await settled(()=>w.location.hash==='#lesson/lesson-1/apply');
   await requests[0].release(failure);assert.equal(doc.querySelector('#context-panel'),null);assert.equal(doc.querySelector('#toast').textContent,'');
  });
  test('UXI13 Help '+outcome+' ignores replacement of the lesson session on the same route',async t=>{
   const {w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true}),requests=holdHelp(w);
-  click(doc,'help');await settled(()=>requests.length===1);const previous=doc.querySelector('[data-lesson-comment]');
+  await openLessonWordHelp(w,doc);await settled(()=>requests.length===1);const previous=doc.querySelector('[data-lesson-comment]');
   w.dispatchEvent(new w.PopStateEvent('popstate'));await settled(()=>doc.querySelector('[data-lesson-comment]')!==previous);
-  assert.equal(w.location.hash,'#lesson/lesson-1/learn');await requests[0].release(failure);assert.equal(doc.querySelector('#context-panel'),null);assert.equal(doc.querySelector('#toast').textContent,'');
+  assert.equal(w.location.hash,'#lesson/lesson-1/vocabulary');await requests[0].release(failure);assert.equal(doc.querySelector('#context-panel'),null);assert.equal(doc.querySelector('#toast').textContent,'');
  });
  test('UXI13 Help '+outcome+' cannot interrupt another profile new panel or draft',async t=>{
   const {w,doc}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true}),requests=holdHelp(w);
-  click(doc,'help');await settled(()=>requests.length===1);await profile(w,doc,'learner-core');nav(doc,'library').click();await settled(()=>doc.querySelector('[data-action=note-open][data-value=w-ani]'));
+  await openLessonWordHelp(w,doc);await settled(()=>requests.length===1);await profile(w,doc,'learner-core');nav(doc,'library').click();await settled(()=>doc.querySelector('[data-action=note-open][data-value=w-ani]'));
   doc.querySelector('[data-action=note-open][data-value=w-ani]').click();const field=doc.querySelector('#personal-note');draft(w,field);
   await requests[0].release(failure);expectDraft(doc,field);assert.equal(field.dataset.noteOwner,'learner-core');assert.equal(doc.querySelector('#toast').textContent,'');
  });
 }
 test('UXI13 Help valid same-context success keeps owner/context and retained comment draft',async t=>{
- const {w,doc,store}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true});click(doc,'help');await settled(()=>doc.querySelector('#author-question-form'));
+ const {w,doc,store}=await app(t,{page:'lesson/lesson-1/learn',realHTTP:true});await openLessonWordHelp(w,doc);await settled(()=>doc.querySelector('#author-question-form'));
  draft(w,doc.querySelector('#author-question-form textarea'));click(doc,'panel-close');const requests=holdHelp(w),before=structuredClone(store.learner('learner-demo'));
- click(doc,'help');await settled(()=>requests.length===1);assert.equal(requests[0].owner,'learner-demo');await requests[0].release();await settled(()=>doc.querySelector('#author-question-form'));
+ await openLessonWordHelp(w,doc);await settled(()=>requests.length===1);assert.equal(requests[0].owner,'learner-demo');await requests[0].release();await settled(()=>doc.querySelector('#author-question-form'));
  const form=doc.querySelector('#author-question-form');assert.equal(form.dataset.commentOwner,'learner-demo');assert.deepEqual(JSON.parse(form.dataset.commentContext),requests[0].context);assert.equal(form.querySelector('textarea').value,syntheticDraft);
  assert.equal(doc.querySelectorAll('#context-panel').length,1);assert.deepEqual(store.learner('learner-demo'),before);assert.equal(store.questions('author-demo').length,0);
 });

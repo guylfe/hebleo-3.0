@@ -1,0 +1,50 @@
+{
+  "surface": "mounted Browser",
+  "date": "2026-10-31",
+  "candidateOnly": true,
+  "measurement": {
+    "continueDisabled": false,
+    "dock": {
+      "bottom": 707,
+      "height": 71.390625,
+      "left": 252.5,
+      "right": 1012.5,
+      "top": 635.609375,
+      "width": 760,
+      "x": 252.5,
+      "y": 635.609375
+    },
+    "midpointHitsSummary": true,
+    "open": false,
+    "path": "saved Preview page6 -> Back -> page5",
+    "scrollTop": 260,
+    "summary": {
+      "bottom": 436.28125,
+      "height": 36,
+      "left": 273.5,
+      "right": 991.5,
+      "top": 400.28125,
+      "width": 718,
+      "x": 273.5,
+      "y": 400.28125
+    },
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "otherObservedChecks": [
+    "Real native heading replacement via Ctrl+A and typing; saved through Save draft",
+    "Real native paragraph typing and Bold formatting, followed by saved learner Preview",
+    "Native selected paragraph opened readable exact-quote target; synthetic private note saved",
+    "Native summary click opened optional comparison; Continue stayed enabled",
+    "Focused comparison input retained 0704 with bottom363.453125 < dockTop635.609375",
+    "After toolbar reserve fix, single native Save click changed Saving to Draft saved"
+  ],
+  "limits": [
+    "Not independent QA/UX",
+    "No narrow viewport, 200 percent zoom, screen reader, physical touch/APK or Guy acceptance",
+    "No full-data recovery rerun",
+    "No live teaching draft or installation"
+  ]
+}

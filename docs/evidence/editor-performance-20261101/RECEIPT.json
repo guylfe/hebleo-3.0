@@ -1,0 +1,112 @@
+{
+  "codeCommit": "00325085c0cd6b5dc25af0e07aa63081a1b3d634",
+  "baseline": "4433f2e0e8bcd319edd3189ba9016f8d9fa7ff12",
+  "branch": "feature/mature-lesson-editor-20261101",
+  "node": "v24.19.0",
+  "sourceOnly": true,
+  "liveEdits": false,
+  "installation": false,
+  "publication": false,
+  "nativeBrowser": false,
+  "independentReview": false,
+  "tests": {
+    "focused": {
+      "command": "npm run test:editor",
+      "pass": 36,
+      "fail": 0,
+      "finalCode": true
+    },
+    "appFocused": {
+      "command": "node --test --test-name-pattern='DESIGN13 single course rail|F14 unsaved inline' test/app.test.js",
+      "pass": 2,
+      "fail": 0
+    },
+    "broader": {
+      "command": "npm run test:candidate",
+      "pass": 971,
+      "fail": 1,
+      "total": 972,
+      "note": "Earlier branch run before final narrow paste/IME/long-source additions. The single failure is the required Lead-owned static module route integration (404 /author/image-chooser.js); no final full-suite pass is claimed."
+    },
+    "syntax": {
+      "command": "npm run check",
+      "exit": 0
+    },
+    "vendorBuild": {
+      "command": "npm run build:editor",
+      "exit": 0
+    },
+    "rootAudit": {
+      "command": "npm audit --json",
+      "vulnerabilities": 0
+    },
+    "premiumAudit": {
+      "exit": 1,
+      "unchangedDelegatedButtonFindings": 3
+    }
+  },
+  "performance": [
+    {
+      "syntheticSourceCodeUnits": 114020,
+      "operations": 60,
+      "sanitizesDuringInput": 0,
+      "transactionMs": {
+        "p50": 0.39249999999992724,
+        "p95": 0.7745999999997366,
+        "max": 1.1068999999997686
+      },
+      "measurement": "JSDOM only, not native input-to-paint"
+    },
+    {
+      "syntheticLessons": 23,
+      "operations": 120,
+      "workspaceReads": 0,
+      "workspaceClones": 0,
+      "notifications": 1,
+      "transactionMs": {
+        "p50": 0.23219999999855645,
+        "p95": 0.676500000001397,
+        "max": 2.274599999998827
+      },
+      "measurement": "JSDOM transaction+selection, not native input-to-paint"
+    }
+  ],
+  "requiredStaticRoutes": [
+    "/sidebar-toggle.js",
+    "/author/standard-editor.js",
+    "/author/source-adapter.js",
+    "/author/image-chooser.js",
+    "/author/vendor/prosemirror.js",
+    "/studio/media-picker.js"
+  ],
+  "changedFiles": [
+    "DESIGN.md",
+    "UX-CONTRACT.md",
+    "docs/EDITOR_PERFORMANCE_DELIVERY_20261101.md",
+    "docs/FEATURE_CHECKLIST.md",
+    "package-lock.json",
+    "package.json",
+    "public/app.js",
+    "public/author/author.css",
+    "public/author/image-chooser.js",
+    "public/author/inline-author.js",
+    "public/author/rendered-source.js",
+    "public/author/source-adapter.js",
+    "public/author/standard-editor.js",
+    "public/author/vendor/LICENSES.txt",
+    "public/author/vendor/prosemirror.js",
+    "public/sidebar-toggle.js",
+    "public/studio/markdown-editor.js",
+    "public/studio/workspace.js",
+    "scripts/build-editor-vendor.mjs",
+    "scripts/editor-vendor-entry.js",
+    "test/app.test.js",
+    "test/mature-editor.test.js",
+    "test/qa-actions-independent.test.js",
+    "test/qa-first20-independent.test.js",
+    "test/qa-uxi13-independent.test.js",
+    "test/rendered-author.test.js",
+    "test/ux-actions-independent.test.js"
+  ],
+  "nextOwner": "Lead: integrate six routes/publication callback, then disposable matching-data native QA/UX. No install authorized in this assignment."
+}

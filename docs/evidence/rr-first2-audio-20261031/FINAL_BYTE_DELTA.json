@@ -1,0 +1,9 @@
+{
+  "revision": "73e242e717c630976fd2d040396d4d8d5fcd3127",
+  "runtimeSha256": "08e689b369f2129b94e6d6d0016c4a0c6dadc4936b680cd30d26b69a20bb2249",
+  "backendSha256": "c5f13d8d3e9190bb620874e9a239a454a96d90074dc711ead64aa7f54a38edc1",
+  "changedExecutableFiles": [
+    "public/text-contract.js"
+  ],
+  "unchangedExecutableFiles": 112
+}

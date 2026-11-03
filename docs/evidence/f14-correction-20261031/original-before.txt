@@ -1,0 +1,51 @@
+✔ independent HTTP CAS: disjoint reconcile preserves full source; overlapping reconcile rejects with all local values retained (328.8093ms)
+✔ independent actual app dirty guard retains unsent private comment; Stay and failed save leave all inputs (1294.4938ms)
+✖ REGRESSION: departure Save must retire inline raw buffers so later Studio changes survive inline reentry (3881.1023ms)
+✖ REGRESSION: unknown JSON metadata including an own __proto__ field survives disjoint reconciliation (37.482ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9652.5657
+
+✖ failing tests:
+
+test at baseline\independent.test.mjs:32:1
+✖ REGRESSION: departure Save must retire inline raw buffers so later Studio changes survive inline reentry (3881.1023ms)
+  AssertionError [ERR_ASSERTION]: An unchanged inline save must not overwrite the newer saved Studio source
+  + actual - expected
+
+  + '<p><b>SYNTHETIC first edit saved using departure</b></p>'
+  - '<p><em>SYNTHETIC later Studio edit</em></p>'
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/4d4e36bc-67d1-4c07-bcfb-e381d246b0b3/baseline/independent.test.mjs:43:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '<p><b>SYNTHETIC first edit saved using departure</b></p>',
+    expected: '<p><em>SYNTHETIC later Studio edit</em></p>',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at baseline\independent.test.mjs:46:1
+✖ REGRESSION: unknown JSON metadata including an own __proto__ field survives disjoint reconciliation (37.482ms)
+  AssertionError [ERR_ASSERTION]: A successful reconciled draft save must preserve the own JSON metadata field
+
+  false !== true
+
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/8c900356-50f6-4d41-bbb9-50c8abe09233/4d4e36bc-67d1-4c07-bcfb-e381d246b0b3/baseline/independent.test.mjs:50:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

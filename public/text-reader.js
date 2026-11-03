@@ -1,7 +1,8 @@
 // One text explanation reader for learner and disposable Studio Preview.
 // Authored HTML is rendered only through the host's safe renderLesson function.
 import {exerciseActionDock,mountExerciseDock} from './exercise-actions.js';
-import {textPageGatePassed,textGatesPassed} from './text-contract.js';
+import {textPageGatePassed,textGatesPassed,validateTextActivityVersion} from './text-contract.js';
+import {mountSourceActivities} from './source-activities.js';
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const hasTextPages = lesson => Boolean(lesson?.textPages?.pages?.length);
 export const textReaderSlot = () => '<div class="text-reader" data-text-reader></div>';
@@ -20,7 +21,9 @@ export function createTextTimer({now, schedule, cancel, onChange}) {
   return {play,stop,get phase(){return phase;},get visible(){return phase==='running'&&now()<deadline;}};
 }
 
-export function mountTextReader(host,{textPages,renderLesson,renderWord=()=>'',word=()=>null,renderMedia=()=>'',loadProgress,saveProgress,onState=()=>{},onGateChange=()=>{},initialState={},isCurrent=()=>true,clock,dock=true}={}) {
+export function mountTextReader(host,{textPages,renderLesson,renderWord=()=>'',word=()=>null,renderMedia=()=>'',loadProgress,saveProgress,onState=()=>{},onGateChange=()=>{},onContinue,initialState={},isCurrent=()=>true,clock,dock=true}={}) {
+  validateTextActivityVersion(textPages);
+  if(textPages.activityVersion===1)return mountSourceActivities(host,{textPages,renderLesson,loadProgress,saveProgress,onState,onGateChange,onContinue,initialState,isCurrent,clock,dock});
   const doc=host.ownerDocument,view=doc.defaultView;
   const pages=ordered(textPages),responses=Object.assign(Object.create(null),structuredClone(initialState.responses||{}));
   let index=Math.max(0,pages.findIndex(p=>p.id===initialState.cursorPageId)),disposed=false,edited=false,untimed=false,queue=Promise.resolve(),failed=new Map(),saveVersion=0;

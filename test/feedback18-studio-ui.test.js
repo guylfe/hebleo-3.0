@@ -118,7 +118,7 @@ test('preview sanitizer rejects form/style/svg payloads while retaining pointed 
   const {dom}=harness(t),preview=createMarkdownPreview(dom.window.document,marked,DOMPurify(dom.window));
   const result=preview('<svg onload="bad()"></svg><form><input></form><style>body{display:none}</style><p style="color:red" dir="rtl">אֲנִי</p>');
   const box=dom.window.document.createElement('div');box.innerHTML=result;
-  assert.equal(box.querySelector('svg,form,input,style,[style],[onload]'),null);assert.match(box.textContent,/אֲנִי/);
+  assert.equal(box.querySelector('svg,form,input,style,[onload]'),null);assert.match(box.textContent,/אֲנִי/);assert.equal(box.querySelector('[style]').getAttribute('style'),'color:red');
 });
 
 test('vendored editor bytes match locked installed distribution and have license notices',async()=>{

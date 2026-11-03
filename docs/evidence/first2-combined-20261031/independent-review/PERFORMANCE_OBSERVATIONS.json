@@ -1,0 +1,24 @@
+{
+  "method": "Reviewer observations of process StartTime and full-data/receipt.json LastWriteTime after newly completed roundtrips. These include HTTP export, restore, complete state comparisons and original request retries, not isolated request or UI latency.",
+  "timezone": "Israel time UTC+02:00",
+  "processStartedAt": "2026-10-31T16:49:45+02:00",
+  "completedRoundtripsObserved": [
+    {
+      "pass": 1,
+      "receiptLastWriteTime": "2026-10-31T16:58:42.0912833+02:00"
+    },
+    {
+      "pass": 2,
+      "receiptLastWriteTime": "2026-10-31T17:01:08.0827616+02:00"
+    },
+    {
+      "pass": 3,
+      "receiptLastWriteTime": "2026-10-31T17:03:34.1229322+02:00"
+    }
+  ],
+  "sampledWorkingSetBytes": 3797561344,
+  "workingSetIsPeakMeasurement": false,
+  "concurrency": "Candidate/focused/schema and reviewer fixture tests also ran earlier in this review; the reported roundtrip completion intervals followed completion of the candidate run. No performance benchmark isolation is claimed.",
+  "completedAt": "2026-10-31T17:14:42.1759722+02:00",
+  "approximateElapsedSeconds": 1497
+}

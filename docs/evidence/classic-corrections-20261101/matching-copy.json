@@ -1,0 +1,43 @@
+{
+  "baselineUnchanged": "8f2dac78cc94520e67fb74336efc8cae8e4df1509a1cd3f6ee3d903851c5e5dc",
+  "disposableFile": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\4d4e36bc-67d1-4c07-bcfb-e381d246b0b3\\hebleo-classic\\tmp\\classic-http-sIWjBf\\copy.sqlite",
+  "lessonCount": 23,
+  "originalContentBytes": 26632089,
+  "savedContentBytes": 26632134,
+  "saveMs": 3537.5829999999987,
+  "sourceProjectionExact": true,
+  "otherLessonsExact": true,
+  "activeExact": true,
+  "learnersExact": true,
+  "allNonKVTablesExact": true,
+  "privateHistoryMediaSettingsExact": true,
+  "savedPreviewExact": true,
+  "httpReloadExact": true,
+  "assets": {
+    "safe-format.js": {
+      "bytes": 3366,
+      "sha256": "753ca0d990bceb86037a195de17eb231c0f97339d002c8aa35b73e9bbe45ddd7"
+    },
+    "author/classic-source.js": {
+      "bytes": 8027,
+      "sha256": "8708c9900c1e8a397457684acf2a9401c8b5169a676064f4353314ca6ff31475"
+    },
+    "author/standard-editor.js": {
+      "bytes": 12341,
+      "sha256": "9ec02dab4fa71428c3c46f09db4c76c6b9f62b5386e7afe986ea452f22d6c89e"
+    },
+    "author/legacy-editor.js": {
+      "bytes": 3679,
+      "sha256": "1ccefdd2026b07133dc5114983d225a9b9bbbaa9c1ecdfea53a40d55bcd4010f"
+    },
+    "author/vendor/jodit.min.js": {
+      "bytes": 792340,
+      "sha256": "a3bccf84a49c203f41c9ac954359c0cfa4fa549d2e8874a5df71650321db0644"
+    },
+    "author/vendor/jodit.min.css": {
+      "bytes": 165760,
+      "sha256": "d9ba17faee055dfae5f2aad40e3b6c3d154aa8084a187dbbc33d15114531070f"
+    }
+  },
+  "limits": "JSDOM supplied component plus loopback HTTP, not trusted native UI or input-to-paint. No installation/publication."
+}

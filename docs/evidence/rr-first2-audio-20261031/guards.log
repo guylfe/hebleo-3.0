@@ -1,0 +1,56 @@
+{
+  "guards": [
+    {
+      "name": "extra learner",
+      "rejected": true,
+      "wroteNothing": true,
+      "error": "Refuse database containing additional learner records."
+    },
+    {
+      "name": "wrong slot ID",
+      "rejected": true,
+      "wroteNothing": true,
+      "error": "Refuse unexpected replacement slots."
+    },
+    {
+      "name": "imported identity",
+      "rejected": true,
+      "wroteNothing": true,
+      "error": "Never replace source-imported identities."
+    },
+    {
+      "name": "shared placeholder exercise",
+      "rejected": true,
+      "wroteNothing": true,
+      "error": "A placeholder exercise is shared; resolve explicitly."
+    },
+    {
+      "name": "install already applied",
+      "rejected": true,
+      "wroteNothing": true,
+      "error": "This bounded install already ran; use a separately reviewed revision update."
+    }
+  ],
+  "validation": [
+    {
+      "name": "letter gallery missing items",
+      "accepted": false,
+      "error": "Invalid activity items."
+    },
+    {
+      "name": "date connection missing descriptions",
+      "accepted": false,
+      "error": "Invalid activity date descriptions."
+    },
+    {
+      "name": "matching duplicate item IDs",
+      "accepted": false,
+      "error": "Invalid or duplicate activity item identity."
+    },
+    {
+      "name": "unsupported activity version",
+      "accepted": false,
+      "error": "Unsupported text activity version."
+    }
+  ]
+}

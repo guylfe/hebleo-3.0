@@ -1,0 +1,17 @@
+{
+  "codeCommit": "699e9951202e6368647ce77dbba7cfb895579810",
+  "port": 63471,
+  "pid": 4940,
+  "surface": "mounted Browser",
+  "observed": {
+    "advancedOpen": false,
+    "asset": "/author/rendered-source.js",
+    "assetStatus": 200,
+    "editableLeaves": 4,
+    "noteLabel": "open · current · Synthetic Browser heading",
+    "sha256": "4e5930e9d1c9a86f0af18393aa9a270da0a881bc33084f009f7b91b5c53bd7b8"
+  },
+  "localAssetSha256": "4e5930e9d1c9a86f0af18393aa9a270da0a881bc33084f009f7b91b5c53bd7b8",
+  "localMatch": true,
+  "diagnosticLimit": "GET /api/build returned404 because this disposable launcher does not enable developerAudit. Runtime identity uses the exact local commit, launcher PID and matching served/local asset bytes; no claim of a successful build endpoint."
+}

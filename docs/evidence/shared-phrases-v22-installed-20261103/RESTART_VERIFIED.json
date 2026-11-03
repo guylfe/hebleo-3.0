@@ -1,0 +1,9 @@
+{
+  "revision": "6484ec7ea4d6ecbf2923a7eb7eb62ae95dfed3a9",
+  "runtimeSha256": "49dc760907c59082dad06ae734c54c723b29022d378a5f29f09632800bd3e829",
+  "logicalSHA256": "dc81014bdefd4d31d2b11b7dec33441e595e537c958cb4ac6437c34a05664ad4",
+  "sameBuildRestartPreservedAllRows": true,
+  "allLearnerRowsPreserved": true,
+  "progressReset": false,
+  "oldDatabaseUnchanged": true
+}

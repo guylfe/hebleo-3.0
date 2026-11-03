@@ -47,6 +47,10 @@ components:
 ---
 # Hebleo selected application design
 
+## In-lesson prose editor candidate, 1 November 2026
+
+Guy's 1 November classic-editor correction supersedes the earlier custom toolbar and Markdown-primary variant. All normal in-lesson prose, including Markdown, uses complete Jodit core 4.18.12 with its supplied light-grey compact icon toolbar, dropdowns, separators and two configured rows. The existing 760px lesson measure, palette, application fonts and sidebar next-action behavior remain. Scoped CSS isolates the component controls from application button/select sizing. Advanced exact source remains secondary; Studio's other Markdown surfaces retain EasyMDE. This is an isolated uninstalled candidate; the mounted Browser was occupied by another thread, so native visual/layout/tooltip/keyboard/paste/IME, zoom and assistive-technology review remain pending. See docs/CLASSIC_EDITOR_DELIVERY_20261101.md.
+
 Oct20 source browsing extends the existing lexical category tables, typography, rich renderer and Note/Examples treatment. Original provenance uses a native full-width disclosure with every exact authored field available. Collection buttons distinguish source from learned vocabulary. Palette, fonts, token ownership, contained horizontal scrolling and natural document height remain as specified below.
 
 ## Overview
@@ -78,6 +82,8 @@ Read-only teaching prose is unboxed. Cards, editable fields and controlled dialo
 Radius8px for controls, Cards and dialogs. At least42px header controls. Small contextual support controls retain intrinsic widths. Nikkud and pedagogical keyboard highlights retain their source-purpose shape and colors.
 
 ## Components
+
+Oct31 staged first-two feedback extends the existing blue primary dock with one current commitment/Continue owner. A thin native progress bar and seconds label share the actual exposure deadline; no animation clock or new palette is introduced. Conditional Extra information uses the existing native-dialog visual language, with one shared learner/Preview owner in learner-view.js. Empty authored extras produce no control. See UX-CONTRACT.md for behavior and the staged delivery receipt for evidence; the installed demo is unchanged.
 
 Studio Choose lesson uses the existing native confirmation-dialog surface as an all-draft navigation dialog, owned by curriculum-editor.js. Search and ordinary full-width lesson buttons retain native focus/activation; readable IDs and authored titles wrap within the viewport. Existing ink/paper/accent/selection/line/radius tokens supply contrast and current state. It does not change chapter order, automatically save edits or publish content. Selected lesson content continues in the existing paginated authoring and saved-draft Preview owners.
 
@@ -128,3 +134,15 @@ Oct25 TXT-NATIVE-01 correction keeps the same action dock, tokens and keyboard. 
 Guy approved the exercise-actions proposal including Leo’s Accepted answer(s) wording. Shared exercise-actions.js owns the fixed action slot and measured reading reserve in learner and saved-draft rehearsal. The dock aligns to the current question’s real width, follows rail/viewport changes and sits above the Hebrew/visual-viewport keyboard boundary; Preview constrains it to its dialog. Existing refinement.css tokens, 760px reading measure and Hebrew rich rendering remain canonical. Support uses quiet 44px targets. This explicitly supersedes the earlier static exercise-footer arrangement only for questions.
 
 The result displays Correct/Incorrect and a conditional existing Explanation trigger. Answer controls remain mounted and read-only after grading. Check is removed; save/recovery/continuation occupies the same primary slot. Vocabulary occurrence identity and pointer/Escape/media ownership stay shared. Native geometry, 200% zoom and Guy acceptance remain Pending: mounted Edge inspection returned browser_consent_required. No headless or simulated geometry is native evidence.
+
+## Oct31 inline author review
+
+FIRST2-F14 uses the existing 760px learner reading measure, native selects/dialogs and current refinement tokens. The rendered heading and verified paragraph/list leaves are the default edit canvas; raw HTML/Markdown and technical context are collapsed in Advanced source. A stable contextual Bold/Italic slot and quiet focus outline retain the established typography and source emphasis. Save draft is primary; saved Preview is secondary; Review changes opens existing Studio review. This supersedes the earlier separate-source-form interaction following Guy’s direct feedback. Private review panels stay in document flow; narrow author controls wrap without overlaying learner navigation. `public/author/author.css` owns only this bounded author variant. Shared palette, typography, headers and keyboard remain canonical. See docs/INLINE_AUTHOR_REVIEW.md for the coordinator, permission and state contract.
+
+## Combined first-two feedback — 31 October 2026
+
+The current integration retains the existing palette, 760px measure, typography, dock, native disclosures and rich renderer. The date demonstration uses sixteen persistent monospaced digit nodes in one reserved 27ch coordinate frame, with horizontal transforms, separate separators and delayed event labels. Numbered principle summaries stay in normal document flow and share existing focus styling. No global visual redesign or extra framework is introduced. Source lists and emphasis follow the reconciled curriculum pack. Exact identities, tests and remaining native/acceptance limits live in docs/evidence/first2-combined-20261031/CANDIDATE.md.
+
+1 November editor/publication integration: retain existing reading measure and blue tokens. Full mature formatting is visible at the prose surface; wrapping controls remain keyboard reachable. Save/Preview/Review & publish are separate. The scope dialog uses the existing modal pattern and lists included changes, required dependencies, downstream published effects and private remainder before final confirmation. A small version/history refresh preserves the editor instance, caret/history and comment composer. Sidebar glyph/title/name describe the next click at the measured physical edge. Independent/native evidence and Guy acceptance remain pending at this implementation checkpoint.
+
+1 November UX01 Save responsiveness rework preserves all current tokens, typography, layout and mature editor controls. Existing inline status announces Saving before asynchronous preparation. The same editor and Undo history remain mounted, with text available for newer edits during private Save; publication retains its existing separate lock and confirmation. No visual redesign.

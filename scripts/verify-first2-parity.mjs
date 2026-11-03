@@ -1,0 +1,25 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {JSDOM} from 'jsdom';
+import assert from 'node:assert/strict';
+const dir=new URL('../docs/curriculum/memory-feedback-20261031/',import.meta.url);
+const read=name=>JSON.parse(readFileSync(new URL(name,dir),'utf8'));
+const receipt=read('MASTER_UPDATE_VERIFIED.json'),source=read('REVISION.json');
+const pack=JSON.parse(readFileSync(new URL('../content/first2/lessons.json',import.meta.url),'utf8'));
+const pages=pack.lessons[0].blocks[0].textPages.pages;
+const projection=s=>{const d=new JSDOM(s),t=d.window.document.body.textContent;d.window.close();return t;};
+const at=path=>path.replaceAll('[','.').replaceAll(']','').split('.').reduce((v,k)=>v[k],source);
+assert.equal(receipt.status,'PASS');assert.equal(pack.sourceRevision,receipt.currentGoogleDocRevision);
+const fields=receipt.exactParagraphSourceHashMapping.map(m=>{
+ let text=at(m.field);if(typeof text==='object')text=text.title+' '+text.text;
+ assert.equal(text,m.text);assert.equal(createHash('sha256').update(text).digest('hex'),m.sha256);
+ const page=pages[Number(m.field.match(/^pages\[(\d+)\]/)[1])],wire=JSON.stringify(page);
+ if(m.field.includes('.copy.'))assert.ok(projection(page.html+(page.activity?.intro||'')).includes(text),m.field);
+ else if(m.field.includes('dateContext'))assert.ok(projection(page.activity.after).includes(text),m.field);
+ else if(m.field.includes('principles['))assert.ok(page.activity.principles.some(p=>p.title+' '+p.text===text),m.field);
+ else assert.ok(wire.includes(JSON.stringify(text).slice(1,-1)),m.field);
+ return {field:m.field,sha256:m.sha256,exact:true};
+});
+assert.equal(fields.length,30);
+const result={status:'PASS',masterRevision:receipt.currentGoogleDocRevision,fields};
+writeFileSync(new URL('RUNTIME_PARITY.json',dir),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({status:'PASS',fields:fields.length,masterRevision:result.masterRevision}));

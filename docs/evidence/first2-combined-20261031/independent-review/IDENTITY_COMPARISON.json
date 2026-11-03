@@ -1,0 +1,11 @@
+{
+  "reviewedCommit": "021dc19ae0e9f7cb3b5cfb4afcc6984a5c7600b3",
+  "candidateRuntime": "4ac6c267b9c393aac27b42a71d2a81c0725e391df207099870159c8c3f99cbbd",
+  "leadRuntime": "3105779faa90e6ba5f6a51c13387f5c53f35547b3b68cbb7b6956af283727bc4",
+  "differentFiles": [
+    "public/refinement.css",
+    "scripts/revise-first2-feedback.mjs",
+    "scripts/verify-first2-parity.mjs"
+  ],
+  "nonLineEndings": []
+}

@@ -1,0 +1,70 @@
+{
+  "codeCommit": "68c3b022cc9eae5cab2584a79b95e6fb514d9d63",
+  "runtimeSha256": "c726a86bd304db87c2062d1bb4350fd5c42f1988a44b46fdfa02ee6674ad0e58",
+  "configuredCandidate": {
+    "passed": 911,
+    "failed": 0,
+    "files": 78,
+    "excludes": "existing audio filenames and audio/speed/playback test names"
+  },
+  "schemas": {
+    "passed": 27
+  },
+  "runtime": {
+    "passed": 9
+  },
+  "feedbackFocused": {
+    "passed": 11
+  },
+  "priorDockAndFirst2": {
+    "passed": 23
+  },
+  "helpLifecycle": {
+    "passed": 27
+  },
+  "live": {
+    "runtimeUnchanged": true,
+    "contentRevision": 5,
+    "unchangedTables": [
+      "events",
+      "kv",
+      "media_aliases",
+      "media_blobs",
+      "revisions",
+      "sqlite_sequence"
+    ],
+    "changedTables": [
+      "learners"
+    ],
+    "allTablesUnchanged": false,
+    "limit": "Initial normal Browser inspection and its unload can save fictional lesson position; no full learner-table equality claim. No live installation, reset, curriculum or source write."
+  },
+  "browser": {
+    "stagingURL": "http://127.0.0.1:50312/",
+    "stagingPID": 29936,
+    "sourceBackupReadOnly": true,
+    "timer": "actual pointer-started exposure at 8 seconds captured; recall after hide verified",
+    "exactRecall": "all16 digits with leading0 submitted; authored exact feedback observed",
+    "extras": "native shared component with labeled synthetic DOM fixture; Escape returned exact focus; fixture removed",
+    "finalComparison": {
+      "codeCommit": "68c3b022cc9eae5cab2584a79b95e6fb514d9d63",
+      "primaryActions": 1,
+      "comparisonInDock": true,
+      "outerContinue": false,
+      "limit": "Opening entry initially overlapped fixed surfaces at the automation click point; ordinary upward scroll260px made the pointer action succeed. No synthetic activation used."
+    }
+  },
+  "premiumStaticAudit": "not run: Python launcher could not start installed Python3.13",
+  "independentReview": false,
+  "guyAcceptance": "Pending",
+  "combinedFocused": {
+    "passed": 34
+  },
+  "ci": {
+    "conclusion": "success",
+    "databaseId": 41196281226,
+    "headSha": "68c3b022cc9eae5cab2584a79b95e6fb514d9d63",
+    "status": "completed",
+    "url": "https://github.com/guylfe/hebleo-3.0/actions/runs/41196281226"
+  }
+}

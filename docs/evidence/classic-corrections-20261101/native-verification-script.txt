@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync} from 'node:fs';
+import {DatabaseSync} from 'node:sqlite';
+import {databaseReceipt,openPreservedStore} from '../scripts/runtime-state.mjs';
+import {authorProjection} from '../src/author-review.js';
+const baseline='../classic-editor-before-20261101/candidate.sqlite',file='tmp/classic-corrections-native/candidate.sqlite',prepared=JSON.parse(readFileSync('tmp/classic-corrections-native/PREPARED.json'));
+const before=databaseReceipt(baseline);assert.equal(before.sha256,prepared.baselineReceipt);
+const db=new DatabaseSync(baseline,{readOnly:true}),get=key=>JSON.parse(db.prepare('SELECT value FROM kv WHERE key=?').get(key).value),old=get('draft'),oldLearners=db.prepare('SELECT * FROM learners ORDER BY id').all(),oldKV=db.prepare('SELECT * FROM kv ORDER BY key').all();db.close();
+const {store:s}=openPreservedStore(file);
+try{
+ const current=s.currentDraft(),loc=c=>c.lessons.find(l=>l.id===prepared.target.lessonId).blocks.find(b=>b.id===prepared.target.componentId).textPages.pages.find(p=>p.id===prepared.target.pageId),actual=loc(current.content);
+ assert.equal(actual.title,'SYNTHETIC projection verification');assert.match(actual.html,/text-align:center/);assert.match(actual.html,/https:\/\/example.invalid\/synthetic-review/);assert.ok(actual.html.includes('SYNTHETIC LATE B'));assert.ok(!actual.html.includes('\uFEFF'));assert.ok(!actual.html.includes('data-classic-region'));
+ assert.equal(authorProjection(actual.html).replace(' SYNTHETIC LATE B',''),authorProjection(prepared.source));
+ const expected=structuredClone(old.content);Object.assign(loc(expected),{html:actual.html,title:actual.title});assert.deepEqual(current.content,expected);
+ const review=s.authorReview.state(),comment=review.comments.find(n=>n.body==='SYNTHETIC preserved whole-block anchor');assert.ok(comment);assert.equal(comment.anchor.sourceText,authorProjection(prepared.source));assert.equal(comment.audit.length,1);assert.equal(comment.version,1);assert.equal(comment.status,'open');
+ const contexts=s.authorReview.contexts();assert.ok(contexts.some(c=>loc(c)?.html===prepared.source));assert.equal(s.authorReview.list('author-demo',{lessonId:prepared.target.lessonId}).comments.find(c=>c.id===comment.id).anchorState,'changed');
+ const after=databaseReceipt(file);for(const name of Object.keys(before.tables))if(!['kv','learners'].includes(name))assert.deepEqual(after.tables[name],before.tables[name],name);
+ const learners=s.db.prepare('SELECT * FROM learners ORDER BY id').all();for(const row of oldLearners)if(row.id!=='author-demo')assert.deepEqual(learners.find(n=>n.id===row.id),row);
+ const kv=s.db.prepare('SELECT * FROM kv ORDER BY key').all();for(const row of oldKV)if(!['draft','author-review','source-state'].includes(row.key))assert.deepEqual(kv.find(n=>n.key===row.key),row);
+ assert.equal(databaseReceipt(baseline).sha256,before.sha256);
+ const result={baselineUnchanged:before.sha256,disposableNeverInstall:true,lessonCount:current.content.lessons.length,contentBytes:Buffer.byteLength(JSON.stringify(current.content)),onlyDraftFieldDeltas:['first MEMORY page.title','first MEMORY page.html'],other22LessonsAndBranchesExact:true,allNonKVTablesExceptAuthorNavigationExact:true,otherLearnersExact:true,retainedSettingsAndKVExact:true,oldSyntheticContextAndNoteUnchanged:true,realLateTextEditLegitimatelyChangesAnchor:true,removingOnlyDeclaredLateTextRestoresExactOriginalProjection:true,noPersistedScaffolding:true,receipt:after.sha256};
+ writeFileSync('tmp/classic-corrections-native/VERIFIED.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
+}finally{s.close();}

@@ -1,0 +1,10 @@
+PASS GET null draft and empty diff match schemas
+PASS no-draft, missing token and stale base errors are coded and write nothing
+PASS stage preserves every field and emits first-stage unchanged false
+PASS full-token scope and key-order-only restage preserve time and database rows
+PASS HTTP preview matches preparation/evaluation schemas and changes no stored profile rows
+PASS non-authors, malformed answers and wrong targets are rejected without writes
+PASS newer draft rejects stale saves, preview, publish and rollback atomically
+PASS publish and rollback return revision envelopes and enforce null/no-draft CAS
+PASS HTTP v2 repeated instances, mixed curriculum and keyed rehearsal validate without writes; a forged selector rejects atomically
+{"runtimeCommit":"8a8f6606d16835a18f96689669067ef00cbbbcc7","passed":9,"database":":memory:","transport":"ephemeral loopback HTTP; closed on exit","limits":"Contract and backend checks only; no app renderer, browser or independent release acceptance."}
