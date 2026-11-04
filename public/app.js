@@ -385,7 +385,7 @@ function sourceLibrary(){
 }
 function sharedReview(w,undo,session){
  const ratings=[['Again',1],['Hard',2],['Good',3],['Easy',4]].map(([label,rating])=>button(label+' · '+reviewIntervalLabel(scheduleReview(state.data.learner.cards[w.id],rating,state.data.reviewClock).delayMs),'review-rate',rating===3?'primary':'secondary',rating)).join('');
- return '<h1 tabindex="-1">Your review.</h1><p>Card '+(session.index+1)+' of '+session.ids.length+'</p><iframe title="Hebleo vocabulary card" data-shared-review data-card-id="'+esc(w.id)+'" data-face="'+(state.revealReview?'back':'front')+'" sandbox="allow-scripts"></iframe><div class="review-primary">'+(state.revealReview?ratings:button('Show answer','review-reveal','primary'))+'</div><div class="review-secondary">'+undo+button('Finish session','review-end','small outline')+'</div><p data-review-save-status role="status"></p>';
+ return '<h1 tabindex="-1">Your review.</h1><p>Card '+(session.index+1)+' of '+session.ids.length+'</p><div class="shared-review-card"><iframe title="Hebleo vocabulary card" data-shared-review data-card-id="'+esc(w.id)+'" data-face="'+(state.revealReview?'back':'front')+'" sandbox="allow-scripts"></iframe></div><div class="review-primary">'+(state.revealReview?ratings:button('Show answer','review-reveal','primary'))+'</div><div class="review-secondary">'+undo+button('Finish session','review-end','small outline')+'</div><p data-review-save-status role="status"></p>';
 }
 function sharedLibrary(){
  const view=state.sharedView||{rows:[],total:0,offset:0,limit:25};

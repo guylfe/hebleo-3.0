@@ -211,3 +211,4 @@ dialog.lesson-extra-information{border:1px solid var(--line);border-radius:var(-
 
 /* Flashcard primary controls keep their own center, independent of secondary actions. */
 .review-primary{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:20px 0}.review-primary>[data-action="review-reveal"]{margin-inline:auto}.review-secondary{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:16px;margin-top:40px;padding-top:16px;border-top:1px solid var(--border,#d6d9dd)}.review-card>[data-action="review-reveal"]{display:block;margin-inline:auto}[data-review-save-status] button{display:block;margin:12px auto}
+.shared-review-card{box-sizing:border-box;min-width:0;padding:16px}.shared-review-card>iframe{display:block;max-width:100%}
