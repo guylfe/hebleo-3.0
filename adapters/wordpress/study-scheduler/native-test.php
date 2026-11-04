@@ -10,6 +10,8 @@ if($mode==='setup') {
  if(!is_blog_installed())wp_install('Synthetic scheduler fixture','scheduler','fixture@example.invalid',false,'','disposable-only');
  wp_set_current_user(1);$r=activate_plugin('wp-learning-cards/wp-learning-cards.php');
  if(is_wp_error($r))throw new RuntimeException($r->get_error_message());
+ if(function_exists('maybe_add_autoplay_audio_column'))maybe_add_autoplay_audio_column();
+ if(function_exists('maybe_add_default_order_column'))maybe_add_default_order_column();
  echo 'PASS full plugin activation '.WP_LEARNING_CARDS_VERSION.' WordPress '.$GLOBALS['wp_version'].' MariaDB '.$wpdb->db_version()."\n";exit;
 }
 wp_set_current_user(1);

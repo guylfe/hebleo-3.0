@@ -50,6 +50,11 @@
     player.src = button.getAttribute('data-audio');
     try { var promise = player.play(); if (promise) promise.catch(function(){fail(request);}); } catch (_) { fail(request); }
   }
+  var shortcutGeneration=null;
+  function shortcutContext(event){const d=event.data;if(event.source===parent&&d&&Object.keys(d).sort().join('|')==='generation|type'&&d.type==='hebleo-review-context'&&typeof d.generation==='string'&&/^[a-zA-Z0-9-]{16,80}$/.test(d.generation))shortcutGeneration=d.generation;}
+  function shortcut(event){if(!shortcutGeneration||event.defaultPrevented||event.isComposing||event.ctrlKey||event.altKey||event.metaKey||event.shiftKey||event.target.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"]),dialog,[role="dialog"]'))return;var key=event.key===' '||event.code==='Space'?'reveal':/^[1-4]$/.test(event.key)?event.key:null;if(!key)return;event.preventDefault();if(event.repeat)return;parent.postMessage({type:'hebleo-review-key',generation:shortcutGeneration,key:key},'*');}
+  window.addEventListener('message',shortcutContext);document.addEventListener('keydown',shortcut);
+  parent.postMessage({type:'hebleo-review-ready'},'*');
   function error() { fail(token); }
   function visibility() { if (document.hidden) stop(); }
   function height() {
@@ -60,6 +65,7 @@
   player.addEventListener('ended',stop); player.addEventListener('error',error);
   window.addEventListener('pagehide',stop); document.addEventListener('visibilitychange',visibility);
   window.hebleoCard = {get mode(){return state.mode;}, get nikkud(){return !!(nikkud && nikkud.checked);},destroy:function(){
+    window.removeEventListener('message',shortcutContext);document.removeEventListener('keydown',shortcut);
     stop(); observer.disconnect(); player.removeAttribute('src'); player.load();
     if(nikkud)nikkud.removeEventListener('change',settingsChanged);
     root.removeEventListener('click',clicked); theme.removeEventListener('change',changed);

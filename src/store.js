@@ -1,3 +1,4 @@
+import {nextStudyDay,isReviewBuried,validateBurials} from './review-burial.js';
 import {SharedCards,validateSharedState,validateCardSettings,parseSharedCardId} from './shared-cards.js';
 import {AuthorReview,validateAuthorReview,relinkAuthorReview,mergeAuthorReview,authorReviewContents} from './author-review.js';
 import {canonicalJSON,contextHash} from './immutable-context.js';
@@ -268,7 +269,7 @@ export class Store {
   }
   bootstrap(userId) {
     const content = this.snapshot(); const learner = this.learner(userId);
-    const due = Object.entries(learner.cards).filter(([, c]) => Date.parse(c.due) <= Date.now()).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)||this.shared.word(wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
+    const due = Object.entries(learner.cards).filter(([cardId, c]) => Date.parse(c.due) <= Date.now() && !isReviewBuried(learner,cardId)).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)||this.shared.word(wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
     return { sharedCollection: this.shared.state()&&learner.purchasedCourses.includes('demo-foundations')?this.shared.collection(userId):null, revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
   }
   publicWord(word) {
@@ -333,18 +334,21 @@ export class Store {
     if (!card || !this.snapshot().words.some(w => w.id === input.wordId) && !this.shared.word(input.wordId)) throw new DomainError('Review card not found.', 404);
     const requestId = id(input.requestId); const previous = this.get('review-' + userId + '-' + requestId);
     if (previous) { if (previous.wordId !== input.wordId || previous.rating !== input.rating) throw new DomainError('Conflicting review request ID.', 409); return { ...previous, duplicate: true }; }
+    if(isReviewBuried(state,input.wordId))throw new DomainError('A sibling of this card was reviewed today.',409,'REVIEW_CARD_BURIED');
     if (Object.hasOwn(input,'expectedCard') && canonicalJSON(input.expectedCard) !== canonicalJSON(card)) throw new DomainError('This card changed elsewhere. Refresh its review choices.',409,'REVIEW_CARD_CHANGED');
+    const now=Date.now(),note=parseSharedCardId(input.wordId),burialBefore=note?(state.reviewBurials?.[note.sourceId]??null):null;
     const before = clone(card);
-    Object.assign(card,scheduleReview(card,input.rating,Date.now()).card);
+    Object.assign(card,scheduleReview(card,input.rating,now).card);
+    if(note){state.reviewBurials=Object.fromEntries(Object.entries(state.reviewBurials||{}).filter(([,entry])=>Date.parse(entry.until)>now));state.reviewBurials[note.sourceId]={cardId:input.wordId,until:nextStudyDay(now)};}
     const result = { wordId: input.wordId, rating: input.rating, requestId, card: clone(card) };
-    state.lastReview = { requestId, wordId: input.wordId, before, after: clone(card) };
+    state.lastReview = { requestId, wordId: input.wordId, before, after: clone(card), ...(note?{burialBefore}: {}) };
     return this.transaction(() => { this.saveLearner(userId, state); this.set('review-' + userId + '-' + requestId, result); return result; });
   }
   undoReview(userId, input) {
     const state = this.learner(userId); const previous = state.lastReview;
     if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     if (!previous || previous.requestId !== input.requestId || JSON.stringify(state.cards[previous.wordId]) !== JSON.stringify(previous.after)) throw new DomainError('Only the most recent unchanged review can be undone.', 409);
-    return this.transaction(() => { state.cards[previous.wordId] = previous.before; state.lastReview = null; this.saveLearner(userId, state); const key = 'review-' + userId + '-' + input.requestId; this.set(key, { ...this.get(key), undone: true }); return { wordId: previous.wordId }; });
+    return this.transaction(() => { state.cards[previous.wordId] = previous.before; const note=parseSharedCardId(previous.wordId);if(note&&Object.hasOwn(previous,'burialBefore')){state.reviewBurials??={};if(previous.burialBefore)state.reviewBurials[note.sourceId]=previous.burialBefore;else delete state.reviewBurials[note.sourceId];} state.lastReview = null; this.saveLearner(userId, state); const key = 'review-' + userId + '-' + input.requestId; this.set(key, { ...this.get(key), undone: true }); return { wordId: previous.wordId }; });
   }
   session(userId, lessonId) {
     const state = this.learner(userId); let progress = state.resumes[lessonId];
@@ -822,6 +826,7 @@ export class Store {
       if (new Set(s.attempts.map(a => a.requestId)).size !== s.attempts.length) throw new DomainError('Duplicate saved attempt receipt.');
       for (const [key, note] of Object.entries(s.notes)) { id(key); if (typeof note !== 'string' || note.length > 2000) throw new DomainError('Invalid saved note.'); }
       validatePreferences(s.preferences);
+      try{validateBurials(s.reviewBurials);for(const entry of Object.values(s.reviewBurials||{}))if(!s.cards[entry.cardId])throw Error('Orphan burial');if(s.lastReview?.burialBefore)validateBurials({[parseSharedCardId(s.lastReview.wordId)?.sourceId]:s.lastReview.burialBefore});}catch{throw new DomainError('Invalid review burial backup.');}
       if(s.sharedCardSettings!==undefined)validateCardSettings(s.sharedCardSettings);
       for(const cardId of Object.keys(s.cards).filter(k=>k.startsWith('sc-'))){const key=parseSharedCardId(cardId);if(!key||!restoredShared?.raw.notes.some(n=>n.id===key.sourceId))throw new DomainError('Orphan shared card schedule.');}
       if(s.textPages!==undefined){

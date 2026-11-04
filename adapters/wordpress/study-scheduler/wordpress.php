@@ -2,6 +2,7 @@
 /** Native WordPress adapter. Read-only preview; only rating persists state. */
 namespace HebleoStudy;
 require_once __DIR__.'/fsrs.php';
+require_once __DIR__.'/../followup/state.php';
 function clock_now(): int { return (int)\apply_filters('hebleo_study_scheduler_now',time()); }
 function meta_key($p): string { return '_hebleo_fsrs_v2_'.(int)$p->id; }
 function local_date(int $utc,\DateTimeZone $tz): string { return (new \DateTimeImmutable('@'.$utc))->setTimezone($tz)->format('Y-m-d H:i:s'); }
@@ -59,6 +60,7 @@ function due_sql(string $alias='p'): array {
     $local=local_date($now,\wp_timezone());
     $where="(CASE WHEN $valid THEN $utc <= $now ELSE p.next_review <= '$local' END)";
     $join="LEFT JOIN {$wpdb->usermeta} hfsrs ON hfsrs.umeta_id = (SELECT MAX(hm.umeta_id) FROM {$wpdb->usermeta} hm WHERE hm.user_id=p.user_id AND hm.meta_key=CONCAT('_hebleo_fsrs_v2_',p.id))";
+    $burial=\HebleoFollowup\sql($now);$join.=' '.$burial['join'];$where='('.$where.' AND '.$burial['where'].')';
     return ['join'=>$join,'epoch'=>$epoch,'where'=>$where,'valid'=>$valid,'now'=>$now];
 }
 
@@ -110,17 +112,22 @@ function preview($p,int $now): array {
 /** Called only after nonce/user/rating checks in original handler.
  * Both native row + per-card metadata commit atomically. InnoDB required.
  */
-function persist_rating(int $user_id,int $note_id,int $template_id,int $rating,?callable $clock=null): array {
-    global $wpdb;$table=$wpdb->prefix.'flashcard_progress';$p=null;
+function persist_rating(int $user_id,int $note_id,int $template_id,int $rating,?callable $clock=null,?array $request=null): array {
+    global $wpdb;$table=$wpdb->prefix.'flashcard_progress';$p=null;$note_lock=null;
     if($wpdb->query('START TRANSACTION')===false)throw new \RuntimeException('Cannot begin rating transaction');
     try {
         $p=$wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE user_id = %d AND note_id = %d AND template_id = %d FOR UPDATE",$user_id,$note_id,$template_id));
         if(!$p)throw new \RuntimeException('Card not found');
+        $note_lock=\HebleoFollowup\lock($user_id,$note_id);
         // Drop any metadata cached before the row lock (another request may have rated).
         \wp_cache_delete($user_id,'user_meta');
         $meta=read_meta($p);
         // Resolve time only after the real row lock and fresh committed metadata read.
         $now=(int)($clock??(__NAMESPACE__.'\\clock_now'))();
+        $note_state=\HebleoFollowup\load($user_id,$note_id);$old=\HebleoFollowup\duplicate($note_state,$request,$template_id,$rating);
+        if($old!==null){if($wpdb->query('COMMIT')===false)throw new \RuntimeException('Cannot confirm previous review');return $old;}
+        if(\HebleoFollowup\buried($note_state,$template_id,$now))throw new \RuntimeException('Sibling is buried until next study day');
+        if($request!==null&&!hash_equals(\HebleoFollowup\version($p,$meta),$request['version']))throw new \RuntimeException('Card state changed; reload');
         if(isset($meta['last_review_utc'])&&$meta['last_review_utc']>$now)throw new \RuntimeException('Scheduling clock precedes committed review');
         $s=schedule($p,$rating,$now,$meta);
         $fields=array_intersect_key($s,array_flip(['stability','difficulty','scheduled_days','state','reps','lapses','elapsed_days','last_reviewed','next_review']));
@@ -132,7 +139,13 @@ function persist_rating(int $user_id,int $note_id,int $template_id,int $rating,?
         $json=\wp_json_encode($meta,JSON_PRESERVE_ZERO_FRACTION|JSON_THROW_ON_ERROR);
         $saved=\update_user_meta($user_id,meta_key($p),\wp_slash($json));
         if($saved===false&&\get_user_meta($user_id,meta_key($p),true)!==$json)throw new \RuntimeException('Learning step update failed');
+        $s=\HebleoFollowup\record($user_id,$p,$s,$rating,$now,$request,$note_state);
         if($wpdb->query('COMMIT')===false)throw new \RuntimeException('Rating commit failed');
+        // Positive confirmation comes from a fresh committed record, not in-memory work.
+        // This also detects a connection/retry that acknowledged an empty replacement transaction.
+        $committed=\HebleoFollowup\load($user_id,$note_id);
+        if($request!==null){if(\HebleoFollowup\duplicate($committed,$request,$template_id,$rating)===null)throw new \RuntimeException('Review commit is not confirmed');}
+        elseif(($committed['reviewed_utc']??null)!==$now||($committed['allowed_template']??null)!==$template_id)throw new \RuntimeException('Review commit is not confirmed');
         return $s;
-    } catch(\Throwable $e){$wpdb->query('ROLLBACK');\wp_cache_delete($user_id,'user_meta');throw $e;}
+    } catch(\Throwable $e){$wpdb->query('ROLLBACK');\wp_cache_delete($user_id,'user_meta');throw $e;} finally { \HebleoFollowup\unlock($note_lock); }
 }

@@ -1,6 +1,6 @@
 import {readFileSync} from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
 const source=readFileSync(new URL('./frame-host.js',import.meta.url),'utf8');const saved=new Map();const app={dataset:{}};let handler,frames=[],posts=[];
-function run(){vm.runInNewContext(source,{window:{addEventListener(t,f){handler=f;}},document:{querySelectorAll(){return frames;},getElementById(id){return id==='study-app'?app:null;}},localStorage:{getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)}});}
+function run(){vm.runInNewContext(source,{window:{addEventListener(t,f){handler=f;}},document:{addEventListener(){},querySelectorAll(){return frames;},getElementById(id){return id==='study-app'?app:null;}},localStorage:{getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)}});}
 const frame={contentWindow:{postMessage:v=>posts.push(v)},style:{}};frames=[frame];run();
 handler({source:{},data:{type:'hebleo-card-settings',mode:'dark',nikkud:true}});assert.equal(saved.size,0);
 handler({source:frame.contentWindow,data:{type:'hebleo-card-settings',mode:'dark',nikkud:'true'}});assert.equal(saved.size,0);

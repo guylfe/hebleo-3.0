@@ -33,3 +33,9 @@ jobs:
           node --check adapters/wordpress/shared-cards/frame-child.js
           node --check adapters/wordpress/shared-cards/frame-host.js
           node --test adapters/wordpress/shared-cards/frame-host.test.mjs
+      - name: Follow-up dispatch and source checks
+        run: |
+          php -l adapters/wordpress/followup/state.php
+          php -l adapters/wordpress/followup/frontend.php
+          php adapters/wordpress/followup/front-test.php
+          node --check adapters/wordpress/followup/client.js

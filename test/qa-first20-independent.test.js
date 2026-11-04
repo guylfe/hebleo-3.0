@@ -1,3 +1,6 @@
+import {mountReviewKeys} from '../public/review-shortcuts.js';
+import {createReviewSave} from '../public/review-save.js';
+import {mountSharedReview} from '../public/shared-cards.js';
 import {courseRailEdge,updateCourseToggle} from '../public/sidebar-toggle.js';
 // Independent QA for frozen d912e746. Synthetic fixtures only; no owner database.
 import test from 'node:test';
@@ -44,7 +47,7 @@ async function actualApp(t,s,origin,{beforeFetch}={}){
  }
  Object.assign(w,{courseRailEdge,updateCourseToggle,structuredClone,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),playAudio:async()=>{},stopMedia:()=>{},clearRecording:()=>{},feedbackSound:()=>{}});
  const calls=[];w.fetch=async(path,options)=>{calls.push({path,...options});await beforeFetch?.(path,options);return fetch(new URL(path,origin),options);};
- w.eval(source.replace(/^import .*;\r?\n/gm,''));await until(()=>w.document.querySelector('[data-reader-heading]'));return {w,doc:w.document,calls};
+ Object.assign(w,{mountReviewKeys,createReviewSave,mountSharedReview});w.eval(source.replace(/^import .*;\r?\n/gm,''));await until(()=>w.document.querySelector('[data-reader-heading]'));return {w,doc:w.document,calls};
 }
 
 test('QA positive: actual HTTP response/revision/profile/entitlement isolation and atomic malformed writes',async t=>{

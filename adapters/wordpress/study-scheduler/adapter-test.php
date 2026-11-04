@@ -1,4 +1,6 @@
 <?php
+// Pure adapter fixture only: ignore hook registration; native suites use real WordPress.
+if(!function_exists('add_action')){function add_action(...$args){}}
 require __DIR__.'/wordpress.php';
 use function HebleoStudy\{normalize,local_date};
 use HebleoStudy\FSRS;

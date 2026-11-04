@@ -1,3 +1,6 @@
+import {mountReviewKeys} from '../public/review-shortcuts.js';
+import {createReviewSave} from '../public/review-save.js';
+import {mountSharedReview} from '../public/shared-cards.js';
 import {createStudioWorkspace} from '../public/studio/workspace.js';
 import {courseRailEdge,updateCourseToggle} from '../public/sidebar-toggle.js';
 import {BACKUP_BYTE_LIMIT,serializeBackup} from '../public/backup-contract.js';
@@ -77,7 +80,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else throw new Error('Unexpected app API '+url.pathname);
     return {ok:true,json:async()=>structuredClone(value)};
   }catch(e){return {ok:false,status:e.status||500,json:async()=>({error:e.message,code:e.code,...e.details})};}};
-  w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
+  Object.assign(w,{mountReviewKeys,createReviewSave,mountSharedReview});w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
@@ -1265,3 +1268,55 @@ test('REGRESSION: departure Save must retire inline raw buffers so later Studio 
  assert.equal(savedAuthorHTML(store),second,'An unchanged inline save must not overwrite the newer saved Studio source');assert.equal(shown,second,'Inline must display the newer saved Studio source');
 });
 
+
+test('Flashcard follow-up: actual app Space/digits preserve one commit and recover a lost acknowledgement read-only',async t=>{
+ const {w,doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));
+ const key=(el,k,extra={})=>{const event=new w.KeyboardEvent('keydown',{key:k,bubbles:true,cancelable:true,...extra});el.dispatchEvent(event);return event};
+ let sends=0,lost=true;const original=w.fetch;w.fetch=async(path,options)=>{if(path==='/api/review'){sends++;const response=await original(path,options);if(lost){lost=false;throw Error('Synthetic lost acknowledgement after server commit');}return response;}return original(path,options)};
+ key(doc.body,'1');assert.equal(sends,0);const reveal=doc.querySelector('[data-action=review-reveal]');reveal.focus();assert(key(reveal,' ').defaultPrevented);
+ await settled(()=>doc.querySelector('[data-action=review-rate]'));key(doc.body,'1');key(doc.body,'2');await settled(()=>doc.querySelector('[data-review-save-status]')?.textContent.includes('unconfirmed'));
+ assert.equal(sends,1);assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,1);key(doc.body,'3');assert.equal(sends,1);
+ doc.querySelector('[data-review-save-status] button').click();await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');assert.equal(sends,1);assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,1);
+});
+
+test('Flashcard follow-up: actual queued sibling removed after confirmed save and undo restores its queue',async t=>{
+ const a='sc-mf-000001-he-en',b='sc-mf-000001-en-he';
+ const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.shared.word=id=>[a,b].includes(id)?{id,shared:true,sourceId:'mf-000001',english:'Synthetic note',hebrew:'fixture'}:null;s.enroll('learner-demo',a);s.enroll('learner-demo',b);s.enroll('learner-demo','w-hu');}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-shared-review]'));click(doc,'review-reveal');await settled(()=>doc.querySelector('[data-action=review-rate]'));click(doc,'review-rate');
+ await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');assert.equal(store.learner('learner-demo').cards[b].repetitions,0);assert(!store.bootstrap('learner-demo').due.some(x=>x.word.id===b));
+ click(doc,'review-undo');await settled(()=>doc.querySelector('[data-shared-review]')?.dataset.cardId===a);assert(store.bootstrap('learner-demo').due.some(x=>x.word.id===b));assert(!store.learner('learner-demo').reviewBurials?.['mf-000001']);
+});
+
+for(const stalledPath of ['/api/bootstrap','/api/questions'])test('RR-APP refresh '+stalledPath+' timeout recovers read-only and cannot overwrite a reopened/newer session',async t=>{
+ const {w,doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});
+ w.createReviewSave=options=>createReviewSave({...options,timeoutMs:500});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');
+ const original=w.fetch;let release,held=false,first=true,posts=0,reads=0;const gate=new Promise(r=>release=r);
+ t.after(()=>release?.());
+ w.fetch=async(path,options)=>{
+  if(path==='/api/review')posts++;if(path.startsWith('/api/review/status'))reads++;
+  const response=await original(path,options);
+  if(path===stalledPath&&first){first=false;const body=await response.json();held=true;await gate;return {ok:true,json:async()=>body};}
+  return response;
+ };
+ click(doc,'review-rate');await settled(()=>held);
+ await settled(()=>doc.querySelector('[data-review-save-status]')?.textContent.includes('refresh is incomplete'));
+ assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,1);assert.equal(doc.querySelector('[data-pronunciation-word]').dataset.pronunciationWord,'w-ani');assert.equal(posts,1);
+ doc.querySelector('[data-review-save-status] button').click();await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');assert.equal(posts,1);assert.equal(reads,1);
+ click(doc,'review-end');click(doc,'review-start');await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');click(doc,'review-reveal');click(doc,'review-rate');
+ await settled(()=>doc.querySelector('h1')?.textContent==='Review finished.');assert.equal(store.learner('learner-demo').cards['w-hu'].repetitions,1);
+ release();await new Promise(r=>setTimeout(r,40));click(doc,'review-end');assert.match(doc.querySelector('h2').textContent,/0 cards due/);assert.equal(posts,2);
+});
+
+test('RR-APP delayed old frame flush cannot reveal or clear a newer pending reveal',async t=>{
+ const a='sc-mf-000001-he-en',b='sc-mf-000001-en-he';
+ const {w,doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.shared.word=id=>[a,b].includes(id)?{id,shared:true,sourceId:'mf-000001',english:'Synthetic',hebrew:'fixture'}:null;[a,b].forEach(id=>s.enroll('learner-demo',id));}});
+ const prior=globalThis.window;globalThis.window=w;const releases=[];t.after(()=>{releases.forEach(release=>release?.());globalThis.window=prior});
+ const original=w.fetch;w.fetch=async(path,options)=>{const response=await original(path,options);if(path==='/api/shared-cards/settings')await new Promise(resolve=>releases.push(resolve));return response};
+ const settings=(frame,mode,nikkud)=>w.dispatchEvent(new w.MessageEvent('message',{source:frame.contentWindow,data:{type:'hebleo-card-settings',mode,nikkud}}));
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-shared-review]'));const oldFrame=doc.querySelector('[data-shared-review]');settings(oldFrame,'dark',false);await settled(()=>releases.length===1);click(doc,'review-reveal');
+ click(doc,'review-end');click(doc,'review-start');await settled(()=>doc.querySelector('[data-shared-review]')&&doc.querySelector('[data-shared-review]')!==oldFrame);const nextFrame=doc.querySelector('[data-shared-review]');settings(nextFrame,'light',true);await settled(()=>releases.length===2);click(doc,'review-reveal');
+ releases[0]();await new Promise(resolve=>setTimeout(resolve,30));assert.equal(doc.querySelector('[data-shared-review]').dataset.face,'front');
+ releases[1]();await settled(()=>doc.querySelector('[data-shared-review]')?.dataset.face==='back');assert.deepEqual(store.shared.settings('learner-demo'),{mode:'light',nikkud:true});
+});
