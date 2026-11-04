@@ -1,0 +1,47 @@
+    async rateCard(rating) {
+        const card = this.currentCard;
+        if (!card || this.ratingPending || this.ratingFinished?.has(card)) return;
+        if (![1, 2, 3, 4].includes(rating)) return;
+        this.ratingFinished ??= new WeakSet();
+        this.ratingPending = true;
+        const actions = document.getElementById('card-actions');
+        const controls = Array.from(document.querySelectorAll('.rating-btn, .suspend-btn, .back-btn'));
+        controls.forEach(button => button.disabled = true);
+        let notice = document.getElementById('rating-save-status');
+        if (!notice && actions) {
+            notice = document.createElement('p');
+            notice.id = 'rating-save-status';
+            notice.setAttribute('role', 'status');
+            actions.append(notice);
+        }
+        if (notice) notice.textContent = 'Saving review…';
+        let confirmed = false;
+        try {
+            const response = await this.makeRequest('rate_card', {
+                note_id: card.note_id,
+                template_id: card.template_id,
+                rating: rating
+            });
+            confirmed = response?.success === true;
+        } catch (_) {
+            // The server may have committed before the response was lost.
+            // Never retry or advance from a transport/parse failure.
+        }
+        this.ratingFinished.add(card);
+        this.ratingPending = false;
+        if (!confirmed) {
+            if (notice) {
+                notice.setAttribute('role', 'alert');
+                notice.textContent = 'Review save was not confirmed. Return to decks and reopen this deck to refresh its saved state before continuing. Your displayed counts have not changed.';
+            }
+            document.querySelectorAll('.back-btn').forEach(button => button.disabled = false);
+            return;
+        }
+        this.stats.studied++;
+        if (rating >= 3) this.stats.correct++;
+        if (card.state === 'new') this.stats.new_studied++;
+        else this.stats.reviews_studied++;
+        controls.forEach(button => button.disabled = false);
+        this.nextCard();
+    }
+

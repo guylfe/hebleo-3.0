@@ -1,0 +1,33 @@
+/* WordPress study adapter. Approved 4 Nov reference; document owns scrolling. */
+#study-app{--paper:#fff;--ink:#142943;--muted:#596878;--line:#dae2e9;--blue:#185c92;color:var(--ink);width:100%;max-width:1120px;margin:20px auto;font:16px/1.5 system-ui,sans-serif}
+#study-app .study-interface{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:visible;min-height:min(560px,80vh)}
+#study-app .study-header{background:var(--paper);padding:16px 24px;gap:16px;border-color:var(--line);flex-direction:row;text-align:left}
+#study-app .progress-info{flex-wrap:wrap;gap:12px;font-size:14px;color:var(--muted)}
+#study-app .study-header>div:last-child{font-size:12px!important;color:var(--muted)}
+#study-app .progress-bar{width:140px;height:3px;margin:0}
+#study-app .study-card{margin:0;padding:24px 32px;perspective:none}
+#study-app .card-inner,#study-app .card-inner.flipped{height:auto;transform:none;transition:none;transform-style:flat}
+#study-app .card-side{position:static;height:auto;padding:0;border:0;border-radius:0;background:var(--paper);overflow:visible;display:block;transform:none;text-align:left}
+#study-app .card-back{display:none}
+#study-app .card-inner.flipped>.card-side:first-child{display:none}
+#study-app .card-inner.flipped>.card-back{display:block}
+#study-app .card-content{width:100%;max-width:none}
+#study-app iframe[data-hebleo-shared]{display:block;width:100%;border:0}
+#study-app .card-actions{margin:0;padding:16px 24px 20px;border-top:1px solid var(--line);display:flex;flex-direction:column}
+#study-app .card-controls{display:flex;flex-direction:row;justify-content:center;gap:12px;margin:12px 0 0;order:2}
+#study-app button{min-height:44px;font:inherit;cursor:pointer;border-radius:10px}
+#study-app button:focus-visible{outline:3px solid #2f8dca;outline-offset:3px}
+#study-app .back-btn,#study-app .suspend-btn{border:1px solid var(--line);background:var(--paper);color:var(--blue);padding:8px 12px;font-size:14px}
+#study-app .suspend-btn{border-color:transparent;font-size:12px}
+#study-app .show-answer-btn{background:var(--blue);color:#fff;min-width:min(240px,65%)}
+#study-app .rating-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:640px;margin:0 auto;order:1}
+#study-app .rating-btn{min-width:0;min-height:68px;width:100%;padding:8px 4px;background:var(--paper);color:var(--ink);border:1px solid var(--line);font-size:16px}
+#study-app .rating-btn small{font-size:12px;color:var(--muted);font-weight:400}
+#study-app .rating-again{border-top:3px solid #b44a51}#study-app .rating-hard{border-top:3px solid #aa7b24}
+#study-app .rating-good{background:var(--blue);color:#fff;border-color:var(--blue)}#study-app .rating-good small{color:#e1eef9}
+#study-app .rating-easy{border-top:3px solid #50837e}
+#study-app .card-type-indicator{order:3;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin:8px 0 0;padding:0;border:0;background:transparent}
+#study-app .card-type-label{margin:0;font-size:12px;color:var(--muted)}#study-app .card-counts{font-size:14px}
+@media(max-width:560px){#study-app{margin:8px auto}#study-app .study-header{padding:12px;gap:8px}#study-app .study-card{padding:16px 20px}#study-app .card-actions{padding:12px}#study-app .rating-buttons{gap:6px}#study-app .rating-btn{font-size:14px;min-height:64px}#study-app .progress-bar{width:80px}}
+@media(max-height:500px) and (min-width:561px){#study-app .study-header{padding:8px 16px}#study-app .study-card{padding:12px 24px}#study-app .card-actions{padding:12px 16px}}
+#study-app[data-hebleo-mode=dark]{--paper:#1c2937;--ink:#eef4fa;--muted:#aebccd;--line:#3b4b5c;--blue:#3485bd}

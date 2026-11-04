@@ -1,0 +1,36 @@
+{
+  "upstream": "open-spaced-repetition/py-fsrs",
+  "version": "6.3.2",
+  "algorithm": "FSRS-6",
+  "url": "https://files.pythonhosted.org/packages/00/b9/c815e796480dd22441886f06b23f249a7ff2e3f41fc9bfaa428332e34b49/fsrs-6.3.2-py3-none-any.whl",
+  "wheel_sha256": "bc55066c821164b1cff6d75b17a3ed8e86cfd45789e3d775cfcb895319ce9ba4",
+  "license": "MIT",
+  "runtime": "PHP scalar port, no Python/native extension dependency",
+  "source_hashes": {
+    "upstream\\fsrs\\__init__.py": "79e8c6c2fc444115fbd2a1f5f9d52593d3e3ef81adfaef1d172e663882cd6f87",
+    "upstream\\fsrs\\card.py": "be433000a1b839b222420233b9019e905f88efda3901e2efd51c3fdb5754f0ab",
+    "upstream\\fsrs\\optimizer.py": "e7c4afd63c252b4ca2442d476f996832961bc976fa41307fd765d17dfb500917",
+    "upstream\\fsrs\\rating.py": "01bc939a22f7e728ebd9a999dda77a9dc2b7fcfec4f392beea4b11ea7019b85e",
+    "upstream\\fsrs\\review_log.py": "79a4afdc25fcf1abf764b50fdce0e52d37fc7656b8894eda6630b60b0ece1047",
+    "upstream\\fsrs\\scheduler.py": "dd04d86ba98ee22106f6bbdb7eede00fa3c848dbf15d18e33db4584f333bac46",
+    "upstream\\fsrs\\state.py": "3ed5d9c98cad65f3fd8e3a31d1904eddc88ee3b6a7ead22585d850ce27fc51f4",
+    "upstream\\LICENSE": "021bff58ad2685d7e5b30d307429bc7cfdca108ad620ce889abb38d7acd89ace"
+  },
+  "storage_schema": 2,
+  "correction": {
+    "findings": [
+      "RR-SCHED-01",
+      "RR-SCHED-02"
+    ],
+    "core_unchanged": true,
+    "generator_sha256": "37f69d8a39a2458f170f493cc11c98f15fc63d3dcf463df11aedb8ff26c0383e",
+    "deploy_hashes": {
+      "study-scheduler/fsrs.php": "f66b9e5373d30302e087f73bae266999e0b9465d6cdf29398219474f8f9a67be",
+      "study-scheduler/LICENSE-py-fsrs": "021bff58ad2685d7e5b30d307429bc7cfdca108ad620ce889abb38d7acd89ace",
+      "study-scheduler/wordpress.php": "4a3413514b649c896e2491513f4ba0a88473123b452484dbc0329c97013259f2",
+      "templates/card_loader.php": "01b0b3cd68ffec33477a3480789e899e5b391658078cb546beb47243a8f021c0"
+    },
+    "test_evidence": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\8c900356-50f6-4d41-bbb9-50c8abe09233\\d93ac18d-de54-4035-ad88-9628a2b2e5df\\wordpress-study-20261104\\work\\scheduler\\native-rr-20261104-3",
+    "review_reference": "wordpress-study-20261104/work/release-review/REVIEW.md, probe.php, run-review.mjs; copied/extended only in scheduler-owned files"
+  }
+}

@@ -1,0 +1,6 @@
+# Keep pinned upstream bytes exact and generated study scripts stable on Windows.
+/study-scheduler/** -text
+/study-layout/** text eol=lf
+/shared-cards/frame-bridge.php text eol=lf
+/shared-cards/frame-child.js text eol=lf
+/shared-cards/frame-host.js text eol=lf
