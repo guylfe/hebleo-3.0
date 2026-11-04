@@ -1,0 +1,35 @@
+name: WordPress study reference checks
+on:
+  push:
+    paths:
+      - 'adapters/wordpress/**'
+      - '.github/workflows/wordpress-study.yml'
+  pull_request:
+    paths:
+      - 'adapters/wordpress/**'
+      - '.github/workflows/wordpress-study.yml'
+permissions:
+  contents: read
+jobs:
+  reference:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Reference environment
+        run: |
+          php --version
+          python3 -m venv "$RUNNER_TEMP/fsrs-reference"
+          "$RUNNER_TEMP/fsrs-reference/bin/pip" install --disable-pip-version-check typing_extensions==4.15.0
+      - name: Pinned upstream and PHP adapter
+        run: |
+          "$RUNNER_TEMP/fsrs-reference/bin/python" adapters/wordpress/study-scheduler/test-upstream.py "$(command -v php)" "$RUNNER_TEMP/fsrs-vectors"
+          php adapters/wordpress/study-scheduler/adapter-test.php
+          php -l adapters/wordpress/study-scheduler/wordpress.php
+      - name: Frame source and message boundaries
+        run: |
+          node --check adapters/wordpress/shared-cards/frame-child.js
+          node --check adapters/wordpress/shared-cards/frame-host.js
+          node --test adapters/wordpress/shared-cards/frame-host.test.mjs
