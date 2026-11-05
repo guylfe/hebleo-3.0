@@ -41,3 +41,10 @@ test('approved runtime replay/end/error cleanup, independent disclosures and set
  const broken=page(note,renderer,true);
  try{broken.d.window.document.querySelector('.hc-play').click();await new Promise(r=>setImmediate(r));assert.match(broken.d.window.document.querySelector('.hc-audio-status').textContent,/retry/);}finally{broken.d.window.close();}
 });
+
+test('shared renderer relays keys only after trusted per-mount context and detaches on destroy',{skip:!source},()=>{
+ const {raw,renderer}=fixture(),r=page(raw.notes[0],renderer);try{const w=r.d.window,doc=w.document,messages=[];w.parent.postMessage=m=>messages.push(m);const press=(key,extra={})=>{const event=new w.KeyboardEvent('keydown',{key,bubbles:true,cancelable:true,...extra});doc.body.dispatchEvent(event);return event};press(' ');assert.equal(messages.length,0);
+ const context={type:'hebleo-review-context',generation:'fixture-generation-123456'};w.dispatchEvent(new w.MessageEvent('message',{source:null,data:context}));press('1');assert.equal(messages.length,0);
+ w.dispatchEvent(new w.MessageEvent('message',{source:w.parent,data:context}));assert(press(' ').defaultPrevented);press('4');assert(press('1',{repeat:true}).defaultPrevented);press('2',{isComposing:true});assert.deepEqual(messages.map(m=>m.key),['reveal','4']);assert(messages.every(m=>m.generation===context.generation));w.hebleoCard.destroy();press('3');assert.equal(messages.length,2);
+ }finally{r.d.window.close()}
+});

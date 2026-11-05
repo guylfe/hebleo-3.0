@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 const approved = JSON.parse(readFileSync(new URL('./approved-templates.json', import.meta.url)));
 // HTML parsing normalizes line endings before CSP hashes are evaluated.
 const behavior = readFileSync(new URL('./behavior.js', import.meta.url), 'utf8').replace(/\r\n?/g,'\n');
+const cardInset = readFileSync(new URL('./card-inset.css', import.meta.url), 'utf8').replace(/\r\n?/g,'\n');
 export const FIELD_NAMES = Object.freeze(['SourceId','Hebrew','English','Forms','Notes','Grammar','Source','Audio','HebrewNikkud']);
 export const DIRECTIONS = Object.freeze(['he-en','en-he']);
 export const PACKAGE_SHA256 = '597c2fb3c78591a0c377216ab6668b5408a48a3f5f0a66b57fbb225122dd4e2a';
@@ -71,7 +72,7 @@ export function createRenderer({mediaManifest, mediaBaseUrl}) {
       const scriptHash = createHash('sha256').update(script).digest('base64');
       // Inline style is safe: fields cannot supply style attributes or style elements.
       const csp = "default-src 'none'; script-src 'sha256-"+scriptHash+"'; style-src 'unsafe-inline'; img-src "+base.origin+"; media-src "+base.origin+"; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
-      return '<!doctype html><html lang="en" data-hebleo-mode="'+mode+'"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="'+escape(csp)+'"><title>Hebleo vocabulary card</title><style>'+approved.css+'\nbody.card{min-height:0}</style></head><body class="card" data-hebleo-mode="'+mode+'">'+body+'<script>'+script+'</script></body></html>';
+      return '<!doctype html><html lang="en" data-hebleo-mode="'+mode+'"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="'+escape(csp)+'"><title>Hebleo vocabulary card</title><style>'+approved.css+'\nbody.card{min-height:0}</style><style data-hebleo-card-inset>'+cardInset+'</style></head><body class="card" data-hebleo-mode="'+mode+'">'+body+'<script>'+script+'</script></body></html>';
     }
   };
 }

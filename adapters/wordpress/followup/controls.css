@@ -1,0 +1,11 @@
+
+/* Suspend is outside the primary action container: its width/visibility cannot shift center. */
+#study-app .study-secondary-actions{display:flex;justify-content:flex-end;padding:8px 24px 24px;margin:0;gap:24px;border-bottom:1px solid var(--line)}
+#study-app .study-secondary-actions .suspend-btn{max-width:min(100%,20rem);white-space:normal;overflow-wrap:anywhere;font-size:12px;color:var(--muted);border:1px solid var(--line);padding:8px 12px}
+#study-app .card-actions .card-controls{display:grid;place-items:center;width:100%;margin:0 auto;gap:0}
+#study-app .card-actions .card-controls:empty{display:none}
+#study-app .card-actions .show-answer-btn{margin:0;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+#study-app .study-card{min-height:120px}
+#study-app #rating-save-status{order:4;overflow-wrap:anywhere}
+#study-app .review-reconcile{display:block;margin:16px auto 0;padding:8px 16px}
+@media(max-width:560px){#study-app .study-secondary-actions{padding:8px 12px 24px}}

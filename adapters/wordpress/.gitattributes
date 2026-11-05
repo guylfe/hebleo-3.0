@@ -4,3 +4,4 @@
 /shared-cards/frame-bridge.php text eol=lf
 /shared-cards/frame-child.js text eol=lf
 /shared-cards/frame-host.js text eol=lf
+/followup/** -text

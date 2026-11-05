@@ -1,3 +1,6 @@
+import {mountReviewKeys} from '../public/review-shortcuts.js';
+import {createReviewSave} from '../public/review-save.js';
+import {mountSharedReview} from '../public/shared-cards.js';
 import {courseRailEdge,updateCourseToggle} from '../public/sidebar-toggle.js';
 // Independent UX regression source: review 2a67a825-81a7-4356-bc08-3502f8ab4532; original first seven probes retained.
 import {renderLexicalVocabulary,bindLexicalVocabulary} from '../public/lexical-vocabulary.js';
@@ -68,7 +71,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else throw new Error('Unexpected app API '+url.pathname);
     return {ok:true,json:async()=>structuredClone(value)};
   }catch(e){return {ok:false,status:e.status||500,json:async()=>({error:e.message,code:e.code,...e.details})};}};
-  w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
+  Object.assign(w,{mountReviewKeys,createReviewSave,mountSharedReview});w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};

@@ -1,3 +1,6 @@
+import {mountReviewKeys} from './review-shortcuts.js';
+import {createReviewSave} from './review-save.js';
+let reviewSave=null,reviewUndoQueue=null,reviewRevealPending=null;
 import {mountSharedReview} from './shared-cards.js';
 let sharedFrame=null;
 import {createStudioWorkspace} from './studio/workspace.js';
@@ -135,11 +138,20 @@ let studioSave=null;
 // The task calls done() once state.studio is reloaded, so the render that follows mounts current, enabled editors.
 function trackStudioSave(task){let run;const done=()=>{if(studioSave===run)studioSave=null;};run=task(done).finally(done);studioSave=run;return run;}
 async function settledDraftToken(){let token=draftToken();while(studioSave||authorContext?.workspace.pending){const pending=studioSave||authorContext.workspace.pending;try{token=(await pending)?.draftToken??token;}catch{}}return token;}
-async function api(path, body, user=state.user, headers={},preparedBody) {
-  const response=await fetch('/api/'+path,{method:body===undefined?'GET':'POST',headers:{'x-demo-user':user,...(body===undefined?{}:{'content-type':'application/json'}),...headers},...(body===undefined?{}:{body:preparedBody??JSON.stringify(body)})});
+async function api(path, body, user=state.user, headers={},preparedBody,options={}) {
+  const response=await fetch('/api/'+path,{signal:options.signal,method:body===undefined?'GET':'POST',headers:{'x-demo-user':user,...(body===undefined?{}:{'content-type':'application/json'}),...headers},...(body===undefined?{}:{body:preparedBody??JSON.stringify(body)})});
   const value=await response.json(); if(!response.ok)throw Object.assign(new Error(value.error || 'Request failed'),{status:response.status,...value}); return value;
 }
 function toast(message) { const box=document.querySelector('#toast');box.textContent=message;box.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>box.classList.remove('visible'),5000); }
+// Review refresh commits nothing until all reads and the captured operation are current.
+async function loadReview({owner,signal,isCurrent}) {
+ if(!isCurrent()||signal.aborted)return false;
+ const data=await api('bootstrap',undefined,owner,{},undefined,{signal});
+ if(!isCurrent()||signal.aborted)return false;
+ const questions=await api('questions',undefined,owner,{},undefined,{signal});
+ if(!isCurrent()||signal.aborted)return false;
+ state.sharedView=data.sharedCollection;state.data=data;state.questions=questions;return true;
+}
 async function load() {
   const owner=state.user,page=state.page,data=await api('bootstrap',undefined,owner),questions=await api('questions',undefined,owner);
   const author=page==='studio'&&data.canAuthor,studio=author?await api('studio',undefined,owner):null,reports=author?await api('reports',undefined,owner):null;
@@ -240,7 +252,7 @@ function pageStudioLists(){
 function refreshComments(){rememberComposers();for(const area of document.querySelectorAll('[data-comment-feed]')){const panel=area.closest('#context-panel');area.innerHTML=questionList(panel?false:state.data.canAuthor,panel?state.panel?.context?.lessonId:state.page==='studio'?state.authorLessonId:state.lessonId);bind(area);}}
 function render() {
   if(!state.data)return;
-  sharedFrame?.dispose();sharedFrame=null;
+  reviewRevealPending=null;sharedFrame?.dispose();sharedFrame=null;
   inlineAuthor?.dispose();inlineAuthor=null;
   disposeTextReaders();
   exerciseDockBinding?.destroy();exerciseDockBinding=null;
@@ -254,7 +266,7 @@ function render() {
   root.innerHTML='<a class="skip-link" href="#main-content" data-action="skip-content">Skip to content</a><header class="app-header" aria-label="Hebleo navigation">'+(hasCourse?navigationToggle():'')+'<a class="brand" href="#home" data-action="page" data-value="home" aria-label="Hebleo home"><span class="brand-logo-slot" aria-hidden="true"><img src="/assets/hebleo-wide-navy.png" alt="" width="3693" height="1198"></span></a><nav id="main-menu" class="nav main-navigation" aria-label="Main navigation">'+nav()+'</nav><div class="profile"><span class="demo-pill">DEMO CONTENT</span><label class="profile-control"><span>Demo profile</span><select id="demo-user" aria-label="Demo profile">'+state.data.users.map(x=>'<option value="'+x.id+'" '+(x.id===state.user?'selected':'')+'>'+esc(x.name)+' · '+esc(x.role)+'</option>').join('')+'</select></label></div></header><div class="shell nav-shell page-'+state.page+' '+(hasCourse?'has-course ':'')+(!pref().animations?'reduce-motion':'')+'">'+(hasCourse?courseNavigation(courseLesson):'')+'<main class="main" id="main-content" tabindex="-1"><div class="topbar"><div class="breadcrumb">Your Hebrew / '+esc({home:'Your path',course:'Foundations',lesson:label(state.step),review:'Review',library:'My Hebrew',studio:'Author workspace',settings:'Settings'}[state.page])+'</div></div><div class="content">'+pages[state.page]()+'</div></main><button type="button" class="nav-backdrop" data-action="navigation-close" aria-label="Close course outline" hidden></button></div>';
 
   applyNavigation();bind();
-  const cardFrame=root.querySelector('[data-shared-review]');if(cardFrame)sharedFrame=mountSharedReview(cardFrame,{api,user:state.user,onError:error=>toast(error.message)});mountLessonTextReaders();mountInlineLesson();if(state.page==='lesson'&&state.data.canAuthor){const owner=state.user,id=state.lessonId,control=root.querySelector('[data-action=author-comments]');if(control)api('studio/author-comments?'+new URLSearchParams({lessonId:id,limit:1})).then(r=>{if(control.isConnected&&state.user===owner&&state.lessonId===id)control.textContent='Author comments ('+r.total+')';},()=>{if(control.isConnected)control.textContent='Author comments · unavailable';});}if(state.page==='lesson')extraInformationBinding=bindExtraInformation(root,portionLesson(lessonObject(),state.step),renderLesson);syncLessonTextGates();exerciseDockBinding=state.page==='lesson'&&currentKind()==='learn'&&root.querySelector('[data-text-reader]')?null:mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio'){pageStudioLists();if(state.studioTask==='comments')mountStudioPrivateComments();}syncKeyboard();if(state.panel)showPanel();
+  const cardFrame=root.querySelector('[data-shared-review]');if(cardFrame)sharedFrame=mountSharedReview(cardFrame,{api,user:state.user,onError:error=>toast(error.message),onShortcut:reviewKey});mountLessonTextReaders();mountInlineLesson();if(state.page==='lesson'&&state.data.canAuthor){const owner=state.user,id=state.lessonId,control=root.querySelector('[data-action=author-comments]');if(control)api('studio/author-comments?'+new URLSearchParams({lessonId:id,limit:1})).then(r=>{if(control.isConnected&&state.user===owner&&state.lessonId===id)control.textContent='Author comments ('+r.total+')';},()=>{if(control.isConnected)control.textContent='Author comments · unavailable';});}if(state.page==='lesson')extraInformationBinding=bindExtraInformation(root,portionLesson(lessonObject(),state.step),renderLesson);syncLessonTextGates();exerciseDockBinding=state.page==='lesson'&&currentKind()==='learn'&&root.querySelector('[data-text-reader]')?null:mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio'){pageStudioLists();if(state.studioTask==='comments')mountStudioPrivateComments();}syncKeyboard();if(state.panel)showPanel();
 }
 function lessonStarted(id) { const l=state.data.learner; return Boolean(l.resumes[id] || l.attempts.some(a=>a.lessonId===id)); }
 function lessonCards() {
@@ -373,7 +385,7 @@ function sourceLibrary(){
 }
 function sharedReview(w,undo,session){
  const ratings=[['Again',1],['Hard',2],['Good',3],['Easy',4]].map(([label,rating])=>button(label+' · '+reviewIntervalLabel(scheduleReview(state.data.learner.cards[w.id],rating,state.data.reviewClock).delayMs),'review-rate',rating===3?'primary':'secondary',rating)).join('');
- return '<h1 tabindex="-1">Your review.</h1><p>Card '+(session.index+1)+' of '+session.ids.length+'</p><iframe title="Hebleo vocabulary card" data-shared-review data-card-id="'+esc(w.id)+'" data-face="'+(state.revealReview?'back':'front')+'" sandbox="allow-scripts"></iframe><div class="button-row">'+(state.revealReview?ratings:button('Show answer','review-reveal','primary'))+undo+button('Finish session','review-end','small outline')+'</div>';
+ return '<h1 tabindex="-1">Your review.</h1><p>Card '+(session.index+1)+' of '+session.ids.length+'</p><iframe title="Hebleo vocabulary card" data-shared-review data-card-id="'+esc(w.id)+'" data-face="'+(state.revealReview?'back':'front')+'" sandbox="allow-scripts"></iframe><div class="review-primary">'+(state.revealReview?ratings:button('Show answer','review-reveal','primary'))+'</div><div class="review-secondary">'+undo+button('Finish session','review-end','small outline')+'</div><p data-review-save-status role="status"></p>';
 }
 function sharedLibrary(){
  const view=state.sharedView||{rows:[],total:0,offset:0,limit:25};
@@ -574,7 +586,16 @@ function insertKey(value,backspace=false) {
 async function updatePreference(key,value) { await api('preferences',{[key]:value});await load(); }
 const learnerActions=new Set(['choice','check','token','remove-token','next-question','retry-question','inline-choice','review-reveal','review-rate','save-answer-position','recover-attempt','retry-continuing','key','backspace','cursor']);
 function learnerControlsActive(){return !state.panel&&!rehearsal&&!document.querySelector('dialog[open]')&&root.querySelector('.nav-shell')?.dataset.courseOverlay!=='true'&&!root.querySelector('#main-content')?.hasAttribute('inert');}
+function reviewStatus(text){
+ let status=root.querySelector('[data-review-save-status]');if(!status){status=document.createElement('p');status.dataset.reviewSaveStatus='';status.setAttribute('role','status');root.querySelector('.review-surface,.review-card')?.append(status);}
+ if(status){status.textContent=text;if(text.includes('unconfirmed')||text.includes('refresh is incomplete')){const check=document.createElement('button');check.textContent='Check saved review';check.onclick=()=>act('review-reconcile').catch(e=>toast(e.message));status.append(check);}}
+ root.querySelectorAll('[data-action="review-rate"],[data-action="review-reveal"],[data-action="review-undo"]').forEach(el=>el.disabled=!!text);
+}
+function reviewKey(key){if(state.page!=='review'||!state.reviewSession||state.panel||rehearsal||submitting||reviewSave?.blocked||reviewRevealPending||document.querySelector('dialog[open],[role="dialog"]')||!learnerControlsActive())return;const selector=key==='reveal'?'[data-action="review-reveal"]':state.revealReview?'[data-action="review-rate"][data-value="'+key+'"]':null;if(selector)learnerElements(selector)[0]?.click();}
+mountReviewKeys({document,active:()=>state.page==='review'&&!!state.reviewSession&&!state.panel&&!rehearsal&&!document.querySelector('dialog[open],[role="dialog"]'),onShortcut:reviewKey});
 async function act(action,value,source) {
+  if(reviewSave?.blocked&&!['review-reconcile','review-end','audio','voice-replay'].includes(action))return;
+
   if((submitting||pendingAttempt)&&['page','lesson','outline','step','latest-lesson','lesson-practice','retry-question','target-practice','mode','token','remove-token','choice','concept','inline-concept-close'].includes(action))return;
   if(learnerActions.has(action)&&(!learnerControlsActive()||source&&!activeLearnerDestination(source,true)))return;
   if(action==='author-inline'||action==='author-comments'){await openInlineAuthor(action==='author-inline');return;}
@@ -660,14 +681,36 @@ async function act(action,value,source) {
   if(action==='library-page'){state.libraryPage=Math.max(0,Number(value));render();return;}
   if(action==='review-demo'){const candidates=state.data.content.words.filter(w=>!w.noCard).slice(0,3);for(const w of candidates)if(!state.data.learner.cards[w.id])await api('enroll',{wordId:w.id});await load();render();toast('Existing synthetic words are ready for review.');return;}
   if(action==='review-start'){
+    reviewRevealPending=null;
     const limit=Number(document.querySelector('#review-limit').value),type=document.querySelector('#review-type').value;await api('preferences',{reviewLimit:limit,reviewType:type});await load();
     const ids=state.data.due.filter(({word:w})=>w.shared|| (type==='listening'?audioURL(w.audio):type==='sentence'?w.examples?.length:true)).slice(0,limit).map(({word:w})=>w.id);
     if(!ids.length){toast('No due cards have the source audio or examples needed for this presentation.');return;}state.reviewSession={ids,index:0,type};state.revealReview=false;render();return;
   }
-  if(action==='review-reveal'){if(sharedFrame)await sharedFrame.flush();state.revealReview=true;render();return;}
-  if(action==='review-rate'){await sharedFrame?.flush();const w=reviewWord();if(!w||!state.revealReview)return;try{await api('review',{requestId:uid(),wordId:w.id,rating:Number(value),expectedCard:state.data.learner.cards[w.id]});}catch(error){if(error.code==='REVIEW_CARD_CHANGED'){await load();render();}throw error;}clearRecording();state.recording='empty';state.reviewSession.index++;state.revealReview=false;await load();render();return;}
-  if(action==='review-undo'){const last=state.data.learner.lastReview;if(!last)return;await api('review/undo',{requestId:last.requestId});clearRecording();state.recording='empty';if(state.reviewSession){const index=state.reviewSession.ids.indexOf(last.wordId);if(index>=0)state.reviewSession.index=index;}state.revealReview=false;await load();render();toast('Previous review schedule restored.');return;}
-  if(action==='review-end'){clearRecording();state.recording='empty';state.reviewSession=null;state.revealReview=false;render();return;}
+  if(action==='review-reveal'){
+    if(reviewRevealPending||reviewSave?.blocked)return;
+    const operation={owner:state.user,session:state.reviewSession,index:state.reviewSession?.index,card:reviewWord()?.id,frame:sharedFrame};
+    if(!operation.session||!operation.card)return;reviewRevealPending=operation;
+    try{
+      if(operation.frame)await operation.frame.flush();
+      if(reviewRevealPending!==operation||state.user!==operation.owner||state.reviewSession!==operation.session||state.reviewSession.index!==operation.index||reviewWord()?.id!==operation.card||sharedFrame!==operation.frame||reviewSave?.blocked)return;
+      state.revealReview=true;render();root.querySelector('[data-action="review-rate"]')?.focus();
+    }finally{if(reviewRevealPending===operation)reviewRevealPending=null;}
+    return;
+  }
+  if(action==='review-reconcile'){await reviewSave?.reconcile();return;}
+  if(action==='review-rate'){
+    if(reviewRevealPending||reviewSave?.blocked)return;const w=reviewWord();if(!w||!state.revealReview)return;
+    const owner=state.user,session=state.reviewSession,index=session.index,ids=[...session.ids];
+    let save;save=createReviewSave({send:async(path,body,signal)=>{await sharedFrame?.flush();return api(path,body,owner,{},undefined,{signal});},status:text=>{if(reviewSave===save)reviewStatus(text);},apply:async(receipt,operation)=>{
+      const isCurrent=()=>operation.isCurrent()&&state.user===owner&&state.reviewSession===session&&reviewSave===save&&session.index===index;
+      if(!await loadReview({owner,signal:operation.signal,isCurrent})||!isCurrent())return;
+      reviewUndoQueue={requestId:receipt.requestId,session,ids,index};const due=new Set(state.data.due.map(c=>c.word.id));session.ids=ids.filter((id,i)=>i<=index||due.has(id));session.index=index+1;
+      clearRecording();state.recording='empty';state.revealReview=false;render();
+    }});
+    reviewSave=save;await save.commit({requestId:uid(),wordId:w.id,rating:Number(value),expectedCard:state.data.learner.cards[w.id]});return;
+  }
+  if(action==='review-undo'){const last=state.data.learner.lastReview;if(!last)return;await api('review/undo',{requestId:last.requestId});if(reviewUndoQueue?.requestId===last.requestId&&reviewUndoQueue.session===state.reviewSession){state.reviewSession.ids=reviewUndoQueue.ids;state.reviewSession.index=reviewUndoQueue.index;}clearRecording();state.recording='empty';if(state.reviewSession){const index=state.reviewSession.ids.indexOf(last.wordId);if(index>=0)state.reviewSession.index=index;}state.revealReview=false;await load();render();toast('Previous review schedule restored.');return;}
+  if(action==='review-end'){reviewRevealPending=null;reviewSave?.cancel();reviewSave=null;clearRecording();state.recording='empty';state.reviewSession=null;state.revealReview=false;render();return;}
   if(action==='studio-word'){state.wordId=value;render();return;}
   if(action==='report-resolve'){const [userId,requestId,status]=value.split('|');await api('reports/resolve',{userId,requestId,status});await load();render();return;}
   if(action==='comment-moderate'){const owner=state.user,[userId,requestId,choice]=value.split('|');rememberComposers();await api('questions/moderate',{userId,requestId,action:choice},owner);if(state.user!==owner)return;if(choice==='remove'){state.questions=state.questions.filter(q=>q.userId!==userId||q.requestId!==requestId);refreshComments();}await load();if(state.user===owner){refreshComments();toast(choice==='keep'?'Comment kept.':'Comment removed from learner discussion.');}return;}
@@ -699,11 +742,11 @@ function bind(scope=root) {
   scope.querySelector('#review-nikkud')?.addEventListener('change',async event=>{try{await updatePreference('reviewNikkud',event.target.value);}catch(error){toast(error.message);}});
 
   scope.querySelectorAll('[data-question-answer]').forEach(form=>form.addEventListener('submit',async event=>{event.preventDefault();const key=form.dataset.questionAnswer;if(state.replyPending[key])return;const text=form.querySelector('[name=answer]'),save=form.querySelector('button');state.replyPending[key]=true;state.replyErrors[key]='';text.readOnly=true;save.disabled=true;try{const [userId,requestId]=key.split('|');await api('questions/answer',{userId,requestId,answer:text.value});delete state.replyDrafts[key];form.closest('details').open=false;state.replyOpen[key]=false;state.replyPending[key]=false;await load();text.value=state.questions.find(q=>q.userId+'|'+q.requestId===key)?.answer||'';refreshComments();toast('Author reply saved.');}catch(error){state.replyErrors[key]=error.message;const live=[...root.querySelectorAll('[data-question-answer]')].find(f=>f.dataset.questionAnswer===key);if(live)live.querySelector('[data-reply-status]').textContent=error.message;}finally{state.replyPending[key]=false;const live=[...root.querySelectorAll('[data-question-answer]')].find(f=>f.dataset.questionAnswer===key);if(live){live.querySelector('[name=answer]').readOnly=false;live.querySelector('button').disabled=false;}}}));
-  Array.from(scope.querySelectorAll('[data-action]')).filter(el=>!el.closest('#hebleo-keyboard-root')).forEach(el=>el.addEventListener('click',async event=>{event.preventDefault();if(el.disabled||learnerActions.has(el.dataset.action)&&!activeLearnerDestination(el))return;const transient=!['audio','studio-choose-lesson'].includes(el.dataset.action);if(transient)el.disabled=true;try{await act(el.dataset.action,el.dataset.value,el);}catch(error){toast(error.message);}finally{if(el.isConnected&&transient)el.disabled=el.dataset.action==='record'?state.recording==='recording':el.dataset.action==='record-stop'?state.recording!=='recording':['check','choice','token','remove-token'].includes(el.dataset.action)&&Boolean(state.result||submitting||pendingAttempt);}}));
+  Array.from(scope.querySelectorAll('[data-action]')).filter(el=>!el.closest('#hebleo-keyboard-root')).forEach(el=>el.addEventListener('click',async event=>{event.preventDefault();if(el.disabled||learnerActions.has(el.dataset.action)&&!activeLearnerDestination(el))return;const transient=!['audio','studio-choose-lesson'].includes(el.dataset.action);if(transient)el.disabled=true;try{await act(el.dataset.action,el.dataset.value,el);}catch(error){toast(error.message);}finally{if(el.isConnected&&transient)el.disabled=['review-rate','review-reveal','review-undo'].includes(el.dataset.action)&&reviewSave?.blocked?true:el.dataset.action==='record'?state.recording==='recording':el.dataset.action==='record-stop'?state.recording!=='recording':['check','choice','token','remove-token'].includes(el.dataset.action)&&Boolean(state.result||submitting||pendingAttempt);}}));
   scope.querySelectorAll('[data-action="key"],[data-action="backspace"],[data-action="cursor"]').forEach(el=>el.addEventListener('pointerdown',event=>event.preventDefault()));
   scope.querySelector('#answer')?.addEventListener('input',event=>{state.answer=event.target.value;scheduleSave();});
   scope.querySelectorAll('[data-match]').forEach(el=>el.addEventListener('change',()=>{state.matching[el.dataset.match]=el.value;scheduleSave();}));
-  scope.querySelector('#demo-user')?.addEventListener('change',async event=>{const next=event.target.value;event.target.value=state.user;if(submitting||pendingAttempt)return;try{if(next===state.user||!await guardStudioDeparture('Change demo profile'))return;disposeTextReaders();rememberComposers();rememberNote();await flushSave();closePanel();clearRecording();authorContext=null;inlineAuthorStates.clear();state.user=next;localStorage.setItem('hebleo-demo-user',state.user);state.page='home';state.session=null;state.reviewSession=null;resetQuestion();await load();setRoute();render();}catch(error){toast(error.message);}});
+  scope.querySelector('#demo-user')?.addEventListener('change',async event=>{const next=event.target.value;event.target.value=state.user;if(submitting||pendingAttempt||reviewSave?.blocked)return;try{if(next===state.user||!await guardStudioDeparture('Change demo profile'))return;disposeTextReaders();rememberComposers();rememberNote();await flushSave();closePanel();clearRecording();authorContext=null;inlineAuthorStates.clear();state.user=next;localStorage.setItem('hebleo-demo-user',state.user);state.page='home';state.session=null;state.reviewSession=null;resetQuestion();await load();setRoute();render();}catch(error){toast(error.message);}});
   scope.querySelector('#library-search')?.addEventListener('input',event=>{const position=event.target.selectionStart;state.search=event.target.value;state.libraryPage=0;render();if(!event.isComposing)scheduleLexicalLibrary();const el=document.querySelector('#library-search');el.focus();el.setSelectionRange(position,position);});
   for(const [id,key] of [['source-category','sourceCategory'],['source-lesson','sourceLesson'],['library-tag','libraryTag'],['library-lesson','libraryLesson'],['library-state','libraryState']])scope.querySelector('#'+id)?.addEventListener('change',event=>{state[key]=event.target.value;state.libraryPage=0;render();scheduleLexicalLibrary(0);});
   scope.querySelectorAll('[data-preference]').forEach(el=>el.addEventListener('change',async()=>{try{await updatePreference(el.dataset.preference,el.checked);render();}catch(error){toast(error.message);}}));
@@ -721,7 +764,7 @@ function activeLearnerDestination(el,allowDisabled=false){
 }
 const learnerElements=selector=>Array.from(root.querySelectorAll(selector)).filter(el=>activeLearnerDestination(el));
 window.addEventListener('resize',()=>applyNavigation());navigationMotion?.addEventListener?.('change',()=>applyNavigation());
-document.addEventListener('keydown',event=>{exerciseDockBinding?.refresh?.();
+document.addEventListener('keydown',event=>{if(state.page==='review'&&state.reviewSession&&([' ','1','2','3','4'].includes(event.key)))return;exerciseDockBinding?.refresh?.();
   const navigationShell=root.querySelector('.nav-shell'),navigationOverlays=navigationShell?.dataset.courseOverlay==='true'?[root.querySelector('.app-header'),root.querySelector('#course-navigation')]:[];
   if(navigationOverlays.length&&!document.querySelector('dialog[open]')&&event.key==='Tab'){const controls=navigationOverlays.flatMap(el=>[...el.querySelectorAll('button:not(:disabled),a[href],summary,select:not(:disabled)')]).filter(navigationControlVisible);const first=controls[0],last=controls.at(-1);if(event.shiftKey&&(document.activeElement===first||!controls.includes(document.activeElement))){event.preventDefault();last?.focus();return;}if(!event.shiftKey&&(document.activeElement===last||!controls.includes(document.activeElement))){event.preventDefault();first?.focus();return;}}
   if(event.key==='Escape'&&!document.querySelector('dialog[open]')){const shell=root.querySelector('.nav-shell');if(shell?.dataset.mainOverlay==='true'||shell?.dataset.courseOverlay==='true'){event.preventDefault();act('navigation-close');return;}}
@@ -742,7 +785,7 @@ document.addEventListener('keydown',event=>{exerciseDockBinding?.refresh?.();
   if(event.key.toLowerCase()==='r'){const el=learnerElements('[data-action="audio-replay"]:not(:disabled)')[0];if(el){event.preventDefault();el.click();}}
 });
 async function routeFromURL() {
-  if(submitting||pendingAttempt){setRoute(true);return;}
+  if(submitting||pendingAttempt||reviewSave?.blocked){setRoute(true);return;}
   disposeTextReaders();const generation=++routeGeneration,parts=location.hash.slice(1).split('/');
   if(state.page==='studio'&&parts[0]!=='studio'&&!await guardStudioDeparture('Leave Studio through browser history')){setRoute(true);return;}
   rememberComposers();

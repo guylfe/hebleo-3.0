@@ -1,0 +1,3 @@
+/* Presentation inset inside the painted card, including its header controls. */
+.hc-card,.hc-card:has(.hc-verb-forms){box-sizing:border-box;width:100%;min-width:0;padding:16px}
+.hc-card .hc-theme-control{position:static;margin-inline-start:auto}
