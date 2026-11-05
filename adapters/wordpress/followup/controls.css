@@ -9,5 +9,3 @@
 #study-app #rating-save-status{order:4;overflow-wrap:anywhere}
 #study-app .review-reconcile{display:block;margin:16px auto 0;padding:8px 16px}
 @media(max-width:560px){#study-app .study-secondary-actions{padding:8px 12px 24px}}
-/* Both faces keep a content inset without padding the auto-sized iframe itself. */
-#study-app .card-side{box-sizing:border-box;min-width:0;padding:16px}

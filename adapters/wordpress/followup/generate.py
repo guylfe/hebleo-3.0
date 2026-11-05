@@ -38,4 +38,8 @@ s=s.replace('return await response.json();',"const result=await response.json();
 s=s.replace('// Initialize app and handle audio clicks',(here/'client.js').read_text(encoding='utf8')+'\n// Initialize app and handle audio clicks')
 s=s.replace('</style>',(here/'controls.css').read_text(encoding='utf8')+'\n</style>',1)
 (out/'archive-decks.php').write_text(s,encoding='utf8',newline='\n')
+# Put the shared inset inside each document, after existing responsive overrides.
+inset=(here.parents[2]/'src/shared-card-adapter/card-inset.css').read_bytes()
+(out/'study-layout').mkdir(exist_ok=True)
+(out/'study-layout/card-layout.css').write_bytes((base/'study-layout/card-layout.css').read_bytes()+inset)
 print(json.dumps({str(p.relative_to(out)).replace('\\','/'):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.rglob('*')) if p.is_file()},indent=2))
