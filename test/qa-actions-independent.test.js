@@ -143,3 +143,24 @@ for(const family of ['recognition','typing','ordering','matching','cloze','trans
 
 
 
+
+test('sentence modes retain both drafts across rapid switching, saved resume and typed grading',async t=>{
+ const store=new Store();t.after(()=>store.close());
+ const env=await app(t,{store,page:'lesson/lesson-2/apply'}),{doc,w}=env;
+ const mode=(d,v)=>d.querySelector('[data-action="sentence-mode"][data-value="'+v+'"]').click();
+ await settled(()=>doc.querySelector('[data-action="token"]'));
+ const tile=doc.querySelector('[data-action="token"]'),index=Number(tile.dataset.value);tile.click();
+ mode(doc,'complex');
+ const input=doc.querySelector('#answer');input.value='אני בבית';input.dispatchEvent(new w.Event('input',{bubbles:true}));
+ for(let i=0;i<4;i++){mode(doc,'simple');assert.equal(doc.querySelectorAll('[data-action="remove-token"]').length,1);mode(doc,'complex');assert.equal(doc.querySelector('#answer').value,'אני בבית');}
+ await settled(()=>store.learner('learner-demo').resumes['lesson-2']?.answer==='אני בבית');
+ const saved=store.learner('learner-demo').resumes['lesson-2'];assert.equal(saved.sentenceMode,'complex');assert.deepEqual(saved.selectedTokens,[index]);
+ const second=await app(t,{store,page:'lesson/lesson-2/apply'});
+ await settled(()=>second.doc.querySelector('#answer'));
+ assert.equal(second.doc.querySelector('#answer').value,'אני בבית');
+ mode(second.doc,'simple');assert.equal(second.doc.querySelectorAll('[data-action="remove-token"]').length,1);
+ mode(second.doc,'complex');click(second.doc,'check');
+ await settled(()=>second.doc.querySelector('.compact-result'));
+ assert.match(second.doc.querySelector('.compact-result').textContent,/Correct/);
+ assert.ok([...second.doc.querySelectorAll('[data-action="sentence-mode"]')].every(b=>b.disabled));
+});

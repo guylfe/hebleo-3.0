@@ -373,7 +373,7 @@ export class Store {
   saveProgress(userId, input) {
     const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     this.validateProgress(input, state);
-    const safe = { ...(input.componentId!==undefined ? {componentId:input.componentId} : {}), lessonId: input.lessonId, revisionId: input.revisionId, step: input.step, question: input.question, answer: input.answer, selectedTokens: input.selectedTokens, matching: input.matching, resultRequestId: input.resultRequestId || null, practiceIds: input.practiceIds || [], updatedAt: new Date().toISOString() };
+    const safe = { ...(input.componentId!==undefined ? {componentId:input.componentId} : {}), lessonId: input.lessonId, revisionId: input.revisionId, step: input.step, question: input.question, answer: input.answer, ...(input.sentenceMode!==undefined ? {sentenceMode:input.sentenceMode} : {}), selectedTokens: input.selectedTokens, matching: input.matching, resultRequestId: input.resultRequestId || null, practiceIds: input.practiceIds || [], updatedAt: new Date().toISOString() };
     // Optional lessons with no assessed questions complete only after an explicit,
     // validated Finish position. Merely opening a lesson never completes it.
     const content = this.snapshot(input.revisionId), lesson = content.lessons.find(l => l.id === input.lessonId);
@@ -470,6 +470,7 @@ export class Store {
     const exercise=content.exercises.find(e=>e.id===questionIDs[p.question]);
     // Saved matches belong to the matching question at this exact revision, step and position. Its authored pairs may use any pack word, not only the lesson's list.
     if (!p.matching || typeof p.matching !== 'object' || Array.isArray(p.matching) || Object.entries(p.matching).some(([k,v]) => !['check','apply'].includes(p.step) || exercise?.type !== 'matching' || !exercise.wordIds.includes(k) || typeof v !== 'string' || v.length > 1000)) throw new DomainError('Invalid saved matching answer.');
+    if(p.sentenceMode!==undefined && !['simple','complex'].includes(p.sentenceMode))throw new DomainError('Invalid sentence answer mode.');
     if(p.selectedTokens.length && (!exercise || exercise.type!=='ordering' || p.selectedTokens.some(i=>i>=orderingTokens(exercise,content,p.lessonId).length)))throw new DomainError('Invalid saved sentence tokens.');
     const receipts = p.resultRequestId ? state.attempts.filter(a => a.requestId === p.resultRequestId) : [];
     const result = receipts.length === 1 && receipts[0].revisionId === p.revisionId && receipts[0].lessonId === p.lessonId && receipts[0].exerciseId === questionIDs[p.question] ? receipts[0] : null;
