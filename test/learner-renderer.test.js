@@ -256,3 +256,22 @@ test('busy rehearsal disables every control and ignores clicks and shortcuts; a 
   assert.equal(p.root().getAttribute('aria-busy'), null);
   assert.equal(p.container.querySelectorAll('[data-preview-root]').length, 1);
 });
+
+test('sentence mode drafts survive preview remount and submit the active answer',t=>{
+ const {store,token}=fixture(t),session=store.previewSession({lessonId:'lesson-2',draftToken:token});
+ const env=direct(t,session,{lessonId:'lesson-2',step:'apply',exerciseId:'ex-2-order'});
+ const {container,w,calls}=env;
+ container.querySelector('[data-action="token"]').click();
+ container.querySelector('[data-action="sentence-mode"][data-value="complex"]').click();
+ const input=container.querySelector('#answer');input.value='אני בבית';input.dispatchEvent(new w.Event('input',{bubbles:true}));
+ container.querySelector('[data-action="sentence-mode"][data-value="simple"]').click();
+ assert.equal(container.querySelectorAll('[data-action="remove-token"]').length,1);
+ container.querySelector('[data-action="sentence-mode"][data-value="complex"]').click();
+ assert.equal(container.querySelector('#answer').value,'אני בבית');
+ const draft=calls.filter(c=>c[0]==='setAnswer').at(-1)[1];
+ const restored=direct(t,session,{lessonId:'lesson-2',step:'apply',exerciseId:'ex-2-order',answer:draft});
+ assert.equal(restored.container.querySelector('#answer').value,'אני בבית');
+ restored.container.querySelector('[data-action="check"]').click();
+ assert.equal(restored.calls.find(c=>c[0]==='submit')[1],'אני בבית');
+ assert.equal(draft.selectedTokens.length,1);
+});

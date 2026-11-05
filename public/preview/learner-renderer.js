@@ -62,6 +62,7 @@ const VOWELS=[
     ];
 const plainText = text => '<p style="white-space:pre-wrap">' + esc(text) + '</p>';
 const draftOf = answer => ({
+  ...(answer?.sentenceMode!==undefined ? {sentenceMode:answer.sentenceMode==='complex'?'complex':'simple'} : {}),
   text: typeof answer?.text === 'string' ? answer.text : '',
   matching: answer?.matching && typeof answer.matching === 'object' && !Array.isArray(answer.matching) ? Object.fromEntries(Object.entries(answer.matching).filter(([, v]) => typeof v === 'string')) : {},
   selectedTokens: Array.isArray(answer?.selectedTokens) ? answer.selectedTokens.filter(Number.isInteger) : []
@@ -220,6 +221,7 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           updateDraft({...draft, text:value}); keepKeys();
           if (preferences.immediateAnswers) submit();
         }
+        else if (action === 'sentence-mode') { if (!result && exercise?.type==='ordering' && ['simple','complex'].includes(value)) updateDraft({...draft, sentenceMode:value}); }
         else if (action === 'token') { if (!result) { updateDraft({...draft, selectedTokens:[...draft.selectedTokens, Number(value)]}); keepKeys(); } }
         else if (action === 'remove-token') { if (!result) { updateDraft({...draft, selectedTokens:draft.selectedTokens.filter((_, i) => i !== Number(value))}); keepKeys(); } }
         else if (action === 'check') submit();
