@@ -55,7 +55,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   Object.assign(w,{createStudioWorkspace,mountInlineAuthor,hasTextPages,mountTextReader,mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountTextImport,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   if(markdownDependencies){w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});w.mountInlineAuthor=(host,options)=>mountInlineAuthor(host,{...options,markdownDependencies:markdownDependencies(w)});}
   const calls=[];
-  w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?parseRequestBody(options.body):null;calls.push(url.pathname);try{let value;
+  w.fetch=async(path,options={})=>{if(options.signal&&!(options.signal instanceof AbortSignal)){const originalSignal=options.signal,controller=new AbortController();if(originalSignal.aborted)controller.abort();else originalSignal.addEventListener('abort',()=>controller.abort(),{once:true});options={...options,signal:controller.signal};}const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?parseRequestBody(options.body):null;calls.push(url.pathname);try{let value;
     if(realHTTP){if(reviewTransport&&url.pathname.startsWith('/api/review/'))return await reviewTransport({url,input,perform:()=>fetch(origin+url.pathname+url.search,options)});return await fetch(origin+url.pathname+url.search,options);}
     if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
     else if(url.pathname==='/api/text-progress'&&textProgressTransport)value=await textProgressTransport({user,input,query:url.searchParams});
@@ -63,7 +63,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else if(url.pathname==='/api/session')value=store.session(user,url.searchParams.get('lessonId'));
     else if(url.pathname==='/api/session/latest')value=store.startLatestLesson(user,input.lessonId);
     else if(url.pathname==='/api/progress')value=store.saveProgress(user,input);
-    else if(url.pathname==='/api/review/clock')value=store.reviewClock(user);
+    else if(url.pathname==='/api/review/clock')value=store.reviewClock(user,input);
     else if(url.pathname==='/api/review/background')value=store.backgroundReview(user,input);
     else if(url.pathname==='/api/review/status')value={receipt:store.get('review-'+user+'-'+url.searchParams.get('requestId'))||null};
     else if(url.pathname==='/api/review/undo')value=store.undoReview(user,input);
@@ -110,6 +110,32 @@ test('BACKGROUND actual app durable transaction failure retains revealed card an
  const {doc,store}=await app(t,{page:'review',realHTTP:true,reviewStorage,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});
  click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');const before=doc.querySelector('.review-card').textContent;fail=true;click(doc,'review-rate');await settled(()=>doc.querySelector('#toast').textContent.includes('storage failure'));
  assert.equal(doc.querySelector('.review-card').textContent,before);assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,0);assert(doc.querySelector('[data-action=review-rate]'));fail=false;
+});
+
+test('BACKGROUND Undo then rerate reacquires CAS anchor and commits a new learner choice',async t=>{
+ const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>store.learner('learner-demo').lastReview&&doc.querySelector('[data-action=review-undo]'));
+ const first=store.learner('learner-demo').lastReview.requestId;click(doc,'review-undo');await settled(()=>doc.querySelector('[data-action=review-reveal]')&&!doc.querySelector('[data-action=review-reveal]').disabled);click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>store.learner('learner-demo').lastReview?.requestId!==first&&store.learner('learner-demo').cards['w-ani'].repetitions===1);await settled(()=>!doc.body.textContent.includes('pending'));
+ assert(!doc.body.textContent.includes('need recovery'));
+});
+
+test('BACKGROUND authoritative shortened synthetic learning boundary returns through timed bootstrap',async t=>{
+ let storeRef,shorten=true;const {doc,store,w,calls}=await app(t,{page:'review',realHTTP:true,prepare(s){storeRef=s;s.enroll('learner-demo','w-ani');},reviewTransport:async({url,perform})=>{
+  const response=await perform();if(url.pathname!=='/api/review/background'||!shorten)return response;shorten=false;const receipt=await response.json(),state=storeRef.learner('learner-demo');
+  // Test-only 150ms due boundary, preserving the production algorithm unchanged.
+  state.cards[receipt.cardId].due=new Date(Date.now()+150).toISOString();state.lastReview.after=structuredClone(state.cards[receipt.cardId]);storeRef.saveLearner('learner-demo',state);receipt.authoritativeSchedule=receipt.card=structuredClone(state.cards[receipt.cardId]);receipt.resultingVersion=storeRef.reviewVersion(state,receipt.cardId);storeRef.set('review-learner-demo-'+receipt.requestId,receipt);return {ok:true,json:async()=>receipt};
+ }});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>store.learner('learner-demo').cards['w-ani'].repetitions===1);await settled(()=>doc.querySelector('[data-action=review-reveal]')&&!doc.querySelector('[data-action=review-reveal]').disabled);
+
+ assert.equal(doc.querySelector('[data-pronunciation-word]').dataset.pronunciationWord,'w-ani');assert.equal(store.bootstrap('learner-demo').due.length,1);click(doc,'review-end');await settled(()=>doc.querySelector('h2')?.textContent==='1 cards due');assert.equal(doc.querySelector('[data-action=review-start]').disabled,false);
+});
+
+test('BACKGROUND rejected card stays excluded until explicit fresh-state resolution; next choice gets a new ID',async t=>{
+ let conflict=true;const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');},reviewTransport:async({url,perform})=>{
+  if(url.pathname==='/api/review/background'&&conflict){conflict=false;const state=store.learner('learner-demo');state.cards['w-ani'].intervalDays=1;store.saveLearner('learner-demo',state);}return perform();
+ }});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>doc.body.textContent.includes('Resolve rejected rating'));assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,0);
+ const rejected=store.db.prepare("SELECT value FROM kv WHERE key LIKE 'review-learner-demo-%'").all().map(x=>JSON.parse(x.value)).find(x=>x.outcome==='rejected');assert(rejected);[...doc.querySelectorAll('button')].find(x=>x.textContent==='Resolve rejected rating').click();await settled(()=>doc.querySelector('[data-action=review-reveal]')&&!doc.querySelector('[data-action=review-reveal]').disabled);click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>store.learner('learner-demo').cards['w-ani'].repetitions===1);assert.notEqual(store.learner('learner-demo').lastReview.requestId,rejected.requestId);
 });
 
 test('F14 actual app backup download and confirmed HTTP restore retain exact comments, saved token and revision counts through three roundtrips',async t=>{

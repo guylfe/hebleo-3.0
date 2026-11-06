@@ -144,17 +144,37 @@ async function api(path, body, user=state.user, headers={},preparedBody,options=
 }
 function toast(message) { const box=document.querySelector('#toast');box.textContent=message;box.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>box.classList.remove('visible'),5000); }
 const reviewGroup=id=>/^sc-(mf-\d{6})-(he-en|en-he)$/.exec(id)?.[1]||id;
+let reviewDueSource=[],reviewDueTimer=null,reviewRefreshRunning=false;
+function scheduleReviewReturn(){
+ clearTimeout(reviewDueTimer);if(!reviewSave)return;
+ const now=reviewSave.now();if(!Number.isFinite(now))return;
+ const boundaries=reviewSave.snapshot().overlays.flatMap(r=>[Date.parse(r.authoritativeSchedule?.due),r.siblingsUntil]).filter(t=>Number.isFinite(t)&&t>now);
+ if(boundaries.length)reviewDueTimer=setTimeout(()=>refreshReviewDue().catch(error=>toast(error.message)),Math.min(2147483647,Math.max(25,Math.min(...boundaries)-now+25)));
+}
+async function refreshReviewDue(){
+ if(reviewRefreshRunning||!reviewSave)return;reviewRefreshRunning=true;
+ const save=reviewSave,owner=state.user,session=state.reviewSession,controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+ try{const data=await api('bootstrap',undefined,owner,{},undefined,{signal:controller.signal});
+  if(state.user!==owner||reviewSave!==save)return;
+  await save.observe(data);if(state.user!==owner||reviewSave!==save)return;
+  const hadCard=!!reviewWord();state.data=data;reviewDueSource=data.due;overlayReviews();
+  if(session&&session===state.reviewSession){for(const {word}of state.data.due)if(session.ids.indexOf(word.id)<session.index&&!session.ids.slice(session.index).includes(word.id))session.ids.push(word.id);}
+  if(!hadCard&&session===state.reviewSession&&session){await save.clock(session.ids.slice(session.index,session.index+100));if(state.user!==owner||reviewSave!==save||state.reviewSession!==session)return;}
+  if(state.page==='review'&&(!state.reviewSession||!hadCard)){state.revealReview=false;render();}
+ }finally{clearTimeout(timeout);reviewRefreshRunning=false;}
+}
 function overlayReviews(){
  if(!reviewSave||!state.data)return;
  const snap=reviewSave.snapshot();
  for(const receipt of snap.overlays)if(receipt.outcome==='committed'&&(state.data.learner.reviewGenerations?.[receipt.cardId]||0)<=(receipt.resultingGeneration||0))state.data.learner.cards[receipt.cardId]=receipt.authoritativeSchedule;
- state.data.due=state.data.due.filter(({word})=>!reviewSave.excluded(word.id,reviewGroup(word.id)));
+ state.data.due=reviewDueSource.filter(({word})=>!reviewSave.excluded(word.id,reviewGroup(word.id)));
+ scheduleReviewReturn();
 }
 async function ensureReviewOutbox(){
  if(reviewSave?.owner===state.user&&!reviewSave.snapshot().disposed)return reviewSave;
  reviewSave?.dispose();const owner=state.user;
  let save;save=createReviewSave({background:true,ownerId:owner,isActive:()=>state.user===owner,
- send:(path,body,signal)=>api(path,body,owner,{},undefined,{signal}),onChange:()=>{
+ getCardIds:()=>state.reviewSession?state.reviewSession.ids.slice(state.reviewSession.index,state.reviewSession.index+100):reviewDueSource.map(x=>x.word.id).slice(0,100),send:(path,body,signal)=>api(path,body,owner,{},undefined,{signal}),onChange:()=>{
   if(reviewSave!==save||state.user!==owner)return;
   overlayReviews();reviewPendingStatus();
   if(state.page==='review'&&(!state.reviewSession||!reviewWord())){render();reviewPendingStatus();}
@@ -165,6 +185,7 @@ async function ensureReviewOutbox(){
 function reviewPendingStatus(){
  if(!reviewSave)return;const snap=reviewSave.snapshot();
  reviewStatus(snap.error?'Pending reviews need recovery: '+snap.error:snap.pending.length?snap.pending.length+' review'+(snap.pending.length===1?'':'s')+' pending':'');
+ const rejected=snap.pending.find(x=>x.phase==='needs-resolution');if(rejected){const status=root.querySelector('[data-review-save-status]');if(status){status.textContent='Rating was not applied: '+rejected.receipt.reasonCode+'. ';const resolve=document.createElement('button');resolve.textContent='Resolve rejected rating';resolve.onclick=()=>act('review-resolve-rejected',rejected.intent.requestId).catch(error=>toast(error.message));status.append(resolve);}}
 }
 // Review refresh commits nothing until all reads and the captured operation are current.
 async function loadReview({owner,signal,isCurrent}) {
@@ -179,7 +200,7 @@ async function load() {
   const owner=state.user,page=state.page,data=await api('bootstrap',undefined,owner),questions=await api('questions',undefined,owner);
   const author=page==='studio'&&data.canAuthor,studio=author?await api('studio',undefined,owner):null,reports=author?await api('reports',undefined,owner):null;
   const sharedView=page==='library'&&state.libraryMode==='shared'&&data.sharedCollection?await api('shared-cards?'+new URLSearchParams({search:state.sharedSearch||'',offset:state.sharedView?.offset||0}),undefined,owner):data.sharedCollection;
-  if(state.user!==owner)return;state.sharedView=sharedView;state.data=data;state.questions=questions;const save=await ensureReviewOutbox();if(state.user!==owner||reviewSave!==save)return;await save.observe(data).catch(()=>{});if(state.user!==owner||reviewSave!==save)return;overlayReviews();if(author){state.studio=studio;state.reports=reports;}
+  if(state.user!==owner)return;state.sharedView=sharedView;state.data=data;reviewDueSource=data.due;state.questions=questions;const save=await ensureReviewOutbox();if(state.user!==owner||reviewSave!==save)return;await save.observe(data).catch(()=>{});if(state.user!==owner||reviewSave!==save)return;overlayReviews();if(author){state.studio=studio;state.reports=reports;}
 }
 // Studio writes name the draft they were built from, so a draft changed in another tab is never silently overwritten.
 function draftToken() { return authorContext?.owner===state.user?authorContext.workspace.expectedDraftToken:state.studio?.draft?.draftToken ?? null; }
@@ -721,6 +742,15 @@ async function act(action,value,source) {
     }finally{if(reviewRevealPending===operation)reviewRevealPending=null;}
     return;
   }
+  if(action==='review-resolve-rejected'){
+   const save=reviewSave,owner=state.user,session=state.reviewSession;const data=await api('bootstrap',undefined,owner);
+   if(state.user!==owner||reviewSave!==save||state.reviewSession!==session)return;
+   const intent=await save.resolveRejected(value,data);if(state.user!==owner||reviewSave!==save||state.reviewSession!==session)return;
+   state.data=data;reviewDueSource=data.due;overlayReviews();const eligible=state.data.due.some(x=>x.word.id===intent.cardId);
+   if(eligible&&session)session.ids.splice(session.index,0,intent.cardId);
+   state.revealReview=false;render();
+   const card=data.learner.cards[intent.cardId];toast(eligible?'Rating was not applied. The card is ready for a new choice.':!card?'Rating was not applied. This card is no longer available.':card.suspended?'Rating was not applied. This card is suspended.':Date.parse(card.due)>data.reviewClock?'Rating was not applied. This card is not due yet.':'Rating was not applied. A sibling restriction currently excludes this card.');return;
+  }
   if(action==='review-reconcile'){await reviewSave?.reconcile();return;}
   if(action==='review-rate'){
     if(reviewRevealPending||reviewSave?.blocked)return;const w=reviewWord();if(!w||!state.revealReview)return;
@@ -734,8 +764,8 @@ async function act(action,value,source) {
     while(session.index<session.ids.length&&save.excluded(session.ids[session.index],reviewGroup(session.ids[session.index])))session.index++;
     clearRecording();state.recording='empty';state.revealReview=false;overlayReviews();render();reviewPendingStatus();return;
   }
-  if(action==='review-undo'){const owner=state.user,session=state.reviewSession,save=reviewSave;await save?.drain();if(state.user!==owner||state.reviewSession!==session)return;await load();if(state.user!==owner||state.reviewSession!==session)return;const last=state.data.learner.lastReview;if(!last)return;await api('review/undo',{requestId:last.requestId},owner);await save?.clearOverlays(last.requestId);if(state.user!==owner||state.reviewSession!==session)return;if(reviewUndoQueue?.requestId===last.requestId&&reviewUndoQueue.session===state.reviewSession){state.reviewSession.ids=reviewUndoQueue.ids;state.reviewSession.index=reviewUndoQueue.index;}clearRecording();state.recording='empty';if(state.reviewSession){const index=state.reviewSession.ids.indexOf(last.wordId);if(index>=0)state.reviewSession.index=index;}state.revealReview=false;await load();render();toast('Previous review schedule restored.');return;}
-  if(action==='review-end'){reviewRevealPending=null;clearRecording();state.recording='empty';state.reviewSession=null;state.revealReview=false;render();return;}
+  if(action==='review-undo'){const owner=state.user,session=state.reviewSession,save=reviewSave;const resume=await save.pauseCapture();let released=false;const release=async()=>{if(!released){released=true;await resume();}};try{await save.drain();if(state.user!==owner||state.reviewSession!==session)return;await load();if(state.user!==owner||state.reviewSession!==session)return;const last=state.data.learner.lastReview;if(!last)return;await api('review/undo',{requestId:last.requestId},owner);await save?.clearOverlays(last.requestId);if(state.user!==owner||state.reviewSession!==session)return;if(reviewUndoQueue?.requestId===last.requestId&&reviewUndoQueue.session===state.reviewSession){state.reviewSession.ids=reviewUndoQueue.ids;state.reviewSession.index=reviewUndoQueue.index;}clearRecording();state.recording='empty';if(state.reviewSession){const index=state.reviewSession.ids.indexOf(last.wordId);if(index>=0)state.reviewSession.index=index;}state.revealReview=false;await load();await save.clock([last.wordId]);await release();render();toast('Previous review schedule restored.');}finally{await release();}return;}
+  if(action==='review-end'){reviewRevealPending=null;clearRecording();state.recording='empty';state.reviewSession=null;state.revealReview=false;render();void refreshReviewDue().catch(error=>toast(error.message));return;}
   if(action==='studio-word'){state.wordId=value;render();return;}
   if(action==='report-resolve'){const [userId,requestId,status]=value.split('|');await api('reports/resolve',{userId,requestId,status});await load();render();return;}
   if(action==='comment-moderate'){const owner=state.user,[userId,requestId,choice]=value.split('|');rememberComposers();await api('questions/moderate',{userId,requestId,action:choice},owner);if(state.user!==owner)return;if(choice==='remove'){state.questions=state.questions.filter(q=>q.userId!==userId||q.requestId!==requestId);refreshComments();}await load();if(state.user===owner){refreshComments();toast(choice==='keep'?'Comment kept.':'Comment removed from learner discussion.');}return;}
@@ -820,7 +850,7 @@ async function routeFromURL() {
 window.addEventListener('hebleo-keyboard-preference',async event=>{if(rehearsal)return;try{await api('preferences',event.detail);await load();}catch(error){toast(error.message);}});
 window.addEventListener('popstate',()=>routeFromURL());
 window.addEventListener('beforeunload',event=>{if(studioDirty()){event.preventDefault();event.returnValue='';}});
-window.addEventListener('pagehide',()=>{reviewSave?.dispose();disposeTextReaders();if(state.page==='lesson'&&state.session&&!inlineActive()){fetch('/api/progress',{method:'POST',headers:{'content-type':'application/json','x-demo-user':state.user},body:JSON.stringify(progressPayload()),keepalive:true}).catch(()=>{});}});
+window.addEventListener('pagehide',()=>{clearTimeout(reviewDueTimer);reviewSave?.dispose();disposeTextReaders();if(state.page==='lesson'&&state.session&&!inlineActive()){fetch('/api/progress',{method:'POST',headers:{'content-type':'application/json','x-demo-user':state.user},body:JSON.stringify(progressPayload()),keepalive:true}).catch(()=>{});}});
 load().then(routeFromURL).catch(error=>{root.innerHTML='<div class="card empty"><h1>Could not open the demo.</h1><p>'+esc(error.message)+'</p></div>';});
 
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&reviewSave)reviewSave.clock().catch(error=>toast(error.message));});
