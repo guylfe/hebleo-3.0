@@ -1,5 +1,7 @@
 # Background review integration — Lead evidence
 
+Current6November19:15Israel delivery: app785ab53 remains installed; WordPress corrected15a433f is now independently reviewed, preservation-installed and read back. See docs/WP_BACKGROUND_DELIVERY_20261106.md for current WordPress receipts, CI and limits. Earlier app-checkpoint statements below describe their named historical stage; the prior WordPress approval/install blocker is resolved.
+
 This change implements Guy's approved next-card-after-durable-capture behavior. The app's existing prototype interval scheduler and WordPress's existing FSRS remain separate algorithms. This report supplements the core and epoch reports; their earlier broad-suite and native limitations are historical findings on their named revisions.
 
 ## Integrated scope

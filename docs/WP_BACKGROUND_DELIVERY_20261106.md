@@ -1,6 +1,6 @@
 # WordPress background-saving integration and verification
 
-Current candidate source: `15a433fc17c350167ee80b6a01ece682bd8627a4`, recovered from the existing WordPress branch and integrated into Lead's isolated feature branch. The installed app785ab53 and its data/configuration are unchanged. WordPress production has not yet been installed at this checkpoint; independent corrected-candidate closure and guarded installation/readback remain Lead work.
+Current installed WordPress source: `15a433fc17c350167ee80b6a01ece682bd8627a4`, manifest849d1d9, installed **6 November2026,19:15:56 Israel time** at [deck49480](https://hebleo.com/decks/?deck=49480). Lead privately integrated the corrected result at5180c7c; later delivery-document commits do not change that executable artifact. The app remains installed at785ab53/runtimeab611aea and was not reinstalled or modified during WordPress recovery.
 
 ## Corrections and source identity
 
@@ -24,8 +24,24 @@ Lead's mounted Browser then exercised the exact final32 files on a disposable co
 
 Private evidence in this task: `.private/wp-browser-protocol-20261106/` contains PREPARED.json,01-held-response.json,02-lost-response.json,03-backend-readback.json,04-reload-recovered.json, screenshots, process/cleanup receipts and server logs. Lead's generated artifact and tests are `hebleo-background-review-20261106/evidence/candidate-protocol-lead*` and wp-protocol-lead-tests.log. Fixtures and databases are not committed.
 
-## Delivery gates and boundaries
+## Independent closure, installation and preservation
 
-Candidate WordPress reference CI42255574121 passed. Candidate app CI42255574445 was still running at its single read; no result is claimed here. Lead adds syntax guards for the new adapter source to WordPress CI; final integration CI is recorded after push.
+Architect's exact corrected-revision report closes all three original findings with no remaining P1/P2 blocker in its bounded review. It independently pins32/32candidate hashes, passes the original DOM regression7/7, corrected race suite13/13 and protocol/authentication probes26/26 including the original nine. Groups overlap and are not summed as unique scenarios. Exact report: `wp-background-architect-20261106/corrected-15a433f/REVIEW.md` in the Architect's delivered evidence. This is independent isolated source/DOM/PHP review; its author did not repeat the native database or Browser runs.
 
-Independent Architect corrected-revision review, fresh production backup, guarded file installation and destination/data preservation readback remain pending at this checkpoint. No new decks/features, app reinstall, reset/reseed or database rollback is part of this WordPress release. Native simultaneous-tab/suspension/device/accessibility and authenticated production review timing remain unverified. Existing streak update remains outside the scheduling transaction; exactly-once scheduling does not claim atomic streak recovery. Guy acceptance is unreported.
+Lead's five-position file interruption/retry/rollback/reinstall rehearsal passed21checks, including refusal to overwrite a newer external edit. An initial local rehearsal used an incomplete overlay as its baseline; the successful rehearsal first constructs and verifies the complete29-file baseline. Both results remain local; no production file was touched by that initial failure.
+
+A fresh full342-table InnoDB consistent SQL snapshot was created before deployment, outside the web root with private permissions. Compressed110,311,325bytes; expanded655,441,093bytes; SHA256 `6c49bd23e0b31484553836fc39653210d1851c3bc26ae51acb5cb64460cb0beb`; independently streamed gzip CRC32 `e246efc1` and expanded size match. It contains current data, not the older5November backup. No database backup was restored.
+
+The journaled file operator verified all29baseline hashes, protected-data fingerprints and backup integrity immediately before replacing two existing files and adding three assets. PHP backend/support assets were installed before the archive loader. Runtime files were atomically renamed and opcode caches invalidated. A separate fresh WordPress request verified all32destination hashes, loaded/registered background handler and exact learner/content fingerprints. Further real HTTP checks verified both served JavaScript hashes, deckHTTP200 and authentication rejection before mutation for clock/status/save. A final fresh request after these checks again verified all32files and unchanged protected state.
+
+Fresh preserved counts:2,967progress rows,2,118assignments,35settings,18streak rows,1,045notes and1,427source media files. Full row/metadata hashes cover progress, sessions, settings/rules, streaks, suspensions/import history, authored notes/posts/metadata/templates/deck, scheduler and burial metadata, plus media hashes. Their values match the fresh pre-install baseline exactly. Legitimate changes since the older5November receipt were preserved. No new deck, fake production review, reset/reseed, source rewrite or app reinstall occurred.
+
+Server-private rollback/evidence root: `/mnt/customers/customers-bh-1pq6z0/0b7a70f4-6a9a-447d-82d7-6994b9475791/.hebleo-background-review-20261106-1907`. It contains before/, candidate/, manifest, file journal/operator, fresh SQL snapshot/integrity receipt and stage/install/destination/HTTP/final-preservation receipts. Code rollback uses `hs_execute(root,actualPluginRoot,'before')`; added assets remain inert. Never roll back the database over later learner activity.
+
+Local receipts: task `.private/wp-release-20261106/{STAGED,BACKUP,BACKUP-VERIFIED,INSTALLED,DESTINATION,HTTP-READBACK,FINAL-PRESERVATION}.json`. Backup contents stay on the server; only counts/hashes/code receipts are retained locally. Production Browser evidence shows an anonymous account(ownerId0) and `Please log in to study`; no authenticated production study or timing is claimed. Browser returned to blank after inspection. The native authenticated timing/recovery evidence above remains explicitly disposable, plain-template evidence.
+
+## CI and remaining evidence boundaries
+
+Both integration5180c7c feature checks passed: [WordPress42257512063](https://github.com/guylfe/hebleo-3.0/actions/runs/42257512063) and [Local demo42257511947](https://github.com/guylfe/hebleo-3.0/actions/runs/42257511947). After private main integration, [WordPress42259981488](https://github.com/guylfe/hebleo-3.0/actions/runs/42259981488) passed; [Local demo42259981557](https://github.com/guylfe/hebleo-3.0/actions/runs/42259981557) was running at its single read. A bounded follow-up reports that and the final documentation check; no polling or further installation is required for CI.
+
+Native simultaneous-tab/suspension/device/accessibility, shared iframe/media latency on WordPress and authenticated production review timing remain unverified. Existing streak update remains outside the scheduling transaction; exactly-once scheduling does not claim atomic streak recovery. Guy acceptance is unreported. Implementation, guarded installation, exact destination/preservation readback and the original three correctness findings are complete.
