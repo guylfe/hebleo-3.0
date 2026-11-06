@@ -18,17 +18,37 @@
   queue.subscribe(()=>{status();scheduleRefresh();});queue.ready.catch(e=>status(e.message));return queue;
  }
  function status(error){const a=ownerApp;if(!a)return;let n=document.getElementById('background-review-status');if(!n){n=document.createElement('p');n.id='background-review-status';n.setAttribute('role','status');document.getElementById('study-app')?.append(n);}const s=queue?.snapshot();n.textContent=error||s?.error||(s?.pending.length?`Saving ${s.pending.length} review${s.pending.length===1?'':'s'}…`:'');
-  if(s?.error){const b=document.createElement('button');b.type='button';const reject=s.pending.find(x=>x.phase==='needs-resolution');b.textContent=reject?'Refresh rejected rating':'Retry saved reviews';b.onclick=async()=>{b.disabled=true;try{if(reject){const cards=await fresh(a);if(!cards)throw Error('Refresh superseded; reopen recovery.');await queue.resolveRejected(reject.intent.requestId,reject.receipt.intentHash);a.cards=cards.filter(c=>allowed(c)&&(!a.currentCard||cid(c)!==cid(a.currentCard)));}else await queue.retry();status();}catch(e){status(e.message);}};n.append(' ',b);}
+  if(s?.error){const b=document.createElement('button');b.type='button';const reject=s.pending.find(x=>x.phase==='needs-resolution');b.textContent=reject?'Refresh rejected rating':'Retry saved reviews';b.onclick=async()=>{b.disabled=true;try{if(reject){const observed=await fresh(a);if(!observed)throw Error('Refresh superseded; reopen recovery.');await queue.resolveRejected(reject.intent.requestId,reject.receipt.intentHash);const cards=observed.afterResolution(reject.intent.requestId);if(!cards)throw Error('Refresh superseded; reopen recovery.');a.cards=cards.filter(c=>!a.currentCard||cid(c)!==cid(a.currentCard));}else await queue.retry();status();}catch(e){status(e.message);}};n.append(' ',b);}
  }
- async function acquire(cards){const version=++epoch;anchors.clear();const ids=[...new Set(cards.map(cid))];for(let offset=0;offset<ids.length;offset+=100){const r=await transport('hebleo_bg_clock',{card_ids:JSON.stringify(ids.slice(offset,offset+100))});if(version!==epoch)return;const at=performance.now();for(const a of r.anchors)anchors.set(a.cardId,{...a,base:r.serverNow-a.issuedAt,at});}}
+ async function acquire(cards){const version=++epoch;anchors.clear();const ids=[...new Set(cards.map(cid))];for(let offset=0;offset<ids.length;offset+=100){const r=await transport('hebleo_bg_clock',{card_ids:JSON.stringify(ids.slice(offset,offset+100))});if(version!==epoch)return null;const at=performance.now();for(const a of r.anchors)anchors.set(a.cardId,{...a,base:r.serverNow-a.issuedAt,at,serverNow:r.serverNow});}return version;}
  const allowed=c=>!queue?.excluded(cid(c),group(c));
- async function fresh(a){if(!active||!a.currentDeck)return;const deck=a.currentDeck;const r=await prior.makeRequest.call(a,'start_study_session',{deck_id:deck});if(!r?.success)throw Error('Unable to refresh authoritative card state.');if(deck!==a.currentDeck||!active)return;const cards=r.data.cards;await acquire(cards);if(deck!==a.currentDeck||!active)return;
+ // Snapshot BEFORE the authoritative request. A receipt acknowledged while the
+ // request is in flight cannot be retired by that request's older response.
+ async function observation(a){const q=getQueue(a);await q.ready;await q.reconcile(()=>false);return {q,...q.snapshot()};}
+ const sameReceipt=(a,b)=>a.requestId===b.requestId&&a.intentHash===b.intentHash&&a.cardId===b.cardId&&a.expectedVersion===b.expectedVersion&&a.resultingVersion===b.resultingVersion;
+ function observedAllowed(c,before,retired){const at=now(),id=cid(c),note=group(c);return allowed(c)&&!before.pending.some(e=>e.intent.cardId===id||e.intent.siblingGroupId===note)&&!before.overlays.some(r=>r.cardId!==id&&r.siblingGroupId===note&&(!Number.isFinite(at)||r.siblingsUntil>at)||r.cardId===id&&!retired.has(r.requestId)&&(!Number.isFinite(at)||Date.parse(r.authoritativeSchedule?.due)>at));}
+ async function reconcileObserved(cards,before,valid){const token=await acquire(cards);if(token===null||!valid()||before.q!==queue)return null;
+  const current=()=>active&&queue===before.q&&epoch===token&&valid(),retired=new Set(),byId=new Map(cards.map(c=>[cid(c),c]));
+  await before.q.reconcile(r=>{
+   if(!current()||!before.overlays.some(old=>sameReceipt(old,r)))return false;
+   const c=byId.get(r.cardId),anchor=anchors.get(r.cardId);
+   // Opaque hashes are not ordered: evidence is a subsequent authoritative due
+   // queue plus matching fresh clock state, distinct from both older versions.
+   if(!c||!anchor||anchor.expectedVersion!==c.review_version||!Number.isSafeInteger(anchor.serverNow)||anchor.serverNow<r.committedAt||c.review_version===r.resultingVersion||c.review_version===r.expectedVersion)return false;
+   retired.add(r.requestId);return true;
+  });
+  if(!current())return null;
+  // Retain the observation's sibling/pending fences even after retirement, so
+  // a response started before a concurrent commit cannot resurrect its cards.
+  return {cards:cards.filter(c=>observedAllowed(c,before,retired)),afterResolution(requestId){if(!current())return null;const resolved={...before,pending:before.pending.filter(e=>e.intent.requestId!==requestId)};return cards.filter(c=>observedAllowed(c,resolved,retired));}};
+ }
+ async function fresh(a){if(!active||!a.currentDeck)return;const deck=a.currentDeck,before=await observation(a);const r=await prior.makeRequest.call(a,'start_study_session',{deck_id:deck});if(!r?.success)throw Error('Unable to refresh authoritative card state.');if(deck!==a.currentDeck||!active)return;const observed=await reconcileObserved(r.data.cards,before,()=>deck===a.currentDeck);if(!observed)return;const cards=observed.cards;
   // Server queue is the sole authority for learning return. Never replace a revealed card.
   a.cards=cards.filter(c=>allowed(c)&&(!a.currentCard||cid(c)!==cid(a.currentCard)||a.currentView!=='study'));
-  status();scheduleRefresh();return cards;
+  status();scheduleRefresh();return observed;
  }
  function scheduleRefresh(){clearTimeout(refreshTimer);if(!queue||!active||!ownerApp?.currentDeck)return;const s=queue.snapshot(),at=now();if(!Number.isFinite(at))return;const times=s.overlays.flatMap(r=>[Date.parse(r.authoritativeSchedule.due),r.siblingsUntil]).filter(t=>Number.isFinite(t)&&t>at);if(times.length)refreshTimer=setTimeout(()=>fresh(ownerApp).catch(e=>status(e.message)),Math.min(2147483647,Math.max(50,Math.min(...times)-at+50)));}
- Study.prototype.makeRequest=async function(action,data,options){const r=await prior.makeRequest.call(this,action,data,options);if(action==='start_study_session'&&r?.success){await getQueue(this).ready;await acquire(r.data.cards);r.data.cards=r.data.cards.filter(allowed);}return r;};
+ Study.prototype.makeRequest=async function(action,data,options){const before=action==='start_study_session'?await observation(this):null;const r=await prior.makeRequest.call(this,action,data,options);if(before&&r?.success){const observed=await reconcileObserved(r.data.cards,before,()=>active);if(!observed)throw Error('Review refresh superseded. Reopen the deck.');r.data.cards=observed.cards;}return r;};
  Study.prototype.nextCard=function(){this.cards=this.cards.filter(allowed);return prior.nextCard.call(this);};
  Study.prototype.renderStudyInterface=function(){prior.renderStudyInterface.call(this);status();};
  Study.prototype.showSessionComplete=function(){this.currentView='complete';this.currentCard=null;prior.showSessionComplete.call(this);status();};

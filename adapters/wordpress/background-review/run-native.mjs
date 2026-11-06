@@ -5,7 +5,7 @@ import {spawn,execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {createHash} from 'node:crypto';
 const run=promisify(execFile), root=process.argv[2], php=process.argv[3], work=path.join(root,'flashcard-followup-20261104/work/wordpress');
-const fixture=path.resolve('evidence/'+(process.argv[4]||'native2')), source=path.join(root,'wordpress-shared-cards/native'), candidate=path.resolve('evidence/candidate-reviewed');
+const fixture=path.resolve('evidence/'+(process.argv[4]||'native2')), source=path.join(root,'wordpress-shared-cards/native'), candidate=path.resolve(process.env.WP_BACKGROUND_CANDIDATE||'evidence/candidate-protocol-final');
 const sched=path.resolve('adapters/wordpress/study-scheduler'), dbbin=path.join(source,'db/mariadb-11.4.13-winx64/bin'), port=33539;
 if(fs.existsSync(fixture))throw Error('Refuse fixture reuse');
 await new Promise((resolve,reject)=>{const s=net.createServer();s.once('error',reject);s.listen(port,'127.0.0.1',()=>s.close(resolve));});
@@ -53,6 +53,18 @@ try{
 
  console.log((await logged('background',php,[...phpargs,path.resolve('adapters/wordpress/background-review/native.php'),fixture])).stdout.trim());
 
+
+ const protocolProbe=await logged('architect-protocol-probe',php,[...phpargs,path.resolve('adapters/wordpress/background-review/protocol-probe.php'),path.join(wp,'wp-includes/pluggable.php'),plugin]);console.log('Architect protocol probes '+JSON.parse(protocolProbe.stdout).results.length+' passed');
+ const transportResults=[];
+ for(const mode of ['rollover','legacy-rollover','retry-rollover','at-now','future-1','future-999','future-1000','future-50000','future-120001','invalid-nonce','wrong-owner','wrong-site','cross-origin']){
+  const result=await logged('transport-'+mode,php,[...phpargs,path.resolve('adapters/wordpress/background-review/native-transport.php'),fixture,mode]);
+  const reply=JSON.parse(result.stdout),state=JSON.parse(fs.readFileSync(path.join(fixture,'transport-'+mode+'.json'),'utf8'));
+  if(['rollover','legacy-rollover','retry-rollover','at-now'].includes(mode)){if(!reply.success||state.receipt?.outcome!=='committed'||state.receipt.acceptedAnswerAt!==state.capturedAnswer||state.lastReviewMs!==state.capturedAnswer||state.reps!==1||state.receipt.requestId!==state.requestId||state.receipt.intentHash!==state.intentHash)throw Error('Transport acceptance '+mode);}
+  else if(mode.startsWith('future-')){if(!reply.success||state.receipt?.outcome!=='rejected'||state.receipt.reasonCode!=='future-answer'||!state.unchanged||state.receipt.intentHash!==state.intentHash)throw Error('Transport future rejection '+mode);}
+  else if(reply.success||!state.unchanged||state.receipt!==null)throw Error('Transport auth '+mode);
+  transportResults.push({mode,passed:true,reply,state});
+ }
+ fs.writeFileSync(path.join(fixture,'TRANSPORT_NATIVE.json'),JSON.stringify(transportResults,null,2));console.log('Actual nonce/auth/future handler cases '+transportResults.length+' passed');
  const bgpath=path.resolve('adapters/wordpress/background-review/native.php');
  const ca=spawn(php,[...phpargs,bgpath,fixture,'A'],{windowsHide:true});children.push(ca);let barrier='';
  const adone=new Promise((resolve,reject)=>ca.once('exit',c=>c===0?resolve():reject(Error('BG A '+c))));adone.catch(()=>{});

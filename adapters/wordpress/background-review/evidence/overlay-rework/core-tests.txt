@@ -1,0 +1,24 @@
+✔ capture completes independently of slow backend; ordered head cannot be overtaken (20.438ms)
+ℹ durable capture 3.8ms; backend deliberately held until assertions
+✔ unavailable storage never accepts; dispose preserves reload intents; account scope parks replay (46.2674ms)
+✔ simultaneous tabs atomically exclude opposite siblings; receipt hash mismatch retains head (15.7669ms)
+✔ lost committed response reconciles by immutable receipt exactly once after reload (31.572ms)
+✔ trusted clock, immutable replay, ABA Undo, expired receipt recovery and backup/reopen (66.7854ms)
+✔ HTTP contract enforces scope, suspended/version changes, future/regressed clocks (76.6584ms)
+✔ lease takeover during unabortable HTTP fences stale acknowledgment and retains exact head (59.1451ms)
+✔ authoritative learning return keeps siblings hidden and requires resulting version; backlog is bounded (17.2425ms)
+✔ incomplete matching-hash receipts never acknowledge; rejected heads persist and resolve only by identity (59.2175ms)
+✔ server rejection tombstone survives repair, Undo and backup without changing review state (4.7286ms)
+✔ selective reusable clock anchors do not multiply with normal refreshes (35.2066ms)
+✔ resume refresh blocks old anchors, ignores superseded responses and uses trusted elapsed clock (21.7001ms)
+✔ durable Undo pause fences captures in other tabs while sender still drains (15.1444ms)
+✔ expired Undo pause cannot renew or retake ownership from a new client (63.7021ms)
+✔ Undo pause renewal storage failure is terminal for that handle (46.5473ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1934.0352

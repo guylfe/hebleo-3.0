@@ -1,0 +1,38 @@
+✔ WP actual keys: next visible after durable capture while save held, siblings masked, Finish drains (128.7466ms)
+ℹ capture-to-next-visible 9.8ms; backend held separately through second capture and Finish
+✔ WP unavailable durable storage keeps revealed card recoverable (12.6791ms)
+✔ WP stale refresh cannot restore pending siblings and resume requires new timing choice (48.9196ms)
+✔ WP durable write failure after reveal never advances or counts (12.2139ms)
+✔ WP learning return requires authoritative due/version and never advances current card (18.4787ms)
+✔ WP authoritative later version can be rated after a settled older receipt (37.205ms)
+✔ WP definitive rejection retained until explicit authoritative refresh, never silently resent (28.1232ms)
+✔ WP repeated authoritative later versions retire only settled matching overlays (80.7081ms)
+✔ WP fresh: acknowledgement arriving after refresh began survives stale response (32.1298ms)
+✔ WP restart: acknowledgement arriving after refresh began survives stale response (48.9942ms)
+✔ WP stale refresh cannot retire newer settled overlay or resurrect newer pending siblings (47.0263ms)
+✔ WP restarted and newly loaded sessions reconcile authoritative later versions from durable overlays (46.3161ms)
+✔ WP retirement requires a matching fresh clock and excludes the old pre-review version (22.0448ms)
+✔ capture completes independently of slow backend; ordered head cannot be overtaken (12.864ms)
+ℹ durable capture 4.8ms; backend deliberately held until assertions
+✔ unavailable storage never accepts; dispose preserves reload intents; account scope parks replay (59.5002ms)
+✔ simultaneous tabs atomically exclude opposite siblings; receipt hash mismatch retains head (15.477ms)
+✔ lost committed response reconciles by immutable receipt exactly once after reload (29.8826ms)
+✔ trusted clock, immutable replay, ABA Undo, expired receipt recovery and backup/reopen (76.7457ms)
+✔ HTTP contract enforces scope, suspended/version changes, future/regressed clocks (82.0137ms)
+✔ lease takeover during unabortable HTTP fences stale acknowledgment and retains exact head (68.5433ms)
+✔ authoritative learning return keeps siblings hidden and requires resulting version; backlog is bounded (17.4473ms)
+✔ incomplete matching-hash receipts never acknowledge; rejected heads persist and resolve only by identity (66.3345ms)
+✔ server rejection tombstone survives repair, Undo and backup without changing review state (5.3302ms)
+✔ selective reusable clock anchors do not multiply with normal refreshes (36.4891ms)
+✔ resume refresh blocks old anchors, ignores superseded responses and uses trusted elapsed clock (9.1241ms)
+✔ durable Undo pause fences captures in other tabs while sender still drains (16.1451ms)
+✔ expired Undo pause cannot renew or retake ownership from a new client (66.7671ms)
+✔ Undo pause renewal storage failure is terminal for that handle (48.8708ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1904.2016

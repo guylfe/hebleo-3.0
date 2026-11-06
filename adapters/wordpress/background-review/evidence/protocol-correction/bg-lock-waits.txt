@@ -1,0 +1,2 @@
+requesting_trx_id	requested_lock_id	blocking_trx_id	blocking_lock_id
+1785	1785:20:4:49	1784	1784:20:4:49

@@ -1,0 +1,28 @@
+✖ WP authoritative later version can be rated after a settled older receipt (182.7618ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3243.3124
+
+✖ failing tests:
+
+test at adapters\wordpress\background-review\client.test.mjs:32:1
+✖ WP authoritative later version can be rated after a settled older receipt (182.7618ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///C:/Users/Trans/.openmausbot/task-workspaces/87d0667d-8e06-4e26-bc79-5a718991b13c/e8d802de-62e1-4bd5-93df-45ba6190ddee/wp-background/adapters/wordpress/background-review/client.test.mjs:36:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
