@@ -1,0 +1,50 @@
+{
+  "base": "5924fb54fc78647ecc06b9f2e90b57d29e559e7c",
+  "files": [
+    {
+      "path": "public/review-outbox.js",
+      "preparedSourceSHA256": null,
+      "candidateSHA256": "94f416a5dfee403f3b16513e6ae842fe0d42087b1fb52d2297cdcb636cec9825"
+    },
+    {
+      "path": "public/review-save.js",
+      "preparedSourceSHA256": "eba09b7f7893272556a117abaf6d5c1520522c2d9b4934ab50a62160ecea4c5a",
+      "candidateSHA256": "b5e95badf2279523fef6cbf1aff02a6cabd8a3029ab2cbb088b256b7d201c14e"
+    },
+    {
+      "path": "public/app.js",
+      "preparedSourceSHA256": "fe5142fc5e77751f319f34ac3f18701c5b3514de8febf25581fcc76ae43f7d81",
+      "candidateSHA256": "1e92c0fc514ae65221bfd5b147f0f4554e4ec4f0c4d204254943aa78433c691e"
+    },
+    {
+      "path": "src/store.js",
+      "preparedSourceSHA256": "b2ae5bcc30ae23c454215c30b52f24342350445438adf794a28ab20d4fe0f801",
+      "candidateSHA256": "5b92fbc0097ce89fcbc6f83a1b530444c63f3660673638bd0bd07f2a3a18ab65"
+    },
+    {
+      "path": "src/server.js",
+      "preparedSourceSHA256": "6b985ead56310b54e6eb824b02a02b9f0b9202a981a501532360aebe30d0f53c",
+      "candidateSHA256": "b2d96b40b9e25b539a1faf02ed4b8beb6edf801e6a29748e3eba20f91780ce9a"
+    },
+    {
+      "path": "package.json",
+      "preparedSourceSHA256": "eba1a9fe12551043bdbb9310cf5745fbb71eded4bd466c478a3d6ff789722e53",
+      "candidateSHA256": "7d546cd9d81f3ea765a047d7f3eb75be16c1ef2b50d38f6db3df279571cacdbb"
+    },
+    {
+      "path": "package-lock.json",
+      "preparedSourceSHA256": "e86e3e61121e8d6fd3a86acfba5e8af9d46b498b45d89970e4f8d352e68566f5",
+      "candidateSHA256": "7d163174a3b6e5a7f056026102f212a81ba4caa4b30f674161aea840b37df26f"
+    },
+    {
+      "path": "test/app.test.js",
+      "preparedSourceSHA256": "68e0309de5bed19c653980b3eca0f0d33f6725e00e62e6353cfd7d515f9b3759",
+      "candidateSHA256": "46f25d3a4aca701bcb9141a93f9b7940d70e7d6383d180145fd5e475f4df4e14"
+    },
+    {
+      "path": "test/background-review.test.js",
+      "preparedSourceSHA256": null,
+      "candidateSHA256": "ea7d407436870a06316b6a865702e9516d0a28bbddcbc6416051d17ed2f7ddc4"
+    }
+  ]
+}

@@ -1,5 +1,8 @@
 // Writes, receipt reads and authoritative refresh each belong to one cancellable operation.
-export function createReviewSave({send,status,apply,timeoutMs=15000}){
+import './review-outbox.js';
+export function createReviewSave(options){
+ if(options.background)return createBackgroundReview(options);
+ const {send,status,apply,timeoutMs=15000}=options;
  let pending=false,unconfirmed=null,confirmedReceipt=null,active=null;
  const recovery=()=>confirmedReceipt
   ?'Review saved, but refresh is incomplete. Check saved review, or finish and reopen the overview before continuing.'
@@ -43,5 +46,33 @@ export function createReviewSave({send,status,apply,timeoutMs=15000}){
    return operation(async context=>{const result=await send('review/status?'+new URLSearchParams({requestId:unconfirmed.requestId}),undefined,context.signal);await finish(result.receipt,context);});
   },
   cancel(){const previous=active;active=null;pending=false;previous?.controller.abort(Error('Review context ended.'));}
+ };
+}
+
+function createBackgroundReview({ownerId,siteId='hebleo-local-demo',send,isActive,onChange=()=>{},...options}){
+ let anchors={},anchoredAt=0,capturing=false;
+ const queue=globalThis.HebleoReviewOutbox.create({...options,siteId,ownerId,isActive,
+  send:(intent,signal)=>send('review/background',intent,signal),
+  lookup:async(intent,signal)=>(await send('review/status?'+new URLSearchParams({requestId:intent.requestId}),undefined,signal)).receipt});
+ queue.subscribe(onChange);
+ async function clock(){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);try{const result=await send('review/clock',{},controller.signal);if(!isActive())throw Error('Review account changed.');anchors=result.anchors;anchoredAt=performance.now();}finally{clearTimeout(timer);}}
+ return {ready:queue.ready,snapshot:queue.snapshot,excluded:queue.excluded,reconcile:queue.retry,retry:queue.retry,
+  get blocked(){return capturing||queue.blocked;},clock,
+  async commit({cardId,rating,requestId}){
+   if(capturing)throw Error('A rating is already being captured.');capturing=true;
+   try{const anchor=anchors[cardId];if(!anchor||performance.now()-anchoredAt>300000) {await clock();throw Error('Review clock refreshed. Choose your rating again.');}
+    const {clockTicketId,expectedVersion,siblingGroupId}=anchor;
+    return await queue.capture({protocolVersion:1,siteId,ownerId,requestId,cardId,siblingGroupId,expectedVersion,rating,clockTicketId,elapsedMs:Math.max(0,performance.now()-anchoredAt)});
+   }finally{capturing=false;}
+  },dispose:queue.dispose,cancel:queue.dispose,async drain(){
+   await queue.retry();if(!queue.snapshot().pending.length)return;
+   await new Promise((resolve,reject)=>{let unsubscribe=()=>{},timer;
+    const done=error=>{clearTimeout(timer);unsubscribe();error?reject(error):resolve();};
+    timer=setTimeout(()=>done(Error('Pending reviews need recovery before Undo.')),20000);
+    unsubscribe=queue.subscribe(snapshot=>{if(snapshot.error)done(Error(snapshot.error));else if(!snapshot.pending.length)done();});
+   });
+  },
+  async observe(data){await queue.reconcile(r=>Number.isSafeInteger(r.resultingGeneration)&&(data.learner.reviewGenerations?.[r.cardId]||0)>=r.resultingGeneration&&data.reviewVersions?.[r.cardId]!==r.resultingVersion);},
+  async clearOverlays(requestId){await queue.reconcile(receipt=>receipt.requestId===requestId);}
  };
 }
