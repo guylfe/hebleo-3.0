@@ -1,0 +1,17 @@
+import {execFileSync} from 'node:child_process';import fs from 'node:fs';import path from 'node:path';import {createHash} from 'node:crypto';import {fileURLToPath} from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url)),repo=path.resolve(here,'../../..');
+const core=execFileSync('git',['show','6f1ec28:public/review-outbox.js'],{cwd:repo});const coreHash=createHash('sha256').update(core).digest('hex');if(coreHash!=='6a69e152548e07005c6526557abcad5924ca94e9b30a40bc37de38a1e8329ad2')throw Error('Reviewed core drift');
+const [base,out,original]=process.argv.slice(2);if(!base||!out||path.resolve(base)===path.resolve(out)||fs.existsSync(out))throw Error('Supply current 29-file baseline and a NEW output directory');
+const hash=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const pins={'archive-decks.php':'0c0f7dbf2dd519de89cef7655716d633b2c380b009c86cdee0e4afedc4395ded','study-followup/state.php':'39e9ee3e65860262ed91f9dcd59d37e1e05ab43f49200c09cf24497b13994b2a','study-layout/card-layout.css':'dc243b380ce007454cdff7b5a8895ea3f388832c9cc4bd06d3a93f7e96c0c36e'};
+for(const [p,h] of Object.entries(pins))if(hash(path.join(base,p))!==h)throw Error('Baseline drift: '+p);
+if(!original)throw Error('Supply full original plugin as third argument');for(const [name,digest] of Object.entries(JSON.parse(fs.readFileSync(path.join(here,'../followup/BASELINE.json'),'utf8')))){if(hash(path.join(original,name))!==digest)throw Error('Original plugin drift: '+name);}fs.cpSync(original,out,{recursive:true});fs.cpSync(base,out,{recursive:true});fs.mkdirSync(path.join(out,'background-review'),{recursive:true});
+for(const p of ['protocol.php','client.js'])fs.copyFileSync(path.join(here,p),path.join(out,'background-review',p));
+fs.writeFileSync(path.join(out,'background-review/review-outbox.js'),core);
+let sched=fs.readFileSync(path.join(repo,'adapters/wordpress/study-scheduler/wordpress.php'),'utf8').replace("__DIR__.'/../followup/state.php'","__DIR__.'/../study-followup/state.php'");fs.writeFileSync(path.join(out,'study-scheduler/wordpress.php'),sched);
+let archive=fs.readFileSync(path.join(base,'archive-decks.php'),'utf8');
+const injection=`window.HebleoBackgroundConfig=<?php echo wp_json_encode(['siteId'=>rtrim(home_url('/'),'/'),'ownerId'=>(string)get_current_user_id(),'nonce'=>wp_create_nonce('study_nonce'),'endpoint'=>add_query_arg('hebleo_review','1',home_url('/'))]); ?>;\n`+core.toString('utf8')+'\n'+fs.readFileSync(path.join(here,'client.js'),'utf8');
+const marker='// Initialize app and handle audio clicks';if(archive.split(marker).length!==2)throw Error('Archive anchor drift');archive=archive.replace(marker,injection+'\n'+marker);fs.writeFileSync(path.join(out,'archive-decks.php'),archive);
+function list(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?list(path.join(dir,e.name)):[path.join(dir,e.name)]);}
+const files=list(out).map(p=>({file:path.relative(out,p).replaceAll('\\','/'),sha256:hash(p),before:fs.existsSync(path.join(base,path.relative(out,p)))?hash(path.join(base,path.relative(out,p))):fs.existsSync(path.join(original,path.relative(out,p)))?hash(path.join(original,path.relative(out,p))):null}));
+fs.writeFileSync(out+'-manifest.json',JSON.stringify({baseline:pins,sharedCore:coreHash,files},null,2));console.log(JSON.stringify({files:files.length,changed:files.filter(x=>x.before!==x.sha256).map(x=>x.file),manifest:out+'-manifest.json'}));

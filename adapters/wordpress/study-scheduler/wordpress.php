@@ -3,6 +3,7 @@
 namespace HebleoStudy;
 require_once __DIR__.'/fsrs.php';
 require_once __DIR__.'/../followup/state.php';
+require_once __DIR__.'/../background-review/protocol.php';
 function clock_now(): int { return (int)\apply_filters('hebleo_study_scheduler_now',time()); }
 function meta_key($p): string { return '_hebleo_fsrs_v2_'.(int)$p->id; }
 function local_date(int $utc,\DateTimeZone $tz): string { return (new \DateTimeImmutable('@'.$utc))->setTimezone($tz)->format('Y-m-d H:i:s'); }
@@ -117,14 +118,27 @@ function persist_rating(int $user_id,int $note_id,int $template_id,int $rating,?
     if($wpdb->query('START TRANSACTION')===false)throw new \RuntimeException('Cannot begin rating transaction');
     try {
         $p=$wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE user_id = %d AND note_id = %d AND template_id = %d FOR UPDATE",$user_id,$note_id,$template_id));
-        if(!$p)throw new \RuntimeException('Card not found');
+        if(!$p){$early=$request['background']??null;$known=$early?\HebleoBackground\receipt($user_id,$early):null;if($known!==null){if($wpdb->query('COMMIT')===false)throw new \RuntimeException('Cannot confirm previous review');return ['background_receipt'=>$known,'duplicate'=>true];}throw new \RuntimeException('Card not found');}
         $note_lock=\HebleoFollowup\lock($user_id,$note_id);
         // Drop any metadata cached before the row lock (another request may have rated).
         \wp_cache_delete($user_id,'user_meta');
         $meta=read_meta($p);
         // Resolve time only after the real row lock and fresh committed metadata read.
         $now=(int)($clock??(__NAMESPACE__.'\\clock_now'))();
-        $note_state=\HebleoFollowup\load($user_id,$note_id);$old=\HebleoFollowup\duplicate($note_state,$request,$template_id,$rating);
+        $note_state=\HebleoFollowup\load($user_id,$note_id);
+        $bg=$request['background']??null;$timing=null;
+        if($bg!==null){
+            $receipt=\HebleoBackground\receipt($user_id,$bg);
+            if($receipt!==null){if($wpdb->query('COMMIT')===false)throw new \RuntimeException('Cannot confirm previous review');return ['background_receipt'=>$receipt,'duplicate'=>true];}
+            $timing=\HebleoBackground\validate($user_id,$p,$meta,$note_state,$bg);
+            if(isset($timing['reject'])){
+                $receipt=\HebleoBackground\reject($user_id,$bg,$timing['reject'],$timing['now']);
+                if($wpdb->query('COMMIT')===false||\HebleoBackground\receipt($user_id,$bg)===null)throw new \RuntimeException('Rejection commit unconfirmed');
+                return ['background_receipt'=>$receipt];
+            }
+            $now=$timing['answer'];
+        }
+        $old=\HebleoFollowup\duplicate($note_state,$request,$template_id,$rating);
         if($old!==null){if($wpdb->query('COMMIT')===false)throw new \RuntimeException('Cannot confirm previous review');return $old;}
         if(\HebleoFollowup\buried($note_state,$template_id,$now))throw new \RuntimeException('Sibling is buried until next study day');
         if($request!==null&&!hash_equals(\HebleoFollowup\version($p,$meta),$request['version']))throw new \RuntimeException('Card state changed; reload');
@@ -136,14 +150,18 @@ function persist_rating(int $user_id,int $note_id,int $template_id,int $rating,?
         $fields['difficulty']=round($s['difficulty'],4);
         if($wpdb->update($table,$fields,['id'=>(int)$p->id,'user_id'=>$user_id])===false)throw new \RuntimeException('Rating update failed');
         $meta=['storage_schema'=>2,'due_utc'=>$s['due'],'next_review_local'=>$s['next_review'],'version'=>FSRS::VERSION,'step'=>$s['step'],'last_review_utc'=>$now,'last_review_local'=>$s['last_reviewed'],'state'=>$s['state'],'stability'=>$s['stability'],'difficulty'=>$s['difficulty'],'storage_stability'=>number_format($fields['stability'],4,'.',''),'storage_difficulty'=>number_format($fields['difficulty'],4,'.','')];
+        if($bg!==null)$meta['last_review_ms']=$timing['accepted'];
         $json=\wp_json_encode($meta,JSON_PRESERVE_ZERO_FRACTION|JSON_THROW_ON_ERROR);
         $saved=\update_user_meta($user_id,meta_key($p),\wp_slash($json));
         if($saved===false&&\get_user_meta($user_id,meta_key($p),true)!==$json)throw new \RuntimeException('Learning step update failed');
         $s=\HebleoFollowup\record($user_id,$p,$s,$rating,$now,$request,$note_state);
+        if($bg!==null){$day=\HebleoFollowup\load($user_id,$note_id);$day['reviewed_ms']=$timing['accepted'];$dayJson=\wp_json_encode($day,JSON_THROW_ON_ERROR);if(\update_user_meta($user_id,\HebleoFollowup\key($note_id),\wp_slash($dayJson))===false&&\HebleoFollowup\load($user_id,$note_id)!==$day)throw new \RuntimeException('Note time persistence failed');}
+        if($bg!==null)$s['background_receipt']=\HebleoBackground\committed($user_id,$p,$s,$bg,$timing['accepted'],$timing['now']);
         if($wpdb->query('COMMIT')===false)throw new \RuntimeException('Rating commit failed');
         // Positive confirmation comes from a fresh committed record, not in-memory work.
         // This also detects a connection/retry that acknowledged an empty replacement transaction.
         $committed=\HebleoFollowup\load($user_id,$note_id);
+        if($bg!==null&&\HebleoBackground\receipt($user_id,$bg)===null)throw new \RuntimeException('Background commit unconfirmed');
         if($request!==null){if(\HebleoFollowup\duplicate($committed,$request,$template_id,$rating)===null)throw new \RuntimeException('Review commit is not confirmed');}
         elseif(($committed['reviewed_utc']??null)!==$now||($committed['allowed_template']??null)!==$template_id)throw new \RuntimeException('Review commit is not confirmed');
         return $s;

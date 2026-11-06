@@ -1,0 +1,15 @@
+✔ WP actual keys: next visible after durable capture while save held, siblings masked, Finish drains (101.8733ms)
+ℹ capture-to-next-visible 8.5ms; backend held separately through second capture and Finish
+✔ WP unavailable durable storage keeps revealed card recoverable (10.4516ms)
+✔ WP stale refresh cannot restore pending siblings and resume requires new timing choice (53.4114ms)
+✔ WP durable write failure after reveal never advances or counts (11.1922ms)
+✔ WP learning return requires authoritative due/version and never advances current card (21.5697ms)
+✔ WP definitive rejection retained until explicit authoritative refresh, never silently resent (33.3605ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1198.8637
