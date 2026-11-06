@@ -110,7 +110,7 @@ test('every seed exercise kind submits the learner wire answer through the real 
         }
         h.root().querySelector('[data-action="check"]').click();
         await settled(() => h.root()?.querySelector('.feedback'));
-        assert.deepEqual(h.evaluations.at(-1), {lessonId:lesson.id, exerciseId:id, draftToken:token, answer:expected}, source.type + ' wire answer');
+        assert.deepEqual(h.evaluations.at(-1), {lessonId:lesson.id, exerciseId:id, draftToken:token, answer:expected,...(source.type==='ordering'?{sentenceMode:'simple'}:{})}, source.type + ' wire answer');
         assert.ok(!h.root().querySelector('.feedback').classList.contains('wrong'), source.type + ' graded correct by the draft evaluator');
         kinds.add(source.type);
       }
@@ -274,4 +274,14 @@ test('sentence mode drafts survive preview remount and submit the active answer'
  restored.container.querySelector('[data-action="check"]').click();
  assert.equal(restored.calls.find(c=>c[0]==='submit')[1],'אני בבית');
  assert.equal(draft.selectedTokens.length,1);
+});
+
+test('Studio Type self-approval is disposable, preserves both grades and drafts, and never writes a learner row',async t=>{
+ const {store,token}=fixture(t),before=dump(store),h=previewHarness(t,store,token,'lesson-2');await h.preview.ready;h.preview.go('apply',0);
+ h.root().querySelector('[data-action="token"]').click();h.root().querySelector('[data-action="sentence-mode"][data-value="complex"]').click();input(h,'אני בביית');h.root().querySelector('[data-action="check"]').click();
+ await settled(()=>h.root()?.querySelector('[data-action="self-approve"]'));
+ assert.match(h.root().querySelector('.compact-result').textContent,/Incorrect/);h.root().querySelector('[data-action="self-approve"]').click();
+ assert.match(h.root().querySelector('.compact-result').textContent,/Self-approved/);assert.ok(!h.root().querySelector('.compact-result').classList.contains('wrong'));assert.equal(h.root().querySelector('#answer').value,'אני בביית');assert.equal(h.root().querySelector('[data-action="self-approve"]'),null);
+ h.preview.selfApprove();h.preview.go('learn');h.preview.go('apply',0);assert.match(h.root().querySelector('.compact-result').textContent,/Self-approved/);assert.equal(h.evaluations.length,1);assert.equal(dump(store),before);
+ h.preview.retry();h.root().querySelector('[data-action="token"]').click();h.root().querySelector('[data-action="check"]').click();await settled(()=>h.root()?.querySelector('.compact-result'));assert.equal(h.root().querySelector('[data-action="self-approve"]'),null);h.preview.selfApprove();assert.match(h.root().querySelector('.compact-result').textContent,/Incorrect/);assert.equal(dump(store),before);
 });

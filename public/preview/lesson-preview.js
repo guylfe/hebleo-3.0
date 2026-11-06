@@ -33,7 +33,7 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
       lessonId, step:portionKind(lesson,step), componentId:lesson.compositionVersion===2?(step==='complete'?null:step):undefined, question, exerciseId:exercise()?.id ?? null,
       answer:structuredClone(state.answer), result:structuredClone(state.result),
       preferences:structuredClone(localPreferences), lookupId, busy,
-      actions: {go, next, setAnswer, submit, retry, lookup, setPreference, exit}
+      actions: {go, next, setAnswer, submit, selfApprove, retry, lookup, setPreference, exit}
     };
     if(unmount?.update?.(rendererProps)){keepFocus(hadFocus,focusedStep);return;}
     unmount?.();unmount=renderer.mount(body,rendererProps);
@@ -90,7 +90,7 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
     const current = ++generation, answer = structuredClone(currentAnswer().answer);
     busy = true; status.textContent = 'Checking draft answer…'; render();
     try {
-      const response = await evaluate({lessonId, exerciseId:item.id, draftToken, answer:structuredClone(wireAnswer)});
+      const response = await evaluate({lessonId, exerciseId:item.id, draftToken, answer:structuredClone(wireAnswer),...(item.type==='ordering'?{sentenceMode:answer.sentenceMode||'simple'}:{})});
       if (!active() || current !== generation) return;
       if (response?.mode !== 'draft-preview' || response.persistent !== false || response.draftToken !== draftToken || !response.result) throw new Error('Invalid draft evaluation response.');
       answers.set(item.id, {answer, result:structuredClone(response.result)});
@@ -104,6 +104,13 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
     } finally {if (active() && current === generation) {busy = false; render();}}
   }
   function retry() {assertMutable(); const item = exercise(); if (item) {answers.delete(item.id); lookupId = null; render();}}
+  function selfApprove() {
+    assertMutable();const item=exercise(),state=currentAnswer(),result=state.result;
+    if(item?.type!=='ordering'||!result||result.correct||result.sentenceMode!=='complex')return;
+    const automaticGrade=Object.fromEntries(['correct','expected','acceptedAnswers','evaluationPolicy'].filter(key=>Object.hasOwn(result,key)).map(key=>[key,structuredClone(result[key])]));
+    answers.set(item.id,{answer:state.answer,result:{...result,automaticGrade,selfApproved:true,selfApprovedAt:new Date().toISOString(),correct:true}});
+    status.textContent='Draft answer self-approved. Your learner progress is unchanged.';render();
+  }
   function lookup(wordId) {
     assertMutable(); const item = exercise();
     if (wordId !== null && (!session.content.words.some(w => w.id === wordId) || (item && !item.allowLookup && !currentAnswer().result))) throw new Error('Lookup is unavailable for this exercise.');
@@ -141,5 +148,5 @@ export function mountLessonPreview(container, {lessonId, draftToken, loadSession
       status.textContent = error.status === 409 || error.statusCode === 409 ? 'This draft changed. Exit and reopen rehearsal.' : error.message;
     }
   })();
-  return {ready, go, next, setAnswer, submit, retry, lookup, setPreference, exit, dispose};
+  return {ready, go, next, setAnswer, submit, selfApprove, retry, lookup, setPreference, exit, dispose};
 }

@@ -174,7 +174,8 @@ function returnKeyboard(){window.HebleoKeyboard?.mount(document.body);}
 const chapterName=(c,id)=>courseOutline(c).find(g=>g.kind==='chapter'&&g.lessons.some(l=>l.id===id))?.title||'';
 function nextLesson() { return orderedLessons(state.data.content).find(l=>!state.data.learner.completed.includes(l.id)) || null; }
 function continueLesson() { const l=state.data.content.lessons.find(l=>l.id===state.data.learner.lastLessonId && !state.data.learner.completed.includes(l.id));return l || nextLesson(); }
-function clearQuestionAnswer() { pendingAttempt=null;answerPhase='ready';continueTarget=null;state.answer='';state.matching={};state.selectedTokens=[];state.sentenceMode='simple';state.result=null; }
+let pendingApproval=null;
+function clearQuestionAnswer() { pendingApproval=null;pendingAttempt=null;answerPhase='ready';continueTarget=null;state.answer='';state.matching={};state.selectedTokens=[];state.sentenceMode='simple';state.result=null; }
 function answerDraft() { return {text:state.answer,matching:state.matching,sentenceMode:state.sentenceMode,selectedTokens:state.selectedTokens}; }
 function resetQuestion() { state.question=0;clearQuestionAnswer(); }
 function questionProgress(l) { return lessonQuestionProgress(l,state.data.learner.attempts,state.session.revisionId); }
@@ -323,6 +324,8 @@ function keyboard(){return '<div class="keyboard-tools">'+button('Open Hebrew ke
 function questionPrimary(l=lessonObject()){
  const ids=portionExercises(content(),l,state.step,state.practiceIds);
  const phase=answerPhase;
+ if(phase==='approving')return button('Saving approval…','pending-answer','primary','',true);
+ if(phase==='approval-error'&&pendingApproval)return button('Retry saving approval','self-approve','primary');
  if(phase==='checking'||phase==='saving'||phase==='advancing')return button(phase==='checking'?'Checking…':phase==='saving'?'Saving position…':'Continuing…','pending-answer','primary','',true);
  if(phase==='save-error')return button('Retry saving position','save-answer-position','primary');
  if(phase==='advance-error')return button('Retry continuing','retry-continuing','primary');
@@ -532,7 +535,7 @@ function showAnswerResult(scope,e){
  if(!scope?.isConnected||!state.result)return;scope.dataset.checked='true';
  scope.querySelectorAll('[data-exercise-input] button:not([data-vocabulary-word]),[data-exercise-input] textarea,[data-exercise-input] input').forEach(el=>el.disabled=true);scope.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===state.answer));
  applyMatchingResult(scope,e,state.result);
- const status=scope.querySelector('[data-answer-status]');status.innerHTML=exerciseFeedback(e,state.result);bindResultExplanations(status);const keyboard=scope.querySelector('[data-action="keyboard-open"]');if(keyboard)keyboard.remove();
+ const status=scope.querySelector('[data-answer-status]');status.innerHTML=exerciseFeedback(e,state.result);bindResultExplanations(status);bind(status);const keyboard=scope.querySelector('[data-action="keyboard-open"]');if(keyboard)keyboard.remove();
  const support=scope.querySelector('.exercise-support');support.innerHTML=questionSupport(e,true);bind(support);updateQuestionPrimary();
  refreshQuestionProgress();
  mountExerciseReminders(scope,e);syncKeyboard();refreshComments();scope.querySelector('[data-answer-commit]').focus({preventScroll:true});
@@ -549,7 +552,7 @@ function mountExerciseReminders(scope,e=currentExercise()){
 async function submitAnswer(recover=false) {
  if(submitting||state.result||!learnerControlsActive()||pendingAttempt&&!recover)return;const e=currentExercise();if(!e)return;const wire=wireAnswer(e,answerDraft());if(wire.error){toast(wire.error);return;}
  const context={owner:state.user,session:state.session,step:state.step,question:state.question},scope=root.querySelector('#practice'),field=scope.querySelector('#answer'),selection=field?{start:field.selectionStart,end:field.selectionEnd,direction:field.selectionDirection}:null,isCurrent=()=>state.user===context.owner&&state.session===context.session&&state.step===context.step&&state.question===context.question&&root.querySelector('#practice')===scope;
- pendingAttempt??={requestId:uid(),revisionId:context.session.revisionId,lessonId:state.lessonId,exerciseId:e.id,answer:structuredClone(wire.answer)};
+ pendingAttempt??={requestId:uid(),revisionId:context.session.revisionId,lessonId:state.lessonId,exerciseId:e.id,answer:structuredClone(wire.answer),...(e.type==='ordering'?{sentenceMode:state.sentenceMode}:{})};
  const controls=[...scope.querySelectorAll('[data-exercise-input] button,[data-exercise-input] textarea,[data-exercise-input] input')],disabled=controls.map(el=>el.disabled);
  clearTimeout(saveTimer);submitting=true;answerPhase='checking';controls.forEach(el=>el.disabled=true);updateQuestionPrimary();answerRecovery('','');
  try{
@@ -562,6 +565,22 @@ async function submitAnswer(recover=false) {
   if(state.result){answerPhase='save-error';answerRecovery('Your answer was graded. This position was not saved.','position-recovery');updateQuestionPrimary();}
   else if(error.status&&error.status<500){pendingAttempt=null;answerPhase='ready';controls.forEach((el,i)=>el.disabled=disabled[i]);updateQuestionPrimary();answerRecovery('Checking failed. Your answer is unchanged; try checking again.','grade-recovery');field?.focus({preventScroll:true});if(selection)field.setSelectionRange(selection.start,selection.end,selection.direction);}
   else{answerPhase='uncertain';answerRecovery('The checking response was interrupted. Retry checking to recover this answer’s result.','grade-recovery');updateQuestionPrimary();}
+ }throw error;}finally{submitting=false;}
+}
+async function approveSentenceAnswer(){
+ if(submitting||!state.result||state.result.correct||state.result.sentenceMode!=='complex'||currentExercise()?.type!=='ordering'||!learnerControlsActive()||!['ready','approval-error'].includes(answerPhase))return;
+ const scope=root.querySelector('#practice'),owner=state.user,result=state.result,isCurrent=()=>owner===state.user&&root.querySelector('#practice')===scope&&state.result===result;
+ pendingApproval??={requestId:result.requestId,revisionId:result.revisionId,lessonId:result.lessonId,exerciseId:result.exerciseId};
+ submitting=true;answerPhase='approving';updateQuestionPrimary();scope.querySelector('[data-action="self-approve"]')?.setAttribute('disabled','');answerRecovery('Saving your approval…','approval-status');
+ try{
+  const approved=await api('attempt/self-approve',pendingApproval,owner);if(!isCurrent())return;
+  if(approved.requestId!==result.requestId||approved.revisionId!==result.revisionId||approved.lessonId!==result.lessonId||approved.exerciseId!==result.exerciseId||approved.answer!==result.answer||approved.selfApproved!==true||approved.correct!==true)throw new Error('Invalid approval response. Retry to check the saved result.');
+  state.result=approved;pendingApproval=null;answerPhase='saving';showAnswerResult(scope,currentExercise());answerRecovery('','');
+  await load();if(owner!==state.user||root.querySelector('#practice')!==scope)return;refreshQuestionProgress();await queueSave();answerPhase='ready';updateQuestionPrimary();
+ }catch(error){if(owner===state.user&&root.querySelector('#practice')===scope){
+  if(state.result.selfApproved){answerPhase='save-error';answerRecovery('Your approval was saved. Retry saving this position.','position-recovery');}
+  else{if(error.status&&error.status<500)pendingApproval=null;answerPhase='approval-error';answerRecovery('Approval was not confirmed. Your answer is unchanged here. Retry Mark my answer correct.','approval-error');scope.querySelector('[data-action="self-approve"]')?.removeAttribute('disabled');}
+  updateQuestionPrimary();
  }throw error;}finally{submitting=false;}
 }
 async function saveAnswerPosition(){
@@ -584,7 +603,7 @@ function insertKey(value,backspace=false) {
   input.value=input.value.slice(0,start)+(backspace?'':value)+input.value.slice(end);input.focus();input.setSelectionRange(start+(backspace?0:value.length),start+(backspace?0:value.length));state.answer=input.value;scheduleSave();
 }
 async function updatePreference(key,value) { await api('preferences',{[key]:value});await load(); }
-const learnerActions=new Set(['choice','check','sentence-mode','token','remove-token','next-question','retry-question','inline-choice','review-reveal','review-rate','save-answer-position','recover-attempt','retry-continuing','key','backspace','cursor']);
+const learnerActions=new Set(['choice','check','sentence-mode','self-approve','token','remove-token','next-question','retry-question','inline-choice','review-reveal','review-rate','save-answer-position','recover-attempt','retry-continuing','key','backspace','cursor']);
 function learnerControlsActive(){return !state.panel&&!rehearsal&&!document.querySelector('dialog[open]')&&root.querySelector('.nav-shell')?.dataset.courseOverlay!=='true'&&!root.querySelector('#main-content')?.hasAttribute('inert');}
 function reviewStatus(text){
  let status=root.querySelector('[data-review-save-status]');if(!status){status=document.createElement('p');status.dataset.reviewSaveStatus='';status.setAttribute('role','status');root.querySelector('.review-surface,.review-card')?.append(status);}
@@ -594,6 +613,7 @@ function reviewStatus(text){
 function reviewKey(key){if(state.page!=='review'||!state.reviewSession||state.panel||rehearsal||submitting||reviewSave?.blocked||reviewRevealPending||document.querySelector('dialog[open],[role="dialog"]')||!learnerControlsActive())return;const selector=key==='reveal'?'[data-action="review-reveal"]':state.revealReview?'[data-action="review-rate"][data-value="'+key+'"]':null;if(selector)learnerElements(selector)[0]?.click();}
 mountReviewKeys({document,active:()=>state.page==='review'&&!!state.reviewSession&&!state.panel&&!rehearsal&&!document.querySelector('dialog[open],[role="dialog"]'),onShortcut:reviewKey});
 async function act(action,value,source) {
+  if(pendingApproval&&!['self-approve','audio'].includes(action))return;
   if(reviewSave?.blocked&&!['review-reconcile','review-end','audio','voice-replay'].includes(action))return;
 
   if((submitting||pendingAttempt)&&['page','lesson','outline','step','latest-lesson','lesson-practice','retry-question','target-practice','mode','sentence-mode','token','remove-token','choice','concept','inline-concept-close'].includes(action))return;
@@ -663,6 +683,7 @@ async function act(action,value,source) {
   if(action==='choice'){if(state.result||submitting)return;state.answer=value;root.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===value));root.querySelector('[data-answer-commit]')?.focus({preventScroll:true});if(pref().immediateAnswers)await submitAnswer();else await queueSave();return;}
   if(action==='check'){await submitAnswer();return;}
   if(action==='recover-attempt'){await submitAnswer(true);return;}
+  if(action==='self-approve'){await approveSentenceAnswer();return;}
   if(action==='save-answer-position'){await saveAnswerPosition();return;}
   if(action==='retry-continuing'){await continueQuestion();return;}
   if(action==='sentence-mode'){if(state.result||submitting||currentExercise()?.type!=='ordering'||!['simple','complex'].includes(value))return;state.sentenceMode=value;render();scheduleSave();root.querySelector('[data-action="sentence-mode"][aria-pressed="true"]')?.focus({preventScroll:true});return;}
