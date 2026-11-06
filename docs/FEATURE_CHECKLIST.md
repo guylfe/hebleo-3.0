@@ -731,3 +731,10 @@ Ordering exercises open in Build (pieces); Type accepts the full Hebrew sentence
 
 Verification: verify:candidate passed 1101, skipped 8 under the existing audio exclusions. Focused store/ordering/matching/renderer suite passed 31; new actual-app rapid-toggle, resume and typed-grading test passed. After the final active-button styling correction, renderer/mode tests passed 9. Browser on synthetic lesson 2 verified tile -> typed text -> tile -> typed text retention, refreshed typed draft, and visible RTL field. Integration and installed-course verification remain pending. Guy acceptance pending.
 
+
+### Background review epoch
+
+| ID | Candidate status | Evidence | Acceptance |
+|---|---|---|---|
+| SC-BG03 | Explicit reset/restore epoch invalidation implemented; bounded review pending | Old pre-restore/reset intents reject; fresh choices and ordinary reopen/retained receipts recover. 214 app/Store/restore checks and 14 epoch/reset checks passed; docs/BACKGROUND_REVIEW_EPOCH_20261106.md | Unreported |
+

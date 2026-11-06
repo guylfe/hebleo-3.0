@@ -45,7 +45,7 @@ test('trusted clock, immutable replay, ABA Undo, expired receipt recovery and ba
  assert.throws(()=>s.backgroundReview(ownerId,{...i,rating:4}),/Conflicting/);s.undoReview(ownerId,{requestId:i.requestId});assert.equal(s.backgroundReview(ownerId,i).outcome,'undone');assert.equal(s.backgroundReview(ownerId,{...i,requestId:randomUUID()}).reasonCode,'CARD_CHANGED');
  const fresh=payload(s),state=s.learner(ownerId);state.reviewClockTickets[fresh.clockTicketId].issuedAt-=10000;state.reviewClockTickets[fresh.clockTicketId].expiresAt=state.reviewClockTickets[fresh.clockTicketId].issuedAt+1;s.saveLearner(ownerId,state);assert.equal(s.backgroundReview(ownerId,fresh).reasonCode,'CLOCK_EXPIRED');
  const backup=s.backup();s.restore(backup);assert.deepEqual(s.learner(ownerId).reviewGenerations,backup.learners.find(x=>x.id===ownerId).state.reviewGenerations);assert.deepEqual(s.snapshot(),before);
- s.close();s=new Store(join(dir,'fixture.db'));assert.equal(s.backgroundReview(ownerId,i).outcome,'undone');assert.deepEqual(s.learner(ownerId).reviewClockTickets,backup.learners.find(x=>x.id===ownerId).state.reviewClockTickets);
+ s.close();s=new Store(join(dir,'fixture.db'));assert.equal(s.backgroundReview(ownerId,i).outcome,'undone');assert.equal(s.learner(ownerId).reviewClockTickets,undefined,'Deliberate restore invalidates volatile clock tickets.');
 });
 test('HTTP contract enforces scope, suspended/version changes, future/regressed clocks',async t=>{
  const s=new Store();t.after(()=>s.close());s.enroll(ownerId,'w-ani');const server=createServer(s);await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(()=>new Promise(r=>server.close(r)));const origin='http://127.0.0.1:'+server.address().port;
