@@ -5,7 +5,7 @@ import {spawn,execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {createHash} from 'node:crypto';
 const run=promisify(execFile), root=process.argv[2], php=process.argv[3], work=path.join(root,'flashcard-followup-20261104/work/wordpress');
-const fixture=path.resolve('evidence/'+(process.argv[4]||'native2')), source=path.join(root,'wordpress-shared-cards/native'), candidate=path.resolve('evidence/candidate-final');
+const fixture=path.resolve('evidence/'+(process.argv[4]||'native2')), source=path.join(root,'wordpress-shared-cards/native'), candidate=path.resolve('evidence/candidate-reviewed');
 const sched=path.resolve('adapters/wordpress/study-scheduler'), dbbin=path.join(source,'db/mariadb-11.4.13-winx64/bin'), port=33539;
 if(fs.existsSync(fixture))throw Error('Refuse fixture reuse');
 await new Promise((resolve,reject)=>{const s=net.createServer();s.once('error',reject);s.listen(port,'127.0.0.1',()=>s.close(resolve));});

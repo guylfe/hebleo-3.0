@@ -10,5 +10,7 @@
     "pending": 0,
     "receipts": 1
   },
-  "limits": "Mock transport; plain synthetic card HTML. Real shared-document/media and production timing unverified."
+  "limits": "Mock transport; plain synthetic card HTML. Real shared-document/media and production timing unverified.",
+  "precedesLineEndingCorrection": true,
+  "finalRecheck": "Automatic approval review deadline expired; action not verified"
 }

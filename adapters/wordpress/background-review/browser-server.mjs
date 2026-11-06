@@ -1,5 +1,5 @@
 import http from 'node:http';import fs from 'node:fs';
-const source=fs.readFileSync('evidence/candidate-final/archive-decks.php','utf8');
+const source=fs.readFileSync('evidence/candidate-reviewed/archive-decks.php','utf8');
 let script=source.match(/<script>([\s\S]*?)<\/script>/)[1].replace(/window.HebleoBackgroundConfig=<\?php[\s\S]*?\?>;/,'window.HebleoBackgroundConfig={siteId:"http://127.0.0.1:33562",ownerId:"1",nonce:"synthetic",endpoint:"/?hebleo_review=1"};').replace(/<\?php echo wp_json_encode[\s\S]*?\?>/g,'"/ajax"').replace(/<\?php[\s\S]*?\?>/g,'fixture').replace('let studyApp;','window.studyApp;').replace('studyApp = new StudyApp();','StudyApp.prototype.init=async function(){await this.startStudy(1);};studyApp = new StudyApp();');
 const mock=`
 window.fixture={calls:[],receipts:{},hold:true};

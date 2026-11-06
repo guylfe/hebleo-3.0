@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import {JSDOM} from 'jsdom';import {IDBFactory} from 'fake-indexeddb';import {webcrypto} from 'node:crypto';
-const source=fs.readFileSync('evidence/candidate-final/archive-decks.php','utf8');
+const source=fs.readFileSync('evidence/candidate-reviewed/archive-decks.php','utf8');
 const cards=()=>[10,10,11,12].map((n,i)=>({note_id:n,template_id:20+i,state:'new',front:'Synthetic '+n,back:'Answer '+n,review_version:'a'.repeat(64),intervals:{again:'1m',hard:'5m',good:'10m',easy:'8d'}}));
 const until=async f=>{const end=Date.now()+2500;while(!f()){if(Date.now()>end)throw Error('timeout');await new Promise(r=>setTimeout(r,5));}};
 async function fixture(t,{storage=true}={}){
