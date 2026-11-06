@@ -39,3 +39,11 @@ jobs:
           php -l adapters/wordpress/followup/frontend.php
           php adapters/wordpress/followup/front-test.php
           node --check adapters/wordpress/followup/client.js
+      - name: Background review source guards
+        run: |
+          php -l adapters/wordpress/background-review/protocol.php
+          php -l adapters/wordpress/background-review/native.php
+          php -l adapters/wordpress/background-review/native-transport.php
+          php -l adapters/wordpress/background-review/protocol-probe.php
+          node --check adapters/wordpress/background-review/client.js
+          node --check adapters/wordpress/background-review/generate.mjs
