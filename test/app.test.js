@@ -1,3 +1,4 @@
+import {IDBFactory} from 'fake-indexeddb';
 import {mountReviewKeys} from '../public/review-shortcuts.js';
 import {createReviewSave} from '../public/review-save.js';
 import {mountSharedReview} from '../public/shared-cards.js';
@@ -42,7 +43,7 @@ const {mountLessonPreview} = await import(process.env.HEBLEO_PREVIEW_CONTROLLER 
 import {createLearnerRenderer} from '../public/preview/learner-renderer.js';
 const parseRequestBody=body=>JSON.parse(typeof body==='string'?body:new TextDecoder().decode(body));
 async function settled(predicate){const deadline=Date.now()+5000;while(Date.now()<deadline){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle within 5 seconds.');}
-async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,width=1024,navigationPrefs,markdownDependencies,reduceMotion=false,textProgressTransport}={}){
+async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,reviewTransport,reviewStorage,width=1024,navigationPrefs,markdownDependencies,reduceMotion=false,textProgressTransport}={}){
   const store=providedStore||new Store();prepare?.(store);const d=new JSDOM('<div id="app"></div><div id="toast"></div>',{url:'http://127.0.0.1/#'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=d.window;
   Object.defineProperty(w,'innerWidth',{value:width,writable:true});let server,origin;
   if(realHTTP){server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
@@ -54,14 +55,18 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   Object.assign(w,{createStudioWorkspace,mountInlineAuthor,hasTextPages,mountTextReader,mountAnsweredVocabulary,renderLexicalVocabulary,bindLexicalVocabulary},ux,reviewScheduler,courseHelpers,learnerView,{structuredClone,resolveBlock,importVocabularyCSV,composeSentence,bindMatching,matchWord,richCell,cellCSS,renderLesson:createLessonRenderer(marked,createPurifier(w),w.document),mountMediaLibrary,mountSourceAuthoring,mountUnifiedStudio,mountTextImport,mountImportWorkflow,mountLessonEditor,mountExerciseEditor,inspectImport,renderImportReview,mountLessonPreview,createLearnerRenderer,getPlaybackState:()=>w.referenceState||{},playAudio:async()=>{},setPlaybackSpeed(){},stopMedia(){},clearRecording(){},feedbackSound(){}});
   if(markdownDependencies){w.mountUnifiedStudio=(host,options)=>mountUnifiedStudio(host,{...options,markdownDependencies:markdownDependencies(w)});w.mountInlineAuthor=(host,options)=>mountInlineAuthor(host,{...options,markdownDependencies:markdownDependencies(w)});}
   const calls=[];
-  w.fetch=async(path,options={})=>{const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?parseRequestBody(options.body):null;calls.push(url.pathname);try{let value;
-    if(realHTTP)return await fetch(origin+url.pathname+url.search,options);
+  w.fetch=async(path,options={})=>{if(options.signal&&!(options.signal instanceof AbortSignal)){const originalSignal=options.signal,controller=new AbortController();if(originalSignal.aborted)controller.abort();else originalSignal.addEventListener('abort',()=>controller.abort(),{once:true});options={...options,signal:controller.signal};}const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?parseRequestBody(options.body):null;calls.push(url.pathname);try{let value;
+    if(realHTTP){if(reviewTransport&&url.pathname.startsWith('/api/review/'))return await reviewTransport({url,input,perform:()=>fetch(origin+url.pathname+url.search,options)});return await fetch(origin+url.pathname+url.search,options);}
     if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
     else if(url.pathname==='/api/text-progress'&&textProgressTransport)value=await textProgressTransport({user,input,query:url.searchParams});
     else if(url.pathname==='/api/questions')value=input?store.askQuestion(user,input):store.questions(user);
     else if(url.pathname==='/api/session')value=store.session(user,url.searchParams.get('lessonId'));
     else if(url.pathname==='/api/session/latest')value=store.startLatestLesson(user,input.lessonId);
     else if(url.pathname==='/api/progress')value=store.saveProgress(user,input);
+    else if(url.pathname==='/api/review/clock')value=store.reviewClock(user,input);
+    else if(url.pathname==='/api/review/background')value=store.backgroundReview(user,input);
+    else if(url.pathname==='/api/review/status')value={receipt:store.get('review-'+user+'-'+url.searchParams.get('requestId'))||null};
+    else if(url.pathname==='/api/review/undo')value=store.undoReview(user,input);
     else if(url.pathname==='/api/preferences')value=store.updateLearner(user,input);
     else if(url.pathname==='/api/attempt')value=store.attempt(user,input);
     else if(url.pathname==='/api/practice')value=store.practice(user,input);
@@ -80,10 +85,70 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else throw new Error('Unexpected app API '+url.pathname);
     return {ok:true,json:async()=>structuredClone(value)};
   }catch(e){return {ok:false,status:e.status||500,json:async()=>({error:e.message,code:e.code,...e.details})};}};
-  Object.assign(w,{mountReviewKeys,createReviewSave,mountSharedReview});w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
+  const reviewIDB=new IDBFactory();let queue;const reviewFactory=options=>{queue=createReviewSave({...options,indexedDB:reviewStorage||reviewIDB,pollMs:50});return queue;};t.after(()=>queue?.dispose?.());Object.assign(w,{mountReviewKeys,createReviewSave:reviewFactory,mountSharedReview});w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
+
+test('BACKGROUND actual app advances two cards while HTTP save is held, Finish retains queue and Undo follows drain',async t=>{
+ let release,started=0;const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');},reviewTransport:async({url,perform})=>{if(url.pathname==='/api/review/background'&&++started===1)await new Promise(r=>release=r);return perform();}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');const start=performance.now();click(doc,'review-rate');await settled(()=>doc.querySelector('[data-action=review-reveal]'));
+ const visibleMs=performance.now()-start;assert.equal(store.learner('learner-demo').lastReview,undefined);await settled(()=>release);assert.match(doc.body.textContent,/pending/);
+ click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>doc.querySelector('h1').textContent.includes('finished'));click(doc,'review-end');await settled(()=>doc.querySelector('[data-action=review-start]'));assert.match(doc.body.textContent,/pending/);
+ release();await settled(()=>store.learner('learner-demo').cards['w-hu'].repetitions===1&&doc.querySelector('[data-action=review-undo]'));await settled(()=>!doc.body.textContent.includes('pending'));click(doc,'review-undo');await settled(()=>store.learner('learner-demo').cards['w-hu'].repetitions===0);
+ assert.equal(started,2);t.diagnostic('capture-to-next-visible '+visibleMs.toFixed(1)+'ms with first backend save held until Finish assertions');
+});
+
+test('BACKGROUND actual app lost committed HTTP response recovers through status without another POST',async t=>{
+ let posts=0;const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');},reviewTransport:async({url,perform})=>{const response=await perform();if(url.pathname==='/api/review/background'){posts++;await response.text();throw Error('Synthetic lost committed response');}return response;}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>doc.body.textContent.includes('need recovery'));assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,1);
+ const retry=[...doc.querySelectorAll('button')].find(x=>x.textContent==='Check saved review');assert(retry);retry.click();await settled(()=>!doc.body.textContent.includes('need recovery'));assert.equal(posts,1);assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,1);
+});
+
+test('BACKGROUND actual app durable transaction failure retains revealed card and rating controls',async t=>{
+ const factory=new IDBFactory();let fail=false;const reviewStorage={open(...args){const r=factory.open(...args);r.addEventListener('success',()=>{const db=r.result,transaction=db.transaction.bind(db);db.transaction=(...values)=>{if(fail)throw Error('Synthetic storage failure');return transaction(...values);};});return r;}};
+ const {doc,store}=await app(t,{page:'review',realHTTP:true,reviewStorage,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');const before=doc.querySelector('.review-card').textContent;fail=true;click(doc,'review-rate');await settled(()=>doc.querySelector('#toast').textContent.includes('storage failure'));
+ assert.equal(doc.querySelector('.review-card').textContent,before);assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,0);assert(doc.querySelector('[data-action=review-rate]'));fail=false;
+});
+
+test('BACKGROUND Undo then rerate reacquires CAS anchor and commits a new learner choice',async t=>{
+ const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>store.learner('learner-demo').lastReview&&doc.querySelector('[data-action=review-undo]'));
+ const first=store.learner('learner-demo').lastReview.requestId;click(doc,'review-undo');await settled(()=>doc.querySelector('[data-action=review-reveal]')&&!doc.querySelector('[data-action=review-reveal]').disabled);click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>store.learner('learner-demo').lastReview?.requestId!==first&&store.learner('learner-demo').cards['w-ani'].repetitions===1);await settled(()=>!doc.body.textContent.includes('pending'));
+ assert(!doc.body.textContent.includes('need recovery'));
+});
+
+test('BACKGROUND expired Undo pause aborts original attempt without undoing another client rating',async t=>{
+ const indexedDB=new IDBFactory();const {doc,w,store}=await app(t,{page:'review',realHTTP:true,reviewStorage:indexedDB,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>!doc.body.textContent.includes('pending')&&store.learner('learner-demo').lastReview);
+ const original=w.fetch;let release,held=false,undoPosts=0;const gate=new Promise(r=>release=r);t.after(()=>release());
+ w.fetch=async(path,options)=>{if(path==='/api/review/undo')undoPosts++;if(path==='/api/bootstrap'&&!held){held=true;await gate;}return original(path,options);};
+ click(doc,'review-undo');await settled(()=>held);
+ // Represents a 61-second suspended holder whose durable pause has expired.
+ await new Promise((resolve,reject)=>{const r=indexedDB.open('hebleo-review-outbox-v1',1);r.onsuccess=()=>{const db=r.result,tx=db.transaction('scopes','readwrite'),store=tx.objectStore('scopes'),key=JSON.stringify(['hebleo-local-demo','learner-demo']),get=store.get(key);get.onsuccess=()=>{const value=get.result;assert(value.pause);value.pause.until=Date.now()-1;store.put(value,key);};tx.oncomplete=()=>{db.close();resolve();};tx.onabort=()=>reject(tx.error);};r.onerror=()=>reject(r.error);});
+ const second=createReviewSave({background:true,ownerId:'learner-demo',isActive:()=>true,indexedDB,pollMs:10,getCardIds:()=>['w-hu'],send:async(path,body,signal)=>{const response=await original('/api/'+path,{method:body===undefined?'GET':'POST',headers:{'x-demo-user':'learner-demo','content-type':'application/json'},signal,...(body===undefined?{}:{body:JSON.stringify(body)})});const value=await response.json();if(!response.ok)throw Error(value.error);return value;}});t.after(()=>second.dispose());await second.clock();await second.commit({cardId:'w-hu',rating:3,requestId:randomUUID()});await settled(()=>store.learner('learner-demo').cards['w-hu'].repetitions===1);
+ release();await settled(()=>doc.querySelector('#toast').textContent.includes('Undo pause expired or was lost'));assert.equal(undoPosts,0);const state=store.learner('learner-demo');assert.equal(state.cards['w-ani'].repetitions,1);assert.equal(state.cards['w-hu'].repetitions,1);assert.equal(state.lastReview.wordId,'w-hu');assert(!doc.querySelector('#toast').textContent.includes('restored'));
+});
+
+test('BACKGROUND authoritative shortened synthetic learning boundary returns through timed bootstrap',async t=>{
+ let storeRef,shorten=true;const {doc,store,w,calls}=await app(t,{page:'review',realHTTP:true,prepare(s){storeRef=s;s.enroll('learner-demo','w-ani');},reviewTransport:async({url,perform})=>{
+  const response=await perform();if(url.pathname!=='/api/review/background'||!shorten)return response;shorten=false;const receipt=await response.json(),state=storeRef.learner('learner-demo');
+  // Test-only 150ms due boundary, preserving the production algorithm unchanged.
+  state.cards[receipt.cardId].due=new Date(Date.now()+150).toISOString();state.lastReview.after=structuredClone(state.cards[receipt.cardId]);storeRef.saveLearner('learner-demo',state);receipt.authoritativeSchedule=receipt.card=structuredClone(state.cards[receipt.cardId]);receipt.resultingVersion=storeRef.reviewVersion(state,receipt.cardId);storeRef.set('review-learner-demo-'+receipt.requestId,receipt);return {ok:true,json:async()=>receipt};
+ }});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>store.learner('learner-demo').cards['w-ani'].repetitions===1);await settled(()=>doc.querySelector('[data-action=review-reveal]')&&!doc.querySelector('[data-action=review-reveal]').disabled);
+
+ assert.equal(doc.querySelector('[data-pronunciation-word]').dataset.pronunciationWord,'w-ani');assert.equal(store.bootstrap('learner-demo').due.length,1);click(doc,'review-end');await settled(()=>doc.querySelector('h2')?.textContent==='1 cards due');assert.equal(doc.querySelector('[data-action=review-start]').disabled,false);
+});
+
+test('BACKGROUND rejected card stays excluded until explicit fresh-state resolution; next choice gets a new ID',async t=>{
+ let conflict=true;const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');},reviewTransport:async({url,perform})=>{
+  if(url.pathname==='/api/review/background'&&conflict){conflict=false;const state=store.learner('learner-demo');state.cards['w-ani'].intervalDays=1;store.saveLearner('learner-demo',state);}return perform();
+ }});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>doc.body.textContent.includes('Resolve rejected rating'));assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,0);
+ const rejected=store.db.prepare("SELECT value FROM kv WHERE key LIKE 'review-learner-demo-%'").all().map(x=>JSON.parse(x.value)).find(x=>x.outcome==='rejected');assert(rejected);[...doc.querySelectorAll('button')].find(x=>x.textContent==='Resolve rejected rating').click();await settled(()=>doc.querySelector('[data-action=review-reveal]')&&!doc.querySelector('[data-action=review-reveal]').disabled);click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>store.learner('learner-demo').cards['w-ani'].repetitions===1);assert.notEqual(store.learner('learner-demo').lastReview.requestId,rejected.requestId);
+});
 
 test('F14 actual app backup download and confirmed HTTP restore retain exact comments, saved token and revision counts through three roundtrips',async t=>{
  const {w,doc,store,calls}=await app(t,{author:true,page:'settings',realHTTP:true});
@@ -1095,7 +1160,7 @@ test('FB14 item3 surface preference ownership and late completion preserve curre
 });
 
 test('FB14 item4 Undo clears the departing word recording and ignores its late callback',async t=>{
- const {w,doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});let cleared=0,changed;w.clearRecording=()=>cleared++;w.recordVoice=async callback=>{changed=callback;callback('recording');};click(doc,'review-start');await settled(()=>doc.querySelector('.review-card'));click(doc,'review-reveal');await settled(()=>doc.querySelector('.review-ratings'));click(doc,'review-rate');await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');doc.querySelector('[data-action=record]').click();await settled(()=>doc.querySelector('[data-recording-status]').textContent.includes('Recording locally'));const before=cleared;click(doc,'review-undo');await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-ani');assert.equal(cleared,before+1);assert.equal(doc.querySelector('[data-action=record-stop]').disabled,true);assert.equal(doc.querySelector('[data-action=voice-replay]').disabled,true);changed('ready');assert.equal(doc.querySelector('[data-action=voice-replay]').disabled,true);assert.equal(doc.querySelector('[data-recording-status]').textContent,'');assert.equal(store.learner('learner-demo').lastReview,null);
+ const {w,doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});let cleared=0,changed;w.clearRecording=()=>cleared++;w.recordVoice=async callback=>{changed=callback;callback('recording');};click(doc,'review-start');await settled(()=>doc.querySelector('.review-card'));click(doc,'review-reveal');await settled(()=>doc.querySelector('.review-ratings'));click(doc,'review-rate');await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');doc.querySelector('[data-action=record]').click();await settled(()=>doc.querySelector('[data-recording-status]').textContent.includes('Recording locally'));await settled(()=>!doc.body.textContent.includes('pending'));const before=cleared;click(doc,'review-undo');await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-ani');assert.equal(cleared,before+1);assert.equal(doc.querySelector('[data-action=record-stop]').disabled,true);assert.equal(doc.querySelector('[data-action=voice-replay]').disabled,true);changed('ready');assert.equal(doc.querySelector('[data-action=voice-replay]').disabled,true);assert.equal(doc.querySelector('[data-recording-status]').textContent,'');assert.equal(store.learner('learner-demo').lastReview,null);
 });
 
 test('FB14 actual reference module drives all same-source app controls through pending Pause ended and retry',async t=>{
@@ -1273,9 +1338,9 @@ test('Flashcard follow-up: actual app Space/digits preserve one commit and recov
  const {w,doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});
  click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));
  const key=(el,k,extra={})=>{const event=new w.KeyboardEvent('keydown',{key:k,bubbles:true,cancelable:true,...extra});el.dispatchEvent(event);return event};
- let sends=0,lost=true;const original=w.fetch;w.fetch=async(path,options)=>{if(path==='/api/review'){sends++;const response=await original(path,options);if(lost){lost=false;throw Error('Synthetic lost acknowledgement after server commit');}return response;}return original(path,options)};
+ let sends=0,lost=true;const original=w.fetch;w.fetch=async(path,options)=>{if(path==='/api/review/background'){sends++;const response=await original(path,options);if(lost){lost=false;throw Error('Synthetic lost acknowledgement after server commit');}return response;}return original(path,options)};
  key(doc.body,'1');assert.equal(sends,0);const reveal=doc.querySelector('[data-action=review-reveal]');reveal.focus();assert(key(reveal,' ').defaultPrevented);
- await settled(()=>doc.querySelector('[data-action=review-rate]'));key(doc.body,'1');key(doc.body,'2');await settled(()=>doc.querySelector('[data-review-save-status]')?.textContent.includes('unconfirmed'));
+ await settled(()=>doc.querySelector('[data-action=review-rate]'));key(doc.body,'1');key(doc.body,'2');await settled(()=>doc.querySelector('[data-review-save-status]')?.textContent.includes('need recovery'));
  assert.equal(sends,1);assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,1);key(doc.body,'3');assert.equal(sends,1);
  doc.querySelector('[data-review-save-status] button').click();await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');assert.equal(sends,1);assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,1);
 });
@@ -1284,29 +1349,15 @@ test('Flashcard follow-up: actual queued sibling removed after confirmed save an
  const a='sc-mf-000001-he-en',b='sc-mf-000001-en-he';
  const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.shared.word=id=>[a,b].includes(id)?{id,shared:true,sourceId:'mf-000001',english:'Synthetic note',hebrew:'fixture'}:null;s.enroll('learner-demo',a);s.enroll('learner-demo',b);s.enroll('learner-demo','w-hu');}});
  click(doc,'review-start');await settled(()=>doc.querySelector('[data-shared-review]'));click(doc,'review-reveal');await settled(()=>doc.querySelector('[data-action=review-rate]'));click(doc,'review-rate');
- await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');assert.equal(store.learner('learner-demo').cards[b].repetitions,0);assert(!store.bootstrap('learner-demo').due.some(x=>x.word.id===b));
+ await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');assert.equal(store.learner('learner-demo').cards[b].repetitions,0);await settled(()=>!store.bootstrap('learner-demo').due.some(x=>x.word.id===b)&&!doc.body.textContent.includes('pending'));
  click(doc,'review-undo');await settled(()=>doc.querySelector('[data-shared-review]')?.dataset.cardId===a);assert(store.bootstrap('learner-demo').due.some(x=>x.word.id===b));assert(!store.learner('learner-demo').reviewBurials?.['mf-000001']);
 });
 
-for(const stalledPath of ['/api/bootstrap','/api/questions'])test('RR-APP refresh '+stalledPath+' timeout recovers read-only and cannot overwrite a reopened/newer session',async t=>{
+for(const stalledPath of ['/api/bootstrap','/api/questions'])test('BACKGROUND no per-rating '+stalledPath+' fetch is needed to advance and save',async t=>{
  const {w,doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});
- w.createReviewSave=options=>createReviewSave({...options,timeoutMs:500});
  click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');
- const original=w.fetch;let release,held=false,first=true,posts=0,reads=0;const gate=new Promise(r=>release=r);
- t.after(()=>release?.());
- w.fetch=async(path,options)=>{
-  if(path==='/api/review')posts++;if(path.startsWith('/api/review/status'))reads++;
-  const response=await original(path,options);
-  if(path===stalledPath&&first){first=false;const body=await response.json();held=true;await gate;return {ok:true,json:async()=>body};}
-  return response;
- };
- click(doc,'review-rate');await settled(()=>held);
- await settled(()=>doc.querySelector('[data-review-save-status]')?.textContent.includes('refresh is incomplete'));
- assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,1);assert.equal(doc.querySelector('[data-pronunciation-word]').dataset.pronunciationWord,'w-ani');assert.equal(posts,1);
- doc.querySelector('[data-review-save-status] button').click();await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');assert.equal(posts,1);assert.equal(reads,1);
- click(doc,'review-end');click(doc,'review-start');await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');click(doc,'review-reveal');click(doc,'review-rate');
- await settled(()=>doc.querySelector('h1')?.textContent==='Review finished.');assert.equal(store.learner('learner-demo').cards['w-hu'].repetitions,1);
- release();await new Promise(r=>setTimeout(r,40));click(doc,'review-end');assert.match(doc.querySelector('h2').textContent,/0 cards due/);assert.equal(posts,2);
+ const original=w.fetch;let reads=0;w.fetch=async(path,options)=>{if(path===stalledPath){reads++;return new Promise(()=>{});}return original(path,options);};
+ click(doc,'review-rate');await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');await settled(()=>store.learner('learner-demo').cards['w-ani'].repetitions===1);assert.equal(reads,0);
 });
 
 test('RR-APP delayed old frame flush cannot reveal or clear a newer pending reveal',async t=>{

@@ -1,0 +1,50 @@
+{
+  "base": "5924fb54fc78647ecc06b9f2e90b57d29e559e7c",
+  "files": [
+    {
+      "path": "public/review-outbox.js",
+      "preparedSourceSHA256": null,
+      "candidateSHA256": "6a69e152548e07005c6526557abcad5924ca94e9b30a40bc37de38a1e8329ad2"
+    },
+    {
+      "path": "public/review-save.js",
+      "preparedSourceSHA256": "eba09b7f7893272556a117abaf6d5c1520522c2d9b4934ab50a62160ecea4c5a",
+      "candidateSHA256": "8dc18e6b4948b997d79385c8448752fcfd4c8818a154265a74ef91b9ea95e3ef"
+    },
+    {
+      "path": "public/app.js",
+      "preparedSourceSHA256": "fe5142fc5e77751f319f34ac3f18701c5b3514de8febf25581fcc76ae43f7d81",
+      "candidateSHA256": "d39e5886b3743ade8c0214e16385cb960b93148a246f60fe40efc07c052df9fa"
+    },
+    {
+      "path": "src/store.js",
+      "preparedSourceSHA256": "b2ae5bcc30ae23c454215c30b52f24342350445438adf794a28ab20d4fe0f801",
+      "candidateSHA256": "6aebb9ac944621584b009292111be2d0812325067eeeb6bb6e557c223cd93584"
+    },
+    {
+      "path": "src/server.js",
+      "preparedSourceSHA256": "6b985ead56310b54e6eb824b02a02b9f0b9202a981a501532360aebe30d0f53c",
+      "candidateSHA256": "99ff4755b980c910ebebd0d68f35b82b9cf36a9a836f5ec22d4d5b18e979cc06"
+    },
+    {
+      "path": "package.json",
+      "preparedSourceSHA256": "eba1a9fe12551043bdbb9310cf5745fbb71eded4bd466c478a3d6ff789722e53",
+      "candidateSHA256": "7d546cd9d81f3ea765a047d7f3eb75be16c1ef2b50d38f6db3df279571cacdbb"
+    },
+    {
+      "path": "package-lock.json",
+      "preparedSourceSHA256": "e86e3e61121e8d6fd3a86acfba5e8af9d46b498b45d89970e4f8d352e68566f5",
+      "candidateSHA256": "7d163174a3b6e5a7f056026102f212a81ba4caa4b30f674161aea840b37df26f"
+    },
+    {
+      "path": "test/app.test.js",
+      "preparedSourceSHA256": "68e0309de5bed19c653980b3eca0f0d33f6725e00e62e6353cfd7d515f9b3759",
+      "candidateSHA256": "8806a522f71381e10ca4c54b71bea52bff84e5757efdbc16ada51f4dc05c915b"
+    },
+    {
+      "path": "test/background-review.test.js",
+      "preparedSourceSHA256": null,
+      "candidateSHA256": "72ab1ac4925626594031a9f75059b050cb6bc11eb63892dbc5446fdd33cbcd25"
+    }
+  ]
+}

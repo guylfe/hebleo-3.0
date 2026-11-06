@@ -270,7 +270,7 @@ export class Store {
   bootstrap(userId) {
     const content = this.snapshot(); const learner = this.learner(userId);
     const due = Object.entries(learner.cards).filter(([cardId, c]) => Date.parse(c.due) <= Date.now() && !isReviewBuried(learner,cardId)).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)||this.shared.word(wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
-    return { sharedCollection: this.shared.state()&&learner.purchasedCourses.includes('demo-foundations')?this.shared.collection(userId):null, revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
+    return { sharedCollection: this.shared.state()&&learner.purchasedCourses.includes('demo-foundations')?this.shared.collection(userId):null, revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewVersions:Object.fromEntries(Object.keys(learner.cards).map(id=>[id,this.reviewVersion(learner,id)])), reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
   }
   publicWord(word) {
     if(!word)return word;
@@ -327,7 +327,51 @@ export class Store {
     }
     this.saveLearner(userId, state); return withAnswerVocabularyBindings(exercise, result);
   }
-  review(userId, input) {
+  reviewVersion(state,cardId) { return contextHash({generation:state.reviewGenerations?.[cardId]||0,card:state.cards[cardId]}); }
+  reviewClock(userId, input={}) {
+    return this.transaction(()=>{
+      const state=this.learner(userId),now=Date.now();
+      if(!state.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
+      state.reviewClockTickets=Object.fromEntries(Object.entries(state.reviewClockTickets||{}).filter(([,x])=>x.expiresAt>=now));
+      const requested=input.cardIds??Object.keys(state.cards).slice(0,100);
+      if(!Array.isArray(requested)||requested.length>100||requested.some(x=>typeof x!=='string'))throw new DomainError('Review clock needs at most 100 card IDs.');
+      const wanted=new Set(requested),anchors={};
+      for(const [cardId,card] of Object.entries(state.cards))if(wanted.has(cardId)&&!card.suspended&&Date.parse(card.due)<=now&&!isReviewBuried(state,cardId,now)){
+        const expectedVersion=this.reviewVersion(state,cardId),existing=Object.entries(state.reviewClockTickets).find(([,x])=>x.cardId===cardId&&x.expectedVersion===expectedVersion),clockTicketId=existing?.[0]||randomUUID(),siblingGroupId=parseSharedCardId(cardId)?.sourceId||cardId;
+        const ticket=existing?.[1]||{siteId:'hebleo-local-demo',ownerId:userId,cardId,siblingGroupId,expectedVersion,issuedAt:now,expiresAt:now+86400000};
+        state.reviewClockTickets[clockTicketId]=ticket;anchors[cardId]={...ticket,clockTicketId};
+      }
+      if(Object.keys(state.reviewClockTickets).length>10000)throw new DomainError('Review clock capacity reached. Retry later.',409);
+      this.saveLearner(userId,state);return {anchors,serverNow:now};
+    });
+  }
+  backgroundReview(userId,input){
+    return this.transaction(()=>{
+      const state=this.learner(userId);
+      if(!state.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
+      const fields=['protocolVersion','siteId','ownerId','requestId','cardId','siblingGroupId','expectedVersion','rating','clockTicketId','elapsedMs'];
+      if(Object.keys(input).sort().join('|')!==fields.sort().join('|')||input.protocolVersion!==1||input.siteId!=='hebleo-local-demo'||input.ownerId!==userId)throw new DomainError('Invalid review scope.',403);
+      id(input.requestId);const intentHash=contextHash(input),key='review-'+userId+'-'+input.requestId,previous=this.get(key);
+      if(previous){if(previous.intentHash!==intentHash)throw new DomainError('Conflicting review request ID.',409);return {...previous,duplicate:true};}
+      if(typeof input.cardId!=='string'||typeof input.siblingGroupId!=='string'||typeof input.expectedVersion!=='string'||typeof input.clockTicketId!=='string'||![1,2,3,4].includes(input.rating)||!Number.isFinite(input.elapsedMs)||input.elapsedMs<0)throw new DomainError('Invalid review intent.');
+      const now=Date.now(),ticket=state.reviewClockTickets?.[input.clockTicketId],card=state.cards[input.cardId];
+      const reject=reasonCode=>{const result={protocolVersion:1,requestId:input.requestId,intentHash,cardId:input.cardId,expectedVersion:input.expectedVersion,outcome:'rejected',reasonCode,rejectedAt:now};this.set(key,result);return result;};
+      if(!ticket||['siteId','ownerId','cardId','siblingGroupId','expectedVersion'].some(k=>ticket[k]!==input[k]))return reject('CLOCK_TICKET_INVALID');
+      if(!card||card.suspended||this.reviewVersion(state,input.cardId)!==input.expectedVersion)return reject('CARD_CHANGED');
+      if(![1,2,3,4].includes(input.rating)||!Number.isFinite(input.elapsedMs)||input.elapsedMs<0||input.elapsedMs>86400000||now>ticket.expiresAt)return reject('CLOCK_EXPIRED');
+      const candidate=ticket.issuedAt+input.elapsedMs,last=state.reviewAnswerTimes?.[input.cardId]||0;
+      if(now<ticket.issuedAt||now<last)throw new DomainError('Server clock regressed. Retry later.',409);
+      if(candidate<last||candidate>now+120000)return reject('ANSWER_TIME_INVALID');
+      const word=this.snapshot().words.find(w=>w.id===input.cardId)||this.shared.word(input.cardId);if(!word||word.noCard)return reject('CARD_REMOVED');
+      const acceptedAnswerAt=Math.floor(Math.min(candidate,now));
+      if(Date.parse(card.due)>acceptedAnswerAt||isReviewBuried(state,input.cardId,acceptedAnswerAt)||isReviewBuried(state,input.cardId,now))return reject('CARD_NOT_ELIGIBLE');
+      const receipt=this.review(userId,{wordId:input.cardId,rating:input.rating,requestId:input.requestId,expectedCard:card},acceptedAnswerAt);
+      const result={...receipt,protocolVersion:1,intentHash,outcome:'committed',cardId:input.cardId,expectedVersion:input.expectedVersion,resultingVersion:this.reviewVersion(this.learner(userId),input.cardId),resultingGeneration:this.learner(userId).reviewGenerations[input.cardId],acceptedAnswerAt,committedAt:now,authoritativeSchedule:receipt.card,siblingsUntil:parseSharedCardId(input.cardId)?Date.parse(nextStudyDay(acceptedAnswerAt)):0};
+      this.set(key,result);return result;
+    });
+  }
+  review(userId, input, answerAt, locked=false) {
+    if(!locked)return this.transaction(()=>this.review(userId,input,answerAt,true));
     if (![1, 2, 3, 4].includes(input.rating)) throw new DomainError('Invalid review rating.');
     const state = this.learner(userId); const card = state.cards[input.wordId];
     if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
@@ -336,19 +380,22 @@ export class Store {
     if (previous) { if (previous.wordId !== input.wordId || previous.rating !== input.rating) throw new DomainError('Conflicting review request ID.', 409); return { ...previous, duplicate: true }; }
     if(isReviewBuried(state,input.wordId))throw new DomainError('A sibling of this card was reviewed today.',409,'REVIEW_CARD_BURIED');
     if (Object.hasOwn(input,'expectedCard') && canonicalJSON(input.expectedCard) !== canonicalJSON(card)) throw new DomainError('This card changed elsewhere. Refresh its review choices.',409,'REVIEW_CARD_CHANGED');
-    const now=Date.now(),note=parseSharedCardId(input.wordId),burialBefore=note?(state.reviewBurials?.[note.sourceId]??null):null;
+    const now=answerAt??Date.now(),note=parseSharedCardId(input.wordId),burialBefore=note?(state.reviewBurials?.[note.sourceId]??null):null;
     const before = clone(card);
     Object.assign(card,scheduleReview(card,input.rating,now).card);
     if(note){state.reviewBurials=Object.fromEntries(Object.entries(state.reviewBurials||{}).filter(([,entry])=>Date.parse(entry.until)>now));state.reviewBurials[note.sourceId]={cardId:input.wordId,until:nextStudyDay(now)};}
+    state.reviewGenerations??={};state.reviewGenerations[input.wordId]=(state.reviewGenerations[input.wordId]||0)+1;
+    state.reviewAnswerTimes??={};state.reviewAnswerTimes[input.wordId]=now;
     const result = { wordId: input.wordId, rating: input.rating, requestId, card: clone(card) };
     state.lastReview = { requestId, wordId: input.wordId, before, after: clone(card), ...(note?{burialBefore}: {}) };
     return this.transaction(() => { this.saveLearner(userId, state); this.set('review-' + userId + '-' + requestId, result); return result; });
   }
-  undoReview(userId, input) {
+  undoReview(userId, input, locked=false) {
+    if(!locked)return this.transaction(()=>this.undoReview(userId,input,true));
     const state = this.learner(userId); const previous = state.lastReview;
     if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     if (!previous || previous.requestId !== input.requestId || JSON.stringify(state.cards[previous.wordId]) !== JSON.stringify(previous.after)) throw new DomainError('Only the most recent unchanged review can be undone.', 409);
-    return this.transaction(() => { state.cards[previous.wordId] = previous.before; const note=parseSharedCardId(previous.wordId);if(note&&Object.hasOwn(previous,'burialBefore')){state.reviewBurials??={};if(previous.burialBefore)state.reviewBurials[note.sourceId]=previous.burialBefore;else delete state.reviewBurials[note.sourceId];} state.lastReview = null; this.saveLearner(userId, state); const key = 'review-' + userId + '-' + input.requestId; this.set(key, { ...this.get(key), undone: true }); return { wordId: previous.wordId }; });
+    return this.transaction(() => { state.cards[previous.wordId] = previous.before; state.reviewGenerations??={};state.reviewGenerations[previous.wordId]=(state.reviewGenerations[previous.wordId]||0)+1; const note=parseSharedCardId(previous.wordId);if(note&&Object.hasOwn(previous,'burialBefore')){state.reviewBurials??={};if(previous.burialBefore)state.reviewBurials[note.sourceId]=previous.burialBefore;else delete state.reviewBurials[note.sourceId];} state.lastReview = null; this.saveLearner(userId, state); const key = 'review-' + userId + '-' + input.requestId,receipt=this.get(key); this.set(key, { ...receipt, undone: true, outcome:'undone',...(receipt.protocolVersion?{resultingVersion:this.reviewVersion(state,previous.wordId),resultingGeneration:state.reviewGenerations[previous.wordId],authoritativeSchedule:clone(previous.before),siblingsUntil:Date.parse(state.reviewBurials?.[note?.sourceId]?.until)||0}:{}) }); return { wordId: previous.wordId }; });
   }
   session(userId, lessonId) {
     const state = this.learner(userId); let progress = state.resumes[lessonId];
@@ -815,9 +862,18 @@ export class Store {
     if (!Array.isArray(input.events) || !Array.isArray(input.reviewReceipts)) throw new DomainError('Backup needs replay receipts.');
     if (new Set(input.events.map(e => e?.id)).size !== input.events.length || new Set(input.reviewReceipts.map(r => r?.key)).size !== input.reviewReceipts.length) throw new DomainError('Duplicate backup receipt.');
     for (const e of input.events) { id(e?.id); if (!users.some(u => u.id === e.payload?.userId) || !['membership_cancelled', 'membership_started', 'course_refunded', 'course_purchased'].includes(e.payload?.type)) throw new DomainError('Invalid event receipt.'); }
-    for (const r of input.reviewReceipts) if (typeof r?.key !== 'string' || !/^review-(learner-(demo|core)|author-demo)-[A-Za-z0-9_-]+$/.test(r.key) || !r.value || ![1,2,3,4].includes(r.value.rating) || typeof r.value.wordId !== 'string' || !r.value.card) throw new DomainError('Invalid review receipt.');
+    for (const r of input.reviewReceipts) if (typeof r?.key !== 'string' || !/^review-(learner-(demo|core)|author-demo)-[A-Za-z0-9_-]+$/.test(r.key) || !r.value || (r.value.outcome==='rejected' ? r.value.protocolVersion!==1||typeof r.value.intentHash!=='string'||typeof r.value.cardId!=='string'||typeof r.value.expectedVersion!=='string'||typeof r.value.reasonCode!=='string'||!Number.isFinite(r.value.rejectedAt) : ![1,2,3,4].includes(r.value.rating)||typeof r.value.wordId!=='string'||!r.value.card)) throw new DomainError('Invalid review receipt.');
     for (const row of input.learners) {
       const s = row.state;
+      for(const field of ['reviewGenerations','reviewAnswerTimes','reviewClockTickets'])if(s?.[field]!==undefined){
+        const map=s[field];if(!map||typeof map!=='object'||Array.isArray(map)||Object.keys(map).length>10000)throw new DomainError('Invalid review protocol metadata.');
+        for(const [key,value]of Object.entries(map)){
+          id(key);
+          if(field==='reviewClockTickets'){
+            if(!value||value.ownerId!==row.id||value.siteId!=='hebleo-local-demo'||typeof value.cardId!=='string'||typeof value.siblingGroupId!=='string'||typeof value.expectedVersion!=='string'||!Number.isFinite(value.issuedAt)||!Number.isFinite(value.expiresAt)||value.expiresAt<value.issuedAt)throw new DomainError('Invalid review clock metadata.');
+          }else if(!Number.isSafeInteger(value)||value<0)throw new DomainError('Invalid review generation or time.');
+        }
+      }
       if (!users.some(u => u.id === row.id) || !s || !Array.isArray(s.completed) || !Array.isArray(s.attempts) || !Array.isArray(s.bookmarks) || !Array.isArray(s.purchasedCourses) || !s.cards || !s.notes || !modes.includes(s.preferences?.nikkud) || typeof s.membership !== 'boolean' || !Number.isInteger(s.goal) || s.goal < 1 || s.goal > 120) throw new DomainError('Invalid learner backup.');
       if (Array.isArray(s.cards) || Array.isArray(s.notes) || typeof s.cards !== 'object' || typeof s.notes !== 'object') throw new DomainError('Invalid learner state objects.');
       for (const list of [s.completed, s.bookmarks, s.purchasedCourses]) list.forEach(id);

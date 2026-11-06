@@ -143,6 +143,50 @@ async function api(path, body, user=state.user, headers={},preparedBody,options=
   const value=await response.json(); if(!response.ok)throw Object.assign(new Error(value.error || 'Request failed'),{status:response.status,...value}); return value;
 }
 function toast(message) { const box=document.querySelector('#toast');box.textContent=message;box.classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>box.classList.remove('visible'),5000); }
+const reviewGroup=id=>/^sc-(mf-\d{6})-(he-en|en-he)$/.exec(id)?.[1]||id;
+let reviewDueSource=[],reviewDueTimer=null,reviewRefreshRunning=false;
+function scheduleReviewReturn(){
+ clearTimeout(reviewDueTimer);if(!reviewSave)return;
+ const now=reviewSave.now();if(!Number.isFinite(now))return;
+ const boundaries=reviewSave.snapshot().overlays.flatMap(r=>[Date.parse(r.authoritativeSchedule?.due),r.siblingsUntil]).filter(t=>Number.isFinite(t)&&t>now);
+ if(boundaries.length)reviewDueTimer=setTimeout(()=>refreshReviewDue().catch(error=>toast(error.message)),Math.min(2147483647,Math.max(25,Math.min(...boundaries)-now+25)));
+}
+async function refreshReviewDue(){
+ if(reviewRefreshRunning||!reviewSave)return;reviewRefreshRunning=true;
+ const save=reviewSave,owner=state.user,session=state.reviewSession,controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+ try{const data=await api('bootstrap',undefined,owner,{},undefined,{signal:controller.signal});
+  if(state.user!==owner||reviewSave!==save)return;
+  await save.observe(data);if(state.user!==owner||reviewSave!==save)return;
+  const hadCard=!!reviewWord();state.data=data;reviewDueSource=data.due;overlayReviews();
+  if(session&&session===state.reviewSession){for(const {word}of state.data.due)if(session.ids.indexOf(word.id)<session.index&&!session.ids.slice(session.index).includes(word.id))session.ids.push(word.id);}
+  if(!hadCard&&session===state.reviewSession&&session){await save.clock(session.ids.slice(session.index,session.index+100));if(state.user!==owner||reviewSave!==save||state.reviewSession!==session)return;}
+  if(state.page==='review'&&(!state.reviewSession||!hadCard)){state.revealReview=false;render();}
+ }finally{clearTimeout(timeout);reviewRefreshRunning=false;}
+}
+function overlayReviews(){
+ if(!reviewSave||!state.data)return;
+ const snap=reviewSave.snapshot();
+ for(const receipt of snap.overlays)if(receipt.outcome==='committed'&&(state.data.learner.reviewGenerations?.[receipt.cardId]||0)<=(receipt.resultingGeneration||0))state.data.learner.cards[receipt.cardId]=receipt.authoritativeSchedule;
+ state.data.due=reviewDueSource.filter(({word})=>!reviewSave.excluded(word.id,reviewGroup(word.id)));
+ scheduleReviewReturn();
+}
+async function ensureReviewOutbox(){
+ if(reviewSave?.owner===state.user&&!reviewSave.snapshot().disposed)return reviewSave;
+ reviewSave?.dispose();const owner=state.user;
+ let save;save=createReviewSave({background:true,ownerId:owner,isActive:()=>state.user===owner,
+ getCardIds:()=>state.reviewSession?state.reviewSession.ids.slice(state.reviewSession.index,state.reviewSession.index+100):reviewDueSource.map(x=>x.word.id).slice(0,100),send:(path,body,signal)=>api(path,body,owner,{},undefined,{signal}),onChange:()=>{
+  if(reviewSave!==save||state.user!==owner)return;
+  overlayReviews();reviewPendingStatus();
+  if(state.page==='review'&&(!state.reviewSession||!reviewWord())){render();reviewPendingStatus();}
+  const session=state.reviewSession;
+  if(session&&!save.blocked){let moved=false;while(session.index<session.ids.length&&save.excluded(session.ids[session.index],reviewGroup(session.ids[session.index]))){session.index++;moved=true;}if(moved){state.revealReview=false;render();reviewPendingStatus();}}
+ }});save.owner=owner;reviewSave=save;await save.ready.catch(()=>{});return save;
+}
+function reviewPendingStatus(){
+ if(!reviewSave)return;const snap=reviewSave.snapshot();
+ reviewStatus(snap.error?'Pending reviews need recovery: '+snap.error:snap.pending.length?snap.pending.length+' review'+(snap.pending.length===1?'':'s')+' pending':'');
+ const rejected=snap.pending.find(x=>x.phase==='needs-resolution');if(rejected){const status=root.querySelector('[data-review-save-status]');if(status){status.textContent='Rating was not applied: '+rejected.receipt.reasonCode+'. ';const resolve=document.createElement('button');resolve.textContent='Resolve rejected rating';resolve.onclick=()=>act('review-resolve-rejected',rejected.intent.requestId).catch(error=>toast(error.message));status.append(resolve);}}
+}
 // Review refresh commits nothing until all reads and the captured operation are current.
 async function loadReview({owner,signal,isCurrent}) {
  if(!isCurrent()||signal.aborted)return false;
@@ -156,7 +200,7 @@ async function load() {
   const owner=state.user,page=state.page,data=await api('bootstrap',undefined,owner),questions=await api('questions',undefined,owner);
   const author=page==='studio'&&data.canAuthor,studio=author?await api('studio',undefined,owner):null,reports=author?await api('reports',undefined,owner):null;
   const sharedView=page==='library'&&state.libraryMode==='shared'&&data.sharedCollection?await api('shared-cards?'+new URLSearchParams({search:state.sharedSearch||'',offset:state.sharedView?.offset||0}),undefined,owner):data.sharedCollection;
-  if(state.user!==owner)return;state.sharedView=sharedView;state.data=data;state.questions=questions;if(author){state.studio=studio;state.reports=reports;}
+  if(state.user!==owner)return;state.sharedView=sharedView;state.data=data;reviewDueSource=data.due;state.questions=questions;const save=await ensureReviewOutbox();if(state.user!==owner||reviewSave!==save)return;await save.observe(data).catch(()=>{});if(state.user!==owner||reviewSave!==save)return;overlayReviews();if(author){state.studio=studio;state.reports=reports;}
 }
 // Studio writes name the draft they were built from, so a draft changed in another tab is never silently overwritten.
 function draftToken() { return authorContext?.owner===state.user?authorContext.workspace.expectedDraftToken:state.studio?.draft?.draftToken ?? null; }
@@ -266,7 +310,7 @@ function render() {
   root.innerHTML='<a class="skip-link" href="#main-content" data-action="skip-content">Skip to content</a><header class="app-header" aria-label="Hebleo navigation">'+(hasCourse?navigationToggle():'')+'<a class="brand" href="#home" data-action="page" data-value="home" aria-label="Hebleo home"><span class="brand-logo-slot" aria-hidden="true"><img src="/assets/hebleo-wide-navy.png" alt="" width="3693" height="1198"></span></a><nav id="main-menu" class="nav main-navigation" aria-label="Main navigation">'+nav()+'</nav><div class="profile"><span class="demo-pill">DEMO CONTENT</span><label class="profile-control"><span>Demo profile</span><select id="demo-user" aria-label="Demo profile">'+state.data.users.map(x=>'<option value="'+x.id+'" '+(x.id===state.user?'selected':'')+'>'+esc(x.name)+' · '+esc(x.role)+'</option>').join('')+'</select></label></div></header><div class="shell nav-shell page-'+state.page+' '+(hasCourse?'has-course ':'')+(!pref().animations?'reduce-motion':'')+'">'+(hasCourse?courseNavigation(courseLesson):'')+'<main class="main" id="main-content" tabindex="-1"><div class="topbar"><div class="breadcrumb">Your Hebrew / '+esc({home:'Your path',course:'Foundations',lesson:label(state.step),review:'Review',library:'My Hebrew',studio:'Author workspace',settings:'Settings'}[state.page])+'</div></div><div class="content">'+pages[state.page]()+'</div></main><button type="button" class="nav-backdrop" data-action="navigation-close" aria-label="Close course outline" hidden></button></div>';
 
   applyNavigation();bind();
-  const cardFrame=root.querySelector('[data-shared-review]');if(cardFrame)sharedFrame=mountSharedReview(cardFrame,{api,user:state.user,onError:error=>toast(error.message),onShortcut:reviewKey});mountLessonTextReaders();mountInlineLesson();if(state.page==='lesson'&&state.data.canAuthor){const owner=state.user,id=state.lessonId,control=root.querySelector('[data-action=author-comments]');if(control)api('studio/author-comments?'+new URLSearchParams({lessonId:id,limit:1})).then(r=>{if(control.isConnected&&state.user===owner&&state.lessonId===id)control.textContent='Author comments ('+r.total+')';},()=>{if(control.isConnected)control.textContent='Author comments · unavailable';});}if(state.page==='lesson')extraInformationBinding=bindExtraInformation(root,portionLesson(lessonObject(),state.step),renderLesson);syncLessonTextGates();exerciseDockBinding=state.page==='lesson'&&currentKind()==='learn'&&root.querySelector('[data-text-reader]')?null:mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio'){pageStudioLists();if(state.studioTask==='comments')mountStudioPrivateComments();}syncKeyboard();if(state.panel)showPanel();
+  const cardFrame=root.querySelector('[data-shared-review]');if(cardFrame)sharedFrame=mountSharedReview(cardFrame,{api,user:state.user,onError:error=>toast(error.message),onShortcut:reviewKey});mountLessonTextReaders();mountInlineLesson();if(state.page==='lesson'&&state.data.canAuthor){const owner=state.user,id=state.lessonId,control=root.querySelector('[data-action=author-comments]');if(control)api('studio/author-comments?'+new URLSearchParams({lessonId:id,limit:1})).then(r=>{if(control.isConnected&&state.user===owner&&state.lessonId===id)control.textContent='Author comments ('+r.total+')';},()=>{if(control.isConnected)control.textContent='Author comments · unavailable';});}if(state.page==='lesson')extraInformationBinding=bindExtraInformation(root,portionLesson(lessonObject(),state.step),renderLesson);syncLessonTextGates();exerciseDockBinding=state.page==='lesson'&&currentKind()==='learn'&&root.querySelector('[data-text-reader]')?null:mountExerciseDock(root.querySelector('#practice'));if(state.page==='studio'&&state.studio)mountStudioEditors();applyStudioTask();if(state.page==='studio'){pageStudioLists();if(state.studioTask==='comments')mountStudioPrivateComments();}syncKeyboard();if(state.panel)showPanel();if(state.page==='review')reviewPendingStatus();
 }
 function lessonStarted(id) { const l=state.data.learner; return Boolean(l.resumes[id] || l.attempts.some(a=>a.lessonId===id)); }
 function lessonCards() {
@@ -356,7 +400,7 @@ function voiceControls(w) {return '<details class="voice-comparison pronunciatio
 function updateVoiceStatus(){for(const section of document.querySelectorAll('[data-pronunciation-word]')){section.open=true;const record=section.querySelector('[data-action="record"]'),stop=section.querySelector('[data-action="record-stop"]'),play=section.querySelector('[data-action="voice-replay"]');record.textContent=state.recording==='recording'?'Recording…':'Record yourself';record.disabled=state.recording==='recording';stop.disabled=state.recording!=='recording';play.disabled=state.recording!=='ready';section.querySelector('[data-recording-status]').textContent=state.recording==='recording'?'Recording locally…':state.recording==='ready'?'Your local recording is ready.':'';}}
 
 function review() {
-  const undo=state.data.learner.lastReview?button('Undo last rating','review-undo','small outline'):'',session=state.reviewSession,w=reviewWord();
+  const undo=(state.data.learner.lastReview||reviewSave?.snapshot().overlays.length||reviewSave?.snapshot().pending.length)?button('Undo last rating','review-undo','small outline'):'',session=state.reviewSession,w=reviewWord();
   if(!session)return '<div class="eyebrow">A SHORT RETURN TO FAMILIAR WORDS</div><h1 tabindex="-1">Your review.</h1><section class="card"><h2>'+state.data.due.length+' cards due</h2><label for="review-limit">Cards in this session</label><input id="review-limit" type="number" min="1" max="100" value="'+pref().reviewLimit+'"><label for="review-type">Card presentation</label><select id="review-type">'+[['recognition','Hebrew → meaning'],['translation','English → Hebrew'],['listening','Listening first'],['sentence','Sentence context']].map(([v,l])=>'<option value="'+v+'" '+(pref().reviewType===v?'selected':'')+'>'+l+'</option>').join('')+'</select>'+reviewNikkudControl()+(!state.data.due.length?'<p>'+(!Object.keys(state.data.learner.cards).length?'Your review deck is empty. Add a word from a lesson or My Hebrew.':'No cards are due yet. They will return on their scheduled date.')+'</p>'+((state.data.content.provenance?.kind==='synthetic-demo'&&!Object.keys(state.data.learner.cards).length)?button('Add 3 synthetic demo words to review','review-demo','secondary'):''):'')+'<div class="button-row">'+button('Start review','review-start','primary','',!state.data.due.length)+undo+'</div><p>Listening and sentence cards appear when their source media or examples are available. These are initial presentation options; final card pedagogy remains to be defined.</p></section>';
   if(!w)return '<h1 tabindex="-1">Review finished.</h1><section class="card empty"><h2>You reviewed '+session.index+' cards.</h2><div class="button-row centered">'+button('Continue learning','lesson','primary',continueLesson()?.id||state.data.content.lessons[0].id)+button('Review overview','review-end','secondary')+undo+'</div></section>';
   if(w?.shared)return sharedReview(w,undo,session);
@@ -587,14 +631,14 @@ async function updatePreference(key,value) { await api('preferences',{[key]:valu
 const learnerActions=new Set(['choice','check','token','remove-token','next-question','retry-question','inline-choice','review-reveal','review-rate','save-answer-position','recover-attempt','retry-continuing','key','backspace','cursor']);
 function learnerControlsActive(){return !state.panel&&!rehearsal&&!document.querySelector('dialog[open]')&&root.querySelector('.nav-shell')?.dataset.courseOverlay!=='true'&&!root.querySelector('#main-content')?.hasAttribute('inert');}
 function reviewStatus(text){
- let status=root.querySelector('[data-review-save-status]');if(!status){status=document.createElement('p');status.dataset.reviewSaveStatus='';status.setAttribute('role','status');root.querySelector('.review-surface,.review-card')?.append(status);}
- if(status){status.textContent=text;if(text.includes('unconfirmed')||text.includes('refresh is incomplete')){const check=document.createElement('button');check.textContent='Check saved review';check.onclick=()=>act('review-reconcile').catch(e=>toast(e.message));status.append(check);}}
- root.querySelectorAll('[data-action="review-rate"],[data-action="review-reveal"],[data-action="review-undo"]').forEach(el=>el.disabled=!!text);
+ let status=root.querySelector('[data-review-save-status]');if(!status){status=document.createElement('p');status.dataset.reviewSaveStatus='';status.setAttribute('role','status');(root.querySelector('.review-surface,.review-card')||root.querySelector('#main-content'))?.append(status);}
+ if(status){status.textContent=text;if(text.includes('unconfirmed')||text.includes('refresh is incomplete')||text.includes('need recovery')){const check=document.createElement('button');check.textContent='Check saved review';check.onclick=()=>act('review-reconcile').catch(e=>toast(e.message));status.append(check);}}
+ root.querySelectorAll('[data-action="review-rate"],[data-action="review-reveal"]').forEach(el=>el.disabled=!!reviewSave?.blocked);
 }
 function reviewKey(key){if(state.page!=='review'||!state.reviewSession||state.panel||rehearsal||submitting||reviewSave?.blocked||reviewRevealPending||document.querySelector('dialog[open],[role="dialog"]')||!learnerControlsActive())return;const selector=key==='reveal'?'[data-action="review-reveal"]':state.revealReview?'[data-action="review-rate"][data-value="'+key+'"]':null;if(selector)learnerElements(selector)[0]?.click();}
 mountReviewKeys({document,active:()=>state.page==='review'&&!!state.reviewSession&&!state.panel&&!rehearsal&&!document.querySelector('dialog[open],[role="dialog"]'),onShortcut:reviewKey});
 async function act(action,value,source) {
-  if(reviewSave?.blocked&&!['review-reconcile','review-end','audio','voice-replay'].includes(action))return;
+  if(reviewSave?.blocked&&['review-start','review-reveal','review-rate'].includes(action)){reviewPendingStatus();return;}
 
   if((submitting||pendingAttempt)&&['page','lesson','outline','step','latest-lesson','lesson-practice','retry-question','target-practice','mode','token','remove-token','choice','concept','inline-concept-close'].includes(action))return;
   if(learnerActions.has(action)&&(!learnerControlsActive()||source&&!activeLearnerDestination(source,true)))return;
@@ -682,6 +726,7 @@ async function act(action,value,source) {
   if(action==='review-demo'){const candidates=state.data.content.words.filter(w=>!w.noCard).slice(0,3);for(const w of candidates)if(!state.data.learner.cards[w.id])await api('enroll',{wordId:w.id});await load();render();toast('Existing synthetic words are ready for review.');return;}
   if(action==='review-start'){
     reviewRevealPending=null;
+    await (await ensureReviewOutbox()).clock();
     const limit=Number(document.querySelector('#review-limit').value),type=document.querySelector('#review-type').value;await api('preferences',{reviewLimit:limit,reviewType:type});await load();
     const ids=state.data.due.filter(({word:w})=>w.shared|| (type==='listening'?audioURL(w.audio):type==='sentence'?w.examples?.length:true)).slice(0,limit).map(({word:w})=>w.id);
     if(!ids.length){toast('No due cards have the source audio or examples needed for this presentation.');return;}state.reviewSession={ids,index:0,type};state.revealReview=false;render();return;
@@ -697,20 +742,48 @@ async function act(action,value,source) {
     }finally{if(reviewRevealPending===operation)reviewRevealPending=null;}
     return;
   }
+  if(action==='review-resolve-rejected'){
+   const save=reviewSave,owner=state.user,session=state.reviewSession;const data=await api('bootstrap',undefined,owner);
+   if(state.user!==owner||reviewSave!==save||state.reviewSession!==session)return;
+   const intent=await save.resolveRejected(value,data);if(state.user!==owner||reviewSave!==save||state.reviewSession!==session)return;
+   state.data=data;reviewDueSource=data.due;overlayReviews();const eligible=state.data.due.some(x=>x.word.id===intent.cardId);
+   if(eligible&&session)session.ids.splice(session.index,0,intent.cardId);
+   state.revealReview=false;render();
+   const card=data.learner.cards[intent.cardId];toast(eligible?'Rating was not applied. The card is ready for a new choice.':!card?'Rating was not applied. This card is no longer available.':card.suspended?'Rating was not applied. This card is suspended.':Date.parse(card.due)>data.reviewClock?'Rating was not applied. This card is not due yet.':'Rating was not applied. A sibling restriction currently excludes this card.');return;
+  }
   if(action==='review-reconcile'){await reviewSave?.reconcile();return;}
   if(action==='review-rate'){
     if(reviewRevealPending||reviewSave?.blocked)return;const w=reviewWord();if(!w||!state.revealReview)return;
     const owner=state.user,session=state.reviewSession,index=session.index,ids=[...session.ids];
-    let save;save=createReviewSave({send:async(path,body,signal)=>{await sharedFrame?.flush();return api(path,body,owner,{},undefined,{signal});},status:text=>{if(reviewSave===save)reviewStatus(text);},apply:async(receipt,operation)=>{
-      const isCurrent=()=>operation.isCurrent()&&state.user===owner&&state.reviewSession===session&&reviewSave===save&&session.index===index;
-      if(!await loadReview({owner,signal:operation.signal,isCurrent})||!isCurrent())return;
-      reviewUndoQueue={requestId:receipt.requestId,session,ids,index};const due=new Set(state.data.due.map(c=>c.word.id));session.ids=ids.filter((id,i)=>i<=index||due.has(id));session.index=index+1;
-      clearRecording();state.recording='empty';state.revealReview=false;render();
-    }});
-    reviewSave=save;await save.commit({requestId:uid(),wordId:w.id,rating:Number(value),expectedCard:state.data.learner.cards[w.id]});return;
+    const save=await ensureReviewOutbox(),frame=sharedFrame;await frame?.flush();
+    if(state.user!==owner||state.reviewSession!==session||session.index!==index||reviewWord()?.id!==w.id)return;
+    await save.commit({requestId:uid(),cardId:w.id,rating:Number(value)});
+    if(state.user!==owner||state.reviewSession!==session||reviewSave!==save)return;
+    reviewUndoQueue={session,ids,index};
+    session.index=Math.max(session.index,index+1);
+    while(session.index<session.ids.length&&save.excluded(session.ids[session.index],reviewGroup(session.ids[session.index])))session.index++;
+    clearRecording();state.recording='empty';state.revealReview=false;overlayReviews();render();reviewPendingStatus();return;
   }
-  if(action==='review-undo'){const last=state.data.learner.lastReview;if(!last)return;await api('review/undo',{requestId:last.requestId});if(reviewUndoQueue?.requestId===last.requestId&&reviewUndoQueue.session===state.reviewSession){state.reviewSession.ids=reviewUndoQueue.ids;state.reviewSession.index=reviewUndoQueue.index;}clearRecording();state.recording='empty';if(state.reviewSession){const index=state.reviewSession.ids.indexOf(last.wordId);if(index>=0)state.reviewSession.index=index;}state.revealReview=false;await load();render();toast('Previous review schedule restored.');return;}
-  if(action==='review-end'){reviewRevealPending=null;reviewSave?.cancel();reviewSave=null;clearRecording();state.recording='empty';state.reviewSession=null;state.revealReview=false;render();return;}
+  if(action==='review-undo'){
+   const owner=state.user,session=state.reviewSession,save=reviewSave,pause=await save.pauseCapture();
+   const snapshot=save.snapshot(),selectedId=snapshot.pending.at(-1)?.intent.requestId||snapshot.overlays.at(-1)?.requestId||state.data.learner.lastReview?.requestId;
+   const current=()=>state.user===owner&&state.reviewSession===session&&reviewSave===save;
+   try{
+    await save.drain();await pause.assertOwned();if(!current()||!selectedId)return;
+    await load();await pause.assertOwned();if(!current())return;
+    const last=state.data.learner.lastReview;
+    if(!last||last.requestId!==selectedId)throw Error('The latest rating changed. Reopen review before Undo.');
+    await pause.assertOwned();
+    await api('review/undo',{requestId:selectedId},owner,{},undefined,{signal:pause.signal});
+    await save.clearOverlays(selectedId);if(!current())return;
+    if(reviewUndoQueue?.requestId===selectedId&&reviewUndoQueue.session===session){session.ids=reviewUndoQueue.ids;session.index=reviewUndoQueue.index;}
+    clearRecording();state.recording='empty';if(session){const index=session.ids.indexOf(last.wordId);if(index>=0)session.index=index;}
+    state.revealReview=false;await load();await pause.assertOwned();if(!current())return;
+    await save.clock([last.wordId]);await pause.assertOwned();if(!current())return;
+    await pause();render();toast('Previous review schedule restored.');
+   }finally{await pause();}return;
+  }
+  if(action==='review-end'){reviewRevealPending=null;clearRecording();state.recording='empty';state.reviewSession=null;state.revealReview=false;render();void refreshReviewDue().catch(error=>toast(error.message));return;}
   if(action==='studio-word'){state.wordId=value;render();return;}
   if(action==='report-resolve'){const [userId,requestId,status]=value.split('|');await api('reports/resolve',{userId,requestId,status});await load();render();return;}
   if(action==='comment-moderate'){const owner=state.user,[userId,requestId,choice]=value.split('|');rememberComposers();await api('questions/moderate',{userId,requestId,action:choice},owner);if(state.user!==owner)return;if(choice==='remove'){state.questions=state.questions.filter(q=>q.userId!==userId||q.requestId!==requestId);refreshComments();}await load();if(state.user===owner){refreshComments();toast(choice==='keep'?'Comment kept.':'Comment removed from learner discussion.');}return;}
@@ -746,7 +819,7 @@ function bind(scope=root) {
   scope.querySelectorAll('[data-action="key"],[data-action="backspace"],[data-action="cursor"]').forEach(el=>el.addEventListener('pointerdown',event=>event.preventDefault()));
   scope.querySelector('#answer')?.addEventListener('input',event=>{state.answer=event.target.value;scheduleSave();});
   scope.querySelectorAll('[data-match]').forEach(el=>el.addEventListener('change',()=>{state.matching[el.dataset.match]=el.value;scheduleSave();}));
-  scope.querySelector('#demo-user')?.addEventListener('change',async event=>{const next=event.target.value;event.target.value=state.user;if(submitting||pendingAttempt||reviewSave?.blocked)return;try{if(next===state.user||!await guardStudioDeparture('Change demo profile'))return;disposeTextReaders();rememberComposers();rememberNote();await flushSave();closePanel();clearRecording();authorContext=null;inlineAuthorStates.clear();state.user=next;localStorage.setItem('hebleo-demo-user',state.user);state.page='home';state.session=null;state.reviewSession=null;resetQuestion();await load();setRoute();render();}catch(error){toast(error.message);}});
+  scope.querySelector('#demo-user')?.addEventListener('change',async event=>{const next=event.target.value;event.target.value=state.user;if(submitting||pendingAttempt)return;try{if(next===state.user||!await guardStudioDeparture('Change demo profile'))return;disposeTextReaders();rememberComposers();rememberNote();await flushSave();closePanel();clearRecording();authorContext=null;inlineAuthorStates.clear();state.user=next;localStorage.setItem('hebleo-demo-user',state.user);state.page='home';state.session=null;state.reviewSession=null;resetQuestion();await load();setRoute();render();}catch(error){toast(error.message);}});
   scope.querySelector('#library-search')?.addEventListener('input',event=>{const position=event.target.selectionStart;state.search=event.target.value;state.libraryPage=0;render();if(!event.isComposing)scheduleLexicalLibrary();const el=document.querySelector('#library-search');el.focus();el.setSelectionRange(position,position);});
   for(const [id,key] of [['source-category','sourceCategory'],['source-lesson','sourceLesson'],['library-tag','libraryTag'],['library-lesson','libraryLesson'],['library-state','libraryState']])scope.querySelector('#'+id)?.addEventListener('change',event=>{state[key]=event.target.value;state.libraryPage=0;render();scheduleLexicalLibrary(0);});
   scope.querySelectorAll('[data-preference]').forEach(el=>el.addEventListener('change',async()=>{try{await updatePreference(el.dataset.preference,el.checked);render();}catch(error){toast(error.message);}}));
@@ -785,7 +858,7 @@ document.addEventListener('keydown',event=>{if(state.page==='review'&&state.revi
   if(event.key.toLowerCase()==='r'){const el=learnerElements('[data-action="audio-replay"]:not(:disabled)')[0];if(el){event.preventDefault();el.click();}}
 });
 async function routeFromURL() {
-  if(submitting||pendingAttempt||reviewSave?.blocked){setRoute(true);return;}
+  if(submitting||pendingAttempt){setRoute(true);return;}
   disposeTextReaders();const generation=++routeGeneration,parts=location.hash.slice(1).split('/');
   if(state.page==='studio'&&parts[0]!=='studio'&&!await guardStudioDeparture('Leave Studio through browser history')){setRoute(true);return;}
   rememberComposers();
@@ -795,5 +868,9 @@ async function routeFromURL() {
 window.addEventListener('hebleo-keyboard-preference',async event=>{if(rehearsal)return;try{await api('preferences',event.detail);await load();}catch(error){toast(error.message);}});
 window.addEventListener('popstate',()=>routeFromURL());
 window.addEventListener('beforeunload',event=>{if(studioDirty()){event.preventDefault();event.returnValue='';}});
-window.addEventListener('pagehide',()=>{disposeTextReaders();if(state.page==='lesson'&&state.session&&!inlineActive()){fetch('/api/progress',{method:'POST',headers:{'content-type':'application/json','x-demo-user':state.user},body:JSON.stringify(progressPayload()),keepalive:true}).catch(()=>{});}});
+window.addEventListener('pagehide',()=>{clearTimeout(reviewDueTimer);reviewSave?.dispose();disposeTextReaders();if(state.page==='lesson'&&state.session&&!inlineActive()){fetch('/api/progress',{method:'POST',headers:{'content-type':'application/json','x-demo-user':state.user},body:JSON.stringify(progressPayload()),keepalive:true}).catch(()=>{});}});
 load().then(routeFromURL).catch(error=>{root.innerHTML='<div class="card empty"><h1>Could not open the demo.</h1><p>'+esc(error.message)+'</p></div>';});
+
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&reviewSave)reviewSave.clock().catch(error=>toast(error.message));});
+
+window.addEventListener('pageshow',event=>{if(event.persisted)ensureReviewOutbox().then(save=>save.clock()).catch(error=>toast(error.message));});

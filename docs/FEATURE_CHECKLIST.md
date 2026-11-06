@@ -718,3 +718,10 @@ Verification: npm run check PASS; final configured candidate1101/1101; focused s
 | WPS03 | Two old decks recoverably trashed after verified install | IDs39575/39576 trash,49480 published;2967 progress/2118 assignments/35 settings and all notes/media/other SRS posts exact; no new decks | Future conjugation selections await Guy approval before creation |
 
 Fresh private backup, exact runtime/source preservation, rollback and limits: docs/WORDPRESS_STUDY_INSTALLED_20261104.md. No native-app, Anki, course-authoring, access or payment changes. Historical earlier candidate statuses above retain their dates; user result cells remain unchanged.
+
+6 November isolated background-review candidate (not installed):
+
+| ID | Candidate status | Actual evidence | User acceptance |
+|---|---|---|---|
+| SC-BG01 | Durable shared browser queue and app/backend integration implemented; Architect review closed on 6e245c9; ready for Lead integration | 177 focused checks pass; 14 latest event regressions pass; isolated native synthetic smoke; broad suite has 28 failures. See docs/BACKGROUND_REVIEW_CORE_20261106.md | Unreported |
+| SC-BG02 | Durable rejected outcomes and fresh-state resolution implemented; Architect recheck closed on 6e245c9 | Rejected identity survives reload/backup; explicit resolution requires fresh state, ticket and new choice; cross-tab Undo pause, expiry loss and selected-request fencing verified | Unreported |
