@@ -92,3 +92,14 @@ test('resume refresh blocks old anchors, ignores superseded responses and uses t
 test('durable Undo pause fences captures in other tabs while sender still drains',async t=>{
  const indexedDB=new IDBFactory(),a=queue(t,{indexedDB}),b=queue(t,{indexedDB});await a.ready;const resume=await a.pauseCapture();await assert.rejects(b.capture(intent()),/paused/);await resume();await b.capture(intent());await until(()=>b.snapshot().overlays.length===1);
 });
+
+test('expired Undo pause cannot renew or retake ownership from a new client',async t=>{
+ const indexedDB=new IDBFactory(),a=queue(t,{indexedDB,pauseLeaseMs:20,pauseRenewMs:40}),b=queue(t,{indexedDB});
+ await a.ready;const old=await a.pauseCapture();await old.assertOwned();await until(()=>old.lost);assert(old.signal.aborted);await assert.rejects(old.assertOwned(),/expired or was lost/);
+ const replacement=await b.pauseCapture();await old();await replacement.assertOwned();assert(!replacement.lost);await replacement();await b.capture(intent());
+});
+test('Undo pause renewal storage failure is terminal for that handle',async t=>{
+ const factory=new IDBFactory();let fail=false;
+ const indexedDB={open(...args){const r=factory.open(...args);r.addEventListener('success',()=>{const db=r.result,transaction=db.transaction.bind(db);db.transaction=(...args)=>{if(fail)throw Error('Synthetic pause renewal storage failure');return transaction(...args);};});return r;}};
+ const q=queue(t,{indexedDB,pauseRenewMs:20});await q.ready;const pause=await q.pauseCapture();fail=true;await until(()=>pause.lost);assert(pause.signal.aborted);fail=false;await assert.rejects(pause.assertOwned(),/storage failure/);await pause();
+});

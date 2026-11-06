@@ -5,10 +5,10 @@
  const canonical=value=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value&&typeof value==='object'?'{'+Object.keys(value).sort().filter(k=>value[k]!==undefined).map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}':JSON.stringify(value);
  async function hash(value){return Array.from(new Uint8Array(await root.crypto.subtle.digest('SHA-256',new TextEncoder().encode(canonical(value)))),x=>x.toString(16).padStart(2,'0')).join('');}
  function create(options){
-  const {siteId,ownerId,send,lookup,isActive=()=>true,now=()=>-Infinity,indexedDB=root.indexedDB,maxPending=20,timeoutMs=15000,pollMs=2000}=options;
+  const {siteId,ownerId,send,lookup,isActive=()=>true,now=()=>-Infinity,indexedDB=root.indexedDB,maxPending=20,timeoutMs=15000,pollMs=2000,pauseLeaseMs=60000,pauseRenewMs=10000}=options;
   if(!siteId||!ownerId)throw Error('Review storage needs a site and learner.');
   const scope=JSON.stringify([siteId,ownerId]),sender=root.crypto.randomUUID(),listeners=new Set();
-  let db,disposed=false,running=false,failed=null,view={entries:[],overlays:[]},timer,controller,lastPublication,pauseTimer;
+  let db,disposed=false,running=false,failed=null,view={entries:[],overlays:[]},timer,controller,lastPublication,pauseTimer,pauseAbort;
   const channel=typeof root.BroadcastChannel==='function'?new root.BroadcastChannel('hebleo-review-outbox-v1'):null;
   function transaction(change){return new Promise((resolve,reject)=>{
    let tx;try{tx=db.transaction('scopes','readwrite',{durability:'strict'});}catch(error){reject(error);return;}
@@ -77,10 +77,14 @@
   }
   async function pauseCapture(){
    await ready;if(disposed||!isActive())throw Error('Review account changed.');const token=root.crypto.randomUUID();
-   await transaction(s=>{if(s.pause&&s.pause.until>Date.now())throw Error('Undo is already running in another tab.');s.pause={owner:sender,token,until:Date.now()+60000};});notify();
-   const renew=()=>transaction(s=>{if(s.pause?.token===token)s.pause.until=Date.now()+60000;});
-   pauseTimer=setInterval(()=>void renew().catch(()=>{}),10000);
-   return async()=>{clearInterval(pauseTimer);await transaction(s=>{if(s.pause?.token===token)s.pause=null;});notify();};
+   await transaction(s=>{if(s.pause&&s.pause.until>Date.now())throw Error('Undo is already running in another tab.');s.pause={owner:sender,token,until:Date.now()+pauseLeaseMs};});notify();
+   let lost=false,released=false;const abort=new AbortController();pauseAbort=abort;
+   const lose=error=>{lost=true;clearInterval(renewTimer);abort.abort(error);};
+   function assertState(s){if(lost||released||disposed||!isActive()||s.pause?.owner!==sender||s.pause?.token!==token||s.pause.until<=Date.now())throw Error('Undo pause expired or was lost. Reopen review before Undo.');}
+   async function check(renew=false){try{if(lost)throw abort.signal.reason;await transaction(s=>{assertState(s);if(renew)s.pause.until=Date.now()+pauseLeaseMs;});}catch(error){lose(error);throw error;}}
+   const renewTimer=setInterval(()=>void check(true).catch(()=>{/* lost state and abort signal retain the failure */}),pauseRenewMs);pauseTimer=renewTimer;
+   const release=async()=>{if(released)return;released=true;clearInterval(renewTimer);await transaction(s=>{if(s.pause?.owner===sender&&s.pause.token===token)s.pause=null;});notify();};
+   release.assertOwned=()=>check();release.signal=abort.signal;Object.defineProperty(release,'lost',{get:()=>lost});return release;
   }
   async function resolveRejected(requestId,intentHash){
    await ready;if(disposed||!isActive())throw Error('Review account changed.');
@@ -89,7 +93,7 @@
   channel&&(channel.onmessage=event=>{if(event.data===scope)void sync().then(pump);});
   timer=setInterval(()=>void sync().then(pump),pollMs);
   ready.then(()=>sync().then(pump)).catch(error=>{failed=error.message;clearInterval(timer);channel?.close();publish();});
-  return {ready,capture,snapshot,excluded,pauseCapture,resolveRejected,subscribe(fn){listeners.add(fn);fn(snapshot());return()=>listeners.delete(fn);},async retry(){failed=null;await sync();await pump();return snapshot();},async reconcile(observed){await ready;await transaction(s=>{s.overlays=s.overlays.filter(x=>!observed(x));});notify();},dispose(){disposed=true;clearInterval(timer);clearInterval(pauseTimer);controller?.abort();channel?.close();listeners.clear();/* Release only owned claims; HTTP relies on server idempotency. */void ready.then(()=>transaction(s=>{if(s.lease?.owner===sender)s.lease=null;if(s.pause?.owner===sender)s.pause=null;})).then(()=>db.close()).catch(()=>{});},get blocked(){return snapshot().blocked;}};
+  return {ready,capture,snapshot,excluded,pauseCapture,resolveRejected,subscribe(fn){listeners.add(fn);fn(snapshot());return()=>listeners.delete(fn);},async retry(){failed=null;await sync();await pump();return snapshot();},async reconcile(observed){await ready;await transaction(s=>{s.overlays=s.overlays.filter(x=>!observed(x));});notify();},dispose(){disposed=true;clearInterval(timer);clearInterval(pauseTimer);pauseAbort?.abort(Error('Undo context ended.'));controller?.abort();channel?.close();listeners.clear();/* Release only owned claims; HTTP relies on server idempotency. */void ready.then(()=>transaction(s=>{if(s.lease?.owner===sender)s.lease=null;if(s.pause?.owner===sender)s.pause=null;})).then(()=>db.close()).catch(()=>{});},get blocked(){return snapshot().blocked;}};
  }
  root.HebleoReviewOutbox={create,protocolVersion:1};
 })(globalThis);

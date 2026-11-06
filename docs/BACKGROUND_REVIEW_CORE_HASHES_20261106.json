@@ -4,7 +4,7 @@
     {
       "path": "public/review-outbox.js",
       "preparedSourceSHA256": null,
-      "candidateSHA256": "d677cf1ea720774bed1823dcc7e7671a9401c26494646cae8e00ce496d5e6089"
+      "candidateSHA256": "6a69e152548e07005c6526557abcad5924ca94e9b30a40bc37de38a1e8329ad2"
     },
     {
       "path": "public/review-save.js",
@@ -14,7 +14,7 @@
     {
       "path": "public/app.js",
       "preparedSourceSHA256": "fe5142fc5e77751f319f34ac3f18701c5b3514de8febf25581fcc76ae43f7d81",
-      "candidateSHA256": "d20bcffd082d3b79218c4dfd1616cf8a020e54b9e42ca4a1075a96e7a08d9ccc"
+      "candidateSHA256": "d39e5886b3743ade8c0214e16385cb960b93148a246f60fe40efc07c052df9fa"
     },
     {
       "path": "src/store.js",
@@ -39,12 +39,12 @@
     {
       "path": "test/app.test.js",
       "preparedSourceSHA256": "68e0309de5bed19c653980b3eca0f0d33f6725e00e62e6353cfd7d515f9b3759",
-      "candidateSHA256": "b7907753fdb410d4ab675db6ba4ee47e85c22a46c9bc52b9cbc8fea01b3ca8db"
+      "candidateSHA256": "8806a522f71381e10ca4c54b71bea52bff84e5757efdbc16ada51f4dc05c915b"
     },
     {
       "path": "test/background-review.test.js",
       "preparedSourceSHA256": null,
-      "candidateSHA256": "1fb633e91ad466f8a071b27992f19f4a87253ae293c2b8e13ca6fd0d97ec274e"
+      "candidateSHA256": "72ab1ac4925626594031a9f75059b050cb6bc11eb63892dbc5446fdd33cbcd25"
     }
   ]
 }

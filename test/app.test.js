@@ -119,6 +119,18 @@ test('BACKGROUND Undo then rerate reacquires CAS anchor and commits a new learne
  assert(!doc.body.textContent.includes('need recovery'));
 });
 
+test('BACKGROUND expired Undo pause aborts original attempt without undoing another client rating',async t=>{
+ const indexedDB=new IDBFactory();const {doc,w,store}=await app(t,{page:'review',realHTTP:true,reviewStorage:indexedDB,prepare(s){s.enroll('learner-demo','w-ani');s.enroll('learner-demo','w-hu');}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>!doc.body.textContent.includes('pending')&&store.learner('learner-demo').lastReview);
+ const original=w.fetch;let release,held=false,undoPosts=0;const gate=new Promise(r=>release=r);t.after(()=>release());
+ w.fetch=async(path,options)=>{if(path==='/api/review/undo')undoPosts++;if(path==='/api/bootstrap'&&!held){held=true;await gate;}return original(path,options);};
+ click(doc,'review-undo');await settled(()=>held);
+ // Represents a 61-second suspended holder whose durable pause has expired.
+ await new Promise((resolve,reject)=>{const r=indexedDB.open('hebleo-review-outbox-v1',1);r.onsuccess=()=>{const db=r.result,tx=db.transaction('scopes','readwrite'),store=tx.objectStore('scopes'),key=JSON.stringify(['hebleo-local-demo','learner-demo']),get=store.get(key);get.onsuccess=()=>{const value=get.result;assert(value.pause);value.pause.until=Date.now()-1;store.put(value,key);};tx.oncomplete=()=>{db.close();resolve();};tx.onabort=()=>reject(tx.error);};r.onerror=()=>reject(r.error);});
+ const second=createReviewSave({background:true,ownerId:'learner-demo',isActive:()=>true,indexedDB,pollMs:10,getCardIds:()=>['w-hu'],send:async(path,body,signal)=>{const response=await original('/api/'+path,{method:body===undefined?'GET':'POST',headers:{'x-demo-user':'learner-demo','content-type':'application/json'},signal,...(body===undefined?{}:{body:JSON.stringify(body)})});const value=await response.json();if(!response.ok)throw Error(value.error);return value;}});t.after(()=>second.dispose());await second.clock();await second.commit({cardId:'w-hu',rating:3,requestId:randomUUID()});await settled(()=>store.learner('learner-demo').cards['w-hu'].repetitions===1);
+ release();await settled(()=>doc.querySelector('#toast').textContent.includes('Undo pause expired or was lost'));assert.equal(undoPosts,0);const state=store.learner('learner-demo');assert.equal(state.cards['w-ani'].repetitions,1);assert.equal(state.cards['w-hu'].repetitions,1);assert.equal(state.lastReview.wordId,'w-hu');assert(!doc.querySelector('#toast').textContent.includes('restored'));
+});
+
 test('BACKGROUND authoritative shortened synthetic learning boundary returns through timed bootstrap',async t=>{
  let storeRef,shorten=true;const {doc,store,w,calls}=await app(t,{page:'review',realHTTP:true,prepare(s){storeRef=s;s.enroll('learner-demo','w-ani');},reviewTransport:async({url,perform})=>{
   const response=await perform();if(url.pathname!=='/api/review/background'||!shorten)return response;shorten=false;const receipt=await response.json(),state=storeRef.learner('learner-demo');

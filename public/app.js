@@ -764,7 +764,25 @@ async function act(action,value,source) {
     while(session.index<session.ids.length&&save.excluded(session.ids[session.index],reviewGroup(session.ids[session.index])))session.index++;
     clearRecording();state.recording='empty';state.revealReview=false;overlayReviews();render();reviewPendingStatus();return;
   }
-  if(action==='review-undo'){const owner=state.user,session=state.reviewSession,save=reviewSave;const resume=await save.pauseCapture();let released=false;const release=async()=>{if(!released){released=true;await resume();}};try{await save.drain();if(state.user!==owner||state.reviewSession!==session)return;await load();if(state.user!==owner||state.reviewSession!==session)return;const last=state.data.learner.lastReview;if(!last)return;await api('review/undo',{requestId:last.requestId},owner);await save?.clearOverlays(last.requestId);if(state.user!==owner||state.reviewSession!==session)return;if(reviewUndoQueue?.requestId===last.requestId&&reviewUndoQueue.session===state.reviewSession){state.reviewSession.ids=reviewUndoQueue.ids;state.reviewSession.index=reviewUndoQueue.index;}clearRecording();state.recording='empty';if(state.reviewSession){const index=state.reviewSession.ids.indexOf(last.wordId);if(index>=0)state.reviewSession.index=index;}state.revealReview=false;await load();await save.clock([last.wordId]);await release();render();toast('Previous review schedule restored.');}finally{await release();}return;}
+  if(action==='review-undo'){
+   const owner=state.user,session=state.reviewSession,save=reviewSave,pause=await save.pauseCapture();
+   const snapshot=save.snapshot(),selectedId=snapshot.pending.at(-1)?.intent.requestId||snapshot.overlays.at(-1)?.requestId||state.data.learner.lastReview?.requestId;
+   const current=()=>state.user===owner&&state.reviewSession===session&&reviewSave===save;
+   try{
+    await save.drain();await pause.assertOwned();if(!current()||!selectedId)return;
+    await load();await pause.assertOwned();if(!current())return;
+    const last=state.data.learner.lastReview;
+    if(!last||last.requestId!==selectedId)throw Error('The latest rating changed. Reopen review before Undo.');
+    await pause.assertOwned();
+    await api('review/undo',{requestId:selectedId},owner,{},undefined,{signal:pause.signal});
+    await save.clearOverlays(selectedId);if(!current())return;
+    if(reviewUndoQueue?.requestId===selectedId&&reviewUndoQueue.session===session){session.ids=reviewUndoQueue.ids;session.index=reviewUndoQueue.index;}
+    clearRecording();state.recording='empty';if(session){const index=session.ids.indexOf(last.wordId);if(index>=0)session.index=index;}
+    state.revealReview=false;await load();await pause.assertOwned();if(!current())return;
+    await save.clock([last.wordId]);await pause.assertOwned();if(!current())return;
+    await pause();render();toast('Previous review schedule restored.');
+   }finally{await pause();}return;
+  }
   if(action==='review-end'){reviewRevealPending=null;clearRecording();state.recording='empty';state.reviewSession=null;state.revealReview=false;render();void refreshReviewDue().catch(error=>toast(error.message));return;}
   if(action==='studio-word'){state.wordId=value;render();return;}
   if(action==='report-resolve'){const [userId,requestId,status]=value.split('|');await api('reports/resolve',{userId,requestId,status});await load();render();return;}
