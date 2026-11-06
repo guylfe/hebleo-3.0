@@ -1,0 +1,20 @@
+{
+    "checks": 27,
+    "hashParity": {
+        "intent": {
+            "protocolVersion": 1,
+            "siteId": "https:\/\/fixture.invalid",
+            "ownerId": "1",
+            "requestId": "test-parity-00000001",
+            "cardId": "12:23",
+            "siblingGroupId": "12",
+            "expectedVersion": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "rating": 3,
+            "clockTicketId": "test-ticket-00000001",
+            "elapsedMs": 12345
+        },
+        "canonical": "{\"cardId\":\"12:23\",\"clockTicketId\":\"test-ticket-00000001\",\"elapsedMs\":12345,\"expectedVersion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"ownerId\":\"1\",\"protocolVersion\":1,\"rating\":3,\"requestId\":\"test-parity-00000001\",\"siblingGroupId\":\"12\",\"siteId\":\"https:\/\/fixture.invalid\"}",
+        "hash": "e7c0b330cc25076bbcf8a4ec03f3c3856eaa6f2a72773205ca80e2da5c3bacfe"
+    },
+    "onlySynthetic": true
+}

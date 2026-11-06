@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "nativeBrowser": true,
+  "nextVisibleMs": 15.800000190734863,
+  "heldResponsePending": 1,
+  "nextCard": 11,
+  "siblingExcluded": true,
+  "afterRelease": {
+    "currentCard": 11,
+    "pending": 0,
+    "receipts": 1
+  },
+  "limits": "Mock transport; plain synthetic card HTML. Real shared-document/media and production timing unverified."
+}
