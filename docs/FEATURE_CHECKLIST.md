@@ -737,6 +737,6 @@ Verification: verify:candidate passed 1101, skipped 8 under the existing audio e
 | ID | Candidate status | Evidence | Acceptance |
 |---|---|---|---|
 | SC-BG03 | Explicit reset/restore epoch invalidation implemented; Architect review closed on f4e2bc9 | Old pre-restore/reset intents reject; fresh choices and ordinary reopen/retained receipts recover. 214 app/Store/restore checks and 14 epoch/reset checks passed; independent Architect41 checks passed; docs/BACKGROUND_REVIEW_EPOCH_20261106.md | Unreported |
-| SC-BG04 | Lead integration with installed Build/Type complete; native app timing and recovery exercised on disposable data; installation pending | 1,153 candidate tests passed, nine skips; mounted Browser shows water in 478.4 ms while response held 10 seconds; account/reload recovery preserved one review; completion/Undo counter regression corrected. Current evidence: docs/BACKGROUND_REVIEW_LEAD_20261106.md. WordPress remains separate and uninstalled. | Unreported |
+| SC-BG04 | App privately integrated and preservation-installed at 785ab53; WordPress remains pending and uninstalled | Final candidate 1,154 passed, nine existing audio skips, zero failures. Mounted final Browser readiness 426.7 ms with response held 10 seconds; HTTP120.5 ms. Native completion/Undo/rerate counts two choices and excludes sibling. All163 disk/83 served files match; entire DB09cec407, active6, all3 learners and23 drafts retained. Remote CI pending at install; see docs/BACKGROUND_REVIEW_LEAD_20261106.md. | Unreported |
 
 
