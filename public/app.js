@@ -405,7 +405,7 @@ function updateVoiceStatus(){for(const section of document.querySelectorAll('[da
 function review() {
   const undo=(state.data.learner.lastReview||reviewSave?.snapshot().overlays.length||reviewSave?.snapshot().pending.length)?button('Undo last rating','review-undo','small outline'):'',session=state.reviewSession,w=reviewWord();
   if(!session)return '<div class="eyebrow">A SHORT RETURN TO FAMILIAR WORDS</div><h1 tabindex="-1">Your review.</h1><section class="card"><h2>'+state.data.due.length+' cards due</h2><label for="review-limit">Cards in this session</label><input id="review-limit" type="number" min="1" max="100" value="'+pref().reviewLimit+'"><label for="review-type">Card presentation</label><select id="review-type">'+[['recognition','Hebrew → meaning'],['translation','English → Hebrew'],['listening','Listening first'],['sentence','Sentence context']].map(([v,l])=>'<option value="'+v+'" '+(pref().reviewType===v?'selected':'')+'>'+l+'</option>').join('')+'</select>'+reviewNikkudControl()+(!state.data.due.length?'<p>'+(!Object.keys(state.data.learner.cards).length?'Your review deck is empty. Add a word from a lesson or My Hebrew.':'No cards are due yet. They will return on their scheduled date.')+'</p>'+((state.data.content.provenance?.kind==='synthetic-demo'&&!Object.keys(state.data.learner.cards).length)?button('Add 3 synthetic demo words to review','review-demo','secondary'):''):'')+'<div class="button-row">'+button('Start review','review-start','primary','',!state.data.due.length)+undo+'</div><p>Listening and sentence cards appear when their source media or examples are available. These are initial presentation options; final card pedagogy remains to be defined.</p></section>';
-  if(!w)return '<h1 tabindex="-1">Review finished.</h1><section class="card empty"><h2>You reviewed '+session.index+' cards.</h2><div class="button-row centered">'+button('Continue learning','lesson','primary',continueLesson()?.id||state.data.content.lessons[0].id)+button('Review overview','review-end','secondary')+undo+'</div></section>';
+  if(!w)return '<h1 tabindex="-1">Review finished.</h1><section class="card empty"><h2>You reviewed '+session.ratings.length+' cards.</h2><div class="button-row centered">'+button('Continue learning','lesson','primary',continueLesson()?.id||state.data.content.lessons[0].id)+button('Review overview','review-end','secondary')+undo+'</div></section>';
   if(w?.shared)return sharedReview(w,undo,session);
   const frontMode=reviewNikkud(state.data.content,pref().reviewNikkud),type=session.type,example=w.examples?.[0],sentence=typeof example==='string'?example:example?.hebrew;
   return '<h1 tabindex="-1">Your review.</h1><section class="review-surface" data-audio-surface><div class="review-reference">'+audioControls(w.audio,w.english)+'</div><p>Card '+(session.index+1)+' of '+session.ids.length+'</p><article class="card review-card"><span class="tag">'+esc({recognition:'HEBREW → MEANING',translation:'ENGLISH → HEBREW',listening:'LISTENING FIRST',sentence:'SENTENCE CONTEXT'}[type])+'</span><div class="card-side-label">'+(state.revealReview?'ANSWER':'QUESTION')+'</div>'+(state.revealReview?'<div class="hebrew">'+wordText(w)+'</div><div class="review-meaning">'+esc(w.english)+'</div><p>'+esc(w.notes)+'</p>'+'<details><summary>Full entry</summary>'+richFields(w)+'</details>'+'<div class="review-ratings">'+[['Again',1],['Hard',2],['Good',3],['Easy',4]].map(([label,rating])=>button('<span class="rating-label">'+label+'</span> <span class="rating-interval">'+reviewIntervalLabel(scheduleReview(state.data.learner.cards[w.id],rating,state.data.reviewClock).delayMs)+'</span>','review-rate',rating===3?'primary':'secondary',rating)).join('')+'</div>':(type==='listening'?'':type==='translation'?'<div class="review-meaning">'+esc(w.english)+'</div>':type==='sentence'?'<div class="hebrew">'+esc(frontMode==='none'?sentence?.replace(/[\u0591-\u05c7]/g,''):sentence)+'</div>':'<div class="hebrew">'+wordText(w,frontMode)+'</div>')+button('Show answer','review-reveal','primary'))+'</article>'+voiceControls(w)+'<div class="toolbar centered">'+undo+button('Finish session','review-end','small outline')+'</div></section>';
@@ -752,7 +752,7 @@ async function act(action,value,source) {
     await (await ensureReviewOutbox()).clock();
     const limit=Number(document.querySelector('#review-limit').value),type=document.querySelector('#review-type').value;await api('preferences',{reviewLimit:limit,reviewType:type});await load();
     const ids=state.data.due.filter(({word:w})=>w.shared|| (type==='listening'?audioURL(w.audio):type==='sentence'?w.examples?.length:true)).slice(0,limit).map(({word:w})=>w.id);
-    if(!ids.length){toast('No due cards have the source audio or examples needed for this presentation.');return;}state.reviewSession={ids,index:0,type};state.revealReview=false;render();return;
+    if(!ids.length){toast('No due cards have the source audio or examples needed for this presentation.');return;}state.reviewSession={ids,index:0,type,ratings:[]};state.revealReview=false;render();return;
   }
   if(action==='review-reveal'){
     if(reviewRevealPending||reviewSave?.blocked)return;
@@ -770,7 +770,7 @@ async function act(action,value,source) {
    if(state.user!==owner||reviewSave!==save||state.reviewSession!==session)return;
    const intent=await save.resolveRejected(value,data);if(state.user!==owner||reviewSave!==save||state.reviewSession!==session)return;
    state.data=data;reviewDueSource=data.due;overlayReviews();const eligible=state.data.due.some(x=>x.word.id===intent.cardId);
-   if(eligible&&session)session.ids.splice(session.index,0,intent.cardId);
+   if(session){session.ratings=session.ratings.filter(id=>id!==intent.requestId);if(eligible)session.ids.splice(session.index,0,intent.cardId);}
    state.revealReview=false;render();
    const card=data.learner.cards[intent.cardId];toast(eligible?'Rating was not applied. The card is ready for a new choice.':!card?'Rating was not applied. This card is no longer available.':card.suspended?'Rating was not applied. This card is suspended.':Date.parse(card.due)>data.reviewClock?'Rating was not applied. This card is not due yet.':'Rating was not applied. A sibling restriction currently excludes this card.');return;
   }
@@ -780,9 +780,9 @@ async function act(action,value,source) {
     const owner=state.user,session=state.reviewSession,index=session.index,ids=[...session.ids];
     const save=await ensureReviewOutbox(),frame=sharedFrame;await frame?.flush();
     if(state.user!==owner||state.reviewSession!==session||session.index!==index||reviewWord()?.id!==w.id)return;
-    await save.commit({requestId:uid(),cardId:w.id,rating:Number(value)});
+    const captured=await save.commit({requestId:uid(),cardId:w.id,rating:Number(value)});
     if(state.user!==owner||state.reviewSession!==session||reviewSave!==save)return;
-    reviewUndoQueue={session,ids,index};
+    reviewUndoQueue={session,ids,index,requestId:captured.requestId};session.ratings.push(captured.requestId);
     session.index=Math.max(session.index,index+1);
     while(session.index<session.ids.length&&save.excluded(session.ids[session.index],reviewGroup(session.ids[session.index])))session.index++;
     clearRecording();state.recording='empty';state.revealReview=false;overlayReviews();render();reviewPendingStatus();return;
@@ -800,7 +800,7 @@ async function act(action,value,source) {
     await api('review/undo',{requestId:selectedId},owner,{},undefined,{signal:pause.signal});
     await save.clearOverlays(selectedId);if(!current())return;
     if(reviewUndoQueue?.requestId===selectedId&&reviewUndoQueue.session===session){session.ids=reviewUndoQueue.ids;session.index=reviewUndoQueue.index;}
-    clearRecording();state.recording='empty';if(session){const index=session.ids.indexOf(last.wordId);if(index>=0)session.index=index;}
+    clearRecording();state.recording='empty';if(session){session.ratings=session.ratings.filter(id=>id!==selectedId);const index=session.ids.indexOf(last.wordId);if(index>=0)session.index=index;}
     state.revealReview=false;await load();await pause.assertOwned();if(!current())return;
     await save.clock([last.wordId]);await pause.assertOwned();if(!current())return;
     await pause();render();toast('Previous review schedule restored.');

@@ -99,6 +99,17 @@ test('BACKGROUND actual app advances two cards while HTTP save is held, Finish r
  assert.equal(started,2);t.diagnostic('capture-to-next-visible '+visibleMs.toFixed(1)+'ms with first backend save held until Finish assertions');
 });
 
+test('BACKGROUND completion counts captured ratings rather than skipped siblings and Undo removes its count',async t=>{
+ const a='sc-mf-000001-he-en',b='sc-mf-000001-en-he';
+ const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.shared.word=id=>[a,b].includes(id)?{id,shared:true,sourceId:'mf-000001',english:'Synthetic note',hebrew:'fixture'}:null;for(const id of [a,b,'w-hu'])s.enroll('learner-demo',id);}});
+ click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>doc.querySelector('[data-pronunciation-word]')?.dataset.pronunciationWord==='w-hu');
+ click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>doc.querySelector('h1').textContent.includes('finished'));
+ assert.equal(doc.querySelector('h2').textContent,'You reviewed 2 cards.');await settled(()=>!doc.body.textContent.includes('pending'));
+ click(doc,'review-undo');await settled(()=>doc.querySelector('[data-action=review-reveal]')&&!doc.querySelector('[data-action=review-reveal]').disabled);
+ assert.equal(store.learner('learner-demo').cards['w-hu'].repetitions,0);click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>doc.querySelector('h1').textContent.includes('finished'));
+ assert.equal(doc.querySelector('h2').textContent,'You reviewed 2 cards.');assert.equal(store.learner('learner-demo').cards[b].repetitions,0);
+});
+
 test('BACKGROUND actual app lost committed HTTP response recovers through status without another POST',async t=>{
  let posts=0;const {doc,store}=await app(t,{page:'review',realHTTP:true,prepare(s){s.enroll('learner-demo','w-ani');},reviewTransport:async({url,perform})=>{const response=await perform();if(url.pathname==='/api/review/background'){posts++;await response.text();throw Error('Synthetic lost committed response');}return response;}});
  click(doc,'review-start');await settled(()=>doc.querySelector('[data-action=review-reveal]'));click(doc,'review-reveal');click(doc,'review-rate');await settled(()=>doc.body.textContent.includes('need recovery'));assert.equal(store.learner('learner-demo').cards['w-ani'].repetitions,1);
