@@ -1,0 +1,14 @@
+{
+  "study-scheduler/fsrs.php": {
+    "candidate": "f66b9e5373d30302e087f73bae266999e0b9465d6cdf29398219474f8f9a67be",
+    "fixture": "f66b9e5373d30302e087f73bae266999e0b9465d6cdf29398219474f8f9a67be"
+  },
+  "study-scheduler/wordpress.php": {
+    "candidate": "c88c84f0b94557e31ed3ed1b8e4f388ebe7d329b18528424cec93cf25970ab5f",
+    "fixture": "c88c84f0b94557e31ed3ed1b8e4f388ebe7d329b18528424cec93cf25970ab5f"
+  },
+  "templates/card_loader.php": {
+    "candidate": "a6f6a408a4617ce040d3ecb511b81a1d49b0479d52d9044f5aa0c6d598933314",
+    "fixture": "a6f6a408a4617ce040d3ecb511b81a1d49b0479d52d9044f5aa0c6d598933314"
+  }
+}

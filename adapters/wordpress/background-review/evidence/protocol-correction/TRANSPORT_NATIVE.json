@@ -1,0 +1,525 @@
+[
+  {
+    "mode": "rollover",
+    "passed": true,
+    "reply": {
+      "success": true,
+      "data": {
+        "receipt": {
+          "protocolVersion": 1,
+          "requestId": "cabc5554-c45e-4457-836d-4f8c326ab4cc",
+          "intentHash": "0b981dd1891542a97ee7537b2115417b0b457f809853637745ea31b76dfb5860",
+          "outcome": "committed",
+          "cardId": "98:99",
+          "expectedVersion": "74e6479487f46e259a22e9045617fd0da46e7552e3670b9c4876e5a88d2cfe55",
+          "resultingVersion": "a9a8637a917ed37b8d89e95c037a62249ea6de2a2617d5d5491200278528952d",
+          "acceptedAnswerAt": 1793926201234,
+          "committedAt": 1793926210000,
+          "authoritativeSchedule": {
+            "due": "2026-11-06T01:00:01Z",
+            "state": "learning",
+            "step": 1
+          },
+          "siblingsUntil": 1794002400000
+        },
+        "serverNow": 1793926210000,
+        "siteId": "http://127.0.0.1:33540",
+        "ownerId": "1"
+      }
+    },
+    "state": {
+      "case": "rollover",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": false,
+      "reps": 1,
+      "receipt": {
+        "protocolVersion": 1,
+        "requestId": "cabc5554-c45e-4457-836d-4f8c326ab4cc",
+        "intentHash": "0b981dd1891542a97ee7537b2115417b0b457f809853637745ea31b76dfb5860",
+        "outcome": "committed",
+        "cardId": "98:99",
+        "expectedVersion": "74e6479487f46e259a22e9045617fd0da46e7552e3670b9c4876e5a88d2cfe55",
+        "resultingVersion": "a9a8637a917ed37b8d89e95c037a62249ea6de2a2617d5d5491200278528952d",
+        "acceptedAnswerAt": 1793926201234,
+        "committedAt": 1793926210000,
+        "authoritativeSchedule": {
+          "due": "2026-11-06T01:00:01Z",
+          "state": "learning",
+          "step": 1
+        },
+        "siblingsUntil": 1794002400000
+      },
+      "requestId": "cabc5554-c45e-4457-836d-4f8c326ab4cc",
+      "intentHash": "0b981dd1891542a97ee7537b2115417b0b457f809853637745ea31b76dfb5860",
+      "capturedAnswer": 1793926201234,
+      "lastReviewMs": 1793926201234
+    }
+  },
+  {
+    "mode": "legacy-rollover",
+    "passed": true,
+    "reply": {
+      "success": true,
+      "data": {
+        "receipt": {
+          "protocolVersion": 1,
+          "requestId": "238b10c3-b082-4c29-869c-ffd7feb1b9e2",
+          "intentHash": "845792b51f3b78d7fd285134bc23dc3149ae5b7f930c15f81b107a192e097489",
+          "outcome": "committed",
+          "cardId": "101:102",
+          "expectedVersion": "58bca7cf6cca605e66656b1bb3f3677c4751c64040fbe82646ff317d60b31c59",
+          "resultingVersion": "f6572b7e04f45dd8e9af1f9cb7ebe0c9f87ee566a2899af8beb01a24e0a00791",
+          "acceptedAnswerAt": 1793926201234,
+          "committedAt": 1793926210000,
+          "authoritativeSchedule": {
+            "due": "2026-11-06T01:00:01Z",
+            "state": "learning",
+            "step": 1
+          },
+          "siblingsUntil": 1794002400000
+        },
+        "serverNow": 1793926210000,
+        "siteId": "http://127.0.0.1:33540",
+        "ownerId": "1"
+      }
+    },
+    "state": {
+      "case": "legacy-rollover",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": false,
+      "reps": 1,
+      "receipt": {
+        "protocolVersion": 1,
+        "requestId": "238b10c3-b082-4c29-869c-ffd7feb1b9e2",
+        "intentHash": "845792b51f3b78d7fd285134bc23dc3149ae5b7f930c15f81b107a192e097489",
+        "outcome": "committed",
+        "cardId": "101:102",
+        "expectedVersion": "58bca7cf6cca605e66656b1bb3f3677c4751c64040fbe82646ff317d60b31c59",
+        "resultingVersion": "f6572b7e04f45dd8e9af1f9cb7ebe0c9f87ee566a2899af8beb01a24e0a00791",
+        "acceptedAnswerAt": 1793926201234,
+        "committedAt": 1793926210000,
+        "authoritativeSchedule": {
+          "due": "2026-11-06T01:00:01Z",
+          "state": "learning",
+          "step": 1
+        },
+        "siblingsUntil": 1794002400000
+      },
+      "requestId": "238b10c3-b082-4c29-869c-ffd7feb1b9e2",
+      "intentHash": "845792b51f3b78d7fd285134bc23dc3149ae5b7f930c15f81b107a192e097489",
+      "capturedAnswer": 1793926201234,
+      "lastReviewMs": 1793926201234
+    }
+  },
+  {
+    "mode": "retry-rollover",
+    "passed": true,
+    "reply": {
+      "success": true,
+      "data": {
+        "receipt": {
+          "protocolVersion": 1,
+          "requestId": "e737bfcf-1601-47e4-97e9-a50f9ccfcd53",
+          "intentHash": "8c86a5172fc91588f38dd36f17a1069bef4e83783d5252eb0a7c7fa527f60c78",
+          "outcome": "committed",
+          "cardId": "104:105",
+          "expectedVersion": "173588e28133ba1c7b91020ec66b264d98ab6ee4d60995a1f5ff00c683c63315",
+          "resultingVersion": "e299437a64ac0fa2e475c4deace2ace950fdeff5e0479d54ab770bdc8b6619da",
+          "acceptedAnswerAt": 1793926201234,
+          "committedAt": 1793926210000,
+          "authoritativeSchedule": {
+            "due": "2026-11-06T01:00:01Z",
+            "state": "learning",
+            "step": 1
+          },
+          "siblingsUntil": 1794002400000
+        },
+        "serverNow": 1794012600001,
+        "siteId": "http://127.0.0.1:33540",
+        "ownerId": "1"
+      }
+    },
+    "state": {
+      "case": "retry-rollover",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": true,
+      "reps": 1,
+      "receipt": {
+        "protocolVersion": 1,
+        "requestId": "e737bfcf-1601-47e4-97e9-a50f9ccfcd53",
+        "intentHash": "8c86a5172fc91588f38dd36f17a1069bef4e83783d5252eb0a7c7fa527f60c78",
+        "outcome": "committed",
+        "cardId": "104:105",
+        "expectedVersion": "173588e28133ba1c7b91020ec66b264d98ab6ee4d60995a1f5ff00c683c63315",
+        "resultingVersion": "e299437a64ac0fa2e475c4deace2ace950fdeff5e0479d54ab770bdc8b6619da",
+        "acceptedAnswerAt": 1793926201234,
+        "committedAt": 1793926210000,
+        "authoritativeSchedule": {
+          "due": "2026-11-06T01:00:01Z",
+          "state": "learning",
+          "step": 1
+        },
+        "siblingsUntil": 1794002400000
+      },
+      "requestId": "e737bfcf-1601-47e4-97e9-a50f9ccfcd53",
+      "intentHash": "8c86a5172fc91588f38dd36f17a1069bef4e83783d5252eb0a7c7fa527f60c78",
+      "capturedAnswer": 1793926201234,
+      "lastReviewMs": 1793926201234
+    }
+  },
+  {
+    "mode": "at-now",
+    "passed": true,
+    "reply": {
+      "success": true,
+      "data": {
+        "receipt": {
+          "protocolVersion": 1,
+          "requestId": "e9a52c78-60cb-4d40-a6dc-8c444c9b7c67",
+          "intentHash": "bc17964e283e413f120ee6dcf6a4ca6e36148ea95bc5a2df86c4c62bf355d9ca",
+          "outcome": "committed",
+          "cardId": "107:108",
+          "expectedVersion": "d7d6eb39ecd0372f8e8b23072efce715dc13b89e8c7f70a40104b6bfd66128fc",
+          "resultingVersion": "ee7ddbd52640ca5a4b45ac8c9efcd9fef655002abe34b5355b626c1a195faa3e",
+          "acceptedAnswerAt": 1793926210000,
+          "committedAt": 1793926210000,
+          "authoritativeSchedule": {
+            "due": "2026-11-06T01:00:10Z",
+            "state": "learning",
+            "step": 1
+          },
+          "siblingsUntil": 1794002400000
+        },
+        "serverNow": 1793926210000,
+        "siteId": "http://127.0.0.1:33540",
+        "ownerId": "1"
+      }
+    },
+    "state": {
+      "case": "at-now",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": false,
+      "reps": 1,
+      "receipt": {
+        "protocolVersion": 1,
+        "requestId": "e9a52c78-60cb-4d40-a6dc-8c444c9b7c67",
+        "intentHash": "bc17964e283e413f120ee6dcf6a4ca6e36148ea95bc5a2df86c4c62bf355d9ca",
+        "outcome": "committed",
+        "cardId": "107:108",
+        "expectedVersion": "d7d6eb39ecd0372f8e8b23072efce715dc13b89e8c7f70a40104b6bfd66128fc",
+        "resultingVersion": "ee7ddbd52640ca5a4b45ac8c9efcd9fef655002abe34b5355b626c1a195faa3e",
+        "acceptedAnswerAt": 1793926210000,
+        "committedAt": 1793926210000,
+        "authoritativeSchedule": {
+          "due": "2026-11-06T01:00:10Z",
+          "state": "learning",
+          "step": 1
+        },
+        "siblingsUntil": 1794002400000
+      },
+      "requestId": "e9a52c78-60cb-4d40-a6dc-8c444c9b7c67",
+      "intentHash": "bc17964e283e413f120ee6dcf6a4ca6e36148ea95bc5a2df86c4c62bf355d9ca",
+      "capturedAnswer": 1793926210000,
+      "lastReviewMs": 1793926210000
+    }
+  },
+  {
+    "mode": "future-1",
+    "passed": true,
+    "reply": {
+      "success": true,
+      "data": {
+        "receipt": {
+          "protocolVersion": 1,
+          "requestId": "e45ff37b-40bc-479a-a0df-7b83ea542b93",
+          "intentHash": "b7d178a6c638ada14e6905d245149605aea9682aed46eddfef2fbde3744214ea",
+          "outcome": "rejected",
+          "cardId": "110:111",
+          "expectedVersion": "052f583cae0f42e81b945a3684161e21001f9eee98e2b0faa11422304254fd54",
+          "reasonCode": "future-answer",
+          "rejectedAt": 1793926210000
+        },
+        "serverNow": 1793926210000,
+        "siteId": "http://127.0.0.1:33540",
+        "ownerId": "1"
+      }
+    },
+    "state": {
+      "case": "future-1",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": true,
+      "reps": 0,
+      "receipt": {
+        "protocolVersion": 1,
+        "requestId": "e45ff37b-40bc-479a-a0df-7b83ea542b93",
+        "intentHash": "b7d178a6c638ada14e6905d245149605aea9682aed46eddfef2fbde3744214ea",
+        "outcome": "rejected",
+        "cardId": "110:111",
+        "expectedVersion": "052f583cae0f42e81b945a3684161e21001f9eee98e2b0faa11422304254fd54",
+        "reasonCode": "future-answer",
+        "rejectedAt": 1793926210000
+      },
+      "requestId": "e45ff37b-40bc-479a-a0df-7b83ea542b93",
+      "intentHash": "b7d178a6c638ada14e6905d245149605aea9682aed46eddfef2fbde3744214ea",
+      "capturedAnswer": 1793926210001,
+      "lastReviewMs": null
+    }
+  },
+  {
+    "mode": "future-999",
+    "passed": true,
+    "reply": {
+      "success": true,
+      "data": {
+        "receipt": {
+          "protocolVersion": 1,
+          "requestId": "6d524463-cfc4-425a-8d99-a83440f7a475",
+          "intentHash": "258e3ad42c28e839945d6176415a6a803ec460de33b63333827b096a5bacc13f",
+          "outcome": "rejected",
+          "cardId": "113:114",
+          "expectedVersion": "c9be380b25cc81ed473006f5140c9c926dea6de62d5f74061cff02e5e056d5cc",
+          "reasonCode": "future-answer",
+          "rejectedAt": 1793926210000
+        },
+        "serverNow": 1793926210000,
+        "siteId": "http://127.0.0.1:33540",
+        "ownerId": "1"
+      }
+    },
+    "state": {
+      "case": "future-999",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": true,
+      "reps": 0,
+      "receipt": {
+        "protocolVersion": 1,
+        "requestId": "6d524463-cfc4-425a-8d99-a83440f7a475",
+        "intentHash": "258e3ad42c28e839945d6176415a6a803ec460de33b63333827b096a5bacc13f",
+        "outcome": "rejected",
+        "cardId": "113:114",
+        "expectedVersion": "c9be380b25cc81ed473006f5140c9c926dea6de62d5f74061cff02e5e056d5cc",
+        "reasonCode": "future-answer",
+        "rejectedAt": 1793926210000
+      },
+      "requestId": "6d524463-cfc4-425a-8d99-a83440f7a475",
+      "intentHash": "258e3ad42c28e839945d6176415a6a803ec460de33b63333827b096a5bacc13f",
+      "capturedAnswer": 1793926210999,
+      "lastReviewMs": null
+    }
+  },
+  {
+    "mode": "future-1000",
+    "passed": true,
+    "reply": {
+      "success": true,
+      "data": {
+        "receipt": {
+          "protocolVersion": 1,
+          "requestId": "8f83b443-5493-4403-ac0f-6c8ca479d6d9",
+          "intentHash": "9190ecc467ab63dfbfbb29f479a955e033d1f07432780ee9df49b6c333155fea",
+          "outcome": "rejected",
+          "cardId": "116:117",
+          "expectedVersion": "8568b80bd58122f65defdb240369e28f46dd4ba31c4f687129787216ae2dce2b",
+          "reasonCode": "future-answer",
+          "rejectedAt": 1793926210000
+        },
+        "serverNow": 1793926210000,
+        "siteId": "http://127.0.0.1:33540",
+        "ownerId": "1"
+      }
+    },
+    "state": {
+      "case": "future-1000",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": true,
+      "reps": 0,
+      "receipt": {
+        "protocolVersion": 1,
+        "requestId": "8f83b443-5493-4403-ac0f-6c8ca479d6d9",
+        "intentHash": "9190ecc467ab63dfbfbb29f479a955e033d1f07432780ee9df49b6c333155fea",
+        "outcome": "rejected",
+        "cardId": "116:117",
+        "expectedVersion": "8568b80bd58122f65defdb240369e28f46dd4ba31c4f687129787216ae2dce2b",
+        "reasonCode": "future-answer",
+        "rejectedAt": 1793926210000
+      },
+      "requestId": "8f83b443-5493-4403-ac0f-6c8ca479d6d9",
+      "intentHash": "9190ecc467ab63dfbfbb29f479a955e033d1f07432780ee9df49b6c333155fea",
+      "capturedAnswer": 1793926211000,
+      "lastReviewMs": null
+    }
+  },
+  {
+    "mode": "future-50000",
+    "passed": true,
+    "reply": {
+      "success": true,
+      "data": {
+        "receipt": {
+          "protocolVersion": 1,
+          "requestId": "9cc6868a-1ade-44a6-affa-a18d3da659c3",
+          "intentHash": "0d7825a4f4b485b97e00f6a8b001c84bae7de57f7aba56c7ca1d27d67b3ccec8",
+          "outcome": "rejected",
+          "cardId": "119:120",
+          "expectedVersion": "6705da55570c56d039e8bade2135bd4670e68651fc69555914235cccc21efa9f",
+          "reasonCode": "future-answer",
+          "rejectedAt": 1793926210000
+        },
+        "serverNow": 1793926210000,
+        "siteId": "http://127.0.0.1:33540",
+        "ownerId": "1"
+      }
+    },
+    "state": {
+      "case": "future-50000",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": true,
+      "reps": 0,
+      "receipt": {
+        "protocolVersion": 1,
+        "requestId": "9cc6868a-1ade-44a6-affa-a18d3da659c3",
+        "intentHash": "0d7825a4f4b485b97e00f6a8b001c84bae7de57f7aba56c7ca1d27d67b3ccec8",
+        "outcome": "rejected",
+        "cardId": "119:120",
+        "expectedVersion": "6705da55570c56d039e8bade2135bd4670e68651fc69555914235cccc21efa9f",
+        "reasonCode": "future-answer",
+        "rejectedAt": 1793926210000
+      },
+      "requestId": "9cc6868a-1ade-44a6-affa-a18d3da659c3",
+      "intentHash": "0d7825a4f4b485b97e00f6a8b001c84bae7de57f7aba56c7ca1d27d67b3ccec8",
+      "capturedAnswer": 1793926260000,
+      "lastReviewMs": null
+    }
+  },
+  {
+    "mode": "future-120001",
+    "passed": true,
+    "reply": {
+      "success": true,
+      "data": {
+        "receipt": {
+          "protocolVersion": 1,
+          "requestId": "21d587e4-375a-44b4-83ed-46046fd10620",
+          "intentHash": "37e6a2b5c989c6e8eec56401f491581f54d881b7c58b682f72bcd8d61e6c2d42",
+          "outcome": "rejected",
+          "cardId": "122:123",
+          "expectedVersion": "28c4b31ad4a7fe716c8ca8aacbc87733f0d24ca7a98a7662662e15fdceccf57f",
+          "reasonCode": "future-answer",
+          "rejectedAt": 1793926210000
+        },
+        "serverNow": 1793926210000,
+        "siteId": "http://127.0.0.1:33540",
+        "ownerId": "1"
+      }
+    },
+    "state": {
+      "case": "future-120001",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": true,
+      "reps": 0,
+      "receipt": {
+        "protocolVersion": 1,
+        "requestId": "21d587e4-375a-44b4-83ed-46046fd10620",
+        "intentHash": "37e6a2b5c989c6e8eec56401f491581f54d881b7c58b682f72bcd8d61e6c2d42",
+        "outcome": "rejected",
+        "cardId": "122:123",
+        "expectedVersion": "28c4b31ad4a7fe716c8ca8aacbc87733f0d24ca7a98a7662662e15fdceccf57f",
+        "reasonCode": "future-answer",
+        "rejectedAt": 1793926210000
+      },
+      "requestId": "21d587e4-375a-44b4-83ed-46046fd10620",
+      "intentHash": "37e6a2b5c989c6e8eec56401f491581f54d881b7c58b682f72bcd8d61e6c2d42",
+      "capturedAnswer": 1793926330001,
+      "lastReviewMs": null
+    }
+  },
+  {
+    "mode": "invalid-nonce",
+    "passed": true,
+    "reply": {
+      "success": false,
+      "data": "Security check failed"
+    },
+    "state": {
+      "case": "invalid-nonce",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": true,
+      "reps": 0,
+      "receipt": null,
+      "requestId": "280d4e60-b640-40d0-a9fc-9238172ec6f5",
+      "intentHash": "476c8e90335576732f53ce6377624eb8fe2018fbadddd2e502c22b8040820218",
+      "capturedAnswer": 1793926201234,
+      "lastReviewMs": null
+    }
+  },
+  {
+    "mode": "wrong-owner",
+    "passed": true,
+    "reply": {
+      "success": false,
+      "data": "Invalid intent"
+    },
+    "state": {
+      "case": "wrong-owner",
+      "oldNonceValid": false,
+      "freshNonceValid": false,
+      "unchanged": true,
+      "reps": 0,
+      "receipt": null,
+      "requestId": "45421f37-16c8-48f1-81bb-5d503edbbc0a",
+      "intentHash": "e1f818fd95d809092a514b077fdcf80eb994d90f502ae46921b6b3f4ea89d480",
+      "capturedAnswer": 1793926201234,
+      "lastReviewMs": null
+    }
+  },
+  {
+    "mode": "wrong-site",
+    "passed": true,
+    "reply": {
+      "success": false,
+      "data": "Invalid intent"
+    },
+    "state": {
+      "case": "wrong-site",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": true,
+      "reps": 0,
+      "receipt": null,
+      "requestId": "3a94b8fa-1f32-4faa-a4f9-eaa107d8df76",
+      "intentHash": "f7d19022a0929da25bb4558cf119eeb8dee45764f7b4fef14a178f45ca1ea0b7",
+      "capturedAnswer": 1793926201234,
+      "lastReviewMs": null
+    }
+  },
+  {
+    "mode": "cross-origin",
+    "passed": true,
+    "reply": {
+      "success": false,
+      "data": "Security check failed"
+    },
+    "state": {
+      "case": "cross-origin",
+      "oldNonceValid": 2,
+      "freshNonceValid": 1,
+      "unchanged": true,
+      "reps": 0,
+      "receipt": null,
+      "requestId": "53344f52-855b-4dc4-875a-51dcb51cf6e8",
+      "intentHash": "d3947c70cf987c89ca1b2bf838bd9e154ac81d0d36fdb1c8fe8ff1895853cc3f",
+      "capturedAnswer": 1793926201234,
+      "lastReviewMs": null
+    }
+  }
+]

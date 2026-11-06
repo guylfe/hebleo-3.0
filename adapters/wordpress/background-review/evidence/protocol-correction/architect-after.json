@@ -1,0 +1,71 @@
+{
+    "source": "pinned generated candidate protocol",
+    "environment": "unit harness, production PHP functions with stubbed WordPress storage",
+    "results": [
+        {
+            "name": "old and refreshed WordPress nonces are both valid for same user\/session",
+            "pass": true,
+            "actual": {
+                "old": 2,
+                "fresh": 1
+            }
+        },
+        {
+            "name": "delayed delivery preserves answer time",
+            "pass": true,
+            "actual": {
+                "answer": 1793926201,
+                "accepted": 1793926201000,
+                "now": 1793926320000
+            }
+        },
+        {
+            "name": "same account reload with refreshed CSRF nonce preserves queued answer",
+            "pass": true,
+            "actual": {
+                "answer": 1793926201,
+                "accepted": 1793926201000,
+                "now": 1793926320000
+            }
+        },
+        {
+            "name": "future answer is rejected rather than silently rebased",
+            "pass": true,
+            "actual": {
+                "reject": "future-answer",
+                "now": 1793926210000
+            }
+        },
+        {
+            "name": "wrong owner",
+            "pass": true,
+            "actual": "Invalid intent"
+        },
+        {
+            "name": "wrong site",
+            "pass": true,
+            "actual": "Invalid intent"
+        },
+        {
+            "name": "noninteger elapsed",
+            "pass": true,
+            "actual": "Invalid intent"
+        },
+        {
+            "name": "immutable receipt survives changed current nonce",
+            "pass": true,
+            "actual": {
+                "protocolVersion": 1,
+                "requestId": "request-000000000001",
+                "intentHash": "e204a359e16d4c2525ec5e7140674f537902f216b8671ab54707d80a4dc24655",
+                "outcome": "committed",
+                "committedAt": 1793926210000
+            }
+        },
+        {
+            "name": "changed immutable payload rejected",
+            "pass": true,
+            "actual": "Request identity reused"
+        }
+    ]
+}

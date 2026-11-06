@@ -1,0 +1,23 @@
+PASS full plugin activation 1.2.2 WordPress 7.1.4 MariaDB 11.4.13
+{
+    "native_checks": 415,
+    "wordpress": "7.1.4",
+    "mariadb": "11.4.13",
+    "original_plugin": "1.2.2",
+    "old_row_exact": true,
+    "production_data_used": false
+}
+{"reopen_checks":51,"separate_process":true}
+{"rr_dst_validity_limits_fault_checks":120,"concurrency_id":"37"}
+{"concurrency_final_state":"review","step":null,"last_review_utc":1793752203,"stability":2.3065,"reps":"2"}
+{"background_native_checks":27}
+Architect protocol probes 9 passed
+Actual nonce/auth/future handler cases 13 passed
+{"background_concurrency_checks":2}
+{"followup_native_checks":57}
+{"reopen_burial_checks":3}
+{"concurrent_sibling_checks":3}
+TABLE_NAME	ENGINE
+rr_flashcard_progress	InnoDB
+rr_usermeta	InnoDB
+Own MariaDB helper stopped

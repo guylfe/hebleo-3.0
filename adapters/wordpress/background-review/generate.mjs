@@ -1,6 +1,6 @@
 import {execFileSync} from 'node:child_process';import fs from 'node:fs';import path from 'node:path';import {createHash} from 'node:crypto';import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url)),repo=path.resolve(here,'../../..');
-const core=execFileSync('git',['show','6f1ec28:public/review-outbox.js'],{cwd:repo});const coreHash=createHash('sha256').update(core).digest('hex');if(coreHash!=='6a69e152548e07005c6526557abcad5924ca94e9b30a40bc37de38a1e8329ad2')throw Error('Reviewed core drift');
+const core=execFileSync('git',['-c','safe.directory='+repo,'show','6f1ec28:public/review-outbox.js'],{cwd:repo});const coreHash=createHash('sha256').update(core).digest('hex');if(coreHash!=='6a69e152548e07005c6526557abcad5924ca94e9b30a40bc37de38a1e8329ad2')throw Error('Reviewed core drift');
 const [base,out,original]=process.argv.slice(2);if(!base||!out||path.resolve(base)===path.resolve(out)||fs.existsSync(out))throw Error('Supply current 29-file baseline and a NEW output directory');
 const hash=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 const pins={'archive-decks.php':'0c0f7dbf2dd519de89cef7655716d633b2c380b009c86cdee0e4afedc4395ded','study-followup/state.php':'39e9ee3e65860262ed91f9dcd59d37e1e05ab43f49200c09cf24497b13994b2a','study-layout/card-layout.css':'dc243b380ce007454cdff7b5a8895ea3f388832c9cc4bd06d3a93f7e96c0c36e'};

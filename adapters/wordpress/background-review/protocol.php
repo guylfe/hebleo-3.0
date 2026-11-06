@@ -2,7 +2,8 @@
 /** Additive per-user protocol metadata. No content or FSRS algorithm changes. */
 namespace HebleoBackground;
 const HORIZON=86400000;
-function now(): int { return \HebleoStudy\clock_now()*1000; }
+/** Millisecond UTC avoids inventing a future-time allowance for a seconds clock. */
+function now(): int { return (int)\apply_filters('hebleo_background_now_ms',(int)floor(microtime(true)*1000)); }
 function site(): string { return rtrim(\home_url('/'),'/'); }
 function canonical($v): string {
  if(is_array($v)){if(array_is_list($v))return '['.implode(',',array_map(__NAMESPACE__.'\\canonical',$v)).']';ksort($v,SORT_STRING);$a=[];foreach($v as $k=>$x)$a[]=canonical((string)$k).':'.canonical($x);return '{'.implode(',',$a).'}';}
@@ -30,9 +31,9 @@ function reject(int $u,array $i,string $reason,int $at): array {
 /** Runs after progress/note locks. Receipt lookup precedes ticket expiry and CAS. */
 function validate(int $u,$p,array $meta,array $day,array $i): array {
  $at=now();$t=load($u,'ticket',$i['clockTicketId']);
- if(!$t||$t['siteId']!==site()||$t['ownerId']!==(string)$u||$t['cardId']!==$i['cardId']||$t['expectedVersion']!==$i['expectedVersion']||!hash_equals($t['nonceHash'],hash('sha256',(string)($_POST['nonce']??''))))return ['reject'=>'clock-ticket','now'=>$at];
+ if(!$t||$t['siteId']!==site()||$t['ownerId']!==(string)$u||$t['cardId']!==$i['cardId']||$t['expectedVersion']!==$i['expectedVersion'])return ['reject'=>'clock-ticket','now'=>$at];
  if($at<$t['issuedAt'])throw new \RuntimeException('Server clock regressed');
- $answer=$t['issuedAt']+$i['elapsedMs'];if($at>$t['expiresAt'])return ['reject'=>'expired','now'=>$at];if($answer>$at+120000)return ['reject'=>'future-answer','now'=>$at];$answer=min($answer,$at);$sec=intdiv($answer,1000);
+ $answer=$t['issuedAt']+$i['elapsedMs'];if($at>$t['expiresAt'])return ['reject'=>'expired','now'=>$at];if($answer>$at)return ['reject'=>'future-answer','now'=>$at];$sec=intdiv($answer,1000);
  if(!hash_equals(\HebleoFollowup\version($p,$meta),$i['expectedVersion']))return ['reject'=>'version-changed','now'=>$at];
  if((int)($p->suspended??0)!==0)return ['reject'=>'suspended','now'=>$at];
  $last=max((int)($meta['last_review_utc']??(\HebleoStudy\parse_local($p->last_reviewed??null,\wp_timezone())??0)),(int)($day['reviewed_utc']??0));
@@ -51,8 +52,8 @@ function issue(int $u,array $ids): array {
  // committed and rejected receipts remain recoverable for seven days.
  foreach(['ticket'=>'expiresAt','anchor'=>'expiresAt','receipt'=>'retainedUntil'] as $kind=>$field){$pattern=$wpdb->esc_like('_hebleo_bg_v1_'.$kind.'_').'%';if($wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->usermeta} WHERE user_id=%d AND meta_key LIKE %s AND JSON_VALID(meta_value) AND CAST(JSON_UNQUOTE(JSON_EXTRACT(meta_value,%s)) AS UNSIGNED)<%d",$u,$pattern,'$.'.$field,$at))===false)throw new \RuntimeException('Protocol retention failed');}
  foreach($ids as $id){if(!is_string($id)||!preg_match('/\A[1-9][0-9]{0,18}:[1-9][0-9]{0,18}\z/D',$id))throw new \RuntimeException('Invalid clock card');[$n,$t]=array_map('intval',explode(':',$id));$lock=\HebleoFollowup\lock($u,$n);try{
- $p=$wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}flashcard_progress WHERE user_id=%d AND note_id=%d AND template_id=%d",$u,$n,$t));if(!$p)continue;$v=\HebleoFollowup\version($p);$at=now();$nonceHash=hash('sha256',(string)($_POST['nonce']??''));$index=$id.'|'.$v.'|'.$nonceHash;$old=load($u,'anchor',$index);$ticket=$old?load($u,'ticket',$old['id']):null;
- if(!$ticket||$ticket['expiresAt']<=$at){$tid=\wp_generate_uuid4();$ticket=['id'=>$tid,'cardId'=>$id,'expectedVersion'=>$v,'siteId'=>site(),'ownerId'=>(string)$u,'issuedAt'=>$at,'expiresAt'=>$at+HORIZON,'nonceHash'=>$nonceHash];put($u,'ticket',$tid,$ticket);put($u,'anchor',$index,['id'=>$tid,'expiresAt'=>$at+HORIZON]);}
+ $p=$wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}flashcard_progress WHERE user_id=%d AND note_id=%d AND template_id=%d",$u,$n,$t));if(!$p)continue;$v=\HebleoFollowup\version($p);$at=now();$index=$id.'|'.$v;$old=load($u,'anchor',$index);$ticket=$old?load($u,'ticket',$old['id']):null;
+ if(!$ticket||$ticket['expiresAt']<=$at){$tid=\wp_generate_uuid4();$ticket=['id'=>$tid,'cardId'=>$id,'expectedVersion'=>$v,'siteId'=>site(),'ownerId'=>(string)$u,'issuedAt'=>$at,'expiresAt'=>$at+HORIZON];put($u,'ticket',$tid,$ticket);put($u,'anchor',$index,['id'=>$tid,'expiresAt'=>$at+HORIZON]);}
  $out[]=['cardId'=>$id,'expectedVersion'=>$v,'clockTicketId'=>$ticket['id'],'issuedAt'=>$ticket['issuedAt'],'expiresAt'=>$ticket['expiresAt']];
  }finally{\HebleoFollowup\unlock($lock);}}return ['anchors'=>$out,'serverNow'=>now(),'siteId'=>site(),'ownerId'=>(string)$u];
 }
