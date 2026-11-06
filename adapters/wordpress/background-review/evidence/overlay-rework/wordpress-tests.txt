@@ -1,0 +1,22 @@
+✔ WP actual keys: next visible after durable capture while save held, siblings masked, Finish drains (135.8238ms)
+ℹ capture-to-next-visible 17.1ms; backend held separately through second capture and Finish
+✔ WP unavailable durable storage keeps revealed card recoverable (12.2221ms)
+✔ WP stale refresh cannot restore pending siblings and resume requires new timing choice (48.4934ms)
+✔ WP durable write failure after reveal never advances or counts (12.6822ms)
+✔ WP learning return requires authoritative due/version and never advances current card (34.8525ms)
+✔ WP authoritative later version can be rated after a settled older receipt (35.5619ms)
+✔ WP definitive rejection retained until explicit authoritative refresh, never silently resent (27.8877ms)
+✔ WP repeated authoritative later versions retire only settled matching overlays (77.4617ms)
+✔ WP fresh: acknowledgement arriving after refresh began survives stale response (45.4833ms)
+✔ WP restart: acknowledgement arriving after refresh began survives stale response (45.3882ms)
+✔ WP stale refresh cannot retire newer settled overlay or resurrect newer pending siblings (47.4943ms)
+✔ WP restarted and newly loaded sessions reconcile authoritative later versions from durable overlays (56.4223ms)
+✔ WP retirement requires a matching fresh clock and excludes the old pre-review version (22.6139ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1730.5813

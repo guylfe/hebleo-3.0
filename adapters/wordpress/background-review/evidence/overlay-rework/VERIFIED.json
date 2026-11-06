@@ -1,0 +1,20 @@
+{
+  "files": 32,
+  "changedSince74eadd7": [
+    {
+      "file": "archive-decks.php",
+      "sha256": "96a04404eddd6fa535af66f8d449fedded7e71e34cdd81e8b0fa074ad6546eb3",
+      "before": "0c0f7dbf2dd519de89cef7655716d633b2c380b009c86cdee0e4afedc4395ded"
+    },
+    {
+      "file": "background-review/client.js",
+      "sha256": "fd39f22ce13af8a610af854fcecf945fcd2ae902e9a1e53dbc4c55bb1eee2754",
+      "before": null
+    }
+  ],
+  "sharedCore": "6a69e152548e07005c6526557abcad5924ca94e9b30a40bc37de38a1e8329ad2",
+  "backendUnchanged": true,
+  "noProductionChanges": true,
+  "wordpressTests": 13,
+  "coreTests": 15
+}
