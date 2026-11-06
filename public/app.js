@@ -33,7 +33,7 @@ import {renderLexicalVocabulary,bindLexicalVocabulary} from './lexical-vocabular
 import {mountAnsweredVocabulary} from './post-answer-vocabulary.js';
 
 const root = document.querySelector('#app');
-const state = { page:'home', user:localStorage.getItem('hebleo-demo-user') || 'learner-demo', data:null, lessonId:'lesson-1', step:'learn', question:0, answer:'', matching:{}, selectedTokens:[], result:null, practiceIds:[], medium:'watch', wordId:'w-ani', search:'', libraryTag:'', libraryLesson:'', libraryState:'', libraryPage:0, libraryMode:'source', sourceCategory:'', sourceLesson:'', studioTask:'lesson', outlineOpen:null, discussionPage:0, commentDrafts:{}, commentPending:{}, commentErrors:{}, noteDrafts:{}, replyDrafts:{}, replyOpen:{}, replyPending:{}, replyErrors:{}, navigation:{}, navDrawer:null, navLast:null, studio:null, reports:[], questions:[], authorLessonId:'lesson-1', authorExerciseId:null, importCandidate:null, studioImport:{}, panel:null, reviewSession:null, revealReview:false, recording:'empty' };
+const state = { page:'home', user:localStorage.getItem('hebleo-demo-user') || 'learner-demo', data:null, lessonId:'lesson-1', step:'learn', question:0, answer:'', matching:{}, selectedTokens:[], sentenceMode:'simple', result:null, practiceIds:[], medium:'watch', wordId:'w-ani', search:'', libraryTag:'', libraryLesson:'', libraryState:'', libraryPage:0, libraryMode:'source', sourceCategory:'', sourceLesson:'', studioTask:'lesson', outlineOpen:null, discussionPage:0, commentDrafts:{}, commentPending:{}, commentErrors:{}, noteDrafts:{}, replyDrafts:{}, replyOpen:{}, replyPending:{}, replyErrors:{}, navigation:{}, navDrawer:null, navLast:null, studio:null, reports:[], questions:[], authorLessonId:'lesson-1', authorExerciseId:null, importCandidate:null, studioImport:{}, panel:null, reviewSession:null, revealReview:false, recording:'empty' };
 const uid = () => crypto.randomUUID();
 let authorContext=null,inlineAuthor=null,studioPrivateComments=null,inlineAuthorStates=new Map();
 let publicationDialog=null;
@@ -218,12 +218,13 @@ function returnKeyboard(){window.HebleoKeyboard?.mount(document.body);}
 const chapterName=(c,id)=>courseOutline(c).find(g=>g.kind==='chapter'&&g.lessons.some(l=>l.id===id))?.title||'';
 function nextLesson() { return orderedLessons(state.data.content).find(l=>!state.data.learner.completed.includes(l.id)) || null; }
 function continueLesson() { const l=state.data.content.lessons.find(l=>l.id===state.data.learner.lastLessonId && !state.data.learner.completed.includes(l.id));return l || nextLesson(); }
-function clearQuestionAnswer() { pendingAttempt=null;answerPhase='ready';continueTarget=null;state.answer='';state.matching={};state.selectedTokens=[];state.result=null; }
-function answerDraft() { return {text:state.answer,matching:state.matching,selectedTokens:state.selectedTokens}; }
+let pendingApproval=null;
+function clearQuestionAnswer() { pendingApproval=null;pendingAttempt=null;answerPhase='ready';continueTarget=null;state.answer='';state.matching={};state.selectedTokens=[];state.sentenceMode='simple';state.result=null; }
+function answerDraft() { return {text:state.answer,matching:state.matching,sentenceMode:state.sentenceMode,selectedTokens:state.selectedTokens}; }
 function resetQuestion() { state.question=0;clearQuestionAnswer(); }
 function questionProgress(l) { return lessonQuestionProgress(l,state.data.learner.attempts,state.session.revisionId); }
 function lessonProgressBar(l) { if(!l.exerciseIds.length)return '';const n=questionProgress(l).correctIds.length,total=l.exerciseIds.length;return '<div class="lesson-progress"><label for="lesson-question-progress">'+n+' of '+total+' questions answered correctly</label><progress id="lesson-question-progress" value="'+n+'" max="'+(total||1)+'" aria-label="Lesson questions answered correctly" aria-valuetext="'+n+' of '+total+'"></progress></div>'; }
-function progressPayload() { return {lessonId:state.lessonId,revisionId:state.session.revisionId,step:currentKind(),...(lessonObject().compositionVersion===2?{componentId:state.step==='complete'?null:state.step}:{}),question:state.question,answer:state.answer,selectedTokens:[...state.selectedTokens],matching:{...state.matching},resultRequestId:state.result?.requestId || null,practiceIds:state.practiceIds}; }
+function progressPayload() { return {lessonId:state.lessonId,revisionId:state.session.revisionId,step:currentKind(),...(lessonObject().compositionVersion===2?{componentId:state.step==='complete'?null:state.step}:{}),question:state.question,answer:state.answer,sentenceMode:state.sentenceMode,selectedTokens:[...state.selectedTokens],matching:{...state.matching},resultRequestId:state.result?.requestId || null,practiceIds:state.practiceIds}; }
 function queueSave() {
   if(state.page!=='lesson' || !state.session||inlineActive())return saveChain;
   const payload=progressPayload(),user=state.user,isCurrent=captureTextDestination(),finishesWithoutQuestions=payload.step==='complete'&&!lessonObject().exerciseIds.length;
@@ -241,7 +242,7 @@ async function openLesson(id, step, replace=false) {
   const session=await api('session?lessonId='+encodeURIComponent(id));
   state.session=session;state.lessonId=id;state.page='lesson';state.practiceIds=[];resetQuestion();
   const p=session.progress;
-  if(p){state.step=lessonObject().compositionVersion===2?(p.componentId??'complete'):p.step;state.question=p.question;state.answer=p.answer;state.matching=p.matching;state.selectedTokens=p.selectedTokens;state.practiceIds=p.practiceIds || [];state.result=session.result;}
+  if(p){state.step=lessonObject().compositionVersion===2?(p.componentId??'complete'):p.step;state.question=p.question;state.answer=p.answer;state.matching=p.matching;state.selectedTokens=p.selectedTokens;state.sentenceMode=p.sentenceMode||'simple';state.practiceIds=p.practiceIds || [];state.result=session.result;}
   else state.step=portionKeys(lessonObject())[0];
   step=portionKeys(lessonObject()).includes(step)?step:lessonObject().compositionVersion===2?lessonPortions(content(),lessonObject()).find(p=>p.kind===step)?.key:step;
   if(step && portionKeys(lessonObject()).includes(step) && step!==state.step){state.step=step;resetQuestion();state.practiceIds=[];}
@@ -367,6 +368,8 @@ function keyboard(){return '<div class="keyboard-tools">'+button('Open Hebrew ke
 function questionPrimary(l=lessonObject()){
  const ids=portionExercises(content(),l,state.step,state.practiceIds);
  const phase=answerPhase;
+ if(phase==='approving')return button('Saving approval…','pending-answer','primary','',true);
+ if(phase==='approval-error'&&pendingApproval)return button('Retry saving approval','self-approve','primary');
  if(phase==='checking'||phase==='saving'||phase==='advancing')return button(phase==='checking'?'Checking…':phase==='saving'?'Saving position…':'Continuing…','pending-answer','primary','',true);
  if(phase==='save-error')return button('Retry saving position','save-answer-position','primary');
  if(phase==='advance-error')return button('Retry continuing','retry-continuing','primary');
@@ -576,7 +579,7 @@ function showAnswerResult(scope,e){
  if(!scope?.isConnected||!state.result)return;scope.dataset.checked='true';
  scope.querySelectorAll('[data-exercise-input] button:not([data-vocabulary-word]),[data-exercise-input] textarea,[data-exercise-input] input').forEach(el=>el.disabled=true);scope.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===state.answer));
  applyMatchingResult(scope,e,state.result);
- const status=scope.querySelector('[data-answer-status]');status.innerHTML=exerciseFeedback(e,state.result);bindResultExplanations(status);const keyboard=scope.querySelector('[data-action="keyboard-open"]');if(keyboard)keyboard.remove();
+ const status=scope.querySelector('[data-answer-status]');status.innerHTML=exerciseFeedback(e,state.result);bindResultExplanations(status);bind(status);const keyboard=scope.querySelector('[data-action="keyboard-open"]');if(keyboard)keyboard.remove();
  const support=scope.querySelector('.exercise-support');support.innerHTML=questionSupport(e,true);bind(support);updateQuestionPrimary();
  refreshQuestionProgress();
  mountExerciseReminders(scope,e);syncKeyboard();refreshComments();scope.querySelector('[data-answer-commit]').focus({preventScroll:true});
@@ -593,7 +596,7 @@ function mountExerciseReminders(scope,e=currentExercise()){
 async function submitAnswer(recover=false) {
  if(submitting||state.result||!learnerControlsActive()||pendingAttempt&&!recover)return;const e=currentExercise();if(!e)return;const wire=wireAnswer(e,answerDraft());if(wire.error){toast(wire.error);return;}
  const context={owner:state.user,session:state.session,step:state.step,question:state.question},scope=root.querySelector('#practice'),field=scope.querySelector('#answer'),selection=field?{start:field.selectionStart,end:field.selectionEnd,direction:field.selectionDirection}:null,isCurrent=()=>state.user===context.owner&&state.session===context.session&&state.step===context.step&&state.question===context.question&&root.querySelector('#practice')===scope;
- pendingAttempt??={requestId:uid(),revisionId:context.session.revisionId,lessonId:state.lessonId,exerciseId:e.id,answer:structuredClone(wire.answer)};
+ pendingAttempt??={requestId:uid(),revisionId:context.session.revisionId,lessonId:state.lessonId,exerciseId:e.id,answer:structuredClone(wire.answer),...(e.type==='ordering'?{sentenceMode:state.sentenceMode}:{})};
  const controls=[...scope.querySelectorAll('[data-exercise-input] button,[data-exercise-input] textarea,[data-exercise-input] input')],disabled=controls.map(el=>el.disabled);
  clearTimeout(saveTimer);submitting=true;answerPhase='checking';controls.forEach(el=>el.disabled=true);updateQuestionPrimary();answerRecovery('','');
  try{
@@ -608,6 +611,22 @@ async function submitAnswer(recover=false) {
   else{answerPhase='uncertain';answerRecovery('The checking response was interrupted. Retry checking to recover this answer’s result.','grade-recovery');updateQuestionPrimary();}
  }throw error;}finally{submitting=false;}
 }
+async function approveSentenceAnswer(){
+ if(submitting||!state.result||state.result.correct||state.result.sentenceMode!=='complex'||currentExercise()?.type!=='ordering'||!learnerControlsActive()||!['ready','approval-error'].includes(answerPhase))return;
+ const scope=root.querySelector('#practice'),owner=state.user,result=state.result,isCurrent=()=>owner===state.user&&root.querySelector('#practice')===scope&&state.result===result;
+ pendingApproval??={requestId:result.requestId,revisionId:result.revisionId,lessonId:result.lessonId,exerciseId:result.exerciseId};
+ submitting=true;answerPhase='approving';updateQuestionPrimary();scope.querySelector('[data-action="self-approve"]')?.setAttribute('disabled','');answerRecovery('Saving your approval…','approval-status');
+ try{
+  const approved=await api('attempt/self-approve',pendingApproval,owner);if(!isCurrent())return;
+  if(approved.requestId!==result.requestId||approved.revisionId!==result.revisionId||approved.lessonId!==result.lessonId||approved.exerciseId!==result.exerciseId||approved.answer!==result.answer||approved.selfApproved!==true||approved.correct!==true)throw new Error('Invalid approval response. Retry to check the saved result.');
+  state.result=approved;pendingApproval=null;answerPhase='saving';showAnswerResult(scope,currentExercise());answerRecovery('','');
+  await load();if(owner!==state.user||root.querySelector('#practice')!==scope)return;refreshQuestionProgress();await queueSave();answerPhase='ready';updateQuestionPrimary();
+ }catch(error){if(owner===state.user&&root.querySelector('#practice')===scope){
+  if(state.result.selfApproved){answerPhase='save-error';answerRecovery('Your approval was saved. Retry saving this position.','position-recovery');}
+  else{if(error.status&&error.status<500)pendingApproval=null;answerPhase='approval-error';answerRecovery('Approval was not confirmed. Your answer is unchanged here. Retry Mark my answer correct.','approval-error');scope.querySelector('[data-action="self-approve"]')?.removeAttribute('disabled');}
+  updateQuestionPrimary();
+ }throw error;}finally{submitting=false;}
+}
 async function saveAnswerPosition(){
  if(!state.result||submitting)return;const scope=root.querySelector('#practice'),owner=state.user;submitting=true;answerPhase='saving';updateQuestionPrimary();
  try{await load();if(owner!==state.user||root.querySelector('#practice')!==scope)return;await queueSave();if(root.querySelector('#practice')!==scope)return;answerPhase='ready';answerRecovery('','');refreshQuestionProgress();updateQuestionPrimary();scope.querySelector('[data-answer-commit]')?.focus({preventScroll:true});}
@@ -616,7 +635,7 @@ async function saveAnswerPosition(){
 async function continueQuestion(){
  if(!state.result||submitting||!['ready','advance-error'].includes(answerPhase))return;
  const scope=root.querySelector('#practice'),owner=state.user;
- if(!continueTarget){const ids=portionExercises(content(),lessonObject(),state.step,state.practiceIds),last=state.question+1>=ids.length;continueTarget={...progressPayload(),step:last?portionKind(lessonObject(),portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1]):currentKind(),question:last?0:state.question+1,answer:'',matching:{},selectedTokens:[],resultRequestId:null,practiceIds:last?[]:state.practiceIds};if(lessonObject().compositionVersion===2)continueTarget.componentId=last?(portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1]??null):state.step;}
+ if(!continueTarget){const ids=portionExercises(content(),lessonObject(),state.step,state.practiceIds),last=state.question+1>=ids.length;continueTarget={...progressPayload(),step:last?portionKind(lessonObject(),portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1]):currentKind(),question:last?0:state.question+1,sentenceMode:'simple',answer:'',matching:{},selectedTokens:[],resultRequestId:null,practiceIds:last?[]:state.practiceIds};if(lessonObject().compositionVersion===2)continueTarget.componentId=last?(portionKeys(lessonObject())[portionKeys(lessonObject()).indexOf(state.step)+1]??null):state.step;}
  submitting=true;answerPhase='advancing';updateQuestionPrimary();
  try{await saveChain.catch(()=>{});const saved=await api('progress',continueTarget,owner);if(owner!==state.user||root.querySelector('#practice')!==scope)return;state.data.learner.resumes[state.lessonId]=saved;state.data.learner.lastLessonId=state.lessonId;const target=continueTarget;state.step=lessonObject().compositionVersion===2?(target.componentId??'complete'):target.step;state.question=target.question;state.practiceIds=target.practiceIds;clearQuestionAnswer();setRoute();render();focusHeading();}
  catch(error){if(owner===state.user&&root.querySelector('#practice')===scope){answerPhase='advance-error';answerRecovery('Your next position was not saved. Retry continuing.','continue-recovery');updateQuestionPrimary();}throw error;}finally{submitting=false;}
@@ -628,7 +647,7 @@ function insertKey(value,backspace=false) {
   input.value=input.value.slice(0,start)+(backspace?'':value)+input.value.slice(end);input.focus();input.setSelectionRange(start+(backspace?0:value.length),start+(backspace?0:value.length));state.answer=input.value;scheduleSave();
 }
 async function updatePreference(key,value) { await api('preferences',{[key]:value});await load(); }
-const learnerActions=new Set(['choice','check','token','remove-token','next-question','retry-question','inline-choice','review-reveal','review-rate','save-answer-position','recover-attempt','retry-continuing','key','backspace','cursor']);
+const learnerActions=new Set(['choice','check','sentence-mode','self-approve','token','remove-token','next-question','retry-question','inline-choice','review-reveal','review-rate','save-answer-position','recover-attempt','retry-continuing','key','backspace','cursor']);
 function learnerControlsActive(){return !state.panel&&!rehearsal&&!document.querySelector('dialog[open]')&&root.querySelector('.nav-shell')?.dataset.courseOverlay!=='true'&&!root.querySelector('#main-content')?.hasAttribute('inert');}
 function reviewStatus(text){
  let status=root.querySelector('[data-review-save-status]');if(!status){status=document.createElement('p');status.dataset.reviewSaveStatus='';status.setAttribute('role','status');(root.querySelector('.review-surface,.review-card')||root.querySelector('#main-content'))?.append(status);}
@@ -638,9 +657,11 @@ function reviewStatus(text){
 function reviewKey(key){if(state.page!=='review'||!state.reviewSession||state.panel||rehearsal||submitting||reviewSave?.blocked||reviewRevealPending||document.querySelector('dialog[open],[role="dialog"]')||!learnerControlsActive())return;const selector=key==='reveal'?'[data-action="review-reveal"]':state.revealReview?'[data-action="review-rate"][data-value="'+key+'"]':null;if(selector)learnerElements(selector)[0]?.click();}
 mountReviewKeys({document,active:()=>state.page==='review'&&!!state.reviewSession&&!state.panel&&!rehearsal&&!document.querySelector('dialog[open],[role="dialog"]'),onShortcut:reviewKey});
 async function act(action,value,source) {
+  if(pendingApproval&&!['self-approve','audio'].includes(action))return;
   if(reviewSave?.blocked&&['review-start','review-reveal','review-rate'].includes(action)){reviewPendingStatus();return;}
 
-  if((submitting||pendingAttempt)&&['page','lesson','outline','step','latest-lesson','lesson-practice','retry-question','target-practice','mode','token','remove-token','choice','concept','inline-concept-close'].includes(action))return;
+
+  if((submitting||pendingAttempt)&&['page','lesson','outline','step','latest-lesson','lesson-practice','retry-question','target-practice','mode','sentence-mode','token','remove-token','choice','concept','inline-concept-close'].includes(action))return;
   if(learnerActions.has(action)&&(!learnerControlsActive()||source&&!activeLearnerDestination(source,true)))return;
   if(action==='author-inline'||action==='author-comments'){await openInlineAuthor(action==='author-inline');return;}
   if(action==='author-exit'){inlineState().active=false;render();return;}
@@ -666,7 +687,7 @@ async function act(action,value,source) {
   // A later portion request supersedes an earlier continuation even while both wait for the same save.
   textReaderGeneration++;
   let isCurrent=captureTextDestination();
-  const previous={step:state.step,medium:state.medium,question:state.question,answer:state.answer,matching:state.matching,selectedTokens:state.selectedTokens,result:state.result,practiceIds:state.practiceIds};
+  const previous={step:state.step,medium:state.medium,question:state.question,answer:state.answer,matching:state.matching,sentenceMode:state.sentenceMode,selectedTokens:state.selectedTokens,result:state.result,practiceIds:state.practiceIds};
   try{
    if(forward)await settleTextSaves();
    if(!isCurrent())return;
@@ -707,8 +728,10 @@ async function act(action,value,source) {
   if(action==='choice'){if(state.result||submitting)return;state.answer=value;root.querySelectorAll('[data-action="choice"]').forEach(el=>el.classList.toggle('selected',el.dataset.value===value));root.querySelector('[data-answer-commit]')?.focus({preventScroll:true});if(pref().immediateAnswers)await submitAnswer();else await queueSave();return;}
   if(action==='check'){await submitAnswer();return;}
   if(action==='recover-attempt'){await submitAnswer(true);return;}
+  if(action==='self-approve'){await approveSentenceAnswer();return;}
   if(action==='save-answer-position'){await saveAnswerPosition();return;}
   if(action==='retry-continuing'){await continueQuestion();return;}
+  if(action==='sentence-mode'){if(state.result||submitting||currentExercise()?.type!=='ordering'||!['simple','complex'].includes(value))return;state.sentenceMode=value;render();scheduleSave();root.querySelector('[data-action="sentence-mode"][aria-pressed="true"]')?.focus({preventScroll:true});return;}
   if(action==='token'){if(state.result||submitting)return;state.selectedTokens.push(Number(value));render();scheduleSave();return;}
   if(action==='remove-token'){if(state.result||submitting)return;state.selectedTokens.splice(Number(value),1);render();scheduleSave();return;}
   if(action==='next-question'){await continueQuestion();return;}
@@ -815,7 +838,7 @@ function bind(scope=root) {
   scope.querySelector('#review-nikkud')?.addEventListener('change',async event=>{try{await updatePreference('reviewNikkud',event.target.value);}catch(error){toast(error.message);}});
 
   scope.querySelectorAll('[data-question-answer]').forEach(form=>form.addEventListener('submit',async event=>{event.preventDefault();const key=form.dataset.questionAnswer;if(state.replyPending[key])return;const text=form.querySelector('[name=answer]'),save=form.querySelector('button');state.replyPending[key]=true;state.replyErrors[key]='';text.readOnly=true;save.disabled=true;try{const [userId,requestId]=key.split('|');await api('questions/answer',{userId,requestId,answer:text.value});delete state.replyDrafts[key];form.closest('details').open=false;state.replyOpen[key]=false;state.replyPending[key]=false;await load();text.value=state.questions.find(q=>q.userId+'|'+q.requestId===key)?.answer||'';refreshComments();toast('Author reply saved.');}catch(error){state.replyErrors[key]=error.message;const live=[...root.querySelectorAll('[data-question-answer]')].find(f=>f.dataset.questionAnswer===key);if(live)live.querySelector('[data-reply-status]').textContent=error.message;}finally{state.replyPending[key]=false;const live=[...root.querySelectorAll('[data-question-answer]')].find(f=>f.dataset.questionAnswer===key);if(live){live.querySelector('[name=answer]').readOnly=false;live.querySelector('button').disabled=false;}}}));
-  Array.from(scope.querySelectorAll('[data-action]')).filter(el=>!el.closest('#hebleo-keyboard-root')).forEach(el=>el.addEventListener('click',async event=>{event.preventDefault();if(el.disabled||learnerActions.has(el.dataset.action)&&!activeLearnerDestination(el))return;const transient=!['audio','studio-choose-lesson'].includes(el.dataset.action);if(transient)el.disabled=true;try{await act(el.dataset.action,el.dataset.value,el);}catch(error){toast(error.message);}finally{if(el.isConnected&&transient)el.disabled=['review-rate','review-reveal','review-undo'].includes(el.dataset.action)&&reviewSave?.blocked?true:el.dataset.action==='record'?state.recording==='recording':el.dataset.action==='record-stop'?state.recording!=='recording':['check','choice','token','remove-token'].includes(el.dataset.action)&&Boolean(state.result||submitting||pendingAttempt);}}));
+  Array.from(scope.querySelectorAll('[data-action]')).filter(el=>!el.closest('#hebleo-keyboard-root')).forEach(el=>el.addEventListener('click',async event=>{event.preventDefault();if(el.disabled||learnerActions.has(el.dataset.action)&&!activeLearnerDestination(el))return;const transient=!['audio','studio-choose-lesson'].includes(el.dataset.action);if(transient)el.disabled=true;try{await act(el.dataset.action,el.dataset.value,el);}catch(error){toast(error.message);}finally{if(el.isConnected&&transient)el.disabled=['review-rate','review-reveal','review-undo'].includes(el.dataset.action)&&reviewSave?.blocked?true:el.dataset.action==='record'?state.recording==='recording':el.dataset.action==='record-stop'?state.recording!=='recording':['check','choice','sentence-mode','token','remove-token'].includes(el.dataset.action)&&Boolean(state.result||submitting||pendingAttempt);}}));
   scope.querySelectorAll('[data-action="key"],[data-action="backspace"],[data-action="cursor"]').forEach(el=>el.addEventListener('pointerdown',event=>event.preventDefault()));
   scope.querySelector('#answer')?.addEventListener('input',event=>{state.answer=event.target.value;scheduleSave();});
   scope.querySelectorAll('[data-match]').forEach(el=>el.addEventListener('change',()=>{state.matching[el.dataset.match]=el.value;scheduleSave();}));

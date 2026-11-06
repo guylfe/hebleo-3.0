@@ -130,6 +130,8 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           if (url.pathname === '/api/attempt') return json(200, store.attempt(userId, input));
           if(url.pathname==='/api/review/clock')return json(200,store.reviewClock(userId,input));
           if(url.pathname==='/api/review/background')return json(200,store.backgroundReview(userId,input));
+          if (url.pathname === '/api/attempt/self-approve') return json(200, store.approveSentenceAttempt(userId, input));
+
           if (url.pathname === '/api/review') return json(200, store.review(userId, input));
           if (url.pathname === '/api/enroll') return json(200, store.enroll(userId, input.wordId));
           if (url.pathname === '/api/studio/impact') return json(200,store.workspaceImpact(input));

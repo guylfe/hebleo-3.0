@@ -137,6 +137,7 @@ dialog.studio-lesson-picker{max-height:calc(100dvh - 32px);overflow:auto}
 .exercise-support{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-block:8px 16px}
 .exercise-support details{margin:0;padding:0;border:0}.exercise-support summary{min-height:44px;align-content:center;color:var(--accent);font-size:14px;cursor:pointer}
 .feedback.compact-result{gap:8px;justify-content:flex-start;flex-wrap:wrap;line-height:1.5}
+.answer-commit,.answer-commit>[data-answer-status]{flex-wrap:wrap;gap:12px}
 .feedback.compact-result .result-icon{width:26px;height:26px;font-size:18px}
 .answer-commit:empty{min-height:0}.answer-commit:not(:has(.compact-result)){min-height:0;padding:0}
 [data-authored-vocabulary-answers]{margin-block:12px;overflow-wrap:anywhere}

@@ -124,14 +124,19 @@ export function exerciseInput(e,{mode,word,draft,result,keyboard=''}) {
 function exerciseAnswerInput(e,{mode,word,draft,result,keyboard}) {
   if(e.type==='recognition')return '<div class="hebrew large">'+wordText(word(e.wordId),mode)+'</div><div class="choices">'+e.choices.map((c,i)=>'<button class="choice '+(draft.text===c?'selected':'')+'" data-action="choice" data-value="'+esc(c)+'" '+(result?'disabled':'')+'><span class="shortcut">'+(i+1)+'</span>'+esc(c)+'</button>').join('')+'</div>';
   if(e.type==='matching')return matchingGame(e,mode,word,draft.matching,result);
-  if(e.type==='ordering')return '<label>Your sentence</label><p class="assembled-sentence hebrew" dir="rtl">'+esc(composeSentence(e.tokens,draft.selectedTokens,e.prefixTokenIndices))+'</p><div class="token-row sentence-answer" aria-label="Your sentence">'+sentenceTiles(e,draft.selectedTokens,result)+'</div><label>Choose words</label><div class="token-row" aria-label="Available words">'+e.tokens.map((t,i)=>'<button class="token" data-action="token" data-value="'+i+'" '+(draft.selectedTokens.includes(i)||result?'disabled':'')+'>'+exerciseSurface(t,'tokens',i)+'</button>').join('')+'</div>';
+  if(e.type==='ordering') {
+    const complex=draft.sentenceMode==='complex';
+    const toggle='<div class="segmented" role="group" aria-label="Sentence answer mode">'+[['simple','Build'],['complex','Type']].map(([value,label])=>'<button type="button" data-action="sentence-mode" data-value="'+value+'" class="'+((complex?'complex':'simple')===value?'active':'')+'" aria-pressed="'+((complex?'complex':'simple')===value)+'" '+(result?'disabled':'')+'>'+label+'</button>').join('')+'</div>';
+    const typed='<label for="answer">Write the full sentence</label><textarea id="answer" class="answer-input" dir="rtl" rows="2" autocomplete="off" spellcheck="false" inputmode="text" '+(result?'disabled':'')+'>'+esc(draft.text)+'</textarea>'+(result?'':keyboard);
+    return toggle+(complex?typed:'<label>Your sentence</label><p class="assembled-sentence hebrew" dir="rtl">'+esc(composeSentence(e.tokens,draft.selectedTokens,e.prefixTokenIndices))+'</p><div class="token-row sentence-answer" aria-label="Your sentence">'+sentenceTiles(e,draft.selectedTokens,result)+'</div><label>Choose words</label><div class="token-row" aria-label="Available words">'+e.tokens.map((t,i)=>'<button class="token" data-action="token" data-value="'+i+'" '+(draft.selectedTokens.includes(i)||result?'disabled':'')+'>'+exerciseSurface(t,'tokens',i)+'</button>').join('')+'</div>');
+  }
   return (e.type==='cloze'?'<label for="answer">Type the missing word</label>':'<label for="answer">Your Hebrew answer</label>')+'<textarea id="answer" class="answer-input" dir="rtl" rows="2" autocomplete="off" spellcheck="false" inputmode="text" '+(result?'disabled':'')+'>'+esc(draft.text)+'</textarea>'+(result?'':keyboard);
 }
 export {exerciseActionDock,mountExerciseDock} from './exercise-actions.js';
 export function exerciseFeedback(e,result) {
  if(!result)return '';const status=result.correct?'Correct':'Incorrect',explanation=[e.feedback,e.feedbackDetails].filter(value=>typeof value==='string'&&value.trim()),alternatives=!['recognition','matching'].includes(e.type)&&Array.isArray(result.acceptedAnswers)?[...new Set(result.acceptedAnswers)].filter(value=>typeof value==='string'&&value.trim()):[],meaningful=explanation.length||alternatives.length>1;
  const icon='<span aria-hidden="true">'+(result.correct?'✓':'✕')+'</span><span class="sr-only">'+status+'</span>',body=['feedback','feedbackDetails'].filter(field=>typeof e[field]==='string'&&e[field].trim()).map(field=>'<p dir="auto">'+exerciseSurface(e[field],field)+'</p>').join('')+(alternatives.length>1?'<p>Authored alternatives</p><ul>'+alternatives.map(value=>'<li><bdi dir="auto">'+esc(value)+'</bdi></li>').join('')+'</ul>':'');
- return '<div class="feedback compact-result '+(result.correct?'':'wrong')+'" role="status" aria-label="'+status+'"><span class="result-icon" aria-hidden="true">'+icon+'</span><strong>'+status+'</strong>'+(meaningful?'<span class="result-explanation"><button type="button" class="exercise-quiet" data-result-explanation aria-label="'+status+'. Show explanation" aria-expanded="false">Explanation</button><span class="result-popover" data-result-popover role="note" hidden>'+body+'</span></span>':'')+'</div>';
+ return '<div class="feedback compact-result '+(result.correct?'':'wrong')+'" role="status" aria-label="'+status+'"><span class="result-icon" aria-hidden="true">'+icon+'</span><strong>'+status+'</strong>'+(result.selfApproved?'<span>Self-approved · automatic check was incorrect</span>':'')+(meaningful?'<span class="result-explanation"><button type="button" class="exercise-quiet" data-result-explanation aria-label="'+status+'. Show explanation" aria-expanded="false">Explanation</button><span class="result-popover" data-result-popover role="note" hidden>'+body+'</span></span>':'')+'</div>'+(e.type==='ordering'&&result.sentenceMode==='complex'&&!result.correct?'<button type="button" class="button secondary" data-action="self-approve">Mark my answer correct</button>':'');
 }
 const boundResultExplanations=new WeakSet();
 export function bindResultExplanations(scope){
@@ -166,7 +171,7 @@ export function bindResultExplanations(scope){
 // Wire answer exactly as graded by the learner attempt and draft preview evaluate endpoints.
 export function wireAnswer(e,draft) {
   let answer=draft.text;
-  if(e.type==='ordering')answer=composeSentence(e.tokens,draft.selectedTokens,e.prefixTokenIndices);
+  if(e.type==='ordering'&&draft.sentenceMode!=='complex')answer=composeSentence(e.tokens,draft.selectedTokens,e.prefixTokenIndices);
   if(e.type==='matching'){answer={...draft.matching};if(e.wordIds.some(id=>!answer[id]))return {error:'Choose a meaning for every word.'};}
   if(typeof answer==='string'&&!answer.trim())return {error:'Choose or enter an answer first.'};
   return {answer};

@@ -73,7 +73,7 @@ test('renderer wire answers for six families are sent separately from the retain
       loadSession:async()=>h.response,evaluate:async input=>{h.calls.push(['evaluate',structuredClone(input)]);return {mode:'draft-preview',persistent:false,draftToken:'fixture-token',result:{exerciseId:item.id,lessonId:lesson.id,answer:input.answer,correct:false,expected:'fixture'}};}});
     t.after(()=>preview.dispose());await preview.ready;preview.go('apply');preview.setAnswer(draft);
     await h.views.at(-1).actions.submit(wire);
-    assert.deepEqual(h.calls.at(-1)[1],{lessonId:lesson.id,exerciseId:item.id,draftToken:'fixture-token',answer:wire});
+    assert.deepEqual(h.calls.at(-1)[1],{lessonId:lesson.id,exerciseId:item.id,draftToken:'fixture-token',answer:wire,...(type==='ordering'?{sentenceMode:'simple'}:{})});
     assert.deepEqual(h.views.at(-1).answer,draft);assert.deepEqual(h.views.at(-1).result.answer,wire);
     preview.go('learn');preview.go('apply');assert.deepEqual(h.views.at(-1).answer,draft);
   }

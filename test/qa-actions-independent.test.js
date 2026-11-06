@@ -57,6 +57,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else if(url.pathname==='/api/progress')value=store.saveProgress(user,input);
     else if(url.pathname==='/api/preferences')value=store.updateLearner(user,input);
     else if(url.pathname==='/api/attempt')value=store.attempt(user,input);
+    else if(url.pathname==='/api/attempt/self-approve')value=store.approveSentenceAttempt(user,input);
     else if(url.pathname==='/api/practice')value=store.practice(user,input);
     else if(url.pathname==='/api/studio'){store.requireAuthor(user);value={...store.active(),preview:store.preview()};}
     else if(url.pathname==='/api/reports')value=store.reports(user);
@@ -143,3 +144,47 @@ for(const family of ['recognition','typing','ordering','matching','cloze','trans
 
 
 
+
+test('sentence modes retain both drafts across rapid switching, saved resume and typed grading',async t=>{
+ const store=new Store();t.after(()=>store.close());
+ const env=await app(t,{store,page:'lesson/lesson-2/apply'}),{doc,w}=env;
+ const mode=(d,v)=>d.querySelector('[data-action="sentence-mode"][data-value="'+v+'"]').click();
+ await settled(()=>doc.querySelector('[data-action="token"]'));
+ const tile=doc.querySelector('[data-action="token"]'),index=Number(tile.dataset.value);tile.click();
+ mode(doc,'complex');
+ const input=doc.querySelector('#answer');input.value='אני בבית';input.dispatchEvent(new w.Event('input',{bubbles:true}));
+ for(let i=0;i<4;i++){mode(doc,'simple');assert.equal(doc.querySelectorAll('[data-action="remove-token"]').length,1);mode(doc,'complex');assert.equal(doc.querySelector('#answer').value,'אני בבית');}
+ await settled(()=>store.learner('learner-demo').resumes['lesson-2']?.answer==='אני בבית');
+ const saved=store.learner('learner-demo').resumes['lesson-2'];assert.equal(saved.sentenceMode,'complex');assert.deepEqual(saved.selectedTokens,[index]);
+ const second=await app(t,{store,page:'lesson/lesson-2/apply'});
+ await settled(()=>second.doc.querySelector('#answer'));
+ assert.equal(second.doc.querySelector('#answer').value,'אני בבית');
+ mode(second.doc,'simple');assert.equal(second.doc.querySelectorAll('[data-action="remove-token"]').length,1);
+ mode(second.doc,'complex');click(second.doc,'check');
+ await settled(()=>second.doc.querySelector('.compact-result'));
+ assert.match(second.doc.querySelector('.compact-result').textContent,/Correct/);
+ assert.ok([...second.doc.querySelectorAll('[data-action="sentence-mode"]')].every(b=>b.disabled));
+});
+
+test('Type self-approval in the actual HTTP app rejects failure without false success, recovers a lost response and resumes the same approved attempt',async t=>{
+ const store=new Store();t.after(()=>store.close());const {doc,w}=await app(t,{store,page:'lesson/lesson-2/apply',realHTTP:true});
+ await settled(()=>doc.querySelector('[data-action="sentence-mode"]'));
+ assert.deepEqual([...doc.querySelectorAll('[data-action="sentence-mode"]')].map(b=>b.textContent),['Build','Type']);
+ doc.querySelector('[data-action="sentence-mode"][data-value="complex"]').click();typeAnswer(w,doc.querySelector('#answer'),'אני בביית');click(doc,'check');
+ await settled(()=>doc.querySelector('[data-action="next-question"]')&&doc.querySelector('[data-action="self-approve"]'));
+ const transport=w.fetch;let failure='reject',sent=[];
+ w.fetch=async(url,options)=>{if(url!=='/api/attempt/self-approve')return transport(url,options);sent.push(JSON.parse(options.body));if(failure==='reject'){failure='lost';return {ok:false,status:403,json:async()=>({error:'Synthetic rejected approval'})};}const response=await transport(url,options);if(failure==='lost'){failure=null;throw new Error('Synthetic lost response after approval commit');}return response;};
+ click(doc,'self-approve');await settled(()=>doc.querySelector('[data-approval-error]'));
+ assert.match(doc.querySelector('.compact-result').textContent,/Incorrect/);assert.equal(store.learner('learner-demo').attempts[0].selfApproved,undefined);
+ click(doc,'self-approve');await settled(()=>store.learner('learner-demo').attempts[0].selfApproved&&doc.querySelector('[data-action="self-approve"]:not(:disabled)'));
+ assert.match(doc.querySelector('.compact-result').textContent,/Incorrect/);click(doc,'self-approve');
+ await settled(()=>doc.querySelector('.compact-result')?.textContent.includes('Self-approved'));
+ const a=store.learner('learner-demo').attempts[0];assert.equal(a.answer,'אני בביית');assert.equal(a.automaticGrade.correct,false);assert.equal(a.correct,true);assert.equal(store.learner('learner-demo').attempts.length,1);assert.deepEqual(sent,[sent[0],sent[0],sent[0]]);
+ await settled(()=>store.learner('learner-demo').resumes['lesson-2']?.resultRequestId===a.requestId);
+ const reopened=await app(t,{store,page:'lesson/lesson-2/apply',realHTTP:true});await settled(()=>reopened.doc.querySelector('.compact-result')?.textContent.includes('Self-approved'));assert.equal(reopened.doc.querySelector('#answer').value,'אני בביית');assert.equal(reopened.doc.querySelector('[data-action="self-approve"]'),null);
+});
+
+test('Build submissions never offer self-approval and the submitted mode stays locked',async t=>{
+ const {doc,store}=await app(t,{page:'lesson/lesson-2/apply'});await settled(()=>doc.querySelector('[data-action="token"]'));click(doc,'token');click(doc,'check');await settled(()=>doc.querySelector('.compact-result'));
+ assert.equal(store.learner('learner-demo').attempts[0].sentenceMode,'simple');assert.equal(doc.querySelector('[data-action="self-approve"]'),null);assert.ok([...doc.querySelectorAll('[data-action="sentence-mode"]')].every(b=>b.disabled));
+});

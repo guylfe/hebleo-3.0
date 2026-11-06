@@ -310,22 +310,48 @@ export class Store {
     const requestId = id(input.requestId); const state = this.learner(userId);
     const content = this.snapshot(input.revisionId), exercise=content.exercises.find(e=>e.id===input.exerciseId);
     const lessonId=input.lessonId ?? exercise?.lessonId;
+    if(input.sentenceMode!==undefined&&(exercise?.type!=='ordering'||!['simple','complex'].includes(input.sentenceMode)))throw new DomainError('Invalid submitted sentence mode.');
+    const sentenceMode=exercise?.type==='ordering'?(input.sentenceMode||'simple'):undefined;
     const duplicate = state.attempts.find(a => a.requestId === requestId);
-    if (duplicate) { if (duplicate.lessonId !== lessonId || duplicate.exerciseId !== input.exerciseId || duplicate.revisionId !== input.revisionId || JSON.stringify(duplicate.answer) !== JSON.stringify(input.answer)) throw new DomainError('Conflicting attempt request ID.', 409); return withAnswerVocabularyBindings(exercise, { ...duplicate, duplicate: true }); }
+    if (duplicate) { if (duplicate.lessonId !== lessonId || duplicate.exerciseId !== input.exerciseId || duplicate.revisionId !== input.revisionId || JSON.stringify(duplicate.answer) !== JSON.stringify(input.answer) || (duplicate.sentenceMode||'simple')!==(sentenceMode||'simple')) throw new DomainError('Conflicting attempt request ID.', 409); return withAnswerVocabularyBindings(exercise, { ...duplicate, duplicate: true }); }
     if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     if (!Number.isInteger(input.revisionId)) throw new DomainError('An exact content revision is required.');
     if(!exerciseInLesson(content,lessonId,input.exerciseId))throw new DomainError('Exercise not found in this lesson.',404);
     if (!exercise) throw new DomainError('Exercise not found.', 404);
     const grade = evaluateAnswer(exercise, content, input.answer);
-    const result = { requestId, exerciseId: exercise.id, lessonId, revisionId: input.revisionId, answer: input.answer, ...grade, at: new Date().toISOString() };
+    const result = { requestId, exerciseId: exercise.id, lessonId, revisionId: input.revisionId, answer: input.answer, ...(sentenceMode?{sentenceMode}:{}), ...grade, at: new Date().toISOString() };
     state.attempts.push(result);
+    this.completeAttemptLesson(state,content,lessonId,input.revisionId);
+    this.saveLearner(userId, state); return withAnswerVocabularyBindings(exercise, result);
+  }
+  completeAttemptLesson(state,content,lessonId,revisionId) {
     const lesson = content.lessons.find(l => l.id === lessonId);
     // Completion needs every core question answered correctly in this one pinned revision; retries count once and revisions never combine.
-    if (lessonQuestionProgress(lesson, state.attempts, input.revisionId).correctIds.length === lesson.exerciseIds.length && this.textLessonGatesPassed(state,lesson,input.revisionId)) {
+    if (lessonQuestionProgress(lesson, state.attempts, revisionId).correctIds.length === lesson.exerciseIds.length && this.textLessonGatesPassed(state,lesson,revisionId)) {
       if (!state.completed.includes(lesson.id)) state.completed.push(lesson.id);
       for (const wordId of lesson.wordIds) if (!content.words.find(w=>w.id===wordId)?.noCard && !state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false };
     }
-    this.saveLearner(userId, state); return withAnswerVocabularyBindings(exercise, result);
+  }
+  approveSentenceAttempt(userId,input) {
+    const requestId=id(input.requestId),state=this.learner(userId),result=state.attempts.find(a=>a.requestId===requestId);
+    if(!state.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
+    if(!result)throw new DomainError('Attempt not found.',404);
+    if(result.lessonId!==input.lessonId||result.exerciseId!==input.exerciseId||result.revisionId!==input.revisionId)throw new DomainError('Attempt context differs.',409);
+    const content=this.snapshot(result.revisionId),exercise=content.exercises.find(e=>e.id===result.exerciseId);
+    if(exercise?.type!=='ordering'||result.sentenceMode!=='complex'||typeof result.answer!=='string')throw new DomainError('Only a submitted Type answer can be self-approved.',400);
+    if(result.selfApproved)return withAnswerVocabularyBindings(exercise,{...result,duplicate:true});
+    if(result.correct)throw new DomainError('This answer is already correct.',409);
+    result.automaticGrade=Object.fromEntries(['correct','expected','acceptedAnswers','evaluationPolicy'].filter(key=>Object.hasOwn(result,key)).map(key=>[key,clone(result[key])]));
+    result.selfApproved=true;result.selfApprovedAt=new Date().toISOString();result.correct=true;
+    return this.transaction(()=>{
+      this.completeAttemptLesson(state,content,result.lessonId,result.revisionId);
+      this.saveLearner(userId,state);
+      for(const {key,value} of this.db.prepare("SELECT key,value FROM kv WHERE key LIKE 'report-%'").all()){
+        const report=JSON.parse(value);
+        if(report.userId===userId&&report.attempt?.requestId===requestId){report.attempt=clone(result);this.set(key,report);}
+      }
+      return withAnswerVocabularyBindings(exercise,result);
+    });
   }
   reviewVersion(state,cardId) { return contextHash({generation:state.reviewGenerations?.[cardId]||0,card:state.cards[cardId]}); }
   reviewClock(userId, input={}) {
@@ -420,7 +446,7 @@ export class Store {
   saveProgress(userId, input) {
     const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     this.validateProgress(input, state);
-    const safe = { ...(input.componentId!==undefined ? {componentId:input.componentId} : {}), lessonId: input.lessonId, revisionId: input.revisionId, step: input.step, question: input.question, answer: input.answer, selectedTokens: input.selectedTokens, matching: input.matching, resultRequestId: input.resultRequestId || null, practiceIds: input.practiceIds || [], updatedAt: new Date().toISOString() };
+    const safe = { ...(input.componentId!==undefined ? {componentId:input.componentId} : {}), lessonId: input.lessonId, revisionId: input.revisionId, step: input.step, question: input.question, answer: input.answer, ...(input.sentenceMode!==undefined ? {sentenceMode:input.sentenceMode} : {}), selectedTokens: input.selectedTokens, matching: input.matching, resultRequestId: input.resultRequestId || null, practiceIds: input.practiceIds || [], updatedAt: new Date().toISOString() };
     // Optional lessons with no assessed questions complete only after an explicit,
     // validated Finish position. Merely opening a lesson never completes it.
     const content = this.snapshot(input.revisionId), lesson = content.lessons.find(l => l.id === input.lessonId);
@@ -517,6 +543,7 @@ export class Store {
     const exercise=content.exercises.find(e=>e.id===questionIDs[p.question]);
     // Saved matches belong to the matching question at this exact revision, step and position. Its authored pairs may use any pack word, not only the lesson's list.
     if (!p.matching || typeof p.matching !== 'object' || Array.isArray(p.matching) || Object.entries(p.matching).some(([k,v]) => !['check','apply'].includes(p.step) || exercise?.type !== 'matching' || !exercise.wordIds.includes(k) || typeof v !== 'string' || v.length > 1000)) throw new DomainError('Invalid saved matching answer.');
+    if(p.sentenceMode!==undefined && !['simple','complex'].includes(p.sentenceMode))throw new DomainError('Invalid sentence answer mode.');
     if(p.selectedTokens.length && (!exercise || exercise.type!=='ordering' || p.selectedTokens.some(i=>i>=orderingTokens(exercise,content,p.lessonId).length)))throw new DomainError('Invalid saved sentence tokens.');
     const receipts = p.resultRequestId ? state.attempts.filter(a => a.requestId === p.resultRequestId) : [];
     const result = receipts.length === 1 && receipts[0].revisionId === p.revisionId && receipts[0].lessonId === p.lessonId && receipts[0].exerciseId === questionIDs[p.question] ? receipts[0] : null;
@@ -780,8 +807,9 @@ export class Store {
   previewEvaluate(input) {
     const draft = this.previewDraft(input.draftToken), content = draft.content, exercise = content.exercises.find(e => e.id === input.exerciseId);
     if (!content.lessons.some(l => l.id === input.lessonId) || !exercise || !exerciseInLesson(content,input.lessonId,exercise.id)) throw new DomainError('Exercise not found in this draft lesson.', 404, 'PREVIEW_TARGET_NOT_FOUND');
+    if(input.sentenceMode!==undefined&&(exercise.type!=='ordering'||!['simple','complex'].includes(input.sentenceMode)))throw new DomainError('Invalid submitted sentence mode.');
     const grade = evaluateAnswer(exercise, content, input.answer);
-    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, exerciseId: exercise.id, result: withAnswerVocabularyBindings(exercise, { exerciseId: exercise.id, lessonId: input.lessonId, answer: input.answer, ...grade }) };
+    return { mode: 'draft-preview', persistent: false, draftToken: draft.draftToken, exerciseId: exercise.id, result: withAnswerVocabularyBindings(exercise, { exerciseId: exercise.id, lessonId: input.lessonId, answer: input.answer, ...(exercise.type==='ordering'?{sentenceMode:input.sentenceMode||'simple'}:{}), ...grade }) };
   }
   entitlement(userId, input) {
     const eventId = id(input.eventId);
@@ -844,7 +872,15 @@ export class Store {
     const linkable = record => record.revisionId === null ? Number.isInteger(record.legacyRevisionId) : Number.isInteger(record.revisionId) && (!v2 || linked(record));
     // A reported attempt is a copy of a graded attempt, so it needs the same identity and grade as learner history; only questions have optional targets.
     const validId = value => { try { return id(value) === value; } catch { return false; } };
-    const savedAttempt = a => Boolean(a) && typeof a === 'object' && typeof a.correct === 'boolean' && Number.isFinite(Date.parse(a.at)) && [a.requestId, a.exerciseId, a.lessonId].every(validId) && linkable(a);
+    const sentenceReceipt=a=>{
+      const c=carried.get(a.revisionId),e=c?.exercises.find(e=>e.id===a.exerciseId);
+      if(a.sentenceMode!==undefined&&(!['simple','complex'].includes(a.sentenceMode)||e?.type!=='ordering'))return false;
+      if(a.selfApproved===undefined)return a.automaticGrade===undefined&&a.selfApprovedAt===undefined;
+      if(a.selfApproved!==true||a.correct!==true||a.sentenceMode!=='complex'||e?.type!=='ordering'||!Number.isFinite(Date.parse(a.selfApprovedAt))||a.automaticGrade?.correct!==false)return false;
+      const original=Object.fromEntries(['correct','expected','acceptedAnswers','evaluationPolicy'].filter(key=>Object.hasOwn(a,key)).map(key=>[key,key==='correct'?false:a[key]]));
+      try{return canonicalJSON(original)===canonicalJSON(a.automaticGrade)&&canonicalJSON(a.automaticGrade)===canonicalJSON(evaluateAnswer(e,c,a.answer));}catch{return false;}
+    };
+    const savedAttempt = a => Boolean(a) && typeof a === 'object' && typeof a.correct === 'boolean' && Number.isFinite(Date.parse(a.at)) && [a.requestId, a.exerciseId, a.lessonId].every(validId) && linkable(a) && sentenceReceipt(a);
     const commentIds=new Set();
     for(const entry of questions){
       const q=entry?.value;

@@ -62,6 +62,7 @@ const VOWELS=[
     ];
 const plainText = text => '<p style="white-space:pre-wrap">' + esc(text) + '</p>';
 const draftOf = answer => ({
+  ...(answer?.sentenceMode!==undefined ? {sentenceMode:answer.sentenceMode==='complex'?'complex':'simple'} : {}),
   text: typeof answer?.text === 'string' ? answer.text : '',
   matching: answer?.matching && typeof answer.matching === 'object' && !Array.isArray(answer.matching) ? Object.fromEntries(Object.entries(answer.matching).filter(([, v]) => typeof v === 'string')) : {},
   selectedTokens: Array.isArray(answer?.selectedTokens) ? answer.selectedTokens.filter(Number.isInteger) : []
@@ -220,9 +221,11 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
           updateDraft({...draft, text:value}); keepKeys();
           if (preferences.immediateAnswers) submit();
         }
+        else if (action === 'sentence-mode') { if (!result && exercise?.type==='ordering' && ['simple','complex'].includes(value)) updateDraft({...draft, sentenceMode:value}); }
         else if (action === 'token') { if (!result) { updateDraft({...draft, selectedTokens:[...draft.selectedTokens, Number(value)]}); keepKeys(); } }
         else if (action === 'remove-token') { if (!result) { updateDraft({...draft, selectedTokens:draft.selectedTokens.filter((_, i) => i !== Number(value))}); keepKeys(); } }
         else if (action === 'check') submit();
+        else if (action === 'self-approve') call('selfApprove');
         else if (action === 'concept' || action === 'concept-close') {
           const input=root.querySelector('#answer'),slot=root.querySelector('[data-concept-slot]'),trigger=root.querySelector('[data-action="concept"]');
           if(action==='concept'){
@@ -275,14 +278,14 @@ export function createLearnerRenderer({renderLesson = plainText, playAudio, stop
       }
       dispose.update = next => {
         if(!exercise||next.exerciseId!==exerciseId||next.lessonId!==lessonId||next.componentId!==componentId||next.step!==step||next.question!==question||next.lookupId!==lookupId||JSON.stringify(next.preferences)!==JSON.stringify(props.preferences)||result&&!next.result)return false;
-        const hadResult=Boolean(result);result=next.result;busy=next.busy;draft=draftOf(next.answer);props=next;
+        const hadResult=Boolean(result),resultChanged=JSON.stringify(result)!==JSON.stringify(next.result);result=next.result;busy=next.busy;draft=draftOf(next.answer);props=next;
         if(busy)root.setAttribute('aria-busy','true');else root.removeAttribute('aria-busy');
         for(const el of root.querySelectorAll('button,input,select,textarea')){
           if(busy){if(!el.hasAttribute('data-before-pending'))el.dataset.beforePending=String(el.disabled);el.disabled=true;}
           else if(el.hasAttribute('data-before-pending')){el.disabled=el.dataset.beforePending==='true';delete el.dataset.beforePending;}
         }
         root.querySelector('[data-primary-action]').innerHTML=busy?button('Checking…','pending-answer','primary','',true):result?button(question+1===portionExercises(content,lesson,componentId||step).length?'Continue →':'Next question →','next-question','primary'):button('Check answer','check','primary').replace('<button','<button data-keyboard-preserve');
-        if(result&&!hadResult){
+        if(result&&(!hadResult||resultChanged)){
           root.querySelector('[data-answer-commit]').innerHTML=exerciseFeedback(exercise,result);bindResultExplanations(root);
           for(const el of root.querySelectorAll('[data-exercise-input] button,[data-exercise-input] textarea,[data-exercise-input] input'))el.disabled=true;
           applyMatchingResult(root,exercise,result);
