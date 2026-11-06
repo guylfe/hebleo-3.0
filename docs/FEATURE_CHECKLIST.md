@@ -723,5 +723,5 @@ Fresh private backup, exact runtime/source preservation, rollback and limits: do
 
 | ID | Candidate status | Actual evidence | User acceptance |
 |---|---|---|---|
-| SC-BG01 | Durable shared browser queue and app/backend integration implemented; protocol review pending | 177 focused checks pass; 14 latest event regressions pass; isolated native synthetic smoke; broad suite has 28 failures. See docs/BACKGROUND_REVIEW_CORE_20261106.md | Unreported |
-| SC-BG02 | Durable rejected outcomes and fresh-state resolution implemented; final recheck pending | Rejected identity survives reload/backup; explicit resolution requires fresh state, ticket and new choice; cross-tab Undo pause, expiry loss and selected-request fencing verified | Unreported |
+| SC-BG01 | Durable shared browser queue and app/backend integration implemented; Architect review closed on 6e245c9; ready for Lead integration | 177 focused checks pass; 14 latest event regressions pass; isolated native synthetic smoke; broad suite has 28 failures. See docs/BACKGROUND_REVIEW_CORE_20261106.md | Unreported |
+| SC-BG02 | Durable rejected outcomes and fresh-state resolution implemented; Architect recheck closed on 6e245c9 | Rejected identity survives reload/backup; explicit resolution requires fresh state, ticket and new choice; cross-tab Undo pause, expiry loss and selected-request fencing verified | Unreported |
