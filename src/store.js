@@ -247,7 +247,8 @@ export class Store {
     if(typeof build!=='string'||!build.trim()||build.length>100)throw new DomainError('Invalid demo build.');
     if(this.get('demo-progress-build')===build)return false;
     return this.transaction(()=>{
-      for(const user of users){const state=this.learner(user.id);Object.assign(state,{completed:[],attempts:[],cards:{},resumes:{},lastReview:null});delete state.lastLessonId;delete state.textPages;this.saveLearner(user.id,state);}
+      this.set('reviewDataEpoch',randomUUID());
+      for(const user of users){const state=this.learner(user.id);Object.assign(state,{completed:[],attempts:[],cards:{},resumes:{},lastReview:null});delete state.lastLessonId;delete state.textPages;delete state.reviewClockTickets;this.saveLearner(user.id,state);}
       this.db.exec("DELETE FROM kv WHERE key LIKE 'review-%'");
       this.set('demo-progress-build',build);this.set('demo-progress-reset-at',new Date().toISOString());return true;
     });
@@ -327,7 +328,12 @@ export class Store {
     }
     this.saveLearner(userId, state); return withAnswerVocabularyBindings(exercise, result);
   }
-  reviewVersion(state,cardId) { return contextHash({generation:state.reviewGenerations?.[cardId]||0,card:state.cards[cardId]}); }
+  reviewVersion(state,cardId) {
+    // No epoch means the legacy namespace. Keep its exact hash for ordinary
+    // restart/upgrade recovery; only deliberate reset/restore rotates it.
+    const epoch=this.get('reviewDataEpoch');
+    return contextHash({...(epoch?{epoch}:{}),generation:state.reviewGenerations?.[cardId]||0,card:state.cards[cardId]});
+  }
   reviewClock(userId, input={}) {
     return this.transaction(()=>{
       const state=this.learner(userId),now=Date.now();
@@ -802,11 +808,12 @@ export class Store {
     const sourceAuthoring=this.get('source-state');
     const referenced = [...this.db.prepare('SELECT id FROM revisions').all().map(r=>r.id),...Object.keys(sourceAuthoring?.revisions||{}).map(Number),activeRevisionId, draft?.baseRevisionId, ...learners.flatMap(({ state }) => [...state.attempts.map(a => a.revisionId), ...Object.values(state.resumes).map(p => p.revisionId),...(state.textPages||[]).map(p=>p.revisionId)]), ...questions.map(q => q.value.revisionId), ...reports.map(r => r.value.attempt?.revisionId)];
     const revisionSnapshots = [...new Set(referenced.filter(Number.isInteger))].sort((a, b) => a - b).map(revisionId => ({ revisionId, content: this.snapshot(revisionId) }));
-    const result={ sharedCards:structuredClone(this.shared.state()), format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),authorReview:this.authorReview.state(),mediaRecovery:this.media.backup([...revisionSnapshots.map(r=>r.content),...(draft?[draft.content]:[]),...this.authorReview.contexts()]),...(sourceAuthoring?{sourceAuthoring}: {}) };
+    const result={ ...(this.get('reviewDataEpoch')?{reviewDataEpoch:this.get('reviewDataEpoch')}:{}),sharedCards:structuredClone(this.shared.state()), format: 'hebleo-demo-backup-v2', storeSchemaVersion: STORE_SCHEMA_VERSION, exportedAt: new Date().toISOString(), activeRevisionId, content: this.snapshot(activeRevisionId), draft, learners, events: this.db.prepare('SELECT id,payload FROM events').all().map(row => ({ id: row.id, payload: JSON.parse(row.payload) })), questions, reports, revisionSnapshots, reviewReceipts: rows('review-'),authorReview:this.authorReview.state(),mediaRecovery:this.media.backup([...revisionSnapshots.map(r=>r.content),...(draft?[draft.content]:[]),...this.authorReview.contexts()]),...(sourceAuthoring?{sourceAuthoring}: {}) };
     this.serializeBackup(result);return result;
   }
   serializeBackup(value){try{return serializeBackup(value);}catch(error){if(error.code==='BACKUP_TOO_LARGE')throw new DomainError(error.message,error.status,error.code);throw error;}}
   restore(input) {
+    if(input?.reviewDataEpoch!==undefined&&(typeof input.reviewDataEpoch!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(input.reviewDataEpoch)))throw new DomainError('Invalid review data epoch in backup.');
     if (!backupFormats.includes(input?.format) || !Array.isArray(input.learners) || ![2,3].includes(input.learners.length) || new Set(input.learners.map(x => x?.id)).size !== input.learners.length || !['learner-demo','learner-core'].every(id=>input.learners.some(row=>row.id===id))) throw new DomainError('Invalid demo backup.');
     if (!RESTORABLE_SCHEMA_VERSIONS[input.format].includes(input.storeSchemaVersion)) throw new DomainError('This backup declares store schema ' + JSON.stringify(input.storeSchemaVersion ?? null) + '; this build restores ' + input.format + ' with schema ' + RESTORABLE_SCHEMA_VERSIONS[input.format].filter(Boolean).join(' or ') + '. Use a newer build.', 409);
     const v2 = input.format === 'hebleo-demo-backup-v2';
@@ -925,7 +932,10 @@ export class Store {
       this.media.restore(restoredMedia);
       this.set('shared-cards',restoredShared);
       this.set('active', revisionId); this.set('draft', v2 && input.draft ? { ...clone(input.draft), baseRevisionId: revisionId } : null);
-      for (const row of input.learners) { const state = clone(row.state); state.attempts.forEach(relink); Object.values(state.resumes || {}).forEach(relink);(state.textPages||[]).forEach(relink); this.saveLearner(row.id, state); }
+      // The imported epoch is provenance, never an instruction to revive its
+      // request namespace. Rotate atomically with restored state and receipts.
+      this.set('reviewDataEpoch',randomUUID());
+      for (const row of input.learners) { const state = clone(row.state); state.attempts.forEach(relink); Object.values(state.resumes || {}).forEach(relink);(state.textPages||[]).forEach(relink);delete state.reviewClockTickets;this.saveLearner(row.id, state); }
       this.db.exec("DELETE FROM events; DELETE FROM kv WHERE key LIKE 'review-%' OR key LIKE 'report-%' OR key LIKE 'question-%';");
       for (const q of questions) { const value = clone(q.value); relink(value); this.set(q.key, value); }
       for (const r of reports) { const value = clone(r.value); relink(value.attempt); this.set(r.key, value); }

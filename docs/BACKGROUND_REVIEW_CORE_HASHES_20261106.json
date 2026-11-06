@@ -19,7 +19,7 @@
     {
       "path": "src/store.js",
       "preparedSourceSHA256": "b2ae5bcc30ae23c454215c30b52f24342350445438adf794a28ab20d4fe0f801",
-      "candidateSHA256": "6aebb9ac944621584b009292111be2d0812325067eeeb6bb6e557c223cd93584"
+      "candidateSHA256": "07f5a2b3020926b5048ab9ff6290d451344cdebf33919bc2f8941c21d1352701"
     },
     {
       "path": "src/server.js",
@@ -44,7 +44,12 @@
     {
       "path": "test/background-review.test.js",
       "preparedSourceSHA256": null,
-      "candidateSHA256": "72ab1ac4925626594031a9f75059b050cb6bc11eb63892dbc5446fdd33cbcd25"
+      "candidateSHA256": "4102e6575bcbcc058c556fecbe16d98fa25cc174e3e88ffbfdf811fffa23bfcf"
+    },
+    {
+      "path": "test/review-data-epoch.test.js",
+      "preparedSourceSHA256": null,
+      "candidateSHA256": "4e5ce1251308c663a8355b186d5e929acdecabdf7eb5c97e3fb246eaec985886"
     }
   ]
 }
