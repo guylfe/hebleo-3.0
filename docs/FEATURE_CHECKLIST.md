@@ -736,5 +736,6 @@ Verification: verify:candidate passed 1101, skipped 8 under the existing audio e
 
 | ID | Candidate status | Evidence | Acceptance |
 |---|---|---|---|
-| SC-BG03 | Explicit reset/restore epoch invalidation implemented; bounded review pending | Old pre-restore/reset intents reject; fresh choices and ordinary reopen/retained receipts recover. 214 app/Store/restore checks and 14 epoch/reset checks passed; docs/BACKGROUND_REVIEW_EPOCH_20261106.md | Unreported |
+| SC-BG03 | Explicit reset/restore epoch invalidation implemented; Architect review closed on f4e2bc9 | Old pre-restore/reset intents reject; fresh choices and ordinary reopen/retained receipts recover. 214 app/Store/restore checks and 14 epoch/reset checks passed; independent Architect41 checks passed; docs/BACKGROUND_REVIEW_EPOCH_20261106.md | Unreported |
+
 
