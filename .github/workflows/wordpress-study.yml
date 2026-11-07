@@ -58,3 +58,7 @@ jobs:
           php adapters/wordpress/conjugation/cache.test.php
           php adapters/wordpress/conjugation/access-evidence/policy-replay.test.php
           node --test adapters/wordpress/conjugation/package.test.mjs adapters/wordpress/conjugation/direct-access.test.mjs
+      - name: Read-only practice help add-on
+        run: |
+          php -l adapters/wordpress/practice-help/practice-help.php
+          node --test test/practice-help.test.js

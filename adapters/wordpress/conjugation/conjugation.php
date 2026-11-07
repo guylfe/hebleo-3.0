@@ -36,6 +36,7 @@ function shortcode(): string {
     foreach ($catalog['forms'] as $f) if (($f['approval'] ?? '') !== 'approved') return '<p>Practice content is awaiting approval.</p>';
     $id = wp_unique_id('hebleo-conjugation-');
     wp_enqueue_style('hebleo-conjugation', plugins_url('assets/practice.css', __FILE__), [], '1.0.0');
+    wp_enqueue_style('hebleo-practice-help', plugins_url('assets/help.css', __FILE__), [], '1.0.0');
     $json = wp_json_encode($catalog, JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT);
     return '<div data-conjugation-host><div id="'.esc_attr($id).'" data-conjugation-root></div><script type="application/json" data-conjugation-catalog>'.$json.'</script></div><script type="module" src="'.esc_url(plugins_url('assets/bootstrap.js', __FILE__)).'"></script>';
 }

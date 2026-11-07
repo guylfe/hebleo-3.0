@@ -158,7 +158,7 @@ test('native loading failure supports retry, and departed async loads cannot mou
 test('HTTP access follows existing course entitlement; catalogs are read-only and only fixed assets are served',async t=>{
   const {store:s,api,origin}=await http(t);const state=s.learner('learner-core');state.purchasedCourses=[];s.saveLearner('learner-core',state);await assert.rejects(api('conjugation',undefined,'learner-core'),e=>e.status===403);
   await assert.rejects(api('studio',undefined,'learner-demo'),e=>e.status===403);
-  for(const path of ['/native-conjugation.js','/conjugation-contract.js','/studio/conjugation-unlocks.js'])assert.equal((await fetch(origin+path)).status,200);
+  for(const path of ['/native-conjugation.js','/conjugation-contract.js','/studio/conjugation-unlocks.js','/conjugation/help.js','/conjugation/help.css','/conjugation/read-only-dialog.js'])assert.equal((await fetch(origin+path)).status,200);
   for(const path of ['/src/conjugation.js','/conjugation/catalog.json','/test/conjugation-native.test.js'])assert.equal((await fetch(origin+path)).status,404);
 });
 
@@ -176,7 +176,7 @@ test('real app #conjugation navigation, profile change and page restore preserve
   const createSave=w.createReviewSave;w.createReviewSave=options=>queue=createSave({...options,indexedDB:new IDBFactory()});t.after(()=>queue?.dispose());
   w.mountNativeConjugation=(host,options)=>mountNativeConjugation(host,{...options,loadView:async()=>({mountConjugation:(root,input)=>{mountedOptions=input;root.textContent='Shared practice view boundary test';return {destroy(){destroyed++;}};}})});
   const before=tables(s);w.eval(source.replace(/^import .*;\r?\n/gm,''));await until(()=>mountedOptions);
-  assert.equal(w.document.querySelector('[data-action=page][data-value=library]').getAttribute('aria-current'),'page');assert.equal(mountedOptions.platform,'native');assert.deepEqual(tables(s),before);
+  assert.equal(w.document.querySelector('[data-action=page][data-value=conjugation]').getAttribute('aria-current'),'page');assert.equal(w.document.querySelector('[data-action=page][data-value=library]').getAttribute('aria-current'),'false');assert.equal(w.document.querySelector('[data-action=page][data-value=review]').textContent,'Flashcards');assert.equal(mountedOptions.platform,'native');assert.deepEqual(tables(s),before);
   w.document.querySelector('[data-action=page][data-value=home]').click();await until(()=>w.location.hash==='#home');assert.equal(destroyed,1);
   w.document.querySelector('[data-action=page][data-value=library]').click();await until(()=>w.location.hash==='#library');
   w.document.querySelector('[data-action=page][data-value=conjugation]').click();await until(()=>w.document.querySelector('[data-native-conjugation]')?.textContent.includes('boundary test'));

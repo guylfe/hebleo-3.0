@@ -1,3 +1,4 @@
+import {openReadOnlyDialog} from './conjugation/read-only-dialog.js';
 import {richCell,cellCSS} from './rich.js';
 import {audioURL,wordFields,fieldLabel} from './ux.js';
 import {composeSentence} from './interactions.js';
@@ -16,19 +17,12 @@ export function extraInformationControl(lesson){
  const text=lesson?.extraInformation;
  return typeof text==='string'&&text.replace(/<[^>]*>|&nbsp;|&#160;/g,'').trim()?'<div class="button-row"><button type="button" class="button outline small" data-extra-information>Extra information</button></div>':'';
 }
-// Shared read-only dialog for authored extras, in the learner and disposable Preview.
-let extraSerial=0;
+// Shared read-only dialog for authored extras, in learner and disposable Preview.
 export function bindExtraInformation(scope,lesson,renderLesson){
- const trigger=scope.querySelector('[data-extra-information]'),doc=scope.ownerDocument;let dialog;
- const close=()=>{if(!dialog)return;dialog.close();dialog.remove();dialog=null;if(trigger?.isConnected)trigger.focus({preventScroll:true});};
- const open=()=>{
-  if(dialog||!trigger||!extraInformationControl(lesson))return;
-  const title='extra-information-'+(++extraSerial);dialog=doc.createElement('dialog');dialog.className='lesson-extra-information';dialog.setAttribute('aria-labelledby',title);
-  dialog.innerHTML='<div class="panel-header"><h2 id="'+title+'">Extra information</h2><button type="button" class="button small outline" data-extra-close>Close</button></div><div class="rich-lesson">'+renderLesson(lesson.extraInformation)+'</div>';
-  doc.body.append(dialog);dialog.showModal();dialog.querySelector('[data-extra-close]').focus({preventScroll:true});dialog.querySelector('[data-extra-close]').addEventListener('click',close);dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
- };
+ const trigger=scope.querySelector('[data-extra-information]');let modal;
+ const open=()=>{if(modal?.dialog.isConnected||!trigger||!extraInformationControl(lesson))return;modal=openReadOnlyDialog({document:scope.ownerDocument,trigger,title:'Extra information',html:renderLesson(lesson.extraInformation)});};
  trigger?.addEventListener('click',open);
- return {destroy(){trigger?.removeEventListener('click',open);close();}};
+ return {destroy(){trigger?.removeEventListener('click',open);modal?.close();}};
 }
 let textGateSerial=0;
 export const textGateNotice=()=>'<p class="hint" data-text-gate-notice role="status" hidden>Complete the required text-page activities before continuing.</p>';

@@ -1,3 +1,4 @@
+import {helpControl,bindPracticeHelp} from './help.js';
 import {eligibleForms,selectForms,displayHebrew,Drill,TENSES} from './engine.js';
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function mountConjugation(root,{catalog,learnedIds=[],platform='native',storageKey,allowFixtures=false}={}) {
@@ -12,7 +13,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
   function select(key,label,values){return `<label>${label}<select data-filter="${key}">${values.map(v=>`<option value="${v}" ${s[key]===v?'selected':''}>${v==='all'?'All':esc(v)}</option>`).join('')}</select></label>`;}
   function render(focus=false){
     if(dead)return;
-    let html=`<header class="cp-header"><h1 tabindex="-1">Conjugation practice</h1><label class="cp-toggle">Nikkud <input type="checkbox" role="switch" data-action="nikkud" aria-label="Show Nikkud" ${nikkud?'checked':''}></label></header>`;
+    let html=`<header class="cp-header"><h1 tabindex="-1">Conjugation practice</h1>${helpControl('conjugation')}<label class="cp-toggle">Nikkud <input type="checkbox" role="switch" data-action="nikkud" aria-label="Show Nikkud" ${nikkud?'checked':''}></label></header>`;
     if(allowFixtures)html+='<p class="cp-fixture" role="note">Synthetic fixture rehearsal — illustrative forms, not approved teaching content.</p>';
     if(!drill){
       const selected=selectForms(catalog,s,{allowFixtures});
@@ -51,6 +52,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
   }
   function input(e){if(e.target.matches('[data-typed]')&&drill)drill.typed=e.target.value;}
   function submit(e){if(e.target.matches('[data-answer-form]')){e.preventDefault();drill.grade(drill.typed,'write');render();}}
+  const help=bindPracticeHelp(root,{platform});
   root.addEventListener('click',act);root.addEventListener('change',change);root.addEventListener('input',input);root.addEventListener('submit',submit);render();
-  return {destroy(){dead=true;root.removeEventListener('click',act);root.removeEventListener('change',change);root.removeEventListener('input',input);root.removeEventListener('submit',submit);root.replaceChildren();root.classList.remove('conjugation-root');}};
+  return {destroy(){help.destroy();dead=true;root.removeEventListener('click',act);root.removeEventListener('change',change);root.removeEventListener('input',input);root.removeEventListener('submit',submit);root.replaceChildren();root.classList.remove('conjugation-root');}};
 }

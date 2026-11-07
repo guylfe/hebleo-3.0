@@ -1,3 +1,4 @@
+import {helpControl,bindPracticeHelp} from '../public/conjugation/help.js';
 import {mountReviewKeys} from '../public/review-shortcuts.js';
 import {createReviewSave} from '../public/review-save.js';
 import {mountSharedReview} from '../public/shared-cards.js';
@@ -71,7 +72,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else throw new Error('Unexpected app API '+url.pathname);
     return {ok:true,json:async()=>structuredClone(value)};
   }catch(e){return {ok:false,status:e.status||500,json:async()=>({error:e.message,code:e.code,...e.details})};}};
-  Object.assign(w,{mountReviewKeys,createReviewSave,mountSharedReview});w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
+  Object.assign(w,{helpControl,bindPracticeHelp,mountReviewKeys,createReviewSave,mountSharedReview});w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};

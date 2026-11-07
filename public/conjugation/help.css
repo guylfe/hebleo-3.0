@@ -1,0 +1,7 @@
+dialog.practice-help{box-sizing:border-box;border:1px solid var(--line,#D6D9DD);border-radius:var(--radius,8px);color:var(--ink,#0A2457);background:var(--paper,#fff);font:inherit;width:min(680px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;overscroll-behavior:contain;padding:24px;text-align:start;overflow-wrap:anywhere}
+dialog.practice-help::backdrop{background:rgb(10 36 87 / 45%)}
+dialog.practice-help .panel-header{display:flex;align-items:start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+dialog.practice-help h2{margin:0;font-size:1.35em}
+dialog.practice-help li{margin-block:12px;line-height:1.6}
+dialog.practice-help button,[data-practice-help]{font:inherit;min-height:44px;cursor:pointer;color:var(--ink,#0A2457);background:var(--paper,#fff);border:1px solid var(--line,#D6D9DD);border-radius:var(--radius,8px);padding:8px 12px}
+dialog.practice-help button:focus-visible,[data-practice-help]:focus-visible{outline:3px solid var(--accent,#0170B9);outline-offset:3px}

@@ -1,3 +1,4 @@
+import {helpControl,bindPracticeHelp} from '../public/conjugation/help.js';
 import {IDBFactory} from 'fake-indexeddb';
 import {mountReviewKeys} from '../public/review-shortcuts.js';
 import {createReviewSave} from '../public/review-save.js';
@@ -43,7 +44,7 @@ const {mountLessonPreview} = await import(process.env.HEBLEO_PREVIEW_CONTROLLER 
 import {createLearnerRenderer} from '../public/preview/learner-renderer.js';
 const parseRequestBody=body=>JSON.parse(typeof body==='string'?body:new TextDecoder().decode(body));
 async function settled(predicate){const deadline=Date.now()+5000;while(Date.now()<deadline){if(predicate())return;await new Promise(r=>setTimeout(r,5));}throw new Error('App condition did not settle within 5 seconds.');}
-async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,reviewTransport,reviewStorage,width=1024,navigationPrefs,markdownDependencies,reduceMotion=false,textProgressTransport}={}){
+async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKeyboard=false,store:providedStore,realHTTP=false,reviewTransport,reviewStorage,width=1024,navigationPrefs,markdownDependencies,reduceMotion=false,textProgressTransport,sharedTutorialFixture=false}={}){
   const store=providedStore||new Store();prepare?.(store);const d=new JSDOM('<div id="app"></div><div id="toast"></div>',{url:'http://127.0.0.1/#'+page,runScripts:'outside-only',pretendToBeVisual:true}),w=d.window;
   Object.defineProperty(w,'innerWidth',{value:width,writable:true});let server,origin;
   if(realHTTP){server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;}
@@ -57,7 +58,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
   const calls=[];
   w.fetch=async(path,options={})=>{if(options.signal&&!(options.signal instanceof AbortSignal)){const originalSignal=options.signal,controller=new AbortController();if(originalSignal.aborted)controller.abort();else originalSignal.addEventListener('abort',()=>controller.abort(),{once:true});options={...options,signal:controller.signal};}const url=new URL(path,w.location.href),user=options.headers?.['x-demo-user']||'learner-demo',input=options.body?parseRequestBody(options.body):null;calls.push(url.pathname);try{let value;
     if(realHTTP){if(reviewTransport&&url.pathname.startsWith('/api/review/'))return await reviewTransport({url,input,perform:()=>fetch(origin+url.pathname+url.search,options)});return await fetch(origin+url.pathname+url.search,options);}
-    if(url.pathname==='/api/bootstrap')value=store.bootstrap(user);
+    if(url.pathname==='/api/bootstrap'){value=store.bootstrap(user);if(sharedTutorialFixture){value=structuredClone(value);value.content.words.find(word=>word.id==='w-ani').shared=true;value.due.forEach(card=>card.word.shared=true);}}
     else if(url.pathname==='/api/text-progress'&&textProgressTransport)value=await textProgressTransport({user,input,query:url.searchParams});
     else if(url.pathname==='/api/questions')value=input?store.askQuestion(user,input):store.questions(user);
     else if(url.pathname==='/api/session')value=store.session(user,url.searchParams.get('lessonId'));
@@ -85,7 +86,7 @@ async function app(t,{page='lesson/lesson-2/learn',author=false,prepare,ownerKey
     else throw new Error('Unexpected app API '+url.pathname);
     return {ok:true,json:async()=>structuredClone(value)};
   }catch(e){return {ok:false,status:e.status||500,json:async()=>({error:e.message,code:e.code,...e.details})};}};
-  const reviewIDB=new IDBFactory();let queue;const reviewFactory=options=>{queue=createReviewSave({...options,indexedDB:reviewStorage||reviewIDB,pollMs:50});return queue;};t.after(()=>queue?.dispose?.());Object.assign(w,{mountReviewKeys,createReviewSave:reviewFactory,mountSharedReview});w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
+  const reviewIDB=new IDBFactory();let queue;const reviewFactory=options=>{queue=createReviewSave({...options,indexedDB:reviewStorage||reviewIDB,pollMs:50});return queue;};t.after(()=>queue?.dispose?.());Object.assign(w,{helpControl,bindPracticeHelp,mountReviewKeys,createReviewSave:reviewFactory,mountSharedReview});w.eval(readFileSync(process.env.HEBLEO_APP_SOURCE || new URL('../public/app.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,''));
   await settled(()=>w.document.querySelector('h1'));return {store,w,doc:w.document,calls};
 }
 const click=(doc,action)=>{const el=doc.querySelector('[data-action="'+action+'"]');assert.ok(el,action);el.click();};
@@ -1381,4 +1382,19 @@ test('RR-APP delayed old frame flush cannot reveal or clear a newer pending reve
  click(doc,'review-end');click(doc,'review-start');await settled(()=>doc.querySelector('[data-shared-review]')&&doc.querySelector('[data-shared-review]')!==oldFrame);const nextFrame=doc.querySelector('[data-shared-review]');settings(nextFrame,'light',true);await settled(()=>releases.length===2);click(doc,'review-reveal');
  releases[0]();await new Promise(resolve=>setTimeout(resolve,30));assert.equal(doc.querySelector('[data-shared-review]').dataset.face,'front');
  releases[1]();await settled(()=>doc.querySelector('[data-shared-review]')?.dataset.face==='back');assert.deepEqual(store.shared.settings('learner-demo'),{mode:'light',nikkud:true});
+});
+
+test('practice tutorial is read-only before and during native review',async t=>{
+ const {doc,w,store,calls}=await app(t,{page:'review',prepare:s=>s.enroll('learner-demo','w-ani')});
+ const help=()=>doc.querySelector('[data-practice-help=flashcards]');
+ const check=()=>{const before=JSON.stringify(store.learner('learner-demo')),count=calls.length,card=doc.querySelector('.review-card');help().focus();help().click();const modal=doc.querySelector('dialog[open]');assert(modal);for(const key of [' ','1','2','3','4','Enter'])modal.querySelector('button').dispatchEvent(new w.KeyboardEvent('keydown',{key,bubbles:true,cancelable:true}));assert.equal(JSON.stringify(store.learner('learner-demo')),before);assert.equal(calls.length,count);assert.equal(doc.querySelector('.review-card'),card);modal.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));assert.equal(doc.querySelector('dialog'),null);assert.equal(doc.activeElement,help());};
+ check();doc.querySelector('[data-action=review-start]').click();await settled(()=>doc.querySelector('[data-action=review-reveal]'));check();doc.querySelector('[data-action=review-reveal]').click();await settled(()=>doc.querySelector('[data-action=review-rate]'));check();doc.querySelector('[data-action=review-rate][data-value="3"]').click();await settled(()=>doc.querySelector('h1')?.textContent.includes('finished'));check();doc.querySelector('[data-action=review-end]').click();await settled(()=>doc.querySelector('[data-action=review-start]'));check();
+});
+
+test('practice tutorial keeps synthetic sharedReview iframe mounted and its face unchanged',async t=>{
+ const {doc,w,calls}=await app(t,{page:'review',sharedTutorialFixture:true,prepare:s=>s.enroll('learner-demo','w-ani')});let mounts=0,disposals=0;
+ // Synthetic shared-card projection; isolate ticket transport while using actual app branch.
+ w.mountSharedReview=()=>{mounts++;return {dispose(){disposals++;}};};
+ doc.querySelector('[data-action=review-start]').click();await settled(()=>doc.querySelector('[data-shared-review]'));
+ const frame=doc.querySelector('[data-shared-review]'),before=frame.outerHTML,count=calls.length;assert(frame);doc.querySelector('[data-practice-help]').click();doc.querySelector('dialog button').click();assert.equal(doc.querySelector('[data-shared-review]'),frame);assert.equal(frame.outerHTML,before);assert.equal(mounts,1);assert.equal(disposals,0);assert.equal(calls.length,count);
 });
