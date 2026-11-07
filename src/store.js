@@ -1,3 +1,4 @@
+import {loadConjugationCatalog,validateConjugationCatalog,emptyConjugationCatalog,validateLessonUnlocks,validateLearnedFormIds,addCompletionUnlocks} from './conjugation.js';
 import {nextStudyDay,isReviewBuried,validateBurials} from './review-burial.js';
 import {SharedCards,validateSharedState,validateCardSettings,parseSharedCardId} from './shared-cards.js';
 import {AuthorReview,validateAuthorReview,relinkAuthorReview,mergeAuthorReview,authorReviewContents} from './author-review.js';
@@ -61,7 +62,7 @@ function validatePreferences(p) {
 
 function validateInteractions(items){if(!Array.isArray(items)||items.length>30)throw new DomainError('Invalid lesson interactions.');for(const item of items){if(!['reveal','choice'].includes(item.type))throw new DomainError('Unsupported lesson interaction.');text(item.prompt,'interaction prompt');if(item.type==='reveal')text(item.answer,'interaction answer',12000);else{if(!Array.isArray(item.choices)||item.choices.length<2||item.choices.length>10||!Number.isInteger(item.correctIndex)||item.correctIndex<0||item.correctIndex>=item.choices.length)throw new DomainError('Invalid inline choices.');item.choices.forEach(v=>text(v,'inline choice'));text(item.feedback,'inline feedback');}}}
 
-export function validateContent(content) {
+export function validateContent(content, {conjugationCatalog, allowFixtures=false, historical=false} = {}) {
   if(content&&['lexicalView','sourceView','exerciseVocabulary'].some(key=>Object.hasOwn(content,key)))throw new DomainError('lexicalView/sourceView/exerciseVocabulary is a learner projection, not authored content.');
   if (!content || content.schemaVersion !== 1) throw new DomainError('Expected content schemaVersion 1.');
   if (content.provenance?.kind !== 'synthetic-demo' && content.provenance?.kind !== 'verified-source') throw new DomainError('Content needs explicit provenance.');
@@ -135,6 +136,7 @@ export function validateContent(content) {
     }
   }
   for (const l of content.lessons) {
+    if(l.conjugationUnlocks!==undefined)validateLessonUnlocks(l, historical ? undefined : (conjugationCatalog ?? loadConjugationCatalog()), {allowFixtures});
     if(l.draftTargets!==undefined){
       if(!Array.isArray(l.draftTargets)||l.draftTargets.length>300||new Set(l.draftTargets.map(t=>t.id)).size!==l.draftTargets.length)throw new DomainError('Invalid draft vocabulary targets.');
       try{validateTextMetadata(l.draftTargets);}catch(error){throw new DomainError(error.message);}
@@ -178,11 +180,18 @@ export function validateContent(content) {
   return content;
 }
 
-const emptyLearner = () => ({ completed: [], attempts: [], cards: {}, bookmarks: [], notes: {}, preferences: { ...preferenceDefaults }, resumes: {}, goal: 10, membership: true, purchasedCourses: ['demo-foundations'] });
+const emptyLearner = () => ({ conjugationLearnedFormIds: [], completed: [], attempts: [], cards: {}, bookmarks: [], notes: {}, preferences: { ...preferenceDefaults }, resumes: {}, goal: 10, membership: true, purchasedCourses: ['demo-foundations'] });
 const users = [{ id: 'learner-demo', name: 'Alex', role: 'Course + membership' }, { id: 'learner-core', name: 'Sam', role: 'Course purchaser' }, { id: 'author-demo', name: 'Author', role: 'Content author', canAuthor: true }];
 
 export class Store {
-  constructor(path = ':memory:') {
+  constructor(path = ':memory:', {conjugationTestCatalog} = {}) {
+    // An injected teaching fixture can only exist in a disposable in-memory Store.
+    if (conjugationTestCatalog !== undefined && path !== ':memory:') throw new DomainError('Conjugation test catalogs require an in-memory Store.');
+    this.conjugationFixtures = conjugationTestCatalog !== undefined;
+    this.conjugationError = null;
+    if(this.conjugationFixtures)this.conjugationCatalog=structuredClone(validateConjugationCatalog(conjugationTestCatalog,{allowFixtures:true}));
+    else try{this.conjugationCatalog=loadConjugationCatalog();}catch{this.conjugationCatalog=emptyConjugationCatalog();this.conjugationCatalog.status='Conjugation content is unavailable. Catalog validation failed.';this.conjugationError=this.conjugationCatalog.status;}
+    this.validateContent = (content, options={}) => validateContent(content,{conjugationCatalog:this.conjugationCatalog,allowFixtures:this.conjugationFixtures,...options});
     this.db = new DatabaseSync(path);
     this.db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; CREATE TABLE IF NOT EXISTS kv(key TEXT PRIMARY KEY, value TEXT NOT NULL); CREATE TABLE IF NOT EXISTS revisions(id INTEGER PRIMARY KEY AUTOINCREMENT, snapshot TEXT NOT NULL, created_at TEXT NOT NULL, reason TEXT NOT NULL); CREATE TABLE IF NOT EXISTS learners(id TEXT PRIMARY KEY, state TEXT NOT NULL); CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY, payload TEXT NOT NULL);');
     // A refused migration must release the file, or the database stays locked for the caller.
@@ -191,7 +200,7 @@ export class Store {
     for (const u of users) if (!this.db.prepare('SELECT id FROM learners WHERE id=?').get(u.id)) { const state = emptyLearner(); if (u.id === 'learner-core') state.membership = false; this.saveLearner(u.id, state); }
     const foundation=!this.get('draft')&&upgradeDemo(this.snapshot());
     const upgraded=!this.get('draft')&&(upgradeDemoSignal(foundation||this.snapshot())||foundation);
-    if (upgraded) { validateContent(upgraded); this.transaction(()=>{if(upgraded.words.some(w=>w.audio?.url===demoSignalReference.url))this.media.putBlob(demoSignalBlob);this.set('active',this.addRevision(upgraded,'Additive synthetic demo presentation fixture; learner records retained'));}); }
+    if (upgraded) { this.validateContent(upgraded); this.transaction(()=>{if(upgraded.words.some(w=>w.audio?.url===demoSignalReference.url))this.media.putBlob(demoSignalBlob);this.set('active',this.addRevision(upgraded,'Additive synthetic demo presentation fixture; learner records retained'));}); }
   }
   close() { this.db.close(); }
   migrate() {
@@ -223,7 +232,7 @@ export class Store {
       if(review){
         if(review.schemaVersion!==1)throw new DomainError('Legacy Store marker requires author review namespace 1.',409,'AUTHOR_REVIEW_READER_MISMATCH');
         const carried=new Map(this.db.prepare('SELECT id,snapshot FROM revisions').all().map(r=>[r.id,JSON.parse(r.snapshot)]));
-        const compact=validateAuthorReview(review,{carried,validateContent,draftTokenFor,authorIds:users.filter(u=>u.canAuthor).map(u=>u.id)});
+        const compact=validateAuthorReview(review,{carried,validateContent:content=>this.validateContent(content,{historical:true}),draftTokenFor,authorIds:users.filter(u=>u.canAuthor).map(u=>u.id)});
         this.set('author-review',compact);
       }
       this.set('schema-version',10);
@@ -240,7 +249,7 @@ export class Store {
   set(key, value) { if(key==='shared-cards')this.shared?.invalidate();this.db.prepare('INSERT INTO kv(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run(key, JSON.stringify(value)); }
   addRevision(content, reason) { const result = this.db.prepare('INSERT INTO revisions(snapshot,created_at,reason) VALUES(?,?,?)').run(JSON.stringify(content), new Date().toISOString(), reason); return Number(result.lastInsertRowid); }
   snapshot(revisionId = this.get('active')) { const row = this.db.prepare('SELECT snapshot FROM revisions WHERE id=?').get(Number(revisionId)); if (!row) throw new DomainError('Content revision not found.', 404); return JSON.parse(row.snapshot); }
-  learner(userId) { if (!users.some(u => u.id === userId)) throw new DomainError('Unknown demo learner.', 404); const state = JSON.parse(this.db.prepare('SELECT state FROM learners WHERE id=?').get(userId).state); state.preferences = { ...preferenceDefaults, ...state.preferences }; state.resumes ||= {}; return state; }
+  learner(userId) { if (!users.some(u => u.id === userId)) throw new DomainError('Unknown demo learner.', 404); const state = JSON.parse(this.db.prepare('SELECT state FROM learners WHERE id=?').get(userId).state); state.preferences = { ...preferenceDefaults, ...state.preferences }; state.resumes ||= {}; state.conjugationLearnedFormIds ??= []; return state; }
   requireAuthor(userId) { if (!users.find(u => u.id === userId)?.canAuthor) throw new DomainError('Author workspace required. Switch to the fictional Author profile for local testing.', 403); }
   saveLearner(userId, state) { this.db.prepare('INSERT INTO learners(id,state) VALUES(?,?) ON CONFLICT(id) DO UPDATE SET state=excluded.state').run(userId, JSON.stringify(state)); }
   resetDemoProgressForBuild(build) {
@@ -248,7 +257,7 @@ export class Store {
     if(this.get('demo-progress-build')===build)return false;
     return this.transaction(()=>{
       this.set('reviewDataEpoch',randomUUID());
-      for(const user of users){const state=this.learner(user.id);Object.assign(state,{completed:[],attempts:[],cards:{},resumes:{},lastReview:null});delete state.lastLessonId;delete state.textPages;delete state.reviewClockTickets;this.saveLearner(user.id,state);}
+      for(const user of users){const state=this.learner(user.id);Object.assign(state,{completed:[],conjugationLearnedFormIds:[],attempts:[],cards:{},resumes:{},lastReview:null});delete state.lastLessonId;delete state.textPages;delete state.reviewClockTickets;this.saveLearner(user.id,state);}
       this.db.exec("DELETE FROM kv WHERE key LIKE 'review-%'");
       this.set('demo-progress-build',build);this.set('demo-progress-reset-at',new Date().toISOString());return true;
     });
@@ -267,6 +276,12 @@ export class Store {
     const exercises=content.exercises.filter(e=>e.wordId===wordId||e.wordIds?.includes(wordId)||exerciseVocabularyReferenceIds(e).includes(wordId)).map(e=>e.id);
     const lessons=content.lessons.filter((l,i)=>l.wordIds.includes(wordId)||l.blocks.some(b=>b.textPages?.pages.some(p=>p.wordIds?.includes(wordId))||b.source==='words'&&resolveComponent(content,l,b).some(w=>w.id===wordId))||exercises.some(id=>exerciseInLesson(content,l.id,id))).map(l=>l.id);
     return {lessons,exercises,review:'All enrolled cards for this word resolve the latest published vocabulary.'};
+  }
+  conjugation(userId) {
+    const learner=this.learner(userId);
+    if(!learner.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
+    if(this.conjugationError)throw new DomainError(this.conjugationError,503,'CONJUGATION_UNAVAILABLE');
+    return {catalog:structuredClone(this.conjugationCatalog),learnedIds:[...learner.conjugationLearnedFormIds],allowFixtures:this.conjugationFixtures};
   }
   bootstrap(userId) {
     const content = this.snapshot(); const learner = this.learner(userId);
@@ -307,7 +322,8 @@ export class Store {
     if (patch.note !== undefined) { const wordId = id(patch.note.wordId); if (!this.snapshot().words.some(w => w.id === wordId) || typeof patch.note.text !== 'string' || patch.note.text.length > 2000) throw new DomainError('Invalid note.'); state.notes[wordId] = patch.note.text; }
     this.saveLearner(userId, state); return state;
   }
-  attempt(userId, input) {
+  attempt(userId, input, locked=false) {
+    if(!locked)return this.transaction(()=>this.attempt(userId,input,true));
     const requestId = id(input.requestId); const state = this.learner(userId);
     const content = this.snapshot(input.revisionId), exercise=content.exercises.find(e=>e.id===input.exerciseId);
     const lessonId=input.lessonId ?? exercise?.lessonId;
@@ -330,10 +346,12 @@ export class Store {
     // Completion needs every core question answered correctly in this one pinned revision; retries count once and revisions never combine.
     if (lessonQuestionProgress(lesson, state.attempts, revisionId).correctIds.length === lesson.exerciseIds.length && this.textLessonGatesPassed(state,lesson,revisionId)) {
       if (!state.completed.includes(lesson.id)) state.completed.push(lesson.id);
+      addCompletionUnlocks(state,lesson,this.conjugationCatalog,{allowFixtures:this.conjugationFixtures});
       for (const wordId of lesson.wordIds) if (!content.words.find(w=>w.id===wordId)?.noCard && !state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false };
     }
   }
-  approveSentenceAttempt(userId,input) {
+  approveSentenceAttempt(userId,input,locked=false) {
+    if(!locked)return this.transaction(()=>this.approveSentenceAttempt(userId,input,true));
     const requestId=id(input.requestId),state=this.learner(userId),result=state.attempts.find(a=>a.requestId===requestId);
     if(!state.purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);
     if(!result)throw new DomainError('Attempt not found.',404);
@@ -449,7 +467,8 @@ export class Store {
     // Starting a newer lesson clears its current position, while all graded attempts, notes and cards survive.
     delete state.resumes[lessonId];this.saveLearner(userId,state);return this.session(userId,lessonId);
   }
-  saveProgress(userId, input) {
+  saveProgress(userId, input, locked=false) {
+    if(!locked)return this.transaction(()=>this.saveProgress(userId,input,true));
     const state = this.learner(userId); if (!state.purchasedCourses.includes('demo-foundations')) throw new DomainError('Course access required.', 403);
     this.validateProgress(input, state);
     const safe = { ...(input.componentId!==undefined ? {componentId:input.componentId} : {}), lessonId: input.lessonId, revisionId: input.revisionId, step: input.step, question: input.question, answer: input.answer, ...(input.sentenceMode!==undefined ? {sentenceMode:input.sentenceMode} : {}), selectedTokens: input.selectedTokens, matching: input.matching, resultRequestId: input.resultRequestId || null, practiceIds: input.practiceIds || [], updatedAt: new Date().toISOString() };
@@ -459,6 +478,7 @@ export class Store {
     if(input.step==='complete'&&!this.textLessonGatesPassed(state,lesson,input.revisionId))throw new DomainError('Complete the required text-page activities before finishing this lesson.',409,'TEXT_GATES_REQUIRED');
     if (input.step === 'complete' && lessonQuestionProgress(lesson,state.attempts,input.revisionId).correctIds.length===lesson.exerciseIds.length) {
       if (!state.completed.includes(lesson.id)) state.completed.push(lesson.id);
+      addCompletionUnlocks(state,lesson,this.conjugationCatalog,{allowFixtures:this.conjugationFixtures});
       for (const wordId of lesson.wordIds) if (!content.words.find(w=>w.id===wordId)?.noCard && !state.cards[wordId]) state.cards[wordId] = { due: new Date().toISOString(), intervalDays: 0, repetitions: 0, suspended: false };
     }
     state.resumes[input.lessonId] = safe; state.lastLessonId = input.lessonId; this.saveLearner(userId, state); return safe;
@@ -512,7 +532,7 @@ export class Store {
   reviewTextImport(input){
     this.expectBase(input.baseRevisionId);this.expectDraft(input.expectedDraftToken);
     const result=prepareTextDraftImport(this.currentDraft()?.content||this.snapshot(),input.pack,input);
-    if(result.content)validateContent(result.content);
+    if(result.content)this.validateContent(result.content);
     return result;
   }
   resolveIdentity({kind,value,namespace}){try{return resolveContentID(this.currentDraft()?.content||this.snapshot(),kind,value,{namespace});}catch(error){throw new DomainError(error.message,409,'CONTENT_ALIAS_REVIEW_REQUIRED');}}
@@ -625,7 +645,7 @@ export class Store {
       const current = this.currentDraft();this.expectDraft(input.expectedDraftToken,current);
       let content = input.content ? clone(input.content) : clone(current?.content || this.snapshot());
       if (input.word) { const index = content.words.findIndex(w => w.id === input.word.id); if (index < 0) throw new DomainError('Word not found.', 404); content.words[index] = { ...content.words[index], ...input.word, id: content.words[index].id }; }
-      validateContent(content);
+      this.validateContent(content);
       const previous=current?.content || this.snapshot();
       try{assertContentIdentityTransition(previous,content);}catch(error){throw new DomainError(error.message,409,'CONTENT_IDENTITY_CONFLICT');}
       assertLexicalTransition(previous,content);
@@ -652,7 +672,7 @@ export class Store {
   }
   workspaceImpact(input) {
     this.expectBase(input.baseRevisionId);this.expectDraft(input.expectedDraftToken);
-    const content=clone(input.content);validateContent(content);
+    const content=clone(input.content);this.validateContent(content);
     const candidateDraftToken=draftTokenFor(input.baseRevisionId,content),view=this.preview({baseRevisionId:input.baseRevisionId,draftToken:candidateDraftToken,content});
     const packs=[{key:'active',content:this.snapshot()},{key:'draft',content:this.currentDraft()?.content},{key:'candidate',content}].filter(x=>x.content);
     const exerciseIds=[...new Set(packs.flatMap(p=>p.content.exercises.map(e=>e.id)))];
@@ -734,7 +754,7 @@ export class Store {
     const sourceState=this.get('source-state'),mediaState=this.get('media-state');
     if(sourceState?.draftBinding || sourceState?.authorBundle || Object.keys(sourceState?.sources||{}).length)plan.blockers.push({code:'SOURCE_PUBLICATION_REQUIRED',id:scope.lessonId,path:'source-state',reason:'Source-bound work requires the exact source freshness and approval publication path.',action:'Use the reviewed source publication workflow.'});
     const check=(path,fn,code)=>{try{return fn();}catch(error){if(!(error instanceof DomainError)&&!code)throw error;plan.blockers.push({code:code||error.code,id:scope.lessonId,path,reason:error.message,action:'Resolve the publication blocker before reviewing again.'});return null;}};
-    check('content',()=>validateContent(candidate));
+    check('content',()=>this.validateContent(candidate));
     check('identity',()=>assertContentIdentityTransition(active,candidate),'CONTENT_IDENTITY_CONFLICT');
     check('lexical',()=>assertLexicalTransition(active,candidate));
     check('lessons',()=>this.assertTextPublicationEligible(candidate));
@@ -781,7 +801,7 @@ export class Store {
     // Base and token are compared inside the transaction that creates the release, so a stale request cannot publish or clear a newer draft.
     return this.transaction(() => {
       this.expectBase(baseRevisionId, 'Stale publication request.'); this.expectDraft(draftToken);
-      const draft = this.currentDraft(); validateContent(draft.content);
+      const draft = this.currentDraft(); this.validateContent(draft.content);
       this.assertTextPublicationEligible(draft.content);
       this.media.checkPublication(draft.content,{trustedContentApproval:sourcePermit===this.sourcePermit});this.media.persistPlan(this.media.plan(draft.content,{strict:true}));
       const revisionId = this.addRevision(draft.content, 'Published draft'); this.set('active', revisionId); this.set('draft', null); return { revisionId };
@@ -793,7 +813,7 @@ export class Store {
     if (expectedDraftToken === undefined) throw this.draftConflict('Rollback discards the draft; name it, or null when there is none.', 'DRAFT_TOKEN_REQUIRED');
     return this.transaction(() => {
       this.expectBase(baseRevisionId, 'Stale rollback request.'); this.expectDraft(expectedDraftToken);
-      const content = this.snapshot(revisionId); validateContent(content);this.assertTextPublicationEligible(content);this.media.persistPlan(this.media.plan(content,{strict:true}));
+      const content = this.snapshot(revisionId); this.validateContent(content);this.assertTextPublicationEligible(content);this.media.persistPlan(this.media.plan(content,{strict:true}));
       const next = this.addRevision(content, 'Restored content revision ' + revisionId); this.set('active', next); this.set('draft', null);if(sourcePermit!==this.sourcePermit)this.sourceAuthoring?.onRollback(revisionId,next); return { revisionId: next };
     });
   }
@@ -845,24 +865,24 @@ export class Store {
     if (!backupFormats.includes(input?.format) || !Array.isArray(input.learners) || ![2,3].includes(input.learners.length) || new Set(input.learners.map(x => x?.id)).size !== input.learners.length || !['learner-demo','learner-core'].every(id=>input.learners.some(row=>row.id===id))) throw new DomainError('Invalid demo backup.');
     if (!RESTORABLE_SCHEMA_VERSIONS[input.format].includes(input.storeSchemaVersion)) throw new DomainError('This backup declares store schema ' + JSON.stringify(input.storeSchemaVersion ?? null) + '; this build restores ' + input.format + ' with schema ' + RESTORABLE_SCHEMA_VERSIONS[input.format].filter(Boolean).join(' or ') + '. Use a newer build.', 409);
     const v2 = input.format === 'hebleo-demo-backup-v2';
-    validateContent(input.content);
+    this.validateContent(input.content,{historical:true});
     this.assertTextPublicationEligible(input.content);
     // v1 carried only resumed-lesson snapshots; v2 carries every referenced revision, including the active one.
     const reports=input.reports || [], sessions=(v2 ? input.revisionSnapshots : input.sessionSnapshots) || [], questions=input.questions||[];
     if(!Array.isArray(questions)||new Set(questions.map(q=>q?.key)).size!==questions.length)throw new DomainError('Invalid backup questions.');
     if(!Array.isArray(reports)||new Set(reports.map(r=>r?.key)).size!==reports.length||!Array.isArray(sessions)||new Set(sessions.map(x=>x?.revisionId)).size!==sessions.length)throw new DomainError('Invalid backup reports or lesson sessions.');
-    for(const session of sessions){if(!Number.isInteger(session?.revisionId))throw new DomainError('Invalid session revision.');validateContent(session.content);this.assertTextPublicationEligible(session.content);}
+    for(const session of sessions){if(!Number.isInteger(session?.revisionId))throw new DomainError('Invalid session revision.');this.validateContent(session.content,{historical:true});this.assertTextPublicationEligible(session.content);}
     const carried = new Map(sessions.map(s => [s.revisionId, s.content]));
     if (v2) {
       if (!carried.has(input.activeRevisionId) || JSON.stringify(carried.get(input.activeRevisionId)) !== JSON.stringify(input.content)) throw new DomainError('Backup active revision does not match its content.');
-      if (input.draft != null) { if (typeof input.draft !== 'object' || input.draft.baseRevisionId !== input.activeRevisionId || typeof input.draft.stagedAt !== 'string') throw new DomainError('Invalid backup draft.'); validateContent(input.draft.content); }
+      if (input.draft != null) { if (typeof input.draft !== 'object' || input.draft.baseRevisionId !== input.activeRevisionId || typeof input.draft.stagedAt !== 'string') throw new DomainError('Invalid backup draft.'); this.validateContent(input.draft.content,{historical:true}); }
     }
     if(input.authorReview!==undefined&&input.storeSchemaVersion<9)throw new DomainError('Author review backups require Store reader 9.',409,'AUTHOR_REVIEW_READER_MISMATCH');
     if(input.storeSchemaVersion>=9&&input.authorReview==null)throw new DomainError('Backup is missing its private author review namespace.');
     if(input.authorReview?.schemaVersion===2&&input.storeSchemaVersion<10||input.storeSchemaVersion>=10&&input.authorReview?.schemaVersion!==2)throw new DomainError('Compact author review requires Store reader 10 and namespace 2.',409,'AUTHOR_REVIEW_READER_MISMATCH');
     if(input.storeSchemaVersion>=11&&!Object.hasOwn(input,'sharedCards')||input.storeSchemaVersion<11&&input.sharedCards!=null)throw new DomainError('Shared namespace requires reader 11.',409);
     if(this.shared.state()&&!input.sharedCards)throw new DomainError('Restore would drop the shared namespace. Use a shared-aware backup.',409);
-    const restoredAuthorReview=validateAuthorReview(input.authorReview,{carried,validateContent,draftTokenFor,authorIds:users.filter(u=>u.canAuthor).map(u=>u.id)});
+    const restoredAuthorReview=validateAuthorReview(input.authorReview,{carried,validateContent:content=>this.validateContent(content,{historical:true}),draftTokenFor,authorIds:users.filter(u=>u.canAuthor).map(u=>u.id)});
     const restoredContexts=authorReviewContents(restoredAuthorReview,id=>carried.get(id),draftTokenFor),existingContexts=this.authorReview.contexts();
     const known=this.db.prepare('SELECT snapshot FROM revisions').all().map(r=>JSON.parse(r.snapshot));
     const incoming=[input.content,...sessions.map(s=>s.content),...(input.draft?[input.draft.content]:[]),...restoredContexts];
@@ -908,6 +928,7 @@ export class Store {
     for (const r of input.reviewReceipts) if (typeof r?.key !== 'string' || !/^review-(learner-(demo|core)|author-demo)-[A-Za-z0-9_-]+$/.test(r.key) || !r.value || (r.value.outcome==='rejected' ? r.value.protocolVersion!==1||typeof r.value.intentHash!=='string'||typeof r.value.cardId!=='string'||typeof r.value.expectedVersion!=='string'||typeof r.value.reasonCode!=='string'||!Number.isFinite(r.value.rejectedAt) : ![1,2,3,4].includes(r.value.rating)||typeof r.value.wordId!=='string'||!r.value.card)) throw new DomainError('Invalid review receipt.');
     for (const row of input.learners) {
       const s = row.state;
+      validateLearnedFormIds(s?.conjugationLearnedFormIds);
       for(const field of ['reviewGenerations','reviewAnswerTimes','reviewClockTickets'])if(s?.[field]!==undefined){
         const map=s[field];if(!map||typeof map!=='object'||Array.isArray(map)||Object.keys(map).length>10000)throw new DomainError('Invalid review protocol metadata.');
         for(const [key,value]of Object.entries(map)){
