@@ -22,6 +22,7 @@ function protect_page_cache(): void {
     if (!defined('DONOTCACHEPAGE')) define('DONOTCACHEPAGE', true);
     nocache_headers();
     header('Cache-Control: private, no-store, no-cache, must-revalidate, max-age=0', true);
+    header('EC-CDN-Cache-Control: private, no-store, no-cache, max-age=0', true);
     do_action('litespeed_control_set_nocache', 'Hebleo authenticated conjugation practice');
 }
 add_action('template_redirect', __NAMESPACE__.'\\protect_page_cache', 0);
