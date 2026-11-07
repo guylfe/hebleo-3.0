@@ -55,5 +55,6 @@ jobs:
         run: |
           node qa-tests/verify-approved-conjugation-release.mjs
           php -l adapters/wordpress/conjugation/conjugation.php
+          php adapters/wordpress/conjugation/cache.test.php
           php adapters/wordpress/conjugation/access-evidence/policy-replay.test.php
           node --test adapters/wordpress/conjugation/package.test.mjs adapters/wordpress/conjugation/direct-access.test.mjs

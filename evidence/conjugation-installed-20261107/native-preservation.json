@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-07T16:13:22.664Z",
+  "installedRevision": "fc34aa90d92eabba566446d5d41761e4541ed9ca",
+  "logicalDatabaseSha256": "09cec407e1f619058d2a64dec5eb0aafb398484d65c79af9efb9096d199cee9b",
+  "allApplicationTablesIdentical": true,
+  "mediaBlobs": 1431,
+  "mediaAliases": 4,
+  "externalMediaRootPresentBeforeAndAfter": false,
+  "designatedEnvAndVaultPresentBeforeAndAfter": false,
+  "scope": "fresh baseline through installed HTTP and mounted browser; no content/learner/SRS/recording write"
+}

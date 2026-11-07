@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-11-07T18:13:00+02:00",
+  "independentlyDownloadedFilesRehashed": 7,
+  "manifestEqual": true,
+  "exactApprovedCatalogObject": true,
+  "approvedForms": 508,
+  "protectedTablesCompared": 51,
+  "identicalTables": 49,
+  "unresolvedTables": {
+    "ei1ye_postmeta": {
+      "before": {
+        "count": 89521,
+        "sha256": "cbaa0a16a458e2197191cce71843c2462d6304596aeb4dd957ffbeb54a81dca8"
+      },
+      "after": {
+        "count": 89135,
+        "sha256": "863c2238aff2c6c3c965da78e3548d4756e0b8746d57dad18077212714205316"
+      }
+    },
+    "ei1ye_usermeta": {
+      "before": {
+        "count": 30838,
+        "sha256": "384c9b6afdfcd553f946c4eae54b082718ff2183b1562564cdb7be8ef4104e55"
+      },
+      "after": {
+        "count": 30838,
+        "sha256": "059495de77c11c21f278ccd9c604dd5cd5f4c70499a78251cc8d4c6eaea1e113"
+      }
+    }
+  },
+  "existingPluginFilesCompared": 45,
+  "existingPluginFilesIdentical": true,
+  "activeAdded": [
+    "hebleo-conjugation/conjugation.php"
+  ],
+  "activeRemoved": [],
+  "noPreservationCertificationForChangedTables": true
+}

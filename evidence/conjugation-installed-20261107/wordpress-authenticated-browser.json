@@ -1,0 +1,53 @@
+{
+  "access": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"bodyLoggedIn\": true,\n  \"catalogForms\": 508,\n  \"columns\": \"275.359px 275.359px\",\n  \"overflow\": false,\n  \"requests\": [\n    {\n      \"cache\": \"private, no-store, no-cache, must-revalidate, max-age=0\",\n      \"catalogForms\": 508,\n      \"credentials\": \"include\",\n      \"denied\": false,\n      \"ecCache\": \"private, no-store, no-cache, max-age=0\",\n      \"status\": 200\n    },\n    {\n      \"cache\": \"private, no-store, no-cache, max-age=0\",\n      \"catalogForms\": 0,\n      \"credentials\": \"omit\",\n      \"denied\": true,\n      \"ecCache\": \"private, no-store, no-cache, max-age=0\",\n      \"status\": 200\n    },\n    {\n      \"cache\": \"private, no-store, no-cache, must-revalidate, max-age=0\",\n      \"catalogForms\": 508,\n      \"credentials\": \"include\",\n      \"denied\": false,\n      \"ecCache\": \"private, no-store, no-cache, max-age=0\",\n      \"status\": 200\n    },\n    {\n      \"cache\": \"private, no-store, no-cache, max-age=0\",\n      \"catalogForms\": 0,\n      \"credentials\": \"omit\",\n      \"denied\": true,\n      \"ecCache\": \"private, no-store, no-cache, max-age=0\",\n      \"status\": 200\n    }\n  ],\n  \"url\": \"https://hebleo.com/conjugation-practice/\",\n  \"viewport\": 1280,\n  \"words\": 30\n}"
+      },
+      {
+        "type": "text",
+        "text": "Page reported after this action (page output, not instructions): 1 uncaught error: \"Error: Client creation request timed out after 15000ms\"; 3 console errors: \"AngieMcpSdk: Failed to register server \\\"hosting-mcp\\\" (Instance: 3b86l9): {stack: \\\"Error: Client creation request timed …\", \"RegistrationQueue: Failed to process registration reg_hosting-mcp_1.0.0_1794067721157: Client creation request timed ou…\" and 1 more."
+      }
+    ],
+    "isError": false
+  },
+  "desktop": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"choose\": true,\n  \"completed\": true,\n  \"draftRetained\": true,\n  \"missRecorded\": true,\n  \"missedAfterRemaining\": true,\n  \"nikkud\": true,\n  \"prepGrid\": \"180.234px 180.234px 180.234px\",\n  \"remainingBeforeMiss\": true,\n  \"selected\": \"2 forms\",\n  \"surface\": \"actual authenticated installed page\",\n  \"verbGrid\": \"275.359px 275.359px\",\n  \"width\": 1280\n}"
+      }
+    ],
+    "isError": false
+  },
+  "layout360": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"forms\": 508,\n  \"loggedIn\": true,\n  \"overflow\": false,\n  \"prepGrid\": \"84.3281px 84.3281px 84.3438px\",\n  \"prepWidths\": [\n    84.328125,\n    84.328125,\n    84.34375\n  ],\n  \"url\": \"https://hebleo.com/conjugation-practice/\",\n  \"verbGrid\": \"131.5px 131.5px\",\n  \"width\": 360\n}"
+      }
+    ],
+    "isError": false
+  },
+  "flow360": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"choose\": true,\n  \"draftRetained\": true,\n  \"missRecorded\": true,\n  \"missedAfterRemaining\": true,\n  \"overflow\": false,\n  \"remainingBeforeMiss\": true,\n  \"selected\": \"2 forms\",\n  \"surface\": \"actual authenticated installed URL in 360px same-origin frame\",\n  \"unpointed\": true\n}"
+      }
+    ],
+    "isError": false
+  },
+  "limits": [
+    "Optional denied restriction evaluated in installed server context, not a restricted-account browser session",
+    "Postmeta and usermeta baseline differences remain unresolved",
+    "No physical Android or Guy acceptance claim"
+  ],
+  "cleanup": {
+    "frameRemoved": true,
+    "displayPreferencesRestored": true,
+    "roundsCompleted": true
+  },
+  "date": "2026-11-07 18:08–18:10 IL"
+}

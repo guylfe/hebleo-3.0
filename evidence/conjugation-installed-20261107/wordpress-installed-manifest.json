@@ -1,0 +1,16 @@
+{
+  "schema": 2,
+  "approvedForms": 508,
+  "forbiddenFiles": [
+    "assets/catalog.json"
+  ],
+  "files": {
+    "conjugation.php": "7cbc78075fa49ec63d2348cc7e461fc9bd2aa2fe7ab698d8012e2c4d5b1eaa57",
+    "assets/bootstrap.js": "22e5795c95a55e9ec9cea075c9df2975bb992ff3696f86d2399c60a832af2650",
+    "assets/catalog-contract.js": "80513200ba17d979474a66e1c3d5bc7a5de5e67c4fb77b30ac7ee07c81a53f75",
+    "assets/engine.js": "d6a83b0907eaceae73ae3630176fc0df8f3f8dfed05b3531c42c40995c9f0712",
+    "assets/view.js": "3f436c50e9d7a77d798ca7ea0a1b7408f3b9eb4a2d663bc946c8f8bf4d6f22a4",
+    "assets/practice.css": "cc0596fcd639ca7f03d12c5aa6695c6d51421b686308596d90abe2ef64e94f02",
+    "catalog-data.php": "dd4f08457d6b12e1b8c7331bbbc75096ed02c15be160770b14eedcd43ed151ea"
+  }
+}
