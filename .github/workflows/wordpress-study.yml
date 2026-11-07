@@ -3,10 +3,14 @@ on:
   push:
     paths:
       - 'adapters/wordpress/**'
+      - 'public/conjugation/**'
+      - 'qa-tests/verify-approved-conjugation-release.mjs'
       - '.github/workflows/wordpress-study.yml'
   pull_request:
     paths:
       - 'adapters/wordpress/**'
+      - 'public/conjugation/**'
+      - 'qa-tests/verify-approved-conjugation-release.mjs'
       - '.github/workflows/wordpress-study.yml'
 permissions:
   contents: read
@@ -49,6 +53,7 @@ jobs:
           node --check adapters/wordpress/background-review/generate.mjs
       - name: Conjugation package and WordPress access boundary
         run: |
+          node qa-tests/verify-approved-conjugation-release.mjs
           php -l adapters/wordpress/conjugation/conjugation.php
           php adapters/wordpress/conjugation/access-evidence/policy-replay.test.php
           node --test adapters/wordpress/conjugation/package.test.mjs adapters/wordpress/conjugation/direct-access.test.mjs

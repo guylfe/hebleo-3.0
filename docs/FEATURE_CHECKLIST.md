@@ -744,6 +744,8 @@ Verification: verify:candidate passed 1101, skipped 8 under the existing audio e
 
 ## CP - Conjugation practice (7 November 2026)
 
+Current checkpoint15:07Israel: exact508-form release approved for both versions; all11verbs/all19prepositions/10action nouns are integrated. Only verb-proposal-02:gerund:lexeme is excluded. Approved SHAfa58473bbd19b201829f9584482003d2d78e850d6bdef0b0f030837b92dd2ca1; approval receipt is pinned.39focused tests,1016grader checks and3048distractor exclusions pass. Older zero-key/pending-approval text below is historical. Both preservation installations and destination/rendered verification are underway; user acceptance remains Unreported.
+
 Reviewed base implementation for both platforms is integrated into private main. WordPress source access now matches the inspected flashcard audience: signed-in positive-ID accounts, with an optional strict site restriction and anonymous denial. Production release awaits the approved answer key and actual destination installation/verification. The exact 11 verb / 19 preposition identities are present with zero production grading forms. No conjugation installation has changed the existing app or WordPress. All user-result cells remain Unreported. Evidence: docs/CONJUGATION_IMPLEMENTATION_20261107.md and evidence/conjugation-integration-20261107/.
 
 | ID | Implemented behavior / bounded status | Evidence | User acceptance |
@@ -753,10 +755,10 @@ Reviewed base implementation for both platforms is integrated into private main.
 | CP03 | Specific preposition selection implemented | Exact-ID engine tests; 19 literal selections | Unreported |
 | CP04 | All contracted tense/conjugation filters implemented; unsupported content unavailable | Fixture slot/filter tests; missing key never synthesized | Unreported |
 | CP05 | Shared catalog/engine and separate native/WP adapters implemented | One validator; generated package hashes; actual PHP boundary tests | Unreported |
-| CP06 | Exact 11/19 lexical identities preserved; full grading coverage blocked | Production catalog identity test; 302-cell readback; 509 held units / 308 separate proposals | Unreported |
+| CP06 | Exact 11/19 lexical identities and approved508-form key integrated; excluded action noun retained outside release | Production catalog identity test; 302-cell readback; 509 held units / 308 separate proposals | Unreported |
 | CP07 | Choose default both directions, Write and both drafts retained | Native/WP direction/mode tests; actual native painted draft check | Unreported |
 | CP08 | Optional collapsed person/gender/number filters implemented | Semantic/filter tests; native selects retain platform popup | Unreported |
-| CP09 | Nikkud display switch and unpointed comparison implemented; actual key approval blocked | Explicit display fixtures; draft/Nikkud tests; no spelling authored by mark deletion | Unreported |
+| CP09 | Nikkud display switch and explicit approved unpointed answers implemented | Explicit display fixtures; draft/Nikkud tests; no spelling authored by mark deletion | Unreported |
 | CP10 | Practice remains independent of flashcard scheduling | Actual native HTTP/shared-view test and Store readback show no learner/card writes | Unreported |
 | CP11 | Automatic missed passes after every remaining form, repeating as needed | Multi-item/repeated-pass sequence tests; supersedes older optional-repeat proposal | Unreported |
 | CP12 | Citation-pair/base plus tense/pronoun and reverse meaning prompts implemented | Both-direction fixture tests and painted examples | Unreported |

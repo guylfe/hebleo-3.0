@@ -1,0 +1,25 @@
+{
+  "authority": "Guy Landau, direct user message",
+  "date": "2026-11-07",
+  "localTimeContext": "15:07 Israel time",
+  "conversation": "5ac5570e-bc3a-4939-b545-55d3a23eb252",
+  "exactReply": "Yes",
+  "approvalScope": "The 508-record content recommendation in RECOMMENDED_RELEASE.md for native Hebleo 3.0 and WordPress; excludes the proposed action noun רצייה; permits integration, installation and verification; does not edit original course tables.",
+  "recommendationSha256": "1149b03102c3b0a8529a8cb038c22332ab7affaaed50511c57c306a1a23c2fc1",
+  "proposedCatalogSha256": "064818aa1466bd8fa7dec3420d124e6bd83075b629ff57077649ce5962ce258a",
+  "heldFormIds": [
+    "verb-proposal-02:gerund:lexeme"
+  ],
+  "approvedCatalogSha256": "fa58473bbd19b201829f9584482003d2d78e850d6bdef0b0f030837b92dd2ca1",
+  "outputPath": "C:\\Users\\Trans\\.openmausbot\\task-workspaces\\71c71389-5334-4e0c-9ca8-d80dd28223d1\\5ac5570e-bc3a-4939-b545-55d3a23eb252\\content-review\\catalog.approved.json",
+  "approvedForms": 508,
+  "verbs": 11,
+  "prepositions": 19,
+  "actionNouns": 10,
+  "answerChecks": 1016,
+  "distractorChecks": 3048,
+  "semanticFieldsUnchanged": true,
+  "sourcePreserved": true,
+  "readback": "PASS",
+  "installed": false
+}

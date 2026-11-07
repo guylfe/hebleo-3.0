@@ -1,0 +1,3 @@
+# Approved release key
+
+Guy directly approved the exact linked508-record recommendation at15:07Israel on7November2026 for both native and WordPress, including the necessary installation/verification. APPROVAL_RECEIPT.json pins the key and reviewed recommendation hashes. RECOMMENDED_RELEASE.md is retained byte-for-byte as the historical proposal that was approved; its earlier pending wording is superseded by the receipt. The runtime catalog is public/conjugation/catalog.json, SHA256 fa58473bbd19b201829f9584482003d2d78e850d6bdef0b0f030837b92dd2ca1. Only verb-proposal-02:gerund:lexeme is excluded. Original course sources remain unchanged.

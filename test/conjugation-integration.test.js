@@ -26,6 +26,11 @@ test('production catalogue preserves the exact approved lexical identities and e
   assert.equal(catalog.words.filter(w=>w.kind==='prep').length,19);
   assert.deepEqual(catalog.words.map(w=>w.id),[...Array.from({length:11},(_,i)=>'verb-proposal-'+String(i+1).padStart(2,'0')),...Array.from({length:19},(_,i)=>'prep-proposal-'+(i+1))]);
   assert.equal(catalog.forms.some(f=>f.approval==='fixture'),false);
+  assert.equal(catalog.forms.length,508);
+  assert.equal(catalog.forms.every(f=>f.approval==='approved'),true);
+  assert.equal(catalog.forms.filter(f=>f.tense==='gerund').length,10);
+  assert.equal(catalog.forms.some(f=>f.id==='verb-proposal-02:gerund:lexeme'),false);
+  for(const word of catalog.words)assert(catalog.forms.some(f=>f.wordId===word.id));
 });
 
 test('actual native HTTP boundary mounts the actual shared view without learner or SRS writes',async t=>{

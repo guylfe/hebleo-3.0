@@ -4,3 +4,6 @@ public/author/vendor/jodit.min.css text eol=lf
 # Stable reviewed adapter source, including CSP script hashes, across platforms.
 adapters/wordpress/shared-cards/** text eol=lf
 src/shared-card-adapter/** text eol=lf
+# Preserve the exact approved answer-key SHA on every checkout.
+public/conjugation/catalog.json -text
+docs/content-provenance/conjugation-20261107/approved-release/** -text
