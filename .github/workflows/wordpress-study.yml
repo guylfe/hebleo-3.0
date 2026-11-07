@@ -60,5 +60,6 @@ jobs:
           node --test adapters/wordpress/conjugation/package.test.mjs adapters/wordpress/conjugation/direct-access.test.mjs
       - name: Read-only practice help add-on
         run: |
+          npm ci --ignore-scripts --no-audit --no-fund
           php -l adapters/wordpress/practice-help/practice-help.php
           node --test test/practice-help.test.js

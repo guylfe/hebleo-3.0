@@ -3,7 +3,7 @@ export const tutorials={
  flashcards:{title:'How to use flashcards',common:[
  'Try to recall the answer before choosing Show answer.',
  'After revealing the answer, rate your recall: Again if you missed it, Hard if it was difficult, Good if you recalled it, or Easy if it was effortless. Your rating schedules the card’s next review.'
- ],native:['Before starting, choose the session size and card presentation. Listening and sentence presentations depend on available source material.','Add words to review from lessons or My Hebrew. Use Undo last rating to correct your latest rating. Finish session returns to the overview.'],wordpress:['Flashcards are independent practice. Open your deck, start a study session, recall the answer, then reveal and rate it.']},
+ ],native:['Before starting, choose the session size and card presentation. Listening and sentence presentations depend on available source material.','Add words to review from lessons or My Hebrew. Use Undo last rating to correct your latest rating. Finish session returns to the overview.'],wordpress:['Flashcards are independent practice. On Study Decks, choose Study beside a deck. If No cards due appears, return when cards are next due.']},
  conjugation:{title:'How to use conjugation practice',common:[
  'Select Verbs or Prepositions, choose words and forms, and use More filters to narrow the selection. Choose a direction, then Start practice.',
  'Choose selects an answer. Write lets you type and Check answer; Nikkud is optional. You can switch modes and show or hide Nikkud.',
