@@ -12,8 +12,9 @@ function allowed(): bool {
 }
 function shortcode(): string {
     if (!allowed()) return '<p>Conjugation practice is unavailable for this account.</p>';
-    $path = __DIR__.'/assets/catalog.json';
-    $catalog = is_file($path) ? json_decode(file_get_contents($path), true) : null;
+    $path = __DIR__.'/catalog-data.php';
+    try { $catalog = is_file($path) ? require $path : null; }
+    catch (\Throwable $error) { return '<p>Practice content is unavailable.</p>'; }
     if (!is_array($catalog) || ($catalog['schemaVersion'] ?? null) !== 1 || !is_array($catalog['words'] ?? null) || !is_array($catalog['forms'] ?? null)) return '<p>Practice content is unavailable.</p>';
     // A corrupted/stale package must not release fixture or held grading records.
     foreach ($catalog['forms'] as $f) if (($f['approval'] ?? '') !== 'approved') return '<p>Practice content is awaiting approval.</p>';

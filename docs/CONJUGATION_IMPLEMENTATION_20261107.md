@@ -8,7 +8,7 @@ The shared engine/view supports the exact 11 verbs and 19 preposition identities
 
 Native My Hebrew opens `#conjugation`. Studio saves exact lesson `conjugationUnlocks.formIds` through its existing workspace/CAS/publishing flow; only successful completion of that actual pinned lesson snapshot adds those exact IDs to that learner. Open/preview/practice ahead does not grant anything. Native loading/retry/profile/disposal behavior is integrated. No fixture is enabled in production; injection is confined to an explicit in-memory Store.
 
-WordPress has a separate read-only shortcode plugin package. The package filters held records and refuses fixture records; the runtime independently rejects non-approved records. Authentication and the site's explicitly bound access decision are both required. No SQL, activation migration, new deck, account, payment or curriculum operation is added. The access filter defaults to deny and is not yet bound at the destination; the existing site's access policy must be connected and verified before an eventual installation. No blanket allow was substituted.
+WordPress has a separate read-only shortcode plugin package. The package filters held records and refuses fixture records; the runtime independently rejects non-approved records. Authentication and the site's explicitly bound access decision are both required. No SQL, activation migration, new deck, account, payment or curriculum operation is added. The access filter defaults to deny and is not yet bound at the destination; the existing site's access policy must be connected and verified before an eventual installation. No blanket allow was substituted. Release review found the original public JSON catalog bypassed that gate. The corrected package uses guarded PHP data, exposes no public JSON and requires complete directory replacement with deprecated-file refusal; an actual PHP HTTP regression verifies the boundary.
 
 Mounted Browser testing also exposed a typed-field blur rerender that swallowed the first Show/Check click. Setup-change handling now ignores typed-answer blur; a regression test preserves the original action node through that event.
 
@@ -25,8 +25,8 @@ Next content owner: Leo/Guy selects and approves a complete first subset; Curric
 ## Executed checks and evidence
 
 - `npm ci` and `npm ci --ignore-scripts --prefix schemas` completed. Runtime dependencies audited at zero vulnerabilities; the existing schema dependency tree reports one moderate advisory, unchanged by this feature.
-- Final focused command: `node --test test/conjugation-engine.test.js test/conjugation-view.test.js test/conjugation-native.test.js test/conjugation-integration.test.js adapters/wordpress/conjugation/package.test.mjs` — 38 passed, no skips/failures.
-- `npm run verify:candidate` — 1,189 passed / 9 existing skips / 0 failures (1,198 total). This is the repository's configured candidate/CI command; its existing audio exclusions remain explicit, and it is not an unrestricted full-suite claim.
+- Final focused command: `node --test test/conjugation-engine.test.js test/conjugation-view.test.js test/conjugation-native.test.js test/conjugation-integration.test.js adapters/wordpress/conjugation/package.test.mjs adapters/wordpress/conjugation/direct-access.test.mjs` — 39 passed, no skips/failures.
+- `npm run verify:candidate` — 1,190 passed / 9 existing skips / 0 failures (1,199 total), independently run on d571256. This is the repository's configured candidate/CI command; its existing audio exclusions remain explicit, and it is not an unrestricted full-suite claim.
 - `node --test --test-name-pattern='browser module dependency graph' test/new7-corrections.test.js` — the actual HTTP module graph passed, including the new shared catalog module.
 - `php -l adapters/wordpress/conjugation/conjugation.php` passed. The package tests execute actual PHP with isolated WordPress API doubles and independently verify generated file hashes. They do not establish an installed WordPress runtime.
 - `node qa-tests/verify-conjugation-provenance.mjs` verifies all 12 input hashes and directly compares all 302 represented cells against the unchanged authored draft; the 308 external proposals stay separate.
@@ -42,3 +42,8 @@ Run `node qa-tests/conjugation-rehearsal.mjs` for the in-memory integrated nativ
 Run `node adapters/wordpress/conjugation/rehearsal/serve.mjs 33608` for the labeled shared-view fixture adapter at `http://127.0.0.1:33608/`, with `?platform=wordpress&phone=1` for the phone surface. This is not an installed WordPress site. The separate actual PHP shortcode/package checks are automated above.
 
 Build a new output folder with `node adapters/wordpress/conjugation/package.mjs public/conjugation/catalog.json NEW_DIRECTORY`. The current catalog produces a zero-form gated package; it must not be described as a usable learner release. Guarded deployment instructions and remaining access checks are in `adapters/wordpress/conjugation/README.md`.
+
+
+## Independent review checkpoint
+
+QA received a bounded pass on d571256: 38 focused tests and 200 randomized rounds, mounted native Studio exact three-ID save/reload plus API readback, both final 360px grids, native first-click/typed correction and five served hashes. Its full committed receipt is in evidence/qa-conjugation-independent-20261107/. Lead integrated QA commits35dd5c6/606553f. Release Reviewer independently ran configured candidate checks1,190pass/9skip/0fail and reproduced one blocking WordPress public-catalog bypass (B1). Lead corrected B1 as above; clearance of that correction and final CI are separate evidence, to be recorded before main merge. No content/installation gate is inferred closed.

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "saveProgress atomic completion",
+    "pass": true,
+    "postWriteFailureRolledBackAllTables": true,
+    "retryGrantedExactForm": true
+  },
+  {
+    "name": "approveSentenceAttempt atomic completion",
+    "pass": true,
+    "postWriteFailureRolledBackAllTables": true,
+    "retryGrantedExactForm": true
+  },
+  {
+    "name": "historical restore into production zero-form catalog",
+    "pass": true,
+    "exactUnknownIdsRetained": true,
+    "gradingForms": 0
+  },
+  {
+    "name": "native data boundary",
+    "pass": true,
+    "revokedApiStatus": 403,
+    "directCatalogStatus": 404
+  },
+  {
+    "name": "CONFIRMED DEFECT: WordPress unauthenticated static catalog bypass",
+    "shortcodeDenied": true,
+    "directCatalogStatus": 200,
+    "exposedSyntheticGradingRecords": 7,
+    "sha256": "c8ba6904276307026f8a256f9f61e8e24b6541c43529499bd15ff0faad6068db",
+    "testedOn": "isolated PHP static server; no WordPress installation"
+  }
+]

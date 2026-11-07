@@ -1,0 +1,175 @@
+{
+  "readAt": "2026-11-07 Israel time",
+  "scope": "Read-only source inspection of existing wp-content/plugins/wp-learning-cards; no learner records, secrets, or live mutations.",
+  "currentCardLoaderSHA256": "a6f6a408a4617ce040d3ecb511b81a1d49b0479d52d9044f5aa0c6d598933314",
+  "currentSchedulerSHA256": "c88c84f0b94557e31ed3ed1b8e4f388ebe7d329b18528424cec93cf25970ab5f",
+  "currentLoaderLines": [
+    {
+      "line": 153,
+      "text": "add_action('wp_ajax_get_study_decks', 'ajax_get_study_decks');"
+    },
+    {
+      "line": 154,
+      "text": "add_action('wp_ajax_nopriv_get_study_decks', 'ajax_get_study_decks');"
+    },
+    {
+      "line": 155,
+      "text": ""
+    },
+    {
+      "line": 156,
+      "text": "function ajax_get_study_decks() {"
+    },
+    {
+      "line": 157,
+      "text": "    if (!wp_verify_nonce($_POST['nonce'], 'study_nonce')) {"
+    },
+    {
+      "line": 158,
+      "text": "        wp_send_json_error('Security check failed');"
+    },
+    {
+      "line": 159,
+      "text": "    }"
+    },
+    {
+      "line": 160,
+      "text": "    "
+    },
+    {
+      "line": 161,
+      "text": "    $user_id = get_current_user_id();"
+    },
+    {
+      "line": 162,
+      "text": "    if (!$user_id) {"
+    },
+    {
+      "line": 163,
+      "text": "        wp_send_json_error('Please log in to study');"
+    },
+    {
+      "line": 164,
+      "text": "    }"
+    },
+    {
+      "line": 165,
+      "text": "    "
+    },
+    {
+      "line": 166,
+      "text": "    global $wpdb;"
+    },
+    {
+      "line": 167,
+      "text": "    "
+    },
+    {
+      "line": 168,
+      "text": "    $decks = get_posts(["
+    },
+    {
+      "line": 169,
+      "text": "        'post_type' => 'decks',"
+    },
+    {
+      "line": 170,
+      "text": "        'post_status' => 'publish',"
+    },
+    {
+      "line": 171,
+      "text": "        'numberposts' => -1,"
+    },
+    {
+      "line": 172,
+      "text": "        'orderby' => 'title',"
+    },
+    {
+      "line": 173,
+      "text": "        'order' => 'ASC'"
+    },
+    {
+      "line": 174,
+      "text": "    ]);"
+    },
+    {
+      "line": 331,
+      "text": "// Start study session with enhanced ordering and limits"
+    },
+    {
+      "line": 332,
+      "text": "add_action('wp_ajax_start_study_session', 'ajax_start_study_session');"
+    },
+    {
+      "line": 333,
+      "text": "add_action('wp_ajax_nopriv_start_study_session', 'ajax_start_study_session');"
+    },
+    {
+      "line": 334,
+      "text": ""
+    },
+    {
+      "line": 335,
+      "text": "function ajax_start_study_session() {"
+    },
+    {
+      "line": 336,
+      "text": "    if (!wp_verify_nonce($_POST['nonce'], 'study_nonce')) {"
+    },
+    {
+      "line": 337,
+      "text": "        wp_send_json_error('Security check failed');"
+    },
+    {
+      "line": 338,
+      "text": "    }"
+    },
+    {
+      "line": 339,
+      "text": "    "
+    },
+    {
+      "line": 340,
+      "text": "    $user_id = get_current_user_id();"
+    },
+    {
+      "line": 341,
+      "text": "    if (!$user_id) {"
+    },
+    {
+      "line": 342,
+      "text": "        wp_send_json_error('Please log in');"
+    },
+    {
+      "line": 343,
+      "text": "    }"
+    },
+    {
+      "line": 344,
+      "text": "    "
+    },
+    {
+      "line": 345,
+      "text": "    $deck_id = intval($_POST['deck_id']);"
+    },
+    {
+      "line": 346,
+      "text": "    if (!$deck_id) {"
+    },
+    {
+      "line": 347,
+      "text": "        wp_send_json_error('Invalid deck');"
+    },
+    {
+      "line": 348,
+      "text": "    }"
+    },
+    {
+      "line": 349,
+      "text": "    "
+    }
+  ],
+  "otherCheck": "Bounded PHP-source scan of 23 files in this plugin found no learndash/sfwd/pmpro/rcp_/wc_customer_bought_product/has_access/can_access/is_user_logged_in/hebleo_conjugation_access matches. Exact current loader login checks use get_current_user_id, shown above; absence of these strings does not establish site-wide access policy.",
+  "baseline": "d93ac18d-de54-4035-ad88-9628a2b2e5df/wordpress-study-20261104/baseline-plugin/templates/card_loader.php:252-273 and 431 onward have nonce/current-user gates too.",
+  "conclusion": "Existing scoped plugin enforces logged-in user plus request nonce for AJAX study operations. No reusable course/membership/refund entitlement predicate was established. The exact protected-page/site policy outside this plugin remains a destination gate."
+}
