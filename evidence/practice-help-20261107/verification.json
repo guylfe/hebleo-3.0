@@ -1,0 +1,33 @@
+{
+  "runtimeRevision": "88ee24f1eb8821ec68cb727c62113e2f8e6b0b88",
+  "runtimeSha256": "6218651d1d5df0763156d254a3270316063adb8b6528c64b0b750c0e0c9f8428",
+  "nativeDatabase": {
+    "phase": "after-browser",
+    "at": "2026-11-07T19:17:48.046Z",
+    "logicalDatabaseSha256": "09cec407e1f619058d2a64dec5eb0aafb398484d65c79af9efb9096d199cee9b",
+    "allApplicationTablesIdentical": true,
+    "mediaBlobs": 1431,
+    "configurationUnchanged": true
+  },
+  "wordpressFiles": {
+    "practice-help.php": "414537452c85193affc84ac1a787358fd8ba28e3365cea58c3ad2b9122f79ec4",
+    "assets/bootstrap.js": "98c88ad342b1ce367f13fe38ec31371ba100bddf9f4d18569014a4db9de39f00",
+    "assets/help.js": "8a452a36dc91db6ac382c29ce83e9d8001f64b21b619cb64437c1e9f178b4cec",
+    "assets/help.css": "072a30142bc7421a03e3c210ad8464d0a4132bb44654141f896cb5cff5e192a3",
+    "assets/read-only-dialog.js": "8e6f9d36cf4920b5436a20e5412fe97df851d879444cb732c55c23ac5817d061"
+  },
+  "fullCandidate": {
+    "revision": "0666703",
+    "pass": 1197,
+    "skipped": 9,
+    "fail": 0
+  },
+  "finalFocused": {
+    "revision": "88ee24f",
+    "pass": 16,
+    "fail": 0
+  },
+  "signedInWordPress": "Evidence pending existing copy question",
+  "physicalAndroid": "unverified",
+  "guyAcceptance": "unreported"
+}
