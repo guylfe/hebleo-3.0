@@ -14,6 +14,17 @@ function allowed(): bool {
     $user_id = get_current_user_id();
     return is_user_logged_in() && $user_id > 0 && apply_filters('hebleo_conjugation_access', true, $user_id) === true;
 }
+/** Protect only pages containing this shortcode, for every visitor. */
+function protect_page_cache(): void {
+    if (!is_singular()) return;
+    $post = get_queried_object();
+    if (!$post instanceof \WP_Post || !has_shortcode($post->post_content, 'hebleo_conjugation')) return;
+    if (!defined('DONOTCACHEPAGE')) define('DONOTCACHEPAGE', true);
+    nocache_headers();
+    header('Cache-Control: private, no-store, no-cache, must-revalidate, max-age=0', true);
+    do_action('litespeed_control_set_nocache', 'Hebleo authenticated conjugation practice');
+}
+add_action('template_redirect', __NAMESPACE__.'\\protect_page_cache', 0);
 function shortcode(): string {
     if (!allowed()) return '<p>Conjugation practice is unavailable for this account.</p>';
     $path = __DIR__.'/catalog-data.php';
