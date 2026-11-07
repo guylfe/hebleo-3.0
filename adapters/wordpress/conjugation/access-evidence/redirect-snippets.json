@@ -1,0 +1,12 @@
+[
+  {
+    "id": 45179,
+    "source": "// Redirect hebleo.com based on login status\r\nadd_action( 'template_redirect', function () {\r\n\r\n    // Don't do anything in the admin area\r\n    if ( is_admin() ) {\r\n        return;\r\n    }\r\n\r\n    // Only act on the main front page (the dummy homepage at hebleo.com)\r\n    if ( ! is_front_page() ) {\r\n        return;\r\n    }\r\n\r\n    // If the user is logged in, send them to the BuddyBoss dashboard\r\n    if ( is_user_logged_in() ) {\r\n        // TODO: change /dashboard/ to your actual BuddyBoss dashboard path\r\n        wp_safe_redirect( site_url( '/my-dashboard/' ) );\r\n        exit;\r\n    }\r\n\r\n    // If the user is NOT logged in, send them to the public welcome page\r\n    wp_safe_redirect( site_url( '/welcome/' ) );\r\n    exit;\r\n} );",
+    "sha256": "8765a0de019540162ba023a669a1db9d25cfa27be815ab1a626bbb56561bd282"
+  },
+  {
+    "id": 45253,
+    "source": "add_action('template_redirect', function () {\r\n    // Redirect the old /dashboard page to /my-dashboard\r\n    if (is_page('dashboard')) { // you can also use the page ID here\r\n        wp_redirect( home_url('/my-dashboard/'), 301 );\r\n        exit;\r\n    }\r\n});",
+    "sha256": "04ed4955139a932cd512002fbe2520d7f849150a63034a58470b92b3fca10072"
+  }
+]
