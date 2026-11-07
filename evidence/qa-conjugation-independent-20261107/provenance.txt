@@ -1,0 +1,7 @@
+{
+  "verifiedInputHashes": 12,
+  "sourceCellsCompared": 302,
+  "heldReviewUnits": 509,
+  "separateExternalProposals": 308,
+  "approvedGradingForms": 0
+}
