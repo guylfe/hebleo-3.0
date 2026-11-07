@@ -5,3 +5,5 @@ dialog.practice-help h2{margin:0;font-size:1.35em}
 dialog.practice-help li{margin-block:12px;line-height:1.6}
 dialog.practice-help button,[data-practice-help]{font:inherit;min-height:44px;cursor:pointer;color:var(--ink,#0A2457);background:var(--paper,#fff);border:1px solid var(--line,#D6D9DD);border-radius:var(--radius,8px);padding:8px 12px}
 dialog.practice-help button:focus-visible,[data-practice-help]:focus-visible{outline:3px solid var(--accent,#0170B9);outline-offset:3px}
+.conjugation-root button[data-practice-help]{min-height:44px}
+dialog.practice-help button:hover,button[data-practice-help]:hover{background:var(--selection,#EAF5FC)}
