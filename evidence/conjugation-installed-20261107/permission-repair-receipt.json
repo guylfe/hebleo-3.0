@@ -1,0 +1,39 @@
+{
+  "repair": {
+    "at": "2026-11-07T16:34:48+00:00",
+    "restored": true,
+    "auditEvent": 7388,
+    "rowId": 418,
+    "userId": 13,
+    "key": "ei1ye_capabilities",
+    "removedOnlyAddedRole": "bbp_participant",
+    "restoredSha256": "694ad5f306e8a852ca630119c77be4673f6b709c34ae58c7c9bbf0c867bf28a5",
+    "backupSha256": "f49e3c5c3861bab47fad1ea4e11b98408b46a335241805086498d53c5ca05d31",
+    "broaderMetadataRollback": false,
+    "contextSwitchingUsed": false,
+    "backupBasename": "user13-capabilities-repair-20261107_163448.serialized"
+  },
+  "independentReadback": {
+    "at": "2026-11-07T16:35:58+00:00",
+    "restoredRow": {
+      "umeta_id": "418",
+      "user_id": "13",
+      "meta_key": "ei1ye_capabilities",
+      "value_sha256": "694ad5f306e8a852ca630119c77be4673f6b709c34ae58c7c9bbf0c867bf28a5"
+    },
+    "exactOriginalValueRestored": true,
+    "repairAuditEvents": [
+      {
+        "change_id": 7390,
+        "audit_id": 3650,
+        "at": "2026-11-07 16:34:48",
+        "beforeHash": "5bd71214e237d0b4a6c5156165d80a8e1242eb1b92b88372410aa18e9d27d2c2",
+        "afterHash": "694ad5f306e8a852ca630119c77be4673f6b709c34ae58c7c9bbf0c867bf28a5"
+      }
+    ],
+    "pluginActive": true,
+    "approvedForms": 508,
+    "readOnly": true,
+    "contextSwitchingUsed": false
+  }
+}

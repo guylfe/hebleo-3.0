@@ -61,3 +61,8 @@ Still unverified: full integrated test suite/CI, native route/author save/comple
 
 
 Lead B1 correction: run `node --test adapters/wordpress/conjugation/package.test.mjs adapters/wordpress/conjugation/direct-access.test.mjs`. The new actual PHP HTTP regression proves anonymous/direct catalog denial, authorized-only embedding, and rejection of a staged upgrade retaining the deprecated public JSON. Earlier catalog.json package evidence is historical and superseded.
+
+
+## Live verification boundary after the7November installation
+
+Do not use wp_set_current_user to impersonate other existing users for a supposedly read-only live access test. Installed BuddyBoss hooks persisted a forum role during that operation. Use isolated copies for simulated identities/denials, and existing real authenticated Browser plus anonymous HTTP for live checks. Capture a consistent private per-row ID/key/hash baseline before activation, because activation/authentication hooks can mutate derived cache or account metadata. The known role entry was exactly restored with an audited compare-and-set; broader preservation remains dependent on hosting row-change evidence.

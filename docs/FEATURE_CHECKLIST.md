@@ -778,3 +778,13 @@ CP access correction supersedes the earlier pending-policy status: Lead reviewed
 
 
 CP installed checkpoint: native63358/fc34aa9 and WordPress/conjugation-practice/page49506 both serve the exact508-form approved key. Seven WordPress hashes and full catalog object match independent readback; real signed-in/anonymous cache isolation and actual authenticated desktop/360px practice pass. Native wholeDB09cec407 remains exact. WordPress metadata exceptions (postmeta89521→89135baseline-ID rows; usermeta30838rows/different hash) remain unresolved, so full preservation/final combined acceptance remains open. Cache source453a9a2 is integrated as474f816 with actual affected tests and new CI coverage. Physical Android and user acceptance remain Unreported.
+
+
+CP preservation correction: audit3619/change7388 confirms production user-context probing added bbp_participant to user13/capabilities via BuddyBoss. Lead exactly restored the audited prior value under row/hash guards and private backup; fresh readback and audit3650/change7390 confirm it. No broad restore. Full postmeta/usermeta attribution still needs hosting operator row logs7Nov15:29–15:37Israel (24-hour retention; current DB account denied). Simulated-user probes move to isolated copies; live authenticated/anonymous HTTP and private transactional per-row baselines prevent recurrence. Full preservation/user acceptance remains Unreported/unsigned.
+
+
+## Scoped feature handoff after user clarification
+
+The exact permissions correction was independently confirmed on7November at18:41:19Israel. Current row418 matches the original before bytes; change7390/execution3650 exactly reverses change7388, and the private backup checksum/0600mode match. Source: evidence/conjugation-installed-20261107/independent-permission-repair.json. Full historical WordPress metadata preservation remains uncertified; the aggregate baselines cannot account conclusively for every changed metadata row.
+
+The user questioned expansion beyond feature implementation. The wider hosting-log investigation is stopped and is not continued as a feature-delivery prerequisite. The installed508-form feature and its functional/access/cache/rendered evidence are delivered with the preservation limitation stated explicitly. No hosting request was sent. Existing already-preserved audit records remain private; no raw sensitive logs enter Git or the public delivery. Any broader audit needs separate agreement. Both runtimes remain running. Physical Android and Guy acceptance are unreported.
