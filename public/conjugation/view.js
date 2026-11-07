@@ -53,4 +53,3 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
   root.addEventListener('click',act);root.addEventListener('change',change);root.addEventListener('input',input);root.addEventListener('submit',submit);render();
   return {destroy(){dead=true;root.removeEventListener('click',act);root.removeEventListener('change',change);root.removeEventListener('input',input);root.removeEventListener('submit',submit);root.replaceChildren();root.classList.remove('conjugation-root');}};
 }
-

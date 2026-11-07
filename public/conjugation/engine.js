@@ -76,4 +76,3 @@ export class Drill {
     this.reset();return true;
   }
 }
-
