@@ -1,0 +1,63 @@
+{
+  "revision": "a69f17438f66c8a6a8e1808b5904e808bed078dd",
+  "scope": "Isolated synthetic package HTTP and supplied zero-form package; no destination installation",
+  "http": [
+    {
+      "url": "/catalog-data.php",
+      "status": 404,
+      "bodyBytes": 0,
+      "catalogExposed": false
+    },
+    {
+      "url": "/catalog-data.php?login=1&access=true",
+      "status": 404,
+      "bodyBytes": 0,
+      "catalogExposed": false
+    },
+    {
+      "url": "/assets/catalog.json",
+      "status": 404,
+      "bodyBytes": 552,
+      "catalogExposed": false
+    },
+    {
+      "url": "/shortcode?login=0&access=false",
+      "status": 200,
+      "embeddedForms": 0
+    },
+    {
+      "url": "/shortcode?login=0&access=true",
+      "status": 200,
+      "embeddedForms": 0
+    },
+    {
+      "url": "/shortcode?login=1&access=false",
+      "status": 200,
+      "embeddedForms": 0
+    },
+    {
+      "url": "/shortcode?login=1&access=truthy",
+      "status": 200,
+      "embeddedForms": 0
+    },
+    {
+      "url": "/shortcode?login=1&access=true",
+      "status": 200,
+      "embeddedForms": 7
+    }
+  ],
+  "suppliedPackage": {
+    "canonicalSevenFiles": true,
+    "allHashesMatch": true,
+    "regeneratedBytesIdentical": true,
+    "verbs": 11,
+    "prepositions": 19,
+    "gradingForms": 0
+  },
+  "verifierRejects": [
+    "assets/catalog.json",
+    "unreviewed-extra.txt",
+    "modified asset hash"
+  ],
+  "verdict": "B1 CLOSED"
+}
