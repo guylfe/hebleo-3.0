@@ -1,0 +1,10 @@
+{
+  "revisionId": 1,
+  "lessonId": "lesson-1",
+  "formIds": [
+    "fixture-study-i",
+    "fixture-my",
+    "fixture-our"
+  ],
+  "fixtureOnly": true
+}

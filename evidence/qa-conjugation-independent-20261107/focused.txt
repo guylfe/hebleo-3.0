@@ -1,0 +1,46 @@
+✔ production packaging rejects fixtures, filters held, preserves modules; real PHP shortcode gate (328.8337ms)
+✔ rehearsal surface links resolve from root and preserve exact 11/19 equal-cell choices (1.2745ms)
+✔ approval gate independent of selected IDs, no fixture default or status bypass (1.3455ms)
+✔ identity/schema gate and exact filters including native partial unlocks (0.413ms)
+✔ each selected form once before automatic repeated missed passes; no immediate reinsertion (1.1861ms)
+✔ override applies only original typed mismatch; cannot override choice by switching mode (0.2728ms)
+✔ both directions accept explicit variants and pointed/unpointed; punctuation is not a Hebrew mark (1.0484ms)
+✔ ambiguous reverse readings are accepted and never wrong distractors; duplicates collapse (0.3107ms)
+✔ show answer waits for explicit self-check and cannot accidentally grade twice (0.1845ms)
+✔ every contracted verb tense and preposition filter supports exact slots without expansion (0.4776ms)
+✔ Write mode continues within a round; drafts clear only on question advance (0.3409ms)
+✔ native startup, portable grading and packaging share one complete record contract (1.7021ms)
+✔ production catalogue preserves the exact approved lexical identities and excludes fixture records (1.9944ms)
+✔ actual native HTTP boundary mounts the actual shared view without learner or SRS writes (91.8442ms)
+✔ production has no fixture key; injection is restricted to disposable in-memory Stores (10.0112ms)
+✔ catalog rejects malformed safe-key and approval records independently of the view (0.6178ms)
+✔ bad unlock IDs and whole-word shortcuts fail atomically, including held, attested and duplicates (15.9614ms)
+✔ actual Studio collector and HTTP Save/reload retain exact partial forms, sibling edits and scoped publication (497.5644ms)
+✔ Studio CAS failure retains unlock inputs; empty catalog never drops existing metadata on mount (184.393ms)
+✔ open, author preview, practice ahead, and client preferences never grant forms or change cards (51.3054ms)
+✔ completion unions only authored partial slots from the actual pinned revision, per learner, idempotently (37.8882ms)
+✔ questionless Finish grants exact forms only after the actual text-page gate passes (7.4748ms)
+✔ later catalog additions never expand a saved preposition selection or historical defaults (7.6825ms)
+✔ completion and unlocks roll back together if the learner write fails after writing (9.4301ms)
+✔ legacy learners default empty on read without writes, and malformed learned lists cannot be restored (5.5552ms)
+✔ native mount passes the fixed API, owner-scoped preferences and read-only learned IDs; destroy cleans up (6.4616ms)
+✔ native loading failure supports retry, and departed async loads cannot mount another learner view (7.069ms)
+✔ HTTP access follows existing course entitlement; catalogs are read-only and only fixed assets are served (90.0682ms)
+✔ real app #conjugation navigation, profile change and page restore preserve teaching and card state (367.5869ms)
+✔ typing then blur leaves the first Show or Check click attached to its original button (107.3233ms)
+✔ native he: default Choose, typed draft + Nikkud + mode retention, override and destroy (40.0859ms)
+✔ native en: default Choose, typed draft + Nikkud + mode retention, override and destroy (19.1336ms)
+✔ wordpress he: default Choose, typed draft + Nikkud + mode retention, override and destroy (16.5509ms)
+✔ wordpress en: default Choose, typed draft + Nikkud + mode retention, override and destroy (21.1271ms)
+✔ production default rejects fixture catalogue and labels gated empty state; content escaped (18.468ms)
+✔ choice attempt cannot gain override by switching Write, and selected option survives toggle (13.9617ms)
+✔ setup changes abandon drill and storage contains only bounded display preferences (15.9741ms)
+✔ too few options offers Write honestly and disabled sole choice; checkbox click retains draft (12.2286ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2775.8279
