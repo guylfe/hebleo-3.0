@@ -269,6 +269,12 @@
         },
         "preview": {
           "$ref": "#/definitions/diff"
+        },
+        "conjugationCatalog": {
+          "type": "object"
+        },
+        "conjugationFixtureMode": {
+          "type": "boolean"
         }
       },
       "required": [

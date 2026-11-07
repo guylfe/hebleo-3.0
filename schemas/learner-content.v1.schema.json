@@ -228,6 +228,9 @@
                     }
                   }
                 ]
+              },
+              "conjugationUnlocks": {
+                "$ref": "conjugation-native.v1.schema.json#/definitions/lessonUnlocks"
               }
             },
             "required": [

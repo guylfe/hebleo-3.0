@@ -65,6 +65,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           if(url.pathname==='/api/review/status'){if(!store.learner(userId).purchasedCourses.includes('demo-foundations'))throw new DomainError('Course access required.',403);return json(200,{receipt:store.get('review-'+userId+'-'+String(url.searchParams.get('requestId')))??null});}
           if(url.pathname==='/api/shared-cards')return json(200,store.shared.collection(userId,Object.fromEntries(url.searchParams)));
           if(url.pathname==='/api/studio/shared-cards/slots'){store.requireAuthor(userId);const note=store.shared.note(url.searchParams.get('sourceId'));if(!note)throw new DomainError('Source not found.',404);return json(200,audioSlots(note));}
+          if (url.pathname === '/api/conjugation') return json(200, store.conjugation(userId));
           if (url.pathname === '/api/bootstrap') return json(200, store.bootstrap(userId));
           if(url.pathname==='/api/source-vocabulary')return json(200,projectSourceVocabulary(store.snapshot(),{offset:url.searchParams.get('offset'),search:url.searchParams.get('search')||'',category:url.searchParams.get('category')||'',sourceLesson:url.searchParams.get('sourceLesson')||''}));
           if (url.pathname === '/api/lexical') return json(200,projectLexicalRows(store.snapshot(),url.searchParams.get('lessonId'),{offset:Math.max(0,Number(url.searchParams.get('offset'))||0),search:url.searchParams.get('search')||'',tag:url.searchParams.get('tag')||'',usedLessonId:url.searchParams.get('usedLessonId')||'',learningState:url.searchParams.get('learningState')||'',learner:store.learner(userId)}));
@@ -74,7 +75,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
           if (url.pathname === '/api/questions') return json(200,store.questions(userId));
           if (url.pathname === '/api/reports') return json(200,store.reports(userId));
           if (['/api/studio','/api/export','/api/content'].includes(url.pathname)) store.requireAuthor(userId);
-          if (url.pathname === '/api/studio') return json(200, { ...store.active(), preview: store.preview() });
+          if (url.pathname === '/api/studio') return json(200, { ...store.active(), preview: store.preview(), conjugationCatalog: store.conjugationCatalog, conjugationFixtureMode: store.conjugationFixtures });
           if (url.pathname === '/api/export') {
             const body=store.serializeBackup(store.backup());
             res.writeHead(200,{...headers,'Content-Type':'application/json; charset=utf-8'});return res.end(body);
@@ -180,6 +181,7 @@ export function createServer(store, { mediaRoot = resolve(root, 'uploads'),sourc
       for(const asset of ['author/rendered-source.js','author/inline-author.js','author/author.css','studio/workspace.js','source-activities.js','studio/text-import.js','text-contract.js','content-identity.js','text-reader.js','studio/text-pages-editor.js','exercise-actions.js','exercise-bindings.js','studio/exercise-bindings-editor.js','post-answer-vocabulary.js','vocabulary-reminder.js','vocabulary-reminder.css','source-vocabulary.js','lexical-contract.js','lexical-runtime.js','lexical-vocabulary.js','lexical-vocabulary.css','studio/lexical-settings.js'])allowed['/'+asset]=asset;
       for(const asset of ['safe-format.js','author/classic-source.js','author/legacy-editor.js','author/vendor/jodit.min.js','author/vendor/jodit.min.css','author/field-patch.js','studio/save-task.js','studio/save-processor.js','studio/save-worker.js','sidebar-toggle.js','author/standard-editor.js','author/source-adapter.js','author/image-chooser.js','author/vendor/prosemirror.js','studio/media-picker.js','studio/lesson-publication.js'])allowed['/'+asset]=asset;
       allowed['/review-outbox.js']='review-outbox.js';allowed['/shared-cards.js']='shared-cards.js';allowed['/review-shortcuts.js']='review-shortcuts.js';allowed['/review-save.js']='review-save.js';
+      for(const asset of ['native-conjugation.js','conjugation-contract.js','studio/conjugation-unlocks.js','conjugation/engine.js','conjugation/view.js','conjugation/practice.css'])allowed['/'+asset]=asset;
       allowed['/backup-contract.js']='backup-contract.js';
       if (!allowed[url.pathname]) return json(404, { error: 'Page not found.', code: 'NOT_FOUND' });
       const file = allowed[url.pathname]; const ext = url.pathname.startsWith('/vendor/') ? '.js' : '.' + file.split('.').pop();

@@ -70,3 +70,7 @@
 .text-pages-editor pre,.text-page-id{white-space:pre-wrap;overflow-wrap:anywhere}
 .text-pages-editor [aria-invalid=true]{border:2px solid var(--danger,#b91c1c)}
 .text-pages-editor summary{cursor:pointer;min-block-size:32px;font-weight:600}
+
+[data-conjugation-unlocks] fieldset{margin:1rem 0;padding:1rem;border:1px solid #d5dfe8;border-radius:8px}
+[data-conjugation-unlocks] .conjugation-unlock-option{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;min-height:44px;margin:.4rem 0}
+[data-conjugation-unlocks] input[type=checkbox]{width:18px;height:18px;flex:none}
