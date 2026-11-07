@@ -47,3 +47,7 @@ jobs:
           php -l adapters/wordpress/background-review/protocol-probe.php
           node --check adapters/wordpress/background-review/client.js
           node --check adapters/wordpress/background-review/generate.mjs
+      - name: Conjugation package and WordPress access boundary
+        run: |
+          php -l adapters/wordpress/conjugation/conjugation.php
+          node --test adapters/wordpress/conjugation/package.test.mjs

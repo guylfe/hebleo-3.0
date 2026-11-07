@@ -1,0 +1,27 @@
+{
+  "base": "0bbd389",
+  "sameFindings": true,
+  "findings": [
+    [
+      "public/studio/lesson-editor.js",
+      30,
+      "affordance.actionless-button"
+    ],
+    [
+      "public/studio/lesson-editor.js",
+      30,
+      "affordance.actionless-button"
+    ],
+    [
+      "public/studio/media-picker.js",
+      15,
+      "affordance.actionless-button"
+    ],
+    [
+      "public/author/vendor/jodit.min.css",
+      1,
+      "scrollbar.webkit-only"
+    ]
+  ],
+  "scopeFindings": 0
+}

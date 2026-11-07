@@ -1,7 +1,6 @@
 // Native boundary validation; independent of the practice view and its controls.
-export function isConjugationId(value) {
-  return typeof value === 'string' && value.length <= 160 && /^[A-Za-z0-9][A-Za-z0-9_:-]*$/.test(value) && !['constructor','prototype','__proto__'].includes(value);
-}
+import {isConjugationId} from './conjugation/catalog-contract.js';
+export {isConjugationId};
 export function validateFormIds(ids) {
   if (!Array.isArray(ids) || ids.length > 10000 || ids.some(id => !isConjugationId(id)) || new Set(ids).size !== ids.length) throw new Error('Conjugation form IDs must be a unique list of safe stable IDs.');
   return ids;

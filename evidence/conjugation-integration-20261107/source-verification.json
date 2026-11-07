@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-07T11:07:57.741Z",
+  "verifiedInputHashes": 12,
+  "counts": {
+    "approvedLexicalSelections": 30,
+    "verbs": 11,
+    "prepositions": 19,
+    "approvedForms": 0,
+    "sourceAttestedSlots": 302,
+    "verbSourceSlots": 115,
+    "prepositionSourceSlots": 187,
+    "missingSelectedCourseSlots": 207,
+    "reviewUnits": 509,
+    "externalVerbProposals": 308,
+    "externalProposalsOverlappingCourseSlots": 115,
+    "externalOnlyVerbProposals": 193,
+    "missingActionNouns": 11,
+    "missingPrepositionSlots": 3
+  },
+  "catalogSha256": "7046599c9abb4c61f92711392d18c2feb0a373cd3d4fb6fbd66712b776c345b8"
+}

@@ -1,5 +1,9 @@
 # Hebleo application UX contract
 
+## Conjugation practice, 7 November 2026
+
+My Hebrew owns the `#conjugation` entry and current navigation state. Native I/O/lifecycle belongs to native-conjugation.js; shared engine/view and catalog-contract.js own transient practice, the exact grading schema and approval exclusion in both platforms. Studio exact form IDs use the existing workspace/CAS/publishing contract, then accumulate per learner only at successful completion of the actual lesson snapshot. Opening, preview and practice ahead never grant forms. Author choices do not expand when a catalog grows. Practice never writes vocabulary scheduling. Mode/Nikkud retain both drafts; changing setup ends the round. Misses repeat only after every remaining form of the current pass and may require further passes. Typed mismatch override changes only that attempt. Native selects retain platform-owned popup behavior. Preference storage contains only display Nikkud and direction. See docs/architecture/CONJUGATION_NATIVE_CONTRACT.md; release status is tracked separately in FEATURE_CHECKLIST.
+
 ## In-lesson editor candidate, 1 November 2026
 
 The assigned `EDITOR_INTERACTION_CONTRACT_20261101.md` governs this bounded change. `author/rendered-source.js` selects existing EasyMDE for genuine Markdown or the ProseMirror integration in `author/standard-editor.js` for HTML/mixed prose. Paragraphs, whole lists, headings, quotes, tables and history share one editor in the current page context; title is an ordinary input. Visible formatting includes lists/checklists, headings, code, links, approved local images with alt text, tables, rule, Undo/Redo and fullscreen. `author/image-chooser.js` reuses the supplied-media picker and reads only approved local image revisions. No upload or external image request is initiated by insertion/paste/preview.

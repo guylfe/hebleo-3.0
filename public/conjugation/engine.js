@@ -1,24 +1,6 @@
 /** Portable, read-only catalogue and transient practice state. No learner/SRS writes. */
-export const TENSES = ['past','present','future','imperative','infinitive','gerund','preposition'];
-export function validateCatalog(c) {
-  if (c?.schemaVersion !== 1 || !Array.isArray(c.words) || !Array.isArray(c.forms)) throw Error('Unsupported conjugation catalog');
-  const words = new Set(), ids = new Set();
-  for (const w of c.words) {
-    if (!w.id || words.has(w.id) || !['verb','prep'].includes(w.kind) || typeof w.unpointed !== 'string' || !w.unpointed.trim()) throw Error('Invalid word identity');
-    words.add(w.id);
-  }
-  for (const f of c.forms) {
-    if (!f.id || ids.has(f.id) || !words.has(f.wordId) || !TENSES.includes(f.tense)) throw Error('Invalid form identity');
-    ids.add(f.id);
-    if (!['approved','fixture','held','source-attested'].includes(f.approval)) throw Error('Invalid approval');
-    if (['approved','fixture'].includes(f.approval)) {
-      for (const k of ['pointed','unpointed','english','pronoun']) if (typeof f[k] !== 'string' || !f[k].trim()) throw Error('Incomplete grading form');
-      for (const k of ['acceptedHebrew','acceptedEnglish','provenance']) if (!Array.isArray(f[k]) || f[k].some(x => typeof x !== 'string' || !x.trim())) throw Error('Invalid alternatives/provenance');
-      if (!f.provenance.length || !['1','2','3','none'].includes(String(f.person)) || !['common','masculine','feminine','none'].includes(f.gender) || !['singular','plural','none'].includes(f.number)) throw Error('Incomplete grading metadata');
-    }
-  }
-  return c;
-}
+import {validateCatalog,TENSES} from './catalog-contract.js';
+export {validateCatalog,TENSES};
 export function eligibleForms(c, {allowFixtures = false} = {}) {
   validateCatalog(c);
   return c.forms.filter(f => f.approval === 'approved' || (allowFixtures === true && f.approval === 'fixture'));

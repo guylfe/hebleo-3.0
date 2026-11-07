@@ -741,3 +741,26 @@ Verification: verify:candidate passed 1101, skipped 8 under the existing audio e
 | SC-BG05 | WordPress15a433f installed6Nov19:15Israel; independent findings closed | Lead28checks; independent corrected32hash/7+13DOM/26protocol checks; real disposable authenticated WP/MariaDB Browser51.3ms vs saveHTTP509.4ms, held10s, lost-response reload exactlyonce. Production32hashes/HTTP/authfailures and fresh342table backup verified; progress2967/assignments2118/settings35 and authored data/media exactly preserved. Authenticated production timing unverified. docs/WP_BACKGROUND_DELIVERY_20261106.md. | Unreported |
 
 
+
+## CP - Conjugation practice (7 November 2026)
+
+Reviewable implementation for both platforms; production release is blocked on the reviewed answer key. The exact 11 verb / 19 preposition identities are present with zero production grading forms. No conjugation installation has changed the existing app or WordPress. All user-result cells remain Unreported. Evidence: docs/CONJUGATION_IMPLEMENTATION_20261107.md and evidence/conjugation-integration-20261107/.
+
+| ID | Implemented behavior / bounded status | Evidence | User acceptance |
+|---|---|---|---|
+| CP01 | Verbs/Prepositions and exact equal 2/3-cell grid implemented; production content gated | Shared view/actual native route; desktop and 360px painted fixtures; no horizontal overflow | Unreported |
+| CP02 | Specific verb selection implemented | Exact-ID engine tests; 11 literal selections | Unreported |
+| CP03 | Specific preposition selection implemented | Exact-ID engine tests; 19 literal selections | Unreported |
+| CP04 | All contracted tense/conjugation filters implemented; unsupported content unavailable | Fixture slot/filter tests; missing key never synthesized | Unreported |
+| CP05 | Shared catalog/engine and separate native/WP adapters implemented | One validator; generated package hashes; actual PHP boundary tests | Unreported |
+| CP06 | Exact 11/19 lexical identities preserved; full grading coverage blocked | Production catalog identity test; 302-cell readback; 509 held units / 308 separate proposals | Unreported |
+| CP07 | Choose default both directions, Write and both drafts retained | Native/WP direction/mode tests; actual native painted draft check | Unreported |
+| CP08 | Optional collapsed person/gender/number filters implemented | Semantic/filter tests; native selects retain platform popup | Unreported |
+| CP09 | Nikkud display switch and unpointed comparison implemented; actual key approval blocked | Explicit display fixtures; draft/Nikkud tests; no spelling authored by mark deletion | Unreported |
+| CP10 | Practice remains independent of flashcard scheduling | Actual native HTTP/shared-view test and Store readback show no learner/card writes | Unreported |
+| CP11 | Automatic missed passes after every remaining form, repeating as needed | Multi-item/repeated-pass sequence tests; supersedes older optional-repeat proposal | Unreported |
+| CP12 | Citation-pair/base plus tense/pronoun and reverse meaning prompts implemented | Both-direction fixture tests and painted examples | Unreported |
+| CP13 | Typed mismatch self-approval removes that attempt from pending review | Attempt-identity/mode-switch tests and actual native rendered correction | Unreported |
+| CP14 | Studio exact lesson unlocks save/reload/publish through existing CAS | Actual collector + HTTP save/reload/scoped publication tests | Unreported |
+| CP15 | Completion grants only exact forms from the actual pinned snapshot, per learner | Partial unlock, text gate, learner isolation, idempotence and rollback tests | Unreported |
+| CP16 | Practice ahead allowed without changing learned defaults/completion | Native Learned/All tests; open/preview/practice/SRS preservation tests | Unreported |

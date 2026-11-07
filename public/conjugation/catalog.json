@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "status": "Content held: 30 approved lexical selections; 0 approved grading forms. Exact course evidence and unresolved decisions are in PROVENANCE_LEDGER.json and CONTENT_GATE.md. Pointed word labels omitted pending policy review; literal unpointed selection labels are from PLAN.md.",
+  "words": [
+    {
+      "id": "verb-proposal-01",
+      "kind": "verb",
+      "unpointed": "למד–לומד"
+    },
+    {
+      "id": "verb-proposal-02",
+      "kind": "verb",
+      "unpointed": "רצה–רוצה"
+    },
+    {
+      "id": "verb-proposal-03",
+      "kind": "verb",
+      "unpointed": "גר–גר"
+    },
+    {
+      "id": "verb-proposal-04",
+      "kind": "verb",
+      "unpointed": "יצא–יוצא"
+    },
+    {
+      "id": "verb-proposal-05",
+      "kind": "verb",
+      "unpointed": "דיבר–מדבר"
+    },
+    {
+      "id": "verb-proposal-06",
+      "kind": "verb",
+      "unpointed": "נכנס–נכנס"
+    },
+    {
+      "id": "verb-proposal-07",
+      "kind": "verb",
+      "unpointed": "התלבש–מתלבש"
+    },
+    {
+      "id": "verb-proposal-08",
+      "kind": "verb",
+      "unpointed": "הסתכן–מסתכן"
+    },
+    {
+      "id": "verb-proposal-09",
+      "kind": "verb",
+      "unpointed": "הרגיש–מרגיש"
+    },
+    {
+      "id": "verb-proposal-10",
+      "kind": "verb",
+      "unpointed": "הכיר–מכיר"
+    },
+    {
+      "id": "verb-proposal-11",
+      "kind": "verb",
+      "unpointed": "העביר–מעביר"
+    },
+    {
+      "id": "prep-proposal-1",
+      "kind": "prep",
+      "unpointed": "של"
+    },
+    {
+      "id": "prep-proposal-2",
+      "kind": "prep",
+      "unpointed": "ל־"
+    },
+    {
+      "id": "prep-proposal-3",
+      "kind": "prep",
+      "unpointed": "ב־"
+    },
+    {
+      "id": "prep-proposal-4",
+      "kind": "prep",
+      "unpointed": "מ־"
+    },
+    {
+      "id": "prep-proposal-5",
+      "kind": "prep",
+      "unpointed": "עם"
+    },
+    {
+      "id": "prep-proposal-6",
+      "kind": "prep",
+      "unpointed": "בגלל"
+    },
+    {
+      "id": "prep-proposal-7",
+      "kind": "prep",
+      "unpointed": "במקום"
+    },
+    {
+      "id": "prep-proposal-8",
+      "kind": "prep",
+      "unpointed": "את"
+    },
+    {
+      "id": "prep-proposal-9",
+      "kind": "prep",
+      "unpointed": "בתוך"
+    },
+    {
+      "id": "prep-proposal-10",
+      "kind": "prep",
+      "unpointed": "לתוך"
+    },
+    {
+      "id": "prep-proposal-11",
+      "kind": "prep",
+      "unpointed": "ליד"
+    },
+    {
+      "id": "prep-proposal-12",
+      "kind": "prep",
+      "unpointed": "כמו"
+    },
+    {
+      "id": "prep-proposal-13",
+      "kind": "prep",
+      "unpointed": "על"
+    },
+    {
+      "id": "prep-proposal-14",
+      "kind": "prep",
+      "unpointed": "אל"
+    },
+    {
+      "id": "prep-proposal-15",
+      "kind": "prep",
+      "unpointed": "לפני"
+    },
+    {
+      "id": "prep-proposal-16",
+      "kind": "prep",
+      "unpointed": "אחרי"
+    },
+    {
+      "id": "prep-proposal-17",
+      "kind": "prep",
+      "unpointed": "בלי"
+    },
+    {
+      "id": "prep-proposal-18",
+      "kind": "prep",
+      "unpointed": "לגבי"
+    },
+    {
+      "id": "prep-proposal-19",
+      "kind": "prep",
+      "unpointed": "בשביל"
+    }
+  ],
+  "forms": []
+}

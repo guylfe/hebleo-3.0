@@ -47,6 +47,10 @@ components:
 ---
 # Hebleo selected application design
 
+## Approved conjugation interface, 7 November 2026
+
+The approved conjugation mockup adds a scoped practice surface with exactly two equal verb cells or three equal preposition cells at every viewport width, a compact Nikkud switch, native Learned only / All, native dropdown filters and Choose / Write. `public/conjugation/practice.css` owns the portable layout. Native colors inherit the canonical refinement.css ink, accent, line, paper, canvas and selection variables; standalone WordPress falls back to the approved mockup palette. No global token is changed. Hebrew display uses explicit stored spelling pairs and isolated RTL. Fixture banners belong only to disposable rehearsals. Content approval, installed rendering and Guy acceptance remain separate gates.
+
 ## In-lesson prose editor candidate, 1 November 2026
 
 Guy's 1 November classic-editor correction supersedes the earlier custom toolbar and Markdown-primary variant. All normal in-lesson prose, including Markdown, uses complete Jodit core 4.18.12 with its supplied light-grey compact icon toolbar, dropdowns, separators and two configured rows. The existing 760px lesson measure, palette, application fonts and sidebar next-action behavior remain. Scoped CSS isolates the component controls from application button/select sizing. Advanced exact source remains secondary; Studio's other Markdown surfaces retain EasyMDE. This is an isolated uninstalled candidate; the mounted Browser was occupied by another thread, so native visual/layout/tooltip/keyboard/paste/IME, zoom and assistive-technology review remain pending. See docs/CLASSIC_EDITOR_DELIVERY_20261101.md.
