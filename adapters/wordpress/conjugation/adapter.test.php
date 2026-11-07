@@ -4,7 +4,7 @@ define('ABSPATH',__DIR__);$logged=false;$userId=0;$override=false;$access=null;$
 function is_user_logged_in(){global $logged;return $logged;}function get_current_user_id(){global $userId;return $userId;}
 function apply_filters($name,$default,$id){global $override,$access,$filterCalls;if($name!=='hebleo_conjugation_access'||$id!==7||$default!==true)throw new Exception('wrong gate');$filterCalls++;return $override?$access:$default;}
 function sfwd_lms_has_access(...$a){throw new Exception('course audience must not be consulted');}
-function add_shortcode($name,$fn){global $hooks;$hooks[$name]=$fn;}
+function add_action(...$args){}function add_shortcode($name,$fn){global $hooks;$hooks[$name]=$fn;}
 function wp_unique_id($p){static $n=0;return $p.(++$n);}function wp_enqueue_style(...$x){}function plugins_url($p,$f){return 'https://fixture.invalid/'.$p;}function esc_attr($s){return htmlspecialchars($s,ENT_QUOTES);}function esc_url($s){return esc_attr($s);}function wp_json_encode($v,$flags){return json_encode($v,$flags);}
 require $argv[1];
 function ok($v,$m){if(!$v)throw new Exception($m);echo "PASS $m\n";}

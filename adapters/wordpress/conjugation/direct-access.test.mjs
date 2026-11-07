@@ -31,7 +31,7 @@ function is_user_logged_in(){return ($_GET['authorized'] ?? '') === '1';}
 function get_current_user_id(){return is_user_logged_in()?7:0;}
 function apply_filters($name,$default,$userId){return ($_GET['denied'] ?? '') === '1'?false:$default;}
 function sfwd_lms_has_access(...$args){throw new Exception('Course enrollment must not gate flashcard audience');}
-function add_shortcode(...$args){}
+function add_action(...$args){}function add_shortcode(...$args){}
 function wp_unique_id($p){return $p.'test';}
 function wp_enqueue_style(...$args){}
 function plugins_url($p,$file){return '/'.$p;}
