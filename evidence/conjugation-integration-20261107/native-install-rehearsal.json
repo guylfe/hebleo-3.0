@@ -1,0 +1,335 @@
+{
+  "checkedAt": "2026-11-07T11:59:10.873Z",
+  "revision": "53604a7b59634cd91478e5a90223baa8f9fd0900",
+  "runtimeSha256": "9b0b2b9b13c8ac600c0fcd669547719c6285e09e5b6d5594f7cd788f6f993914",
+  "preservationMode": true,
+  "sourceUnchanged": true,
+  "rehearsalStateUnchanged": true,
+  "logicalDatabaseSha256": "09cec407e1f619058d2a64dec5eb0aafb398484d65c79af9efb9096d199cee9b",
+  "profiles": 3,
+  "activeLessons": 3,
+  "savedDraftLessons": 23,
+  "approvedGradingForms": 0,
+  "allowFixtures": false,
+  "directCatalogStatus": 404,
+  "servedAssets": 79,
+  "assets": {
+    "/conjugation/practice.css": {
+      "status": 200,
+      "sha256": "cc0596fcd639ca7f03d12c5aa6695c6d51421b686308596d90abe2ef64e94f02"
+    },
+    "/conjugation/view.js": {
+      "status": 200,
+      "sha256": "3f436c50e9d7a77d798ca7ea0a1b7408f3b9eb4a2d663bc946c8f8bf4d6f22a4"
+    },
+    "/styles.css": {
+      "status": 200,
+      "sha256": "e1d9518b309da250a0a90522b3097a7a748d888bf9e91b0b0f565072c015751c"
+    },
+    "/keyboard-owner.css": {
+      "status": 200,
+      "sha256": "8e3c5a05c30ab7b9d4ab34e63a68485c51fd04935e49934d7c94a0dbd5256a62"
+    },
+    "/studio/studio.css": {
+      "status": 200,
+      "sha256": "95fdb5b03798360ac13e6d73313c344d5428ef59d00064547805ddafb8e2a078"
+    },
+    "/author/author.css": {
+      "status": 200,
+      "sha256": "b639324345a14ea0d899bf878fad416fdbba83c11011f4bc696717bfa6da3853"
+    },
+    "/refinement.css": {
+      "status": 200,
+      "sha256": "97b6a19bf89d4062a2165fe2123098648fef0558a16a2ee2699b1a5a904f2795"
+    },
+    "/lexical-vocabulary.css": {
+      "status": 200,
+      "sha256": "227158c0c566c72563c4d330a0a4c849f6c0362d1f4c5331b8f5c0accd2a59a1"
+    },
+    "/vocabulary-reminder.css": {
+      "status": 200,
+      "sha256": "a26300ff22cc8d7104cbc9b8ca1fe04b641ff739ea27a3794b77437a4a48a5bc"
+    },
+    "/keyboard-owner.js": {
+      "status": 200,
+      "sha256": "6e813727db224050295344f1fe80185cdca82274ea5ebad30428469f0a49b6ea"
+    },
+    "/app.js": {
+      "status": 200,
+      "sha256": "8f6aa0adb8ec662989b0a09d73f6e231d21a42ed548a98b7be86567a481ca333"
+    },
+    "/studio/sources.css": {
+      "status": 200,
+      "sha256": "836d5f7eeb4fbcb1b99ba25e266cdba57ce1e94bc0a0f99005f900f78a6660f1"
+    },
+    "/studio/media-library.css": {
+      "status": 200,
+      "sha256": "9148b289cf392dcaaf4df44821bc18005b4b37fdd58f39e13c059cecc4ec9d12"
+    },
+    "/conjugation/engine.js": {
+      "status": 200,
+      "sha256": "d6a83b0907eaceae73ae3630176fc0df8f3f8dfed05b3531c42c40995c9f0712"
+    },
+    "/native-conjugation.js": {
+      "status": 200,
+      "sha256": "3f876e269f1b771673a85b78dd07483600a406e2b5bad9b16b3aef3d0809230a"
+    },
+    "/review-shortcuts.js": {
+      "status": 200,
+      "sha256": "eed93a1553763d9925186ff8d713abd4b6a0229e42d7fa2328245b5f7dcaf786"
+    },
+    "/review-save.js": {
+      "status": 200,
+      "sha256": "789ca6504e90114499f9d5676645598e943652af0e588cb343a22b734831d040"
+    },
+    "/shared-cards.js": {
+      "status": 200,
+      "sha256": "13881bc7adab4a6941fba3e9d26c9bed60596261e4e2fc05d2d9dfee4395cb3f"
+    },
+    "/studio/workspace.js": {
+      "status": 200,
+      "sha256": "beabe0c98d91e1e8aadd9d0f789d530f54e173eb5e24ca4b22edf02f8e400d92"
+    },
+    "/sidebar-toggle.js": {
+      "status": 200,
+      "sha256": "e11b37f0daa5b555cc02fdadf0726194747590821e9c2c47f845a93dab2f2a2c"
+    },
+    "/author/inline-author.js": {
+      "status": 200,
+      "sha256": "ea17963601cf7874520dc0ce32d31f35ba639b9afb85361417ba53ea3206a2f1"
+    },
+    "/studio/lesson-publication.js": {
+      "status": 200,
+      "sha256": "24a7e8f196ab22700a1bb67b795e7fc343af306a4fcdd651b04884c9e3abf40c"
+    },
+    "/backup-contract.js": {
+      "status": 200,
+      "sha256": "b81068263d2017f67312c8c9c8d69cca025d78d8b6292140d50c68bec9743064"
+    },
+    "/content.js": {
+      "status": 200,
+      "sha256": "cddcf13ab9c1df3cb420d8c9b178fef4365d9c241018af5ac0fd7a69495885a2"
+    },
+    "/ux.js": {
+      "status": 200,
+      "sha256": "9ead968a44575b7a362890ad6e8cb7f080b0a53b6063496684e952a13a2c0d00"
+    },
+    "/course.js": {
+      "status": 200,
+      "sha256": "db3efe007cf07e4c3254d38b5b435ea6845e7d468a51de6169737fced25d7c12"
+    },
+    "/rich.js": {
+      "status": 200,
+      "sha256": "3c9478846615b8a55cb3002840b6e2aa7b22dae988d6b8d2f109871655d2962f"
+    },
+    "/rich-browser.js": {
+      "status": 200,
+      "sha256": "b9ee02e3efd01a246f138a5795f8d3cb3455bb31a3d6d30164307a03f7a87963"
+    },
+    "/text-reader.js": {
+      "status": 200,
+      "sha256": "2bb76b7bcccde9c0aa0988ad377b1f29707d33d4570023fd2c80b6d573f060dd"
+    },
+    "/learner-view.js": {
+      "status": 200,
+      "sha256": "a8606eba12becf492f1ec6e00b770ea25523f578b6f2dad3900366bdd1b86a3c"
+    },
+    "/interactions.js": {
+      "status": 200,
+      "sha256": "0408795003104dee4976b376f79371a0ca75932ac4c9fb558ec6a5398c22137f"
+    },
+    "/review-schedule.js": {
+      "status": 200,
+      "sha256": "685cc4028fbf16bdba93b58ea7f05735e542f6cadeadc76315bed4c33b84713c"
+    },
+    "/media.js": {
+      "status": 200,
+      "sha256": "cf65b04dc4d0d0f6e95868818f06ee8d76bfe3ebe5f2bcfd9ab123975cbf96c0"
+    },
+    "/studio/media-library.js": {
+      "status": 200,
+      "sha256": "95518f649d7e3215de1113b7c09165a139ed8efc1433430cccbf2a47f5179e33"
+    },
+    "/studio/sources-editor.js": {
+      "status": 200,
+      "sha256": "ed6be80b6920cc77606be9fad420645dad554349d42d6011b958dbc706b17f17"
+    },
+    "/studio/unified-studio.js": {
+      "status": 200,
+      "sha256": "f93d076a35f5210cf563136affc95ae8b57d232f6c06cbb24a2752dbf34762bd"
+    },
+    "/studio/text-import.js": {
+      "status": 200,
+      "sha256": "e0e8082355529fe6630d518f7046d92a5cb1b826db60c205d632b73c4d456e3b"
+    },
+    "/studio/import-workflow.js": {
+      "status": 200,
+      "sha256": "f4527beaab6388f1d90233f3271e7e5399b2405d99c0bb5c0e42555326c986cb"
+    },
+    "/studio/exercise-editor.js": {
+      "status": 200,
+      "sha256": "d53d3fc5b7195dca1203db37315aa1b3f4f879995f8a8a74a14041656f966d7e"
+    },
+    "/studio/import-review.js": {
+      "status": 200,
+      "sha256": "718c318ec8303f08d25a81864cd15c8705e68bf9cfcee4c5c37c3784e2e8ae93"
+    },
+    "/preview/lesson-preview.js": {
+      "status": 200,
+      "sha256": "47fad047e1f2752adf0a5a3b44d45ada6dc10c45f99f5efaf1f8a124b5674d89"
+    },
+    "/preview/learner-renderer.js": {
+      "status": 200,
+      "sha256": "0a7a6597ab10113278786cebb590908b15e49768c349d6352ddcb503cc51343f"
+    },
+    "/lexical-vocabulary.js": {
+      "status": 200,
+      "sha256": "f0c5aa263cd5acc96b4caaceacbe1c5ad0674404e4aa082f2713d1f30bc692cc"
+    },
+    "/post-answer-vocabulary.js": {
+      "status": 200,
+      "sha256": "dcacd0baf9784098e78222243a3b62f7e23e8d4c11b40880e601f200d1fbb2bc"
+    },
+    "/conjugation/catalog-contract.js": {
+      "status": 200,
+      "sha256": "80513200ba17d979474a66e1c3d5bc7a5de5e67c4fb77b30ac7ee07c81a53f75"
+    },
+    "/review-outbox.js": {
+      "status": 200,
+      "sha256": "3b7786ab9bc01dc374ed5bdb5b901a892eab02c7623f381cefe19c5f57e47754"
+    },
+    "/author/field-patch.js": {
+      "status": 200,
+      "sha256": "fc4bd4872ae40f7af50f22de83df5a62a4aaa5d79706303f9d68c4c19e71702d"
+    },
+    "/studio/save-task.js": {
+      "status": 200,
+      "sha256": "63fdcb0f63e9b5b4bea690a0ce49e9b929a189975bf1e5cb52af836b50fe64f6"
+    },
+    "/studio/save-processor.js": {
+      "status": 200,
+      "sha256": "cb27e4d5efe02953fd6125d7a977ba0a06ed2dc9d46df554b93c860b44da825e"
+    },
+    "/studio/editor-fields.js": {
+      "status": 200,
+      "sha256": "45d32489e0d48a881c570298ac2adaca9c427f8a5f2fa190f63f3be53b371bb6"
+    },
+    "/author/rendered-source.js": {
+      "status": 200,
+      "sha256": "ebf8b1a7573ee6dfbfb467831718aecb1be79a56520dc8ce0db31754f09f12a6"
+    },
+    "/vocabulary-import.js": {
+      "status": 200,
+      "sha256": "93fca44eaf6e0aa1bf9ebcae8b7fa26684646f04e975edcb5a1fe314273c7891"
+    },
+    "/text-contract.js": {
+      "status": 200,
+      "sha256": "050174bde975b447577b472f5af09147ef6ad6e5030c504786ab02351f789c57"
+    },
+    "/safe-format.js": {
+      "status": 200,
+      "sha256": "753ca0d990bceb86037a195de17eb231c0f97339d002c8aa35b73e9bbe45ddd7"
+    },
+    "/vendor/marked.js": {
+      "status": 200,
+      "sha256": "528a1b88bef88fc27277e06036ce7f4afb6a220b18110ba57c09e292b24a7ce0"
+    },
+    "/vendor/purify.js": {
+      "status": 200,
+      "sha256": "60c5d5ccbb466de3de3ba863461a92bf134f8c156cef7992da43e0f659bc5cbd"
+    },
+    "/exercise-actions.js": {
+      "status": 200,
+      "sha256": "010dfb7327ba604cebbb6f60c57cde06a7830142e61f013d9e62e6e8f7320ceb"
+    },
+    "/source-activities.js": {
+      "status": 200,
+      "sha256": "490050613c63c95ea47612458d1f4051090607e8da82a607a7d3c8bf16db9e88"
+    },
+    "/studio/conjugation-unlocks.js": {
+      "status": 200,
+      "sha256": "8b49fc1a82d8bf1ab0dd02dbc6ffb31fee17adf4845b408887c9921a46541c56"
+    },
+    "/studio/markdown-editor.js": {
+      "status": 200,
+      "sha256": "97448890701cfd762f3faa93b8e3f5d6d6397a030a177bd1fe689d407ed4b2a4"
+    },
+    "/studio/vocabulary-browser.js": {
+      "status": 200,
+      "sha256": "145633a98c624a50f8627bc9c186d447173c8364069b3b9aa689b541f8833000"
+    },
+    "/studio/lexical-settings.js": {
+      "status": 200,
+      "sha256": "11724abe76d7c698e13432abcf916ebdc1badce8dff4d03791a8e3bd97e571c7"
+    },
+    "/studio/selector-editor.js": {
+      "status": 200,
+      "sha256": "2c7025a21afd9b934d7f92562f5e79ae480e9646e30d2a162a3ec52a5d5cd1e0"
+    },
+    "/studio/curriculum-editor.js": {
+      "status": 200,
+      "sha256": "f73924eefd5a7e0e743b4fc25bdd205a944dba986cbb646526ddb0fabfefc5be"
+    },
+    "/content-identity.js": {
+      "status": 200,
+      "sha256": "b380ad0d0af902b5944835be478c86d107a9a1935b1c02d4d813fcb368ea07f1"
+    },
+    "/studio/text-pages-editor.js": {
+      "status": 200,
+      "sha256": "55bf51abb6076dcf28ed4455e30b08e145df2c111d393984c0edf3de49aa466a"
+    },
+    "/answer-policy.js": {
+      "status": 200,
+      "sha256": "7b9ace0f96f65980cb5a0ac655dd115a512f131d7419557260cf447cccd8c437"
+    },
+    "/exercise-bindings.js": {
+      "status": 200,
+      "sha256": "6ea7abdcd285c3b187ba1c58d5044df08816412e4fd68ebbd2bd9ee73af853cb"
+    },
+    "/studio/exercise-bindings-editor.js": {
+      "status": 200,
+      "sha256": "cdd93cb7d8d3b649d25a8d2862829266fd0b021c616b4c2a3518110f90bb1cd2"
+    },
+    "/vocabulary-reminder.js": {
+      "status": 200,
+      "sha256": "14b2221540958c5869aa3fa68959bbb001ecdf9c044eaff09dd69e9c016460c7"
+    },
+    "/author/standard-editor.js": {
+      "status": 200,
+      "sha256": "9ec02dab4fa71428c3c46f09db4c76c6b9f62b5386e7afe986ea452f22d6c89e"
+    },
+    "/conjugation-contract.js": {
+      "status": 200,
+      "sha256": "a196d74ea317f1e3ed0637e06d689960894619f2b92521899b432e55cc360a5b"
+    },
+    "/lexical-contract.js": {
+      "status": 200,
+      "sha256": "c30c3c7a24e900691d0199adb684a6b0a8c4c333590d95308b862a14f085700b"
+    },
+    "/lexical-runtime.js": {
+      "status": 200,
+      "sha256": "b050aca59b816266bbb47079577c686ade0bdddc16de66e6c00802626d63fb0b"
+    },
+    "/author/classic-source.js": {
+      "status": 200,
+      "sha256": "8708c9900c1e8a397457684acf2a9401c8b5169a676064f4353314ca6ff31475"
+    },
+    "/author/image-chooser.js": {
+      "status": 200,
+      "sha256": "38d4ca6079e859dd2f9ae6af65feb0ec55791cffdeeba7de1e2d41d1005423ae"
+    },
+    "/author/legacy-editor.js": {
+      "status": 200,
+      "sha256": "1ccefdd2026b07133dc5114983d225a9b9bbbaa9c1ecdfea53a40d55bcd4010f"
+    },
+    "/author/source-adapter.js": {
+      "status": 200,
+      "sha256": "7a578c9092fd8f0c91cc40853c9c9ddc96c814eb05c08acc3dcfa302a6d27159"
+    },
+    "/author/vendor/prosemirror.js": {
+      "status": 200,
+      "sha256": "97a310552004326602a29edfee8b13190e238358233c3a85f520258d050a512c"
+    }
+  },
+  "scope": "Read-only private-copy preparation; no live installation, learner write, configured Google credential or external-service verification"
+}

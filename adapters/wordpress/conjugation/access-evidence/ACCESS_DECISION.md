@@ -1,5 +1,7 @@
 # WordPress conjugation access decision — 7 November 2026
 
+**Historical investigation checkpoint.** The source evidence below is retained. Its pending audience choice and old default-deny package are superseded by CURRENT_BINDING.md and the implemented flashcard audience; destination verification remains pending installation.
+
 Follow-up resolved the choice below in favor of the flashcard audience. See CURRENT_BINDING.md for the implemented isolated binding and fresh verification. This investigation remains the historical evidence for the two audiences; its earlier pending/default-deny statements describe the pre-selection checkpoint.
 
 Base: 8d19d05397337d8695079032ad764ade01308f7a. Isolated branch fix/wordpress-access-evidence.
