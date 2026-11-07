@@ -50,4 +50,5 @@ jobs:
       - name: Conjugation package and WordPress access boundary
         run: |
           php -l adapters/wordpress/conjugation/conjugation.php
+          php adapters/wordpress/conjugation/access-evidence/policy-replay.test.php
           node --test adapters/wordpress/conjugation/package.test.mjs adapters/wordpress/conjugation/direct-access.test.mjs
