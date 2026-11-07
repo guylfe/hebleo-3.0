@@ -1,0 +1,27 @@
+✔ production packaging rejects fixtures, filters held, preserves modules; real PHP shortcode gate (295.0547ms)
+✔ rehearsal surface links resolve from root and preserve exact 11/19 equal-cell choices (0.95ms)
+✔ approval gate independent of selected IDs, no fixture default or status bypass (0.978ms)
+✔ identity/schema gate and exact filters including native partial unlocks (0.3195ms)
+✔ each selected form once before automatic repeated missed passes; no immediate reinsertion (1.5019ms)
+✔ override applies only original typed mismatch; cannot override choice by switching mode (0.2281ms)
+✔ both directions accept explicit variants and pointed/unpointed; punctuation is not a Hebrew mark (0.9256ms)
+✔ ambiguous reverse readings are accepted and never wrong distractors; duplicates collapse (0.2735ms)
+✔ show answer waits for explicit self-check and cannot accidentally grade twice (0.1607ms)
+✔ every contracted verb tense and preposition filter supports exact slots without expansion (0.4053ms)
+✔ Write mode continues within a round; drafts clear only on question advance (0.1789ms)
+✔ native he: default Choose, typed draft + Nikkud + mode retention, override and destroy (105.894ms)
+✔ native en: default Choose, typed draft + Nikkud + mode retention, override and destroy (28.9455ms)
+✔ wordpress he: default Choose, typed draft + Nikkud + mode retention, override and destroy (16.904ms)
+✔ wordpress en: default Choose, typed draft + Nikkud + mode retention, override and destroy (15.6127ms)
+✔ production default rejects fixture catalogue and labels gated empty state; content escaped (15.7463ms)
+✔ choice attempt cannot gain override by switching Write, and selected option survives toggle (11.5835ms)
+✔ setup changes abandon drill and storage contains only bounded display preferences (19.0429ms)
+✔ too few options offers Write honestly and disabled sole choice; checkbox click retains draft (11.8271ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1675.6869
