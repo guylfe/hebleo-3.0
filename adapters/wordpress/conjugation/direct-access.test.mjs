@@ -28,8 +28,9 @@ test('actual PHP HTTP denies direct catalog URLs while authorized shortcode alon
 if (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) !== '/shortcode') return false;
 define('ABSPATH', __DIR__);
 function is_user_logged_in(){return ($_GET['authorized'] ?? '') === '1';}
-function get_current_user_id(){return 7;}
-function apply_filters(...$args){return is_user_logged_in();}
+function get_current_user_id(){return is_user_logged_in()?7:0;}
+function apply_filters($name,$default,$userId){return ($_GET['denied'] ?? '') === '1'?false:$default;}
+function sfwd_lms_has_access(...$args){throw new Exception('Course enrollment must not gate flashcard audience');}
 function add_shortcode(...$args){}
 function wp_unique_id($p){return $p.'test';}
 function wp_enqueue_style(...$args){}
@@ -58,6 +59,8 @@ echo \\HebleoConjugation\\shortcode();
   }
   const denied=await fetch(origin+'/shortcode').then(r=>r.text());
   assert.match(denied,/unavailable for this account/);assert(!denied.includes('data-conjugation-catalog'));
+  const restricted=await fetch(origin+'/shortcode?authorized=1&denied=1').then(r=>r.text());
+  assert.match(restricted,/unavailable for this account/);assert(!restricted.includes('data-conjugation-catalog'));
   const allowed=await fetch(origin+'/shortcode?authorized=1').then(r=>r.text());
   const embedded=JSON.parse(allowed.match(/data-conjugation-catalog>([^<]+)<\/script>/)[1]);
   assert.equal(embedded.forms.length,7);assert.equal(embedded.forms[0].english,'SYNTHETIC PROTECTED GRADING RECORD');

@@ -6,9 +6,13 @@
  */
 namespace HebleoConjugation;
 if (!defined('ABSPATH')) exit;
-/** Default deny: installation owner must wire the existing course access check. */
+/** Same audience as live flashcard study: any authenticated WordPress account.
+ * See access-evidence/ACCESS_DECISION.md. No course/purchase entitlement is inferred.
+ * The optional site filter may restrict access; it cannot bypass authentication.
+ */
 function allowed(): bool {
-    return is_user_logged_in() && apply_filters('hebleo_conjugation_access', false, get_current_user_id()) === true;
+    $user_id = get_current_user_id();
+    return is_user_logged_in() && $user_id > 0 && apply_filters('hebleo_conjugation_access', true, $user_id) === true;
 }
 function shortcode(): string {
     if (!allowed()) return '<p>Conjugation practice is unavailable for this account.</p>';
