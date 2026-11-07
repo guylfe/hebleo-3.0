@@ -27,7 +27,18 @@
     "pass": 16,
     "fail": 0
   },
-  "signedInWordPress": "Evidence pending existing copy question",
+  "signedInWordPress": "Verified on canonical installed pages; independent report and all8screenshots reviewed by Lead",
   "physicalAndroid": "unverified",
-  "guyAcceptance": "unreported"
+  "guyAcceptance": "unreported",
+  "codeCI": {
+    "revision": "b647d46bfffed68f9a71d78db6fb4f205c17ee9c",
+    "local": {
+      "id": 42407052268,
+      "conclusion": "success"
+    },
+    "wordpress": {
+      "id": 42407052267,
+      "conclusion": "success"
+    }
+  }
 }

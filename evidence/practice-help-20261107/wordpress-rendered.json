@@ -1,0 +1,38 @@
+{
+  "reviewedAt": "2026-11-07T19:43:08.576Z",
+  "reviewer": "Lead Engineer",
+  "performer": "Leo - Web",
+  "existingRealSignedInContext": true,
+  "canonicalURLs": [
+    "https://hebleo.com/decks/?deck=49480",
+    "https://hebleo.com/conjugation-practice/"
+  ],
+  "screenshotsReviewed": 8,
+  "sidebarOrderAndLinks": true,
+  "flashcardHTMLCardIframeQueueStatsPreserved": true,
+  "conjugationDraftNodeCaretPromptPreserved": true,
+  "noNewRequestsDuringHelp": true,
+  "modalFocusTabCloseEscape": true,
+  "narrowViewport": 360,
+  "rtlPainted": true,
+  "installedFilesMatchFinalManifest": true,
+  "evidenceFiles": {
+    "VERIFICATION.md": "1d535a198d89b524fb2da5dd15acdd12f8e8b8132b7fca6d812b286e3c382789",
+    "conjugation-desktop.png": "0903838958f59b888abd12f4a423e775297164fea0cfa27e465f7a6c486704df",
+    "conjugation-help-bottom-360.png": "b0ce6cd318985c334d7bfbdf75fbe4c3b8f3cfbd29bf279a1c843617e3333758",
+    "conjugation-write-help-360.png": "9d36604138ad04b476445947abd0cfe60cd15113b17eb1e4f918c20d9414b294",
+    "conjugation-write-rtl-360.png": "161727a10a0e3f052d44e055e835da4f1c36abcd478c07591fae79d703313c74",
+    "conjugation-write-rtl-desktop.png": "538cd86f5d3f9752e2d076244ba12c2ab2e817fec8be2ed138eafc07cadb4ddc",
+    "flashcards-360.png": "1d4fe0b358f2589a6f037a433cbaba4429f87ef2a921221f944672792f193ca3",
+    "flashcards-desktop.png": "d74fc42cbfdea7f7467f103f08bea5690b209ca71326740f81e0441c64f5172a",
+    "sidebar-desktop.png": "0adefe96dbde5d316dfef8fcece3de7f136d882bee3090d46e78cc9fd1f4b583"
+  },
+  "limitations": [
+    "no physical Android or assistive-technology test",
+    "no live non-empty missed-queue or graded-feedback probe",
+    "no new database comparison by Web",
+    "existing bot-detector/GTM activity and site script errors recorded",
+    "known unattributed postmeta deletion remains outside broader investigation"
+  ],
+  "rawEvidenceLocation": "task-root/wordpress-rendered-verification; images not committed"
+}
