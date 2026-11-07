@@ -2,6 +2,18 @@
 
 The person's follow-up selected the flashcard audience. This resolves the substantive choice in ACCESS_DECISION.md; that document and live-policy.json preserve the source evidence.
 
+## Recorded decision provenance
+
+Exact answer delivered by OpenMausBot:
+
+> The person answered: "flashcard audience, consistent with independent WordPress practice; not applied pending Lead’s resolution.".
+
+The quoted answer text is preserved verbatim, including its trailing qualification. It selected the previously offered flashcard-audience option; it did not authorize live installation. The implementation remained isolated.
+
+Available source reference: OpenMausBot's resumed assignment455b5a01-2229-40a4-a149-3ff90f699490, from @Hebleo Lead Engineer on Guy Landau's behalf, in Leo - Web conversation6f420fe6-680d-4442-9d5a-c702edc80e35 (bot87d0667d-8e06-4e26-bc79-5a718991b13c). The received context was stamped Saturday, 7 November2026,14:39 IL (UTC+02:00). This is the supplied context/receipt time, not an independently exposed timestamp of Guy's original answer.
+
+No separate native answer-message ID, approval-card ID or original-answer timestamp was exposed in that received answer. This provenance records the existing answer as delivered; it does not claim a direct-chat original or invent a missing identifier.
+
 ## Change
 
 conjugation.php allowed() now requires is_user_logged_in(), a positive current user ID and a strict true result from hebleo_conjugation_access, defaulting to true. Therefore every authenticated WordPress account is eligible without LearnDash enrollment, membership, purchase or refund queries, matching the inspected flashcard study audience. An existing site filter can restrict access but cannot authorize anonymous users. There is no new product/purchase interpretation.
