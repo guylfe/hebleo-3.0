@@ -1,0 +1,4 @@
+/* NEW is today's existing capped count. The unintroduced total includes it. */
+#study-app .deck-stats{align-items:start}
+#study-app .new-stat{min-width:0;text-align:center}
+#study-app .new-total{display:block;margin-top:6px;color:var(--muted,#596878);font-size:12px;line-height:1.4;overflow-wrap:anywhere}
