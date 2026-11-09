@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-09T23:44:08.624Z",
+  "reviewer": "Lead",
+  "visuallyInspectedImages": 3,
+  "surfaces": {
+    "deckDesktop": {
+      "contentAreaCenter": 747.5,
+      "practiceCenter": 747.5,
+      "width": 955,
+      "xDelta": 0,
+      "widthDelta": 0,
+      "verticalDeltaWhenHelpHidden": -36
+    },
+    "deckNarrow": {
+      "contentAreaCenter": 172.5,
+      "practiceCenter": 172.5,
+      "width": 305,
+      "xDelta": 0,
+      "widthDelta": 0,
+      "verticalDeltaWhenHelpHidden": -36
+    },
+    "conjDesktop": {
+      "contentAreaCenter": 747.5,
+      "practiceCenter": 747.5,
+      "width": 955,
+      "xDelta": 0,
+      "widthDelta": 0,
+      "verticalDeltaWhenHelpHidden": -36
+    },
+    "conjNarrow": {
+      "contentAreaCenter": 172.5,
+      "practiceCenter": 172.5,
+      "width": 305,
+      "xDelta": 0,
+      "widthDelta": 0,
+      "verticalDeltaWhenHelpHidden": -36
+    }
+  },
+  "screenshots": {
+    "deck-desktop.png": {
+      "sha256": "3455c3fde0ea32c7e898450c70d062d7fdf651bd6743bded126f88ab3f2ce955",
+      "width": 975,
+      "height": 541
+    },
+    "deck-360.png": {
+      "sha256": "6d3c75c270f840227adcb191e34d0a6b302547be14ae0922aad12f3c949b41e9",
+      "width": 360,
+      "height": 550
+    },
+    "conjugation-360.png": {
+      "sha256": "dac872a0e54a02b179a663833095b5ddae6aab3a1904f36d9b825e9f53decf9e",
+      "width": 360,
+      "height": 450
+    }
+  },
+  "copyInventoryIdentical": true
+}
