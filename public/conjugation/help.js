@@ -30,7 +30,7 @@ export function tutorialHTML(tutorial,platform){const copy=tutorials[tutorial];i
 export const helpControl=tutorial=>'<button type="button" class="button small outline" data-practice-help="'+tutorial+'">How to practice</button>';
 export function bindPracticeHelp(root,{platform='native'}={}) {
  let modal;
- function click(event){const trigger=event.target.closest('[data-practice-help]');if(!trigger||!root.contains(trigger))return;event.preventDefault();event.stopPropagation();if(modal?.dialog.isConnected)return;const tutorial=trigger.dataset.practiceHelp;modal=openReadOnlyDialog({document:root.ownerDocument,trigger,title:tutorials[tutorial].title,html:tutorialHTML(tutorial,platform),className:'practice-help'});const done=modal.dialog.querySelector('[data-extra-close]');done.textContent='Done';done.setAttribute('aria-label','Done');}
+ function click(event){const target=event.target?.nodeType===1?event.target:event.target?.parentElement;const trigger=target?.closest('[data-practice-help]');if(!trigger||!root.contains(trigger))return;event.preventDefault();event.stopPropagation();if(modal?.dialog.isConnected)return;const tutorial=trigger.dataset.practiceHelp;modal=openReadOnlyDialog({document:root.ownerDocument,trigger,title:tutorials[tutorial].title,html:tutorialHTML(tutorial,platform),className:'practice-help'});const done=modal.dialog.querySelector('[data-extra-close]');done.textContent='Done';done.setAttribute('aria-label','Done');}
  root.addEventListener('click',click);
  return {destroy(){root.removeEventListener('click',click);modal?.close();}};
 }

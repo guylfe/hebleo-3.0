@@ -13,14 +13,14 @@ async function ui(db,owner='native:synthetic',options={}){
  return {root,mount,dom,click,type,close(){mount.destroy();dom.window.close();}};
 }
 for(const platform of ['native','wordpress'])test(platform+': text-node and nested-element clicks preserve the durable lifecycle',async()=>{
- const x=await ui(new IDBFactory(),'native:text-click',{platform});
+ const x=await ui(new IDBFactory(),'native:text-click',{platform}),errors=[];x.dom.virtualConsole.on('jsdomError',e=>errors.push(e));
  const textClick=async action=>{const b=x.root.querySelector(`[data-action=${action}]`);assert(b&&!b.disabled,action);b.firstChild.dispatchEvent(new x.dom.window.MouseEvent('click',{bubbles:true}));await x.mount.flush();await tick();};
  await textClick('start');assert(x.root.querySelector('.cp-practice'));
  await x.click('write');await x.type('synthetic pointer draft');
  await textClick('pause');assert(x.root.querySelector('[data-action=resume]'));assert(x.root.querySelector('[data-action=start]').matches(':disabled'));
  const resume=x.root.querySelector('[data-action=resume]'),span=x.dom.window.document.createElement('span');span.textContent=resume.textContent;resume.replaceChildren(span);span.click();await x.mount.flush();await tick();
  assert.equal(x.root.querySelector('[data-typed]').value,'synthetic pointer draft');
- await textClick('end');assert(!x.root.querySelector('[data-action=resume]'));assert(!x.root.querySelector('[data-action=start]').disabled);x.close();
+ await textClick('end');assert(!x.root.querySelector('[data-action=resume]'));assert(!x.root.querySelector('[data-action=start]').disabled);assert.deepEqual(errors,[]);x.close();
 });
 for(const stage of ['draft','chosen','shown','incorrect','override','missed-pass'])test('exact immutable snapshot roundtrip: '+stage,()=>{
  const d=fresh();d.setMode('write');d.typed='synthetic draft';
