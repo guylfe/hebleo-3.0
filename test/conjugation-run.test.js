@@ -99,3 +99,12 @@ test('failed terminal completion retains last viable saved prompt and blocks rep
  }
  assert.match(x.root.textContent,/could not be saved/);assert((await real.read()).run);await x.click('back');assert.match(x.root.textContent,/Drill complete/);rejectTerminal=false;await x.click('end');assert.equal((await real.read()).run,null);assert(x.root.querySelector('[data-action=start]'));x.close();
 });
+
+test('failed autosave survives native-style destroy/remount; browser leave warns until committed retry',async()=>{
+ const db=new IDBFactory(),real=createRunStore('native:navigation',{indexedDB:db});let fail=false;
+ const options={runStore:{read:()=>real.read(),write:(...args)=>fail?Promise.reject(Error('synthetic offline storage')):real.write(...args)}};
+ let x=await ui(db,'native:navigation',options);await x.click('start');await x.click('write');fail=true;await x.type('unsaved retained answer');
+ const leave=new x.dom.window.Event('beforeunload',{cancelable:true});x.dom.window.dispatchEvent(leave);assert(leave.defaultPrevented);x.close();
+ x=await ui(db,'native:navigation',options);assert.equal(x.root.querySelector('[data-typed]').value,'unsaved retained answer');assert.match(x.root.textContent,/Unsaved drill recovered/);fail=false;await x.click('pause');
+ const savedLeave=new x.dom.window.Event('beforeunload',{cancelable:true});x.dom.window.dispatchEvent(savedLeave);assert(!savedLeave.defaultPrevented);assert.equal((await real.read()).run.drill.typed,'unsaved retained answer');x.close();
+});

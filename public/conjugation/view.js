@@ -3,6 +3,7 @@ import {serializeRun,hydrateRun} from './run-state.js';
 import {helpControl,bindPracticeHelp} from './help.js';
 import {eligibleForms,selectForms,displayHebrew,Drill,TENSES} from './engine.js';
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const retainedRuns=new Map();
 export function mountConjugation(root,{catalog,learnedIds=[],platform='native',storageKey,ownerKey,runStore,allowFixtures=false}={}) {
   const pool=eligibleForms(catalog,{allowFixtures}), doc=root.ownerDocument;
   root.classList.add('conjugation-root');
@@ -10,19 +11,20 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
   let nikkud=saved.nikkud===true, direction=saved.direction==='en'?'en':'he', drill=null, dead=false;
   const s={kind:'verb',wordIds:catalog.words.filter(w=>pool.some(f=>f.wordId===w.id)).map(w=>w.id),tenses:[...new Set(pool.map(f=>f.tense))],scope:'learned',platform,learnedIds,person:'all',gender:'all',number:'all'};
   const store=runStore||(ownerKey?createRunStore(ownerKey,{indexedDB:doc.defaultView.indexedDB}):null);
-  let revision=0, pending=null, runId=null, loading=!!store, blocked=false, busy=false, terminalDirty=false, message='', chain=Promise.resolve();
+  let revision=0, pending=null, runId=null, loading=!!store, blocked=false, busy=false, terminalDirty=false, message='', inFlight=0, saveFailed=false, chain=Promise.resolve();
   const status=()=>{const el=root.querySelector('[data-run-status]');if(el)el.textContent=message;};
-  function failure(error){if(error.code==='CONFLICT')blocked=true;message=error.code==='CONFLICT'?error.message:'Drill could not be saved in this browser. Keep this page open and retry Save & pause drill. '+error.message;status();}
+  function failure(error){saveFailed=true;if(error.code==='CONFLICT')blocked=true;message=error.code==='CONFLICT'?error.message:'Drill could not be saved in this browser. Keep this page open and retry Save & pause drill. '+error.message;status();}
   function save(terminal=false,paused=!drill){
     if(!store)return Promise.resolve(true);
     if(blocked||loading)return Promise.resolve(false);
     const active=drill||pending;
     const snapshot=terminal||active&&!active.current?null:active?serializeRun(catalog,active,{setup:s,nikkud,direction,paused,runId}):null;
-    message='Saving drill…';status();
+    inFlight++;message='Saving drill…';status();
     chain=chain.then(async()=>{
-      if(blocked)return false;
-      try{const slot=await store.write(revision,snapshot);revision=slot.revision;message=terminal?'Drill ended.':'Saved in this browser.';status();return true;}
+      if(blocked){inFlight--;return false;}
+      try{const slot=await store.write(revision,snapshot);revision=slot.revision;saveFailed=false;message=terminal?'Drill ended.':'Saved in this browser.';status();return true;}
       catch(error){failure(error);return false;}
+      finally{inFlight--;}
     });
     return chain;
   }
@@ -105,15 +107,26 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
   function submit(e){if(e.target.matches('[data-answer-form]')){e.preventDefault();if(blocked||busy||!drill)return;drill.grade(drill.typed,'write');save();render();}}
   const help=bindPracticeHelp(root,{platform});
   root.addEventListener('click',act);root.addEventListener('change',change);root.addEventListener('input',input);root.addEventListener('submit',submit);render();
-  const ready=store?store.read().then(slot=>{
+  const retained=ownerKey?retainedRuns.get(ownerKey):null;
+  const ready=store?Promise.resolve(retained?.settled).then(()=>store.read()).then(slot=>{
     if(dead)return;
     revision=slot.revision;
+    if(retained&&retained.failed()){
+      if(slot.revision!==retained.revision())throw Error('This drill changed in another tab. The unsaved draft is retained in this page session.');
+      slot={...slot,run:retained.run};saveFailed=true;
+    }
     if(slot.run){
       const restored=hydrateRun(catalog,slot.run,{allowFixtures});
       Object.assign(s,restored.setup,{platform,learnedIds});nikkud=restored.nikkud;direction=restored.direction;runId=restored.runId;
       if(restored.paused)pending=restored.drill;else drill=restored.drill;
     }
-    loading=false;message=slot.run?'Saved drill restored from this browser.':'';render();
+    if(ownerKey)retainedRuns.delete(ownerKey);
+    loading=false;message=saveFailed?'Unsaved drill recovered from this page session. Retry Save & pause drill.':slot.run?'Saved drill restored from this browser.':'';render();
   }).catch(error=>{if(!dead){loading=false;blocked=true;message=error.message+' Saved data has not been changed.';render();}}):Promise.resolve();
-  return {ready,flush:()=>chain,destroy(){help.destroy();dead=true;root.removeEventListener('click',act);root.removeEventListener('change',change);root.removeEventListener('input',input);root.removeEventListener('submit',submit);root.replaceChildren();root.classList.remove('conjugation-root');}};
+  const leave=event=>{if(store&&(saveFailed||inFlight)){event.preventDefault();event.returnValue='';}};
+  doc.defaultView.addEventListener('beforeunload',leave);
+  return {ready,flush:()=>chain,destroy(){help.destroy();
+    const active=drill||pending;
+    if(ownerKey&&active?.current&&!blocked&&(saveFailed||inFlight))retainedRuns.set(ownerKey,{run:serializeRun(catalog,active,{setup:s,nikkud,direction,paused:!drill,runId}),settled:chain,failed:()=>saveFailed,revision:()=>revision});
+    doc.defaultView.removeEventListener('beforeunload',leave);dead=true;root.removeEventListener('click',act);root.removeEventListener('change',change);root.removeEventListener('input',input);root.removeEventListener('submit',submit);root.replaceChildren();root.classList.remove('conjugation-root');}};
 }
