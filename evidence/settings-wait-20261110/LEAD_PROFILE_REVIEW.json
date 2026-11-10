@@ -1,0 +1,117 @@
+{
+  "at": "2026-11-10T12:06:01.542Z",
+  "artifactHashesMatched": 4,
+  "uiSamples": 6,
+  "firstOpenMedianMs": 2914.2000000476837,
+  "repeatMedianMs": 2852.7999999523236,
+  "preHandlerMs": [
+    2495.895,
+    3144.683
+  ],
+  "preHandlerPercent": [
+    90.24134066248574,
+    92.18429924204722
+  ],
+  "settingsSelectMs": [
+    0.649,
+    1.219
+  ],
+  "wholeHandlerMs": [
+    0.682,
+    1.267
+  ],
+  "residualMs": [
+    234.75299990463265,
+    292.04500004768374
+  ],
+  "all57ProtectedFilesRestored": true,
+  "currentAccountDeckStatePreserved": true,
+  "allUserQuery": false,
+  "noNewSpeedFixInstalled": true,
+  "rows": [
+    {
+      "pair": 1,
+      "open": "first",
+      "usableMs": 2914.2000000476837,
+      "feedbackMs": 2914,
+      "requestMs": 2899.5,
+      "firstByteMs": 2898.3000001907367,
+      "wpReadyMs": 2662.103,
+      "readMs": 0.86,
+      "handlerMs": 0.888,
+      "preHandlerShare": 0.9185049856208147,
+      "residualMs": 235.3090001907366,
+      "renderMs": 13.599999904632568
+    },
+    {
+      "pair": 1,
+      "open": "repeat",
+      "usableMs": 2852.7999999523236,
+      "feedbackMs": 2852.699999809265,
+      "requestMs": 2846.5,
+      "firstByteMs": 2845.0999999046326,
+      "wpReadyMs": 2580.003,
+      "readMs": 0.777,
+      "handlerMs": 0.805,
+      "preHandlerShare": 0.9068233102831119,
+      "residualMs": 264.2919999046324,
+      "renderMs": 5.600000143058423
+    },
+    {
+      "pair": 2,
+      "open": "first",
+      "usableMs": 2870.399999856949,
+      "feedbackMs": 2870.2000000476837,
+      "requestMs": 2864.2999999523163,
+      "firstByteMs": 2862.5999999046326,
+      "wpReadyMs": 2626.984,
+      "readMs": 0.835,
+      "handlerMs": 0.863,
+      "preHandlerShare": 0.9176916090573317,
+      "residualMs": 234.75299990463265,
+      "renderMs": 5.5
+    },
+    {
+      "pair": 2,
+      "open": "repeat",
+      "usableMs": 3417.5,
+      "feedbackMs": 3417.5,
+      "requestMs": 3412.7000000476837,
+      "firstByteMs": 3411.2999999523163,
+      "wpReadyMs": 3144.683,
+      "readMs": 0.81,
+      "handlerMs": 0.838,
+      "preHandlerShare": 0.9218429924204722,
+      "residualMs": 265.77899995231627,
+      "renderMs": 4.199999809265137
+    },
+    {
+      "pair": 3,
+      "open": "first",
+      "usableMs": 3029.600000143051,
+      "feedbackMs": 3029.600000143051,
+      "requestMs": 3023.699999809265,
+      "firstByteMs": 3022.2000000476837,
+      "wpReadyMs": 2729.473,
+      "readMs": 0.649,
+      "handlerMs": 0.682,
+      "preHandlerShare": 0.9031410892584656,
+      "residualMs": 292.04500004768374,
+      "renderMs": 5.1000001430511475
+    },
+    {
+      "pair": 3,
+      "open": "repeat",
+      "usableMs": 2773,
+      "feedbackMs": 2773,
+      "requestMs": 2767.7000000476837,
+      "firstByteMs": 2765.7999999523163,
+      "wpReadyMs": 2495.895,
+      "readMs": 1.219,
+      "handlerMs": 1.267,
+      "preHandlerShare": 0.9024134066248574,
+      "residualMs": 268.6379999523163,
+      "renderMs": 4.799999952316284
+    }
+  ]
+}

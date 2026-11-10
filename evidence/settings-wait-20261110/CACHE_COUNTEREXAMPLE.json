@@ -1,0 +1,8 @@
+{
+  "synthetic": true,
+  "liveWrites": false,
+  "cachedSnapshotCanBeStale": true,
+  "unconditionalSaveCanOverwriteNewerValue": true,
+  "freshClickReadSeesLaterValue": true,
+  "conclusion": "A completed cached snapshot cannot preserve current fresh-on-open behavior; it needs explicit validation/conflict handling and a decision about what may be displayed before validation."
+}
