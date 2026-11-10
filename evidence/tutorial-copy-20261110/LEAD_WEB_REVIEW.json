@@ -1,0 +1,111 @@
+{
+  "at": "2026-11-10T00:38:05.139Z",
+  "rawSha256": "3ad2aa5fe9865241275d162606f8a1f4a6358be241cd63dc86709cf46ac8a7d9",
+  "allSevenImageHashesMatch": true,
+  "allFourApprovedCopiesMatch": true,
+  "findings": {
+    "flash-desktop": {
+      "viewport": [
+        1280,
+        720
+      ],
+      "paragraphs": 4,
+      "exactText": true,
+      "preservation": true,
+      "practiceContentCenterMismatch": 0,
+      "coveredPageModalShift": 7.5,
+      "dialogBounds": {
+        "clientHeight": 364,
+        "clientWidth": 678,
+        "cx": 640,
+        "h": 365.75,
+        "scrollHeight": 364,
+        "scrollTop": 0,
+        "scrollWidth": 678,
+        "w": 680,
+        "x": 300,
+        "y": 177.125
+      },
+      "font": "16px"
+    },
+    "flash-narrow": {
+      "viewport": [
+        360,
+        600
+      ],
+      "paragraphs": 4,
+      "exactText": true,
+      "preservation": true,
+      "practiceContentCenterMismatch": 0,
+      "coveredPageModalShift": 7.5,
+      "dialogBounds": {
+        "clientHeight": 566,
+        "clientWidth": 305,
+        "cx": 180,
+        "h": 568,
+        "scrollHeight": 687,
+        "scrollTop": 0,
+        "scrollWidth": 305,
+        "w": 322,
+        "x": 19,
+        "y": 16
+      },
+      "font": "16px"
+    },
+    "conj-desktop": {
+      "viewport": [
+        1280,
+        720
+      ],
+      "paragraphs": 5,
+      "exactText": true,
+      "preservation": true,
+      "practiceContentCenterMismatch": 0,
+      "coveredPageModalShift": 7.5,
+      "dialogBounds": {
+        "clientHeight": 427,
+        "clientWidth": 678,
+        "cx": 640,
+        "h": 428.9375,
+        "scrollHeight": 427,
+        "scrollTop": 0,
+        "scrollWidth": 678,
+        "w": 680,
+        "x": 300,
+        "y": 145.53125
+      },
+      "font": "16px"
+    },
+    "conj-narrow": {
+      "viewport": [
+        360,
+        600
+      ],
+      "paragraphs": 5,
+      "exactText": true,
+      "preservation": true,
+      "practiceContentCenterMismatch": 0,
+      "coveredPageModalShift": 7.5,
+      "dialogBounds": {
+        "clientHeight": 566,
+        "clientWidth": 305,
+        "cx": 180,
+        "h": 568,
+        "scrollHeight": 802,
+        "scrollTop": 0,
+        "scrollWidth": 305,
+        "w": 322,
+        "x": 19,
+        "y": 16
+      },
+      "font": "16px"
+    }
+  },
+  "limits": [
+    "Setup-only website checks; no active/graded study session",
+    "Native narrow evidence is installed-component replay",
+    "Covered page shifts 7.5px while modal is open; restores after close",
+    "Narrow Done scrolls with existing dialog body; return to top or use Escape",
+    "Physical Android, assistive technology and Guy acceptance unverified"
+  ]
+}
