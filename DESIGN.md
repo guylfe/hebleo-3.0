@@ -155,3 +155,7 @@ The current integration retains the existing palette, 760px measure, typography,
 ## Practice tutorials and navigation candidate — 7 November 2026
 
 `public/conjugation/read-only-dialog.js` extracts the scoped Extra information modal owner; authored extras and practice tutorials share native showModal isolation, close/Escape, focus return and capture-phase shortcut isolation. `help.js` owns static platform-specific tutorial copy and delegated help activation, independently of practice data-action handlers. `help.css` uses existing tokens with the approved WordPress fallback palette, bounded viewport scrolling, logical spacing and visible focus. No practice surface is remounted by help. Native top destinations expose Flashcards at #review and Conjugation practice at #conjugation with independent current-tab semantics. Existing destinations remain. Source-only verification and installation/render limits: docs/PRACTICE_TUTORIALS_NAVIGATION_20261107.md.
+
+## Conjugation lifecycle controls, 10 November 2026
+
+The shared practice CSS retains existing typography/layout and 44px minimum controls. Save & pause drill uses the existing portable blue #185c92 with white text; End drill uses scoped danger #a32121 with white text. Their hover colors are #124775 / #7e1919, with the existing visible focus outline. Exact text labels carry meaning independently of color. Controls wrap with an 8px gap at narrow widths; setup exposes Resume drill above disabled retained choices. No global tokens change. Runtime browser acceptance belongs to Lead's installation gate.

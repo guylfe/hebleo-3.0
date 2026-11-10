@@ -12,10 +12,10 @@ const catalog=validateCatalog(JSON.parse(await fs.readFile(catalogPath,'utf8')))
 if(catalog.forms.some(f=>f.approval==='fixture'))throw Error('Fixture catalog cannot be packaged');
 const production={...catalog,forms:catalog.forms.filter(f=>f.approval==='approved')};
 const out=path.resolve(output);await fs.mkdir(out);await fs.mkdir(path.join(out,'assets'));
-const files=[['conjugation.php',path.join(here,'conjugation.php')],['assets/bootstrap.js',path.join(here,'bootstrap.js')],...['catalog-contract.js','engine.js','view.js','practice.css','help.js','read-only-dialog.js','help.css'].map(f=>['assets/'+f,path.join(repo,'public/conjugation',f)])];
+const files=[['conjugation.php',path.join(here,'conjugation.php')],['assets/bootstrap.js',path.join(here,'bootstrap.js')],...['run-store.js','run-state.js','catalog-contract.js','engine.js','view.js','practice.css','help.js','read-only-dialog.js','help.css'].map(f=>['assets/'+f,path.join(repo,'public/conjugation',f)])];
 const manifest={schema:2,approvedForms:production.forms.length,forbiddenFiles:['assets/catalog.json'],files:{}};
 for(const [dest,src] of files){const bytes=await fs.readFile(src);await fs.writeFile(path.join(out,dest),bytes);manifest.files[dest]=crypto.createHash('sha256').update(bytes).digest('hex');}
-const graph=versionPracticeGraph({engine:await fs.readFile(path.join(out,'assets/engine.js')),view:await fs.readFile(path.join(out,'assets/view.js'),'utf8'),bootstrap:await fs.readFile(path.join(out,'assets/bootstrap.js'),'utf8')});
+const graph=versionPracticeGraph({runStore:await fs.readFile(path.join(out,'assets/run-store.js')),runState:await fs.readFile(path.join(out,'assets/run-state.js'),'utf8'),engine:await fs.readFile(path.join(out,'assets/engine.js')),view:await fs.readFile(path.join(out,'assets/view.js'),'utf8'),bootstrap:await fs.readFile(path.join(out,'assets/bootstrap.js'),'utf8')});
 for(const[name,body]of Object.entries(graph)){await fs.writeFile(path.join(out,'assets',name+'.js'),body);manifest.files['assets/'+name+'.js']=crypto.createHash('sha256').update(body).digest('hex');}
 const bytes=privateCatalogPHP(production);await fs.writeFile(path.join(out,'catalog-data.php'),bytes);manifest.files['catalog-data.php']=crypto.createHash('sha256').update(bytes).digest('hex');
 await fs.writeFile(path.join(out,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');console.log(JSON.stringify(manifest,null,2));
