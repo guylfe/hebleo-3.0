@@ -27,7 +27,7 @@ export function makeChoices(f, pool, direction = 'he', random = Math.random, ans
   const valid = new Set(answers(f,answerPool,direction)), seen = new Set(), candidates = [];
   for (const x of shuffle(pool.filter(x => x.wordId === f.wordId),random)) {
     // A pointed rendering must not turn an accepted equivalent into a distractor.
-    const variants = direction === 'he' ? [x.unpointed,x.pointed] : [x.english];
+    const variants = ownAnswers(x,direction);
     if (variants.some(v => valid.has(normalize(v,direction))) || variants.some(v=>seen.has(normalize(v,direction)))) continue;
     variants.forEach(v=>seen.add(normalize(v,direction))); candidates.push(x);
   }

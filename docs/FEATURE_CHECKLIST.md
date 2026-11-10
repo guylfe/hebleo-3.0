@@ -806,3 +806,8 @@ Installed in native63358 (88ee24f) and as a separate WordPress display-only add-
 ### CP02 / CP03 / CP07 scoped checkpoint — 10 November 2026
 
 Feature branch only; integration and installation pending. Select all / Select none change only enabled words on the active list, retain the other tab and settings, and update zero-form/Start state. CP07 choices now use the prompt's exact lexical wordId in both directions; normalized duplicates and accepted displayed equivalents are excluded. Native Learned only candidates stay within learned form IDs. A sparse lexical pool automatically opens Write/reveal mode without showing a sole answer. See CONJUGATION_LEXICAL_SELECTION_20261110.md for executable evidence and limits. Guy result: Unreported.
+# 2026-11-10 bounded follow-up checkpoint
+
+Conjugation same-word choices and active-list Select all/none installed in both existing runtimes. Lead independently passed 50 focused tests plus one WordPress legacy-view compatibility test. Source-backed native desktop and 360px installed-component evidence saved; independent WordPress visual check pending. No user acceptance claim. Exact scope and preservation: CONJUGATION_LEXICAL_SELECTION_20261110.md. Newly requested End drill / Save & pause drill follows this checkpoint and is not implemented here.
+
+Settings startup attribution completed; all temporary instrumentation removed and independently verified. No additional performance improvement claimed. Measured components and concrete broader option: SETTINGS_STARTUP_ATTRIBUTION_20261110.md. Main publication remains outside the permitted feature checkpoint.

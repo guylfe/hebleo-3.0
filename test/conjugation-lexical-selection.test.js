@@ -49,6 +49,16 @@ test('reverse accepted readings use the grading pool even when candidates are re
   assert.throws(()=>new Drill(cat,[f],{allowFixtures:true,choiceForms:[{id:'unknown'}]}));
 });
 
+test('two distractors sharing an accepted equivalent collapse in either direction',()=>{
+  const cat=structuredClone(fixture),f=cat.forms[0];
+  const one={...f,id:'fixture-synonym-one',unpointed:'למדתם',pointed:'לְמַדְתֶּם',english:'You studied',acceptedHebrew:['למדתן'],acceptedEnglish:['You learned']};
+  const two={...f,id:'fixture-synonym-two',unpointed:'למדתן',pointed:'לְמַדְתֶּן',english:'You learned',acceptedHebrew:[],acceptedEnglish:[]};
+  for(const direction of ['he','en']){
+    const options=makeChoices(f,[f,one,two],direction,()=>.999);
+    assert.equal(options.length,2);assert.equal(options.filter(o=>o.id!==f.id).length,1);
+  }
+});
+
 test('bulk actions preserve other tab, unlearned/disabled selections and settings, update empty count and return keyboard focus',t=>{
   const dom=new JSDOM('<main></main>',{url:'https://fixture.invalid'}),root=dom.window.document.querySelector('main');
   const h=mountConjugation(root,{catalog:fixture,allowFixtures:true,learnedIds:fixture.forms.filter(f=>f.wordId!=='fixture-want').map(f=>f.id)});
