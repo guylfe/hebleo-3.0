@@ -1,3 +1,4 @@
+import {IDBFactory} from 'fake-indexeddb';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -39,6 +40,7 @@ test('actual native HTTP boundary mounts the actual shared view without learner 
   const origin='http://127.0.0.1:'+server.address().port;
   t.after(()=>new Promise(resolve=>server.close(()=>{store.close();resolve();})));
   const dom=new JSDOM('<main></main>',{url:origin}),root=dom.window.document.querySelector('main');
+  dom.window.indexedDB=new IDBFactory();
   t.after(()=>dom.window.close());
   const before=store.db.prepare('SELECT id,state FROM learners ORDER BY id').all();
   const mounted=mountNativeConjugation(root,{userId:'learner-demo',api:async path=>{const response=await fetch(origin+'/api/'+path,{headers:{'x-demo-user':'learner-demo'}});assert.equal(response.status,200);return response.json();}});
@@ -49,6 +51,6 @@ test('actual native HTTP boundary mounts the actual shared view without learner 
   const input=root.querySelector('[data-typed]');input.value='synthetic wrong draft';input.dispatchEvent(new dom.window.Event('input',{bubbles:true}));
   root.querySelector('[data-action=nikkud]').click();assert.equal(root.querySelector('[data-typed]').value,input.value);
   root.querySelector('[data-action=check]').click();root.querySelector('[data-action=override]').click();
-  assert.match(root.querySelector('[role=status]').textContent,/Correct/);
+  assert.match(root.querySelector('.cp-feedback').textContent,/Correct/);
   assert.deepEqual(store.db.prepare('SELECT id,state FROM learners ORDER BY id').all(),before);
 });

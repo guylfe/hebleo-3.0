@@ -3,8 +3,8 @@ test('existing WordPress tutorial owner stays separate while generated shared vi
  const source=legacyWordpressView(readFileSync(new URL('../../../public/conjugation/view.js',import.meta.url),'utf8'));
  assert(!source.includes('./help.js'));assert(!source.includes('helpControl'));assert(!source.includes('bindPracticeHelp'));
  const engine=new URL('../../../public/conjugation/engine.js',import.meta.url).href;
- const {mountConjugation}=await import('data:text/javascript;base64,'+Buffer.from(source.replace("'./engine.js'",JSON.stringify(engine))).toString('base64'));
- const dom=new JSDOM('<main></main>'),root=dom.window.document.querySelector('main');const mount=mountConjugation(root,{catalog:fixture,allowFixtures:true,platform:'wordpress'});
+ const {mountConjugation}=await import('data:text/javascript;base64,'+Buffer.from(source.replace("'./engine.js'",JSON.stringify(engine)).replace("'./run-store.js'",JSON.stringify(new URL('../../../public/conjugation/run-store.js',import.meta.url).href)).replace("'./run-state.js'",JSON.stringify(new URL('../../../public/conjugation/run-state.js',import.meta.url).href))).toString('base64'));
+ const dom=new JSDOM('<main></main>',{url:'https://fixture.invalid'}),root=dom.window.document.querySelector('main');const mount=mountConjugation(root,{catalog:fixture,allowFixtures:true,platform:'wordpress'});
  root.querySelector('[data-action=select-none]').click();assert(root.querySelector('[data-action=start]').disabled);
  root.querySelector('[data-action=select-all]').click();assert(!root.querySelector('[data-action=start]').disabled);
  root.querySelector('[data-word=fixture-want]').click();root.querySelector('[data-action=start]').click();assert(root.querySelectorAll('[data-action=answer]').length>=2);

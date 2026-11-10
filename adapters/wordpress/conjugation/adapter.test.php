@@ -17,6 +17,7 @@ ok(!HebleoConjugation\allowed(),'zero user id blocked even with inconsistent log
 $userId=7;$override=false;
 $html=HebleoConjugation\shortcode();ok(str_contains($html,'data-conjugation-catalog'),'signed-in account needs no entitlement mapping');ok(!str_contains($html,'allowFixtures'),'production has no fixture enable flag');ok(str_contains($html,'type="module"'),'native module bootstrap');
 $override=true;
+ok(str_contains($html,'data-conjugation-owner="7"'),'stable signed-in owner metadata');
 foreach([false,null,0,1,'yes'] as $value){$access=$value;ok(!HebleoConjugation\allowed(),'restriction requires strict true: '.json_encode($value));}
 $access=false;
 ok(!str_contains(HebleoConjugation\shortcode(),'data-conjugation-catalog'),'denied signed-in account receives no catalog');

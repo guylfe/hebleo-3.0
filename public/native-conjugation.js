@@ -18,7 +18,8 @@ export function mountNativeConjugation(root, {api, userId, loadView=()=>import('
       root.replaceChildren();
       if(data.allowFixtures){const p=doc.createElement('p');p.textContent='SYNTHETIC TEST FIXTURE — not approved teaching content.';root.append(p);}
       const host=doc.createElement('div');root.append(host);
-      mounted=mountConjugation(host,{catalog:data.catalog,learnedIds:data.learnedIds,platform:'native',storageKey:'hebleo-conjugation-v1-'+userId,allowFixtures:data.allowFixtures===true});
+      mounted=mountConjugation(host,{catalog:data.catalog,learnedIds:data.learnedIds,platform:'native',ownerKey:'native:'+userId,storageKey:'hebleo-conjugation-v1-'+userId,allowFixtures:data.allowFixtures===true});
+      await mounted.ready;
     } catch(error) { if(!disposed&&generation===own)notice('Conjugation practice could not load. '+error.message,true); }
   }
   root.addEventListener('click',event=>{if(event.target.closest('[data-conjugation-retry]'))void open();},{signal:ctl.signal});

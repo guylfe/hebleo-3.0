@@ -158,7 +158,7 @@ test('native loading failure supports retry, and departed async loads cannot mou
 test('HTTP access follows existing course entitlement; catalogs are read-only and only fixed assets are served',async t=>{
   const {store:s,api,origin}=await http(t);const state=s.learner('learner-core');state.purchasedCourses=[];s.saveLearner('learner-core',state);await assert.rejects(api('conjugation',undefined,'learner-core'),e=>e.status===403);
   await assert.rejects(api('studio',undefined,'learner-demo'),e=>e.status===403);
-  for(const path of ['/native-conjugation.js','/conjugation-contract.js','/studio/conjugation-unlocks.js','/conjugation/help.js','/conjugation/help.css','/conjugation/read-only-dialog.js'])assert.equal((await fetch(origin+path)).status,200);
+  for(const path of ['/native-conjugation.js','/conjugation-contract.js','/studio/conjugation-unlocks.js','/conjugation/run-store.js','/conjugation/run-state.js','/conjugation/help.js','/conjugation/help.css','/conjugation/read-only-dialog.js'])assert.equal((await fetch(origin+path)).status,200);
   for(const path of ['/src/conjugation.js','/conjugation/catalog.json','/test/conjugation-native.test.js'])assert.equal((await fetch(origin+path)).status,404);
 });
 
