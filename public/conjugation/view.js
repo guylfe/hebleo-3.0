@@ -4,6 +4,13 @@ import {helpControl,bindPracticeHelp} from './help.js';
 import {eligibleForms,selectForms,displayHebrew,Drill,TENSES} from './engine.js';
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const retainedRuns=new Map();
+function hebrewPronoun(f) {
+  if(f.person==='1')return f.number==='plural'?'אֲנַחְנוּ':'אֲנִי';
+  if(f.person==='2')return f.number==='plural'?(f.gender==='feminine'?'אַתֶּן':'אַתֶּם'):(f.gender==='feminine'?'אַתְּ':'אַתָּה');
+  if(f.person==='3')return f.number==='plural'?(f.gender==='feminine'?'הֵן':f.gender==='masculine'?'הֵם':'הֵם / הֵן'):(f.gender==='feminine'?'הִיא':'הוּא');
+  if(f.tense==='present')return f.number==='plural'?(f.gender==='feminine'?'אֲנַחְנוּ / אַתֶּן / הֵן':'אֲנַחְנוּ / אַתֶּם / הֵם'):(f.gender==='feminine'?'אֲנִי / אַתְּ / הִיא':'אֲנִי / אַתָּה / הוּא');
+  return '';
+}
 export function mountConjugation(root,{catalog,learnedIds=[],platform='native',storageKey,ownerKey,runStore,allowFixtures=false}={}) {
   const pool=eligibleForms(catalog,{allowFixtures}), doc=root.ownerDocument;
   root.classList.add('conjugation-root');
@@ -22,7 +29,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     inFlight++;message='Saving drill…';status();
     chain=chain.then(async()=>{
       if(blocked&&!(terminal&&canEndIncompatible)){inFlight--;return false;}
-      try{const slot=await store.write(revision,snapshot);revision=slot.revision;saveFailed=false;message=terminal?'Drill ended.':'Saved in this browser.';status();return true;}
+      try{const slot=await store.write(revision,snapshot);revision=slot.revision;saveFailed=false;message=terminal?'Drill ended.':'';status();return true;}
       catch(error){failure(error);return false;}
       finally{inFlight--;}
     });
@@ -45,7 +52,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
       root.innerHTML=html;return;
     }
     if(!drill){
-      if(pending)html+=`<section class="cp-resume"><p>A drill is saved in this browser. Resume it or end it before starting another.</p><div class="cp-row">${button('resume','Resume drill','class="cp-primary"')}${button('end','End drill','class="cp-end"')}</div></section>`;
+      if(pending)html+=`<section class="cp-resume"><p>Resume your drill or end it before starting another.</p><div class="cp-row">${button('resume','Resume drill','class="cp-primary"')}${button('end','End drill','class="cp-end"')}</div></section>`;
       html+=`<fieldset ${pending?'disabled':''} class="cp-setup">`;
 
       const selected=selectForms(catalog,s,{allowFixtures}), selectable=selectableWords();
@@ -57,7 +64,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     }else if(!drill.current){html+=`<section class="cp-practice"><h2 tabindex="-1">Drill complete</h2><p>You practiced ${drill.total} forms, including any missed-form passes and your own corrections.</p>${button('back','Change selection')}${button('end','End drill','class="cp-end"')}</section>`;
     }else{
       const f=drill.current,w=catalog.words.find(w=>w.id===f.wordId),en=direction==='en',fb=drill.feedback;
-      html+=`<section class="cp-practice"><div class="cp-row">${button('back','← Change selection')}${button('pause','Save & pause drill','class="cp-pause"')}${button('end','End drill','class="cp-end"')}<span>${drill.pass>1?'Missed forms · ':''}${drill.index+1} of ${drill.queue.length}</span></div><progress value="${drill.index}" max="${drill.queue.length}" aria-label="Current pass progress"></progress>${drill.pass>1?'<p>You finished the other forms. Now review the ones you missed.</p>':''}<div class="cp-prompt"><h2 tabindex="-1">${en?'What does this form mean?':'Give the Hebrew form'}</h2><div class="cp-base">${he(en?f:w)}</div><p>${f.tense==='preposition'?'':esc(f.tense)+' · '}${esc(f.pronoun)} · ${esc(f.gender)} · ${esc(f.number)}</p></div><div class="cp-row">${button('choose','Choose',`aria-pressed="${drill.mode==='choose'}" ${drill.options.length<2?'disabled':''}`)}${button('write','Write',`aria-pressed="${drill.mode==='write'}"`)}</div>`;
+      html+=`<section class="cp-practice"><div class="cp-row">${button('back','← Change selection')}${button('pause','Save & pause drill','class="cp-pause"')}${button('end','End drill','class="cp-end"')}<span>${drill.pass>1?'Missed forms · ':''}${drill.index+1} of ${drill.queue.length}</span></div><progress value="${drill.index}" max="${drill.queue.length}" aria-label="Current pass progress"></progress>${drill.pass>1?'<p>You finished the other forms. Now review the ones you missed.</p>':''}<div class="cp-prompt"><h2 tabindex="-1">${en?'What does this form mean?':'Give the Hebrew form'}</h2><div class="cp-base">${he(en?f:w)}</div><p>${f.tense==='preposition'?'':esc(f.tense)}${f.tense!=='preposition'&&hebrewPronoun(f)?' · ':''}${hebrewPronoun(f)?he({pointed:hebrewPronoun(f),unpointed:hebrewPronoun(f).replace(/[\u0591-\u05c7]/g,'')}):''}</p></div><div class="cp-row">${button('choose','Choose',`aria-pressed="${drill.mode==='choose'}" ${drill.options.length<2?'disabled':''}`)}${button('write','Write',`aria-pressed="${drill.mode==='write'}"`)}</div>`;
       if(drill.options.length<2)html+='<p role="note">Too few distinct choices are available for this word. Practice in Write mode or show the answer.</p>';
       if(drill.mode==='choose')html+=`<div class="cp-options">${drill.options.map((o,i)=>button('answer',en?esc(o.english):he(o),`data-index="${i}" aria-pressed="${drill.choice===o.id}" ${fb?'disabled':''}`)).join('')}</div>`;
       else html+=`<form data-answer-form novalidate><label>Your answer<input data-typed type="text" dir="${en?'ltr':'rtl'}" lang="${en?'en':'he'}" autocomplete="off" placeholder="${en?'Type the meaning':'Type your answer in Hebrew'}" value="${esc(drill.typed)}" ${fb?'disabled':''}></label><div class="cp-row">${button('check','Check answer',fb?'disabled':'')}${button('show','Show answer',fb?'disabled':'')}</div><p>Nikkud is optional.</p></form>`;
@@ -127,7 +134,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
       if(restored.paused)pending=restored.drill;else drill=restored.drill;
     }
     if(ownerKey)retainedRuns.delete(ownerKey);
-    loading=false;message=saveFailed?'Unsaved drill recovered from this page session. Retry Save & pause drill.':slot.run?'Saved drill restored from this browser.':'';render();
+    loading=false;message=saveFailed?'Unsaved drill recovered from this page session. Retry Save & pause drill.':'';render();
   }).catch(error=>{if(!dead){loading=false;blocked=true;message=error.message+' Saved data has not been changed.';render();}}):Promise.resolve();
   const leave=event=>{if(store&&(saveFailed||inFlight)){event.preventDefault();event.returnValue='';}};
   doc.defaultView.addEventListener('beforeunload',leave);
