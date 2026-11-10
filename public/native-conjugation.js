@@ -22,7 +22,7 @@ export function mountNativeConjugation(root, {api, userId, loadView=()=>import('
       await mounted.ready;
     } catch(error) { if(!disposed&&generation===own)notice('Conjugation practice could not load. '+error.message,true); }
   }
-  root.addEventListener('click',event=>{if(event.target.closest('[data-conjugation-retry]'))void open();},{signal:ctl.signal});
+  root.addEventListener('click',event=>{const target=event.target?.nodeType===1?event.target:event.target?.parentElement;if(target?.closest('[data-conjugation-retry]'))void open();},{signal:ctl.signal});
   const ready=open();
   return {ready,destroy(){disposed=true;generation++;ctl.abort();mounted?.destroy();mounted=null;root.replaceChildren();}};
 }

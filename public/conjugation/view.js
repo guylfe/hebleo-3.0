@@ -67,7 +67,8 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     root.innerHTML=html;
     if(focus)root.querySelector('h2[tabindex],h1')?.focus();
   }
-  async function act(e){const el=e.target.closest('[data-action]');if(!el||!root.contains(el)||el.disabled)return;const a=el.dataset.action;
+  async function act(e){const target=e.target?.nodeType===1?e.target:e.target?.parentElement;
+    const el=target?.closest('[data-action]');if(!el||!root.contains(el)||el.disabled)return;const a=el.dataset.action;
     if(['nikkud','scope','direction'].includes(a)||loading||busy||(blocked&&!(a==='end'&&canEndIncompatible)))return;
     if(a==='back'&&terminalDirty)return;
     if(a==='end'){
