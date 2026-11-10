@@ -23,25 +23,29 @@ export function answers(f, pool, direction = 'he') {
 export function shuffle(items, random = Math.random) {
   const a = [...items]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a;
 }
-export function makeChoices(f, pool, direction = 'he', random = Math.random) {
-  const valid = new Set(answers(f,pool,direction)), seen = new Set(), candidates = [];
-  for (const x of shuffle(pool,random)) {
-    const value = direction === 'he' ? x.unpointed : x.english, n = normalize(value,direction);
-    if (valid.has(n) || seen.has(n)) continue;
-    seen.add(n); candidates.push(x);
+export function makeChoices(f, pool, direction = 'he', random = Math.random, answerPool = pool) {
+  const valid = new Set(answers(f,answerPool,direction)), seen = new Set(), candidates = [];
+  for (const x of shuffle(pool.filter(x => x.wordId === f.wordId),random)) {
+    // A pointed rendering must not turn an accepted equivalent into a distractor.
+    const variants = direction === 'he' ? [x.unpointed,x.pointed] : [x.english];
+    if (variants.some(v => valid.has(normalize(v,direction))) || variants.some(v=>seen.has(normalize(v,direction)))) continue;
+    variants.forEach(v=>seen.add(normalize(v,direction))); candidates.push(x);
   }
   return shuffle([f,...candidates.slice(0,3)],random);
 }
 export class Drill {
-  constructor(catalog, forms, {allowFixtures=false,direction='he',random=Math.random} = {}) {
+  constructor(catalog, forms, {allowFixtures=false,direction='he',random=Math.random,choiceForms=forms} = {}) {
     if (!['he','en'].includes(direction)) throw Error('Invalid direction');
     this.pool=eligibleForms(catalog,{allowFixtures}); const byId=new Map(this.pool.map(f=>[f.id,f]));
     if (!forms.length || new Set(forms.map(f=>f.id)).size !== forms.length || forms.some(f=>!byId.has(f.id))) throw Error('No eligible selection');
-    this.random=random; this.direction=direction;this.mode='choose'; this.queue=shuffle(forms.map(f=>byId.get(f.id)),random); this.total=this.queue.length; this.index=0; this.pass=1; this.missed=new Set(); this.reset();
+    if (choiceForms.some(f=>!byId.has(f.id))) throw Error('Invalid choice pool');
+    this.choicePool=choiceForms.map(f=>byId.get(f.id));
+    this.random=random; this.direction=direction;this.preferredMode='choose'; this.queue=shuffle(forms.map(f=>byId.get(f.id)),random); this.total=this.queue.length; this.index=0; this.pass=1; this.missed=new Set(); this.reset();
   }
   get current(){ return this.queue[this.index]; }
-  reset(){ this.typed='';this.choice=null;this.feedback=null;this.attempt=null;this.options=this.current?makeChoices(this.current,this.pool,this.direction,this.random):[]; }
-  setMode(mode){ if(['choose','write'].includes(mode)) this.mode=mode; }
+  reset(){ this.typed='';this.choice=null;this.feedback=null;this.attempt=null;this.options=this.current?makeChoices(this.current,this.choicePool,this.direction,this.random,this.pool):[]; }
+  get mode(){ return this.options.length < 2 ? 'write' : this.preferredMode; }
+  setMode(mode){ if(['choose','write'].includes(mode)) this.preferredMode=mode; }
   grade(value, mode=this.mode){
     if(!this.current || this.feedback || !String(value).trim()) return false;
     const ok=answers(this.current,this.pool,this.direction).includes(normalize(value,this.direction));
