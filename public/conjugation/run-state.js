@@ -9,7 +9,7 @@ export function serializeRun(catalog,drill,{setup,nikkud,direction,paused=false,
     options:drill.options.map(f=>f.id),preferredMode:drill.preferredMode,direction:drill.direction
   }});
 }
-export function hydrateRun(catalog,raw,{allowFixtures=false}={}){
+export function hydrateRun(catalog,raw,{allowFixtures=false,platform,learnedIds=[]}={}){
   const x=copy(raw);check(x?.schema===1&&JSON.stringify(x.source)===JSON.stringify(catalog));
   const d=x.drill,pool=eligibleForms(catalog,{allowFixtures}),byId=new Map(pool.map(f=>[f.id,f]));
   const ids=(a,allowEmpty=false)=>Array.isArray(a)&&(allowEmpty||a.length>0)&&new Set(a).size===a.length&&a.every(id=>byId.has(id));
@@ -30,6 +30,10 @@ export function hydrateRun(catalog,raw,{allowFixtures=false}={}){
   }
   const s=x.setup;check(s&&['verb','prep'].includes(s.kind)&&['learned','all'].includes(s.scope)&&Array.isArray(s.wordIds)&&s.wordIds.every(id=>catalog.words.some(w=>w.id===id))&&Array.isArray(s.tenses)&&s.tenses.every(t=>pool.some(f=>f.tense===t)));
   check(['all','1','2','3','none'].includes(s.person)&&['all','masculine','feminine','common','none'].includes(s.gender)&&['all','singular','plural','none'].includes(s.number));
+  if(platform==='native'&&s.scope==='learned'){
+    const learned=new Set(learnedIds);
+    if(![...d.queue,...d.choicePool,...d.options].every(id=>learned.has(id)))throw Error('Saved drill includes forms no longer learned by this profile. It has been preserved.');
+  }
   // No constructor, shuffle, reset, grade or next on hydration.
   const drill=Object.create(Drill.prototype);
   Object.assign(drill,d,{pool,random:Math.random,queue:d.queue.map(id=>byId.get(id)),choicePool:d.choicePool.map(id=>byId.get(id)),options:d.options.map(id=>byId.get(id)),missed:new Set(d.missed)});
