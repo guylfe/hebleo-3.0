@@ -35,9 +35,9 @@ function shortcode(): string {
     // A corrupted/stale package must not release fixture or held grading records.
     foreach ($catalog['forms'] as $f) if (($f['approval'] ?? '') !== 'approved') return '<p>Practice content is awaiting approval.</p>';
     $id = wp_unique_id('hebleo-conjugation-');
-    wp_enqueue_style('hebleo-conjugation', plugins_url('assets/practice.css', __FILE__), [], '1.0.0');
+    wp_enqueue_style('hebleo-conjugation', plugins_url('assets/practice.css', __FILE__), [], substr(hash_file('sha256', __DIR__.'/assets/practice.css'),0,16));
     wp_enqueue_style('hebleo-practice-help', plugins_url('assets/help.css', __FILE__), [], '1.0.0');
     $json = wp_json_encode($catalog, JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT);
-    return '<div data-conjugation-host><div id="'.esc_attr($id).'" data-conjugation-root></div><script type="application/json" data-conjugation-catalog>'.$json.'</script></div><script type="module" src="'.esc_url(plugins_url('assets/bootstrap.js', __FILE__)).'"></script>';
+    return '<div data-conjugation-host><div id="'.esc_attr($id).'" data-conjugation-root></div><script type="application/json" data-conjugation-catalog>'.$json.'</script></div><script type="module" src="'.esc_url(plugins_url('assets/bootstrap.js', __FILE__).'?ver='.substr(hash_file('sha256', __DIR__.'/assets/bootstrap.js'),0,16)).'"></script>';
 }
 add_shortcode('hebleo_conjugation', __NAMESPACE__.'\\shortcode');

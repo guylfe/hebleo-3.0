@@ -811,3 +811,7 @@ Feature branch only; integration and installation pending. Select all / Select n
 Conjugation same-word choices and active-list Select all/none installed in both existing runtimes. Lead independently passed 50 focused tests plus one WordPress legacy-view compatibility test. Source-backed native desktop and 360px installed-component evidence saved; independent WordPress visual check pending. No user acceptance claim. Exact scope and preservation: CONJUGATION_LEXICAL_SELECTION_20261110.md. Newly requested End drill / Save & pause drill follows this checkpoint and is not implemented here.
 
 Settings startup attribution completed; all temporary instrumentation removed and independently verified. No additional performance improvement claimed. Measured components and concrete broader option: SETTINGS_STARTUP_ATTRIBUTION_20261110.md. Main publication remains outside the permitted feature checkpoint.
+# 2026-11-10 website delivery correction
+
+Returning-browser verification exposed stale unversioned assets. A scoped content-versioned CSS/module graph is now installed; five version/package/access tests and installed PHP/hash readback pass. Normal desktop/narrow website rerun remains pending. The earlier three-asset installation receipt is historical; website now has exactly five changed files. See CONJUGATION_ASSET_REFRESH_20261110.md. New drill persistence still follows verification of these fixes.
+

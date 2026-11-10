@@ -1,0 +1,11 @@
+# Conjugation normal-load asset refresh
+
+The first website check correctly blocked acceptance: fresh asset requests matched the installed code, but normal reloads in the returning browser executed old November 7 files and lacked Select all/none. Normal asset URLs advertised max-age=315360000 and had transferSize=0. This establishes stale browser delivery in the observed session; it does not identify every cache layer.
+
+Installed a scoped URL-version fix at 13:12:52 UTC. Existing PHP generates stylesheet and module-entry versions from each deployed file's content hash. Packaging stamps the view's engine import and bootstrap's view import with dependency content hashes, so a changed engine invalidates its view and entry URLs. Stable content retains stable URLs. No global cache purge/configuration, authentication, preferences, Settings caching or save semantics changed. The older WordPress view still uses its separate approved tutorial add-on.
+
+Final website files differ from the pre-conjugation-update snapshot only in engine.js, view.js, practice.css, bootstrap.js and conjugation.php. Independent current-account/deck inventories are unchanged across both installations; all other protected custom-plugin hashes, including catalog/audio/tutorial and Settings files, match. Native assets and its whole database remain as verified in the earlier checkpoint. All temporary performance instrumentation remains absent.
+
+Five focused packaging/version/access tests passed, including actual PHP shortcode/access gates and content-hash propagation from engine through the loaded graph. The original packaging byte-equality expectation was updated to compare the exact reviewed versioned output, retaining manifest hash checks. PHP's installed rendered entry URL and stylesheet version match the independently read file hashes. Signed-in normal returning-browser reload and full desktop/narrow interaction acceptance are pending an independent rerun; fresh hashes alone are not that acceptance.
+
+Task evidence: conjugation-fixes-20261110/CACHE_REVIEW.json, CACHE_VERSIONS.json, WP_CACHE_INSTALL_RAW.json, WP_CACHE_READBACK_RAW.json and WP_CACHE_AFTER_RAW.json. The prior LEAD_INSTALL_REVIEW.json remains the historical three-asset checkpoint before this delivery correction.
