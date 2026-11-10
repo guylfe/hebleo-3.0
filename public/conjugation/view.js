@@ -3,6 +3,8 @@ import {serializeRun,hydrateRun} from './run-state.js';
 import {helpControl,bindPracticeHelp} from './help.js';
 import {eligibleForms,selectForms,displayHebrew,Drill,TENSES} from './engine.js';
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Authored base labels restored for display only; catalog snapshots stay compatible.
+const prepositionBasePointing={"של":"שֶׁל","ל־":"לֶ־","ב־":"בֶּ־","מ־":"מִ־","עם":"עִם","בגלל":"בִּגְלָל","במקום":"בִּמְקוֹם","את":"אֶת","בתוך":"בֶּתוֹך","לתוך":"לֶתוֹך","ליד":"לֶיָד","כמו":"כְּמוֹ","על":"עַל","אל":"אֶל","לפני":"לִפְנֵי","אחרי":"אַחֲרֵי","בלי":"בְּלִי","לגבי":"לֶגַבֵּי","בשביל":"בִּשְׁבִיל"};
 const retainedRuns=new Map();
 function hebrewPronoun(f) {
   if(f.person==='1')return f.number==='plural'?'אֲנַחְנוּ':'אֲנִי';
@@ -35,7 +37,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     });
     return chain;
   }
-  const he = f => `<bdi class="cp-he" lang="he" dir="rtl">${esc(displayHebrew(f,nikkud)).replaceAll('–','–\u200b')}</bdi>`;
+  const he = f => `<bdi class="cp-he" lang="he" dir="rtl">${esc(displayHebrew(f.kind==='prep'&&!f.pointed?{...f,pointed:prepositionBasePointing[f.unpointed]}:f,nikkud)).replaceAll('–','–\u200b')}</bdi>`;
   const button=(action,label,extra='')=>`<button type="button" data-action="${action}" ${extra}>${label}</button>`;
   function persist(){try{if(storageKey)doc.defaultView.localStorage.setItem(storageKey,JSON.stringify({nikkud,direction}));}catch{}}
   function select(key,label,values){return `<label>${label}<select data-filter="${key}">${values.map(v=>`<option value="${v}" ${s[key]===v?'selected':''}>${v==='all'?'All':esc(v)}</option>`).join('')}</select></label>`;}
