@@ -1,0 +1,152 @@
+{
+  "at": "2026-11-10T01:50:59.533Z",
+  "allArtifactHashesMatch": true,
+  "screenshotsVisuallyReviewed": 8,
+  "exactWebsiteCopyChecks": 4,
+  "articleBodiesWithZeroBritishMatches": 3,
+  "labelAndValuesVerified": true,
+  "protectedSourceMatch": true,
+  "scopedLearnerStatePreserved": true,
+  "allUserQuery": false,
+  "comparison": {
+    "first": {
+      "samplesBefore": 3,
+      "samplesAfter": 3,
+      "beforeMs": 1383,
+      "afterMs": 1173.1000001430511,
+      "savedMs": 209.89999985694885,
+      "percentLower": 15.177151110408449
+    },
+    "repeat": {
+      "samplesBefore": 3,
+      "samplesAfter": 3,
+      "beforeMs": 1496.5,
+      "afterMs": 1275.5,
+      "savedMs": 221,
+      "percentLower": 14.767791513531574
+    }
+  },
+  "routeRequestMedians": {
+    "oldMs": 1437.2999999523165,
+    "newMs": 1125.4000000953674
+  },
+  "beforeRows": [
+    {
+      "pair": 1,
+      "kind": "first",
+      "feedbackMs": 1382,
+      "usableMs": 1382,
+      "requestMs": 1377.7000000476837,
+      "responseWaitMs": 1375.9000000953674,
+      "renderMs": 3.8999998569488525
+    },
+    {
+      "pair": 1,
+      "kind": "repeat",
+      "feedbackMs": 1850.7000000476837,
+      "usableMs": 1850.7000000476837,
+      "requestMs": 1847,
+      "responseWaitMs": 1845.7000000476837,
+      "renderMs": 3.200000047683716
+    },
+    {
+      "pair": 2,
+      "kind": "first",
+      "feedbackMs": 1383,
+      "usableMs": 1383,
+      "requestMs": 1378.9000000953674,
+      "responseWaitMs": 1377.7000000476837,
+      "renderMs": 3.5
+    },
+    {
+      "pair": 2,
+      "kind": "repeat",
+      "feedbackMs": 1294.8999998569489,
+      "usableMs": 1294.8999998569489,
+      "requestMs": 1291.2999999523163,
+      "responseWaitMs": 1289.8000001907349,
+      "renderMs": 3.299999952316284
+    },
+    {
+      "pair": 3,
+      "kind": "first",
+      "feedbackMs": 1430.4000000953674,
+      "usableMs": 1430.4000000953674,
+      "requestMs": 1425,
+      "responseWaitMs": 1423.6999998092651,
+      "renderMs": 4.900000095367432
+    },
+    {
+      "pair": 3,
+      "kind": "repeat",
+      "feedbackMs": 1496.5,
+      "usableMs": 1496.5,
+      "requestMs": 1492.7999999523163,
+      "responseWaitMs": 1490.8000001907349,
+      "renderMs": 3.3999998569488525
+    }
+  ],
+  "afterRows": [
+    {
+      "pair": 1,
+      "kind": "first",
+      "feedbackMs": 1347.5,
+      "usableMs": 1347.5999999046326,
+      "requestMs": 1340.2000000476835,
+      "responseWaitMs": 1338,
+      "renderMs": 6.799999952316284
+    },
+    {
+      "pair": 1,
+      "kind": "repeat",
+      "feedbackMs": 1206.3000001907276,
+      "usableMs": 1206.4000000953529,
+      "requestMs": 1202.5999999046326,
+      "responseWaitMs": 1200.700000047691,
+      "renderMs": 3.5
+    },
+    {
+      "pair": 2,
+      "kind": "first",
+      "feedbackMs": 1083.0999999046326,
+      "usableMs": 1083.2000000476837,
+      "requestMs": 1079,
+      "responseWaitMs": 1076.5,
+      "renderMs": 3.799999952314465
+    },
+    {
+      "pair": 2,
+      "kind": "repeat",
+      "feedbackMs": 1275.5,
+      "usableMs": 1275.5,
+      "requestMs": 1271.2999999523165,
+      "responseWaitMs": 1269.5,
+      "renderMs": 3.8999998569488525
+    },
+    {
+      "pair": 3,
+      "kind": "first",
+      "feedbackMs": 1173.1000001430511,
+      "usableMs": 1173.1000001430511,
+      "requestMs": 1168.8999998569489,
+      "responseWaitMs": 1167.2999999523163,
+      "renderMs": 3.9000000953674316
+    },
+    {
+      "pair": 3,
+      "kind": "repeat",
+      "feedbackMs": 1410.5,
+      "usableMs": 1410.5,
+      "requestMs": 1407,
+      "responseWaitMs": 1405.5,
+      "renderMs": 3.1999998092651367
+    }
+  ],
+  "limits": [
+    "Small warm-browser sample; request waiting still exceeds one second",
+    "Network/queue/bootstrap/SQL cost not separately isolated",
+    "Timings are DOM/frame proxies, not physical paint",
+    "Native narrow evidence uses installed component replay",
+    "No live preference-save, active/graded session, physical-device, assistive-technology or Guy acceptance claim"
+  ]
+}

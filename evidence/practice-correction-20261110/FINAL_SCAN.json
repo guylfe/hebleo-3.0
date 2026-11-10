@@ -1,0 +1,46 @@
+{
+  "at": "2026-11-10T01:51:59+00:00",
+  "customPluginTextFilesScanned": 49,
+  "sourceRemainingMatches": [],
+  "currentAuthoredPostCandidates": 0,
+  "postRemainingMatches": [],
+  "currentMetaCandidates": 0,
+  "metaRemainingMatches": [],
+  "widgetSiteNameThemeModRowsScanned": 134,
+  "optionRemainingMatches": [],
+  "termCandidates": 0,
+  "termRemainingMatches": [],
+  "hebleoMURemainingMatches": 0,
+  "articles": [
+    {
+      "id": 48308,
+      "substitutions": 3,
+      "exactSpellingOnlyPreserved": true,
+      "sha256": "53ee7d12fbd85d9c1800b1f32e0337b9e2cf9086a072f829467ed726d5140688",
+      "url": "https://hebleo.com/how-to-learn-basic-hebrew-language-step-by-step/"
+    },
+    {
+      "id": 48333,
+      "substitutions": 2,
+      "exactSpellingOnlyPreserved": true,
+      "sha256": "50beda965d9dd29c3a8f1b9777902f48c12524dfb555c82e83b839dc312d6c52",
+      "url": "https://hebleo.com/hebrew-stories-for-beginners-learn-modern-hebrew-through-easy-reading/"
+    },
+    {
+      "id": 48341,
+      "substitutions": 12,
+      "exactSpellingOnlyPreserved": true,
+      "sha256": "85a16a9933c2e7e500431f6ae572d8098a9034ae1702f7fe9e3d4b7985ffa996",
+      "url": "https://hebleo.com/learn-basic-hebrew-language-online-with-easy-lessons/"
+    }
+  ],
+  "excluded": [
+    "historical receipts/evidence/revisions",
+    "trash/auto-drafts",
+    "vendor theme/dependencies",
+    "attachments/media",
+    "URLs/identifiers",
+    "remote embeds/unenumerated generated plugin copy"
+  ],
+  "noLearnerRowsQueried": true
+}
