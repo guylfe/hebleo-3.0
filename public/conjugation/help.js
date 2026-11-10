@@ -1,21 +1,31 @@
 import {openReadOnlyDialog} from './read-only-dialog.js';
 export const tutorials={
- flashcards:{title:'How to use flashcards',common:[
- 'Try to recall the answer before choosing Show answer.',
- 'After revealing the answer, rate your recall: Again if you missed it, Hard if it was difficult, Good if you recalled it, or Easy if it was effortless. Your rating schedules the card’s next review.'
- ],native:['Before starting, choose the session size and card presentation. Listening and sentence presentations depend on available source material.','Add words to review from lessons or My Hebrew. Use Undo last rating to correct your latest rating. Finish session returns to the overview.'],wordpress:['Flashcards are independent practice. On Study Decks, choose Study beside a deck. If No cards due appears, return when cards are next due.']},
+ flashcards:{title:'How to use flashcards',common:[],native:[
+ 'Choose how many cards to practise and how you want them presented, then choose **Start review**.',
+ 'Try to recall each answer before choosing **Show answer**.',
+ "**Again:** I didn't remember. **Hard:** I remembered, but it took effort. **Good:** I remembered. **Easy:** I remembered immediately. Your choice sets when you'll see the card again.",
+ "Choose **Finish session** when you're ready to stop.",
+ 'Chose the wrong rating? Use **Undo last rating** to correct your latest choice.'
+ ],wordpress:[
+ "**NEW** is how many new cards you can study today. **Total remaining** counts all new cards still to learn, including today's cards. **LEARNING** and **REVIEW** show cards you're returning to.",
+ 'Choose **Study** to begin. Try to recall each answer before choosing **Show answer**.',
+ "**Again:** I didn't remember. **Hard:** I remembered, but it took effort. **Good:** I remembered. **Easy:** I remembered immediately. Your choice sets when you'll see the card again.",
+ "Choose **Back to Decks** when you're ready to stop."
+ ]},
  conjugation:{title:'How to use conjugation practice',common:[
- 'Select Verbs or Prepositions, choose words and forms, and use More filters to narrow the selection. Choose a direction, then Start practice.',
- 'Choose selects an answer. Write lets you type and Check answer; Nikkud is optional. You can switch modes and show or hide Nikkud.',
- 'Show answer lets you compare, then choose I got it right or I missed it. After an incorrect written answer, Mark as correct lets you accept your own answer.',
- 'Missed forms return after the remaining forms in each pass. Change selection returns to setup. Conjugation practice leaves your flashcard schedule unchanged.'
- ],native:['Learned only includes the forms lesson authors unlock when you complete their lessons. Choose All to practice ahead. Practice does not complete lessons.'],wordpress:['Conjugation is independent practice; choose from the available forms.']}
+ 'Choose **Verbs** or **Prepositions**, then select the words you want to practise.',
+ 'Select the forms you want to practise. Use **More filters** to focus on a person, gender or number.',
+ 'Practise producing the Hebrew form or recognising its English meaning. Then choose **Start practice**.',
+ 'Use **Choose** to pick an answer, or **Write** to type one and check it. Turn on **Nikkud** when you want vowel marks.',
+ "Stuck? Choose **Show answer**, then **I got it right** or **I missed it**. If a typed answer was marked wrong but you know it's valid, choose **Mark as correct**. Missed forms return for another try."
+ ],native:['**Learned only** practises forms unlocked by completed lessons. Choose **All** to practise ahead.'],wordpress:[]}
 };
-export function tutorialHTML(tutorial,platform){const copy=tutorials[tutorial];if(!copy||!['native','wordpress'].includes(platform))throw Error('Unknown tutorial or platform');return '<ul>'+[...copy[platform],...copy.common].map(text=>'<li>'+text+'</li>').join('')+'</ul>';}
+const format=text=>text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+export function tutorialHTML(tutorial,platform){const copy=tutorials[tutorial];if(!copy||!['native','wordpress'].includes(platform))throw Error('Unknown tutorial or platform');const steps=tutorial==='conjugation'?copy.common:copy[platform];return '<ol>'+steps.map(text=>'<li>'+format(text)+'</li>').join('')+'</ol>'+(tutorial==='conjugation'?copy[platform].map(text=>'<p>'+format(text)+'</p>').join(''):'');}
 export const helpControl=tutorial=>'<button type="button" class="button small outline" data-practice-help="'+tutorial+'">How to practice</button>';
 export function bindPracticeHelp(root,{platform='native'}={}) {
  let modal;
- function click(event){const trigger=event.target.closest('[data-practice-help]');if(!trigger||!root.contains(trigger))return;event.preventDefault();event.stopPropagation();if(modal?.dialog.isConnected)return;const tutorial=trigger.dataset.practiceHelp;modal=openReadOnlyDialog({document:root.ownerDocument,trigger,title:tutorials[tutorial].title,html:tutorialHTML(tutorial,platform),className:'practice-help'});}
+ function click(event){const trigger=event.target.closest('[data-practice-help]');if(!trigger||!root.contains(trigger))return;event.preventDefault();event.stopPropagation();if(modal?.dialog.isConnected)return;const tutorial=trigger.dataset.practiceHelp;modal=openReadOnlyDialog({document:root.ownerDocument,trigger,title:tutorials[tutorial].title,html:tutorialHTML(tutorial,platform),className:'practice-help'});const done=modal.dialog.querySelector('[data-extra-close]');done.textContent='Done';done.setAttribute('aria-label','Done');}
  root.addEventListener('click',click);
  return {destroy(){root.removeEventListener('click',click);modal?.close();}};
 }

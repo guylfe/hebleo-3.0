@@ -1,4 +1,4 @@
-import {helpControl,bindPracticeHelp} from './help.js';
+import {helpControl,bindPracticeHelp} from './help.js?ver=20261110-copy';
 // A single full-width item keeps help out of the theme's practice layout tracks.
 // Sibling controls survive practice-owned innerHTML changes. No prototype patches.
 export function mountWordPressHelp(doc){

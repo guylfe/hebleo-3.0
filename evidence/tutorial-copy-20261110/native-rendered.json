@@ -1,0 +1,173 @@
+{
+  "at": "2026-11-10T00:22:00.763Z",
+  "narrowMethod": "Installed module and full native styles in 360x600 component replay; desktop is actual installed canonical pages",
+  "checks": {
+    "nativeFlashDesktop": {
+      "client": [
+        758,
+        400
+      ],
+      "done": "Done",
+      "focused": true,
+      "font": "18px",
+      "lineHeight": "28.8px",
+      "modal": true,
+      "parts": [
+        "Choose how many cards to practise and how you want them presented, then choose Start review.",
+        "Try to recall each answer before choosing Show answer.",
+        "Again: I didn't remember. Hard: I remembered, but it took effort. Good: I remembered. Easy: I remembered immediately. Your choice sets when you'll see the card again.",
+        "Choose Finish session when you're ready to stop.",
+        "Chose the wrong rating? Use Undo last rating to correct your latest choice."
+      ],
+      "rect": {
+        "height": 402.375,
+        "width": 760,
+        "x": 252.5,
+        "y": 158.8125
+      },
+      "scroll": [
+        758,
+        400
+      ],
+      "url": "http://127.0.0.1:63358/#review",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    "nativeFlashDesktopPreservation": {
+      "closed": true,
+      "focusRestored": true,
+      "htmlIdentical": true,
+      "localStorageIdentical": true,
+      "nodesIdentical": true,
+      "scrollRestored": true,
+      "valuesIdentical": true
+    },
+    "nativeFlashNarrow": {
+      "client": [
+        290,
+        566
+      ],
+      "done": "Done",
+      "focused": true,
+      "font": "18px",
+      "horizontalOverflow": false,
+      "lineHeight": "28.8px",
+      "modal": true,
+      "parts": [
+        "Choose how many cards to practise and how you want them presented, then choose Start review.",
+        "Try to recall each answer before choosing Show answer.",
+        "Again: I didn't remember. Hard: I remembered, but it took effort. Good: I remembered. Easy: I remembered immediately. Your choice sets when you'll see the card again.",
+        "Choose Finish session when you're ready to stop.",
+        "Chose the wrong rating? Use Undo last rating to correct your latest choice."
+      ],
+      "rect": {
+        "height": 568,
+        "width": 307,
+        "x": 19,
+        "y": 16
+      },
+      "scroll": [
+        290,
+        760
+      ],
+      "url": "about:srcdoc",
+      "viewport": [
+        360,
+        600
+      ],
+      "withinViewport": true
+    },
+    "nativeConjugationNarrow": {
+      "client": [
+        290,
+        566
+      ],
+      "done": "Done",
+      "focused": true,
+      "font": "18px",
+      "horizontalOverflow": false,
+      "lineHeight": "28.8px",
+      "modal": true,
+      "parts": [
+        "Choose Verbs or Prepositions, then select the words you want to practise.",
+        "Select the forms you want to practise. Use More filters to focus on a person, gender or number.",
+        "Practise producing the Hebrew form or recognising its English meaning. Then choose Start practice.",
+        "Use Choose to pick an answer, or Write to type one and check it. Turn on Nikkud when you want vowel marks.",
+        "Stuck? Choose Show answer, then I got it right or I missed it. If a typed answer was marked wrong but you know it's valid, choose Mark as correct. Missed forms return for another try.",
+        "Learned only practises forms unlocked by completed lessons. Choose All to practise ahead."
+      ],
+      "rect": {
+        "height": 568,
+        "width": 307,
+        "x": 19,
+        "y": 16
+      },
+      "scroll": [
+        290,
+        1139
+      ],
+      "url": "about:srcdoc",
+      "viewport": [
+        360,
+        600
+      ],
+      "withinViewport": true
+    },
+    "nativeConjugationNarrowPreservation": {
+      "closed": true,
+      "focusRestored": true,
+      "htmlIdentical": true,
+      "localStorageIdentical": true,
+      "nodesIdentical": true,
+      "scrollRestored": true,
+      "valuesIdentical": true
+    },
+    "nativeConjugationDesktop": {
+      "client": [
+        758,
+        544
+      ],
+      "done": "Done",
+      "focused": true,
+      "font": "18px",
+      "horizontalOverflow": false,
+      "lineHeight": "28.8px",
+      "modal": true,
+      "parts": [
+        "Choose Verbs or Prepositions, then select the words you want to practise.",
+        "Select the forms you want to practise. Use More filters to focus on a person, gender or number.",
+        "Practise producing the Hebrew form or recognising its English meaning. Then choose Start practice.",
+        "Use Choose to pick an answer, or Write to type one and check it. Turn on Nikkud when you want vowel marks.",
+        "Stuck? Choose Show answer, then I got it right or I missed it. If a typed answer was marked wrong but you know it's valid, choose Mark as correct. Missed forms return for another try.",
+        "Learned only practises forms unlocked by completed lessons. Choose All to practise ahead."
+      ],
+      "rect": {
+        "height": 546.34375,
+        "width": 760,
+        "x": 252.5,
+        "y": 86.828125
+      },
+      "scroll": [
+        758,
+        544
+      ],
+      "url": "http://127.0.0.1:63358/#conjugation",
+      "viewport": [
+        1280,
+        720
+      ],
+      "withinViewport": true
+    },
+    "nativeConjugationDesktopPreservation": {
+      "closed": true,
+      "focusRestored": true,
+      "htmlIdentical": true,
+      "localStorageIdentical": true,
+      "nodesIdentical": true,
+      "scrollRestored": true,
+      "valuesIdentical": true
+    }
+  }
+}
