@@ -11,17 +11,17 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
   let nikkud=saved.nikkud===true, direction=saved.direction==='en'?'en':'he', drill=null, dead=false;
   const s={kind:'verb',wordIds:catalog.words.filter(w=>pool.some(f=>f.wordId===w.id)).map(w=>w.id),tenses:[...new Set(pool.map(f=>f.tense))],scope:'learned',platform,learnedIds,person:'all',gender:'all',number:'all'};
   const store=runStore||(ownerKey?createRunStore(ownerKey,{indexedDB:doc.defaultView.indexedDB}):null);
-  let revision=0, pending=null, runId=null, loading=!!store, blocked=false, busy=false, terminalDirty=false, message='', inFlight=0, saveFailed=false, chain=Promise.resolve();
+  let revision=0, pending=null, runId=null, loading=!!store, blocked=false, canEndIncompatible=false, slotRead=false, busy=false, terminalDirty=false, message='', inFlight=0, saveFailed=false, chain=Promise.resolve();
   const status=()=>{const el=root.querySelector('[data-run-status]');if(el)el.textContent=message;};
-  function failure(error){saveFailed=true;if(error.code==='CONFLICT')blocked=true;message=error.code==='CONFLICT'?error.message:'Drill could not be saved in this browser. Keep this page open and retry Save & pause drill. '+error.message;status();}
+  function failure(error){saveFailed=true;if(error.code==='CONFLICT'){blocked=true;canEndIncompatible=false;}message=error.code==='CONFLICT'?error.message:(canEndIncompatible?'Drill could not be saved in this browser. Your saved drill is preserved. Retry End drill. ':'Drill could not be saved in this browser. Keep this page open and retry Save & pause drill. ')+error.message;status();}
   function save(terminal=false,paused=!drill){
     if(!store)return Promise.resolve(true);
-    if(blocked||loading)return Promise.resolve(false);
+    if(loading||(blocked&&!(terminal&&canEndIncompatible)))return Promise.resolve(false);
     const active=drill||pending;
     const snapshot=terminal||active&&!active.current?null:active?serializeRun(catalog,active,{setup:s,nikkud,direction,paused,runId}):null;
     inFlight++;message='Saving drill…';status();
     chain=chain.then(async()=>{
-      if(blocked){inFlight--;return false;}
+      if(blocked&&!(terminal&&canEndIncompatible)){inFlight--;return false;}
       try{const slot=await store.write(revision,snapshot);revision=slot.revision;saveFailed=false;message=terminal?'Drill ended.':'Saved in this browser.';status();return true;}
       catch(error){failure(error);return false;}
       finally{inFlight--;}
@@ -39,7 +39,9 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     if(store)html+=`<p data-run-status role="status" aria-live="polite">${esc(message)}</p>`;
     if(allowFixtures)html+='<p class="cp-fixture" role="note">Synthetic fixture rehearsal — illustrative forms, not approved teaching content.</p>';
     if(loading||blocked){
-      html+='<p>Your saved drill is retained. Reload this page to retry or use the latest saved version.</p>';
+      html+=loading?'<p>Loading saved drill…</p>':canEndIncompatible?
+        `<p>Your incompatible saved drill is preserved. End it explicitly to clear it before starting another.</p>${button('end','End drill','class="cp-end"')}`:
+        slotRead?'<p>Reload this page to use the latest saved version. Saved data has not been replaced.</p>':'<p>Saved drill storage could not be read. Reload this page to retry.</p>';
       root.innerHTML=html;return;
     }
     if(!drill){
@@ -66,11 +68,11 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     if(focus)root.querySelector('h2[tabindex],h1')?.focus();
   }
   async function act(e){const el=e.target.closest('[data-action]');if(!el||!root.contains(el)||el.disabled)return;const a=el.dataset.action;
-    if(['nikkud','scope','direction'].includes(a)||loading||blocked||busy)return;
+    if(['nikkud','scope','direction'].includes(a)||loading||busy||(blocked&&!(a==='end'&&canEndIncompatible)))return;
     if(a==='back'&&terminalDirty)return;
     if(a==='end'){
       busy=true;root.querySelectorAll('button,input,select').forEach(el=>el.disabled=true);const ok=await save(true);busy=false;terminalDirty=!ok;
-      if(ok&&!dead){drill=null;pending=null;runId=null;}if(!dead)render(ok);return;
+      if(ok&&!dead){drill=null;pending=null;runId=null;blocked=false;canEndIncompatible=false;if(ownerKey)retainedRuns.delete(ownerKey);}if(!dead)render(ok);return;
     }
     if(a==='pause'||(a==='back'&&drill?.current&&store)){
       busy=true;root.querySelectorAll('button,input,select').forEach(el=>el.disabled=true);const ok=await save(false,true);busy=false;
@@ -110,13 +112,16 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
   const retained=ownerKey?retainedRuns.get(ownerKey):null;
   const ready=store?Promise.resolve(retained?.settled).then(()=>store.read()).then(slot=>{
     if(dead)return;
-    revision=slot.revision;
+    revision=slot.revision;slotRead=true;
+    const knownSavedRun=slot.run!==null;
     if(retained&&retained.failed()){
       if(slot.revision!==retained.revision())throw Error('This drill changed in another tab. The unsaved draft is retained in this page session.');
       slot={...slot,run:retained.run};saveFailed=true;
     }
     if(slot.run){
-      const restored=hydrateRun(catalog,slot.run,{allowFixtures});
+      let restored;
+      try{restored=hydrateRun(catalog,slot.run,{allowFixtures,platform,learnedIds});}
+      catch(error){canEndIncompatible=knownSavedRun;throw error;}
       Object.assign(s,restored.setup,{platform,learnedIds});nikkud=restored.nikkud;direction=restored.direction;runId=restored.runId;
       if(restored.paused)pending=restored.drill;else drill=restored.drill;
     }

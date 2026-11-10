@@ -108,3 +108,55 @@ test('failed autosave survives native-style destroy/remount; browser leave warns
  x=await ui(db,'native:navigation',options);assert.equal(x.root.querySelector('[data-typed]').value,'unsaved retained answer');assert.match(x.root.textContent,/Unsaved drill recovered/);fail=false;await x.click('pause');
  const savedLeave=new x.dom.window.Event('beforeunload',{cancelable:true});x.dom.window.dispatchEvent(savedLeave);assert(!savedLeave.defaultPrevented);assert.equal((await real.read()).run.drill.typed,'unsaved retained answer');x.close();
 });
+
+for(const [kind,mutate] of [
+ ['source',raw=>raw.source.forms[0].english='synthetic older source'],
+ ['schema',raw=>raw.schema=999],
+ ['form',raw=>raw.drill.queue[0]='synthetic-missing-form']
+])test('known '+kind+' mismatch stays preserved until explicit CAS End; failed End and other owner remain intact',async()=>{
+ const db=new IDBFactory(),owner='native:mismatch-'+kind,store=createRunStore(owner,{indexedDB:db}),other=createRunStore('native:untouched-'+kind,{indexedDB:db});
+ const raw=snapshot(fresh());mutate(raw);await store.write(0,raw);await other.write(0,snapshot(fresh()));const otherBefore=await other.read();let fail=true;
+ const x=await ui(db,owner,{runStore:{read:()=>store.read(),write:(...args)=>fail?Promise.reject(Error('synthetic quota')):store.write(...args)}});
+ assert.match(x.root.textContent,/incompatible.*preserved/s);assert.equal(x.root.querySelector('[data-action=start]'),null);assert.equal(x.root.querySelector('[data-action=resume]'),null);
+ assert(x.root.querySelector('[data-action=end]').classList.contains('cp-end'));assert.deepEqual((await store.read()).run,raw);
+ await x.click('end');assert.match(x.root.textContent,/could not be saved/);assert.match(x.root.textContent,/Retry End drill/);assert(x.root.querySelector('[data-action=end]'));assert.deepEqual((await store.read()).run,raw);
+ fail=false;await x.click('end');assert.equal((await store.read()).run,null);assert.equal((await store.read()).revision,2);assert(x.root.querySelector('[data-action=start]'));assert.deepEqual(await other.read(),otherBefore);x.close();
+});
+test('incompatible stale End cannot delete newer run and conflict removes End permission',async()=>{
+ const db=new IDBFactory(),owner='native:stale-incompatible',store=createRunStore(owner,{indexedDB:db}),raw=snapshot(fresh());raw.schema=999;await store.write(0,raw);
+ const x=await ui(db,owner);assert(x.root.querySelector('[data-action=end]'));
+ const newer=snapshot(fresh());newer.runId='synthetic-newer-run';await store.write(1,newer);await x.click('end');assert.match(x.root.textContent,/another tab/);assert.equal(x.root.querySelector('[data-action=end]'),null);assert.deepEqual((await store.read()).run,newer);x.close();
+});
+test('initial storage/read failure makes no existing-run claim and offers no End even when a slot exists',async()=>{
+ for(const withSlot of [false,true]){
+  const db=new IDBFactory(),owner='native:unread-'+withSlot,store=createRunStore(owner,{indexedDB:db});if(withSlot)await store.write(0,snapshot(fresh()));let writes=0;
+  const x=await ui(db,owner,{runStore:{read:()=>Promise.reject(Error('synthetic storage unavailable')),write:()=>{writes++;throw Error('must not write');}}});
+  assert.match(x.root.textContent,/could not be read/);assert.doesNotMatch(x.root.textContent,/Your saved drill is retained|Your incompatible saved drill/);assert.equal(x.root.querySelector('[data-action=end]'),null);assert.equal(x.root.querySelector('[data-action=start]'),null);assert.equal(writes,0);assert.equal((await store.read()).revision,withSlot?1:0);x.close();
+ }
+});
+test('newer revision observed while recovering unsaved memory never offers End',async()=>{
+ const db=new IDBFactory(),owner='native:newer-observed',real=createRunStore(owner,{indexedDB:db});let fail=false;
+ const options={runStore:{read:()=>real.read(),write:(...args)=>fail?Promise.reject(Error('synthetic storage failure')):real.write(...args)}};
+ let x=await ui(db,owner,options);await x.click('start');await x.click('write');fail=true;await x.type('old uncommitted answer');x.close();
+ const current=await real.read(),newer=snapshot(fresh());newer.runId='synthetic-newer';await real.write(current.revision,newer);
+ x=await ui(db,owner,options);assert.match(x.root.textContent,/changed in another tab/);assert.equal(x.root.querySelector('[data-action=end]'),null);assert.deepEqual((await real.read()).run,newer);x.close();
+});
+for(const [label,learned] of [
+ ['queue revocation',[]],
+ ['partial queue',fixture.forms.slice(0,1).map(f=>f.id)],
+ ['candidate-only revocation',fixture.forms.slice(0,1).map(f=>f.id)]
+])test('Learned only hydrate preserves blocked '+label+' until explicit End',async()=>{
+ const db=new IDBFactory(),owner='native:eligibility-'+label.replaceAll(' ','-'),store=createRunStore(owner,{indexedDB:db});
+ const d=label==='candidate-only revocation'?new Drill(fixture,fixture.forms.slice(0,1),{allowFixtures:true,choiceForms:fixture.forms.slice(0,3)}):fresh();
+ const raw=snapshot(d);raw.setup.scope='learned';await store.write(0,raw);
+ const x=await ui(db,owner,{learnedIds:learned});assert.match(x.root.textContent,/no longer learned/);assert.equal(x.root.querySelector('[data-action=resume]'),null);assert.equal(x.root.querySelector('[data-action=start]'),null);assert.deepEqual((await store.read()).run,raw);await x.click('end');assert.equal((await store.read()).run,null);x.close();
+});
+for(const [platform,scope,learned] of [
+ ['native','learned',fixture.forms.map(f=>f.id)],
+ ['native','all',[]],
+ ['wordpress','learned',[]]
+])test(platform+' '+scope+' hydrate keeps compatible superset/ahead/WP behavior',async()=>{
+ const db=new IDBFactory(),owner=platform==='wordpress'?'wordpress:81':'native:allowed-'+scope,store=createRunStore(owner,{indexedDB:db});
+ const raw=snapshot(fresh());raw.setup.scope=scope;raw.setup.learnedIds=fixture.forms.slice(0,3).map(f=>f.id);await store.write(0,raw);
+ const x=await ui(db,owner,{platform,learnedIds:learned});assert(x.root.querySelector('[data-action=write]'));assert.deepEqual((await store.read()).run,raw);assert.doesNotMatch(x.root.textContent,/no longer learned/);x.close();
+});
