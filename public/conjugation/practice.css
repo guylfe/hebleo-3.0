@@ -6,3 +6,5 @@
 
 .conjugation-root .cp-selection{gap:8px;margin-bottom:10px}.conjugation-root .cp-selection button{padding:4px 10px;font-size:14px}
 .conjugation-root .cp-pause{background:#185c92;color:#fff;border-color:#185c92}.conjugation-root .cp-pause:hover:enabled{background:#124775}.conjugation-root .cp-end{background:#a32121;color:#fff;border-color:#a32121}.conjugation-root .cp-end:hover:enabled{background:#7e1919}.conjugation-root .cp-resume{padding:12px;border:1px solid var(--cp-line);border-radius:8px}.conjugation-root .cp-practice>.cp-row:first-child{gap:8px}.conjugation-root .cp-practice>.cp-row:first-child button{padding:6px 10px}.conjugation-root [data-run-status]{overflow-wrap:anywhere}.conjugation-root .cp-setup{width:100%}
+
+.conjugation-root .cp-choice-success{color:#176b35;font-weight:700}.conjugation-root .cp-choice-error{color:#a32121;font-weight:700}.conjugation-root .cp-options button.cp-answer-correct{background:#e5f5e9;color:#145b2c;border:2px solid #24783c;opacity:1}.conjugation-root .cp-options button.cp-answer-wrong{border:2px solid #a32121;opacity:1}.conjugation-root .cp-correct-label{display:block;font-size:14px;font-weight:700}

@@ -5,6 +5,24 @@ const setup={kind:'verb',wordIds:['fixture-study'],tenses:['past','present'],sco
 const fresh=()=>new Drill(fixture,fixture.forms.slice(0,3),{allowFixtures:true,random:()=>.999});
 const snapshot=d=>serializeRun(fixture,d,{setup,nikkud:true,direction:'he',paused:false,runId:'synthetic-run'});
 const tick=()=>new Promise(r=>setTimeout(r,0));
+for(const platform of ['native','wordpress'])for(const direction of ['he','en'])test(`${platform} ${direction}: choices advance, incorrect choices wait, missed pass and final cleanup persist silently`,async()=>{
+ const db=new IDBFactory(),owner='native:auto-choice',catalog={...fixture,forms:fixture.forms.filter(f=>f.wordId==='fixture-study')},options={platform,catalog};
+ let x=await ui(db,owner,options);const select=x.root.querySelector('[data-action=direction]');select.value=direction;select.dispatchEvent(new x.dom.window.Event('change',{bubbles:true}));await x.click('start');
+ const store=createRunStore(owner,{indexedDB:db});let raw=(await store.read()).run;
+ const wrong=raw.drill.options.findIndex(id=>id!==raw.drill.queue[raw.drill.index]);
+ x.root.querySelector(`[data-action=answer][data-index="${wrong}"]`).click();assert(!x.root.textContent.includes('Saving drill'));await x.mount.flush();
+ assert(x.root.querySelector('.cp-choice-error'));assert.equal(x.root.querySelectorAll('.cp-answer-correct').length,1);assert.equal(x.root.querySelectorAll('.cp-answer-wrong').length,1);assert.equal(x.root.querySelector('[data-action=next]').textContent,'Continue');
+ assert.equal((await store.read()).run.drill.index,raw.drill.index);assert.equal((await store.read()).run.drill.feedback,'incorrect');
+ x.close();x=await ui(db,owner,options);assert(x.root.querySelector('.cp-answer-correct'));assert.equal(x.root.querySelector('[data-action=next]').textContent,'Continue');await x.click('next');
+ let count=0,sawMissedPass=false;
+ while((raw=(await store.read()).run)){
+  assert(++count<6);if(raw.drill.pass>1)sawMissedPass=true;
+  const correct=raw.drill.options.indexOf(raw.drill.queue[raw.drill.index]);x.root.querySelector(`[data-action=answer][data-index="${correct}"]`).click();assert(!x.root.textContent.includes('Saving drill'));await x.mount.flush();await tick();
+  assert(x.root.querySelector('.cp-choice-success'));assert(!x.root.querySelector('[data-action=next]'));
+  const after=(await store.read()).run;if(after){assert(after.drill.index!==raw.drill.index||after.drill.pass!==raw.drill.pass);assert.equal(after.drill.feedback,null);x.close();x=await ui(db,owner,options);assert.deepEqual((await store.read()).run,after);}
+ }
+ assert(sawMissedPass);assert.match(x.root.textContent,/Drill complete/);x.close();
+});
 async function ui(db,owner='native:synthetic',options={}){
  const dom=new JSDOM('<main></main>',{url:'https://synthetic.invalid'});dom.window.indexedDB=db;
  const root=dom.window.document.querySelector('main'),mount=mountConjugation(root,{catalog:fixture,learnedIds:fixture.forms.map(f=>f.id),allowFixtures:true,ownerKey:owner,...options});await mount.ready;
@@ -95,7 +113,7 @@ test('two nonterminal writers fence stale save/end; queued writes capture immuta
 test('reverse direction and all setup targets survive paused fresh mount; choice feedback/order survives fresh mount',async()=>{
  const db=new IDBFactory();let x=await ui(db);const el=x.root.querySelector('[data-action=direction]');el.value='en';el.dispatchEvent(new x.dom.window.Event('change',{bubbles:true}));
  const target=x.root.querySelector('[data-word=fixture-want]');target.click();const filter=x.root.querySelector('[data-filter=person]');filter.value='1';filter.dispatchEvent(new x.dom.window.Event('change',{bubbles:true}));
- await x.click('start');await x.click('answer');const store=createRunStore('native:synthetic',{indexedDB:db}),before=(await store.read()).run;
+ await x.click('start');const store=createRunStore('native:synthetic',{indexedDB:db}),initial=(await store.read()).run;const wrong=initial.drill.options.findIndex(id=>id!==initial.drill.queue[initial.drill.index]);x.root.querySelector(`[data-action=answer][data-index="${wrong}"]`).click();await x.mount.flush();const before=(await store.read()).run;
  const options=[...x.root.querySelectorAll('[data-action=answer]')].map(b=>b.textContent);x.close();x=await ui(db);assert.deepEqual([...x.root.querySelectorAll('[data-action=answer]')].map(b=>b.textContent),options);assert(x.root.querySelector('[data-action=answer][aria-pressed=true]'));assert(x.root.querySelector('.cp-feedback'));assert.deepEqual((await store.read()).run,before);
  await x.click('pause');x.close();x=await ui(db);assert.equal(x.root.querySelector('[data-action=direction]').value,'en');assert.equal(x.root.querySelector('[data-filter=person]').value,'1');assert.equal(x.root.querySelector('[data-word=fixture-want]').checked,false);await x.click('resume');assert.deepEqual((await store.read()).run.setup,before.setup);x.close();
 });

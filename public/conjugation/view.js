@@ -15,7 +15,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
   const pool=eligibleForms(catalog,{allowFixtures}), doc=root.ownerDocument;
   root.classList.add('conjugation-root');
   let saved={}; try { if(storageKey)saved=JSON.parse(doc.defaultView.localStorage.getItem(storageKey))||{}; } catch {}
-  let nikkud=saved.nikkud===true, direction=saved.direction==='en'?'en':'he', drill=null, dead=false;
+  let nikkud=saved.nikkud===true, direction=saved.direction==='en'?'en':'he', drill=null, dead=false, lastChoiceCorrect=false;
   const s={kind:'verb',wordIds:catalog.words.filter(w=>pool.some(f=>f.wordId===w.id)).map(w=>w.id),tenses:[...new Set(pool.map(f=>f.tense))],scope:'learned',platform,learnedIds,person:'all',gender:'all',number:'all'};
   const store=runStore||(ownerKey?createRunStore(ownerKey,{indexedDB:doc.defaultView.indexedDB}):null);
   let revision=0, pending=null, runId=null, loading=!!store, blocked=false, canEndIncompatible=false, slotRead=false, busy=false, terminalDirty=false, message='', inFlight=0, saveFailed=false, chain=Promise.resolve();
@@ -26,7 +26,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     if(loading||(blocked&&!(terminal&&canEndIncompatible)))return Promise.resolve(false);
     const active=drill||pending;
     const snapshot=terminal||active&&!active.current?null:active?serializeRun(catalog,active,{setup:s,nikkud,direction,paused,runId}):null;
-    inFlight++;message='Saving drill…';status();
+    inFlight++;
     chain=chain.then(async()=>{
       if(blocked&&!(terminal&&canEndIncompatible)){inFlight--;return false;}
       try{const slot=await store.write(revision,snapshot);revision=slot.revision;saveFailed=false;message=terminal?'Drill ended.':'';status();return true;}
@@ -51,6 +51,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
         slotRead?'<p>Reload this page to use the latest saved version. Saved data has not been replaced.</p>':'<p>Saved drill storage could not be read. Reload this page to retry.</p>';
       root.innerHTML=html;return;
     }
+    if(drill&&lastChoiceCorrect)html+='<p class="cp-choice-success" role="status"><span aria-hidden="true">✓</span> Correct</p>';
     if(!drill){
       if(pending)html+=`<section class="cp-resume"><p>Resume your drill or end it before starting another.</p><div class="cp-row">${button('resume','Resume drill','class="cp-primary"')}${button('end','End drill','class="cp-end"')}</div></section>`;
       html+=`<fieldset ${pending?'disabled':''} class="cp-setup">`;
@@ -66,9 +67,9 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
       const f=drill.current,w=catalog.words.find(w=>w.id===f.wordId),en=direction==='en',fb=drill.feedback;
       html+=`<section class="cp-practice"><div class="cp-row">${button('back','← Change selection')}${button('pause','Save & pause drill','class="cp-pause"')}${button('end','End drill','class="cp-end"')}<span>${drill.pass>1?'Missed forms · ':''}${drill.index+1} of ${drill.queue.length}</span></div><progress value="${drill.index}" max="${drill.queue.length}" aria-label="Current pass progress"></progress>${drill.pass>1?'<p>You finished the other forms. Now review the ones you missed.</p>':''}<div class="cp-prompt"><h2 tabindex="-1">${en?'What does this form mean?':'Give the Hebrew form'}</h2><div class="cp-base">${he(en?f:w)}</div><p>${f.tense==='preposition'?'':esc(f.tense)}${f.tense!=='preposition'&&hebrewPronoun(f)?' · ':''}${hebrewPronoun(f)?he({pointed:hebrewPronoun(f),unpointed:hebrewPronoun(f).replace(/[\u0591-\u05c7]/g,'')}):''}</p></div><div class="cp-row">${button('choose','Choose',`aria-pressed="${drill.mode==='choose'}" ${drill.options.length<2?'disabled':''}`)}${button('write','Write',`aria-pressed="${drill.mode==='write'}"`)}</div>`;
       if(drill.options.length<2)html+='<p role="note">Too few distinct choices are available for this word. Practice in Write mode or show the answer.</p>';
-      if(drill.mode==='choose')html+=`<div class="cp-options">${drill.options.map((o,i)=>button('answer',en?esc(o.english):he(o),`data-index="${i}" aria-pressed="${drill.choice===o.id}" ${fb?'disabled':''}`)).join('')}</div>`;
+      if(drill.mode==='choose')html+=`<div class="cp-options">${drill.options.map((o,i)=>button('answer',(fb==='incorrect'&&drill.attempt?.mode==='choose'&&o.id===drill.choice?'<span class="cp-choice-error" aria-hidden="true">✕</span> ':'')+(en?esc(o.english):he(o))+(fb==='incorrect'&&drill.attempt?.mode==='choose'&&o.id===f.id?'<span class="cp-correct-label"> ✓ Correct answer</span>':''),`class="${fb==='incorrect'&&drill.attempt?.mode==='choose'?(o.id===f.id?'cp-answer-correct':o.id===drill.choice?'cp-answer-wrong':''):''}" data-index="${i}" aria-pressed="${drill.choice===o.id}" ${fb?'disabled':''}`)).join('')}</div>`;
       else html+=`<form data-answer-form novalidate><label>Your answer<input data-typed type="text" dir="${en?'ltr':'rtl'}" lang="${en?'en':'he'}" autocomplete="off" placeholder="${en?'Type the meaning':'Type your answer in Hebrew'}" value="${esc(drill.typed)}" ${fb?'disabled':''}></label><div class="cp-row">${button('check','Check answer',fb?'disabled':'')}${button('show','Show answer',fb?'disabled':'')}</div><p>Nikkud is optional.</p></form>`;
-      if(fb)html+=`<div class="cp-feedback" role="status"><strong>${fb==='correct'?'Correct':fb==='shown'?'Compare with your answer':'Added to missed-form review'}</strong><p>${he(f)} — ${esc(f.english)}</p>${fb==='incorrect'?'<p>Continue through the remaining forms. This one returns at the end of the pass.</p>':''}</div><div class="cp-row">${fb==='shown'?button('knew','I got it right')+button('missed','I missed it'):(fb==='incorrect'&&drill.attempt?.mode==='write'?button('override','Mark as correct'):'')+button('next',drill.index+1<drill.queue.length?'Next form →':drill.missed.size?'Review missed forms →':'Finish drill','class="cp-primary"')}</div>`;
+      if(fb)html+=`<div class="cp-feedback" role="status"><strong>${fb==='correct'?'Correct':fb==='shown'?'Compare with your answer':drill.attempt?.mode==='choose'?'<span class="cp-choice-error"><span aria-hidden="true">✕</span> Incorrect</span>':'Added to missed-form review'}</strong><p>${he(f)} — ${esc(f.english)}</p>${fb==='incorrect'?'<p>Continue through the remaining forms. This one returns at the end of the pass.</p>':''}</div><div class="cp-row">${fb==='shown'?button('knew','I got it right')+button('missed','I missed it'):(fb==='incorrect'&&drill.attempt?.mode==='write'?button('override','Mark as correct'):'')+button('next',fb==='incorrect'&&drill.attempt?.mode==='choose'?'Continue':drill.index+1<drill.queue.length?'Next form →':drill.missed.size?'Review missed forms →':'Finish drill','class="cp-primary"')}</div>`;
       html+='</section>';
     }
     root.innerHTML=html;
@@ -78,6 +79,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     const el=target?.closest('[data-action]');if(!el||!root.contains(el)||el.disabled)return;const a=el.dataset.action;
     if(['nikkud','scope','direction'].includes(a)||loading||busy||(blocked&&!(a==='end'&&canEndIncompatible)))return;
     if(a==='back'&&terminalDirty)return;
+    if(['start','end','back','resume','next','check','show','knew','missed','override'].includes(a))lastChoiceCorrect=false;
     if(a==='end'){
       busy=true;root.querySelectorAll('button,input,select').forEach(el=>el.disabled=true);const ok=await save(true);busy=false;terminalDirty=!ok;
       if(ok&&!dead){drill=null;pending=null;runId=null;blocked=false;canEndIncompatible=false;if(ownerKey)retainedRuns.delete(ownerKey);}if(!dead)render(ok);return;
@@ -95,12 +97,12 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     }
     else if(a==='back')drill=null;
     else if(a==='verb'||a==='prep'){s.kind=a;drill=null;}
-    else if(drill){if(a==='choose'||a==='write')drill.setMode(a);else if(a==='answer'){const o=drill.options[Number(el.dataset.index)];if(o){drill.choice=o.id;drill.grade(direction==='he'?o.unpointed:o.english,'choose');}}else if(a==='check')drill.grade(drill.typed,'write');else if(a==='show')drill.show();else if(a==='override')drill.override();else if(a==='knew'||a==='missed')drill.selfCheck(a==='knew');else if(a==='next')drill.next();}
+    else if(drill){if(a==='choose'||a==='write')drill.setMode(a);else if(a==='answer'){const o=drill.options[Number(el.dataset.index)];if(o&&!drill.feedback){drill.choice=o.id;lastChoiceCorrect=drill.grade(direction==='he'?o.unpointed:o.english,'choose');if(lastChoiceCorrect)drill.next();}}else if(a==='check')drill.grade(drill.typed,'write');else if(a==='show')drill.show();else if(a==='override')drill.override();else if(a==='knew'||a==='missed')drill.selfCheck(a==='knew');else if(a==='next')drill.next();}
     if(drill&&!drill.current&&store){
       busy=true;const ok=await save(true);busy=false;terminalDirty=!ok;
       if(!ok){message+=' Use End drill to retry clearing the completed run.';status();}
     }else if(drill)save();
-    render(['start','back','next'].includes(a));
+    render(['start','back','next'].includes(a)||(a==='answer'&&lastChoiceCorrect));
     if(a==='select-all'||a==='select-none')root.querySelector(`[data-action=${a}]`)?.focus();
   }
   function change(e){const el=e.target;
@@ -114,7 +116,7 @@ export function mountConjugation(root,{catalog,learnedIds=[],platform='native',s
     persist();if(drill||pending)save();render();
   }
   function input(e){if(e.target.matches('[data-typed]')&&drill&&!blocked&&!busy){drill.typed=e.target.value;save();}}
-  function submit(e){if(e.target.matches('[data-answer-form]')){e.preventDefault();if(blocked||busy||!drill)return;drill.grade(drill.typed,'write');save();render();}}
+  function submit(e){if(e.target.matches('[data-answer-form]')){e.preventDefault();if(blocked||busy||!drill)return;lastChoiceCorrect=false;drill.grade(drill.typed,'write');save();render();}}
   const help=bindPracticeHelp(root,{platform});
   root.addEventListener('click',act);root.addEventListener('change',change);root.addEventListener('input',input);root.addEventListener('submit',submit);render();
   const retained=ownerKey?retainedRuns.get(ownerKey):null;
