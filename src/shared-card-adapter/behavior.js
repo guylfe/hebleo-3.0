@@ -50,8 +50,18 @@
     player.src = button.getAttribute('data-audio');
     try { var promise = player.play(); if (promise) promise.catch(function(){fail(request);}); } catch (_) { fail(request); }
   }
-  var shortcutGeneration=null;
-  function shortcutContext(event){const d=event.data;if(event.source===parent&&d&&Object.keys(d).sort().join('|')==='generation|type'&&d.type==='hebleo-review-context'&&typeof d.generation==='string'&&/^[a-zA-Z0-9-]{16,80}$/.test(d.generation))shortcutGeneration=d.generation;}
+  var shortcutGeneration=null, autoplayGeneration=null;
+  function shortcutContext(event){
+    const d=event.data,keys=d&&Object.keys(d).sort().join('|');
+    if(event.source!==parent||!d||!['generation|type','audioSpeed|autoplay|generation|type'].includes(keys)||d.type!=='hebleo-review-context'||typeof d.generation!=='string'||!/^[a-zA-Z0-9-]{16,80}$/.test(d.generation))return;
+    if(keys!=='generation|type'&&(typeof d.autoplay!=='boolean'||![0.75,1].includes(d.audioSpeed)))return;
+    shortcutGeneration=d.generation;
+    if(d.autoplay!==true){stop();return;}
+    if(autoplayGeneration===d.generation||!state.audioVisible||!state.baseAudio||document.hidden)return;
+    autoplayGeneration=d.generation;stop();var request=token;
+    player.src=state.baseAudio;player.playbackRate=d.audioSpeed;
+    try{var promise=player.play();if(promise)promise.catch(function(){fail(request);});}catch(_){fail(request);}
+  }
   function shortcut(event){if(!shortcutGeneration||event.defaultPrevented||event.isComposing||event.ctrlKey||event.altKey||event.metaKey||event.shiftKey||event.target.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"]),dialog,[role="dialog"]'))return;var key=event.key===' '||event.code==='Space'?'reveal':/^[1-4]$/.test(event.key)?event.key:null;if(!key)return;event.preventDefault();if(event.repeat)return;parent.postMessage({type:'hebleo-review-key',generation:shortcutGeneration,key:key},'*');}
   window.addEventListener('message',shortcutContext);document.addEventListener('keydown',shortcut);
   parent.postMessage({type:'hebleo-review-ready'},'*');

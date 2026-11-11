@@ -67,7 +67,8 @@ export function createRenderer({mediaManifest, mediaBaseUrl}) {
       let body = template.replace(/\{\{(\w+)\}\}/g, (_,key) => fields[key] ?? '');
       body = body.replace(/src="(_hebleo-logo-(?:blue|white)\.png)"/g, (_,name)=>'src="'+escape(mediaUrl(name))+'"');
       const mode = settings.mode || 'light';
-      const init = 'window.hebleoInitial=' + JSON.stringify({mode,nikkud:!!settings.nikkud}) + ';';
+      const baseAudio = parseFragment(fields.Audio).childNodes.flatMap(function walk(n){return [n,...(n.childNodes||[]).flatMap(walk)];}).find(n=>n.attrs?.some(a=>a.name==='data-audio'))?.attrs.find(a=>a.name==='data-audio').value || null;
+      const init = 'window.hebleoInitial=' + JSON.stringify({mode,nikkud:!!settings.nikkud,baseAudio,audioVisible:direction==='he-en'||face==='back'}).replaceAll('<','\\u003c') + ';';
       const script = init + behavior;
       const scriptHash = createHash('sha256').update(script).digest('base64');
       // Inline style is safe: fields cannot supply style attributes or style elements.

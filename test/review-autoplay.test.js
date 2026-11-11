@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {JSDOM} from 'jsdom';
+import {Store} from '../src/store.js';
+import {createRenderer,FIELD_NAMES} from '../src/shared-card-adapter/index.mjs';
+import {createReviewAutoplay} from '../public/review-autoplay.js';
+import {mkdtempSync,rmSync} from 'node:fs';import {tmpdir} from 'node:os';import {join} from 'node:path';
+test('autoplay preference persists, validates boolean and remains account-specific',()=>{
+ const dir=mkdtempSync(join(tmpdir(),'hebleo-autoplay-'));let s=new Store(join(dir,'test.sqlite'));
+ try{assert.equal(s.learner('learner-demo').preferences.reviewAutoplay,false);s.updateLearner('learner-demo',{reviewAutoplay:true});assert.equal(s.learner('author-demo').preferences.reviewAutoplay,false);assert.throws(()=>s.updateLearner('learner-demo',{reviewAutoplay:'true'}));s.close();s=new Store(join(dir,'test.sqlite'));assert.equal(s.learner('learner-demo').preferences.reviewAutoplay,true);}finally{s.close();rmSync(dir,{recursive:true,force:true});}
+});
+for(const direction of ['he-en','en-he'])for(const face of ['front','back'])test(`shared autoplay ${direction} ${face}: trust, dedupe, speed, stop, manual replay`,async()=>{
+ const renderer=createRenderer({mediaManifest:['voice.mp3','_hebleo-logo-blue.png','_hebleo-logo-white.png'].map(file=>({file,sha256:'a'.repeat(64),bytes:1})),mediaBaseUrl:'https://example.test/media/'});
+ const note={id:'mf-000001',fields:Object.fromEntries(FIELD_NAMES.map(k=>[k,'']))};Object.assign(note.fields,{SourceId:note.id,Hebrew:'את',HebrewNikkud:'אַתְּ',English:'You',Audio:'[sound:voice.mp3]'});
+ let player;const dom=new JSDOM(renderer.renderCard({note,direction,face}),{runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){w.ResizeObserver=class{observe(){}disconnect(){}};w.Audio=class extends w.EventTarget{constructor(){super();player=this;this.plays=0;this.pauses=0;}play(){this.plays++;return Promise.resolve();}pause(){this.pauses++;}removeAttribute(){}load(){}};}});
+ try{const w=dom.window;const data={type:'hebleo-review-context',generation:'test-generation-123456',autoplay:true,audioSpeed:0.75};const send=(d,source=w.parent)=>w.dispatchEvent(new w.MessageEvent('message',{source,data:d}));send(data,null);assert.equal(player.plays,0);send({...data,autoplay:false});assert.equal(player.plays,0);send(data);send(data);const expected=direction==='he-en'||face==='back'?1:0;assert.equal(player.plays,expected);if(expected){assert.equal(player.src,'https://example.test/media/voice.mp3');assert.equal(player.playbackRate,0.75);}const button=w.document.querySelector('.hc-audio .hc-play');if(button){button.click();assert.equal(player.plays,expected+1);}const pauses=player.pauses;w.hebleoCard.destroy();assert(player.pauses>pauses);send(data);assert.equal(player.plays,expected+(button?1:0));}finally{dom.window.close();}
+});
+test('legacy reviews wait for translation reveal, dedupe and stop on departure',()=>{const plays=[];let stops=0;const sync=createReviewAutoplay({play:(...a)=>{plays.push(a);return Promise.resolve();},stop:()=>stops++});const session={index:0,type:'translation'},card={id:'one',audio:{url:'/voice.mp3'}};const v={session,card,enabled:true,revealed:false};sync(v);assert.equal(plays.length,0);sync({...v,revealed:true});sync({...v,revealed:true});assert.equal(plays.length,1);sync({...v,active:false});assert(stops>0);sync({...v,enabled:false});assert.equal(plays.length,1);});
+
+test('HTTP server delivers autoplay module as JavaScript',async()=>{const {createServer}=await import('../src/server.js');const store=new Store(':memory:');const server=createServer(store);await new Promise(r=>server.listen(0,'127.0.0.1',r));try{const r=await fetch(`http://127.0.0.1:${server.address().port}/review-autoplay.js`);assert.equal(r.status,200);assert.match(r.headers.get('content-type'),/javascript/);assert.match(await r.text(),/export function createReviewAutoplay/);}finally{await new Promise(r=>server.close(r));store.close();}});

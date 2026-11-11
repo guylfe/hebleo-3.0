@@ -46,7 +46,7 @@ const id = value => { text(value, 'ID', 100); if (!/^[A-Za-z0-9][A-Za-z0-9_-]*$/
 // Learners see each entry as a choice or tile, so such entries are refused, never trimmed, dropped or replaced.
 const blankEntry = list => list.findIndex(x => !x.replace(/[\s\p{Cc}\p{Default_Ignorable_Code_Point}]/gu, ''));
 const modes = ['curated', 'full', 'none'];
-const preferenceDefaults = { nikkud: 'curated', vocabularyView: 'cards', immediateAnswers: false, sounds: false, animations: true, keyboardHints: true, keyboardConvert: false, keyboardVisible: false, keyboardPinned: false, reviewNikkud: 'default', audioSpeed: 1, reviewLimit: 10, reviewType: 'recognition' };
+const preferenceDefaults = { nikkud: 'curated', vocabularyView: 'cards', immediateAnswers: false, sounds: false, animations: true, keyboardHints: true, keyboardConvert: false, keyboardVisible: false, keyboardPinned: false, reviewNikkud: 'default', audioSpeed: 1, reviewAutoplay: false, reviewLimit: 10, reviewType: 'recognition' };
 function richData(value, depth = 0) {
   if (depth > 8) throw new DomainError('Vocabulary field nesting exceeds the limit.');
   if (typeof value === 'string' && value.length > 12000) throw new DomainError('Vocabulary field exceeds the limit.');
@@ -54,7 +54,7 @@ function richData(value, depth = 0) {
 }
 function validatePreferences(p) {
   if(p.reviewNikkud!==undefined && !['default',...modes].includes(p.reviewNikkud))throw new DomainError('Invalid flashcard Nikkud.');
-  for (const key of ['immediateAnswers', 'sounds', 'animations', 'keyboardHints', 'keyboardConvert', 'keyboardVisible', 'keyboardPinned']) if (p[key] !== undefined && typeof p[key] !== 'boolean') throw new DomainError('Invalid preference: ' + key);
+  for (const key of ['reviewAutoplay', 'immediateAnswers', 'sounds', 'animations', 'keyboardHints', 'keyboardConvert', 'keyboardVisible', 'keyboardPinned']) if (p[key] !== undefined && typeof p[key] !== 'boolean') throw new DomainError('Invalid preference: ' + key);
   if (p.vocabularyView !== undefined && !['cards', 'table'].includes(p.vocabularyView)) throw new DomainError('Invalid vocabulary view.');
   if (p.audioSpeed !== undefined && ![0.75, 1].includes(p.audioSpeed)) throw new DomainError('Invalid audio speed.');
   if (p.reviewLimit !== undefined && (!Number.isInteger(p.reviewLimit) || p.reviewLimit < 1 || p.reviewLimit > 100)) throw new DomainError('Review limit must be 1–100 cards.');
