@@ -1,4 +1,5 @@
 import {createHash} from 'node:crypto';
+import {correctNote,correctionMedia,correctionBlob} from './shared-card-adapter/corrections.mjs';
 import {parseFragment,parse} from 'parse5';
 import {createRenderer,validateNote} from './shared-card-adapter/index.mjs';
 import {inspectMedia} from './media-store.js';
@@ -99,16 +100,16 @@ export class SharedCards {
  }
  document(userId,id,face,mediaBaseUrl){
   this.access(userId);const key=parseSharedCardId(id),note=key&&this.note(key.sourceId);if(!note)fail('Shared card not found.',404);
-  const state=this.state(),derived=copy(note);
+  const state=this.state(),derived=correctNote(note);
   for(const overlay of state.overlays.filter(o=>o.sourceId===key.sourceId)){
    const slot=audioSlots(note).find(s=>s.formKey===overlay.formKey);
    if(overlay.formKey.startsWith('Audio:'))derived.fields.Audio=derived.fields.Audio.replace('[sound:'+slot.file+']','[sound:'+overlay.file+']');
    else {let index=0;derived.fields.Forms=derived.fields.Forms.replace(/data-audio="([^"]+)"/g,(match)=>'Forms:'+index++===overlay.formKey?'data-audio="'+overlay.file+'"':match);}
   }
-  const manifest=[...state.manifest,...state.overlays.map(o=>({file:o.file,sha256:o.sha256,bytes:this.store.media.blob(o.sha256).byteLength}))].filter((o,i,a)=>a.findIndex(x=>x.file===o.file)===i);
+  const manifest=[...state.manifest,...correctionMedia,...state.overlays.map(o=>({file:o.file,sha256:o.sha256,bytes:this.store.media.blob(o.sha256).byteLength}))].filter((o,i,a)=>a.findIndex(x=>x.file===o.file)===i);
   const html=createRenderer({mediaManifest:manifest,mediaBaseUrl}).renderCard({note:derived,direction:key.direction,face,settings:this.settings(userId)});
   const policy=all(parse(html)).find(n=>n.tagName==='meta'&&attr(n,'http-equiv')==='Content-Security-Policy');
   return {html,csp:attr(policy,'content')+"; frame-ancestors 'self'"};
  }
- media(userId,file){this.access(userId);const state=this.state(),item=state&&[...state.manifest,...state.overlays].find(o=>o.file===file);if(!item)fail('Media not found.',404);return this.store.media.blob(item.sha256);}
+ media(userId,file){this.access(userId);const correction=correctionBlob(file);if(correction)return correction;const state=this.state(),item=state&&[...state.manifest,...state.overlays].find(o=>o.file===file);if(!item)fail('Media not found.',404);return this.store.media.blob(item.sha256);}
 }

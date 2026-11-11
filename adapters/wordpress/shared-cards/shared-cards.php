@@ -2,6 +2,7 @@
 /** Isolated candidate: no activation hooks, routes, installs or scheduler writes. */
 namespace HebleoShared;
 require_once __DIR__.'/frame-bridge.php';
+require_once __DIR__.'/feedback.php';
 const FIELDS = ['SourceId','Hebrew','English','Forms','Notes','Grammar','Source','Audio','HebrewNikkud'];
 const PACKAGE = '597c2fb3c78591a0c377216ab6668b5408a48a3f5f0a66b57fbb225122dd4e2a';
 const PACKAGES = [PACKAGE,'7a91c3d07d493dde5b701ca06a4d748352c8e7f1991a614c1d15814d93c8c1de'];
@@ -132,7 +133,7 @@ function project(array $card,$progress,array $s): array {
   $n=$s['notes'][$source]??null;if(!$n)return $card;
   // Pending audio must not silently continue playing the replaced recording.
 
-  foreach(['front','back'] as $f){$doc=bridge_document($n['documents'][$direction][$f]);$card[$f]='<iframe data-hebleo-shared="1" title="Hebleo vocabulary card" sandbox="allow-scripts" referrerpolicy="no-referrer" style="width:100%;min-height:120px;height:240px;border:0" srcdoc="'.htmlspecialchars($doc,ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8').'"></iframe>';}
+  foreach(['front','back'] as $f){$doc=bridge_document(feedback_document($n['documents'][$direction][$f],$source));$card[$f]='<iframe data-hebleo-shared="1" title="Hebleo vocabulary card" sandbox="allow-scripts" referrerpolicy="no-referrer" style="width:100%;min-height:120px;height:240px;border:0" srcdoc="'.htmlspecialchars($doc,ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8').'"></iframe>';}
   return $card;
  }} return $card;
 }

@@ -1,0 +1,46 @@
+[
+  {
+    "sourceId": "mf-000014",
+    "hebrew": "את",
+    "pointed": "אַתְ",
+    "english": "You (singular female)",
+    "file": "pronoun-9473f1b084cb9e1f5495207efb7ba2657ead35afab479624aae0fdea38cb9d14.mp3",
+    "sha256": "9473f1b084cb9e1f5495207efb7ba2657ead35afab479624aae0fdea38cb9d14",
+    "bytes": 9231,
+    "sourceUrl": "https://hebleo.com/wp-content/uploads/2025/10/at.mp3",
+    "attachment": 41445
+  },
+  {
+    "sourceId": "mf-000015",
+    "hebrew": "אתה",
+    "pointed": "אַתָּה",
+    "english": "You (singular male)",
+    "file": "pronoun-5701f5c4db3b4e681dc3b68cedecb55d9e9506397a6ccf010b41865dc320150e.mp3",
+    "sha256": "5701f5c4db3b4e681dc3b68cedecb55d9e9506397a6ccf010b41865dc320150e",
+    "bytes": 8918,
+    "sourceUrl": "https://hebleo.com/wp-content/uploads/2025/10/ata.mp3",
+    "attachment": 41446
+  },
+  {
+    "sourceId": "mf-000016",
+    "hebrew": "אתם",
+    "pointed": "אַתֶּם",
+    "english": "You (plural)",
+    "file": "pronoun-d001acd7c5cbd7fc12e4832aa6fe54b991c4d329ab052b2cba2f19101be15912.mp3",
+    "sha256": "d001acd7c5cbd7fc12e4832aa6fe54b991c4d329ab052b2cba2f19101be15912",
+    "bytes": 10173,
+    "sourceUrl": "https://hebleo.com/wp-content/uploads/2025/10/atem.mp3",
+    "attachment": 41447
+  },
+  {
+    "sourceId": "mf-000017",
+    "hebrew": "אתן",
+    "pointed": "אַתֶּן",
+    "english": "You (plural, only female)",
+    "file": "pronoun-38cc46480142f212991626d5ea11086935abcb5ad5a3a5319019ed482f448373.mp3",
+    "sha256": "38cc46480142f212991626d5ea11086935abcb5ad5a3a5319019ed482f448373",
+    "bytes": 9860,
+    "sourceUrl": "https://hebleo.com/wp-content/uploads/2025/10/aten.mp3",
+    "attachment": 41448
+  }
+]

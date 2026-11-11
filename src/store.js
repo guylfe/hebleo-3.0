@@ -1,4 +1,5 @@
 import {loadConjugationCatalog,validateConjugationCatalog,emptyConjugationCatalog,validateLessonUnlocks,validateLearnedFormIds,addCompletionUnlocks} from './conjugation.js';
+import {reviewActivity} from './review-activity.js';
 import {nextStudyDay,isReviewBuried,validateBurials} from './review-burial.js';
 import {SharedCards,validateSharedState,validateCardSettings,parseSharedCardId} from './shared-cards.js';
 import {AuthorReview,validateAuthorReview,relinkAuthorReview,mergeAuthorReview,authorReviewContents} from './author-review.js';
@@ -286,7 +287,7 @@ export class Store {
   bootstrap(userId) {
     const content = this.snapshot(); const learner = this.learner(userId);
     const due = Object.entries(learner.cards).filter(([cardId, c]) => Date.parse(c.due) <= Date.now() && !isReviewBuried(learner,cardId)).map(([wordId, card]) => ({ word: this.publicWord(content.words.find(w => w.id === wordId)||this.shared.word(wordId)), card })).filter(c => c.word && !c.word.noCard && !c.card.suspended);
-    return { sharedCollection: this.shared.state()&&learner.purchasedCourses.includes('demo-foundations')?this.shared.collection(userId):null, revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewVersions:Object.fromEntries(Object.keys(learner.cards).map(id=>[id,this.reviewVersion(learner,id)])), reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
+    return { reviewActivity:this.reviewActivity(userId), sharedCollection: this.shared.state()&&learner.purchasedCourses.includes('demo-foundations')?this.shared.collection(userId):null, revisionId: this.get('active'), content: this.publicContent(content), learner, users, canAuthor: Boolean(users.find(u => u.id === userId)?.canAuthor), due: learner.purchasedCourses.includes('demo-foundations') ? due : [], reviewVersions:Object.fromEntries(Object.keys(learner.cards).map(id=>[id,this.reviewVersion(learner,id)])), reviewClock:Date.now(), scheduler: 'Prototype interval scheduler (not FSRS)', aiConnected: Boolean(process.env.HEBLEO_AI_KEY && process.env.HEBLEO_AI_MODEL) };
   }
   publicWord(word) {
     if(!word)return word;
@@ -420,6 +421,12 @@ export class Store {
       this.set(key,result);return result;
     });
   }
+  reviewActivity(userId,now=Date.now()) {
+    this.learner(userId);
+    const prefix='review-'+userId+'-';
+    const receipts=this.db.prepare('SELECT value FROM kv WHERE substr(key,1,?)=?').all(prefix.length,prefix).map(r=>JSON.parse(r.value));
+    return reviewActivity(receipts,now);
+  }
   review(userId, input, answerAt, locked=false) {
     if(!locked)return this.transaction(()=>this.review(userId,input,answerAt,true));
     if (![1, 2, 3, 4].includes(input.rating)) throw new DomainError('Invalid review rating.');
@@ -436,7 +443,7 @@ export class Store {
     if(note){state.reviewBurials=Object.fromEntries(Object.entries(state.reviewBurials||{}).filter(([,entry])=>Date.parse(entry.until)>now));state.reviewBurials[note.sourceId]={cardId:input.wordId,until:nextStudyDay(now)};}
     state.reviewGenerations??={};state.reviewGenerations[input.wordId]=(state.reviewGenerations[input.wordId]||0)+1;
     state.reviewAnswerTimes??={};state.reviewAnswerTimes[input.wordId]=now;
-    const result = { wordId: input.wordId, rating: input.rating, requestId, card: clone(card) };
+    const result = { wordId: input.wordId, rating: input.rating, requestId, card: clone(card), acceptedAnswerAt:now };
     state.lastReview = { requestId, wordId: input.wordId, before, after: clone(card), ...(note?{burialBefore}: {}) };
     return this.transaction(() => { this.saveLearner(userId, state); this.set('review-' + userId + '-' + requestId, result); return result; });
   }
