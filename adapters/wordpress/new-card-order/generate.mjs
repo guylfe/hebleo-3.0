@@ -1,0 +1,30 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+const [baseline, output] = process.argv.slice(2);
+if (!baseline || !output) throw Error('Usage: node generate.mjs BASELINE_PLUGIN NEW_OUTPUT');
+const rel = 'templates/card_loader.php', original = fs.readFileSync(path.join(baseline, rel), 'utf8');
+function replaceOnce(body, from, to) {
+  if (body.split(from).length !== 2) throw Error('Baseline anchor differs: '+from.slice(0,80));
+  return body.replace(from, to);
+}
+let body = replaceOnce(original, "    // Get new cards\n", "    // Course sequence is applied to the complete eligible new pool before its limit.\n    require_once dirname(__DIR__).'/new-card-order/order.php';\n    // Get new cards\n");
+const start = body.indexOf('    // Get new cards\n', body.indexOf('function ajax_start_study_session'));
+const end = body.indexOf('    // Get review cards', start);
+if (start < 0 || end < 0) throw Error('Missing queue anchors');
+let block = body.slice(start, end);
+block = replaceOnce(block, 'ORDER BY {$order_clause}, p.created_at ASC\n         LIMIT %d', 'ORDER BY p.created_at ASC, p.id ASC');
+block = replaceOnce(block, '$user_id, $deck_id, $settings->new_cards_per_day', '$user_id, $deck_id');
+const customAt = block.indexOf('    // Apply custom order');
+if (customAt < 0) throw Error('Missing custom-order block');
+block = block.slice(0, customAt) + '    $new_cards = \\HebleoNewCardOrder\\wordpress($new_cards, $custom_order, (int)$settings->new_cards_per_day);\n    \n';
+body = body.slice(0, start) + block + body.slice(end);
+if (fs.existsSync(output)) throw Error('Refuse output reuse');
+fs.mkdirSync(path.join(output,'templates'),{recursive:true});
+fs.mkdirSync(path.join(output,'new-card-order'),{recursive:true});
+fs.writeFileSync(path.join(output,rel),body);
+fs.copyFileSync(new URL('./order.php',import.meta.url),path.join(output,'new-card-order/order.php'));
+const hash = value => createHash('sha256').update(value).digest('hex');
+const manifest = {schema:1, files:{[rel]:{before:hash(original),after:hash(body)},'new-card-order/order.php':{before:null,after:hash(fs.readFileSync(new URL('./order.php',import.meta.url)))}}};
+fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
+console.log(JSON.stringify(manifest,null,2));

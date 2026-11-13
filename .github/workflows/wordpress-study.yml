@@ -43,6 +43,14 @@ jobs:
           php -l adapters/wordpress/followup/frontend.php
           php adapters/wordpress/followup/front-test.php
           node --check adapters/wordpress/followup/client.js
+      - name: New-card course order and guarded installer
+        run: |
+          php adapters/wordpress/new-card-order/order.test.php
+          php adapters/wordpress/new-card-order/install.test.php "$RUNNER_TEMP/new-card-order-install"
+          php -l adapters/wordpress/new-card-order/protected.php
+          php -l adapters/wordpress/new-card-order/verify.php
+          node --check adapters/wordpress/new-card-order/generate.mjs
+          node --check adapters/wordpress/new-card-order/run-native.mjs
       - name: Background review source guards
         run: |
           php -l adapters/wordpress/background-review/protocol.php
