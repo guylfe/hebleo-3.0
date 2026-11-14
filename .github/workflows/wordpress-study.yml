@@ -71,3 +71,13 @@ jobs:
           npm ci --ignore-scripts --no-audit --no-fund
           php -l adapters/wordpress/practice-help/practice-help.php
           node --test test/practice-help.test.js
+      - name: Autoplay settings release guards and hint assessment
+        run: |
+          php adapters/wordpress/autoplay-settings/install.test.php "$RUNNER_TEMP/autoplay-install"
+          php -l adapters/wordpress/autoplay-settings/native.test.php
+          php -l adapters/wordpress/autoplay-settings/verify-installed.php
+          php -l adapters/wordpress/autoplay-settings/protected.php
+          node --check adapters/wordpress/autoplay-settings/generate.mjs
+          node --check adapters/wordpress/autoplay-settings/run-native.mjs
+          node --check adapters/wordpress/autoplay-settings/frontend.test.mjs
+          node adapters/wordpress/autoplay-settings/hint-assessment.test.mjs
